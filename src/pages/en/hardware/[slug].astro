@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import tiers from "../../../data/hardware-tiers.json";
+import affiliateLinks from "../../../data/affiliate-links.json";
+
+export function getStaticPaths() {
+  return tiers.tiers.map((tier) => ({
+    params: { slug: `${tier.vram_gb}gb-vram-models` },
+    props: { tier }
+  }));
+}
+
+const { tier } = Astro.props;
+const title = `${tier.vram_gb}GB VRAM Models | LocalVRAM`;
+---
+
+<BaseLayout title={title} description={tier.summary} locale="en">
+  <main class="container">
+    <h1>{tier.title}</h1>
+    <p>{tier.summary}</p>
+
+    <section class="card">
+      <h2>Recommended models</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Fit</th>
+            <th>Expected tok/s</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tier.recommended_models.map((model) => (
+            <tr>
+              <td>{model.name}</td>
+              <td>{model.fit}</td>
+              <td>{model.expected_tok_s}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn" href="/en/tools/vram-calculator/">Check your fit</a>
+      <a class="btn" href="/en/affiliate/hardware-upgrade/">Hardware upgrade</a>
+      <a class="btn btn-primary" href={affiliateLinks.runpod}>Cloud GPU fallback</a>
+    </section>
+  </main>
+</BaseLayout>

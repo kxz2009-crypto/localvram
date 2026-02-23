@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import errorData from "../../../data/errors.json";
+import affiliateLinks from "../../../data/affiliate-links.json";
+
+export function getStaticPaths() {
+  return errorData.errors.map((item) => ({
+    params: { slug: item.id },
+    props: { item }
+  }));
+}
+
+const { item } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: `Fix ${item.title}`,
+  about: {
+    "@type": "SoftwareSourceCode",
+    text: item.raw_stack_trace
+  },
+  step: item.fixes.map((fix) => ({
+    "@type": "HowToStep",
+    name: fix.label,
+    text: fix.command
+  })),
+  mainEntity: {
+    "@type": "FAQPage"
+  }
+};
+---
+
+<BaseLayout title={`${item.title} | LocalVRAM`} description={item.symptom} locale="en">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <main class="container">
+    <h1>{item.title}</h1>
+    <p>{item.symptom}</p>
+
+    <section class="card terminal-card">
+      <h2>Raw Stack Trace</h2>
+      <pre><code>{item.raw_stack_trace}</code></pre>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Common causes</h2>
+        <ul>
+          {item.causes.map((cause) => <li>{cause}</li>)}
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Copy-fix commands</h2>
+        <ul>
+          {item.fixes.map((fix) => (
+            <li>
+              <strong>{fix.label}</strong>
+              <code>{fix.command}</code>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn" href="/en/tools/vram-calculator/">Use smaller model</a>
+      <a class="btn" href="/en/tools/quantization-blind-test/">Switch quantization</a>
+      <a class="btn btn-primary" href={affiliateLinks.runpod}>Use Cloud 48GB</a>
+    </section>
+  </main>
+</BaseLayout>

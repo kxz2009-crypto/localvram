@@ -136,6 +136,70 @@ a {
   color: var(--muted);
 }
 
+.card .btn {
+  display: inline-block;
+  margin-top: 12px;
+}
+
+.terminal-card pre {
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow-x: auto;
+  background: #020617;
+  color: #22c55e;
+}
+
+.terminal-card code {
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 13px;
+  white-space: pre;
+}
+
+ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+li {
+  margin: 6px 0;
+}
+
+li code {
+  display: block;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #020617;
+  color: #7dd3fc;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.table th {
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.table td {
+  color: var(--muted);
+}
+
 .simple-header {
   display: flex;
   justify-content: space-between;

@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import providers from "../../../data/cloud-gpu.json";
+import links from "../../../data/affiliate-links.json";
+---
+
+<BaseLayout
+  title="Best Cloud GPU for Ollama | LocalVRAM"
+  description="Compare cloud GPU options for Ollama workloads."
+  locale="en"
+>
+  <main class="container">
+    <h1>Best Cloud GPU for Ollama (2026)</h1>
+    <p>Use this page when local VRAM is not enough for your target model.</p>
+
+    <section class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Recommended GPU</th>
+            <th>Price/hr</th>
+            <th>Setup</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {providers.providers.map((p) => (
+            <tr>
+              <td>{p.name}</td>
+              <td>{p.recommended_gpu}</td>
+              <td>${p.hourly_usd}</td>
+              <td>{p.setup}</td>
+              <td>
+                <a
+                  class="btn btn-primary"
+                  href={p.id === "runpod" ? links.runpod : p.id === "vast" ? links.vast : links.runpod}
+                >
+                  Try {p.name}
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>

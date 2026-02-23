@@ -1,0 +1,84 @@
+{
+  "errors": [
+    {
+      "id": "cuda-out-of-memory",
+      "title": "Ollama CUDA Out of Memory",
+      "raw_stack_trace": "CUDA error: out of memory\ncurrent device: 0, capacity: 24GB\nggml_cuda_mul_mat: out of memory\n[ERROR] Failed to allocate 42.5 GB",
+      "symptom": "Model loading fails or generation stops with OOM.",
+      "causes": [
+        "Model quantization is too large for available VRAM.",
+        "Context window is too high and KV cache expands.",
+        "GPU layers exceed practical memory budget."
+      ],
+      "fixes": [
+        {
+          "label": "Use lower quantization",
+          "command": "ollama pull <model>:q4_k_m"
+        },
+        {
+          "label": "Lower context length",
+          "command": "ollama run <model> --ctx-size 4096"
+        },
+        {
+          "label": "Reduce GPU layers",
+          "command": "ollama run <model> --gpu-layers 40"
+        }
+      ],
+      "related_links": [
+        "/en/tools/vram-calculator/",
+        "/en/hardware/24gb-vram-models/"
+      ],
+      "seo_keyword": "ollama cuda out of memory"
+    },
+    {
+      "id": "rocm-not-detected",
+      "title": "Ollama ROCm Not Detected",
+      "raw_stack_trace": "ROCm backend unavailable\nhipErrorNoBinaryForGpu\nNo compatible AMD runtime found",
+      "symptom": "AMD GPU is present but backend falls back to CPU.",
+      "causes": [
+        "ROCm runtime not installed correctly.",
+        "GPU architecture not supported by installed ROCm build."
+      ],
+      "fixes": [
+        {
+          "label": "Verify ROCm runtime",
+          "command": "rocminfo && hipconfig --full"
+        },
+        {
+          "label": "Pin supported ROCm version",
+          "command": "sudo apt install rocm-6.1.2"
+        }
+      ],
+      "related_links": [
+        "/en/affiliate/cloud-gpu/",
+        "/en/status/data-freshness/"
+      ],
+      "seo_keyword": "ollama rocm not detected"
+    },
+    {
+      "id": "metal-not-found",
+      "title": "Ollama Metal Not Found on macOS",
+      "raw_stack_trace": "Metal device not found\nMPSGraph unavailable\nfallback to CPU",
+      "symptom": "Apple Silicon machine runs only on CPU path.",
+      "causes": [
+        "Unsupported macOS version.",
+        "Environment variables force CPU backend."
+      ],
+      "fixes": [
+        {
+          "label": "Check macOS and Ollama version",
+          "command": "sw_vers && ollama --version"
+        },
+        {
+          "label": "Reset backend variables",
+          "command": "unset OLLAMA_NO_METAL"
+        }
+      ],
+      "related_links": [
+        "/en/tools/roi-calculator/",
+        "/en/affiliate/cloud-gpu/"
+      ],
+      "seo_keyword": "ollama metal not found mac"
+    }
+  ]
+}

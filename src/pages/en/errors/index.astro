@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import errorData from "../../../data/errors.json";
+---
+
+<BaseLayout
+  title="Ollama Error KB | LocalVRAM"
+  description="Terminal-first Ollama troubleshooting knowledge base."
+  locale="en"
+>
+  <main class="container">
+    <h1>Error KB</h1>
+    <p>Copy the exact error string and jump to shortest-fix workflows.</p>
+    <section class="card-grid">
+      {errorData.errors.map((item) => (
+        <article class="card">
+          <h2>{item.title}</h2>
+          <p>{item.symptom}</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href={`/en/errors/${item.id}/`}>Open fix</a>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>

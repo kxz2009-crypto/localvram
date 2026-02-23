@@ -1,0 +1,25 @@
+{
+  "providers": [
+    {
+      "id": "runpod",
+      "name": "RunPod",
+      "recommended_gpu": "A6000 48GB",
+      "hourly_usd": "0.76",
+      "setup": "preinstalled"
+    },
+    {
+      "id": "vast",
+      "name": "Vast.ai",
+      "recommended_gpu": "RTX 4090 24GB",
+      "hourly_usd": "0.34",
+      "setup": "manual"
+    },
+    {
+      "id": "lambda",
+      "name": "Lambda",
+      "recommended_gpu": "A6000 48GB",
+      "hourly_usd": "0.80",
+      "setup": "preinstalled"
+    }
+  ]
+}

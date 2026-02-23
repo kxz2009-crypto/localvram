@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import links from "../../../data/affiliate-links.json";
+---
+
+<BaseLayout
+  title="Ollama Local Cluster Network Guide | LocalVRAM"
+  description="Topology and performance checklist for local Ollama cluster setups."
+  locale="en"
+>
+  <main class="container">
+    <h1>Ollama Local Cluster Network Guide</h1>
+    <p>
+      Validate node-to-node latency, TTFT jitter, and throughput before scaling
+      to multi-node inference.
+    </p>
+
+    <section class="card">
+      <h2>Minimum topology checklist</h2>
+      <ul>
+        <li>1x main GPU node (3090/4090 class)</li>
+        <li>1-2x helper CPU nodes for routing and queueing</li>
+        <li>Gigabit LAN baseline, 2.5GbE preferred</li>
+        <li>Fixed prompt suite for apples-to-apples benchmark</li>
+      </ul>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn" href="/en/status/data-freshness/">View last verified run</a>
+      <a class="btn" href="/en/affiliate/hardware-upgrade/">Upgrade planning</a>
+      <a class="btn btn-primary" href={links.runpod}>Burst to cloud for peak load</a>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import links from "../../../data/affiliate-links.json";
+---
+
+<BaseLayout
+  title="Hardware Upgrade Simulator | LocalVRAM"
+  description="See practical GPU upgrade paths for local Ollama workloads."
+  locale="en"
+>
+  <main class="container">
+    <h1>Hardware Upgrade Simulator</h1>
+    <p>
+      Start from your current VRAM tier and choose an upgrade path by budget and
+      target model size.
+    </p>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Used RTX 3090</h2>
+        <p>Best value jump for 24GB workloads and Q4 large models.</p>
+        <a class="btn btn-primary" href={links.amazon}>Open deal links</a>
+      </article>
+      <article class="card">
+        <h2>RTX 4090</h2>
+        <p>Higher throughput and better sustained performance headroom.</p>
+        <a class="btn btn-primary" href={links.amazon}>Open deal links</a>
+      </article>
+      <article class="card">
+        <h2>Keep local + burst to cloud</h2>
+        <p>Run daily workloads locally and burst to 48GB cloud when needed.</p>
+        <a class="btn btn-primary" href={links.runpod}>Use RunPod fallback</a>
+      </article>
+    </section>
+  </main>
+</BaseLayout>

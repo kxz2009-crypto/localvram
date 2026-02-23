@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import tiers from "../../../data/hardware-tiers.json";
+---
+
+<BaseLayout
+  title="Hardware Tiers | LocalVRAM"
+  description="Pick Ollama models by available VRAM tier."
+  locale="en"
+>
+  <main class="container">
+    <h1>Hardware VRAM Tiers</h1>
+    <section class="card-grid">
+      {tiers.tiers.map((tier) => (
+        <article class="card">
+          <h2>{tier.vram_gb}GB VRAM</h2>
+          <p>{tier.summary}</p>
+          <a class="btn btn-primary" href={`/en/hardware/${tier.vram_gb}gb-vram-models/`}>
+            View recommended models
+          </a>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
