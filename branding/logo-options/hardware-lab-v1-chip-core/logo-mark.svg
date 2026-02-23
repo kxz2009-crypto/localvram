@@ -1,0 +1,16 @@
+﻿<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LocalVRAM mark - chip core">
+  <defs>
+    <linearGradient id="m1a" x1="0" y1="0" x2="220" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="m1b" x1="30" y1="30" x2="190" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FB923C"/>
+      <stop offset="1" stop-color="#F43F5E"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="220" height="220" rx="46" fill="#0B1220" stroke="#334155"/>
+  <rect x="62" y="62" width="132" height="132" rx="20" fill="none" stroke="url(#m1a)" stroke-width="10"/>
+  <circle cx="128" cy="128" r="28" fill="none" stroke="url(#m1b)" stroke-width="10"/>
+  <path d="M28 82H16M28 128H16M28 174H16M240 82H252M240 128H252M240 174H252M82 16V4M128 16V4M174 16V4M82 252V240M128 252V240M174 252V240" stroke="#38BDF8" stroke-width="6" stroke-linecap="round"/>
+</svg>

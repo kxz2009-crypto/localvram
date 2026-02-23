@@ -1,0 +1,17 @@
+{
+  "version": "2026.02.22",
+  "models": [
+    {
+      "id": "qwen3-32b",
+      "name": "Qwen3 32B",
+      "quantizations": ["Q4_K_M", "Q5_K_M"],
+      "verified": true
+    },
+    {
+      "id": "deepseek-r1",
+      "name": "DeepSeek-R1",
+      "quantizations": ["Q4_K_M"],
+      "verified": true
+    }
+  ]
+}

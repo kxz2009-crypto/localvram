@@ -1,0 +1,33 @@
+﻿<svg width="960" height="220" viewBox="0 0 960 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LocalVRAM logo - tech minimal">
+  <defs>
+    <linearGradient id="techBg" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="techAccent" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+    <filter id="techGlow" x="0" y="0" width="200" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect x="32" y="30" width="160" height="160" rx="36" fill="url(#techBg)"/>
+  <rect x="32.5" y="30.5" width="159" height="159" rx="35.5" stroke="#334155"/>
+
+  <g filter="url(#techGlow)">
+    <path d="M76 68L112 152L148 68" stroke="url(#techAccent)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M92 112H132" stroke="#38BDF8" stroke-width="10" stroke-linecap="round"/>
+  </g>
+
+  <circle cx="112" cy="110" r="62" stroke="#1E293B" stroke-width="2" stroke-dasharray="5 7"/>
+
+  <text x="236" y="108" fill="#E2E8F0" font-size="76" font-weight="700" font-family="'Space Grotesk','Segoe UI',sans-serif" letter-spacing="0.5">Local</text>
+  <text x="476" y="108" fill="#38BDF8" font-size="76" font-weight="800" font-family="'Space Grotesk','Segoe UI',sans-serif" letter-spacing="1.2">VRAM</text>
+  <rect x="238" y="126" width="356" height="8" rx="4" fill="url(#techAccent)" opacity="0.55"/>
+</svg>

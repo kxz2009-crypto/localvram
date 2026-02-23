@@ -1,0 +1,37 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale?: "en" | "zh";
+}
+
+const {
+  title = "LocalVRAM",
+  description = "Ollama compatibility and benchmark hub.",
+  locale = "en"
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={`https://localvram.com${Astro.url.pathname}`} />
+    <link rel="alternate" hrefLang="en" href={`https://localvram.com/en${Astro.url.pathname.replace(/^\/(en|zh)/, "")}`} />
+    <link rel="alternate" hrefLang="zh" href={`https://localvram.com/zh${Astro.url.pathname.replace(/^\/(en|zh)/, "")}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`https://localvram.com${Astro.url.pathname}`} />
+    <meta property="og:image" content="https://localvram.com/og/default-og.svg" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

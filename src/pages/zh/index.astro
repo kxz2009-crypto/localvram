@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="LocalVRAM | 中文站"
+  description="本地 Ollama 模型兼容与基准数据中心。"
+  locale="zh"
+>
+  <main class="container">
+    <header class="simple-header">
+      <img src="/branding/logo.svg" alt="LocalVRAM" />
+      <a class="btn" href="/en/">English</a>
+    </header>
+    <section class="hero">
+      <img
+        class="verified-pill"
+        src="/branding/ollama-verified-pill.svg"
+        alt="Ollama Verified"
+      />
+      <h1>用真实测试数据，快速选对本地模型</h1>
+      <p>中文页面当前为精选内容，后续将由自动流程每日更新。</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/en/tools/vram-calculator/">VRAM 计算器</a>
+        <a class="btn" href="/en/status/data-freshness/">数据新鲜度</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

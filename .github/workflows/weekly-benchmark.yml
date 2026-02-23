@@ -1,0 +1,35 @@
+name: Weekly Benchmark
+
+on:
+  schedule:
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark-on-3090:
+    runs-on: [self-hosted, 3090-WSL2]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Weekly benchmark
+        run: python scripts/weekly-benchmark.py
+
+      - name: Cluster benchmark
+        run: python scripts/cluster-benchmark.py
+
+      - name: Commit benchmark updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/status.json src/data/cluster-benchmarks.json logs
+          git diff --cached --quiet || git commit -m "chore: weekly benchmark update"
+          git push

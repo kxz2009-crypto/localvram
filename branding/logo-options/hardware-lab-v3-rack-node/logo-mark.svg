@@ -1,0 +1,20 @@
+﻿<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LocalVRAM mark - rack node">
+  <defs>
+    <linearGradient id="m3a" x1="20" y1="20" x2="220" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="m3b" x1="40" y1="40" x2="190" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FB923C"/>
+      <stop offset="1" stop-color="#EF4444"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="220" height="220" rx="46" fill="#0B1220" stroke="#334155"/>
+  <rect x="58" y="58" width="140" height="40" rx="12" fill="none" stroke="url(#m3a)" stroke-width="7"/>
+  <rect x="58" y="108" width="140" height="40" rx="12" fill="none" stroke="url(#m3a)" stroke-width="7"/>
+  <rect x="58" y="158" width="140" height="40" rx="12" fill="none" stroke="url(#m3a)" stroke-width="7"/>
+  <circle cx="80" cy="78" r="6" fill="#10B981"/>
+  <circle cx="80" cy="128" r="6" fill="#10B981"/>
+  <circle cx="80" cy="178" r="6" fill="#10B981"/>
+  <path d="M198 78H216M198 128H216M198 178H216" stroke="url(#m3b)" stroke-width="5" stroke-linecap="round"/>
+</svg>

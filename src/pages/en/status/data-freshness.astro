@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import report from "../../../data/status.json";
+---
+
+<BaseLayout
+  title="LocalVRAM Data Freshness"
+  description="See verification freshness and update cadence."
+  locale="en"
+>
+  <main class="container">
+    <h1>Data Freshness</h1>
+    <div class="card-grid">
+      <article class="card">
+        <h2>Last Verified</h2>
+        <p>{report.last_verified}</p>
+      </article>
+      <article class="card">
+        <h2>Last Hardware Sync</h2>
+        <p>{report.last_hardware_sync}</p>
+      </article>
+      <article class="card">
+        <h2>Freshness Score</h2>
+        <p>{report.freshness_score}/100</p>
+      </article>
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,22 @@
+﻿<svg width="960" height="220" viewBox="0 0 960 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LocalVRAM logo - hardware lab cooling ring">
+  <defs>
+    <linearGradient id="r1" x1="44" y1="34" x2="190" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="r2" x1="60" y1="60" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#F43F5E"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="112" cy="112" r="74" fill="#0B1220" stroke="#334155" stroke-width="3"/>
+  <circle cx="112" cy="112" r="52" fill="none" stroke="url(#r1)" stroke-width="12"/>
+  <circle cx="112" cy="112" r="26" fill="none" stroke="url(#r2)" stroke-width="8"/>
+  <path d="M112 34V16M164 52L178 38M190 112H208M164 172L178 186M112 190V208M52 172L38 186M34 112H16M52 52L38 38" stroke="#38BDF8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M112 78L126 112L112 146L98 112Z" fill="#FB923C" opacity="0.9"/>
+
+  <text x="244" y="108" fill="#E2E8F0" font-size="76" font-weight="700" font-family="'Sora','Segoe UI',sans-serif">Local</text>
+  <text x="484" y="108" fill="#FB923C" font-size="76" font-weight="800" font-family="'Sora','Segoe UI',sans-serif" letter-spacing="1">VRAM</text>
+  <path d="M246 132H602" stroke="url(#r1)" stroke-width="7" stroke-linecap="round"/>
+</svg>

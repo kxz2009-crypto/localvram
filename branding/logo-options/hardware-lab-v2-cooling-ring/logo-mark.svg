@@ -1,0 +1,17 @@
+﻿<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LocalVRAM mark - cooling ring">
+  <defs>
+    <linearGradient id="m2a" x1="24" y1="24" x2="220" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="m2b" x1="50" y1="50" x2="190" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#F43F5E"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="220" height="220" rx="46" fill="#0B1220" stroke="#334155"/>
+  <circle cx="128" cy="128" r="72" fill="none" stroke="url(#m2a)" stroke-width="12"/>
+  <circle cx="128" cy="128" r="38" fill="none" stroke="url(#m2b)" stroke-width="10"/>
+  <path d="M128 50V34M178 78L192 64M206 128H222M178 178L192 192M128 206V222M78 178L64 192M50 128H34M78 78L64 64" stroke="#38BDF8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M128 86L144 128L128 170L112 128Z" fill="#FB923C"/>
+</svg>

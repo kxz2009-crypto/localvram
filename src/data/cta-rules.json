@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "page_type": "vram_calculator",
+      "ctas": ["cloud_gpu", "smaller_model", "lower_quant", "hardware_upgrade"]
+    },
+    {
+      "page_type": "error_kb",
+      "ctas": ["cloud_gpu", "copy_fix", "consulting"]
+    },
+    {
+      "page_type": "roi_calculator",
+      "ctas": ["cloud_gpu", "hardware_upgrade", "newsletter"]
+    }
+  ]
+}

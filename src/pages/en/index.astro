@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="LocalVRAM | Ollama Verified"
+  description="Pick the right model for your hardware in 60 seconds."
+  locale="en"
+>
+  <header class="top-nav">
+    <a class="brand" href="/en/">
+      <img src="/branding/logo.svg" alt="LocalVRAM" />
+    </a>
+    <div class="ticker">
+      RTX 3090: Stable @ 62C | DeepSeek-R1: Verified | Ollama: 0.5.7 | Last
+      Sync: 42m ago
+    </div>
+    <a class="mode-btn" href="/en/status/data-freshness/">Terminal Mode</a>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <img
+        class="verified-pill"
+        src="/branding/ollama-verified-pill.svg"
+        alt="Ollama Verified"
+      />
+      <h1>Pick the right model for your GPU in 60 seconds</h1>
+      <p>
+        Real-world compatibility, sustained-load benchmarks, and direct run vs
+        rent decisions.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/en/tools/vram-calculator/">Start VRAM Calculator</a>
+        <a class="btn" href="/en/tools/quantization-blind-test/">Quantization Blind Test</a>
+        <a class="btn" href="/en/status/data-freshness/">Data Freshness</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Verified on 3090</h2>
+        <p>Thermal drop-off tracking and 1-hour sustained load runs.</p>
+      </article>
+      <article class="card">
+        <h2>Error KB</h2>
+        <p>Terminal-first troubleshooting pages with copy-fix workflow.</p>
+      </article>
+      <article class="card">
+        <h2>Run or Rent</h2>
+        <p>ROI calculator and cloud fallback links at each decision point.</p>
+      </article>
+    </section>
+  </main>
+</BaseLayout>

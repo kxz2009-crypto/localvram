@@ -1,0 +1,37 @@
+name: Daily Content Agent
+
+on:
+  schedule:
+    - cron: "30 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run content agent
+        run: python scripts/daily-content-agent.py
+
+      - name: Run quality gate
+        run: python scripts/quality-gate.py
+
+      - name: Commit no-op marker
+        run: |
+          mkdir -p logs
+          echo "daily content agent ran at $(date -u)" >> logs/daily-content.log
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add logs/daily-content.log
+          git diff --cached --quiet || git commit -m "chore: daily content agent run"
+          git push
