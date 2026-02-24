@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => data.lang === "en"))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout
+  title="LocalVRAM Blog"
+  description="Daily-updated local LLM benchmarks, fixes, and hardware guides."
+  locale="en"
+>
+  <main class="container">
+    <h1>LocalVRAM Blog</h1>
+    <p>High-intent, data-backed posts for real Ollama deployment decisions.</p>
+
+    <section class="post-list">
+      {posts.map((post) => (
+        <article class="post-card">
+          <h2><a href={`/en/blog/${post.slug}/`}>{post.data.title}</a></h2>
+          <p>{post.data.description}</p>
+          <div class="meta-row">
+            <span>{post.data.pubDate.toISOString().slice(0, 10)}</span>
+            <span>{post.data.intent}</span>
+            <span>{post.data.tags.join(", ")}</span>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>

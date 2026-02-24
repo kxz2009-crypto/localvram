@@ -9,7 +9,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "models.json",
     ROOT / "src" / "data" / "status.json",
     ROOT / "src" / "data" / "cta-rules.json",
-    ROOT / "src" / "data" / "affiliate-links.json",
+    ROOT / "src" / "data" / "daily-updates.json",
 ]
 
 
@@ -21,14 +21,16 @@ def main() -> None:
             print(f"- {item}")
         sys.exit(1)
 
-    links = json.loads((ROOT / "src" / "data" / "affiliate-links.json").read_text(encoding="utf-8"))
-    unresolved = [k for k, v in links.items() if "example.com" in v]
-    if unresolved:
-        print("quality gate warning: unresolved affiliate placeholders")
-        for key in unresolved:
-            print(f"- {key}")
-    else:
-        print("affiliate links configured")
+    blog_dir = ROOT / "src" / "content" / "blog"
+    if not blog_dir.exists():
+        print("quality gate failed: src/content/blog missing")
+        sys.exit(1)
+
+    post_count = len(list(blog_dir.glob("*.md")))
+    if post_count < 6:
+        print(f"quality gate failed: expected >=6 blog posts, found {post_count}")
+        sys.exit(1)
+    print(f"blog post count ok: {post_count}")
 
     print("quality gate passed")
 

@@ -211,6 +211,78 @@ li code {
   max-width: 220px;
 }
 
+.post-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.post-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+  padding: 18px;
+}
+
+.post-card h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.post-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.meta-row {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: #93c5fd;
+  font-size: 13px;
+}
+
+.post-page {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+  padding: 22px;
+}
+
+.post-header h1 {
+  margin: 0 0 10px;
+}
+
+.post-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.prose {
+  margin-top: 18px;
+  line-height: 1.7;
+}
+
+.prose h2,
+.prose h3 {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.prose p,
+.prose li {
+  color: #d1d5db;
+}
+
+.prose code {
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #020617;
+  color: #7dd3fc;
+}
+
 @media (max-width: 900px) {
   .top-nav {
     grid-template-columns: 1fr;

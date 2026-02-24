@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => data.lang === "en");
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+  title={`${post.data.title} | LocalVRAM`}
+  description={post.data.description}
+  locale="en"
+>
+  <main class="container">
+    <article class="post-page">
+      <header class="post-header">
+        <h1>{post.data.title}</h1>
+        <p>{post.data.description}</p>
+        <div class="meta-row">
+          <span>Published: {post.data.pubDate.toISOString().slice(0, 10)}</span>
+          {post.data.updatedDate && (
+            <span>Updated: {post.data.updatedDate.toISOString().slice(0, 10)}</span>
+          )}
+          <span>Intent: {post.data.intent}</span>
+        </div>
+      </header>
+
+      <section class="prose">
+        <Content />
+      </section>
+
+      <section class="cta-row">
+        <a class="btn" href="/en/tools/vram-calculator/">Check model fit</a>
+        <a class="btn" href="/en/errors/">Open Error KB</a>
+        <a class="btn btn-primary" href="/en/status/data-freshness/">View latest verified data</a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
