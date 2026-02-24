@@ -306,6 +306,12 @@ li code {
   color: #9a9a9a;
 }
 
+.legal-copyright {
+  margin: 6px 0 0;
+  color: #7f7f7f;
+  font-size: 13px;
+}
+
 @media (max-width: 900px) {
   .top-nav {
     grid-template-columns: 1fr;
