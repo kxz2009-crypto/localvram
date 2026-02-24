@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   benchmark-on-3090:
-    runs-on: [self-hosted, 3090-WSL2]
+    runs-on: [self-hosted, Linux, X64, gpu, 3090]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
