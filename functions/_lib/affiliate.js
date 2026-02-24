@@ -4,7 +4,8 @@ const DEFAULT_VAST_REF_ID = "415258";
 const AMAZON_RECOMMENDATIONS = {
   "rtx-3090-24gb": {
     keyword: "RTX 3090 24GB graphics card",
-    label: "RTX 3090 24GB"
+    label: "RTX 3090 24GB",
+    directUrl: "https://amzn.to/4sdISrb"
   },
   "rtx-4090-24gb": {
     keyword: "RTX 4090 24GB graphics card",
@@ -44,6 +45,13 @@ function buildAmazonTarget(slug, env) {
   const entry = AMAZON_RECOMMENDATIONS[slug];
   if (!entry) {
     return null;
+  }
+  if (entry.directUrl) {
+    return {
+      provider: "amazon",
+      label: entry.label,
+      url: entry.directUrl
+    };
   }
   const url = new URL("https://www.amazon.com/s");
   url.searchParams.set("k", entry.keyword);
