@@ -22,15 +22,17 @@ const benchmarkMap = benchmarkResults.models || {};
       </select>
       <div id="calc-result" class="card" style="margin-top: 12px;" />
       <div class="card" style="margin-top: 12px;">
-        <h2 style="margin-top: 0;">Performance Curve</h2>
+        <div class="card-head">
+          <h2>Performance Curve</h2>
+          <div class="cta-row card-head-actions">
+            <a id="calc-primary" class="btn btn-primary" href="/en/affiliate/hardware-upgrade/">Check local upgrade</a>
+            <a id="calc-cloud-runpod" class="btn" href={links.runpod}>RunPod fallback</a>
+            <a id="calc-cloud-vast" class="btn" href={links.vast}>Vast.ai fallback</a>
+          </div>
+        </div>
         <div class="chart-wrap">
           <canvas id="calc-chart" aria-label="Hardware benchmark comparison"></canvas>
         </div>
-      </div>
-      <div class="cta-row">
-        <a id="calc-primary" class="btn btn-primary" href="/en/affiliate/hardware-upgrade/">Check local upgrade</a>
-        <a id="calc-cloud-runpod" class="btn" href={links.runpod}>RunPod fallback</a>
-        <a id="calc-cloud-vast" class="btn" href={links.vast}>Vast.ai fallback</a>
       </div>
       <p class="affiliate-note">We may earn a commission if you click links on this page.</p>
     </section>
