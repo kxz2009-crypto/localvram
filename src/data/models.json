@@ -1,9 +1,593 @@
 {
-  "version": "2026.02.24.ollama-verified",
-  "count": 269,
+  "version": "2026.02.24.ollama-popular",
+  "count": 525,
   "models": [
     {
-      "id": "qwen25-0.5b-q4",
+      "id": "llama31-8b-q4",
+      "name": "Llama 3.1 8B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-8b-q5",
+      "name": "Llama 3.1 8B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-8b-q8",
+      "name": "Llama 3.1 8B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-8b-fp16",
+      "name": "Llama 3.1 8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-70b-q4",
+      "name": "Llama 3.1 70B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-70b-q5",
+      "name": "Llama 3.1 70B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-70b-q8",
+      "name": "Llama 3.1 70B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-70b-fp16",
+      "name": "Llama 3.1 70B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-405b-q4",
+      "name": "Llama 3.1 405B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-405b-q5",
+      "name": "Llama 3.1 405B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-405b-q8",
+      "name": "Llama 3.1 405B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama31-405b-fp16",
+      "name": "Llama 3.1 405B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-15b-q4",
+      "name": "DeepSeek-R1 1.5B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-15b-q5",
+      "name": "DeepSeek-R1 1.5B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-15b-q8",
+      "name": "DeepSeek-R1 1.5B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-15b-fp16",
+      "name": "DeepSeek-R1 1.5B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-7b-q4",
+      "name": "DeepSeek-R1 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-7b-q5",
+      "name": "DeepSeek-R1 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-7b-q8",
+      "name": "DeepSeek-R1 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-7b-fp16",
+      "name": "DeepSeek-R1 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-8b-q4",
+      "name": "DeepSeek-R1 8B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-8b-q5",
+      "name": "DeepSeek-R1 8B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-8b-q8",
+      "name": "DeepSeek-R1 8B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-8b-fp16",
+      "name": "DeepSeek-R1 8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-14b-q4",
+      "name": "DeepSeek-R1 14B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-14b-q5",
+      "name": "DeepSeek-R1 14B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-14b-q8",
+      "name": "DeepSeek-R1 14B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-14b-fp16",
+      "name": "DeepSeek-R1 14B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-32b-q4",
+      "name": "DeepSeek-R1 32B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": true
+    },
+    {
+      "id": "deepseek-r1-32b-q5",
+      "name": "DeepSeek-R1 32B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-32b-q8",
+      "name": "DeepSeek-R1 32B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-32b-fp16",
+      "name": "DeepSeek-R1 32B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-70b-q4",
+      "name": "DeepSeek-R1 70B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-70b-q5",
+      "name": "DeepSeek-R1 70B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-70b-q8",
+      "name": "DeepSeek-R1 70B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-70b-fp16",
+      "name": "DeepSeek-R1 70B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-671b-q4",
+      "name": "DeepSeek-R1 671B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-671b-q5",
+      "name": "DeepSeek-R1 671B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-671b-q8",
+      "name": "DeepSeek-R1 671B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-671b-fp16",
+      "name": "DeepSeek-R1 671B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-1b-q4",
+      "name": "Llama 3.2 1B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-1b-q5",
+      "name": "Llama 3.2 1B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-1b-q8",
+      "name": "Llama 3.2 1B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-1b-fp16",
+      "name": "Llama 3.2 1B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-3b-q4",
+      "name": "Llama 3.2 3B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-3b-q5",
+      "name": "Llama 3.2 3B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-3b-q8",
+      "name": "Llama 3.2 3B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-3b-fp16",
+      "name": "Llama 3.2 3B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "nomic-embed-text-137m-fp16",
+      "name": "Nomic Embed Text 137M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-270m-q4",
+      "name": "Gemma 3 270M Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-270m-q5",
+      "name": "Gemma 3 270M Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-270m-q8",
+      "name": "Gemma 3 270M Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-270m-fp16",
+      "name": "Gemma 3 270M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-1b-q4",
+      "name": "Gemma 3 1B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-1b-q5",
+      "name": "Gemma 3 1B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-1b-q8",
+      "name": "Gemma 3 1B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-1b-fp16",
+      "name": "Gemma 3 1B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-4b-q4",
+      "name": "Gemma 3 4B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-4b-q5",
+      "name": "Gemma 3 4B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-4b-q8",
+      "name": "Gemma 3 4B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-4b-fp16",
+      "name": "Gemma 3 4B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-12b-q4",
+      "name": "Gemma 3 12B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-12b-q5",
+      "name": "Gemma 3 12B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-12b-q8",
+      "name": "Gemma 3 12B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-12b-fp16",
+      "name": "Gemma 3 12B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-27b-q4",
+      "name": "Gemma 3 27B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-27b-q5",
+      "name": "Gemma 3 27B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-27b-q8",
+      "name": "Gemma 3 27B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3-27b-fp16",
+      "name": "Gemma 3 27B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-7b-q4",
+      "name": "Mistral 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-7b-q5",
+      "name": "Mistral 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-7b-q8",
+      "name": "Mistral 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-7b-fp16",
+      "name": "Mistral 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-05b-q4",
       "name": "Qwen2.5 0.5B Q4",
       "quantizations": [
         "Q4"
@@ -11,7 +595,7 @@
       "verified": false
     },
     {
-      "id": "qwen25-0.5b-q5",
+      "id": "qwen25-05b-q5",
       "name": "Qwen2.5 0.5B Q5",
       "quantizations": [
         "Q5"
@@ -19,7 +603,7 @@
       "verified": false
     },
     {
-      "id": "qwen25-0.5b-q8",
+      "id": "qwen25-05b-q8",
       "name": "Qwen2.5 0.5B Q8",
       "quantizations": [
         "Q8"
@@ -27,7 +611,7 @@
       "verified": false
     },
     {
-      "id": "qwen25-0.5b-fp16",
+      "id": "qwen25-05b-fp16",
       "name": "Qwen2.5 0.5B FP16",
       "quantizations": [
         "FP16"
@@ -35,7 +619,7 @@
       "verified": false
     },
     {
-      "id": "qwen25-1.5b-q4",
+      "id": "qwen25-15b-q4",
       "name": "Qwen2.5 1.5B Q4",
       "quantizations": [
         "Q4"
@@ -43,7 +627,7 @@
       "verified": false
     },
     {
-      "id": "qwen25-1.5b-q5",
+      "id": "qwen25-15b-q5",
       "name": "Qwen2.5 1.5B Q5",
       "quantizations": [
         "Q5"
@@ -51,7 +635,7 @@
       "verified": false
     },
     {
-      "id": "qwen25-1.5b-q8",
+      "id": "qwen25-15b-q8",
       "name": "Qwen2.5 1.5B Q8",
       "quantizations": [
         "Q8"
@@ -59,7 +643,7 @@
       "verified": false
     },
     {
-      "id": "qwen25-1.5b-fp16",
+      "id": "qwen25-15b-fp16",
       "name": "Qwen2.5 1.5B FP16",
       "quantizations": [
         "FP16"
@@ -227,7 +811,7 @@
       "verified": false
     },
     {
-      "id": "qwen3-0.6b-q4",
+      "id": "qwen3-06b-q4",
       "name": "Qwen3 0.6B Q4",
       "quantizations": [
         "Q4"
@@ -235,7 +819,7 @@
       "verified": false
     },
     {
-      "id": "qwen3-0.6b-q5",
+      "id": "qwen3-06b-q5",
       "name": "Qwen3 0.6B Q5",
       "quantizations": [
         "Q5"
@@ -243,7 +827,7 @@
       "verified": false
     },
     {
-      "id": "qwen3-0.6b-q8",
+      "id": "qwen3-06b-q8",
       "name": "Qwen3 0.6B Q8",
       "quantizations": [
         "Q8"
@@ -251,7 +835,7 @@
       "verified": false
     },
     {
-      "id": "qwen3-0.6b-fp16",
+      "id": "qwen3-06b-fp16",
       "name": "Qwen3 0.6B FP16",
       "quantizations": [
         "FP16"
@@ -259,7 +843,7 @@
       "verified": false
     },
     {
-      "id": "qwen3-1.7b-q4",
+      "id": "qwen3-17b-q4",
       "name": "Qwen3 1.7B Q4",
       "quantizations": [
         "Q4"
@@ -267,7 +851,7 @@
       "verified": false
     },
     {
-      "id": "qwen3-1.7b-q5",
+      "id": "qwen3-17b-q5",
       "name": "Qwen3 1.7B Q5",
       "quantizations": [
         "Q5"
@@ -275,7 +859,7 @@
       "verified": false
     },
     {
-      "id": "qwen3-1.7b-q8",
+      "id": "qwen3-17b-q8",
       "name": "Qwen3 1.7B Q8",
       "quantizations": [
         "Q8"
@@ -283,7 +867,7 @@
       "verified": false
     },
     {
-      "id": "qwen3-1.7b-fp16",
+      "id": "qwen3-17b-fp16",
       "name": "Qwen3 1.7B FP16",
       "quantizations": [
         "FP16"
@@ -483,1288 +1067,224 @@
       "verified": false
     },
     {
-      "id": "qwen35-397b-a17b-cloud",
-      "name": "Qwen3.5 397B-A17B CLOUD",
-      "quantizations": [
-        "CLOUD"
-      ],
-      "verified": false
-    },
-    {
-      "id": "llama-7b-q4",
-      "name": "Llama 7B Q4",
+      "id": "gemma2-2b-q4",
+      "name": "Gemma 2 2B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "llama-7b-q5",
-      "name": "Llama 7B Q5",
+      "id": "gemma2-2b-q5",
+      "name": "Gemma 2 2B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "llama-7b-q8",
-      "name": "Llama 7B Q8",
+      "id": "gemma2-2b-q8",
+      "name": "Gemma 2 2B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "llama-7b-fp16",
-      "name": "Llama 7B FP16",
+      "id": "gemma2-2b-fp16",
+      "name": "Gemma 2 2B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "llama-14b-q4",
-      "name": "Llama 14B Q4",
+      "id": "gemma2-9b-q4",
+      "name": "Gemma 2 9B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "llama-14b-q5",
-      "name": "Llama 14B Q5",
+      "id": "gemma2-9b-q5",
+      "name": "Gemma 2 9B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "llama-14b-q8",
-      "name": "Llama 14B Q8",
+      "id": "gemma2-9b-q8",
+      "name": "Gemma 2 9B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "llama-14b-fp16",
-      "name": "Llama 14B FP16",
+      "id": "gemma2-9b-fp16",
+      "name": "Gemma 2 9B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "llama-32b-q4",
-      "name": "Llama 32B Q4",
+      "id": "gemma2-27b-q4",
+      "name": "Gemma 2 27B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "llama-32b-q5",
-      "name": "Llama 32B Q5",
+      "id": "gemma2-27b-q5",
+      "name": "Gemma 2 27B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "llama-32b-q8",
-      "name": "Llama 32B Q8",
+      "id": "gemma2-27b-q8",
+      "name": "Gemma 2 27B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "llama-32b-fp16",
-      "name": "Llama 32B FP16",
+      "id": "gemma2-27b-fp16",
+      "name": "Gemma 2 27B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "llama-70b-q4",
-      "name": "Llama 70B Q4",
+      "id": "phi3-38b-q4",
+      "name": "Phi-3 3.8B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "llama-70b-q5",
-      "name": "Llama 70B Q5",
+      "id": "phi3-38b-q5",
+      "name": "Phi-3 3.8B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "llama-70b-q8",
-      "name": "Llama 70B Q8",
+      "id": "phi3-38b-q8",
+      "name": "Phi-3 3.8B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "llama-70b-fp16",
-      "name": "Llama 70B FP16",
+      "id": "phi3-38b-fp16",
+      "name": "Phi-3 3.8B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-7b-q4",
-      "name": "DeepSeek-R1 7B Q4",
+      "id": "phi3-14b-q4",
+      "name": "Phi-3 14B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-7b-q5",
-      "name": "DeepSeek-R1 7B Q5",
+      "id": "phi3-14b-q5",
+      "name": "Phi-3 14B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-7b-q8",
-      "name": "DeepSeek-R1 7B Q8",
+      "id": "phi3-14b-q8",
+      "name": "Phi-3 14B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-7b-fp16",
-      "name": "DeepSeek-R1 7B FP16",
+      "id": "phi3-14b-fp16",
+      "name": "Phi-3 14B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-14b-q4",
-      "name": "DeepSeek-R1 14B Q4",
+      "id": "llama3-8b-q4",
+      "name": "Llama 3 8B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-14b-q5",
-      "name": "DeepSeek-R1 14B Q5",
+      "id": "llama3-8b-q5",
+      "name": "Llama 3 8B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-14b-q8",
-      "name": "DeepSeek-R1 14B Q8",
+      "id": "llama3-8b-q8",
+      "name": "Llama 3 8B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-14b-fp16",
-      "name": "DeepSeek-R1 14B FP16",
+      "id": "llama3-8b-fp16",
+      "name": "Llama 3 8B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-32b-q4",
-      "name": "DeepSeek-R1 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": true
-    },
-    {
-      "id": "deepseek-r1-32b-q5",
-      "name": "DeepSeek-R1 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "deepseek-r1-32b-q8",
-      "name": "DeepSeek-R1 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "deepseek-r1-32b-fp16",
-      "name": "DeepSeek-R1 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "deepseek-r1-70b-q4",
-      "name": "DeepSeek-R1 70B Q4",
+      "id": "llama3-70b-q4",
+      "name": "Llama 3 70B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-70b-q5",
-      "name": "DeepSeek-R1 70B Q5",
+      "id": "llama3-70b-q5",
+      "name": "Llama 3 70B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-70b-q8",
-      "name": "DeepSeek-R1 70B Q8",
+      "id": "llama3-70b-q8",
+      "name": "Llama 3 70B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-r1-70b-fp16",
-      "name": "DeepSeek-R1 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-7b-q4",
-      "name": "Mistral 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-7b-q5",
-      "name": "Mistral 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-7b-q8",
-      "name": "Mistral 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-7b-fp16",
-      "name": "Mistral 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-14b-q4",
-      "name": "Mistral 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-14b-q5",
-      "name": "Mistral 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-14b-q8",
-      "name": "Mistral 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-14b-fp16",
-      "name": "Mistral 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-32b-q4",
-      "name": "Mistral 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-32b-q5",
-      "name": "Mistral 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-32b-q8",
-      "name": "Mistral 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-32b-fp16",
-      "name": "Mistral 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-70b-q4",
-      "name": "Mistral 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-70b-q5",
-      "name": "Mistral 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-70b-q8",
-      "name": "Mistral 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "mistral-70b-fp16",
-      "name": "Mistral 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-7b-q4",
-      "name": "Codestral 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-7b-q5",
-      "name": "Codestral 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-7b-q8",
-      "name": "Codestral 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-7b-fp16",
-      "name": "Codestral 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-14b-q4",
-      "name": "Codestral 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-14b-q5",
-      "name": "Codestral 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-14b-q8",
-      "name": "Codestral 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-14b-fp16",
-      "name": "Codestral 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-32b-q4",
-      "name": "Codestral 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-32b-q5",
-      "name": "Codestral 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-32b-q8",
-      "name": "Codestral 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-32b-fp16",
-      "name": "Codestral 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-70b-q4",
-      "name": "Codestral 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-70b-q5",
-      "name": "Codestral 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-70b-q8",
-      "name": "Codestral 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "codestral-70b-fp16",
-      "name": "Codestral 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-7b-q4",
-      "name": "Gemma 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-7b-q5",
-      "name": "Gemma 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-7b-q8",
-      "name": "Gemma 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-7b-fp16",
-      "name": "Gemma 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-14b-q4",
-      "name": "Gemma 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-14b-q5",
-      "name": "Gemma 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-14b-q8",
-      "name": "Gemma 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-14b-fp16",
-      "name": "Gemma 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-32b-q4",
-      "name": "Gemma 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-32b-q5",
-      "name": "Gemma 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-32b-q8",
-      "name": "Gemma 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-32b-fp16",
-      "name": "Gemma 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-70b-q4",
-      "name": "Gemma 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-70b-q5",
-      "name": "Gemma 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-70b-q8",
-      "name": "Gemma 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "gemma-70b-fp16",
-      "name": "Gemma 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-7b-q4",
-      "name": "Phi 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-7b-q5",
-      "name": "Phi 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-7b-q8",
-      "name": "Phi 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-7b-fp16",
-      "name": "Phi 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-14b-q4",
-      "name": "Phi 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-14b-q5",
-      "name": "Phi 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-14b-q8",
-      "name": "Phi 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-14b-fp16",
-      "name": "Phi 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-32b-q4",
-      "name": "Phi 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-32b-q5",
-      "name": "Phi 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-32b-q8",
-      "name": "Phi 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-32b-fp16",
-      "name": "Phi 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-70b-q4",
-      "name": "Phi 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-70b-q5",
-      "name": "Phi 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-70b-q8",
-      "name": "Phi 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "phi-70b-fp16",
-      "name": "Phi 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-7b-q4",
-      "name": "Command-R 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-7b-q5",
-      "name": "Command-R 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-7b-q8",
-      "name": "Command-R 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-7b-fp16",
-      "name": "Command-R 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-14b-q4",
-      "name": "Command-R 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-14b-q5",
-      "name": "Command-R 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-14b-q8",
-      "name": "Command-R 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-14b-fp16",
-      "name": "Command-R 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-32b-q4",
-      "name": "Command-R 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-32b-q5",
-      "name": "Command-R 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-32b-q8",
-      "name": "Command-R 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-32b-fp16",
-      "name": "Command-R 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-70b-q4",
-      "name": "Command-R 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-70b-q5",
-      "name": "Command-R 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-70b-q8",
-      "name": "Command-R 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "command-r-70b-fp16",
-      "name": "Command-R 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-7b-q4",
-      "name": "Yi 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-7b-q5",
-      "name": "Yi 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-7b-q8",
-      "name": "Yi 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-7b-fp16",
-      "name": "Yi 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-14b-q4",
-      "name": "Yi 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-14b-q5",
-      "name": "Yi 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-14b-q8",
-      "name": "Yi 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-14b-fp16",
-      "name": "Yi 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-32b-q4",
-      "name": "Yi 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-32b-q5",
-      "name": "Yi 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-32b-q8",
-      "name": "Yi 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-32b-fp16",
-      "name": "Yi 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-70b-q4",
-      "name": "Yi 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-70b-q5",
-      "name": "Yi 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-70b-q8",
-      "name": "Yi 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "yi-70b-fp16",
-      "name": "Yi 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-7b-q4",
-      "name": "Solar 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-7b-q5",
-      "name": "Solar 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-7b-q8",
-      "name": "Solar 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-7b-fp16",
-      "name": "Solar 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-14b-q4",
-      "name": "Solar 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-14b-q5",
-      "name": "Solar 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-14b-q8",
-      "name": "Solar 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-14b-fp16",
-      "name": "Solar 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-32b-q4",
-      "name": "Solar 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-32b-q5",
-      "name": "Solar 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-32b-q8",
-      "name": "Solar 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-32b-fp16",
-      "name": "Solar 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-70b-q4",
-      "name": "Solar 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-70b-q5",
-      "name": "Solar 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-70b-q8",
-      "name": "Solar 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "solar-70b-fp16",
-      "name": "Solar 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-7b-q4",
-      "name": "Nemotron 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-7b-q5",
-      "name": "Nemotron 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-7b-q8",
-      "name": "Nemotron 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-7b-fp16",
-      "name": "Nemotron 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-14b-q4",
-      "name": "Nemotron 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-14b-q5",
-      "name": "Nemotron 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-14b-q8",
-      "name": "Nemotron 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-14b-fp16",
-      "name": "Nemotron 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-32b-q4",
-      "name": "Nemotron 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-32b-q5",
-      "name": "Nemotron 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-32b-q8",
-      "name": "Nemotron 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-32b-fp16",
-      "name": "Nemotron 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-70b-q4",
-      "name": "Nemotron 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-70b-q5",
-      "name": "Nemotron 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-70b-q8",
-      "name": "Nemotron 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "nemotron-70b-fp16",
-      "name": "Nemotron 70B FP16",
+      "id": "llama3-70b-fp16",
+      "name": "Llama 3 70B FP16",
       "quantizations": [
         "FP16"
       ],
@@ -1803,354 +1323,2882 @@
       "verified": false
     },
     {
-      "id": "llava-14b-q4",
-      "name": "LLaVA 14B Q4",
+      "id": "llava-13b-q4",
+      "name": "LLaVA 13B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "llava-14b-q5",
-      "name": "LLaVA 14B Q5",
+      "id": "llava-13b-q5",
+      "name": "LLaVA 13B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "llava-14b-q8",
-      "name": "LLaVA 14B Q8",
+      "id": "llava-13b-q8",
+      "name": "LLaVA 13B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "llava-14b-fp16",
-      "name": "LLaVA 14B FP16",
+      "id": "llava-13b-fp16",
+      "name": "LLaVA 13B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "llava-32b-q4",
-      "name": "LLaVA 32B Q4",
+      "id": "llava-34b-q4",
+      "name": "LLaVA 34B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "llava-32b-q5",
-      "name": "LLaVA 32B Q5",
+      "id": "llava-34b-q5",
+      "name": "LLaVA 34B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "llava-32b-q8",
-      "name": "LLaVA 32B Q8",
+      "id": "llava-34b-q8",
+      "name": "LLaVA 34B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "llava-32b-fp16",
-      "name": "LLaVA 32B FP16",
+      "id": "llava-34b-fp16",
+      "name": "LLaVA 34B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "llava-70b-q4",
-      "name": "LLaVA 70B Q4",
+      "id": "qwen25-coder-05b-q4",
+      "name": "Qwen2.5 Coder 0.5B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "llava-70b-q5",
-      "name": "LLaVA 70B Q5",
+      "id": "qwen25-coder-05b-q5",
+      "name": "Qwen2.5 Coder 0.5B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "llava-70b-q8",
-      "name": "LLaVA 70B Q8",
+      "id": "qwen25-coder-05b-q8",
+      "name": "Qwen2.5 Coder 0.5B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "llava-70b-fp16",
-      "name": "LLaVA 70B FP16",
+      "id": "qwen25-coder-05b-fp16",
+      "name": "Qwen2.5 Coder 0.5B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-7b-q4",
-      "name": "Qwen-VL 7B Q4",
+      "id": "qwen25-coder-15b-q4",
+      "name": "Qwen2.5 Coder 1.5B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-7b-q5",
-      "name": "Qwen-VL 7B Q5",
+      "id": "qwen25-coder-15b-q5",
+      "name": "Qwen2.5 Coder 1.5B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-7b-q8",
-      "name": "Qwen-VL 7B Q8",
+      "id": "qwen25-coder-15b-q8",
+      "name": "Qwen2.5 Coder 1.5B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-7b-fp16",
-      "name": "Qwen-VL 7B FP16",
+      "id": "qwen25-coder-15b-fp16",
+      "name": "Qwen2.5 Coder 1.5B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-14b-q4",
-      "name": "Qwen-VL 14B Q4",
+      "id": "qwen25-coder-3b-q4",
+      "name": "Qwen2.5 Coder 3B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-14b-q5",
-      "name": "Qwen-VL 14B Q5",
+      "id": "qwen25-coder-3b-q5",
+      "name": "Qwen2.5 Coder 3B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-14b-q8",
-      "name": "Qwen-VL 14B Q8",
+      "id": "qwen25-coder-3b-q8",
+      "name": "Qwen2.5 Coder 3B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-14b-fp16",
-      "name": "Qwen-VL 14B FP16",
+      "id": "qwen25-coder-3b-fp16",
+      "name": "Qwen2.5 Coder 3B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-32b-q4",
-      "name": "Qwen-VL 32B Q4",
+      "id": "qwen25-coder-7b-q4",
+      "name": "Qwen2.5 Coder 7B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-32b-q5",
-      "name": "Qwen-VL 32B Q5",
+      "id": "qwen25-coder-7b-q5",
+      "name": "Qwen2.5 Coder 7B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-32b-q8",
-      "name": "Qwen-VL 32B Q8",
+      "id": "qwen25-coder-7b-q8",
+      "name": "Qwen2.5 Coder 7B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-32b-fp16",
-      "name": "Qwen-VL 32B FP16",
+      "id": "qwen25-coder-7b-fp16",
+      "name": "Qwen2.5 Coder 7B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-70b-q4",
-      "name": "Qwen-VL 70B Q4",
+      "id": "qwen25-coder-14b-q4",
+      "name": "Qwen2.5 Coder 14B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-70b-q5",
-      "name": "Qwen-VL 70B Q5",
+      "id": "qwen25-coder-14b-q5",
+      "name": "Qwen2.5 Coder 14B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-70b-q8",
-      "name": "Qwen-VL 70B Q8",
+      "id": "qwen25-coder-14b-q8",
+      "name": "Qwen2.5 Coder 14B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "qwen-vl-70b-fp16",
-      "name": "Qwen-VL 70B FP16",
+      "id": "qwen25-coder-14b-fp16",
+      "name": "Qwen2.5 Coder 14B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-7b-q4",
-      "name": "DeepSeek-Coder 7B Q4",
+      "id": "qwen25-coder-32b-q4",
+      "name": "Qwen2.5 Coder 32B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-7b-q5",
-      "name": "DeepSeek-Coder 7B Q5",
+      "id": "qwen25-coder-32b-q5",
+      "name": "Qwen2.5 Coder 32B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-7b-q8",
-      "name": "DeepSeek-Coder 7B Q8",
+      "id": "qwen25-coder-32b-q8",
+      "name": "Qwen2.5 Coder 32B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-7b-fp16",
-      "name": "DeepSeek-Coder 7B FP16",
+      "id": "qwen25-coder-32b-fp16",
+      "name": "Qwen2.5 Coder 32B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-14b-q4",
-      "name": "DeepSeek-Coder 14B Q4",
+      "id": "mxbai-embed-large-335m-fp16",
+      "name": "MXBAI Embed Large 335M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "phi4-14b-q4",
+      "name": "Phi-4 14B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-14b-q5",
-      "name": "DeepSeek-Coder 14B Q5",
+      "id": "phi4-14b-q5",
+      "name": "Phi-4 14B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-14b-q8",
-      "name": "DeepSeek-Coder 14B Q8",
+      "id": "phi4-14b-q8",
+      "name": "Phi-4 14B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-14b-fp16",
-      "name": "DeepSeek-Coder 14B FP16",
+      "id": "phi4-14b-fp16",
+      "name": "Phi-4 14B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-32b-q4",
-      "name": "DeepSeek-Coder 32B Q4",
+      "id": "gpt-oss-20b-q4",
+      "name": "GPT-OSS 20B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-32b-q5",
-      "name": "DeepSeek-Coder 32B Q5",
+      "id": "gpt-oss-20b-q5",
+      "name": "GPT-OSS 20B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-32b-q8",
-      "name": "DeepSeek-Coder 32B Q8",
+      "id": "gpt-oss-20b-q8",
+      "name": "GPT-OSS 20B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-32b-fp16",
-      "name": "DeepSeek-Coder 32B FP16",
+      "id": "gpt-oss-20b-fp16",
+      "name": "GPT-OSS 20B FP16",
       "quantizations": [
         "FP16"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-70b-q4",
-      "name": "DeepSeek-Coder 70B Q4",
+      "id": "gpt-oss-20b-cloud",
+      "name": "GPT-OSS 20B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gpt-oss-120b-q4",
+      "name": "GPT-OSS 120B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-70b-q5",
-      "name": "DeepSeek-Coder 70B Q5",
+      "id": "gpt-oss-120b-q5",
+      "name": "GPT-OSS 120B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-70b-q8",
-      "name": "DeepSeek-Coder 70B Q8",
+      "id": "gpt-oss-120b-q8",
+      "name": "GPT-OSS 120B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "deepseek-coder-70b-fp16",
-      "name": "DeepSeek-Coder 70B FP16",
+      "id": "gpt-oss-120b-fp16",
+      "name": "GPT-OSS 120B FP16",
       "quantizations": [
         "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gpt-oss-120b-cloud",
+      "name": "GPT-OSS 120B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma-2b-q4",
+      "name": "Gemma 2B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma-2b-q5",
+      "name": "Gemma 2B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma-2b-q8",
+      "name": "Gemma 2B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma-2b-fp16",
+      "name": "Gemma 2B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma-7b-q4",
+      "name": "Gemma 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma-7b-q5",
+      "name": "Gemma 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma-7b-q8",
+      "name": "Gemma 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma-7b-fp16",
+      "name": "Gemma 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-05b-q4",
+      "name": "Qwen 0.5B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-05b-q5",
+      "name": "Qwen 0.5B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-05b-q8",
+      "name": "Qwen 0.5B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-05b-fp16",
+      "name": "Qwen 0.5B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-18b-q4",
+      "name": "Qwen 1.8B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-18b-q5",
+      "name": "Qwen 1.8B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-18b-q8",
+      "name": "Qwen 1.8B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-18b-fp16",
+      "name": "Qwen 1.8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-4b-q4",
+      "name": "Qwen 4B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-4b-q5",
+      "name": "Qwen 4B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-4b-q8",
+      "name": "Qwen 4B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-4b-fp16",
+      "name": "Qwen 4B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-7b-q4",
+      "name": "Qwen 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-7b-q5",
+      "name": "Qwen 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-7b-q8",
+      "name": "Qwen 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-7b-fp16",
+      "name": "Qwen 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-14b-q4",
+      "name": "Qwen 14B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-14b-q5",
+      "name": "Qwen 14B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-14b-q8",
+      "name": "Qwen 14B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-14b-fp16",
+      "name": "Qwen 14B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-32b-q4",
+      "name": "Qwen 32B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-32b-q5",
+      "name": "Qwen 32B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-32b-q8",
+      "name": "Qwen 32B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-32b-fp16",
+      "name": "Qwen 32B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-72b-q4",
+      "name": "Qwen 72B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-72b-q5",
+      "name": "Qwen 72B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-72b-q8",
+      "name": "Qwen 72B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-72b-fp16",
+      "name": "Qwen 72B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-110b-q4",
+      "name": "Qwen 110B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-110b-q5",
+      "name": "Qwen 110B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-110b-q8",
+      "name": "Qwen 110B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen-110b-fp16",
+      "name": "Qwen 110B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-7b-q4",
+      "name": "Llama 2 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-7b-q5",
+      "name": "Llama 2 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-7b-q8",
+      "name": "Llama 2 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-7b-fp16",
+      "name": "Llama 2 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-13b-q4",
+      "name": "Llama 2 13B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-13b-q5",
+      "name": "Llama 2 13B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-13b-q8",
+      "name": "Llama 2 13B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-13b-fp16",
+      "name": "Llama 2 13B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-70b-q4",
+      "name": "Llama 2 70B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-70b-q5",
+      "name": "Llama 2 70B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-70b-q8",
+      "name": "Llama 2 70B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama2-70b-fp16",
+      "name": "Llama 2 70B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-05b-q4",
+      "name": "Qwen2 0.5B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-05b-q5",
+      "name": "Qwen2 0.5B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-05b-q8",
+      "name": "Qwen2 0.5B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-05b-fp16",
+      "name": "Qwen2 0.5B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-15b-q4",
+      "name": "Qwen2 1.5B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-15b-q5",
+      "name": "Qwen2 1.5B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-15b-q8",
+      "name": "Qwen2 1.5B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-15b-fp16",
+      "name": "Qwen2 1.5B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-7b-q4",
+      "name": "Qwen2 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-7b-q5",
+      "name": "Qwen2 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-7b-q8",
+      "name": "Qwen2 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-7b-fp16",
+      "name": "Qwen2 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-72b-q4",
+      "name": "Qwen2 72B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-72b-q5",
+      "name": "Qwen2 72B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-72b-q8",
+      "name": "Qwen2 72B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen2-72b-fp16",
+      "name": "Qwen2 72B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "minicpm-v-8b-q4",
+      "name": "MiniCPM-V 8B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "minicpm-v-8b-q5",
+      "name": "MiniCPM-V 8B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "minicpm-v-8b-q8",
+      "name": "MiniCPM-V 8B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "minicpm-v-8b-fp16",
+      "name": "MiniCPM-V 8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-7b-q4",
+      "name": "CodeLlama 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-7b-q5",
+      "name": "CodeLlama 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-7b-q8",
+      "name": "CodeLlama 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-7b-fp16",
+      "name": "CodeLlama 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-13b-q4",
+      "name": "CodeLlama 13B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-13b-q5",
+      "name": "CodeLlama 13B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-13b-q8",
+      "name": "CodeLlama 13B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-13b-fp16",
+      "name": "CodeLlama 13B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-34b-q4",
+      "name": "CodeLlama 34B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-34b-q5",
+      "name": "CodeLlama 34B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-34b-q8",
+      "name": "CodeLlama 34B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-34b-fp16",
+      "name": "CodeLlama 34B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-70b-q4",
+      "name": "CodeLlama 70B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-70b-q5",
+      "name": "CodeLlama 70B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-70b-q8",
+      "name": "CodeLlama 70B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codellama-70b-fp16",
+      "name": "CodeLlama 70B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-vision-11b-q4",
+      "name": "Llama 3.2 Vision 11B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-vision-11b-q5",
+      "name": "Llama 3.2 Vision 11B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-vision-11b-q8",
+      "name": "Llama 3.2 Vision 11B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-vision-11b-fp16",
+      "name": "Llama 3.2 Vision 11B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-vision-90b-q4",
+      "name": "Llama 3.2 Vision 90B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-vision-90b-q5",
+      "name": "Llama 3.2 Vision 90B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-vision-90b-q8",
+      "name": "Llama 3.2 Vision 90B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama32-vision-90b-fp16",
+      "name": "Llama 3.2 Vision 90B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "tinyllama-11b-q4",
+      "name": "TinyLlama 1.1B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "tinyllama-11b-q5",
+      "name": "TinyLlama 1.1B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "tinyllama-11b-q8",
+      "name": "TinyLlama 1.1B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "tinyllama-11b-fp16",
+      "name": "TinyLlama 1.1B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "dolphin3-8b-q4",
+      "name": "Dolphin 3 8B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "dolphin3-8b-q5",
+      "name": "Dolphin 3 8B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "dolphin3-8b-q8",
+      "name": "Dolphin 3 8B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "dolphin3-8b-fp16",
+      "name": "Dolphin 3 8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-v3-671b-q4",
+      "name": "DeepSeek-V3 671B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-v3-671b-q5",
+      "name": "DeepSeek-V3 671B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-v3-671b-q8",
+      "name": "DeepSeek-V3 671B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-v3-671b-fp16",
+      "name": "DeepSeek-V3 671B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "olmo2-7b-q4",
+      "name": "OLMo 2 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "olmo2-7b-q5",
+      "name": "OLMo 2 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "olmo2-7b-q8",
+      "name": "OLMo 2 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "olmo2-7b-fp16",
+      "name": "OLMo 2 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "olmo2-13b-q4",
+      "name": "OLMo 2 13B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "olmo2-13b-q5",
+      "name": "OLMo 2 13B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "olmo2-13b-q8",
+      "name": "OLMo 2 13B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "olmo2-13b-fp16",
+      "name": "OLMo 2 13B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-nemo-12b-q4",
+      "name": "Mistral Nemo 12B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-nemo-12b-q5",
+      "name": "Mistral Nemo 12B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-nemo-12b-q8",
+      "name": "Mistral Nemo 12B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-nemo-12b-fp16",
+      "name": "Mistral Nemo 12B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama33-70b-q4",
+      "name": "Llama 3.3 70B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama33-70b-q5",
+      "name": "Llama 3.3 70B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama33-70b-q8",
+      "name": "Llama 3.3 70B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama33-70b-fp16",
+      "name": "Llama 3.3 70B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "bge-m3-567m-fp16",
+      "name": "BGE-M3 567M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-30b-q4",
+      "name": "Qwen3 Coder 30B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-30b-q5",
+      "name": "Qwen3 Coder 30B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-30b-q8",
+      "name": "Qwen3 Coder 30B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-30b-fp16",
+      "name": "Qwen3 Coder 30B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-30b-cloud",
+      "name": "Qwen3 Coder 30B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-480b-q4",
+      "name": "Qwen3 Coder 480B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-480b-q5",
+      "name": "Qwen3 Coder 480B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-480b-q8",
+      "name": "Qwen3 Coder 480B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-480b-fp16",
+      "name": "Qwen3 Coder 480B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-coder-480b-cloud",
+      "name": "Qwen3 Coder 480B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-13b-q4",
+      "name": "DeepSeek Coder 1.3B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-13b-q5",
+      "name": "DeepSeek Coder 1.3B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-13b-q8",
+      "name": "DeepSeek Coder 1.3B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-13b-fp16",
+      "name": "DeepSeek Coder 1.3B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-67b-q4",
+      "name": "DeepSeek Coder 6.7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-67b-q5",
+      "name": "DeepSeek Coder 6.7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-67b-q8",
+      "name": "DeepSeek Coder 6.7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-67b-fp16",
+      "name": "DeepSeek Coder 6.7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-33b-q4",
+      "name": "DeepSeek Coder 33B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-33b-q5",
+      "name": "DeepSeek Coder 33B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-33b-q8",
+      "name": "DeepSeek Coder 33B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-33b-fp16",
+      "name": "DeepSeek Coder 33B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-135m-q4",
+      "name": "SmolLM2 135M Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-135m-q5",
+      "name": "SmolLM2 135M Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-135m-q8",
+      "name": "SmolLM2 135M Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-135m-fp16",
+      "name": "SmolLM2 135M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-360m-q4",
+      "name": "SmolLM2 360M Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-360m-q5",
+      "name": "SmolLM2 360M Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-360m-q8",
+      "name": "SmolLM2 360M Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-360m-fp16",
+      "name": "SmolLM2 360M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-17b-q4",
+      "name": "SmolLM2 1.7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-17b-q5",
+      "name": "SmolLM2 1.7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-17b-q8",
+      "name": "SmolLM2 1.7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "smollm2-17b-fp16",
+      "name": "SmolLM2 1.7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "all-minilm-22m-fp16",
+      "name": "All-MiniLM 22M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "all-minilm-33m-fp16",
+      "name": "All-MiniLM 33M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-small-22b-q4",
+      "name": "Mistral Small 22B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-small-22b-q5",
+      "name": "Mistral Small 22B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-small-22b-q8",
+      "name": "Mistral Small 22B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-small-22b-fp16",
+      "name": "Mistral Small 22B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-small-24b-q4",
+      "name": "Mistral Small 24B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-small-24b-q5",
+      "name": "Mistral Small 24B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-small-24b-q8",
+      "name": "Mistral Small 24B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mistral-small-24b-fp16",
+      "name": "Mistral Small 24B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codegemma-2b-q4",
+      "name": "CodeGemma 2B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codegemma-2b-q5",
+      "name": "CodeGemma 2B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codegemma-2b-q8",
+      "name": "CodeGemma 2B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codegemma-2b-fp16",
+      "name": "CodeGemma 2B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codegemma-7b-q4",
+      "name": "CodeGemma 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codegemma-7b-q5",
+      "name": "CodeGemma 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codegemma-7b-q8",
+      "name": "CodeGemma 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "codegemma-7b-fp16",
+      "name": "CodeGemma 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite31-moe-1b-q4",
+      "name": "Granite 3.1 MoE 1B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite31-moe-1b-q5",
+      "name": "Granite 3.1 MoE 1B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite31-moe-1b-q8",
+      "name": "Granite 3.1 MoE 1B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite31-moe-1b-fp16",
+      "name": "Granite 3.1 MoE 1B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite31-moe-3b-q4",
+      "name": "Granite 3.1 MoE 3B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite31-moe-3b-q5",
+      "name": "Granite 3.1 MoE 3B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite31-moe-3b-q8",
+      "name": "Granite 3.1 MoE 3B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite31-moe-3b-fp16",
+      "name": "Granite 3.1 MoE 3B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-1b-q4",
+      "name": "Falcon 3 1B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-1b-q5",
+      "name": "Falcon 3 1B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-1b-q8",
+      "name": "Falcon 3 1B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-1b-fp16",
+      "name": "Falcon 3 1B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-3b-q4",
+      "name": "Falcon 3 3B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-3b-q5",
+      "name": "Falcon 3 3B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-3b-q8",
+      "name": "Falcon 3 3B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-3b-fp16",
+      "name": "Falcon 3 3B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-7b-q4",
+      "name": "Falcon 3 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-7b-q5",
+      "name": "Falcon 3 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-7b-q8",
+      "name": "Falcon 3 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-7b-fp16",
+      "name": "Falcon 3 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-10b-q4",
+      "name": "Falcon 3 10B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-10b-q5",
+      "name": "Falcon 3 10B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-10b-q8",
+      "name": "Falcon 3 10B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "falcon3-10b-fp16",
+      "name": "Falcon 3 10B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llava-llama3-8b-q4",
+      "name": "LLaVA Llama3 8B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llava-llama3-8b-q5",
+      "name": "LLaVA Llama3 8B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llava-llama3-8b-q8",
+      "name": "LLaVA Llama3 8B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llava-llama3-8b-fp16",
+      "name": "LLaVA Llama3 8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-3b-q4",
+      "name": "StarCoder2 3B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-3b-q5",
+      "name": "StarCoder2 3B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-3b-q8",
+      "name": "StarCoder2 3B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-3b-fp16",
+      "name": "StarCoder2 3B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-7b-q4",
+      "name": "StarCoder2 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-7b-q5",
+      "name": "StarCoder2 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-7b-q8",
+      "name": "StarCoder2 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-7b-fp16",
+      "name": "StarCoder2 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-15b-q4",
+      "name": "StarCoder2 15B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-15b-q5",
+      "name": "StarCoder2 15B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-15b-q8",
+      "name": "StarCoder2 15B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "starcoder2-15b-fp16",
+      "name": "StarCoder2 15B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "snowflake-arctic-embed-22m-fp16",
+      "name": "Snowflake Arctic Embed 22M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "snowflake-arctic-embed-33m-fp16",
+      "name": "Snowflake Arctic Embed 33M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "snowflake-arctic-embed-110m-fp16",
+      "name": "Snowflake Arctic Embed 110M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "snowflake-arctic-embed-137m-fp16",
+      "name": "Snowflake Arctic Embed 137M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "snowflake-arctic-embed-335m-fp16",
+      "name": "Snowflake Arctic Embed 335M FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwq-32b-q4",
+      "name": "QwQ 32B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwq-32b-q5",
+      "name": "QwQ 32B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwq-32b-q8",
+      "name": "QwQ 32B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwq-32b-fp16",
+      "name": "QwQ 32B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mixtral-8x7b-q4",
+      "name": "Mixtral 8X7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mixtral-8x7b-q5",
+      "name": "Mixtral 8X7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mixtral-8x7b-q8",
+      "name": "Mixtral 8X7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mixtral-8x7b-fp16",
+      "name": "Mixtral 8X7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mixtral-8x22b-q4",
+      "name": "Mixtral 8X22B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mixtral-8x22b-q5",
+      "name": "Mixtral 8X22B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mixtral-8x22b-q8",
+      "name": "Mixtral 8X22B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "mixtral-8x22b-fp16",
+      "name": "Mixtral 8X22B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-v2-16b-q4",
+      "name": "DeepSeek Coder V2 16B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-v2-16b-q5",
+      "name": "DeepSeek Coder V2 16B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-v2-16b-q8",
+      "name": "DeepSeek Coder V2 16B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-v2-16b-fp16",
+      "name": "DeepSeek Coder V2 16B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-v2-236b-q4",
+      "name": "DeepSeek Coder V2 236B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-v2-236b-q5",
+      "name": "DeepSeek Coder V2 236B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-v2-236b-q8",
+      "name": "DeepSeek Coder V2 236B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-coder-v2-236b-fp16",
+      "name": "DeepSeek Coder V2 236B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-2b-q4",
+      "name": "Qwen3 VL 2B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-2b-q5",
+      "name": "Qwen3 VL 2B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-2b-q8",
+      "name": "Qwen3 VL 2B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-2b-fp16",
+      "name": "Qwen3 VL 2B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-2b-cloud",
+      "name": "Qwen3 VL 2B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-4b-q4",
+      "name": "Qwen3 VL 4B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-4b-q5",
+      "name": "Qwen3 VL 4B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-4b-q8",
+      "name": "Qwen3 VL 4B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-4b-fp16",
+      "name": "Qwen3 VL 4B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-4b-cloud",
+      "name": "Qwen3 VL 4B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-8b-q4",
+      "name": "Qwen3 VL 8B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-8b-q5",
+      "name": "Qwen3 VL 8B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-8b-q8",
+      "name": "Qwen3 VL 8B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-8b-fp16",
+      "name": "Qwen3 VL 8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-8b-cloud",
+      "name": "Qwen3 VL 8B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-30b-q4",
+      "name": "Qwen3 VL 30B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-30b-q5",
+      "name": "Qwen3 VL 30B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-30b-q8",
+      "name": "Qwen3 VL 30B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-30b-fp16",
+      "name": "Qwen3 VL 30B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-30b-cloud",
+      "name": "Qwen3 VL 30B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-q4",
+      "name": "Qwen3 VL 32B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-q5",
+      "name": "Qwen3 VL 32B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-q8",
+      "name": "Qwen3 VL 32B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-fp16",
+      "name": "Qwen3 VL 32B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-cloud",
+      "name": "Qwen3 VL 32B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-235b-q4",
+      "name": "Qwen3 VL 235B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-235b-q5",
+      "name": "Qwen3 VL 235B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-235b-q8",
+      "name": "Qwen3 VL 235B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-235b-fp16",
+      "name": "Qwen3 VL 235B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-235b-cloud",
+      "name": "Qwen3 VL 235B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-3b-q4",
+      "name": "Qwen2.5 VL 3B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-3b-q5",
+      "name": "Qwen2.5 VL 3B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-3b-q8",
+      "name": "Qwen2.5 VL 3B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-3b-fp16",
+      "name": "Qwen2.5 VL 3B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-7b-q4",
+      "name": "Qwen2.5 VL 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-7b-q5",
+      "name": "Qwen2.5 VL 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-7b-q8",
+      "name": "Qwen2.5 VL 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-7b-fp16",
+      "name": "Qwen2.5 VL 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-32b-q4",
+      "name": "Qwen2.5 VL 32B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-32b-q5",
+      "name": "Qwen2.5 VL 32B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-32b-q8",
+      "name": "Qwen2.5 VL 32B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-32b-fp16",
+      "name": "Qwen2.5 VL 32B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-72b-q4",
+      "name": "Qwen2.5 VL 72B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-72b-q5",
+      "name": "Qwen2.5 VL 72B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-72b-q8",
+      "name": "Qwen2.5 VL 72B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25vl-72b-fp16",
+      "name": "Qwen2.5 VL 72B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3n-e2b-q4",
+      "name": "Gemma 3n E2B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3n-e2b-q5",
+      "name": "Gemma 3n E2B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3n-e2b-q8",
+      "name": "Gemma 3n E2B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3n-e2b-fp16",
+      "name": "Gemma 3n E2B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3n-e4b-q4",
+      "name": "Gemma 3n E4B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3n-e4b-q5",
+      "name": "Gemma 3n E4B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3n-e4b-q8",
+      "name": "Gemma 3n E4B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma3n-e4b-fp16",
+      "name": "Gemma 3n E4B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama4-16x17b-q4",
+      "name": "Llama 4 16X17B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama4-16x17b-q5",
+      "name": "Llama 4 16X17B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama4-16x17b-q8",
+      "name": "Llama 4 16X17B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama4-16x17b-fp16",
+      "name": "Llama 4 16X17B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama4-128x17b-q4",
+      "name": "Llama 4 128X17B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama4-128x17b-q5",
+      "name": "Llama 4 128X17B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama4-128x17b-q8",
+      "name": "Llama 4 128X17B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama4-128x17b-fp16",
+      "name": "Llama 4 128X17B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "phi4-reasoning-14b-q4",
+      "name": "Phi-4 Reasoning 14B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "phi4-reasoning-14b-q5",
+      "name": "Phi-4 Reasoning 14B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "phi4-reasoning-14b-q8",
+      "name": "Phi-4 Reasoning 14B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "phi4-reasoning-14b-fp16",
+      "name": "Phi-4 Reasoning 14B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "magistral-24b-q4",
+      "name": "Magistral 24B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "magistral-24b-q5",
+      "name": "Magistral 24B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "magistral-24b-q8",
+      "name": "Magistral 24B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "magistral-24b-fp16",
+      "name": "Magistral 24B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen35-397b-a17b-cloud",
+      "name": "Qwen3.5 397B-A17B CLOUD",
+      "quantizations": [
+        "CLOUD"
       ],
       "verified": false
     }

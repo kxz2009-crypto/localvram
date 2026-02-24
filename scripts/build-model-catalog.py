@@ -1,5 +1,6 @@
 ﻿#!/usr/bin/env python3
 import json
+import re
 from pathlib import Path
 
 
@@ -7,176 +8,73 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "data" / "model-catalog.json"
 MODELS_OUT = ROOT / "src" / "data" / "models.json"
 VERIFIED_AT = "2026-02-24"
+POPULAR_SOURCE = "https://ollama.com/library"
 
 
-DEFAULT_SIZES = [
-    {"label": "7b", "params_b": 7, "base_vram_min": 8},
-    {"label": "14b", "params_b": 14, "base_vram_min": 12},
-    {"label": "32b", "params_b": 32, "base_vram_min": 20},
-    {"label": "70b", "params_b": 70, "base_vram_min": 40},
-]
-
-DEFAULT_QUANTS = [
+STANDARD_QUANTS = [
     {"label": "q4", "delta_min": -2, "delta_opt": 0, "speed_mult": 1.0},
     {"label": "q5", "delta_min": 0, "delta_opt": 2, "speed_mult": 0.9},
     {"label": "q8", "delta_min": 4, "delta_opt": 6, "speed_mult": 0.72},
     {"label": "fp16", "delta_min": 10, "delta_opt": 14, "speed_mult": 0.55},
 ]
 
-FAMILIES = [
-    {
-        "family": "Qwen2.5",
-        "scenario": "coding",
-        "license_scope": "open-source",
-        "focus": "multilingual coding and instruction following",
-        "caveat": "3b and 72b variants use Qwen license terms",
-        "ollama_source_url": "https://ollama.com/library/qwen2.5",
-        "sizes": [
-            {"label": "0.5b", "params_b": 0.5, "base_vram_min": 2},
-            {"label": "1.5b", "params_b": 1.5, "base_vram_min": 4},
-            {"label": "3b", "params_b": 3, "base_vram_min": 6},
-            {"label": "7b", "params_b": 7, "base_vram_min": 8},
-            {"label": "14b", "params_b": 14, "base_vram_min": 12},
-            {"label": "32b", "params_b": 32, "base_vram_min": 20},
-            {"label": "72b", "params_b": 72, "base_vram_min": 47},
-        ],
-    },
-    {
-        "family": "Qwen3",
-        "scenario": "coding",
-        "license_scope": "open-source",
-        "focus": "agent tasks, coding, and reasoning balance",
-        "caveat": "large variants may require high-end multi-GPU or cloud",
-        "ollama_source_url": "https://ollama.com/library/qwen3",
-        "sizes": [
-            {"label": "0.6b", "params_b": 0.6, "base_vram_min": 2},
-            {"label": "1.7b", "params_b": 1.7, "base_vram_min": 4},
-            {"label": "4b", "params_b": 4, "base_vram_min": 6},
-            {"label": "8b", "params_b": 8, "base_vram_min": 8},
-            {"label": "14b", "params_b": 14, "base_vram_min": 12},
-            {"label": "30b", "params_b": 30, "base_vram_min": 18},
-            {"label": "32b", "params_b": 32, "base_vram_min": 20},
-            {"label": "235b", "params_b": 235, "base_vram_min": 140},
-        ],
-    },
-    {
-        "family": "Qwen3.5",
-        "scenario": "multimodal",
-        "license_scope": "open-source",
-        "focus": "vision-language and tool-using workflows",
-        "caveat": "currently exposed as cloud-first profile on Ollama library",
-        "ollama_source_url": "https://ollama.com/library/qwen3.5%3Acloud",
-        "sizes": [
-            {"label": "397b-a17b", "params_b": 397, "base_vram_min": 215},
-        ],
-        "quantizations": [
-            {"label": "cloud", "delta_min": 0, "delta_opt": 0, "speed_mult": 1.0},
-        ],
-    },
-    {
-        "family": "Llama",
-        "scenario": "chat",
-        "license_scope": "closed-weight",
-        "focus": "general reasoning",
-        "caveat": "license review needed",
-        "ollama_source_url": "https://ollama.com/library/llama3.3",
-    },
-    {
-        "family": "DeepSeek-R1",
-        "scenario": "reasoning",
-        "license_scope": "open-source",
-        "focus": "chain-of-thought tasks",
-        "caveat": "sensitive to quantization",
-        "ollama_source_url": "https://ollama.com/library/deepseek-r1",
-    },
-    {
-        "family": "Mistral",
-        "scenario": "chat",
-        "license_scope": "open-source",
-        "focus": "fast interactive response",
-        "caveat": "requires prompt style tuning",
-        "ollama_source_url": "https://ollama.com/library/mistral",
-    },
-    {
-        "family": "Codestral",
-        "scenario": "coding",
-        "license_scope": "closed-weight",
-        "focus": "code completion",
-        "caveat": "best with IDE context constraints",
-        "ollama_source_url": "https://ollama.com/library/codestral",
-    },
-    {
-        "family": "Gemma",
-        "scenario": "chat",
-        "license_scope": "open-source",
-        "focus": "efficient deployment",
-        "caveat": "can degrade on very long outputs",
-        "ollama_source_url": "https://ollama.com/library/gemma3",
-    },
-    {
-        "family": "Phi",
-        "scenario": "reasoning",
-        "license_scope": "open-source",
-        "focus": "small-model reasoning",
-        "caveat": "not ideal for heavy multilingual tasks",
-        "ollama_source_url": "https://ollama.com/library/phi4",
-    },
-    {
-        "family": "Command-R",
-        "scenario": "rag",
-        "license_scope": "closed-weight",
-        "focus": "retrieval workloads",
-        "caveat": "benefits from retrieval tuning",
-        "ollama_source_url": "https://ollama.com/library/command-r",
-    },
-    {
-        "family": "Yi",
-        "scenario": "chat",
-        "license_scope": "open-source",
-        "focus": "balanced quality-speed",
-        "caveat": "some variants need prompt adaptation",
-        "ollama_source_url": "https://ollama.com/library/yi",
-    },
-    {
-        "family": "Solar",
-        "scenario": "chat",
-        "license_scope": "open-source",
-        "focus": "lightweight serving",
-        "caveat": "mixed benchmark consistency",
-        "ollama_source_url": "https://ollama.com/library/solar",
-    },
-    {
-        "family": "Nemotron",
-        "scenario": "reasoning",
-        "license_scope": "closed-weight",
-        "focus": "enterprise reasoning",
-        "caveat": "higher VRAM floor",
-        "ollama_source_url": "https://ollama.com/library/nemotron",
-    },
-    {
-        "family": "LLaVA",
-        "scenario": "multimodal",
-        "license_scope": "open-source",
-        "focus": "vision-language tasks",
-        "caveat": "depends on image pipeline",
-        "ollama_source_url": "https://ollama.com/library/llava",
-    },
-    {
-        "family": "Qwen-VL",
-        "scenario": "multimodal",
-        "license_scope": "open-source",
-        "focus": "vision and OCR",
-        "caveat": "large image batches increase memory",
-        "ollama_source_url": "https://ollama.com/library/qwen2.5vl",
-    },
-    {
-        "family": "DeepSeek-Coder",
-        "scenario": "coding",
-        "license_scope": "open-source",
-        "focus": "code generation",
-        "caveat": "syntax reliability varies by quant",
-        "ollama_source_url": "https://ollama.com/library/deepseek-coder-v2",
-    },
+EMBED_QUANTS = [{"label": "fp16", "delta_min": 0, "delta_opt": 0, "speed_mult": 1.0}]
+CLOUD_QUANTS = [{"label": "cloud", "delta_min": 0, "delta_opt": 0, "speed_mult": 1.0}]
+MIXED_CLOUD_QUANTS = STANDARD_QUANTS + CLOUD_QUANTS
+
+
+POPULAR_MODELS = [
+    {"id": "llama3.1", "name": "Llama 3.1", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["8b", "70b", "405b"], "source_url": "https://ollama.com/library/llama3.1"},
+    {"id": "deepseek-r1", "name": "DeepSeek-R1", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["1.5b", "7b", "8b", "14b", "32b", "70b", "671b"], "source_url": "https://ollama.com/library/deepseek-r1"},
+    {"id": "llama3.2", "name": "Llama 3.2", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["1b", "3b"], "source_url": "https://ollama.com/library/llama3.2"},
+    {"id": "nomic-embed-text", "name": "Nomic Embed Text", "scenario": "embedding", "license_scope": "open-source", "sizes": ["137m"], "quant_mode": "embedding", "source_url": "https://ollama.com/library/nomic-embed-text"},
+    {"id": "gemma3", "name": "Gemma 3", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["270m", "1b", "4b", "12b", "27b"], "source_url": "https://ollama.com/library/gemma3"},
+    {"id": "mistral", "name": "Mistral", "scenario": "chat", "license_scope": "open-source", "sizes": ["7b"], "source_url": "https://ollama.com/library/mistral"},
+    {"id": "qwen2.5", "name": "Qwen2.5", "scenario": "coding", "license_scope": "open-source", "sizes": ["0.5b", "1.5b", "3b", "7b", "14b", "32b", "72b"], "source_url": "https://ollama.com/library/qwen2.5"},
+    {"id": "qwen3", "name": "Qwen3", "scenario": "coding", "license_scope": "open-source", "sizes": ["0.6b", "1.7b", "4b", "8b", "14b", "30b", "32b", "235b"], "source_url": "https://ollama.com/library/qwen3"},
+    {"id": "gemma2", "name": "Gemma 2", "scenario": "chat", "license_scope": "open-source", "sizes": ["2b", "9b", "27b"], "source_url": "https://ollama.com/library/gemma2"},
+    {"id": "phi3", "name": "Phi-3", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["3.8b", "14b"], "source_url": "https://ollama.com/library/phi3"},
+    {"id": "llama3", "name": "Llama 3", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["8b", "70b"], "source_url": "https://ollama.com/library/llama3"},
+    {"id": "llava", "name": "LLaVA", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["7b", "13b", "34b"], "source_url": "https://ollama.com/library/llava"},
+    {"id": "qwen2.5-coder", "name": "Qwen2.5 Coder", "scenario": "coding", "license_scope": "open-source", "sizes": ["0.5b", "1.5b", "3b", "7b", "14b", "32b"], "source_url": "https://ollama.com/library/qwen2.5-coder"},
+    {"id": "mxbai-embed-large", "name": "MXBAI Embed Large", "scenario": "embedding", "license_scope": "open-source", "sizes": ["335m"], "quant_mode": "embedding", "source_url": "https://ollama.com/library/mxbai-embed-large"},
+    {"id": "phi4", "name": "Phi-4", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["14b"], "source_url": "https://ollama.com/library/phi4"},
+    {"id": "gpt-oss", "name": "GPT-OSS", "scenario": "reasoning", "license_scope": "open-weight", "sizes": ["20b", "120b"], "quant_mode": "mixed-cloud", "source_url": "https://ollama.com/library/gpt-oss"},
+    {"id": "gemma", "name": "Gemma", "scenario": "chat", "license_scope": "open-source", "sizes": ["2b", "7b"], "source_url": "https://ollama.com/library/gemma"},
+    {"id": "qwen", "name": "Qwen", "scenario": "chat", "license_scope": "open-source", "sizes": ["0.5b", "1.8b", "4b", "7b", "14b", "32b", "72b", "110b"], "source_url": "https://ollama.com/library/qwen"},
+    {"id": "llama2", "name": "Llama 2", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["7b", "13b", "70b"], "source_url": "https://ollama.com/library/llama2"},
+    {"id": "qwen2", "name": "Qwen2", "scenario": "chat", "license_scope": "open-source", "sizes": ["0.5b", "1.5b", "7b", "72b"], "source_url": "https://ollama.com/library/qwen2"},
+    {"id": "minicpm-v", "name": "MiniCPM-V", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["8b"], "source_url": "https://ollama.com/library/minicpm-v"},
+    {"id": "codellama", "name": "CodeLlama", "scenario": "coding", "license_scope": "closed-weight", "sizes": ["7b", "13b", "34b", "70b"], "source_url": "https://ollama.com/library/codellama"},
+    {"id": "llama3.2-vision", "name": "Llama 3.2 Vision", "scenario": "multimodal", "license_scope": "closed-weight", "sizes": ["11b", "90b"], "source_url": "https://ollama.com/library/llama3.2-vision"},
+    {"id": "tinyllama", "name": "TinyLlama", "scenario": "chat", "license_scope": "open-source", "sizes": ["1.1b"], "source_url": "https://ollama.com/library/tinyllama"},
+    {"id": "dolphin3", "name": "Dolphin 3", "scenario": "chat", "license_scope": "open-source", "sizes": ["8b"], "source_url": "https://ollama.com/library/dolphin3"},
+    {"id": "deepseek-v3", "name": "DeepSeek-V3", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["671b"], "source_url": "https://ollama.com/library/deepseek-v3"},
+    {"id": "olmo2", "name": "OLMo 2", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["7b", "13b"], "source_url": "https://ollama.com/library/olmo2"},
+    {"id": "mistral-nemo", "name": "Mistral Nemo", "scenario": "chat", "license_scope": "open-source", "sizes": ["12b"], "source_url": "https://ollama.com/library/mistral-nemo"},
+    {"id": "llama3.3", "name": "Llama 3.3", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["70b"], "source_url": "https://ollama.com/library/llama3.3"},
+    {"id": "bge-m3", "name": "BGE-M3", "scenario": "embedding", "license_scope": "open-source", "sizes": ["567m"], "quant_mode": "embedding", "source_url": "https://ollama.com/library/bge-m3"},
+    {"id": "qwen3-coder", "name": "Qwen3 Coder", "scenario": "coding", "license_scope": "open-source", "sizes": ["30b", "480b"], "quant_mode": "mixed-cloud", "source_url": "https://ollama.com/library/qwen3-coder"},
+    {"id": "deepseek-coder", "name": "DeepSeek Coder", "scenario": "coding", "license_scope": "open-source", "sizes": ["1.3b", "6.7b", "33b"], "source_url": "https://ollama.com/library/deepseek-coder"},
+    {"id": "smollm2", "name": "SmolLM2", "scenario": "chat", "license_scope": "open-source", "sizes": ["135m", "360m", "1.7b"], "source_url": "https://ollama.com/library/smollm2"},
+    {"id": "all-minilm", "name": "All-MiniLM", "scenario": "embedding", "license_scope": "open-source", "sizes": ["22m", "33m"], "quant_mode": "embedding", "source_url": "https://ollama.com/library/all-minilm"},
+    {"id": "mistral-small", "name": "Mistral Small", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["22b", "24b"], "source_url": "https://ollama.com/library/mistral-small"},
+    {"id": "codegemma", "name": "CodeGemma", "scenario": "coding", "license_scope": "open-source", "sizes": ["2b", "7b"], "source_url": "https://ollama.com/library/codegemma"},
+    {"id": "granite3.1-moe", "name": "Granite 3.1 MoE", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["1b", "3b"], "source_url": "https://ollama.com/library/granite3.1-moe"},
+    {"id": "falcon3", "name": "Falcon 3", "scenario": "chat", "license_scope": "open-source", "sizes": ["1b", "3b", "7b", "10b"], "source_url": "https://ollama.com/library/falcon3"},
+    {"id": "llava-llama3", "name": "LLaVA Llama3", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["8b"], "source_url": "https://ollama.com/library/llava-llama3"},
+    {"id": "starcoder2", "name": "StarCoder2", "scenario": "coding", "license_scope": "open-source", "sizes": ["3b", "7b", "15b"], "source_url": "https://ollama.com/library/starcoder2"},
+    {"id": "snowflake-arctic-embed", "name": "Snowflake Arctic Embed", "scenario": "embedding", "license_scope": "open-source", "sizes": ["22m", "33m", "110m", "137m", "335m"], "quant_mode": "embedding", "source_url": "https://ollama.com/library/snowflake-arctic-embed"},
+    {"id": "qwq", "name": "QwQ", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["32b"], "source_url": "https://ollama.com/library/qwq"},
+    {"id": "mixtral", "name": "Mixtral", "scenario": "chat", "license_scope": "open-source", "sizes": ["8x7b", "8x22b"], "source_url": "https://ollama.com/library/mixtral"},
+    {"id": "deepseek-coder-v2", "name": "DeepSeek Coder V2", "scenario": "coding", "license_scope": "open-source", "sizes": ["16b", "236b"], "source_url": "https://ollama.com/library/deepseek-coder-v2"},
+    {"id": "qwen3-vl", "name": "Qwen3 VL", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["2b", "4b", "8b", "30b", "32b", "235b"], "quant_mode": "mixed-cloud", "source_url": "https://ollama.com/library/qwen3-vl"},
+    {"id": "qwen2.5vl", "name": "Qwen2.5 VL", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["3b", "7b", "32b", "72b"], "source_url": "https://ollama.com/library/qwen2.5vl"},
+    {"id": "gemma3n", "name": "Gemma 3n", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["e2b", "e4b"], "source_url": "https://ollama.com/library/gemma3n"},
+    {"id": "llama4", "name": "Llama 4", "scenario": "multimodal", "license_scope": "closed-weight", "sizes": ["16x17b", "128x17b"], "source_url": "https://ollama.com/library/llama4"},
+    {"id": "phi4-reasoning", "name": "Phi-4 Reasoning", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["14b"], "source_url": "https://ollama.com/library/phi4-reasoning"},
+    {"id": "magistral", "name": "Magistral", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["24b"], "source_url": "https://ollama.com/library/magistral"},
+    {"id": "qwen3.5", "name": "Qwen3.5", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["397b-a17b"], "quant_mode": "cloud", "source_url": "https://ollama.com/library/qwen3.5%3Acloud"},
 ]
 
 VERIFIED_IDS = {
@@ -186,61 +84,109 @@ VERIFIED_IDS = {
 }
 
 SIZE_CLASS_LABELS = {
-    "0.5b-1.7b": "0.5B-1.7B Models",
-    "4b-class": "4B Models",
+    "tiny-class": "Sub-2B Models",
+    "4b-class": "2B-4B Models",
     "7b-8b": "7B-8B Models",
-    "14b-class": "14B Models",
-    "30b-32b": "30B-32B Models",
-    "70b-class": "70B-72B Models",
-    "200b-class": "200B+ Models",
-    "300b-plus": "300B+ Models",
+    "14b-class": "9B-14B Models",
+    "30b-34b": "15B-34B Models",
+    "70b-class": "35B-72B Models",
+    "100b-250b": "73B-250B Models",
+    "250b-plus": "250B+ Models",
 }
 
 
 def safe_slug(text: str) -> str:
-    return (
-        text.lower()
-        .replace(" ", "-")
-        .replace(".", "")
-        .replace("_", "-")
-        .replace("/", "-")
-    )
+    return text.lower().replace(" ", "-").replace(".", "").replace("_", "-").replace("/", "-")
+
+
+def parse_params(size_label: str) -> float:
+    s = size_label.lower().strip()
+    if s == "cloud":
+        return 120.0
+
+    m = re.match(r"^e([0-9.]+)b$", s)
+    if m:
+        return float(m.group(1))
+
+    m = re.match(r"^([0-9.]+)x([0-9.]+)b$", s)
+    if m:
+        return float(m.group(1)) * float(m.group(2))
+
+    m = re.match(r"^([0-9.]+)b-a([0-9.]+)b$", s)
+    if m:
+        return float(m.group(1))
+
+    m = re.match(r"^([0-9.]+)b$", s)
+    if m:
+        return float(m.group(1))
+
+    m = re.match(r"^([0-9.]+)m$", s)
+    if m:
+        return float(m.group(1)) / 1000.0
+
+    return 7.0
+
+
+def base_vram_floor(params_b: float) -> int:
+    if params_b <= 0.5:
+        return 2
+    if params_b <= 2:
+        return 4
+    if params_b <= 4:
+        return 6
+    if params_b <= 8:
+        return 8
+    if params_b <= 14:
+        return 12
+    if params_b <= 34:
+        return 20
+    if params_b <= 72:
+        return 40
+    if params_b <= 120:
+        return 70
+    if params_b <= 250:
+        return 140
+    if params_b <= 500:
+        return 215
+    return 420
 
 
 def base_tokens(params_b: float) -> float:
-    if params_b <= 2:
+    if params_b <= 1:
         return 48.0
+    if params_b <= 2:
+        return 42.0
     if params_b <= 4:
-        return 41.0
+        return 36.0
     if params_b <= 8:
-        return 34.0
+        return 30.0
     if params_b <= 14:
-        return 22.0
-    if params_b <= 32:
+        return 21.0
+    if params_b <= 34:
         return 11.0
     if params_b <= 72:
         return 6.8
-    if params_b <= 235:
+    if params_b <= 250:
         return 1.9
-    return 1.2
+    return 1.1
 
 
 def size_class_for(params_b: float) -> str:
-    if params_b <= 1.7:
-        return "0.5b-1.7b"
+    if params_b <= 2:
+        return "tiny-class"
     if params_b <= 4:
         return "4b-class"
     if params_b <= 8:
         return "7b-8b"
     if params_b <= 14:
         return "14b-class"
-    if params_b <= 32:
-        return "30b-32b"
+    if params_b <= 34:
+        return "30b-34b"
     if params_b <= 72:
         return "70b-class"
-    if params_b <= 235:
-        return "200b-class"
-    return "300b-plus"
+    if params_b <= 250:
+        return "100b-250b"
+    return "250b-plus"
 
 
 def pick_hardware(opt_vram: int) -> tuple[str, str, float]:
@@ -253,30 +199,45 @@ def pick_hardware(opt_vram: int) -> tuple[str, str, float]:
     return ("Cloud-first (no practical single-GPU local)", "H100/H200 class", 4.9)
 
 
+def quant_list(entry: dict) -> list[dict]:
+    mode = entry.get("quant_mode", "standard")
+    if mode == "embedding":
+        return EMBED_QUANTS
+    if mode == "cloud":
+        return CLOUD_QUANTS
+    if mode == "mixed-cloud":
+        return MIXED_CLOUD_QUANTS
+    return STANDARD_QUANTS
+
+
 def main() -> None:
     items = []
-    for fam in FAMILIES:
-        sizes = fam.get("sizes", DEFAULT_SIZES)
-        quants = fam.get("quantizations", DEFAULT_QUANTS)
-        for size in sizes:
-            for q in quants:
-                model_id = f"{safe_slug(fam['family'])}-{size['label']}-{q['label']}"
-                min_vram = max(2, size["base_vram_min"] + q["delta_min"])
-                opt_vram = max(min_vram + 2, size["base_vram_min"] + 8 + q["delta_opt"])
-                tok_3090 = round(base_tokens(size["params_b"]) * q["speed_mult"], 1)
+
+    for entry in POPULAR_MODELS:
+        base_slug = safe_slug(entry["id"])
+        for size_label in entry["sizes"]:
+            params_b = parse_params(size_label)
+            base_vram = base_vram_floor(params_b)
+            for q in quant_list(entry):
+                model_id = f"{base_slug}-{size_label}-{q['label']}"
+                min_vram = max(2, base_vram + q["delta_min"])
+                opt_vram = max(min_vram + 2, base_vram + 8 + q["delta_opt"])
+                tok_3090 = round(base_tokens(params_b) * q["speed_mult"], 1)
                 tok_4090 = round(tok_3090 * 1.35, 1)
                 tok_a100 = round(tok_3090 * 2.4, 1)
                 best_local_gpu, cloud_fallback, cloud_hourly_usd = pick_hardware(opt_vram)
+
                 items.append(
                     {
-                        "id": model_id,
-                        "slug": model_id,
-                        "name": f"{fam['family']} {size['label'].upper()} {q['label'].upper()}",
-                        "family": fam["family"],
-                        "license_scope": fam["license_scope"],
-                        "scenario": fam["scenario"],
-                        "params_b": size["params_b"],
-                        "size_class": size_class_for(size["params_b"]),
+                        "id": safe_slug(model_id),
+                        "slug": safe_slug(model_id),
+                        "name": f"{entry['name']} {size_label.upper()} {q['label'].upper()}",
+                        "family": entry["name"],
+                        "library_id": entry["id"],
+                        "license_scope": entry["license_scope"],
+                        "scenario": entry["scenario"],
+                        "params_b": params_b,
+                        "size_class": size_class_for(params_b),
                         "quantization": q["label"].upper(),
                         "vram_min_gb": min_vram,
                         "vram_optimal_gb": opt_vram,
@@ -284,38 +245,39 @@ def main() -> None:
                         "cloud_fallback": cloud_fallback,
                         "cloud_hourly_usd": cloud_hourly_usd,
                         "local_monthly_power_usd": round((0.35 * 0.16) * 120, 2),
-                        "data_status": "measured" if model_id in VERIFIED_IDS else "estimated",
-                        "verified": model_id in VERIFIED_IDS,
-                        "ollama_source_url": fam["ollama_source_url"],
+                        "data_status": "measured" if safe_slug(model_id) in VERIFIED_IDS else "estimated",
+                        "verified": safe_slug(model_id) in VERIFIED_IDS,
+                        "ollama_source_url": entry["source_url"],
                         "ollama_verified_at": VERIFIED_AT,
                         "benchmarks": {
                             "rtx3090_tok_s": tok_3090,
                             "rtx4090_tok_s": tok_4090,
                             "a100_tok_s": tok_a100,
                         },
-                        "focus": fam["focus"],
-                        "caveat": fam["caveat"],
+                        "focus": f"Popular Ollama model family: {entry['name']}",
+                        "caveat": "Estimated values are placeholders unless marked measured.",
                         "updated_at": VERIFIED_AT,
                     }
                 )
 
     size_groups = sorted(set(item["size_class"] for item in items))
+    scenario_groups = sorted(set(item["scenario"] for item in items))
+    license_groups = sorted(set(item["license_scope"] for item in items))
+
     payload = {
-        "version": "2026.02.24.ollama-verified",
+        "version": "2026.02.24.ollama-popular",
         "generated_at": "2026-02-24T00:00:00Z",
         "ollama_verified_at": VERIFIED_AT,
+        "ollama_source": POPULAR_SOURCE,
         "count": len(items),
         "items": items,
         "group_definitions": [
-            {"id": "open-source", "label": "Open Source Models"},
-            {"id": "closed-weight", "label": "Closed Weight / Restricted"},
-            {"id": "coding", "label": "Coding Models"},
-            {"id": "reasoning", "label": "Reasoning Models"},
-            {"id": "multimodal", "label": "Multimodal Models"},
-            {"id": "chat", "label": "Chat Models"},
-            {"id": "rag", "label": "RAG-focused Models"},
-        ]
-        + [{"id": sc, "label": SIZE_CLASS_LABELS.get(sc, sc)} for sc in size_groups],
+            {"id": lid, "label": f"{lid.title()} Models"} for lid in license_groups
+        ] + [
+            {"id": sid, "label": f"{sid.title()} Models"} for sid in scenario_groups
+        ] + [
+            {"id": sc, "label": SIZE_CLASS_LABELS.get(sc, sc)} for sc in size_groups
+        ],
     }
 
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
