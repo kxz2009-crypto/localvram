@@ -19,12 +19,20 @@ import links from "../../../data/affiliate-links.json";
       <article class="card">
         <h2>Used RTX 3090</h2>
         <p>Best value jump for 24GB workloads and Q4 large models.</p>
-        <a class="btn btn-primary" href={links.amazon}>Open deal links</a>
+        {links.amazon ? (
+          <a class="btn btn-primary" href={links.amazon}>Open deal links</a>
+        ) : (
+          <span class="btn">Amazon links coming soon</span>
+        )}
       </article>
       <article class="card">
         <h2>RTX 4090</h2>
         <p>Higher throughput and better sustained performance headroom.</p>
-        <a class="btn btn-primary" href={links.amazon}>Open deal links</a>
+        {links.amazon ? (
+          <a class="btn btn-primary" href={links.amazon}>Open deal links</a>
+        ) : (
+          <span class="btn">Amazon links coming soon</span>
+        )}
       </article>
       <article class="card">
         <h2>Keep local + burst to cloud</h2>
