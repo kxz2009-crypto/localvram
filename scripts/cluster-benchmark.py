@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FILE = ROOT / "src" / "data" / "cluster-benchmarks.json"
 LOG_DIR = ROOT / "logs"
 
-DEFAULT_ENDPOINTS = "http://127.0.0.1:11434"
+DEFAULT_ENDPOINTS = ""
 DEFAULT_MODEL = "qwen3:8b"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PROMPT = (
@@ -57,6 +57,18 @@ def run_cmd(args: list[str], timeout: int = 20) -> tuple[int, str, str]:
         return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
     except Exception as exc:  # noqa: BLE001
         return 1, "", str(exc)
+
+
+def env_bool(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    val = str(raw).strip().lower()
+    if val in {"1", "true", "yes", "on"}:
+        return True
+    if val in {"0", "false", "no", "off"}:
+        return False
+    return default
 
 
 def total_power_draw_w() -> float:
@@ -315,6 +327,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--runs", type=int, default=int(os.getenv("LV_CLUSTER_RUNS", "2")))
     parser.add_argument("--timeout", type=int, default=int(os.getenv("LV_CLUSTER_TIMEOUT_S", "600")))
     parser.add_argument("--max-workers", type=int, default=int(os.getenv("LV_CLUSTER_MAX_WORKERS", "2")))
+    parser.add_argument(
+        "--min-endpoints",
+        type=int,
+        default=int(os.getenv("LV_CLUSTER_MIN_ENDPOINTS", "2")),
+        help="Minimum endpoint count required to run a meaningful cluster benchmark.",
+    )
+    parser.add_argument(
+        "--skip-if-under-min-endpoints",
+        action="store_true",
+        default=env_bool("LV_CLUSTER_SKIP_IF_UNDER_MIN_ENDPOINTS", True),
+        help="Skip with exit code 0 when endpoint count is below min-endpoints.",
+    )
     parser.add_argument("--cooldown-s", type=float, default=float(os.getenv("LV_CLUSTER_COOLDOWN_S", "2.0")))
     parser.add_argument("--power-limit-w", type=float, default=float(os.getenv("LV_CLUSTER_POWER_LIMIT_W", "0")))
     parser.add_argument(
@@ -333,7 +357,11 @@ def main() -> None:
     endpoints = [normalize_endpoint(x.strip()) for x in args.endpoints.split(",") if x.strip()]
     redacted_endpoints = [redact_endpoint(x) for x in endpoints]
     if not endpoints:
-        raise SystemExit("no cluster endpoints configured")
+        message = "no cluster endpoints configured"
+        if args.skip_if_under_min_endpoints:
+            print(f"cluster benchmark skipped: {message}")
+            return
+        raise SystemExit(message)
 
     log_file = LOG_DIR / f"cluster-benchmark-{dt.datetime.now(dt.timezone.utc).strftime('%Y%m%d')}.log"
     LOG_DIR.mkdir(parents=True, exist_ok=True)
@@ -345,8 +373,27 @@ def main() -> None:
         print(f"model={args.model}")
         print(f"num_ctx={max(256, args.num_ctx)}")
         print("temperature=0")
+        print(f"min_endpoints={max(1, args.min_endpoints)}")
         print(f"log_retention_days={args.log_retention_days}")
         return
+
+    min_endpoints = max(1, args.min_endpoints)
+    if len(endpoints) < min_endpoints:
+        message = f"cluster benchmark skipped: endpoints {len(endpoints)} < required {min_endpoints}"
+        if args.skip_if_under_min_endpoints:
+            append_log(
+                log_file,
+                {
+                    "event": "cluster_benchmark_skipped",
+                    "ts": utc_now_iso(),
+                    "reason": message,
+                    "endpoints": redacted_endpoints,
+                    "min_endpoints": min_endpoints,
+                },
+            )
+            print(message)
+            return
+        raise SystemExit(message)
 
     append_log(
         log_file,

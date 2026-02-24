@@ -41,7 +41,8 @@ jobs:
           INPUT_INCLUDE_HEAVY: ${{ github.event.inputs.include_heavy_targets }}
           INPUT_EXTRA_TARGETS: ${{ github.event.inputs.extra_targets }}
           INPUT_TIMEOUT_S: ${{ github.event.inputs.benchmark_timeout_s }}
-          LV_WEEKLY_TARGETS: qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128
+          LV_WEEKLY_TARGETS: qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96
+          LV_MIN_SUCCESS_MODELS: "3"
         run: |
           ARGS=()
           if [ -n "${INPUT_EXTRA_TARGETS}" ]; then
@@ -55,8 +56,15 @@ jobs:
           fi
           python scripts/weekly-benchmark.py "${ARGS[@]}"
 
-      - name: Cluster benchmark
-        run: python scripts/cluster-benchmark.py
+      - name: Cluster benchmark (optional multi-endpoint)
+        env:
+          LV_CLUSTER_ENDPOINTS: ${{ secrets.LV_CLUSTER_ENDPOINTS }}
+        run: |
+          if [ -z "${LV_CLUSTER_ENDPOINTS}" ]; then
+            echo "LV_CLUSTER_ENDPOINTS not configured; skipping cluster benchmark."
+            exit 0
+          fi
+          python scripts/cluster-benchmark.py --endpoints "${LV_CLUSTER_ENDPOINTS}" --min-endpoints 2 --allow-empty
 
       - name: Build model catalog
         run: python scripts/build-model-catalog.py

@@ -25,7 +25,7 @@ TAG_ALIASES_FILE = ROOT / "src" / "data" / "benchmark-tag-aliases.json"
 LOG_DIR = ROOT / "logs"
 SCREENSHOT_DIR = ROOT / "public" / "screenshots"
 
-DEFAULT_TARGETS = "llama3:8b=128,qwen3:8b=128,deepseek-r1:8b=128"
+DEFAULT_TARGETS = "qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96"
 DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PRE_COOLDOWN_S = 5.0
@@ -562,6 +562,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prompt", default=os.getenv("LV_BENCHMARK_PROMPT", DEFAULT_PROMPT))
     parser.add_argument("--min-delta", type=float, default=float(os.getenv("LV_SIGNIFICANT_TPS_DELTA", "0.5")))
     parser.add_argument(
+        "--min-success",
+        type=int,
+        default=int(os.getenv("LV_MIN_SUCCESS_MODELS", "3")),
+        help="Minimum number of successful model benchmarks required for a passing run.",
+    )
+    parser.add_argument(
         "--log-retention-days",
         type=int,
         default=int(os.getenv("LV_BENCHMARK_LOG_RETENTION_DAYS", "30")),
@@ -590,6 +596,7 @@ def main() -> None:
         print(f"num_ctx={max(256, args.num_ctx)}")
         print("temperature=0")
         print(f"log_retention_days={args.log_retention_days}")
+        print(f"min_success={max(0, args.min_success)}")
         return
 
     base_targets = parse_targets(args.targets)
@@ -659,7 +666,7 @@ def main() -> None:
                 "num_predict": num_predict,
                 "status": "error",
                 "runs": [],
-                "error": "model not found locally (run `ollama pull` on runner first)",
+                "error": "model not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
                 "error_type": "missing_model",
             }
             reports.append(report)
@@ -766,6 +773,7 @@ def main() -> None:
         "pre_cooldown_s": pre_cooldown_s,
         "success_count": len(success_reports),
         "failed_count": len(failed_reports),
+        "min_success_required": max(0, args.min_success),
     }
 
     env_name = "unknown-gpu"
@@ -829,8 +837,11 @@ def main() -> None:
     if not should_write_results:
         print(f"no significant model changes detected (> {args.min_delta} tok/s); results file unchanged")
 
-    if not success_reports and not args.allow_empty:
-        raise SystemExit("no successful benchmark samples collected")
+    min_success_required = max(0, args.min_success)
+    if not args.allow_empty and len(success_reports) < min_success_required:
+        raise SystemExit(
+            f"successful benchmark samples below threshold: {len(success_reports)} < {min_success_required}"
+        )
 
 
 if __name__ == "__main__":

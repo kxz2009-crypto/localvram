@@ -30,6 +30,10 @@ Add environment variables in Pages project settings:
 - `AMAZON_TAG` (required for Amazon commissions)
 - `RUNPOD_REF` (optional, default `kzc9gtvv`)
 - `VAST_REF_ID` (optional, default `415258`)
+- `AMAZON_3090_URL` (optional override for `/recommends/rtx-3090-24gb`)
+- `AMAZON_4090_URL` (optional override for `/recommends/rtx-4090-24gb`)
+- `AMAZON_PSU_URL` (optional override for `/recommends/atx3-1000w-psu`)
+- `AMAZON_CASE_URL` (optional override for `/recommends/high-airflow-case`)
 
 Optional KV binding for click events:
 
@@ -49,4 +53,3 @@ If `AFFILIATE_EVENTS` is bound, events are also persisted in KV with 30-day TTL.
    `AMAZON_RECOMMENDATIONS` for product routes (`/recommends/*`).
 3. Add a short link in `src/data/affiliate-links.json`.
 4. Update page CTAs to use the short link.
-

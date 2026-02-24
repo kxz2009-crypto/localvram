@@ -5,21 +5,25 @@ const AMAZON_RECOMMENDATIONS = {
   "rtx-3090-24gb": {
     keyword: "RTX 3090 24GB graphics card",
     label: "RTX 3090 24GB",
+    envKey: "AMAZON_3090_URL",
     directUrl: "https://amzn.to/4sdISrb"
   },
   "rtx-4090-24gb": {
     keyword: "RTX 4090 24GB graphics card",
     label: "RTX 4090 24GB",
+    envKey: "AMAZON_4090_URL",
     directUrl: "https://amzn.to/3N1JaCr"
   },
   "atx3-1000w-psu": {
     keyword: "ATX 3.0 1000W PSU",
     label: "ATX 3.0 1000W PSU",
+    envKey: "AMAZON_PSU_URL",
     directUrl: "https://amzn.to/4ryN84q"
   },
   "high-airflow-case": {
     keyword: "high airflow mid tower case",
     label: "CORSAIR 4000D Mid-Tower",
+    envKey: "AMAZON_CASE_URL",
     directUrl: "https://amzn.to/4ryVBEN"
   }
 };
@@ -49,11 +53,13 @@ function buildAmazonTarget(slug, env) {
   if (!entry) {
     return null;
   }
-  if (entry.directUrl) {
+  const envUrl = entry.envKey ? String(env[entry.envKey] || "").trim() : "";
+  const directUrl = envUrl || entry.directUrl || "";
+  if (directUrl) {
     return {
       provider: "amazon",
       label: entry.label,
-      url: entry.directUrl
+      url: directUrl
     };
   }
   const url = new URL("https://www.amazon.com/s");
