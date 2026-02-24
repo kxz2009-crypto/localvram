@@ -1,6 +1,6 @@
 {
   "version": "2026.02.24.ollama-popular",
-  "count": 525,
+  "count": 541,
   "models": [
     {
       "id": "llama31-8b-q4",
@@ -253,6 +253,38 @@
     {
       "id": "deepseek-r1-32b-fp16",
       "name": "DeepSeek-R1 32B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-67b-q4",
+      "name": "DeepSeek-R1 67B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-67b-q5",
+      "name": "DeepSeek-R1 67B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-67b-q8",
+      "name": "DeepSeek-R1 67B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-r1-67b-fp16",
+      "name": "DeepSeek-R1 67B FP16",
       "quantizations": [
         "FP16"
       ],
@@ -2531,6 +2563,38 @@
       "verified": false
     },
     {
+      "id": "deepseek-v3-67b-q4",
+      "name": "DeepSeek-V3 67B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-v3-67b-q5",
+      "name": "DeepSeek-V3 67B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-v3-67b-q8",
+      "name": "DeepSeek-V3 67B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-v3-67b-fp16",
+      "name": "DeepSeek-V3 67B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
       "id": "deepseek-v3-671b-q4",
       "name": "DeepSeek-V3 671B Q4",
       "quantizations": [
@@ -3565,6 +3629,70 @@
     {
       "id": "mixtral-8x22b-fp16",
       "name": "Mixtral 8X22B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "zephyr-7b-q4",
+      "name": "Zephyr 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "zephyr-7b-q5",
+      "name": "Zephyr 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "zephyr-7b-q8",
+      "name": "Zephyr 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "zephyr-7b-fp16",
+      "name": "Zephyr 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "openhermes-7b-q4",
+      "name": "OpenHermes 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "openhermes-7b-q5",
+      "name": "OpenHermes 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "openhermes-7b-q8",
+      "name": "OpenHermes 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "openhermes-7b-fp16",
+      "name": "OpenHermes 7B FP16",
       "quantizations": [
         "FP16"
       ],

@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "data" / "model-catalog.json"
 MODELS_OUT = ROOT / "src" / "data" / "models.json"
+TOP20_CURATED_FILE = ROOT / "src" / "data" / "ollama-top20-curated.json"
 VERIFIED_AT = "2026-02-24"
 POPULAR_SOURCE = "https://ollama.com/library"
 
@@ -25,7 +26,7 @@ MIXED_CLOUD_QUANTS = STANDARD_QUANTS + CLOUD_QUANTS
 
 POPULAR_MODELS = [
     {"id": "llama3.1", "name": "Llama 3.1", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["8b", "70b", "405b"], "source_url": "https://ollama.com/library/llama3.1"},
-    {"id": "deepseek-r1", "name": "DeepSeek-R1", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["1.5b", "7b", "8b", "14b", "32b", "70b", "671b"], "source_url": "https://ollama.com/library/deepseek-r1"},
+    {"id": "deepseek-r1", "name": "DeepSeek-R1", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["1.5b", "7b", "8b", "14b", "32b", "67b", "70b", "671b"], "source_url": "https://ollama.com/library/deepseek-r1"},
     {"id": "llama3.2", "name": "Llama 3.2", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["1b", "3b"], "source_url": "https://ollama.com/library/llama3.2"},
     {"id": "nomic-embed-text", "name": "Nomic Embed Text", "scenario": "embedding", "license_scope": "open-source", "sizes": ["137m"], "quant_mode": "embedding", "source_url": "https://ollama.com/library/nomic-embed-text"},
     {"id": "gemma3", "name": "Gemma 3", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["270m", "1b", "4b", "12b", "27b"], "source_url": "https://ollama.com/library/gemma3"},
@@ -49,7 +50,7 @@ POPULAR_MODELS = [
     {"id": "llama3.2-vision", "name": "Llama 3.2 Vision", "scenario": "multimodal", "license_scope": "closed-weight", "sizes": ["11b", "90b"], "source_url": "https://ollama.com/library/llama3.2-vision"},
     {"id": "tinyllama", "name": "TinyLlama", "scenario": "chat", "license_scope": "open-source", "sizes": ["1.1b"], "source_url": "https://ollama.com/library/tinyllama"},
     {"id": "dolphin3", "name": "Dolphin 3", "scenario": "chat", "license_scope": "open-source", "sizes": ["8b"], "source_url": "https://ollama.com/library/dolphin3"},
-    {"id": "deepseek-v3", "name": "DeepSeek-V3", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["671b"], "source_url": "https://ollama.com/library/deepseek-v3"},
+    {"id": "deepseek-v3", "name": "DeepSeek-V3", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["67b", "671b"], "source_url": "https://ollama.com/library/deepseek-v3"},
     {"id": "olmo2", "name": "OLMo 2", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["7b", "13b"], "source_url": "https://ollama.com/library/olmo2"},
     {"id": "mistral-nemo", "name": "Mistral Nemo", "scenario": "chat", "license_scope": "open-source", "sizes": ["12b"], "source_url": "https://ollama.com/library/mistral-nemo"},
     {"id": "llama3.3", "name": "Llama 3.3", "scenario": "chat", "license_scope": "closed-weight", "sizes": ["70b"], "source_url": "https://ollama.com/library/llama3.3"},
@@ -67,6 +68,8 @@ POPULAR_MODELS = [
     {"id": "snowflake-arctic-embed", "name": "Snowflake Arctic Embed", "scenario": "embedding", "license_scope": "open-source", "sizes": ["22m", "33m", "110m", "137m", "335m"], "quant_mode": "embedding", "source_url": "https://ollama.com/library/snowflake-arctic-embed"},
     {"id": "qwq", "name": "QwQ", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["32b"], "source_url": "https://ollama.com/library/qwq"},
     {"id": "mixtral", "name": "Mixtral", "scenario": "chat", "license_scope": "open-source", "sizes": ["8x7b", "8x22b"], "source_url": "https://ollama.com/library/mixtral"},
+    {"id": "zephyr", "name": "Zephyr", "scenario": "chat", "license_scope": "open-source", "sizes": ["7b"], "source_url": "https://ollama.com/library/zephyr"},
+    {"id": "openhermes", "name": "OpenHermes", "scenario": "chat", "license_scope": "open-source", "sizes": ["7b"], "source_url": "https://ollama.com/library/openhermes"},
     {"id": "deepseek-coder-v2", "name": "DeepSeek Coder V2", "scenario": "coding", "license_scope": "open-source", "sizes": ["16b", "236b"], "source_url": "https://ollama.com/library/deepseek-coder-v2"},
     {"id": "qwen3-vl", "name": "Qwen3 VL", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["2b", "4b", "8b", "30b", "32b", "235b"], "quant_mode": "mixed-cloud", "source_url": "https://ollama.com/library/qwen3-vl"},
     {"id": "qwen2.5vl", "name": "Qwen2.5 VL", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["3b", "7b", "32b", "72b"], "source_url": "https://ollama.com/library/qwen2.5vl"},
@@ -210,8 +213,53 @@ def quant_list(entry: dict) -> list[dict]:
     return STANDARD_QUANTS
 
 
+def parse_vram_gb(text: str) -> int:
+    match = re.search(r"([0-9]+(?:\.[0-9]+)?)", text or "")
+    if not match:
+        return 0
+    return int(float(match.group(1)))
+
+
+def load_top20_overrides() -> dict[tuple[str, str], dict]:
+    if not TOP20_CURATED_FILE.exists():
+        return {}
+
+    payload = json.loads(TOP20_CURATED_FILE.read_text(encoding="utf-8-sig"))
+    overrides: dict[tuple[str, str], dict] = {}
+    for rank, model in enumerate(payload.get("models", []), start=1):
+        slug = str(model.get("slug", "")).strip().lower()
+        if not slug:
+            continue
+
+        q4 = parse_vram_gb(str(model.get("vram_q4", "")))
+        q5 = parse_vram_gb(str(model.get("vram_q5", "")))
+        vram_q4 = q4 if q4 > 0 else 8
+        vram_q5 = q5 if q5 > 0 else max(vram_q4 + 2, 10)
+        common = {
+            "top20_rank": rank,
+            "popularity": model.get("popularity", ""),
+            "category_label": model.get("category", ""),
+            "seo_title": model.get("seo_title", ""),
+            "ollama_command": model.get("ollama_command", f"ollama run {slug}"),
+            "recommended_hardware": model.get("recommended_hardware", ""),
+        }
+        overrides[(slug, "q4")] = {
+            **common,
+            "vram_min_gb": vram_q4,
+            "vram_optimal_gb": max(vram_q5, vram_q4 + 2),
+        }
+        overrides[(slug, "q5")] = {
+            **common,
+            "vram_min_gb": vram_q5,
+            "vram_optimal_gb": max(vram_q5 + 2, vram_q4 + 4),
+        }
+
+    return overrides
+
+
 def main() -> None:
     items = []
+    top20_overrides = load_top20_overrides()
 
     for entry in POPULAR_MODELS:
         base_slug = safe_slug(entry["id"])
@@ -220,12 +268,22 @@ def main() -> None:
             base_vram = base_vram_floor(params_b)
             for q in quant_list(entry):
                 model_id = f"{base_slug}-{size_label}-{q['label']}"
+                ollama_tag = f"{entry['id']}:{size_label}".lower()
                 min_vram = max(2, base_vram + q["delta_min"])
                 opt_vram = max(min_vram + 2, base_vram + 8 + q["delta_opt"])
+                override = top20_overrides.get((ollama_tag, q["label"]))
+                if override:
+                    min_vram = int(override["vram_min_gb"])
+                    opt_vram = int(override["vram_optimal_gb"])
                 tok_3090 = round(base_tokens(params_b) * q["speed_mult"], 1)
                 tok_4090 = round(tok_3090 * 1.35, 1)
                 tok_a100 = round(tok_3090 * 2.4, 1)
                 best_local_gpu, cloud_fallback, cloud_hourly_usd = pick_hardware(opt_vram)
+                seo_title = override["seo_title"] if override else f"{entry['name']} {size_label.upper()} on RTX 3090: Performance & VRAM Requirements"
+                popularity = override["popularity"] if override else ""
+                category_label = override["category_label"] if override else entry["scenario"]
+                ollama_command = override["ollama_command"] if override else f"ollama run {entry['id']}:{size_label}"
+                recommended_hardware = override["recommended_hardware"] if override else best_local_gpu
 
                 items.append(
                     {
@@ -242,11 +300,19 @@ def main() -> None:
                         "vram_min_gb": min_vram,
                         "vram_optimal_gb": opt_vram,
                         "best_local_gpu": best_local_gpu,
+                        "recommended_hardware": recommended_hardware,
                         "cloud_fallback": cloud_fallback,
                         "cloud_hourly_usd": cloud_hourly_usd,
                         "local_monthly_power_usd": round((0.35 * 0.16) * 120, 2),
                         "data_status": "measured" if safe_slug(model_id) in VERIFIED_IDS else "estimated",
                         "verified": safe_slug(model_id) in VERIFIED_IDS,
+                        "is_top20_curated": override is not None,
+                        "top20_rank": override["top20_rank"] if override else None,
+                        "popularity": popularity,
+                        "category_label": category_label,
+                        "ollama_tag": ollama_tag,
+                        "seo_title": seo_title,
+                        "ollama_command": ollama_command,
                         "ollama_source_url": entry["source_url"],
                         "ollama_verified_at": VERIFIED_AT,
                         "benchmarks": {
@@ -254,7 +320,7 @@ def main() -> None:
                             "rtx4090_tok_s": tok_4090,
                             "a100_tok_s": tok_a100,
                         },
-                        "focus": f"Popular Ollama model family: {entry['name']}",
+                        "focus": "Top-20 curated profile from ollama.com popular list." if override else f"Popular Ollama model family: {entry['name']}",
                         "caveat": "Estimated values are placeholders unless marked measured.",
                         "updated_at": VERIFIED_AT,
                     }
@@ -269,6 +335,8 @@ def main() -> None:
         "generated_at": "2026-02-24T00:00:00Z",
         "ollama_verified_at": VERIFIED_AT,
         "ollama_source": POPULAR_SOURCE,
+        "top20_curated_source": "src/data/ollama-top20-curated.json",
+        "top20_curated_count": len({k[0] for k in top20_overrides.keys()}),
         "count": len(items),
         "items": items,
         "group_definitions": [

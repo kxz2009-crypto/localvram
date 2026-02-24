@@ -8,6 +8,14 @@ const groups = catalog.group_definitions;
 const featured = [...items].sort((a, b) => b.params_b - a.params_b).slice(0, 8);
 const measuredCount = items.filter((item) => item.data_status === "measured").length;
 const estimatedCount = items.length - measuredCount;
+const q5ByTag = new Map(
+  items
+    .filter((item) => item.quantization === "Q5")
+    .map((item) => [item.ollama_tag, item.vram_min_gb])
+);
+const top20Curated = items
+  .filter((item) => item.is_top20_curated && item.quantization === "Q4")
+  .sort((a, b) => (a.top20_rank ?? 999) - (b.top20_rank ?? 999));
 ---
 
 <BaseLayout
@@ -47,6 +55,40 @@ const estimatedCount = items.length - measuredCount;
         <h2>{sc.items.length}</h2>
         <p>SC keywords recycled</p>
       </article>
+      <article class="kpi">
+        <h2>{top20Curated.length}</h2>
+        <p>Top curated models</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Top 20 Curated (Ollama Popular)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Model</th>
+            <th>Tag</th>
+            <th>VRAM Q4</th>
+            <th>VRAM Q5</th>
+            <th>Category</th>
+            <th>Command</th>
+          </tr>
+        </thead>
+        <tbody>
+          {top20Curated.map((item) => (
+            <tr>
+              <td>{item.top20_rank}</td>
+              <td><a class="btn" href={`/en/models/${item.id}/`}>{item.family}</a></td>
+              <td><code>{item.ollama_tag}</code></td>
+              <td>{item.vram_min_gb}GB</td>
+              <td>{q5ByTag.has(item.ollama_tag) ? `${q5ByTag.get(item.ollama_tag)}GB` : "-"}</td>
+              <td>{item.category_label}</td>
+              <td><code>{item.ollama_command}</code></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </section>
 
     <section>

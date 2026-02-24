@@ -90,6 +90,24 @@ const schema = {
             <th>Ollama source</th>
             <td><a class="btn" href={item.ollama_source_url}>Library reference</a> (verified: {item.ollama_verified_at})</td>
           </tr>
+          {item.ollama_tag && (
+            <tr>
+              <th>Ollama tag</th>
+              <td><code>{item.ollama_tag}</code></td>
+            </tr>
+          )}
+          {item.popularity && (
+            <tr>
+              <th>Popularity</th>
+              <td>{item.popularity}</td>
+            </tr>
+          )}
+          {item.category_label && (
+            <tr>
+              <th>Category</th>
+              <td>{item.category_label}</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </section>
@@ -146,6 +164,7 @@ const schema = {
     </section>
 
     <section class="cta-row">
+      {item.ollama_command && <span class="btn"><code>{item.ollama_command}</code></span>}
       <a class="btn" href={`/en/models/group/${item.scenario}/`}>More {item.scenario} models</a>
       <a class="btn" href={`/en/models/group/${item.size_class}/`}>More {item.size_class} models</a>
       <a class="btn" href="/en/benchmarks/changelog/">Benchmark changelog</a>
