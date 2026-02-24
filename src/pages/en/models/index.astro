@@ -6,6 +6,8 @@ import sc from "../../../data/search-console-keywords.json";
 const items = catalog.items;
 const groups = catalog.group_definitions;
 const featured = [...items].sort((a, b) => b.params_b - a.params_b).slice(0, 8);
+const measuredCount = items.filter((item) => item.data_status === "measured").length;
+const estimatedCount = items.length - measuredCount;
 ---
 
 <BaseLayout
@@ -28,6 +30,14 @@ const featured = [...items].sort((a, b) => b.params_b - a.params_b).slice(0, 8);
       <article class="kpi">
         <h2>{groups.length}</h2>
         <p>Group hubs</p>
+      </article>
+      <article class="kpi">
+        <h2>{measuredCount}</h2>
+        <p>Measured profiles</p>
+      </article>
+      <article class="kpi">
+        <h2>{estimatedCount}</h2>
+        <p>Estimated profiles</p>
       </article>
       <article class="kpi">
         <h2>{sc.items.length}</h2>

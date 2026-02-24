@@ -33,6 +33,7 @@ const items = catalog.items
         <thead>
           <tr>
             <th>Model</th>
+            <th>Data</th>
             <th>VRAM min</th>
             <th>VRAM optimal</th>
             <th>Best local GPU</th>
@@ -44,6 +45,7 @@ const items = catalog.items
           {items.map((item) => (
             <tr>
               <td>{item.name}</td>
+              <td>{item.data_status === "measured" ? "Measured" : "Estimated"}</td>
               <td>{item.vram_min_gb}GB</td>
               <td>{item.vram_optimal_gb}GB</td>
               <td>{item.best_local_gpu}</td>

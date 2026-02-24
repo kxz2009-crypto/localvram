@@ -42,7 +42,8 @@ const sampleModels = catalog.items.slice(0, 120);
         `<h2>${model.name}</h2>`,
         `<p>Minimum VRAM: <strong>${model.vram_min_gb}GB</strong> | Optimal VRAM: <strong>${model.vram_optimal_gb}GB</strong></p>`,
         `<p>Best local: ${model.best_local_gpu} | Cloud fallback: ${model.cloud_fallback}</p>`,
-        `<p>Expected throughput: 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`
+        `<p>Expected throughput: 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`,
+        `<p>Data status: <strong>${model.data_status === "measured" ? "Measured" : "Estimated"}</strong></p>`
       ].join("");
 
       primary.textContent = cloudFirst ? "Open cloud options" : "Check local upgrade";

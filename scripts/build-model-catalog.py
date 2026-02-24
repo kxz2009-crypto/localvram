@@ -9,7 +9,9 @@ MODELS_OUT = ROOT / "src" / "data" / "models.json"
 
 FAMILIES = [
     {"family": "Llama", "scenario": "chat", "license_scope": "closed-weight", "focus": "general reasoning", "caveat": "license review needed"},
-    {"family": "Qwen", "scenario": "coding", "license_scope": "open-source", "focus": "multilingual coding", "caveat": "watch memory at long context"},
+    {"family": "Qwen2.5", "scenario": "coding", "license_scope": "open-source", "focus": "multilingual coding", "caveat": "watch memory at long context"},
+    {"family": "Qwen3", "scenario": "coding", "license_scope": "open-source", "focus": "reasoning and coding balance", "caveat": "long context memory pressure can spike"},
+    {"family": "Qwen3.5", "scenario": "coding", "license_scope": "open-source", "focus": "latest Qwen coding and agent workflows", "caveat": "verify release variant before production use"},
     {"family": "DeepSeek-R1", "scenario": "reasoning", "license_scope": "open-source", "focus": "chain-of-thought tasks", "caveat": "sensitive to quantization"},
     {"family": "Mistral", "scenario": "chat", "license_scope": "open-source", "focus": "fast interactive response", "caveat": "requires prompt style tuning"},
     {"family": "Codestral", "scenario": "coding", "license_scope": "closed-weight", "focus": "code completion", "caveat": "best with IDE context constraints"},
@@ -23,6 +25,12 @@ FAMILIES = [
     {"family": "Qwen-VL", "scenario": "multimodal", "license_scope": "open-source", "focus": "vision and OCR", "caveat": "large image batches increase memory"},
     {"family": "DeepSeek-Coder", "scenario": "coding", "license_scope": "open-source", "focus": "code generation", "caveat": "syntax reliability varies by quant"},
 ]
+
+VERIFIED_IDS = {
+    "qwen3-32b-q4",
+    "qwen3-32b-q5",
+    "deepseek-r1-32b-q4",
+}
 
 SIZES = [
     {"label": "7b", "params_b": 7, "size_class": "7b-14b", "base_vram_min": 8},
@@ -87,6 +95,8 @@ def main() -> None:
                         "cloud_fallback": "A100 80GB" if opt_vram > 32 else "A6000 48GB",
                         "cloud_hourly_usd": 1.95 if opt_vram > 32 else 0.76,
                         "local_monthly_power_usd": round((0.35 * 0.16) * 120, 2),
+                        "data_status": "measured" if model_id in VERIFIED_IDS else "estimated",
+                        "verified": model_id in VERIFIED_IDS,
                         "benchmarks": {
                             "rtx3090_tok_s": tok_3090,
                             "rtx4090_tok_s": tok_4090,
@@ -125,7 +135,7 @@ def main() -> None:
                 "id": item["id"],
                 "name": item["name"],
                 "quantizations": [item["quantization"]],
-                "verified": True,
+                "verified": bool(item["verified"]),
             }
             for item in items
         ],

@@ -82,6 +82,10 @@ const schema = {
             <th>Updated</th>
             <td>{item.updated_at}</td>
           </tr>
+          <tr>
+            <th>Data status</th>
+            <td>{item.data_status === "measured" ? "Measured on LocalVRAM hardware" : "Estimated baseline (pending measurement)"}</td>
+          </tr>
         </tbody>
       </table>
     </section>
@@ -153,5 +157,8 @@ const schema = {
     </section>
 
     <p class="affiliate-note">We may earn a commission if you click links on this page.</p>
+    {item.data_status !== "measured" && (
+      <p class="affiliate-note">This page currently uses estimated benchmark baselines. Measured data will replace it after validation.</p>
+    )}
   </main>
 </BaseLayout>
