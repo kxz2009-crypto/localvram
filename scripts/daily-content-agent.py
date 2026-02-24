@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OPPORTUNITY_FILE = ROOT / "src" / "data" / "content-opportunities.json"
+SC_FILE = ROOT / "src" / "data" / "search-console-keywords.json"
 UPDATES_FILE = ROOT / "src" / "data" / "daily-updates.json"
 
 
@@ -18,13 +19,27 @@ def score(item: dict) -> int:
 
 
 def main() -> None:
-    data = json.loads(OPPORTUNITY_FILE.read_text(encoding="utf-8"))
+    data = json.loads(OPPORTUNITY_FILE.read_text(encoding="utf-8-sig"))
     ranked = sorted(data.get("items", []), key=score, reverse=True)
-    selected = ranked[:3]
+    selected = ranked[:2]
+
+    if SC_FILE.exists():
+        sc_data = json.loads(SC_FILE.read_text(encoding="utf-8-sig"))
+        sc_ranked = sorted(sc_data.get("items", []), key=lambda x: x.get("clicks", 0) * x.get("ctr", 0), reverse=True)
+        for item in sc_ranked[:2]:
+            selected.append(
+                {
+                    "slug": item.get("landing", "/").strip("/").replace("/", "-"),
+                    "keyword": item.get("keyword", item.get("query", "")),
+                    "search_intent_score": min(10, max(1, 11 - int(item.get("position", 10)))),
+                    "commercial_intent_score": min(10, max(1, int(item.get("clicks", 0) / 3) + 1)),
+                    "freshness_gap_score": min(10, max(1, int(item.get("impressions", 0) / 80))),
+                }
+            )
 
     today = dt.date.today().isoformat()
     if UPDATES_FILE.exists():
-        updates = json.loads(UPDATES_FILE.read_text(encoding="utf-8"))
+        updates = json.loads(UPDATES_FILE.read_text(encoding="utf-8-sig"))
     else:
         updates = {"items": []}
 
@@ -33,7 +48,7 @@ def main() -> None:
         0,
         {
             "date": today,
-            "summary": "Agent-ranked SEO and content candidates generated.",
+            "summary": "Agent-ranked SEO candidates generated from opportunities + Search Console backfeed.",
             "candidates": [
                 {"slug": item["slug"], "keyword": item["keyword"], "score": score(item)}
                 for item in selected

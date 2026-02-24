@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import changelog from "../../../data/benchmark-changelog.json";
+---
+
+<BaseLayout
+  title="Benchmark Changelog | LocalVRAM"
+  description="Date-stamped benchmark updates with environment details and measurable result changes."
+  locale="en"
+>
+  <main class="container">
+    <h1>Benchmark Changelog</h1>
+    <p>
+      Last updated: {new Date(changelog.updated_at).toISOString().slice(0, 10)}.
+      This page is updated whenever benchmark baselines change.
+    </p>
+
+    <section class="post-list">
+      {changelog.items.map((entry) => (
+        <article class="post-card">
+          <h2>{entry.date} - {entry.title}</h2>
+          <p>{entry.environment}</p>
+          <ul>
+            {entry.changes.map((change) => (
+              <li>{change}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>

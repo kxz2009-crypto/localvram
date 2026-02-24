@@ -30,12 +30,16 @@ npm run dev
 
 - Status freshness: `src/data/status.json`
 - Content opportunities: `src/data/content-opportunities.json`
+- Search Console backfeed: `src/data/search-console-keywords.json`
 - CTA mapping: `src/data/cta-rules.json`
+- Model catalog (200+): `src/data/model-catalog.json`
 - Affiliate links: `src/data/affiliate-links.json` (replace placeholders)
 
 ## Scripts
 
 - `python scripts/daily-content-agent.py`
+- `python scripts/build-model-catalog.py`
+- `python scripts/build-sitemap.py`
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
 - `python scripts/cluster-benchmark.py`

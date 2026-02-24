@@ -200,6 +200,16 @@ li code {
   color: var(--muted);
 }
 
+.input {
+  width: 100%;
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #020617;
+  color: var(--text);
+}
+
 .simple-header {
   display: flex;
   justify-content: space-between;
@@ -281,6 +291,60 @@ li code {
   border-radius: 6px;
   background: #020617;
   color: #7dd3fc;
+}
+
+.kpi-row {
+  margin: 14px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.kpi {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  background: var(--card);
+}
+
+.kpi h2 {
+  margin: 0;
+  color: #7dd3fc;
+}
+
+.kpi p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.group-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.group-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  background: var(--card);
+}
+
+.group-card h3 {
+  margin: 0 0 8px;
+  color: var(--accent);
+}
+
+.group-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.affiliate-note {
+  margin-top: 12px;
+  color: #7a7a7a;
+  font-size: 12px;
 }
 
 .legal-footer {

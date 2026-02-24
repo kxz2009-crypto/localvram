@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Benchmarks | LocalVRAM"
+  description="Benchmark update timeline and community result submission for LocalVRAM."
+  locale="en"
+>
+  <main class="container">
+    <h1>Benchmarks</h1>
+    <p>Track what changed, when it changed, and submit verified runs from your own hardware.</p>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Benchmark Changelog</h2>
+        <p>Every update with date, environment, and result deltas.</p>
+        <a class="btn btn-primary" href="/en/benchmarks/changelog/">Open changelog</a>
+      </article>
+      <article class="card">
+        <h2>Submit Your Test Result</h2>
+        <p>Community-backed data pipeline with precheck and manual review.</p>
+        <a class="btn btn-primary" href="/en/benchmarks/submit-result/">Open submit guide</a>
+      </article>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import catalog from "../../../../data/model-catalog.json";
+import links from "../../../../data/affiliate-links.json";
+
+export function getStaticPaths() {
+  return catalog.group_definitions.map((group) => ({
+    params: { group: group.id },
+    props: { group }
+  }));
+}
+
+const { group } = Astro.props;
+const items = catalog.items
+  .filter((item) => item.license_scope === group.id || item.size_class === group.id || item.scenario === group.id)
+  .sort((a, b) => b.params_b - a.params_b || a.name.localeCompare(b.name));
+---
+
+<BaseLayout
+  title={`${group.label} | LocalVRAM`}
+  description={`${group.label}: VRAM requirements, benchmark anchors, and local/cloud path.`}
+  locale="en"
+>
+  <main class="container">
+    <h1>{group.label}</h1>
+    <p>
+      {items.length} profiles in this group. Use this hub page to compare practical VRAM floor, expected throughput,
+      and best local-vs-cloud path.
+    </p>
+
+    <section class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min</th>
+            <th>VRAM optimal</th>
+            <th>Best local GPU</th>
+            <th>Cloud fallback</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB</td>
+              <td>{item.vram_optimal_gb}GB</td>
+              <td>{item.best_local_gpu}</td>
+              <td>{item.cloud_fallback}</td>
+              <td>
+                <a class="btn" href={`/en/models/${item.id}/`}>Open</a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn" href="/en/models/">Back to all groups</a>
+      <a class="btn" href="/en/tools/vram-calculator/">Use VRAM calculator</a>
+      <a class="btn btn-primary" href={links.runpod}>Run large models on RunPod</a>
+      <a class="btn btn-primary" href={links.vast}>Try Vast.ai fallback</a>
+    </section>
+
+    <p class="affiliate-note">We may earn a commission if you click links on this page.</p>
+  </main>
+</BaseLayout>

@@ -1,13 +1,57 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import links from "../../../data/affiliate-links.json";
+
+const sampleModels = catalog.items.slice(0, 120);
 ---
 
 <BaseLayout title="VRAM Calculator | LocalVRAM" locale="en">
   <main class="container">
     <h1>VRAM Calculator</h1>
-    <p>
-      Static v1 calculator placeholder. Final interactive logic will be fed by
-      <code>src/data/models.json</code>.
-    </p>
+    <p>Pick a model profile to get minimum VRAM, optimal VRAM, and local-vs-cloud recommendation.</p>
+
+    <section class="card">
+      <label for="model-select">Model profile</label>
+      <select id="model-select" class="input">
+        {sampleModels.map((item) => (
+          <option value={item.id}>{item.name}</option>
+        ))}
+      </select>
+      <div id="calc-result" class="card" style="margin-top: 12px;" />
+      <div class="cta-row">
+        <a id="calc-primary" class="btn btn-primary" href="/en/affiliate/hardware-upgrade/">Check local upgrade</a>
+        <a id="calc-cloud-runpod" class="btn" href={links.runpod}>RunPod fallback</a>
+        <a id="calc-cloud-vast" class="btn" href={links.vast}>Vast.ai fallback</a>
+      </div>
+      <p class="affiliate-note">We may earn a commission if you click links on this page.</p>
+    </section>
   </main>
+
+  <script define:vars={{ items: sampleModels }}>
+    const select = document.getElementById("model-select");
+    const result = document.getElementById("calc-result");
+    const primary = document.getElementById("calc-primary");
+    const runpod = document.getElementById("calc-cloud-runpod");
+    const vast = document.getElementById("calc-cloud-vast");
+
+    const render = () => {
+      const model = items.find((item) => item.id === select.value) || items[0];
+      const cloudFirst = model.vram_optimal_gb > 24;
+      result.innerHTML = [
+        `<h2>${model.name}</h2>`,
+        `<p>Minimum VRAM: <strong>${model.vram_min_gb}GB</strong> | Optimal VRAM: <strong>${model.vram_optimal_gb}GB</strong></p>`,
+        `<p>Best local: ${model.best_local_gpu} | Cloud fallback: ${model.cloud_fallback}</p>`,
+        `<p>Expected throughput: 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`
+      ].join("");
+
+      primary.textContent = cloudFirst ? "Open cloud options" : "Check local upgrade";
+      primary.href = cloudFirst ? "/en/affiliate/cloud-gpu/" : "/en/affiliate/hardware-upgrade/";
+      runpod.style.display = cloudFirst ? "inline-block" : "none";
+      vast.style.display = cloudFirst ? "inline-block" : "none";
+    };
+
+    select.addEventListener("change", render);
+    render();
+  </script>
 </BaseLayout>

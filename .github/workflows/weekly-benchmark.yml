@@ -26,10 +26,16 @@ jobs:
       - name: Cluster benchmark
         run: python scripts/cluster-benchmark.py
 
+      - name: Build model catalog
+        run: python scripts/build-model-catalog.py
+
+      - name: Build sitemap
+        run: python scripts/build-sitemap.py
+
       - name: Commit benchmark updates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/status.json src/data/cluster-benchmarks.json logs
+          git add src/data/status.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/models.json src/data/model-catalog.json public/sitemap.xml logs
           git diff --cached --quiet || git commit -m "chore: weekly benchmark update"
           git push

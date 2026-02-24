@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Submit Your Test Result | LocalVRAM"
+  description="Contribute your hardware benchmark data to LocalVRAM with a standardized precheck flow."
+  locale="en"
+>
+  <main class="container">
+    <h1>Submit Your Test Result</h1>
+    <p>Community submissions are accepted after automated precheck and manual validation.</p>
+
+    <section class="card">
+      <h2>Required submission fields</h2>
+      <ul>
+        <li>Model ID (example: <code>llama-70b-q4</code>)</li>
+        <li>Hardware profile (GPU, CPU, RAM, OS)</li>
+        <li>Ollama version and backend (CUDA/ROCm/Metal)</li>
+        <li>Prompt shape and context length</li>
+        <li>Measured token throughput and runtime notes</li>
+      </ul>
+    </section>
+
+    <section class="card terminal-card">
+      <h2>Precheck command</h2>
+      <pre><code>python scripts/score-user-submission.py --model-id llama-70b-q4 --hardware "RTX 4090 24GB + WSL2" --score 0.91</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>Submission channel</h2>
+      <p>
+        Open a GitHub issue with your data package and include benchmark logs/screenshots.
+      </p>
+      <a class="btn btn-primary" href="https://github.com/kxz2009-crypto/localvram/issues/new">
+        Open GitHub issue
+      </a>
+    </section>
+  </main>
+</BaseLayout>

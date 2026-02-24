@@ -23,6 +23,12 @@ jobs:
       - name: Run content agent
         run: python scripts/daily-content-agent.py
 
+      - name: Build model catalog
+        run: python scripts/build-model-catalog.py
+
+      - name: Build sitemap
+        run: python scripts/build-sitemap.py
+
       - name: Run quality gate
         run: python scripts/quality-gate.py
 
@@ -30,6 +36,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/daily-updates.json
+          git add src/data/daily-updates.json src/data/models.json src/data/model-catalog.json public/sitemap.xml
           git diff --cached --quiet || git commit -m "chore: daily content update"
           git push

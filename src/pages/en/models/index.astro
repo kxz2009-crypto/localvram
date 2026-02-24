@@ -1,0 +1,109 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import sc from "../../../data/search-console-keywords.json";
+
+const items = catalog.items;
+const groups = catalog.group_definitions;
+const featured = [...items].sort((a, b) => b.params_b - a.params_b).slice(0, 8);
+---
+
+<BaseLayout
+  title={`Model Catalog (${catalog.count}) | LocalVRAM`}
+  description="200+ model profiles with VRAM requirements, local/cloud recommendations, and verified benchmark signals."
+  locale="en"
+>
+  <main class="container">
+    <h1>Model Catalog ({catalog.count} profiles)</h1>
+    <p>
+      Structured model pages for long-tail SEO: grouped by license scope, model size, and workload scenario.
+      Every profile includes VRAM requirements, local-vs-cloud recommendation, and benchmark anchor metrics.
+    </p>
+
+    <section class="kpi-row">
+      <article class="kpi">
+        <h2>{catalog.count}</h2>
+        <p>Total profiles</p>
+      </article>
+      <article class="kpi">
+        <h2>{groups.length}</h2>
+        <p>Group hubs</p>
+      </article>
+      <article class="kpi">
+        <h2>{sc.items.length}</h2>
+        <p>SC keywords recycled</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Group Hubs</h2>
+      <div class="group-grid">
+        {groups.map((group) => {
+          const count = items.filter((item) =>
+            item.license_scope === group.id || item.size_class === group.id || item.scenario === group.id
+          ).length;
+          return (
+            <article class="group-card">
+              <h3>{group.label}</h3>
+              <p>{count} models</p>
+              <a class="btn btn-primary" href={`/en/models/group/${group.id}/`}>Open group</a>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Featured high-demand models</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM (min/optimal)</th>
+            <th>3090 tok/s</th>
+            <th>Path</th>
+          </tr>
+        </thead>
+        <tbody>
+          {featured.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td>{item.benchmarks.rtx3090_tok_s}</td>
+              <td>
+                <a class="btn" href={`/en/models/${item.id}/`}>View</a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Search Console feedback loop</h2>
+      <p>Top keywords feeding daily content and model page updates.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Keyword</th>
+            <th>Clicks</th>
+            <th>Impressions</th>
+            <th>CTR</th>
+            <th>Landing</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sc.items.map((item) => (
+            <tr>
+              <td>{item.keyword}</td>
+              <td>{item.clicks}</td>
+              <td>{item.impressions}</td>
+              <td>{Math.round(item.ctr * 1000) / 10}%</td>
+              <td><code>{item.landing}</code></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>

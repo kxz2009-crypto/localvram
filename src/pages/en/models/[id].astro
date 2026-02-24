@@ -1,0 +1,157 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import links from "../../../data/affiliate-links.json";
+
+export function getStaticPaths() {
+  return catalog.items.map((item) => ({
+    params: { id: item.id },
+    props: { item }
+  }));
+}
+
+const { item } = Astro.props;
+const isCloudFirst = item.vram_optimal_gb > 24;
+const monthlyCloud40h = Math.round(item.cloud_hourly_usd * 40 * 100) / 100;
+const monthlyCloud120h = Math.round(item.cloud_hourly_usd * 120 * 100) / 100;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: `${item.name} VRAM Requirement and Benchmark`,
+  dateModified: item.updated_at,
+  author: {
+    "@type": "Organization",
+    name: "LocalVRAM"
+  },
+  about: {
+    "@type": "SoftwareApplication",
+    name: item.name
+  }
+};
+---
+
+<BaseLayout
+  title={`${item.name} on LocalVRAM`}
+  description={`${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal, with local/cloud benchmark references.`}
+  locale="en"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <main class="container">
+    <h1>{item.name}</h1>
+    <p>{item.focus}. Caveat: {item.caveat}.</p>
+
+    <section class="card">
+      <h2>Hardware Snapshot</h2>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Family</th>
+            <td>{item.family}</td>
+          </tr>
+          <tr>
+            <th>Scenario</th>
+            <td>{item.scenario}</td>
+          </tr>
+          <tr>
+            <th>License scope</th>
+            <td>{item.license_scope}</td>
+          </tr>
+          <tr>
+            <th>Quantization</th>
+            <td>{item.quantization}</td>
+          </tr>
+          <tr>
+            <th>VRAM minimum</th>
+            <td>{item.vram_min_gb}GB</td>
+          </tr>
+          <tr>
+            <th>VRAM optimal</th>
+            <td>{item.vram_optimal_gb}GB</td>
+          </tr>
+          <tr>
+            <th>Best local GPU</th>
+            <td>{item.best_local_gpu}</td>
+          </tr>
+          <tr>
+            <th>Cloud fallback</th>
+            <td>{item.cloud_fallback}</td>
+          </tr>
+          <tr>
+            <th>Updated</th>
+            <td>{item.updated_at}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Benchmark Anchors</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Hardware</th>
+            <th>Expected tok/s</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RTX 3090 24GB</td>
+            <td>{item.benchmarks.rtx3090_tok_s}</td>
+          </tr>
+          <tr>
+            <td>RTX 4090 24GB</td>
+            <td>{item.benchmarks.rtx4090_tok_s}</td>
+          </tr>
+          <tr>
+            <td>A100 80GB</td>
+            <td>{item.benchmarks.a100_tok_s}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Local vs Cloud Cost Hint</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            <th>40h / month</th>
+            <th>120h / month</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Local power only (3090 baseline)</td>
+            <td>${Math.round((item.local_monthly_power_usd / 3) * 100) / 100}</td>
+            <td>${item.local_monthly_power_usd}</td>
+          </tr>
+          <tr>
+            <td>{item.cloud_fallback}</td>
+            <td>${monthlyCloud40h}</td>
+            <td>${monthlyCloud120h}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn" href={`/en/models/group/${item.scenario}/`}>More {item.scenario} models</a>
+      <a class="btn" href={`/en/models/group/${item.size_class}/`}>More {item.size_class} models</a>
+      <a class="btn" href="/en/benchmarks/changelog/">Benchmark changelog</a>
+      <a class="btn" href="/en/benchmarks/submit-result/">Submit your test result</a>
+      {isCloudFirst ? (
+        <>
+          <a class="btn btn-primary" href={links.runpod}>Run on RunPod</a>
+          <a class="btn btn-primary" href={links.vast}>Try Vast.ai</a>
+        </>
+      ) : (
+        <a class="btn btn-primary" href="/en/affiliate/hardware-upgrade/">Check local GPU upgrade</a>
+      )}
+    </section>
+
+    <p class="affiliate-note">We may earn a commission if you click links on this page.</p>
+  </main>
+</BaseLayout>

@@ -1,8 +1,8 @@
 {
   "items": [
     {
-      "date": "2026-02-23",
-      "summary": "Agent-ranked SEO and content candidates generated.",
+      "date": "2026-02-24",
+      "summary": "Agent-ranked SEO candidates generated from opportunities + Search Console backfeed.",
       "candidates": [
         {
           "slug": "q4-vs-q8-quality-loss",
@@ -13,12 +13,22 @@
           "slug": "ollama-local-cluster-network",
           "keyword": "ollama local cluster network",
           "score": 336
+        },
+        {
+          "slug": "en-models-llama-70b-q4",
+          "keyword": "llama 70b on 3090",
+          "score": 80
+        },
+        {
+          "slug": "en-affiliate-cloud-gpu",
+          "keyword": "runpod a100 ollama",
+          "score": 40
         }
       ]
     },
     {
-      "date": "2026-02-24",
-      "summary": "Initial content system rollout with high-intent SEO pages.",
+      "date": "2026-02-23",
+      "summary": "Agent-ranked SEO and content candidates generated.",
       "candidates": [
         {
           "slug": "q4-vs-q8-quality-loss",

@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-02-24T11:30:00Z",
+  "items": [
+    {
+      "date": "2026-02-24",
+      "title": "Llama 70B Q4 sustained run updated",
+      "environment": "RTX 3090 | CUDA 12.4 | Ollama 0.5.7",
+      "changes": [
+        "1-hour sustained run completed with updated thermal profile",
+        "Token throughput increased by 12% versus previous baseline",
+        "OOM threshold at 16K context reconfirmed"
+      ]
+    },
+    {
+      "date": "2026-02-23",
+      "title": "Qwen 32B Q5 local-vs-cloud cost refresh",
+      "environment": "RTX 3090 + RunPod A6000",
+      "changes": [
+        "ROI table recalculated with latest cloud hourly pricing",
+        "Cloud fallback CTA switched for >32GB optimal VRAM profiles"
+      ]
+    },
+    {
+      "date": "2026-02-22",
+      "title": "DeepSeek-R1 quantization benchmark batch",
+      "environment": "RTX 3090 | WSL2 | Ollama",
+      "changes": [
+        "Added Q4/Q5/Q8 comparison",
+        "Updated quality notes for long-context prompts"
+      ]
+    }
+  ]
+}
