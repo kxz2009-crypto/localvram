@@ -9,15 +9,18 @@ const AMAZON_RECOMMENDATIONS = {
   },
   "rtx-4090-24gb": {
     keyword: "RTX 4090 24GB graphics card",
-    label: "RTX 4090 24GB"
+    label: "RTX 4090 24GB",
+    directUrl: "https://amzn.to/3N1JaCr"
   },
   "atx3-1000w-psu": {
     keyword: "ATX 3.0 1000W PSU",
-    label: "ATX 3.0 1000W PSU"
+    label: "ATX 3.0 1000W PSU",
+    directUrl: "https://amzn.to/4ryN84q"
   },
   "high-airflow-case": {
     keyword: "high airflow mid tower case",
-    label: "High Airflow Case"
+    label: "CORSAIR 4000D Mid-Tower",
+    directUrl: "https://amzn.to/4ryVBEN"
   }
 };
 
