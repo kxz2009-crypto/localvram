@@ -4,6 +4,22 @@ on:
   schedule:
     - cron: "0 2 * * 0"
   workflow_dispatch:
+    inputs:
+      include_heavy_targets:
+        description: "Include heavy offload targets (e.g. 70B on 24GB+RAM)"
+        required: false
+        default: false
+        type: boolean
+      extra_targets:
+        description: "Extra targets CSV (example: mistral:7b=128,llama3.3:70b-instruct-q4_K_M=64)"
+        required: false
+        default: ""
+        type: string
+      benchmark_timeout_s:
+        description: "Per-request timeout seconds"
+        required: false
+        default: "600"
+        type: string
 
 permissions:
   contents: write
@@ -21,7 +37,22 @@ jobs:
           python-version: "3.11"
 
       - name: Weekly benchmark
-        run: python scripts/weekly-benchmark.py
+        env:
+          INPUT_INCLUDE_HEAVY: ${{ github.event.inputs.include_heavy_targets }}
+          INPUT_EXTRA_TARGETS: ${{ github.event.inputs.extra_targets }}
+          INPUT_TIMEOUT_S: ${{ github.event.inputs.benchmark_timeout_s }}
+        run: |
+          ARGS=()
+          if [ -n "${INPUT_EXTRA_TARGETS}" ]; then
+            ARGS+=(--extra-targets "${INPUT_EXTRA_TARGETS}")
+          fi
+          if [ "${INPUT_INCLUDE_HEAVY}" = "true" ]; then
+            ARGS+=(--include-heavy-targets)
+          fi
+          if [ -n "${INPUT_TIMEOUT_S}" ]; then
+            ARGS+=(--timeout "${INPUT_TIMEOUT_S}")
+          fi
+          python scripts/weekly-benchmark.py "${ARGS[@]}"
 
       - name: Cluster benchmark
         run: python scripts/cluster-benchmark.py

@@ -21,10 +21,12 @@ STATUS_FILE = ROOT / "src" / "data" / "status.json"
 CHANGELOG_FILE = ROOT / "src" / "data" / "benchmark-changelog.json"
 RESULTS_FILE = ROOT / "src" / "data" / "benchmark-results.json"
 MODEL_CATALOG_FILE = ROOT / "src" / "data" / "model-catalog.json"
+TAG_ALIASES_FILE = ROOT / "src" / "data" / "benchmark-tag-aliases.json"
 LOG_DIR = ROOT / "logs"
 SCREENSHOT_DIR = ROOT / "public" / "screenshots"
 
 DEFAULT_TARGETS = "llama3:8b=128,qwen3:8b=128,deepseek-r1:8b=128"
+DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PRE_COOLDOWN_S = 5.0
 DEFAULT_PROMPT = (
@@ -176,6 +178,32 @@ def load_known_model_tags() -> set[str]:
         if tag:
             tags.add(tag)
     return tags
+
+
+def load_tag_aliases() -> dict[str, str]:
+    payload = read_json(TAG_ALIASES_FILE, {"aliases": {}})
+    aliases = payload.get("aliases", {})
+    if not isinstance(aliases, dict):
+        return {}
+    out: dict[str, str] = {}
+    for raw_tag, canonical_tag in aliases.items():
+        raw = str(raw_tag).strip().lower()
+        canonical = str(canonical_tag).strip().lower()
+        if raw and canonical:
+            out[raw] = canonical
+    return out
+
+
+def env_bool(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    val = str(raw).strip().lower()
+    if val in {"1", "true", "yes", "on"}:
+        return True
+    if val in {"0", "false", "no", "off"}:
+        return False
+    return default
 
 
 def extract_legacy_model_map(payload: Any) -> dict[str, dict[str, Any]]:
@@ -341,6 +369,19 @@ def parse_targets(raw: str) -> list[tuple[str, int]]:
     return targets
 
 
+def merge_targets(*target_groups: list[tuple[str, int]]) -> list[tuple[str, int]]:
+    merged: list[tuple[str, int]] = []
+    seen: set[str] = set()
+    for group in target_groups:
+        for model, num_predict in group:
+            model_tag = str(model).strip().lower()
+            if not model_tag or model_tag in seen:
+                continue
+            seen.add(model_tag)
+            merged.append((model_tag, int(num_predict)))
+    return merged
+
+
 def run_single_generation(
     endpoint: str,
     model: str,
@@ -494,6 +535,14 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run real weekly Ollama benchmarks.")
     parser.add_argument("--endpoint", default=resolve_default_endpoint())
     parser.add_argument("--targets", default=os.getenv("LV_WEEKLY_TARGETS", DEFAULT_TARGETS))
+    parser.add_argument("--extra-targets", default=os.getenv("LV_WEEKLY_EXTRA_TARGETS", ""))
+    parser.add_argument("--heavy-targets", default=os.getenv("LV_WEEKLY_HEAVY_TARGETS", DEFAULT_HEAVY_TARGETS))
+    parser.add_argument(
+        "--include-heavy-targets",
+        action="store_true",
+        default=env_bool("LV_INCLUDE_HEAVY_TARGETS", False),
+        help="Include heavy offload targets (for example 70B variants on 24GB VRAM + system RAM).",
+    )
     parser.add_argument("--runs", type=int, default=int(os.getenv("LV_RUNS_PER_MODEL", "2")))
     parser.add_argument("--timeout", type=int, default=int(os.getenv("LV_BENCHMARK_TIMEOUT_S", "600")))
     parser.add_argument("--warmup-predict", type=int, default=int(os.getenv("LV_WARMUP_PREDICT", "24")))
@@ -535,15 +584,22 @@ def main() -> None:
         print("dry-run: weekly benchmark execution skipped")
         print(f"endpoint={redacted_endpoint}")
         print(f"targets={args.targets}")
+        print(f"extra_targets={args.extra_targets}")
+        print(f"include_heavy_targets={args.include_heavy_targets}")
+        print(f"heavy_targets={args.heavy_targets}")
         print(f"num_ctx={max(256, args.num_ctx)}")
         print("temperature=0")
         print(f"log_retention_days={args.log_retention_days}")
         return
 
-    targets = parse_targets(args.targets)
+    base_targets = parse_targets(args.targets)
+    extra_targets = parse_targets(args.extra_targets) if str(args.extra_targets).strip() else []
+    heavy_targets = parse_targets(args.heavy_targets) if args.include_heavy_targets and str(args.heavy_targets).strip() else []
+    targets = merge_targets(base_targets, extra_targets, heavy_targets)
     if not targets:
         raise SystemExit("no valid benchmark targets configured")
     known_tags = load_known_model_tags()
+    tag_aliases = load_tag_aliases()
 
     try:
         local_models = list_local_models(endpoint)
@@ -565,6 +621,9 @@ def main() -> None:
             "ts": now_iso,
             "endpoint": redacted_endpoint,
             "targets": targets,
+            "extra_targets": extra_targets,
+            "heavy_targets_enabled": bool(args.include_heavy_targets),
+            "heavy_targets": heavy_targets,
             "num_ctx": max(256, args.num_ctx),
             "temperature": 0,
             "pre_cooldown_s": pre_cooldown_s,
@@ -578,13 +637,15 @@ def main() -> None:
     reports: list[dict[str, Any]] = []
     for model, num_predict in targets:
         model_tag = model.strip().lower()
-        if known_tags and model_tag not in known_tags:
+        canonical_model_tag = tag_aliases.get(model_tag, model_tag)
+        if known_tags and canonical_model_tag not in known_tags:
             report = {
                 "model": model_tag,
+                "canonical_model": canonical_model_tag,
                 "num_predict": num_predict,
                 "status": "error",
                 "runs": [],
-                "error": "model tag not found in model-catalog (ollama_tag mismatch)",
+                "error": "model tag not found in model-catalog (or alias map) (ollama_tag mismatch)",
                 "error_type": "unknown_model_tag",
             }
             reports.append(report)
@@ -594,6 +655,7 @@ def main() -> None:
         if model_tag not in local_models:
             report = {
                 "model": model_tag,
+                "canonical_model": canonical_model_tag,
                 "num_predict": num_predict,
                 "status": "error",
                 "runs": [],
@@ -614,6 +676,7 @@ def main() -> None:
             warmup_predict=max(0, args.warmup_predict),
             log_file=log_file,
         )
+        report["canonical_model"] = canonical_model_tag
         reports.append(report)
 
     success_reports = [r for r in reports if r.get("status") == "ok" and r.get("runs")]
@@ -636,7 +699,8 @@ def main() -> None:
         runs = report.get("runs", [])
         prompt_tokens = int(round(statistics.mean(r.get("prompt_eval_count", 0) for r in runs))) if runs else 0
         eval_tokens = int(round(statistics.mean(r.get("eval_count", 0) for r in runs))) if runs else 0
-        model_tag = str(report.get("model", "")).strip().lower()
+        source_model_tag = str(report.get("model", "")).strip().lower()
+        model_tag = str(report.get("canonical_model", source_model_tag)).strip().lower()
         next_model_rows[model_tag] = {
             "tokens_per_second": round(float(report.get("tokens_per_s_avg", 0.0)), 3),
             "latency_ms": round(float(report.get("latency_s_avg", 0.0)) * 1000.0, 2),
@@ -652,6 +716,7 @@ def main() -> None:
             "num_ctx": max(256, args.num_ctx),
             "temperature": 0,
             "verified_tooltip": str(args.verified_tooltip).strip(),
+            "source_model_tag": source_model_tag,
         }
 
     changed_models = sorted(
