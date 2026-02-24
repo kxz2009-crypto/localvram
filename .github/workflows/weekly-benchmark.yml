@@ -41,6 +41,7 @@ jobs:
           INPUT_INCLUDE_HEAVY: ${{ github.event.inputs.include_heavy_targets }}
           INPUT_EXTRA_TARGETS: ${{ github.event.inputs.extra_targets }}
           INPUT_TIMEOUT_S: ${{ github.event.inputs.benchmark_timeout_s }}
+          LV_WEEKLY_TARGETS: qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128
         run: |
           ARGS=()
           if [ -n "${INPUT_EXTRA_TARGETS}" ]; then
