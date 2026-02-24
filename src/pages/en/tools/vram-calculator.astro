@@ -109,7 +109,7 @@ const defaultModelId = firstMeasuredModel?.id || sampleModels[0]?.id || "";
       const model = items.find((item) => item.id === select.value) || items[0];
       const realData = model.ollama_tag ? benchmarkMap[model.ollama_tag] : null;
       const isMeasured = realData && realData.status === "ok" && typeof realData.tokens_per_second === "number";
-      const realPerf = isMeasured ? `${realData.tokens_per_second} tok/s` : "N/A";
+      const realPerf = isMeasured ? `${realData.tokens_per_second.toFixed(1)} tok/s` : "N/A";
       const realTestTime = isMeasured ? realData.test_time : "N/A";
       const cloudFirst = model.vram_optimal_gb > 24;
       result.innerHTML = [
