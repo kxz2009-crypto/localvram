@@ -283,6 +283,24 @@ li code {
   color: #7dd3fc;
 }
 
+.legal-footer {
+  margin: 20px auto 0;
+  width: min(1120px, 100% - 32px);
+  border-top: 1px solid #1f2937;
+  padding: 20px 0 30px;
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.6;
+}
+
+.legal-footer p {
+  margin: 0 0 12px;
+}
+
+.legal-footer strong {
+  color: #7a7a7a;
+}
+
 @media (max-width: 900px) {
   .top-nav {
     grid-template-columns: 1fr;
