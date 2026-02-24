@@ -20,6 +20,7 @@ LOG_DIR = ROOT / "logs"
 
 DEFAULT_ENDPOINTS = "http://127.0.0.1:11434"
 DEFAULT_MODEL = "qwen3:8b"
+DEFAULT_NUM_CTX = 4096
 DEFAULT_PROMPT = (
     "Provide exactly three short bullet points about distributed local inference stability."
 )
@@ -88,12 +89,28 @@ def classify_error(error_text: str) -> str:
 def read_json(path: Path, default: Any) -> Any:
     if not path.exists():
         return default
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def prune_old_logs(log_dir: Path, prefix: str, retention_days: int) -> int:
+    if retention_days <= 0 or not log_dir.exists():
+        return 0
+    cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=retention_days)
+    deleted = 0
+    for log_file in log_dir.glob(f"{prefix}*.log"):
+        try:
+            modified_at = dt.datetime.fromtimestamp(log_file.stat().st_mtime, tz=dt.timezone.utc)
+        except FileNotFoundError:
+            continue
+        if modified_at < cutoff:
+            log_file.unlink(missing_ok=True)
+            deleted += 1
+    return deleted
 
 
 def append_log(path: Path, payload: dict[str, Any]) -> None:
@@ -151,12 +168,19 @@ def ns_to_seconds(value: Any) -> float:
     return val / 1_000_000_000.0
 
 
-def stream_generate_once(endpoint: str, model: str, prompt: str, num_predict: int, timeout_s: int) -> dict[str, Any]:
+def stream_generate_once(
+    endpoint: str,
+    model: str,
+    prompt: str,
+    num_predict: int,
+    num_ctx: int,
+    timeout_s: int,
+) -> dict[str, Any]:
     payload = {
         "model": model,
         "prompt": prompt,
         "stream": True,
-        "options": {"temperature": 0, "num_predict": num_predict},
+        "options": {"temperature": 0, "num_predict": num_predict, "num_ctx": num_ctx},
     }
     started = time.perf_counter()
     first_token_ms = None
@@ -193,6 +217,7 @@ def benchmark_endpoint(
     model: str,
     prompt: str,
     num_predict: int,
+    num_ctx: int,
     timeout_s: int,
     runs: int,
     log_file: Path,
@@ -243,7 +268,7 @@ def benchmark_endpoint(
                         break
                     time.sleep(max(0.5, min(cooldown_s, 2.0)))
 
-            row = stream_generate_once(endpoint, model, prompt, num_predict, timeout_s)
+            row = stream_generate_once(endpoint, model, prompt, num_predict, num_ctx, timeout_s)
             row["run_index"] = idx + 1
             row["endpoint"] = redacted_endpoint
             report["runs"].append(row)
@@ -286,11 +311,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--endpoints", default=os.getenv("LV_CLUSTER_ENDPOINTS", DEFAULT_ENDPOINTS))
     parser.add_argument("--model", default=os.getenv("LV_CLUSTER_MODEL", DEFAULT_MODEL))
     parser.add_argument("--num-predict", type=int, default=int(os.getenv("LV_CLUSTER_NUM_PREDICT", "96")))
+    parser.add_argument("--num-ctx", type=int, default=int(os.getenv("LV_CLUSTER_NUM_CTX", str(DEFAULT_NUM_CTX))))
     parser.add_argument("--runs", type=int, default=int(os.getenv("LV_CLUSTER_RUNS", "2")))
     parser.add_argument("--timeout", type=int, default=int(os.getenv("LV_CLUSTER_TIMEOUT_S", "600")))
     parser.add_argument("--max-workers", type=int, default=int(os.getenv("LV_CLUSTER_MAX_WORKERS", "2")))
     parser.add_argument("--cooldown-s", type=float, default=float(os.getenv("LV_CLUSTER_COOLDOWN_S", "2.0")))
     parser.add_argument("--power-limit-w", type=float, default=float(os.getenv("LV_CLUSTER_POWER_LIMIT_W", "0")))
+    parser.add_argument(
+        "--log-retention-days",
+        type=int,
+        default=int(os.getenv("LV_CLUSTER_LOG_RETENTION_DAYS", "30")),
+    )
     parser.add_argument("--prompt", default=os.getenv("LV_CLUSTER_PROMPT", DEFAULT_PROMPT))
     parser.add_argument("--allow-empty", action="store_true", help="Do not fail when no endpoint succeeds.")
     parser.add_argument("--dry-run", action="store_true")
@@ -306,11 +337,15 @@ def main() -> None:
 
     log_file = LOG_DIR / f"cluster-benchmark-{dt.datetime.now(dt.timezone.utc).strftime('%Y%m%d')}.log"
     LOG_DIR.mkdir(parents=True, exist_ok=True)
+    deleted_logs = prune_old_logs(LOG_DIR, "cluster-benchmark-", max(0, args.log_retention_days))
 
     if args.dry_run:
         print("dry-run: cluster benchmark execution skipped")
         print(f"endpoints={redacted_endpoints}")
         print(f"model={args.model}")
+        print(f"num_ctx={max(256, args.num_ctx)}")
+        print("temperature=0")
+        print(f"log_retention_days={args.log_retention_days}")
         return
 
     append_log(
@@ -322,9 +357,12 @@ def main() -> None:
             "model": args.model,
             "runs": args.runs,
             "num_predict": args.num_predict,
+            "num_ctx": max(256, args.num_ctx),
+            "temperature": 0,
             "max_workers": max(1, args.max_workers),
             "cooldown_s": max(0.0, args.cooldown_s),
             "power_limit_w": max(0.0, args.power_limit_w),
+            "deleted_logs": deleted_logs,
         },
     )
 
@@ -339,6 +377,7 @@ def main() -> None:
                 args.model,
                 args.prompt,
                 max(16, args.num_predict),
+                max(256, args.num_ctx),
                 args.timeout,
                 max(1, args.runs),
                 log_file,
@@ -369,6 +408,8 @@ def main() -> None:
             "id": f"cluster_{dt.datetime.now(dt.timezone.utc).strftime('%Y%m%d%H%M%S')}",
             "topology": f"{len(endpoints)} endpoint(s)",
             "model_id": args.model,
+            "num_ctx": max(256, args.num_ctx),
+            "temperature": 0,
             "metrics": {
                 "avg_node_latency_ms": avg_node_latency_ms,
                 "cross_node_ttft_jitter_ms": cross_node_ttft_jitter_ms,

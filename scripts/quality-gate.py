@@ -12,6 +12,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "cta-rules.json",
     ROOT / "src" / "data" / "daily-updates.json",
     ROOT / "src" / "data" / "benchmark-changelog.json",
+    ROOT / "src" / "data" / "benchmark-results.json",
     ROOT / "src" / "data" / "search-console-keywords.json",
 ]
 REQUIRED_PAGES = [
@@ -40,6 +41,7 @@ def main() -> None:
 
     models = json.loads((ROOT / "src" / "data" / "models.json").read_text(encoding="utf-8"))
     model_catalog = json.loads((ROOT / "src" / "data" / "model-catalog.json").read_text(encoding="utf-8"))
+    benchmark_results = json.loads((ROOT / "src" / "data" / "benchmark-results.json").read_text(encoding="utf-8-sig"))
     model_count = int(models.get("count", len(models.get("models", []))))
     catalog_count = int(model_catalog.get("count", len(model_catalog.get("items", []))))
 
@@ -47,6 +49,25 @@ def main() -> None:
         print(f"quality gate failed: expected >=200 models, got models={model_count}, catalog={catalog_count}")
         sys.exit(1)
     print(f"model counts ok: models={model_count}, catalog={catalog_count}")
+
+    benchmark_map = benchmark_results.get("models", {})
+    if not isinstance(benchmark_map, dict):
+        print("quality gate failed: benchmark-results.json models must be an object")
+        sys.exit(1)
+    known_tags = {
+        str(item.get("ollama_tag", "")).strip().lower()
+        for item in model_catalog.get("items", [])
+        if str(item.get("ollama_tag", "")).strip()
+    }
+    unknown_tags = sorted(
+        key for key in benchmark_map.keys() if str(key).strip().lower() not in known_tags
+    )
+    if unknown_tags:
+        print("quality gate failed: benchmark-results model tags missing in model-catalog ollama_tag")
+        for tag in unknown_tags[:20]:
+            print(f"- Error: Model '{tag}' found in results but missing in catalog.")
+        sys.exit(1)
+    print(f"benchmark tag alignment ok: {len(benchmark_map)} measured tag(s)")
 
     blog_dir = ROOT / "src" / "content" / "blog"
     if not blog_dir.exists():

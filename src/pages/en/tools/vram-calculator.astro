@@ -2,8 +2,10 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import links from "../../../data/affiliate-links.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
 
 const sampleModels = catalog.items.slice(0, 120);
+const benchmarkMap = benchmarkResults.models || {};
 ---
 
 <BaseLayout title="VRAM Calculator | LocalVRAM" locale="en">
@@ -19,6 +21,10 @@ const sampleModels = catalog.items.slice(0, 120);
         ))}
       </select>
       <div id="calc-result" class="card" style="margin-top: 12px;" />
+      <div class="card" style="margin-top: 12px; min-height: 260px;">
+        <h2 style="margin-top: 0;">Performance Curve</h2>
+        <canvas id="calc-chart" aria-label="Hardware benchmark comparison"></canvas>
+      </div>
       <div class="cta-row">
         <a id="calc-primary" class="btn btn-primary" href="/en/affiliate/hardware-upgrade/">Check local upgrade</a>
         <a id="calc-cloud-runpod" class="btn" href={links.runpod}>RunPod fallback</a>
@@ -28,21 +34,77 @@ const sampleModels = catalog.items.slice(0, 120);
     </section>
   </main>
 
-  <script define:vars={{ items: sampleModels }}>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script define:vars={{ items: sampleModels, benchmarkMap }}>
     const select = document.getElementById("model-select");
     const result = document.getElementById("calc-result");
+    const chartCanvas = document.getElementById("calc-chart");
     const primary = document.getElementById("calc-primary");
     const runpod = document.getElementById("calc-cloud-runpod");
     const vast = document.getElementById("calc-cloud-vast");
+    let chart = null;
+
+    const renderChart = (model, realData) => {
+      if (!chartCanvas || !window.Chart) {
+        return;
+      }
+      if (chart) {
+        chart.destroy();
+      }
+      const measuredSeries =
+        realData && realData.status === "ok"
+          ? [realData.tokens_per_second, null, null]
+          : [null, null, null];
+      chart = new window.Chart(chartCanvas, {
+        type: "line",
+        data: {
+          labels: ["RTX 3090", "RTX 4090", "A100 80GB"],
+          datasets: [
+            {
+              label: `${model.name} baseline`,
+              data: [model.benchmarks.rtx3090_tok_s, model.benchmarks.rtx4090_tok_s, model.benchmarks.a100_tok_s],
+              borderColor: "#3b82f6",
+              backgroundColor: "rgba(59,130,246,0.15)",
+              borderWidth: 2,
+              tension: 0.2
+            },
+            {
+              label: "Measured RTX 3090",
+              data: measuredSeries,
+              borderColor: "#10b981",
+              backgroundColor: "rgba(16,185,129,0.2)",
+              borderWidth: 2,
+              pointRadius: 5,
+              spanGaps: true,
+              tension: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              title: { display: true, text: "tokens/s" },
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    };
 
     const render = () => {
       const model = items.find((item) => item.id === select.value) || items[0];
+      const realData = model.ollama_tag ? benchmarkMap[model.ollama_tag] : null;
+      const realPerf = realData && realData.status === "ok" ? `${realData.tokens_per_second} tok/s` : "N/A";
+      const realTestTime = realData && realData.status === "ok" ? realData.test_time : "N/A";
       const cloudFirst = model.vram_optimal_gb > 24;
       result.innerHTML = [
         `<h2>${model.name}</h2>`,
         `<p>Minimum VRAM: <strong>${model.vram_min_gb}GB</strong> | Optimal VRAM: <strong>${model.vram_optimal_gb}GB</strong></p>`,
         `<p>Best local: ${model.best_local_gpu} | Cloud fallback: ${model.cloud_fallback}</p>`,
         `<p>Expected throughput: 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`,
+        `<p>Real performance on RTX 3090: <strong>${realPerf}</strong> (test time: ${realTestTime})</p>`,
         `<p>Data status: <strong>${model.data_status === "measured" ? "Measured" : "Estimated"}</strong></p>`
       ].join("");
 
@@ -50,9 +112,14 @@ const sampleModels = catalog.items.slice(0, 120);
       primary.href = cloudFirst ? "/en/affiliate/cloud-gpu/" : "/en/affiliate/hardware-upgrade/";
       runpod.style.display = cloudFirst ? "inline-block" : "none";
       vast.style.display = cloudFirst ? "inline-block" : "none";
+      renderChart(model, realData);
     };
 
     select.addEventListener("change", render);
-    render();
+    if (document.readyState === "complete") {
+      render();
+    } else {
+      window.addEventListener("load", render, { once: true });
+    }
   </script>
 </BaseLayout>

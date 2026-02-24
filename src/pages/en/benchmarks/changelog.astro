@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import changelog from "../../../data/benchmark-changelog.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
+
+const benchmarkMap = benchmarkResults.models || {};
+const measuredCount = Object.values(benchmarkMap).filter((item) => item?.status === "ok").length;
+const latestMeasuredAt = benchmarkResults.updated_at || changelog.updated_at || "";
 ---
 
 <BaseLayout
@@ -13,6 +18,10 @@ import changelog from "../../../data/benchmark-changelog.json";
     <p>
       Last updated: {new Date(changelog.updated_at).toISOString().slice(0, 10)}.
       This page is updated whenever benchmark baselines change.
+    </p>
+    <p>
+      Real measured tags in production map: <strong>{measuredCount}</strong>.
+      Latest measurement sync: <strong>{latestMeasuredAt || "N/A"}</strong>.
     </p>
 
     <section class="post-list">

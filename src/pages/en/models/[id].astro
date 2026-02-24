@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import links from "../../../data/affiliate-links.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
 
 export function getStaticPaths() {
   return catalog.items.map((item) => ({
@@ -14,6 +15,23 @@ const { item } = Astro.props;
 const isCloudFirst = item.vram_optimal_gb > 24;
 const monthlyCloud40h = Math.round(item.cloud_hourly_usd * 40 * 100) / 100;
 const monthlyCloud120h = Math.round(item.cloud_hourly_usd * 120 * 100) / 100;
+const benchmarkMap = benchmarkResults.models || {};
+const realBenchmark = item.ollama_tag ? benchmarkMap[item.ollama_tag] : null;
+const hasRealBenchmark =
+  realBenchmark &&
+  realBenchmark.status === "ok" &&
+  typeof realBenchmark.tokens_per_second === "number";
+const localMeasuredTokS = hasRealBenchmark ? realBenchmark.tokens_per_second : item.benchmarks.rtx3090_tok_s;
+const cloudSpeedFactor =
+  localMeasuredTokS > 0 ? Math.round((item.benchmarks.a100_tok_s / localMeasuredTokS) * 10) / 10 : 0;
+const amazon3090PriceLabel = (import.meta.env.PUBLIC_AMAZON_PRICE_3090 || "Check latest deal").trim();
+const runpodA100PriceLabel = (import.meta.env.PUBLIC_RUNPOD_A100_PRICE || "").trim();
+const chartPayload = {
+  labels: ["RTX 3090", "RTX 4090", "A100 80GB"],
+  baseline: [item.benchmarks.rtx3090_tok_s, item.benchmarks.rtx4090_tok_s, item.benchmarks.a100_tok_s],
+  measured3090: hasRealBenchmark ? realBenchmark.tokens_per_second : null,
+  modelName: item.name,
+};
 
 const schema = {
   "@context": "https://schema.org",
@@ -139,6 +157,81 @@ const schema = {
     </section>
 
     <section class="card">
+      <h2>Real Hardware Benchmark (RTX 3090)</h2>
+      {hasRealBenchmark ? (
+        <>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Tokens/s</th>
+                <td>{realBenchmark.tokens_per_second}</td>
+              </tr>
+              <tr>
+                <th>Latency</th>
+                <td>{realBenchmark.latency_ms} ms</td>
+              </tr>
+              <tr>
+                <th>Prompt tokens</th>
+                <td>{realBenchmark.prompt_tokens}</td>
+              </tr>
+              <tr>
+                <th>Eval tokens</th>
+                <td>{realBenchmark.eval_tokens}</td>
+              </tr>
+              <tr>
+                <th>Test time</th>
+                <td>{realBenchmark.test_time}</td>
+              </tr>
+              <tr>
+                <th>GPU model</th>
+                <td>{realBenchmark.gpu_model}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="color: #19a55a; font-weight: 700;">
+            <span title={realBenchmark.verified_tooltip || "Tested on local RTX 3090, 450W TDP, Ambient 25C"}>
+              Verified by real hardware.
+            </span>
+          </p>
+          {realBenchmark.gpu_snapshot && (
+            <p><a class="btn" href={realBenchmark.gpu_snapshot}>View raw nvidia-smi snapshot</a></p>
+          )}
+        </>
+      ) : (
+        <p>Real benchmark data not available yet for this tag. Estimated anchors are shown above.</p>
+      )}
+    </section>
+
+    <section class="card">
+      <h2>Performance Curve</h2>
+      <canvas id="benchmark-chart" aria-label="Benchmark tokens per second comparison" style="max-height: 260px;"></canvas>
+      <p class="affiliate-note">
+        Reference anchors are baseline estimates. Measured RTX 3090 data is overlaid when available.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Best Hardware for {item.name}</h2>
+      <ul>
+        <li>
+          Local run:
+          <a href={links.amazon_3090}> RTX 3090 (24GB)</a>
+          ({amazon3090PriceLabel}) for around {localMeasuredTokS} tok/s on this profile.
+        </li>
+        <li>
+          Cloud run:
+          <a href={links.runpod}> RunPod {item.cloud_fallback}</a>
+          {runpodA100PriceLabel ? ` (${runpodA100PriceLabel})` : ""}
+          {cloudSpeedFactor > 0 ? `, about ${cloudSpeedFactor}x the local 3090 speed anchor.` : "."}
+        </li>
+        <li>
+          Alternative cloud:
+          <a href={links.vast}> Vast.ai options</a> for flexible spot pricing.
+        </li>
+      </ul>
+    </section>
+
+    <section class="card">
       <h2>Local vs Cloud Cost Hint</h2>
       <table class="table">
         <thead>
@@ -180,8 +273,64 @@ const schema = {
     </section>
 
     <p class="affiliate-note">We may earn a commission if you click links on this page.</p>
-    {item.data_status !== "measured" && (
+    {!hasRealBenchmark && item.data_status !== "measured" && (
       <p class="affiliate-note">This page currently uses estimated benchmark baselines. Measured data will replace it after validation.</p>
     )}
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script define:vars={{ chartPayload }}>
+    const mountChart = () => {
+      const canvas = document.getElementById("benchmark-chart");
+      if (!canvas || !window.Chart) {
+        return;
+      }
+      const measuredSeries = chartPayload.measured3090 !== null
+        ? [chartPayload.measured3090, null, null]
+        : [null, null, null];
+      // eslint-disable-next-line no-new
+      new window.Chart(canvas, {
+        type: "line",
+        data: {
+          labels: chartPayload.labels,
+          datasets: [
+            {
+              label: `${chartPayload.modelName} baseline`,
+              data: chartPayload.baseline,
+              borderColor: "#3b82f6",
+              backgroundColor: "rgba(59,130,246,0.15)",
+              tension: 0.2,
+              borderWidth: 2,
+            },
+            {
+              label: "Measured RTX 3090",
+              data: measuredSeries,
+              borderColor: "#10b981",
+              backgroundColor: "rgba(16,185,129,0.2)",
+              pointRadius: 5,
+              pointHoverRadius: 6,
+              spanGaps: true,
+              tension: 0,
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              title: { display: true, text: "tokens/s" },
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    };
+
+    if (document.readyState === "complete") {
+      mountChart();
+    } else {
+      window.addEventListener("load", mountChart, { once: true });
+    }
+  </script>
 </BaseLayout>

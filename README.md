@@ -49,8 +49,11 @@ npm run dev
 - Search Console backfeed: `src/data/search-console-keywords.json`
 - CTA mapping: `src/data/cta-rules.json`
 - Model catalog (200+): `src/data/model-catalog.json`
+- Measured benchmark map: `src/data/benchmark-results.json` (keyed by `ollama_tag`)
+- Public benchmark API endpoint: `/api/benchmark.json`
 - Affiliate links: `src/data/affiliate-links.json` (replace placeholders)
 - Affiliate redirect worker code: `functions/`
+- GPU snapshots: `public/screenshots/`
 
 ## Scripts
 
@@ -67,17 +70,27 @@ npm run dev
 Weekly benchmark (`scripts/weekly-benchmark.py`):
 
 - `LV_OLLAMA_ENDPOINT` (default: `http://127.0.0.1:11434`)
+- `OLLAMA_HOST` (fallback when `LV_OLLAMA_ENDPOINT` is not set)
 - `LV_WEEKLY_TARGETS` (default: `llama3:8b=128,qwen3:8b=128,deepseek-r1:8b=128`)
 - `LV_RUNS_PER_MODEL` (default: `2`)
 - `LV_BENCHMARK_HISTORY_LIMIT` (default: `20`)
+- `LV_BENCHMARK_NUM_CTX` (default: `4096`; fixed context window for apples-to-apples runs)
+- `LV_PRE_COOLDOWN_S` (default: `5`; wait before baseline snapshot to reduce thermal bias)
+- `LV_SIGNIFICANT_TPS_DELTA` (default: `0.5`; only write measured map when delta exceeds this)
+- `LV_BENCHMARK_LOG_RETENTION_DAYS` (default: `30`)
+- `LV_VERIFIED_TOOLTIP` (optional; tooltip text for measured hardware badges)
+- `PUBLIC_AMAZON_PRICE_3090` (optional UI price label for local recommendation modules)
+- `PUBLIC_RUNPOD_A100_PRICE` (optional UI price label for cloud recommendation modules)
 
 Cluster benchmark (`scripts/cluster-benchmark.py`):
 
 - `LV_CLUSTER_ENDPOINTS` (comma-separated endpoints)
 - `LV_CLUSTER_MODEL` (default: `qwen3:8b`)
+- `LV_CLUSTER_NUM_CTX` (default: `4096`)
 - `LV_CLUSTER_MAX_WORKERS` (default: `2`, use `1` for conservative power draw)
 - `LV_CLUSTER_COOLDOWN_S` (default: `2.0`, delay between runs per endpoint)
 - `LV_CLUSTER_POWER_LIMIT_W` (default: `0`, disabled; set >0 to enable local power guard)
+- `LV_CLUSTER_LOG_RETENTION_DAYS` (default: `30`)
 
 ## Logo
 

@@ -36,6 +36,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/models.json src/data/model-catalog.json public/sitemap.xml logs
+          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
           git diff --cached --quiet || git commit -m "chore: weekly benchmark update"
           git push
