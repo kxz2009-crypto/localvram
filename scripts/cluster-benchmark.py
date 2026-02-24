@@ -4,12 +4,14 @@ import datetime as dt
 import json
 import os
 import statistics
+import subprocess
 import time
 import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +31,58 @@ def utc_now_iso() -> str:
 
 def normalize_endpoint(endpoint: str) -> str:
     return endpoint.rstrip("/")
+
+
+def redact_endpoint(endpoint: str) -> str:
+    raw = normalize_endpoint(endpoint)
+    try:
+        parts = urlsplit(raw)
+        host = parts.hostname or ""
+        masked = host
+        octets = host.split(".")
+        if len(octets) == 4 and all(x.isdigit() for x in octets):
+            masked = f"{octets[0]}.{octets[1]}.x.x"
+        netloc = masked
+        if parts.port:
+            netloc = f"{netloc}:{parts.port}"
+        return urlunsplit((parts.scheme, netloc, "", "", ""))
+    except Exception:  # noqa: BLE001
+        return "redacted-endpoint"
+
+
+def run_cmd(args: list[str], timeout: int = 20) -> tuple[int, str, str]:
+    try:
+        proc = subprocess.run(args, capture_output=True, text=True, timeout=timeout, check=False)
+        return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
+    except Exception as exc:  # noqa: BLE001
+        return 1, "", str(exc)
+
+
+def total_power_draw_w() -> float:
+    code, out, _ = run_cmd(
+        ["nvidia-smi", "--query-gpu=power.draw", "--format=csv,noheader,nounits"],
+        timeout=8,
+    )
+    if code != 0 or not out:
+        return 0.0
+    values = []
+    for line in out.splitlines():
+        try:
+            values.append(float(line.strip()))
+        except ValueError:
+            continue
+    return round(sum(values), 2) if values else 0.0
+
+
+def classify_error(error_text: str) -> str:
+    txt = (error_text or "").lower()
+    if "out of memory" in txt or "oom" in txt:
+        return "oom"
+    if "timed out" in txt or "timeout" in txt:
+        return "timeout"
+    if "connection refused" in txt or "failed to connect" in txt:
+        return "connectivity"
+    return "runtime"
 
 
 def read_json(path: Path, default: Any) -> Any:
@@ -58,7 +112,19 @@ def api_request(endpoint: str, route: str, payload: dict[str, Any] | None = None
         method = "POST"
         headers = {"Content-Type": "application/json"}
     req = urllib.request.Request(url, data=data, method=method, headers=headers)
-    return urllib.request.urlopen(req, timeout=timeout)  # noqa: S310
+    try:
+        return urllib.request.urlopen(req, timeout=timeout)  # noqa: S310
+    except urllib.error.HTTPError as exc:
+        body = ""
+        try:
+            body = exc.read().decode("utf-8", errors="ignore")
+        except Exception:  # noqa: BLE001
+            body = ""
+        detail = body[:500].replace("\n", " ").strip()
+        message = f"HTTP {exc.code} {exc.reason}"
+        if detail:
+            message = f"{message}: {detail}"
+        raise RuntimeError(message) from exc
 
 
 def list_local_models(endpoint: str) -> set[str]:
@@ -123,50 +189,80 @@ def stream_generate_once(endpoint: str, model: str, prompt: str, num_predict: in
 
 def benchmark_endpoint(
     endpoint: str,
+    redacted_endpoint: str,
     model: str,
     prompt: str,
     num_predict: int,
     timeout_s: int,
     runs: int,
     log_file: Path,
+    cooldown_s: float,
+    power_limit_w: float,
 ) -> dict[str, Any]:
     report: dict[str, Any] = {
-        "endpoint": endpoint,
+        "endpoint": redacted_endpoint,
         "status": "ok",
         "runs": [],
         "error": "",
+        "error_type": "",
     }
     try:
         local_models = list_local_models(endpoint)
     except Exception as exc:  # noqa: BLE001
         report["status"] = "error"
         report["error"] = f"endpoint unavailable: {exc}"
+        report["error_type"] = "connectivity"
         append_log(log_file, {"event": "endpoint_unavailable", **report})
         return report
 
     if model not in local_models:
         report["status"] = "error"
         report["error"] = "model not available on endpoint"
+        report["error_type"] = "missing_model"
         append_log(log_file, {"event": "cluster_model_missing", **report, "model": model})
         return report
 
     for idx in range(max(1, runs)):
         try:
+            if power_limit_w > 0:
+                wait_guard = time.perf_counter()
+                while True:
+                    power_now = total_power_draw_w()
+                    if power_now <= 0 or power_now <= power_limit_w:
+                        break
+                    if time.perf_counter() - wait_guard > 60:
+                        append_log(
+                            log_file,
+                            {
+                                "event": "power_guard_timeout",
+                                "endpoint": redacted_endpoint,
+                                "power_now_w": power_now,
+                                "power_limit_w": power_limit_w,
+                            },
+                        )
+                        break
+                    time.sleep(max(0.5, min(cooldown_s, 2.0)))
+
             row = stream_generate_once(endpoint, model, prompt, num_predict, timeout_s)
             row["run_index"] = idx + 1
+            row["endpoint"] = redacted_endpoint
             report["runs"].append(row)
             append_log(log_file, {"event": "cluster_run", **row, "model": model})
+            if idx < runs - 1 and cooldown_s > 0:
+                time.sleep(cooldown_s)
         except Exception as exc:  # noqa: BLE001
             report["status"] = "error"
             report["error"] = str(exc)
+            report["error_type"] = classify_error(str(exc))
             append_log(
                 log_file,
                 {
                     "event": "cluster_run_failed",
-                    "endpoint": endpoint,
+                    "endpoint": redacted_endpoint,
                     "model": model,
                     "run_index": idx + 1,
                     "error": str(exc),
+                    "error_type": report["error_type"],
                 },
             )
             break
@@ -192,6 +288,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num-predict", type=int, default=int(os.getenv("LV_CLUSTER_NUM_PREDICT", "96")))
     parser.add_argument("--runs", type=int, default=int(os.getenv("LV_CLUSTER_RUNS", "2")))
     parser.add_argument("--timeout", type=int, default=int(os.getenv("LV_CLUSTER_TIMEOUT_S", "600")))
+    parser.add_argument("--max-workers", type=int, default=int(os.getenv("LV_CLUSTER_MAX_WORKERS", "2")))
+    parser.add_argument("--cooldown-s", type=float, default=float(os.getenv("LV_CLUSTER_COOLDOWN_S", "2.0")))
+    parser.add_argument("--power-limit-w", type=float, default=float(os.getenv("LV_CLUSTER_POWER_LIMIT_W", "0")))
     parser.add_argument("--prompt", default=os.getenv("LV_CLUSTER_PROMPT", DEFAULT_PROMPT))
     parser.add_argument("--allow-empty", action="store_true", help="Do not fail when no endpoint succeeds.")
     parser.add_argument("--dry-run", action="store_true")
@@ -201,6 +300,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     endpoints = [normalize_endpoint(x.strip()) for x in args.endpoints.split(",") if x.strip()]
+    redacted_endpoints = [redact_endpoint(x) for x in endpoints]
     if not endpoints:
         raise SystemExit("no cluster endpoints configured")
 
@@ -209,7 +309,7 @@ def main() -> None:
 
     if args.dry_run:
         print("dry-run: cluster benchmark execution skipped")
-        print(f"endpoints={endpoints}")
+        print(f"endpoints={redacted_endpoints}")
         print(f"model={args.model}")
         return
 
@@ -218,25 +318,32 @@ def main() -> None:
         {
             "event": "cluster_benchmark_start",
             "ts": utc_now_iso(),
-            "endpoints": endpoints,
+            "endpoints": redacted_endpoints,
             "model": args.model,
             "runs": args.runs,
             "num_predict": args.num_predict,
+            "max_workers": max(1, args.max_workers),
+            "cooldown_s": max(0.0, args.cooldown_s),
+            "power_limit_w": max(0.0, args.power_limit_w),
         },
     )
 
     reports: list[dict[str, Any]] = []
-    with ThreadPoolExecutor(max_workers=min(8, len(endpoints))) as pool:
+    max_workers = min(len(endpoints), max(1, args.max_workers))
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
         futures = [
             pool.submit(
                 benchmark_endpoint,
                 endpoint,
+                redact_endpoint(endpoint),
                 args.model,
                 args.prompt,
                 max(16, args.num_predict),
                 args.timeout,
                 max(1, args.runs),
                 log_file,
+                max(0.0, args.cooldown_s),
+                max(0.0, args.power_limit_w),
             )
             for endpoint in endpoints
         ]
@@ -271,7 +378,7 @@ def main() -> None:
             "nodes": reports,
         },
     )
-    payload["tests"] = payload["tests"][:120]
+    payload["tests"] = payload["tests"][:20]
     write_json(FILE, payload)
 
     append_log(

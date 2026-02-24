@@ -10,6 +10,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit, urlunsplit
 from pathlib import Path
 from typing import Any
 
@@ -60,6 +61,34 @@ def normalize_endpoint(endpoint: str) -> str:
     return endpoint.rstrip("/")
 
 
+def redact_endpoint(endpoint: str) -> str:
+    raw = normalize_endpoint(endpoint)
+    try:
+        parts = urlsplit(raw)
+        host = parts.hostname or ""
+        masked = host
+        octets = host.split(".")
+        if len(octets) == 4 and all(x.isdigit() for x in octets):
+            masked = f"{octets[0]}.{octets[1]}.x.x"
+        netloc = masked
+        if parts.port:
+            netloc = f"{netloc}:{parts.port}"
+        return urlunsplit((parts.scheme, netloc, "", "", ""))
+    except Exception:  # noqa: BLE001
+        return "redacted-endpoint"
+
+
+def classify_error(error_text: str) -> str:
+    txt = (error_text or "").lower()
+    if "out of memory" in txt or "oom" in txt:
+        return "oom"
+    if "timed out" in txt or "timeout" in txt:
+        return "timeout"
+    if "connection refused" in txt or "failed to connect" in txt:
+        return "connectivity"
+    return "runtime"
+
+
 def api_request(endpoint: str, route: str, payload: dict[str, Any] | None = None, timeout: int = 600) -> dict[str, Any]:
     url = f"{normalize_endpoint(endpoint)}{route}"
     data = None
@@ -70,8 +99,20 @@ def api_request(endpoint: str, route: str, payload: dict[str, Any] | None = None
         method = "POST"
         headers = {"Content-Type": "application/json"}
     req = urllib.request.Request(url, data=data, method=method, headers=headers)
-    with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
-        return json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        body = ""
+        try:
+            body = exc.read().decode("utf-8", errors="ignore")
+        except Exception:  # noqa: BLE001
+            body = ""
+        detail = body[:500].replace("\n", " ").strip()
+        message = f"HTTP {exc.code} {exc.reason}"
+        if detail:
+            message = f"{message}: {detail}"
+        raise RuntimeError(message) from exc
 
 
 def list_local_models(endpoint: str) -> set[str]:
@@ -213,6 +254,7 @@ def benchmark_model(
         "status": "ok",
         "runs": [],
         "error": "",
+        "error_type": "",
     }
     if warmup_predict > 0:
         try:
@@ -229,6 +271,7 @@ def benchmark_model(
         except Exception as exc:  # noqa: BLE001
             model_report["status"] = "error"
             model_report["error"] = str(exc)
+            model_report["error_type"] = classify_error(str(exc))
             append_log(
                 log_file,
                 {
@@ -237,6 +280,7 @@ def benchmark_model(
                     "model": model,
                     "run_index": idx + 1,
                     "error": str(exc),
+                    "error_type": model_report["error_type"],
                 },
             )
             break
@@ -284,6 +328,9 @@ def update_changelog(success_reports: list[dict[str, Any]], failed_reports: list
     if failed_reports:
         failed_models = ", ".join(r["model"] for r in failed_reports[:5])
         changes.append(f"Skipped/failed targets: {failed_models}")
+        oom_models = [r["model"] for r in failed_reports if r.get("error_type") == "oom"]
+        if oom_models:
+            changes.append(f"OOM captured for: {', '.join(oom_models[:5])}")
     if not changes:
         changes.append("No successful benchmark samples captured.")
 
@@ -317,13 +364,14 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     endpoint = normalize_endpoint(args.endpoint)
+    redacted_endpoint = redact_endpoint(endpoint)
     now_iso = utc_now_iso()
     log_file = LOG_DIR / f"weekly-benchmark-{dt.datetime.now(dt.timezone.utc).strftime('%Y%m%d')}.log"
     LOG_DIR.mkdir(parents=True, exist_ok=True)
 
     if args.dry_run:
         print("dry-run: weekly benchmark execution skipped")
-        print(f"endpoint={endpoint}")
+        print(f"endpoint={redacted_endpoint}")
         print(f"targets={args.targets}")
         return
 
@@ -344,7 +392,7 @@ def main() -> None:
             "level": "info",
             "event": "benchmark_start",
             "ts": now_iso,
-            "endpoint": endpoint,
+            "endpoint": redacted_endpoint,
             "targets": targets,
             "ollama_version": ollama_version,
             "gpu_before": gpu_before,
@@ -360,6 +408,7 @@ def main() -> None:
                 "status": "error",
                 "runs": [],
                 "error": "model not found locally (run `ollama pull` on runner first)",
+                "error_type": "missing_model",
             }
             reports.append(report)
             append_log(log_file, {"level": "error", "event": "model_missing", **report})
@@ -380,24 +429,43 @@ def main() -> None:
     failed_reports = [r for r in reports if r.get("status") != "ok"]
     gpu_after = collect_gpu_snapshot()
 
+    history_limit = max(5, int(os.getenv("LV_BENCHMARK_HISTORY_LIMIT", "20")))
+    latest_run = {
+        "updated_at": now_iso,
+        "runner": {
+            "hostname": platform.node(),
+            "platform": platform.platform(),
+            "python": sys.version.split()[0],
+        },
+        "ollama": {
+            "endpoint": redacted_endpoint,
+            "version": ollama_version,
+            "available_model_count": len(local_models),
+        },
+        "gpu_before": gpu_before,
+        "gpu_after": gpu_after,
+        "targets": [{"model": m, "num_predict": n} for m, n in targets],
+        "results": reports,
+        "success_count": len(success_reports),
+        "failed_count": len(failed_reports),
+    }
+    old_payload = read_json(RESULTS_FILE, {})
+    history: list[dict[str, Any]]
+    if isinstance(old_payload.get("history"), list):
+        history = old_payload["history"]
+    elif old_payload.get("results"):
+        history = [old_payload]
+    else:
+        history = []
+    history.insert(0, latest_run)
+    history = history[:history_limit]
     write_json(
         RESULTS_FILE,
         {
             "updated_at": now_iso,
-            "runner": {
-                "hostname": platform.node(),
-                "platform": platform.platform(),
-                "python": sys.version.split()[0],
-            },
-            "ollama": {
-                "endpoint": endpoint,
-                "version": ollama_version,
-                "available_model_count": len(local_models),
-            },
-            "gpu_before": gpu_before,
-            "gpu_after": gpu_after,
-            "targets": [{"model": m, "num_predict": n} for m, n in targets],
-            "results": reports,
+            "history_limit": history_limit,
+            "latest": latest_run,
+            "history": history,
         },
     )
 

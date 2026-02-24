@@ -62,6 +62,23 @@ npm run dev
 - `python scripts/cluster-benchmark.py`
 - `python scripts/report-data-freshness.py`
 
+## Benchmark Runtime Controls
+
+Weekly benchmark (`scripts/weekly-benchmark.py`):
+
+- `LV_OLLAMA_ENDPOINT` (default: `http://127.0.0.1:11434`)
+- `LV_WEEKLY_TARGETS` (default: `llama3:8b=128,qwen3:8b=128,deepseek-r1:8b=128`)
+- `LV_RUNS_PER_MODEL` (default: `2`)
+- `LV_BENCHMARK_HISTORY_LIMIT` (default: `20`)
+
+Cluster benchmark (`scripts/cluster-benchmark.py`):
+
+- `LV_CLUSTER_ENDPOINTS` (comma-separated endpoints)
+- `LV_CLUSTER_MODEL` (default: `qwen3:8b`)
+- `LV_CLUSTER_MAX_WORKERS` (default: `2`, use `1` for conservative power draw)
+- `LV_CLUSTER_COOLDOWN_S` (default: `2.0`, delay between runs per endpoint)
+- `LV_CLUSTER_POWER_LIMIT_W` (default: `0`, disabled; set >0 to enable local power guard)
+
 ## Logo
 
 Default connected set:
