@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /go/
+Disallow: /recommends/
 
 Sitemap: https://localvram.com/sitemap.xml

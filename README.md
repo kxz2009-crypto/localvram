@@ -19,6 +19,22 @@ Repository: `https://github.com/kxz2009-crypto/localvram/`
 - Root directory: `/`
 - Environment variable: `NODE_VERSION=20`
 
+## Affiliate Redirects (Cloudflare Workers on Pages Functions)
+
+Affiliate URLs are routed through first-party short links to reduce ad-block loss:
+
+- `/go/runpod` -> RunPod referral URL
+- `/go/vast` -> Vast.ai referral URL
+- `/recommends/rtx-3090-24gb` -> Amazon search + affiliate tag
+- `/recommends/rtx-4090-24gb` -> Amazon search + affiliate tag
+
+Configure in Cloudflare Pages:
+
+- `AMAZON_TAG` (required for Amazon commissions)
+- `RUNPOD_REF` (optional, default: `kzc9gtvv`)
+- `VAST_REF_ID` (optional, default: `415258`)
+- KV binding `AFFILIATE_EVENTS` (optional, stores click events for 30 days)
+
 ## Local run
 
 ```bash
@@ -34,6 +50,7 @@ npm run dev
 - CTA mapping: `src/data/cta-rules.json`
 - Model catalog (200+): `src/data/model-catalog.json`
 - Affiliate links: `src/data/affiliate-links.json` (replace placeholders)
+- Affiliate redirect worker code: `functions/`
 
 ## Scripts
 
