@@ -1,19 +1,276 @@
 {
-  "updated_at": "",
+  "updated_at": "2026-02-24T16:41:44Z",
   "history_limit": 20,
-  "models": {},
-  "latest": {
-    "updated_at": "",
-    "runner": {},
-    "ollama": {},
-    "gpu_before": {},
-    "gpu_after": {},
-    "targets": [],
-    "results": [],
-    "changed_models": [],
-    "significant_tps_delta": 0.5,
-    "success_count": 0,
-    "failed_count": 0
+  "models": {
+    "qwen3:8b": {
+      "tokens_per_second": 122.951,
+      "latency_ms": 1146.0,
+      "prompt_tokens": 31,
+      "eval_tokens": 128,
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260224T164144Z-dd051ff.txt",
+      "test_time": "2026-02-24T16:41:44Z",
+      "gpu_model": "NVIDIA GeForce RTX 3090",
+      "status": "ok",
+      "error_type": "",
+      "error": "",
+      "run_count": 2,
+      "num_ctx": 4096,
+      "temperature": 0,
+      "verified_tooltip": "Tested on local RTX 3090, 450W TDP, Ambient 25C"
+    }
   },
-  "history": []
+  "latest": {
+    "updated_at": "2026-02-24T16:41:44Z",
+    "runner": {
+      "hostname": "Vernon",
+      "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+      "python": "3.11.14"
+    },
+    "ollama": {
+      "endpoint": "http://127.0.x.x:11434",
+      "version": "0.15.6",
+      "available_model_count": 33
+    },
+    "gpu_before": {
+      "available": true,
+      "gpus": [
+        {
+          "name": "NVIDIA GeForce RTX 3090",
+          "driver": "591.74",
+          "memory_total_mb": 24576.0,
+          "memory_used_mb": 2213.0,
+          "temperature_c": 38.0,
+          "power_w": 116.66,
+          "utilization_pct": 1.0
+        }
+      ]
+    },
+    "gpu_after": {
+      "available": true,
+      "gpus": [
+        {
+          "name": "NVIDIA GeForce RTX 3090",
+          "driver": "591.74",
+          "memory_total_mb": 24576.0,
+          "memory_used_mb": 7894.0,
+          "temperature_c": 46.0,
+          "power_w": 335.64,
+          "utilization_pct": 93.0
+        }
+      ]
+    },
+    "targets": [
+      {
+        "model": "llama3:8b",
+        "num_predict": 128,
+        "num_ctx": 4096,
+        "temperature": 0
+      },
+      {
+        "model": "qwen3:8b",
+        "num_predict": 128,
+        "num_ctx": 4096,
+        "temperature": 0
+      },
+      {
+        "model": "deepseek-r1:8b",
+        "num_predict": 128,
+        "num_ctx": 4096,
+        "temperature": 0
+      }
+    ],
+    "results": [
+      {
+        "model": "llama3:8b",
+        "num_predict": 128,
+        "status": "error",
+        "runs": [],
+        "error": "model not found locally (run `ollama pull` on runner first)",
+        "error_type": "missing_model"
+      },
+      {
+        "model": "qwen3:8b",
+        "num_predict": 128,
+        "status": "ok",
+        "runs": [
+          {
+            "model": "qwen3:8b",
+            "num_predict": 128,
+            "eval_count": 128,
+            "eval_duration_s": 1.035,
+            "prompt_eval_count": 31,
+            "prompt_eval_duration_s": 0.0089,
+            "total_duration_s": 1.1445,
+            "wall_duration_s": 1.0502,
+            "tokens_per_s": 123.666,
+            "prompt_tokens_per_s": 3488.045,
+            "run_index": 1
+          },
+          {
+            "model": "qwen3:8b",
+            "num_predict": 128,
+            "eval_count": 128,
+            "eval_duration_s": 1.0472,
+            "prompt_eval_count": 31,
+            "prompt_eval_duration_s": 0.0085,
+            "total_duration_s": 1.1483,
+            "wall_duration_s": 1.0537,
+            "tokens_per_s": 122.235,
+            "prompt_tokens_per_s": 3647.016,
+            "run_index": 2
+          }
+        ],
+        "error": "",
+        "error_type": "",
+        "tokens_per_s_avg": 122.951,
+        "tokens_per_s_max": 123.666,
+        "latency_s_avg": 1.146
+      },
+      {
+        "model": "deepseek-r1:8b",
+        "num_predict": 128,
+        "status": "error",
+        "runs": [],
+        "error": "model not found locally (run `ollama pull` on runner first)",
+        "error_type": "missing_model"
+      }
+    ],
+    "changed_models": [
+      "qwen3:8b"
+    ],
+    "significant_tps_delta": 0.5,
+    "num_ctx": 4096,
+    "temperature": 0,
+    "pre_cooldown_s": 5.0,
+    "success_count": 1,
+    "failed_count": 2
+  },
+  "history": [
+    {
+      "updated_at": "2026-02-24T16:41:44Z",
+      "runner": {
+        "hostname": "Vernon",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "python": "3.11.14"
+      },
+      "ollama": {
+        "endpoint": "http://127.0.x.x:11434",
+        "version": "0.15.6",
+        "available_model_count": 33
+      },
+      "gpu_before": {
+        "available": true,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3090",
+            "driver": "591.74",
+            "memory_total_mb": 24576.0,
+            "memory_used_mb": 2213.0,
+            "temperature_c": 38.0,
+            "power_w": 116.66,
+            "utilization_pct": 1.0
+          }
+        ]
+      },
+      "gpu_after": {
+        "available": true,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3090",
+            "driver": "591.74",
+            "memory_total_mb": 24576.0,
+            "memory_used_mb": 7894.0,
+            "temperature_c": 46.0,
+            "power_w": 335.64,
+            "utilization_pct": 93.0
+          }
+        ]
+      },
+      "targets": [
+        {
+          "model": "llama3:8b",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwen3:8b",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        }
+      ],
+      "results": [
+        {
+          "model": "llama3:8b",
+          "num_predict": 128,
+          "status": "error",
+          "runs": [],
+          "error": "model not found locally (run `ollama pull` on runner first)",
+          "error_type": "missing_model"
+        },
+        {
+          "model": "qwen3:8b",
+          "num_predict": 128,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwen3:8b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.035,
+              "prompt_eval_count": 31,
+              "prompt_eval_duration_s": 0.0089,
+              "total_duration_s": 1.1445,
+              "wall_duration_s": 1.0502,
+              "tokens_per_s": 123.666,
+              "prompt_tokens_per_s": 3488.045,
+              "run_index": 1
+            },
+            {
+              "model": "qwen3:8b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.0472,
+              "prompt_eval_count": 31,
+              "prompt_eval_duration_s": 0.0085,
+              "total_duration_s": 1.1483,
+              "wall_duration_s": 1.0537,
+              "tokens_per_s": 122.235,
+              "prompt_tokens_per_s": 3647.016,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 122.951,
+          "tokens_per_s_max": 123.666,
+          "latency_s_avg": 1.146
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "num_predict": 128,
+          "status": "error",
+          "runs": [],
+          "error": "model not found locally (run `ollama pull` on runner first)",
+          "error_type": "missing_model"
+        }
+      ],
+      "changed_models": [
+        "qwen3:8b"
+      ],
+      "significant_tps_delta": 0.5,
+      "num_ctx": 4096,
+      "temperature": 0,
+      "pre_cooldown_s": 5.0,
+      "success_count": 1,
+      "failed_count": 2
+    }
+  ]
 }

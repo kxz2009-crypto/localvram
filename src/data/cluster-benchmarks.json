@@ -1,0 +1,48 @@
+{
+  "version": "2026.02.24",
+  "updated_at": "2026-02-24T16:42:03Z",
+  "tests": [
+    {
+      "id": "cluster_20260224164203",
+      "topology": "1 endpoint(s)",
+      "model_id": "qwen3:8b",
+      "num_ctx": 4096,
+      "temperature": 0,
+      "metrics": {
+        "avg_node_latency_ms": 879.9,
+        "cross_node_ttft_jitter_ms": 0.0,
+        "tokens_per_s": 123.341
+      },
+      "verified_date": "2026-02-24",
+      "nodes": [
+        {
+          "endpoint": "http://127.0.x.x:11434",
+          "status": "ok",
+          "runs": [
+            {
+              "endpoint": "http://127.0.x.x:11434",
+              "ttft_ms": 0.0,
+              "eval_count": 96,
+              "total_duration_s": 0.8865,
+              "tokens_per_s": 121.729,
+              "run_index": 1
+            },
+            {
+              "endpoint": "http://127.0.x.x:11434",
+              "ttft_ms": 0.0,
+              "eval_count": 96,
+              "total_duration_s": 0.8733,
+              "tokens_per_s": 124.953,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "avg_ttft_ms": 0.0,
+          "avg_tokens_per_s": 123.341,
+          "avg_latency_ms": 879.9
+        }
+      ]
+    }
+  ]
+}

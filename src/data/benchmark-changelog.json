@@ -1,6 +1,15 @@
 {
-  "updated_at": "2026-02-24T11:30:00Z",
+  "updated_at": "2026-02-24T16:41:44Z",
   "items": [
+    {
+      "date": "2026-02-24",
+      "title": "Weekly benchmark run (1 successful model(s))",
+      "environment": "NVIDIA GeForce RTX 3090 | driver 591.74 | Ollama 0.15.6",
+      "changes": [
+        "qwen3:8b avg 122.951 tok/s, avg latency 1.146s (2 run(s))",
+        "Skipped/failed targets: llama3:8b, deepseek-r1:8b"
+      ]
+    },
     {
       "date": "2026-02-24",
       "title": "Llama 70B Q4 sustained run updated",
