@@ -100,11 +100,12 @@ const benchmarkMap = benchmarkResults.models || {};
     const render = () => {
       const model = items.find((item) => item.id === select.value) || items[0];
       const realData = model.ollama_tag ? benchmarkMap[model.ollama_tag] : null;
-      const realPerf = realData && realData.status === "ok" ? `${realData.tokens_per_second} tok/s` : "N/A";
-      const realTestTime = realData && realData.status === "ok" ? realData.test_time : "N/A";
+      const isMeasured = realData && realData.status === "ok" && typeof realData.tokens_per_second === "number";
+      const realPerf = isMeasured ? `${realData.tokens_per_second} tok/s` : "N/A";
+      const realTestTime = isMeasured ? realData.test_time : "N/A";
       const cloudFirst = model.vram_optimal_gb > 24;
       result.innerHTML = [
-        `<h2>${model.name}</h2>`,
+        `<h2 class="model-title">${model.name}${isMeasured ? ' <span class="verified-badge" title="Tested on local RTX 3090">Verified</span>' : ""}</h2>`,
         `<p>Minimum VRAM: <strong>${model.vram_min_gb}GB</strong> | Optimal VRAM: <strong>${model.vram_optimal_gb}GB</strong></p>`,
         `<p>Best local: ${model.best_local_gpu} | Cloud fallback: ${model.cloud_fallback}</p>`,
         `<p>Expected throughput: 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`,
