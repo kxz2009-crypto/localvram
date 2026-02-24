@@ -284,29 +284,26 @@ li code {
 }
 
 .legal-footer {
-  margin: 20px auto 0;
+  margin: 24px auto 0;
   width: min(1120px, 100% - 32px);
   border-top: 1px solid #1f2937;
-  padding: 20px 0 30px;
+  padding: 12px 0 24px;
   font-size: 12px;
-  color: #666666;
+  color: #777777;
   line-height: 1.6;
-}
-
-.legal-footer p {
-  margin: 0 0 12px;
-}
-
-.legal-footer strong {
-  color: #7a7a7a;
-}
-
-.legal-footer .copyright {
-  margin-top: 16px;
-  margin-bottom: 0;
   text-align: center;
-  font-size: 14px;
-  color: #8a8a8a;
+}
+
+.legal-mini-link {
+  display: inline-block;
+  color: #787878;
+  font-size: 12px;
+  letter-spacing: 0.1px;
+  transition: color 0.18s ease;
+}
+
+.legal-mini-link:hover {
+  color: #9a9a9a;
 }
 
 @media (max-width: 900px) {
