@@ -1,7 +1,495 @@
 {
-  "version": "2026.02.24",
-  "count": 256,
+  "version": "2026.02.24.ollama-verified",
+  "count": 269,
   "models": [
+    {
+      "id": "qwen25-0.5b-q4",
+      "name": "Qwen2.5 0.5B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-0.5b-q5",
+      "name": "Qwen2.5 0.5B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-0.5b-q8",
+      "name": "Qwen2.5 0.5B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-0.5b-fp16",
+      "name": "Qwen2.5 0.5B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-1.5b-q4",
+      "name": "Qwen2.5 1.5B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-1.5b-q5",
+      "name": "Qwen2.5 1.5B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-1.5b-q8",
+      "name": "Qwen2.5 1.5B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-1.5b-fp16",
+      "name": "Qwen2.5 1.5B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-3b-q4",
+      "name": "Qwen2.5 3B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-3b-q5",
+      "name": "Qwen2.5 3B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-3b-q8",
+      "name": "Qwen2.5 3B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-3b-fp16",
+      "name": "Qwen2.5 3B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-7b-q4",
+      "name": "Qwen2.5 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-7b-q5",
+      "name": "Qwen2.5 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-7b-q8",
+      "name": "Qwen2.5 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-7b-fp16",
+      "name": "Qwen2.5 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-14b-q4",
+      "name": "Qwen2.5 14B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-14b-q5",
+      "name": "Qwen2.5 14B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-14b-q8",
+      "name": "Qwen2.5 14B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-14b-fp16",
+      "name": "Qwen2.5 14B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-32b-q4",
+      "name": "Qwen2.5 32B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-32b-q5",
+      "name": "Qwen2.5 32B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-32b-q8",
+      "name": "Qwen2.5 32B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-32b-fp16",
+      "name": "Qwen2.5 32B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-72b-q4",
+      "name": "Qwen2.5 72B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-72b-q5",
+      "name": "Qwen2.5 72B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-72b-q8",
+      "name": "Qwen2.5 72B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen25-72b-fp16",
+      "name": "Qwen2.5 72B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-0.6b-q4",
+      "name": "Qwen3 0.6B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-0.6b-q5",
+      "name": "Qwen3 0.6B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-0.6b-q8",
+      "name": "Qwen3 0.6B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-0.6b-fp16",
+      "name": "Qwen3 0.6B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-1.7b-q4",
+      "name": "Qwen3 1.7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-1.7b-q5",
+      "name": "Qwen3 1.7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-1.7b-q8",
+      "name": "Qwen3 1.7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-1.7b-fp16",
+      "name": "Qwen3 1.7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-4b-q4",
+      "name": "Qwen3 4B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-4b-q5",
+      "name": "Qwen3 4B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-4b-q8",
+      "name": "Qwen3 4B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-4b-fp16",
+      "name": "Qwen3 4B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-8b-q4",
+      "name": "Qwen3 8B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-8b-q5",
+      "name": "Qwen3 8B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-8b-q8",
+      "name": "Qwen3 8B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-8b-fp16",
+      "name": "Qwen3 8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-14b-q4",
+      "name": "Qwen3 14B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-14b-q5",
+      "name": "Qwen3 14B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-14b-q8",
+      "name": "Qwen3 14B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-14b-fp16",
+      "name": "Qwen3 14B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-30b-q4",
+      "name": "Qwen3 30B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-30b-q5",
+      "name": "Qwen3 30B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-30b-q8",
+      "name": "Qwen3 30B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-30b-fp16",
+      "name": "Qwen3 30B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-32b-q4",
+      "name": "Qwen3 32B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": true
+    },
+    {
+      "id": "qwen3-32b-q5",
+      "name": "Qwen3 32B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": true
+    },
+    {
+      "id": "qwen3-32b-q8",
+      "name": "Qwen3 32B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-32b-fp16",
+      "name": "Qwen3 32B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-235b-q4",
+      "name": "Qwen3 235B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-235b-q5",
+      "name": "Qwen3 235B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-235b-q8",
+      "name": "Qwen3 235B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-235b-fp16",
+      "name": "Qwen3 235B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen35-397b-a17b-cloud",
+      "name": "Qwen3.5 397B-A17B CLOUD",
+      "quantizations": [
+        "CLOUD"
+      ],
+      "verified": false
+    },
     {
       "id": "llama-7b-q4",
       "name": "Llama 7B Q4",
@@ -125,390 +613,6 @@
     {
       "id": "llama-70b-fp16",
       "name": "Llama 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-7b-q4",
-      "name": "Qwen2.5 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-7b-q5",
-      "name": "Qwen2.5 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-7b-q8",
-      "name": "Qwen2.5 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-7b-fp16",
-      "name": "Qwen2.5 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-14b-q4",
-      "name": "Qwen2.5 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-14b-q5",
-      "name": "Qwen2.5 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-14b-q8",
-      "name": "Qwen2.5 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-14b-fp16",
-      "name": "Qwen2.5 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-32b-q4",
-      "name": "Qwen2.5 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-32b-q5",
-      "name": "Qwen2.5 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-32b-q8",
-      "name": "Qwen2.5 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-32b-fp16",
-      "name": "Qwen2.5 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-70b-q4",
-      "name": "Qwen2.5 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-70b-q5",
-      "name": "Qwen2.5 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-70b-q8",
-      "name": "Qwen2.5 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen25-70b-fp16",
-      "name": "Qwen2.5 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-7b-q4",
-      "name": "Qwen3 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-7b-q5",
-      "name": "Qwen3 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-7b-q8",
-      "name": "Qwen3 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-7b-fp16",
-      "name": "Qwen3 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-14b-q4",
-      "name": "Qwen3 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-14b-q5",
-      "name": "Qwen3 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-14b-q8",
-      "name": "Qwen3 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-14b-fp16",
-      "name": "Qwen3 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-32b-q4",
-      "name": "Qwen3 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": true
-    },
-    {
-      "id": "qwen3-32b-q5",
-      "name": "Qwen3 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": true
-    },
-    {
-      "id": "qwen3-32b-q8",
-      "name": "Qwen3 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-32b-fp16",
-      "name": "Qwen3 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-70b-q4",
-      "name": "Qwen3 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-70b-q5",
-      "name": "Qwen3 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-70b-q8",
-      "name": "Qwen3 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen3-70b-fp16",
-      "name": "Qwen3 70B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-7b-q4",
-      "name": "Qwen3.5 7B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-7b-q5",
-      "name": "Qwen3.5 7B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-7b-q8",
-      "name": "Qwen3.5 7B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-7b-fp16",
-      "name": "Qwen3.5 7B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-14b-q4",
-      "name": "Qwen3.5 14B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-14b-q5",
-      "name": "Qwen3.5 14B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-14b-q8",
-      "name": "Qwen3.5 14B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-14b-fp16",
-      "name": "Qwen3.5 14B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-32b-q4",
-      "name": "Qwen3.5 32B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-32b-q5",
-      "name": "Qwen3.5 32B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-32b-q8",
-      "name": "Qwen3.5 32B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-32b-fp16",
-      "name": "Qwen3.5 32B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-70b-q4",
-      "name": "Qwen3.5 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-70b-q5",
-      "name": "Qwen3.5 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-70b-q8",
-      "name": "Qwen3.5 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "qwen35-70b-fp16",
-      "name": "Qwen3.5 70B FP16",
       "quantizations": [
         "FP16"
       ],

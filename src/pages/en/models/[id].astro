@@ -86,6 +86,10 @@ const schema = {
             <th>Data status</th>
             <td>{item.data_status === "measured" ? "Measured on LocalVRAM hardware" : "Estimated baseline (pending measurement)"}</td>
           </tr>
+          <tr>
+            <th>Ollama source</th>
+            <td><a class="btn" href={item.ollama_source_url}>Library reference</a> (verified: {item.ollama_verified_at})</td>
+          </tr>
         </tbody>
       </table>
     </section>
