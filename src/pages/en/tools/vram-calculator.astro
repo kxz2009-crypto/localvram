@@ -116,7 +116,7 @@ const defaultModelId = firstMeasuredModel?.id || sampleModels[0]?.id || "";
         `<h2 class="model-title">${model.name}${isMeasured ? ' <span class="verified-badge" title="Tested on local RTX 3090">Verified</span>' : ""}</h2>`,
         `<p>Minimum VRAM: <strong>${model.vram_min_gb}GB</strong> | Optimal VRAM: <strong>${model.vram_optimal_gb}GB</strong></p>`,
         `<p>Best local: ${model.best_local_gpu} | Cloud fallback: ${model.cloud_fallback}</p>`,
-        `<p>Expected throughput: 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`,
+        `<p>Catalog baseline (estimated): 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`,
         `<p>Real performance on RTX 3090: <strong>${realPerf}</strong> (test time: ${realTestTime})</p>`,
         `<p>Data status: <strong>${isMeasured ? "Verified by Real Hardware" : "Estimated"}</strong></p>`
       ].join("");
