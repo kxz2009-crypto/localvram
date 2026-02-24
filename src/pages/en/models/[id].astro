@@ -103,7 +103,7 @@ const schema = {
           </tr>
           <tr>
             <th>Data status</th>
-            <td>{item.data_status === "measured" ? "Measured on LocalVRAM hardware" : "Estimated baseline (pending measurement)"}</td>
+            <td>{hasRealBenchmark ? "Verified by Real Hardware" : "Estimated baseline (pending measurement)"}</td>
           </tr>
           <tr>
             <th>Ollama source</th>

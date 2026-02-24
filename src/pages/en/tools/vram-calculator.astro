@@ -110,7 +110,7 @@ const benchmarkMap = benchmarkResults.models || {};
         `<p>Best local: ${model.best_local_gpu} | Cloud fallback: ${model.cloud_fallback}</p>`,
         `<p>Expected throughput: 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`,
         `<p>Real performance on RTX 3090: <strong>${realPerf}</strong> (test time: ${realTestTime})</p>`,
-        `<p>Data status: <strong>${model.data_status === "measured" ? "Measured" : "Estimated"}</strong></p>`
+        `<p>Data status: <strong>${isMeasured ? "Verified by Real Hardware" : "Estimated"}</strong></p>`
       ].join("");
 
       primary.textContent = cloudFirst ? "Open cloud options" : "Check local upgrade";
