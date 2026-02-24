@@ -21,9 +21,11 @@ const benchmarkMap = benchmarkResults.models || {};
         ))}
       </select>
       <div id="calc-result" class="card" style="margin-top: 12px;" />
-      <div class="card" style="margin-top: 12px; min-height: 260px;">
+      <div class="card" style="margin-top: 12px;">
         <h2 style="margin-top: 0;">Performance Curve</h2>
-        <canvas id="calc-chart" aria-label="Hardware benchmark comparison"></canvas>
+        <div class="chart-wrap">
+          <canvas id="calc-chart" aria-label="Hardware benchmark comparison"></canvas>
+        </div>
       </div>
       <div class="cta-row">
         <a id="calc-primary" class="btn btn-primary" href="/en/affiliate/hardware-upgrade/">Check local upgrade</a>
@@ -51,34 +53,34 @@ const benchmarkMap = benchmarkResults.models || {};
       if (chart) {
         chart.destroy();
       }
-      const measuredSeries =
-        realData && realData.status === "ok"
-          ? [realData.tokens_per_second, null, null]
-          : [null, null, null];
+      const hasMeasured = realData && realData.status === "ok" && typeof realData.tokens_per_second === "number";
+      const datasets = [
+        {
+          label: `${model.name} baseline`,
+          data: [model.benchmarks.rtx3090_tok_s, model.benchmarks.rtx4090_tok_s, model.benchmarks.a100_tok_s],
+          borderColor: "#3b82f6",
+          backgroundColor: "rgba(59,130,246,0.15)",
+          borderWidth: 2,
+          tension: 0.2
+        }
+      ];
+      if (hasMeasured) {
+        datasets.push({
+          label: "Measured RTX 3090",
+          data: [realData.tokens_per_second, null, null],
+          borderColor: "#10b981",
+          backgroundColor: "rgba(16,185,129,0.2)",
+          borderWidth: 2,
+          pointRadius: 5,
+          spanGaps: true,
+          tension: 0
+        });
+      }
       chart = new window.Chart(chartCanvas, {
         type: "line",
         data: {
           labels: ["RTX 3090", "RTX 4090", "A100 80GB"],
-          datasets: [
-            {
-              label: `${model.name} baseline`,
-              data: [model.benchmarks.rtx3090_tok_s, model.benchmarks.rtx4090_tok_s, model.benchmarks.a100_tok_s],
-              borderColor: "#3b82f6",
-              backgroundColor: "rgba(59,130,246,0.15)",
-              borderWidth: 2,
-              tension: 0.2
-            },
-            {
-              label: "Measured RTX 3090",
-              data: measuredSeries,
-              borderColor: "#10b981",
-              backgroundColor: "rgba(16,185,129,0.2)",
-              borderWidth: 2,
-              pointRadius: 5,
-              spanGaps: true,
-              tension: 0
-            }
-          ]
+          datasets
         },
         options: {
           responsive: true,
