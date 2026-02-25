@@ -1,0 +1,90 @@
+name: Runner Smoke Check
+
+on:
+  workflow_dispatch:
+    inputs:
+      endpoint:
+        description: "Ollama endpoint"
+        required: false
+        default: "http://127.0.0.1:11434"
+        type: string
+      required_targets:
+        description: "Required targets CSV (family or tag)"
+        required: false
+        default: "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96"
+        type: string
+      restart_if_empty:
+        description: "Try restarting ollama serve when model list is empty"
+        required: false
+        default: true
+        type: boolean
+      retry_delays_s:
+        description: "Network retry delays in seconds (CSV)"
+        required: false
+        default: "5,10,20"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-check:
+    runs-on: [self-hosted, Linux, X64, gpu, 3090]
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+        continue-on-error: true
+
+      - name: Classify checkout failure
+        if: steps.checkout.outcome == 'failure'
+        run: |
+          echo "failure_class=checkout_network_failure"
+          echo "failure_detail=actions/checkout failed before smoke diagnostics could run"
+          echo "::error title=FailureClass::checkout_network_failure - actions/checkout failed before smoke diagnostics could run"
+          exit 1
+
+      - name: Setup Python
+        if: steps.checkout.outcome == 'success'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Runner diagnostics (preflight baseline)
+        if: steps.checkout.outcome == 'success'
+        env:
+          LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
+          OLLAMA_HOST: ${{ github.event.inputs.endpoint }}
+          OLLAMA_MODELS: /mnt/d/Ollama
+          LV_NETWORK_RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s }}
+          LV_WEEKLY_TARGETS: ${{ github.event.inputs.required_targets }}
+        run: |
+          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}"
+
+      - name: Ollama preflight smoke
+        if: steps.checkout.outcome == 'success'
+        env:
+          LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
+          OLLAMA_HOST: ${{ github.event.inputs.endpoint }}
+          OLLAMA_MODELS: /mnt/d/Ollama
+          LV_NETWORK_RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s }}
+          LV_WEEKLY_TARGETS: ${{ github.event.inputs.required_targets }}
+          INPUT_RESTART_IF_EMPTY: ${{ github.event.inputs.restart_if_empty }}
+        run: |
+          ARGS=(--required-targets "${LV_WEEKLY_TARGETS}")
+          if [ "${INPUT_RESTART_IF_EMPTY}" = "true" ]; then
+            ARGS+=(--restart-if-empty)
+          fi
+          python scripts/ollama-preflight.py "${ARGS[@]}"
+
+      - name: Runner diagnostics (post smoke)
+        if: always() && steps.checkout.outcome == 'success'
+        env:
+          LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
+          OLLAMA_HOST: ${{ github.event.inputs.endpoint }}
+          OLLAMA_MODELS: /mnt/d/Ollama
+          LV_NETWORK_RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s }}
+          LV_WEEKLY_TARGETS: ${{ github.event.inputs.required_targets }}
+        run: |
+          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}"
+

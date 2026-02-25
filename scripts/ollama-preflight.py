@@ -58,6 +58,13 @@ def format_retry_delays(delays: list[float]) -> str:
     return ",".join(out) if out else "<none>"
 
 
+def emit_failure_class(code: str, detail: str) -> None:
+    message = str(detail).strip()
+    print(f"failure_class={code}")
+    print(f"failure_detail={message}")
+    print(f"::error title=FailureClass::{code} - {message}")
+
+
 def model_family(tag_or_family: str) -> str:
     value = str(tag_or_family).strip().lower()
     if not value:
@@ -169,10 +176,13 @@ def main() -> None:
     try:
         local_models = fetch_local_models_with_retry(endpoint, retry_delays=network_retry_delays)
     except urllib.error.HTTPError as exc:
+        emit_failure_class("ollama_not_visible", f"Ollama endpoint returned HTTP {exc.code}: {exc.reason}")
         raise SystemExit(f"Ollama endpoint returned HTTP {exc.code}: {exc.reason}") from exc
     except urllib.error.URLError as exc:
+        emit_failure_class("ollama_not_visible", f"failed to connect to Ollama endpoint: {exc}")
         raise SystemExit(f"failed to connect to Ollama endpoint: {exc}") from exc
     except Exception as exc:  # noqa: BLE001
+        emit_failure_class("ollama_not_visible", f"failed to query Ollama endpoint: {exc}")
         raise SystemExit(f"failed to query Ollama endpoint: {exc}") from exc
 
     if args.restart_if_empty and len(local_models) == 0:
@@ -193,6 +203,10 @@ def main() -> None:
     sample = ", ".join(local_models_sorted[:12]) if local_models_sorted else "<empty>"
     print(f"ollama_models_sample={sample}")
 
+    if not args.allow_empty_models and len(local_models_sorted) == 0:
+        emit_failure_class("ollama_not_visible", "Ollama model list is empty")
+        raise SystemExit("Ollama model list is empty")
+
     if required_targets:
         runnable: list[str] = []
         for target in required_targets:
@@ -208,10 +222,8 @@ def main() -> None:
         print(f"required_targets_runnable_count={len(runnable)}")
         print(f"required_targets_runnable={','.join(runnable) if runnable else '<none>'}")
         if not args.allow_no_runnable_targets and len(runnable) == 0:
+            emit_failure_class("model_missing", "no runnable required targets found in Ollama model list")
             raise SystemExit("no runnable required targets found in Ollama model list")
-
-    if not args.allow_empty_models and len(local_models_sorted) == 0:
-        raise SystemExit("Ollama model list is empty")
 
 
 if __name__ == "__main__":

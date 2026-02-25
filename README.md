@@ -63,6 +63,7 @@ npm run dev
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
 - `python scripts/ollama-preflight.py`
+- `python scripts/runner-diagnostics.py`
 - `python scripts/cluster-benchmark.py`
 - `python scripts/report-data-freshness.py`
 
@@ -97,6 +98,12 @@ Self-hosted runner preflight:
 - Uses `LV_NETWORK_RETRY_DELAYS_S` retry backoff (default `5,10,20`) before failing on transient connection issues.
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
+- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `benchmark_threshold_not_met`.
+
+Smoke check workflow:
+
+- GitHub Actions workflow: `Runner Smoke Check` (manual trigger).
+- Runs quick diagnostics + preflight only (no full benchmark), useful after runner/Ollama upgrades.
 
 Cluster benchmark (`scripts/cluster-benchmark.py`):
 

@@ -134,6 +134,13 @@ def classify_error(error_text: str) -> str:
     return "runtime"
 
 
+def emit_failure_class(code: str, detail: str) -> None:
+    message = str(detail).strip()
+    print(f"failure_class={code}")
+    print(f"failure_detail={message}")
+    print(f"::error title=FailureClass::{code} - {message}")
+
+
 def api_request(
     endpoint: str,
     route: str,
@@ -1289,8 +1296,26 @@ def main() -> None:
         print(f"no significant model changes detected (> {args.min_delta} tok/s); results file unchanged")
 
     if not args.allow_empty and runnable_target_count == 0:
+        skipped_missing = [
+            r for r in skipped_reports if r.get("error_type") in {"missing_model", "missing_family", "unknown_model_tag"}
+        ]
+        if len(local_models) == 0:
+            emit_failure_class("ollama_not_visible", "runner reported zero local models from /api/tags")
+        elif skipped_missing:
+            sample = ",".join(str(r.get("model", "")) for r in skipped_missing[:8])
+            emit_failure_class("model_missing", f"no runnable targets; missing_or_unmapped_targets={sample}")
+        else:
+            emit_failure_class("model_missing", "no runnable benchmark targets available on runner")
         raise SystemExit("no runnable benchmark targets available on runner")
     if not args.allow_empty and len(success_reports) < min_success_required:
+        emit_failure_class(
+            "benchmark_threshold_not_met",
+            (
+                "successful benchmark samples below threshold: "
+                f"{len(success_reports)} < {min_success_required} "
+                f"(configured={min_success_configured}, runnable={runnable_target_count})"
+            ),
+        )
         raise SystemExit(
             "successful benchmark samples below threshold: "
             f"{len(success_reports)} < {min_success_required} "
