@@ -25,6 +25,7 @@ on:
 permissions:
   actions: read
   contents: write
+  issues: write
 
 jobs:
   publish:
@@ -32,12 +33,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Prepare logs dir
+        if: always() && steps.checkout.conclusion == 'success'
+        run: mkdir -p logs
 
       - name: Resolve source run id
         id: source
@@ -47,6 +53,8 @@ jobs:
             RUN_ID="${{ github.event.inputs.source_run_id }}"
           fi
           if [ -z "${RUN_ID}" ]; then
+            mkdir -p logs
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'artifact_download_failure','failure_detail':'missing source run id'}, ensure_ascii=False), encoding='utf-8')"
             echo "failure_class=artifact_download_failure"
             echo "failure_detail=missing source run id"
             echo "::error title=FailureClass::artifact_download_failure - missing source run id"
@@ -128,10 +136,14 @@ jobs:
 
           if ! run_with_retry artifact_download gh run download "${SOURCE_RUN_ID}" --name benchmark-collection --dir artifact-source --repo "${GITHUB_REPOSITORY}"; then
             if [ "${last_rate_limited}" -eq 1 ]; then
+              mkdir -p logs
+              python -c "import json, pathlib, os; rid=os.environ.get('SOURCE_RUN_ID',''); pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'artifact_download_rate_limited','failure_detail':f'rate limited while downloading benchmark-collection artifact from run {rid}'}, ensure_ascii=False), encoding='utf-8')"
               echo "failure_class=artifact_download_rate_limited"
               echo "failure_detail=rate limited while downloading benchmark-collection artifact from run ${SOURCE_RUN_ID}"
               echo "::error title=FailureClass::artifact_download_rate_limited - rate limited while downloading benchmark-collection artifact from run ${SOURCE_RUN_ID}"
             else
+              mkdir -p logs
+              python -c "import json, pathlib, os; rid=os.environ.get('SOURCE_RUN_ID',''); pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'artifact_download_failure','failure_detail':f'failed to download benchmark-collection artifact from run {rid}'}, ensure_ascii=False), encoding='utf-8')"
               echo "failure_class=artifact_download_failure"
               echo "failure_detail=failed to download benchmark-collection artifact from run ${SOURCE_RUN_ID}"
               echo "::error title=FailureClass::artifact_download_failure - failed to download benchmark-collection artifact from run ${SOURCE_RUN_ID}"
@@ -142,6 +154,7 @@ jobs:
       - name: Validate and apply artifact
         run: |
           if ! python scripts/validate-benchmark-artifact.py --source-dir artifact-source --apply --report-file logs/artifact-validation-report.json; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'artifact_validation_failure','failure_detail':'benchmark artifact schema validation failed'}, ensure_ascii=False), encoding='utf-8')"
             echo "failure_class=artifact_validation_failure"
             echo "failure_detail=benchmark artifact schema validation failed"
             echo "::error title=FailureClass::artifact_validation_failure - benchmark artifact schema validation failed"
@@ -169,19 +182,6 @@ jobs:
 
       - name: Run quality gate
         run: python scripts/quality-gate.py
-
-      - name: Update pipeline status (publish run)
-        run: |
-          python scripts/update-pipeline-status.py \
-            --workflow-key "publish_benchmark_artifact" \
-            --workflow-name "Publish Benchmark Artifact" \
-            --run-id "${GITHUB_RUN_ID}" \
-            --run-url "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
-            --status "completed" \
-            --conclusion "success" \
-            --event "${GITHUB_EVENT_NAME}" \
-            --head-sha "${GITHUB_SHA}" \
-            --failure-class "none"
 
       - name: Commit and push publish updates
         env:
@@ -254,16 +254,64 @@ jobs:
 
           if ! run_with_retry git_push git push; then
             if [ "${last_rate_limited}" -eq 1 ]; then
+              mkdir -p logs
+              python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'publish_push_rate_limited','failure_detail':'git push rate limited after retries'}, ensure_ascii=False), encoding='utf-8')"
               echo "failure_class=publish_push_rate_limited"
               echo "failure_detail=git push rate limited after retries"
               echo "::error title=FailureClass::publish_push_rate_limited - git push rate limited after retries"
             else
+              mkdir -p logs
+              python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'publish_push_failure','failure_detail':'git push failed after retries'}, ensure_ascii=False), encoding='utf-8')"
               echo "failure_class=publish_push_failure"
               echo "failure_detail=git push failed after retries"
               echo "::error title=FailureClass::publish_push_failure - git push failed after retries"
             fi
             exit 1
           fi
+
+      - name: Finalize pipeline status (publish)
+        id: pipeline_status_publish
+        if: always() && steps.checkout.conclusion == 'success'
+        env:
+          LV_JOB_STATUS: ${{ job.status }}
+        run: |
+          conclusion="success"
+          if [ "${LV_JOB_STATUS}" != "success" ]; then
+            conclusion="failure"
+          fi
+
+          failure_class=""
+          failure_detail=""
+          if [ -f logs/failure-context.json ]; then
+            failure_class="$(python -c "import json, pathlib; d=json.loads(pathlib.Path('logs/failure-context.json').read_text(encoding='utf-8')); print(str(d.get('failure_class','')).strip())" 2>/dev/null || true)"
+            failure_detail="$(python -c "import json, pathlib; d=json.loads(pathlib.Path('logs/failure-context.json').read_text(encoding='utf-8')); print(str(d.get('failure_detail','')).strip())" 2>/dev/null || true)"
+          fi
+          if [ "${conclusion}" = "success" ]; then
+            failure_class="none"
+            failure_detail=""
+          elif [ -z "${failure_class}" ] || [ "${failure_class}" = "none" ]; then
+            failure_class="publish_workflow_failed"
+          fi
+
+          python scripts/update-pipeline-status.py \
+            --workflow-key "publish_benchmark_artifact" \
+            --workflow-name "Publish Benchmark Artifact" \
+            --run-id "${GITHUB_RUN_ID}" \
+            --run-url "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --status "completed" \
+            --conclusion "${conclusion}" \
+            --event "${GITHUB_EVENT_NAME}" \
+            --head-sha "${GITHUB_SHA}" \
+            --failure-class "${failure_class}" \
+            --failure-detail "${failure_detail}"
+
+          {
+            echo "conclusion=${conclusion}"
+            echo "failure_class=${failure_class}"
+            echo "failure_detail<<EOF"
+            echo "${failure_detail}"
+            echo "EOF"
+          } >> "${GITHUB_OUTPUT}"
 
       - name: Upload publish diagnostics
         if: always()
@@ -275,3 +323,110 @@ jobs:
           path: |
             logs/artifact-validation-report.json
             logs
+
+      - name: Alert issue (publish checkout failure)
+        if: always() && steps.checkout.conclusion == 'failure'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Publish Benchmark Artifact
+          ALERT_FAILURE_CLASS: publish_checkout_failure
+          ALERT_FAILURE_DETAIL: actions/checkout failed in publish workflow
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const failureClass = process.env.ALERT_FAILURE_CLASS || "unknown_failure";
+            const failureDetail = process.env.ALERT_FAILURE_DETAIL || "";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const message = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: ${failureDetail || "-"}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: message
+              });
+              core.info(`commented existing issue #${existing.number}`);
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: message
+              });
+              core.info("created new ops alert issue");
+            }
+
+      - name: Alert issue (publish failure)
+        if: always() && failure() && steps.checkout.conclusion == 'success'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Publish Benchmark Artifact
+          ALERT_FAILURE_CLASS: ${{ steps.pipeline_status_publish.outputs.failure_class }}
+          ALERT_FAILURE_DETAIL: ${{ steps.pipeline_status_publish.outputs.failure_detail }}
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            let failureClass = (process.env.ALERT_FAILURE_CLASS || "").trim();
+            const failureDetail = (process.env.ALERT_FAILURE_DETAIL || "").trim();
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            if (!failureClass || failureClass === "none") {
+              failureClass = "publish_workflow_failed";
+            }
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const message = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: ${failureDetail || "-"}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: message
+              });
+              core.info(`commented existing issue #${existing.number}`);
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: message
+              });
+              core.info("created new ops alert issue");
+            }

@@ -23,6 +23,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   benchmark-on-3090:
@@ -131,6 +132,7 @@ jobs:
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-diagnostics-failure.json
 
       - name: Update pipeline status snapshot (weekly)
+        id: pipeline_status_weekly
         if: always() && steps.checkout.conclusion == 'success'
         env:
           LV_JOB_STATUS: ${{ job.status }}
@@ -164,6 +166,14 @@ jobs:
             --failure-class "${failure_class}" \
             --failure-detail "${failure_detail}"
 
+          {
+            echo "conclusion=${conclusion}"
+            echo "failure_class=${failure_class}"
+            echo "failure_detail<<EOF"
+            echo "${failure_detail}"
+            echo "EOF"
+          } >> "${GITHUB_OUTPUT}"
+
       - name: Upload benchmark collection artifact
         if: always() && steps.checkout.conclusion == 'success'
         uses: actions/upload-artifact@v4
@@ -180,3 +190,110 @@ jobs:
             src/data/pipeline-status.json
             logs
             public/screenshots
+
+      - name: Alert issue (weekly checkout failure)
+        if: always() && steps.checkout.conclusion == 'failure'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Weekly Benchmark
+          ALERT_FAILURE_CLASS: checkout_network_failure
+          ALERT_FAILURE_DETAIL: actions/checkout failed before benchmark scripts could run
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const failureClass = process.env.ALERT_FAILURE_CLASS || "unknown_failure";
+            const failureDetail = process.env.ALERT_FAILURE_DETAIL || "";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const message = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: ${failureDetail || "-"}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: message
+              });
+              core.info(`commented existing issue #${existing.number}`);
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: message
+              });
+              core.info("created new ops alert issue");
+            }
+
+      - name: Alert issue (weekly failure)
+        if: always() && failure() && steps.checkout.conclusion == 'success'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Weekly Benchmark
+          ALERT_FAILURE_CLASS: ${{ steps.pipeline_status_weekly.outputs.failure_class }}
+          ALERT_FAILURE_DETAIL: ${{ steps.pipeline_status_weekly.outputs.failure_detail }}
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            let failureClass = (process.env.ALERT_FAILURE_CLASS || "").trim();
+            const failureDetail = (process.env.ALERT_FAILURE_DETAIL || "").trim();
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            if (!failureClass || failureClass === "none") {
+              failureClass = "weekly_benchmark_failed";
+            }
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const message = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: ${failureDetail || "-"}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: message
+              });
+              core.info(`commented existing issue #${existing.number}`);
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: message
+              });
+              core.info("created new ops alert issue");
+            }

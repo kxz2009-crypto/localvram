@@ -101,6 +101,7 @@ Self-hosted runner preflight:
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
 - Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `benchmark_threshold_not_met`, `artifact_download_rate_limited`, `publish_push_rate_limited`.
+- Failure alerts: `Weekly Benchmark` and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
 
 Smoke check workflow:
 
