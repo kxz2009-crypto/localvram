@@ -62,6 +62,7 @@ npm run dev
 - `python scripts/build-sitemap.py`
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
+- `python scripts/ollama-preflight.py`
 - `python scripts/cluster-benchmark.py`
 - `python scripts/report-data-freshness.py`
 
@@ -71,7 +72,8 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 
 - `LV_OLLAMA_ENDPOINT` (default: `http://127.0.0.1:11434`)
 - `OLLAMA_HOST` (fallback when `LV_OLLAMA_ENDPOINT` is not set)
-- `LV_WEEKLY_TARGETS` (default: `llama3:8b=128,qwen3:8b=128,deepseek-r1:8b=128`)
+- `OLLAMA_MODELS` (runner/service-side Ollama model directory, for example `/mnt/d/Ollama`)
+- `LV_WEEKLY_TARGETS` (default: `qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96`)
 - `LV_RUNS_PER_MODEL` (default: `2`)
 - `LV_BENCHMARK_HISTORY_LIMIT` (default: `20`)
 - `LV_BENCHMARK_NUM_CTX` (default: `4096`; fixed context window for apples-to-apples runs)
@@ -84,6 +86,12 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `LV_AUTO_PRIORITY_TAGS` (default: `qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b`; preferred order for auto-added targets)
 - `PUBLIC_AMAZON_PRICE_3090` (optional UI price label for local recommendation modules)
 - `PUBLIC_RUNPOD_A100_PRICE` (optional UI price label for cloud recommendation modules)
+
+Self-hosted runner preflight:
+
+- `python scripts/ollama-preflight.py --required-targets "$LV_WEEKLY_TARGETS"`
+- Validates `/api/tags` visibility before benchmark starts.
+- Fails fast when no models or no runnable required targets are detected.
 
 Cluster benchmark (`scripts/cluster-benchmark.py`):
 

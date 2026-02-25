@@ -41,27 +41,9 @@ jobs:
           LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
           OLLAMA_HOST: http://127.0.0.1:11434
           OLLAMA_MODELS: /mnt/d/Ollama
+          LV_WEEKLY_TARGETS: qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96
         run: |
-          python - <<'PY'
-          import json
-          import os
-          import urllib.request
-
-          endpoint = os.getenv("LV_OLLAMA_ENDPOINT") or os.getenv("OLLAMA_HOST") or "http://127.0.0.1:11434"
-          endpoint = endpoint.rstrip("/")
-          print(f"ollama_endpoint={endpoint}")
-          print(f"ollama_models_dir={os.getenv('OLLAMA_MODELS', '')}")
-          with urllib.request.urlopen(f"{endpoint}/api/tags", timeout=20) as resp:
-              payload = json.loads(resp.read().decode("utf-8"))
-          names = []
-          for row in payload.get("models", []):
-              name = str(row.get("name", "")).strip().lower()
-              if name:
-                  names.append(name)
-          print(f"ollama_models_count={len(names)}")
-          sample = ", ".join(sorted(set(names))[:12]) if names else "<empty>"
-          print(f"ollama_models_sample={sample}")
-          PY
+          python scripts/ollama-preflight.py --required-targets "${LV_WEEKLY_TARGETS}"
 
       - name: Weekly benchmark
         env:
