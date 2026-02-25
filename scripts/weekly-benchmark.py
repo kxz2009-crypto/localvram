@@ -252,6 +252,55 @@ def parse_tag_list(raw: str) -> list[str]:
     return out
 
 
+def _looks_like_variant(tag: str, base: str) -> bool:
+    if tag == base:
+        return True
+    if not tag.startswith(base):
+        return False
+    if len(tag) == len(base):
+        return True
+    return tag[len(base)] in {"-", "_", ".", ":"}
+
+
+def infer_canonical_tag(local_tag: str, known_tags: set[str], tag_aliases: dict[str, str]) -> str:
+    tag = str(local_tag).strip().lower()
+    if not tag:
+        return ""
+    canonical = tag_aliases.get(tag, tag)
+    if not known_tags:
+        return canonical
+    if canonical in known_tags:
+        return canonical
+
+    # Common local tags append quantization/suffix after the base canonical tag.
+    match = re.match(r"^([a-z0-9._-]+:\d+(?:\.\d+)?[bm])(?:[._:-].*)?$", canonical)
+    if match:
+        base = match.group(1)
+        if base in known_tags:
+            return base
+
+    for known in sorted(known_tags, key=len, reverse=True):
+        if _looks_like_variant(canonical, known):
+            return known
+    return canonical
+
+
+def build_local_tag_by_canonical(
+    local_models: set[str], known_tags: set[str], tag_aliases: dict[str, str]
+) -> dict[str, str]:
+    out: dict[str, str] = {}
+    for local_tag in sorted(local_models):
+        canonical = infer_canonical_tag(local_tag, known_tags, tag_aliases)
+        if not canonical:
+            continue
+        if known_tags and canonical not in known_tags:
+            continue
+        chosen = out.get(canonical)
+        if chosen is None or local_tag == canonical:
+            out[canonical] = local_tag
+    return out
+
+
 def recommend_num_predict(params_b: float | None) -> int:
     if params_b is None:
         return 96
@@ -678,18 +727,11 @@ def main() -> None:
     except urllib.error.URLError as exc:
         raise SystemExit(f"failed to connect to Ollama at {endpoint}: {exc}") from exc
     local_models = {x.lower() for x in local_models}
+    local_tag_by_canonical = build_local_tag_by_canonical(local_models, known_tags, tag_aliases)
 
     auto_backfill_targets: list[tuple[str, int]] = []
     if auto_backfill_enabled and min_success_configured > 0 and auto_backfill_max > 0:
         tag_params = load_model_tag_params()
-        local_tag_by_canonical: dict[str, str] = {}
-        for local_tag in local_models:
-            canonical = tag_aliases.get(local_tag, local_tag)
-            if known_tags and canonical not in known_tags:
-                continue
-            chosen = local_tag_by_canonical.get(canonical)
-            if chosen is None or local_tag == canonical:
-                local_tag_by_canonical[canonical] = local_tag
 
         existing_canonical_targets = {tag_aliases.get(model, model) for model, _ in targets}
         runnable_existing = 0
@@ -760,6 +802,7 @@ def main() -> None:
     for model, num_predict in targets:
         model_tag = model.strip().lower()
         canonical_model_tag = tag_aliases.get(model_tag, model_tag)
+        runner_model_tag = model_tag
         if known_tags and canonical_model_tag not in known_tags:
             report = {
                 "model": model_tag,
@@ -775,6 +818,37 @@ def main() -> None:
             continue
 
         if model_tag not in local_models:
+            fallback_tag = local_tag_by_canonical.get(canonical_model_tag)
+            if fallback_tag:
+                runner_model_tag = fallback_tag
+            else:
+                report = {
+                    "model": model_tag,
+                    "canonical_model": canonical_model_tag,
+                    "num_predict": num_predict,
+                    "status": "skipped",
+                    "runs": [],
+                    "error": "model not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
+                    "error_type": "missing_model",
+                }
+                reports.append(report)
+                append_log(log_file, {"level": "error", "event": "model_missing", **report})
+                continue
+
+        if runner_model_tag != model_tag:
+            append_log(
+                log_file,
+                {
+                    "level": "info",
+                    "event": "model_variant_selected",
+                    "model_requested": model_tag,
+                    "model_runner": runner_model_tag,
+                    "canonical_model": canonical_model_tag,
+                    "num_predict": num_predict,
+                },
+            )
+
+        if runner_model_tag not in local_models:
             report = {
                 "model": model_tag,
                 "canonical_model": canonical_model_tag,
@@ -790,7 +864,7 @@ def main() -> None:
         runnable_target_count += 1
         report = benchmark_model(
             endpoint=endpoint,
-            model=model_tag,
+            model=runner_model_tag,
             prompt=args.prompt,
             num_predict=num_predict,
             num_ctx=max(256, args.num_ctx),
@@ -799,6 +873,7 @@ def main() -> None:
             warmup_predict=max(0, args.warmup_predict),
             log_file=log_file,
         )
+        report["requested_model"] = model_tag
         report["canonical_model"] = canonical_model_tag
         reports.append(report)
 
