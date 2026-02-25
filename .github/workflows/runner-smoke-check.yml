@@ -1,6 +1,8 @@
 name: Runner Smoke Check
 
 on:
+  schedule:
+    - cron: "40 1 * * *"
   workflow_dispatch:
     inputs:
       endpoint:

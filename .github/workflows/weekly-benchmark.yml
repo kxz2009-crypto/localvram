@@ -2,7 +2,7 @@ name: Weekly Benchmark
 
 on:
   schedule:
-    - cron: "0 2 * * 0"
+    - cron: "10 2 * * 3"
   workflow_dispatch:
     inputs:
       include_heavy_targets:
