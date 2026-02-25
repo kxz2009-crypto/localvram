@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import pipelineStatus from "../../../data/pipeline-status.json";
+
+type WorkflowRow = {
+  workflow_key?: string;
+  workflow_name?: string;
+  run_id?: string;
+  run_url?: string;
+  status?: string;
+  conclusion?: string;
+  event?: string;
+  head_sha?: string;
+  failure_class?: string;
+  failure_detail?: string;
+  updated_at?: string;
+};
+
+const workflowsMap = (pipelineStatus.workflows || {}) as Record<string, WorkflowRow>;
+const preferredOrder = ["weekly_benchmark", "publish_benchmark_artifact"];
+const workflowRows: WorkflowRow[] = [
+  ...preferredOrder
+    .map((key) => workflowsMap[key])
+    .filter((row): row is WorkflowRow => Boolean(row)),
+  ...Object.entries(workflowsMap)
+    .filter(([key]) => !preferredOrder.includes(key))
+    .map(([, value]) => value),
+];
+
+const historyRows = Array.isArray(pipelineStatus.history) ? (pipelineStatus.history as WorkflowRow[]).slice(0, 12) : [];
+---
+
+<BaseLayout
+  title="Pipeline Status | LocalVRAM"
+  description="Latest Weekly and Publish workflow status snapshots."
+  locale="en"
+>
+  <main class="container">
+    <h1>Pipeline Status</h1>
+    <p>Latest workflow snapshots for benchmark collection and publish pipeline.</p>
+
+    <div class="card-grid">
+      {workflowRows.map((row) => (
+        <article class="card">
+          <h2>{row.workflow_name || row.workflow_key || "Workflow"}</h2>
+          <p>Status: {row.status || "unknown"} / {row.conclusion || "unknown"}</p>
+          <p>Updated: {row.updated_at || "unknown"}</p>
+          <p>Event: {row.event || "unknown"}</p>
+          <p>Failure Class: {row.failure_class || "none"}</p>
+          <p>{row.failure_detail || "-"}</p>
+          {row.run_url ? (
+            <a class="btn" href={row.run_url} target="_blank" rel="noopener noreferrer">Open Run</a>
+          ) : null}
+        </article>
+      ))}
+    </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Recent Pipeline History</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Workflow</th>
+            <th>Status</th>
+            <th>Conclusion</th>
+            <th>Updated</th>
+            <th>Run</th>
+          </tr>
+        </thead>
+        <tbody>
+          {historyRows.length === 0 ? (
+            <tr>
+              <td colSpan={5}>No history yet.</td>
+            </tr>
+          ) : (
+            historyRows.map((row) => (
+              <tr>
+                <td>{row.workflow_name || row.workflow_key || "unknown"}</td>
+                <td>{row.status || "unknown"}</td>
+                <td>{row.conclusion || "unknown"}</td>
+                <td>{row.updated_at || "unknown"}</td>
+                <td>
+                  {row.run_url ? (
+                    <a href={row.run_url} target="_blank" rel="noopener noreferrer">#{row.run_id || "-"}</a>
+                  ) : (
+                    <span>-</span>
+                  )}
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>

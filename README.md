@@ -65,6 +65,7 @@ npm run dev
 - `python scripts/ollama-preflight.py`
 - `python scripts/runner-diagnostics.py`
 - `python scripts/validate-benchmark-artifact.py --source-dir <artifact-dir>`
+- `python scripts/update-pipeline-status.py --workflow-key <key> --run-id <id> --run-url <url>`
 - `python scripts/cluster-benchmark.py`
 - `python scripts/report-data-freshness.py`
 
@@ -111,6 +112,7 @@ Weekly collect/publish split:
 - `Weekly Benchmark` now runs only on self-hosted runner and uploads a `benchmark-collection` artifact.
 - `Publish Benchmark Artifact` (workflow_run/manual) downloads that artifact, validates JSON payloads, rebuilds catalog/sitemap, and pushes with retry backoff (`5,10,20` default) + 429-aware wait (`rate_limit_delay_s`, default `60`) + jitter.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
+- Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 
 Cluster benchmark (`scripts/cluster-benchmark.py`):
 

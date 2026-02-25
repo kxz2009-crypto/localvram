@@ -55,6 +55,16 @@ jobs:
           echo "run_id=${RUN_ID}" >>"${GITHUB_OUTPUT}"
           echo "source_run_id=${RUN_ID}"
 
+      - name: Resolve source run metadata
+        id: source_meta
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN_ID: ${{ steps.source.outputs.run_id }}
+        run: |
+          mkdir -p logs
+          gh run view "${SOURCE_RUN_ID}" --repo "${GITHUB_REPOSITORY}" --json status,conclusion,event,headSha,updatedAt,url > logs/source-run-meta.json
+          python -c "import json, os, pathlib; meta=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); pairs={'status':str(meta.get('status','')).strip(),'conclusion':str(meta.get('conclusion','')).strip(),'event':str(meta.get('event','')).strip(),'head_sha':str(meta.get('headSha','')).strip(),'updated_at':str(meta.get('updatedAt','')).strip(),'run_url':str(meta.get('url','')).strip()}; out=os.environ['GITHUB_OUTPUT']; f=open(out,'a',encoding='utf-8'); [f.write(f'{k}={v}\\n') for k,v in pairs.items()]; f.close()"
+
       - name: Download benchmark collection artifact
         env:
           GH_TOKEN: ${{ github.token }}
@@ -138,6 +148,19 @@ jobs:
             exit 1
           fi
 
+      - name: Update pipeline status (weekly source)
+        run: |
+          python scripts/update-pipeline-status.py \
+            --workflow-key "weekly_benchmark" \
+            --workflow-name "Weekly Benchmark" \
+            --run-id "${{ steps.source.outputs.run_id }}" \
+            --run-url "${{ steps.source_meta.outputs.run_url }}" \
+            --status "${{ steps.source_meta.outputs.status }}" \
+            --conclusion "${{ steps.source_meta.outputs.conclusion }}" \
+            --event "${{ steps.source_meta.outputs.event }}" \
+            --head-sha "${{ steps.source_meta.outputs.head_sha }}" \
+            --updated-at "${{ steps.source_meta.outputs.updated_at }}"
+
       - name: Build model catalog
         run: python scripts/build-model-catalog.py
 
@@ -147,6 +170,19 @@ jobs:
       - name: Run quality gate
         run: python scripts/quality-gate.py
 
+      - name: Update pipeline status (publish run)
+        run: |
+          python scripts/update-pipeline-status.py \
+            --workflow-key "publish_benchmark_artifact" \
+            --workflow-name "Publish Benchmark Artifact" \
+            --run-id "${GITHUB_RUN_ID}" \
+            --run-url "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --status "completed" \
+            --conclusion "success" \
+            --event "${GITHUB_EVENT_NAME}" \
+            --head-sha "${GITHUB_SHA}" \
+            --failure-class "none"
+
       - name: Commit and push publish updates
         env:
           RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s || '5,10,20' }}
@@ -155,7 +191,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
+          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
 
           if git diff --cached --quiet; then
             echo "publish_result=no_changes"

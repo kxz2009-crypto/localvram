@@ -130,6 +130,40 @@ jobs:
         run: |
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-diagnostics-failure.json
 
+      - name: Update pipeline status snapshot (weekly)
+        if: always() && steps.checkout.conclusion == 'success'
+        env:
+          LV_JOB_STATUS: ${{ job.status }}
+        run: |
+          conclusion="success"
+          if [ "${LV_JOB_STATUS}" != "success" ]; then
+            conclusion="failure"
+          fi
+
+          failure_class="none"
+          failure_detail=""
+          if [ "${conclusion}" = "failure" ]; then
+            if [ -f src/data/runner-status.json ]; then
+              failure_class="$(python -c "import json, pathlib; p=pathlib.Path('src/data/runner-status.json'); d=json.loads(p.read_text(encoding='utf-8-sig')); s=d.get('summary',{}) if isinstance(d,dict) else {}; print(str(s.get('failure_class','')).strip())" 2>/dev/null || true)"
+              failure_detail="$(python -c "import json, pathlib; p=pathlib.Path('src/data/runner-status.json'); d=json.loads(p.read_text(encoding='utf-8-sig')); s=d.get('summary',{}) if isinstance(d,dict) else {}; print(str(s.get('failure_detail','')).strip())" 2>/dev/null || true)"
+            fi
+            if [ -z "${failure_class}" ] || [ "${failure_class}" = "none" ]; then
+              failure_class="weekly_benchmark_failed"
+            fi
+          fi
+
+          python scripts/update-pipeline-status.py \
+            --workflow-key "weekly_benchmark" \
+            --workflow-name "Weekly Benchmark" \
+            --run-id "${GITHUB_RUN_ID}" \
+            --run-url "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --status "completed" \
+            --conclusion "${conclusion}" \
+            --event "${GITHUB_EVENT_NAME}" \
+            --head-sha "${GITHUB_SHA}" \
+            --failure-class "${failure_class}" \
+            --failure-detail "${failure_detail}"
+
       - name: Upload benchmark collection artifact
         if: always() && steps.checkout.conclusion == 'success'
         uses: actions/upload-artifact@v4
@@ -143,5 +177,6 @@ jobs:
             src/data/cluster-benchmarks.json
             src/data/benchmark-changelog.json
             src/data/runner-status.json
+            src/data/pipeline-status.json
             logs
             public/screenshots

@@ -29,6 +29,7 @@ def main() -> None:
         "https://localvram.com/en/updates/",
         "https://localvram.com/en/status/data-freshness/",
         "https://localvram.com/en/status/runner-health/",
+        "https://localvram.com/en/status/pipeline-status/",
         "https://localvram.com/en/errors/",
         "https://localvram.com/en/hardware/",
         "https://localvram.com/en/models/",
