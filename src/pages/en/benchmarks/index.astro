@@ -1,5 +1,28 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import clusterBenchmarks from "../../../data/cluster-benchmarks.json";
+
+type ClusterNode = {
+  endpoint?: string;
+  status?: string;
+  avg_tokens_per_s?: number;
+  avg_latency_ms?: number;
+  error?: string;
+};
+
+type ClusterTest = {
+  topology?: string;
+  model_id?: string;
+  metrics?: {
+    tokens_per_s?: number;
+  };
+  nodes?: ClusterNode[];
+};
+
+const clusterTests = Array.isArray(clusterBenchmarks.tests) ? clusterBenchmarks.tests : [];
+const latestCluster = (clusterTests[0] || null) as ClusterTest | null;
+const latestNodes = latestCluster && Array.isArray(latestCluster.nodes) ? latestCluster.nodes : [];
+const clusterUpdatedAt = clusterBenchmarks.updated_at || "";
 ---
 
 <BaseLayout
@@ -22,6 +45,49 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
         <p>Community-backed data pipeline with precheck and manual review.</p>
         <a class="btn btn-primary" href="/en/benchmarks/submit-result/">Open submit guide</a>
       </article>
+      <article class="card">
+        <h2>Cluster Runbook</h2>
+        <p>Network checklist and topology guidance for local multi-node Ollama setup.</p>
+        <a class="btn btn-primary" href="/en/guides/ollama-local-cluster-network/">Open guide</a>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Latest Cluster Snapshot</h2>
+      {latestCluster ? (
+        <>
+          <p>
+            Updated {clusterUpdatedAt ? clusterUpdatedAt.slice(0, 10) : "unknown"} · Topology {latestCluster.topology}
+            {" "}· Model {latestCluster.model_id} · Aggregate {latestCluster.metrics?.tokens_per_s ?? "N/A"} tok/s
+          </p>
+          <div style="overflow-x: auto; margin-top: 12px;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Endpoint</th>
+                  <th>Status</th>
+                  <th>Avg tok/s</th>
+                  <th>Avg latency</th>
+                  <th>Error</th>
+                </tr>
+              </thead>
+              <tbody>
+                {latestNodes.map((node: ClusterNode) => (
+                  <tr>
+                    <td>{node.endpoint || "unknown"}</td>
+                    <td>{node.status || "unknown"}</td>
+                    <td>{typeof node.avg_tokens_per_s === "number" ? node.avg_tokens_per_s.toFixed(2) : "N/A"}</td>
+                    <td>{typeof node.avg_latency_ms === "number" ? `${node.avg_latency_ms.toFixed(1)} ms` : "N/A"}</td>
+                    <td>{node.error || "-"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      ) : (
+        <p>No cluster benchmark data yet. Configure `LV_CLUSTER_ENDPOINTS` to start publishing snapshots.</p>
+      )}
     </section>
   </main>
 </BaseLayout>
