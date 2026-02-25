@@ -30,6 +30,7 @@ DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64,qwen3.5:122b=48"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PRE_COOLDOWN_S = 5.0
 DEFAULT_NETWORK_RETRY_DELAYS_S = "5,10,20"
+DEFAULT_RETIRED_POLICY_FILE = "src/data/retired-models.json"
 DEFAULT_AUTO_PRIORITY_TAGS = "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b"
 DEFAULT_FAMILY_TARGET_HINTS = "qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,llama3.3=70"
 DEFAULT_PROMPT = (
@@ -283,6 +284,32 @@ def parse_tag_list(raw: str) -> list[str]:
         seen.add(tag)
         out.append(tag)
     return out
+
+
+def parse_json_str_list(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return parse_tag_list(",".join(str(x) for x in value))
+    return parse_tag_list(str(value or ""))
+
+
+def resolve_policy_path(raw: str) -> Path:
+    path = Path(str(raw or "").strip() or DEFAULT_RETIRED_POLICY_FILE)
+    if not path.is_absolute():
+        path = (ROOT / path).resolve()
+    return path
+
+
+def load_retired_policy(raw_path: str) -> tuple[set[str], set[str], str]:
+    path = resolve_policy_path(raw_path)
+    if not path.exists():
+        return set(), set(), str(path)
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception:  # noqa: BLE001
+        return set(), set(), str(path)
+    retired_families = set(model_family(item) for item in parse_json_str_list(payload.get("retired_families", [])) if model_family(item))
+    retired_tags = set(parse_json_str_list(payload.get("retired_tags", [])))
+    return retired_families, retired_tags, str(path)
 
 
 def parse_retry_delays(raw: str, default: list[float] | None = None) -> list[float]:
@@ -852,6 +879,11 @@ def parse_args() -> argparse.Namespace:
         default=os.getenv("LV_NETWORK_RETRY_DELAYS_S", DEFAULT_NETWORK_RETRY_DELAYS_S),
         help="Comma-separated retry delays in seconds for transient network errors (example: 5,10,20).",
     )
+    parser.add_argument(
+        "--retired-policy-file",
+        default=os.getenv("LV_RETIRED_POLICY_FILE", DEFAULT_RETIRED_POLICY_FILE),
+        help="JSON file with retired_families / retired_tags to exclude from benchmark targets.",
+    )
     parser.add_argument("--warmup-predict", type=int, default=int(os.getenv("LV_WARMUP_PREDICT", "24")))
     parser.add_argument("--num-ctx", type=int, default=int(os.getenv("LV_BENCHMARK_NUM_CTX", str(DEFAULT_NUM_CTX))))
     parser.add_argument(
@@ -895,11 +927,15 @@ def main() -> None:
 
     if args.dry_run:
         network_retry_delays = parse_retry_delays(args.network_retry_delays, [5.0, 10.0, 20.0])
+        retired_families, retired_tags, retired_policy_path = load_retired_policy(args.retired_policy_file)
         print("dry-run: weekly benchmark execution skipped")
         print(f"endpoint={redacted_endpoint}")
         print(f"targets={args.targets}")
         print(f"family_target_hints={args.family_target_hints}")
         print(f"network_retry_delays_s={format_retry_delays(network_retry_delays)}")
+        print(f"retired_policy_file={retired_policy_path}")
+        print(f"retired_families={','.join(sorted(retired_families)) if retired_families else '<none>'}")
+        print(f"retired_tags={','.join(sorted(retired_tags)) if retired_tags else '<none>'}")
         print(f"extra_targets={args.extra_targets}")
         print(f"include_heavy_targets={args.include_heavy_targets}")
         print(f"heavy_targets={args.heavy_targets}")
@@ -927,6 +963,18 @@ def main() -> None:
     known_tags = load_known_model_tags()
     tag_aliases = load_tag_aliases()
     tag_params = load_model_tag_params()
+    retired_families, retired_tags, retired_policy_path = load_retired_policy(args.retired_policy_file)
+
+    def is_retired_target(model_ref: str) -> bool:
+        raw = str(model_ref or "").strip().lower()
+        if not raw:
+            return False
+        if ":" not in raw:
+            fam = model_family(raw)
+            return fam in retired_families
+        canonical = infer_canonical_tag(raw, known_tags, tag_aliases)
+        fam = model_family(canonical or raw)
+        return raw in retired_tags or canonical in retired_tags or fam in retired_families
 
     try:
         local_models = list_local_models(endpoint, retry_delays=network_retry_delays)
@@ -934,6 +982,15 @@ def main() -> None:
         raise SystemExit(f"failed to connect to Ollama at {endpoint}: {exc}") from exc
     local_models = {x.lower() for x in local_models}
     local_tag_by_canonical = build_local_tag_by_canonical(local_models, known_tags, tag_aliases)
+
+    retained_targets: list[tuple[str, int]] = []
+    retired_target_drops: list[dict[str, Any]] = []
+    for model, num_predict in targets:
+        if is_retired_target(model):
+            retired_target_drops.append({"model": model, "num_predict": num_predict})
+            continue
+        retained_targets.append((model, num_predict))
+    targets = retained_targets
 
     auto_backfill_targets: list[tuple[str, int]] = []
     if auto_backfill_enabled and min_success_configured > 0 and auto_backfill_max > 0:
@@ -971,9 +1028,13 @@ def main() -> None:
             candidate_canonicals: list[str] = []
             for raw_tag in auto_priority_tags:
                 canonical = tag_aliases.get(raw_tag, raw_tag)
+                if is_retired_target(canonical):
+                    continue
                 if canonical in local_tag_by_canonical and canonical not in candidate_canonicals:
                     candidate_canonicals.append(canonical)
             for canonical in sorted(local_tag_by_canonical.keys(), key=lambda t: (tag_params.get(t, 9999.0), t)):
+                if is_retired_target(canonical):
+                    continue
                 if canonical not in candidate_canonicals:
                     candidate_canonicals.append(canonical)
 
@@ -989,6 +1050,10 @@ def main() -> None:
 
             if auto_backfill_targets:
                 targets = merge_targets(targets, auto_backfill_targets)
+
+    if not targets:
+        emit_failure_class("model_missing", "no active benchmark targets available after retirement policy")
+        raise SystemExit("no active benchmark targets available after retirement policy")
 
     pre_cooldown_s = max(0.0, args.pre_cooldown_s)
     if pre_cooldown_s > 0:
@@ -1018,6 +1083,10 @@ def main() -> None:
             "gpu_before": gpu_before,
             "deleted_logs": deleted_logs,
             "significant_tps_delta": args.min_delta,
+            "retired_policy_file": retired_policy_path,
+            "retired_families": sorted(retired_families),
+            "retired_tags": sorted(retired_tags),
+            "retired_target_drops": retired_target_drops,
         },
     )
 
@@ -1213,6 +1282,10 @@ def main() -> None:
         "gpu_after": gpu_after,
         "targets": [{"model": m, "num_predict": n, "num_ctx": max(256, args.num_ctx), "temperature": 0} for m, n in targets],
         "auto_backfill_targets": [{"model": m, "num_predict": n} for m, n in auto_backfill_targets],
+        "retired_policy_file": retired_policy_path,
+        "retired_families": sorted(retired_families),
+        "retired_tags": sorted(retired_tags),
+        "retired_target_drops": retired_target_drops,
         "results": reports,
         "changed_models": changed_models,
         "significant_tps_delta": max(0.0, args.min_delta),

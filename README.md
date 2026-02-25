@@ -50,6 +50,7 @@ npm run dev
 - CTA mapping: `src/data/cta-rules.json`
 - Model catalog (200+): `src/data/model-catalog.json`
 - Measured benchmark map: `src/data/benchmark-results.json` (keyed by `ollama_tag`)
+- Retirement policy: `src/data/retired-models.json` (retired families/tags)
 - Public benchmark API endpoint: `/api/benchmark.json`
 - Affiliate links: `src/data/affiliate-links.json` (replace placeholders)
 - Affiliate redirect worker code: `functions/`
@@ -80,6 +81,7 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `LV_WEEKLY_TARGETS` (default: `qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96`; supports both family targets and explicit tags)
 - `LV_FAMILY_TARGET_HINTS` (default: `qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,llama3.3=70`; preferred size hint when resolving family targets to a local installed tag)
 - `LV_NETWORK_RETRY_DELAYS_S` (default: `5,10,20`; transient network retry backoff for Ollama API requests)
+- `LV_RETIRED_POLICY_FILE` (default: `src/data/retired-models.json`; excludes retired families/tags from targets and auto-backfill)
 - `LV_RUNS_PER_MODEL` (default: `2`)
 - `LV_BENCHMARK_HISTORY_LIMIT` (default: `20`)
 - `LV_BENCHMARK_NUM_CTX` (default: `4096`; fixed context window for apples-to-apples runs)
@@ -105,6 +107,7 @@ Self-hosted runner preflight:
 - Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `artifact_download_rate_limited`, `publish_push_rate_limited`.
 - Failure alerts: `Weekly Benchmark` and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
 - Recovery handling: when workflow returns to success, open `[OPS-ALERT]` issues for that workflow are auto-commented and closed.
+- Model retirement: update `src/data/retired-models.json` to phase out old families/tags so they stop entering weekly targets and auto-backfill.
 
 Smoke check workflow:
 
@@ -117,6 +120,7 @@ Weekly collect/publish split:
 
 - `Weekly Benchmark` now runs only on self-hosted runner and uploads a `benchmark-collection` artifact.
 - Weekly target resolver writes `src/data/weekly-target-plan.json` and includes it in the benchmark artifact/publish sync.
+- Weekly target plan records retirement impact (`dropped_base_targets`, retired local sample) for auditability.
 - Weekly benchmark schedule: `02:10 UTC every Wednesday` (US Tuesday evening window).
 - `Publish Benchmark Artifact` (workflow_run/manual) downloads that artifact, validates JSON payloads, rebuilds catalog/sitemap, and pushes with retry backoff (`5,10,20` default) + 429-aware wait (`rate_limit_delay_s`, default `60`) + jitter.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).

@@ -13,6 +13,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "daily-updates.json",
     ROOT / "src" / "data" / "benchmark-changelog.json",
     ROOT / "src" / "data" / "benchmark-results.json",
+    ROOT / "src" / "data" / "retired-models.json",
     ROOT / "src" / "data" / "search-console-keywords.json",
 ]
 REQUIRED_PAGES = [
