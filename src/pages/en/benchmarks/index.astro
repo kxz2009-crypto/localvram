@@ -13,8 +13,11 @@ type ClusterNode = {
 type ClusterTest = {
   topology?: string;
   model_id?: string;
+  verified_date?: string;
+  id?: string;
   metrics?: {
     tokens_per_s?: number;
+    avg_node_latency_ms?: number;
   };
   nodes?: ClusterNode[];
 };
@@ -23,6 +26,19 @@ const clusterTests = Array.isArray(clusterBenchmarks.tests) ? clusterBenchmarks.
 const latestCluster = (clusterTests[0] || null) as ClusterTest | null;
 const latestNodes = latestCluster && Array.isArray(latestCluster.nodes) ? latestCluster.nodes : [];
 const clusterUpdatedAt = clusterBenchmarks.updated_at || "";
+const trendPoints = clusterTests
+  .slice(0, 12)
+  .reverse()
+  .map((item: ClusterTest) => {
+    const date = (item.verified_date || "").trim();
+    const fallback = (item.id || "").replace(/^cluster_/, "").slice(0, 8);
+    const labelDate = date || fallback || "unknown";
+    return {
+      label: `${labelDate} · ${item.model_id || "unknown"}`,
+      tokensPerSecond: typeof item.metrics?.tokens_per_s === "number" ? item.metrics.tokens_per_s : null,
+      latencyMs: typeof item.metrics?.avg_node_latency_ms === "number" ? item.metrics.avg_node_latency_ms : null,
+    };
+  });
 ---
 
 <BaseLayout
@@ -89,5 +105,75 @@ const clusterUpdatedAt = clusterBenchmarks.updated_at || "";
         <p>No cluster benchmark data yet. Configure `LV_CLUSTER_ENDPOINTS` to start publishing snapshots.</p>
       )}
     </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Cluster Performance Trend</h2>
+      <p>Recent cluster runs with aggregate tokens/s and average node latency.</p>
+      <canvas id="cluster-trend-chart" aria-label="Cluster benchmark trend chart" style="height: 280px;"></canvas>
+    </section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script define:vars={{ trendPoints }}>
+    const mountClusterTrend = () => {
+      const canvas = document.getElementById("cluster-trend-chart");
+      if (!canvas || !window.Chart) return;
+      const labels = trendPoints.map((p) => p.label);
+      const tps = trendPoints.map((p) => p.tokensPerSecond);
+      const latency = trendPoints.map((p) => p.latencyMs);
+      if (!labels.length) return;
+      new window.Chart(canvas, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Aggregate tok/s",
+              data: tps,
+              borderColor: "#0ea5e9",
+              backgroundColor: "rgba(14,165,233,0.15)",
+              yAxisID: "y",
+              tension: 0.25,
+            },
+            {
+              label: "Avg node latency (ms)",
+              data: latency,
+              borderColor: "#fb923c",
+              backgroundColor: "rgba(251,146,60,0.12)",
+              yAxisID: "y1",
+              tension: 0.25,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              title: { display: true, text: "tok/s" },
+              ticks: { color: "#94a3b8" },
+              grid: { color: "rgba(148,163,184,0.15)" },
+            },
+            y1: {
+              position: "right",
+              title: { display: true, text: "ms" },
+              ticks: { color: "#94a3b8" },
+              grid: { drawOnChartArea: false },
+            },
+            x: {
+              ticks: { color: "#94a3b8", maxRotation: 20, minRotation: 20 },
+              grid: { color: "rgba(148,163,184,0.08)" },
+            },
+          },
+          plugins: {
+            legend: { labels: { color: "#cbd5e1" } },
+          },
+        },
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", mountClusterTrend, { once: true });
+    } else {
+      mountClusterTrend();
+    }
+  </script>
 </BaseLayout>

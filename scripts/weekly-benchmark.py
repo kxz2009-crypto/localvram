@@ -25,11 +25,11 @@ TAG_ALIASES_FILE = ROOT / "src" / "data" / "benchmark-tag-aliases.json"
 LOG_DIR = ROOT / "logs"
 SCREENSHOT_DIR = ROOT / "public" / "screenshots"
 
-DEFAULT_TARGETS = "qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96"
-DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64"
+DEFAULT_TARGETS = "qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96,qwen3.5:35b=96"
+DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64,qwen3.5:122b=48"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PRE_COOLDOWN_S = 5.0
-DEFAULT_AUTO_PRIORITY_TAGS = "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b"
+DEFAULT_AUTO_PRIORITY_TAGS = "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b"
 DEFAULT_PROMPT = (
     "You are an inference benchmark probe. "
     "Respond with exactly three short bullet points about local LLM deployment stability."

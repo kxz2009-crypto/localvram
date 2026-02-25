@@ -77,6 +77,7 @@ POPULAR_MODELS = [
     {"id": "llama4", "name": "Llama 4", "scenario": "multimodal", "license_scope": "closed-weight", "sizes": ["16x17b", "128x17b"], "source_url": "https://ollama.com/library/llama4"},
     {"id": "phi4-reasoning", "name": "Phi-4 Reasoning", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["14b"], "source_url": "https://ollama.com/library/phi4-reasoning"},
     {"id": "magistral", "name": "Magistral", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["24b"], "source_url": "https://ollama.com/library/magistral"},
+    {"id": "qwen3.5", "name": "Qwen3.5", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["35b", "122b"], "source_url": "https://ollama.com/library/qwen3.5"},
     {"id": "qwen3.5", "name": "Qwen3.5", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["397b-a17b"], "quant_mode": "cloud", "source_url": "https://ollama.com/library/qwen3.5%3Acloud"},
 ]
 

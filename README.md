@@ -73,7 +73,7 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `LV_OLLAMA_ENDPOINT` (default: `http://127.0.0.1:11434`)
 - `OLLAMA_HOST` (fallback when `LV_OLLAMA_ENDPOINT` is not set)
 - `OLLAMA_MODELS` (runner/service-side Ollama model directory, for example `/mnt/d/Ollama`)
-- `LV_WEEKLY_TARGETS` (default: `qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96`)
+- `LV_WEEKLY_TARGETS` (default: `qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96,qwen3.5:35b=96`)
 - `LV_RUNS_PER_MODEL` (default: `2`)
 - `LV_BENCHMARK_HISTORY_LIMIT` (default: `20`)
 - `LV_BENCHMARK_NUM_CTX` (default: `4096`; fixed context window for apples-to-apples runs)
@@ -83,7 +83,7 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `LV_VERIFIED_TOOLTIP` (optional; tooltip text for measured hardware badges)
 - `LV_AUTO_BACKFILL_TARGETS` (default: `true`; auto-add locally installed known model tags when runnable targets are below threshold)
 - `LV_AUTO_BACKFILL_TARGETS_MAX` (default: `6`; cap for auto-added benchmark targets per run)
-- `LV_AUTO_PRIORITY_TAGS` (default: `qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b`; preferred order for auto-added targets)
+- `LV_AUTO_PRIORITY_TAGS` (default: `qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b`; preferred order for auto-added targets)
 - `PUBLIC_AMAZON_PRICE_3090` (optional UI price label for local recommendation modules)
 - `PUBLIC_RUNPOD_A100_PRICE` (optional UI price label for cloud recommendation modules)
 
