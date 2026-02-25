@@ -37,7 +37,7 @@ jobs:
         continue-on-error: true
 
       - name: Classify checkout failure
-        if: steps.checkout.outcome == 'failure'
+        if: steps.checkout.conclusion == 'failure'
         run: |
           echo "failure_class=checkout_network_failure"
           echo "failure_detail=actions/checkout failed before smoke diagnostics could run"
@@ -45,13 +45,13 @@ jobs:
           exit 1
 
       - name: Setup Python
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Runner diagnostics (preflight baseline)
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         env:
           LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
           OLLAMA_HOST: ${{ github.event.inputs.endpoint }}
@@ -62,7 +62,7 @@ jobs:
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}"
 
       - name: Ollama preflight smoke
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         env:
           LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
           OLLAMA_HOST: ${{ github.event.inputs.endpoint }}
@@ -78,7 +78,7 @@ jobs:
           python scripts/ollama-preflight.py "${ARGS[@]}"
 
       - name: Runner diagnostics (post smoke)
-        if: always() && steps.checkout.outcome == 'success'
+        if: always() && steps.checkout.conclusion == 'success'
         env:
           LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
           OLLAMA_HOST: ${{ github.event.inputs.endpoint }}

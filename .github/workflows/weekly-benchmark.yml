@@ -34,7 +34,7 @@ jobs:
         continue-on-error: true
 
       - name: Classify checkout failure
-        if: steps.checkout.outcome == 'failure'
+        if: steps.checkout.conclusion == 'failure'
         run: |
           echo "failure_class=checkout_network_failure"
           echo "failure_detail=actions/checkout failed before benchmark scripts could run"
@@ -42,13 +42,13 @@ jobs:
           exit 1
 
       - name: Setup Python
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Runner diagnostics (before preflight)
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         env:
           LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
           OLLAMA_HOST: http://127.0.0.1:11434
@@ -59,7 +59,7 @@ jobs:
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}"
 
       - name: Ollama preflight
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         env:
           LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
           OLLAMA_HOST: http://127.0.0.1:11434
@@ -70,7 +70,7 @@ jobs:
           python scripts/ollama-preflight.py --required-targets "${LV_WEEKLY_TARGETS}" --restart-if-empty
 
       - name: Weekly benchmark
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         env:
           INPUT_INCLUDE_HEAVY: ${{ github.event.inputs.include_heavy_targets }}
           INPUT_EXTRA_TARGETS: ${{ github.event.inputs.extra_targets }}
@@ -98,7 +98,7 @@ jobs:
           python scripts/weekly-benchmark.py "${ARGS[@]}"
 
       - name: Cluster benchmark (optional multi-endpoint)
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         env:
           LV_CLUSTER_ENDPOINTS: ${{ secrets.LV_CLUSTER_ENDPOINTS }}
         run: |
@@ -109,15 +109,15 @@ jobs:
           python scripts/cluster-benchmark.py --endpoints "${LV_CLUSTER_ENDPOINTS}" --min-endpoints 2 --allow-empty
 
       - name: Build model catalog
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         run: python scripts/build-model-catalog.py
 
       - name: Build sitemap
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         run: python scripts/build-sitemap.py
 
       - name: Commit benchmark updates
-        if: steps.checkout.outcome == 'success'
+        if: steps.checkout.conclusion == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -126,7 +126,7 @@ jobs:
           git push
 
       - name: Runner diagnostics (on failure)
-        if: failure() && steps.checkout.outcome == 'success'
+        if: failure() && steps.checkout.conclusion == 'success'
         env:
           LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
           OLLAMA_HOST: http://127.0.0.1:11434
