@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import runnerStatus from "../../../data/runner-status.json";
+
+const summary = runnerStatus.summary || {};
+const failureClass = String(summary.failure_class || "unknown");
+const failureDetail = String(summary.failure_detail || "");
+const statusText = failureClass === "none" ? "Healthy" : "Degraded";
+---
+
+<BaseLayout
+  title="Runner Health | LocalVRAM"
+  description="Self-hosted runner and Ollama health snapshot."
+  locale="en"
+>
+  <main class="container">
+    <h1>Runner Health</h1>
+    <p>Latest diagnostic snapshot from benchmark smoke/weekly workflows.</p>
+    <div class="card-grid">
+      <article class="card">
+        <h2>Health</h2>
+        <p>{statusText}</p>
+      </article>
+      <article class="card">
+        <h2>Updated At (UTC)</h2>
+        <p>{runnerStatus.updated_at || "unknown"}</p>
+      </article>
+      <article class="card">
+        <h2>Failure Class</h2>
+        <p>{failureClass}</p>
+      </article>
+      <article class="card">
+        <h2>Model Count</h2>
+        <p>{summary.model_count ?? "N/A"}</p>
+      </article>
+      <article class="card">
+        <h2>Runnable Targets</h2>
+        <p>{summary.required_targets_runnable_count ?? "0"} / {summary.required_targets_count ?? "0"}</p>
+      </article>
+      <article class="card">
+        <h2>Endpoint</h2>
+        <p>{runnerStatus.endpoint || "unknown"}</p>
+      </article>
+    </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Failure Detail</h2>
+      <p>{failureDetail || "-"}</p>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Runnable Target List</h2>
+      <p>{Array.isArray(summary.required_targets_runnable) && summary.required_targets_runnable.length > 0 ? summary.required_targets_runnable.join(", ") : "none"}</p>
+    </section>
+  </main>
+</BaseLayout>

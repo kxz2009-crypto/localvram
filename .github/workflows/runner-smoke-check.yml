@@ -59,7 +59,7 @@ jobs:
           LV_NETWORK_RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s }}
           LV_WEEKLY_TARGETS: ${{ github.event.inputs.required_targets }}
         run: |
-          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}"
+          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-smoke-before.json
 
       - name: Ollama preflight smoke
         if: steps.checkout.conclusion == 'success'
@@ -86,5 +86,16 @@ jobs:
           LV_NETWORK_RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s }}
           LV_WEEKLY_TARGETS: ${{ github.event.inputs.required_targets }}
         run: |
-          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}"
+          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-smoke-after.json
+
+      - name: Upload smoke diagnostics
+        if: always() && steps.checkout.conclusion == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: runner-smoke-diagnostics
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            logs/runner-smoke-before.json
+            logs/runner-smoke-after.json
 

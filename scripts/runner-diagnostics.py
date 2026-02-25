@@ -9,6 +9,7 @@ import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 
@@ -60,6 +61,10 @@ def parse_retry_delays(raw: str) -> list[float]:
     return out
 
 
+def format_retry_delays(delays: list[float]) -> str:
+    return ",".join(str(int(x)) if float(x).is_integer() else f"{x:g}" for x in delays) if delays else "<none>"
+
+
 def normalize_endpoint(endpoint: str) -> str:
     return str(endpoint or "").strip().rstrip("/")
 
@@ -101,16 +106,31 @@ def main() -> None:
     parser.add_argument("--required-targets", default=os.getenv("LV_WEEKLY_TARGETS", ""))
     parser.add_argument("--network-retry-delays", default=os.getenv("LV_NETWORK_RETRY_DELAYS_S", "5,10,20"))
     parser.add_argument("--port", type=int, default=11434)
+    parser.add_argument("--json-out", default="", help="Optional JSON output path for machine-readable diagnostics.")
     args = parser.parse_args()
 
+    diag_timestamp = utc_now_iso()
     endpoint = normalize_endpoint(args.endpoint)
     required_targets = parse_targets(args.required_targets)
     retry_delays = parse_retry_delays(args.network_retry_delays)
+    retry_delays_text = format_retry_delays(retry_delays)
+    report: dict[str, Any] = {
+        "updated_at": diag_timestamp,
+        "endpoint": endpoint,
+        "required_targets": required_targets,
+        "retry_delays_s": retry_delays,
+        "port": args.port,
+        "env": {},
+        "commands": {},
+        "checks": {},
+        "api": {},
+        "summary": {},
+    }
 
-    print(f"diag_timestamp_utc={utc_now_iso()}")
+    print(f"diag_timestamp_utc={diag_timestamp}")
     print(f"diag_endpoint={endpoint}")
     print(f"diag_required_targets={','.join(required_targets) if required_targets else '<none>'}")
-    print(f"diag_retry_delays_s={','.join(str(int(x)) if float(x).is_integer() else f'{x:g}' for x in retry_delays) if retry_delays else '<none>'}")
+    print(f"diag_retry_delays_s={retry_delays_text}")
 
     base_lines = [
         f"runner_name={os.getenv('RUNNER_NAME', '')}",
@@ -126,6 +146,20 @@ def main() -> None:
         f"ALL_PROXY={os.getenv('ALL_PROXY', '')}",
         f"NO_PROXY={os.getenv('NO_PROXY', '')}",
     ]
+    report["env"] = {
+        "runner_name": os.getenv("RUNNER_NAME", ""),
+        "runner_os": os.getenv("RUNNER_OS", ""),
+        "runner_arch": os.getenv("RUNNER_ARCH", ""),
+        "hostname": os.getenv("HOSTNAME", ""),
+        "user": os.getenv("USER", "") or os.getenv("USERNAME", ""),
+        "OLLAMA_HOST": os.getenv("OLLAMA_HOST", ""),
+        "LV_OLLAMA_ENDPOINT": os.getenv("LV_OLLAMA_ENDPOINT", ""),
+        "OLLAMA_MODELS": os.getenv("OLLAMA_MODELS", ""),
+        "HTTP_PROXY": os.getenv("HTTP_PROXY", ""),
+        "HTTPS_PROXY": os.getenv("HTTPS_PROXY", ""),
+        "ALL_PROXY": os.getenv("ALL_PROXY", ""),
+        "NO_PROXY": os.getenv("NO_PROXY", ""),
+    }
     print_section("ENV", "\n".join(base_lines))
 
     system_cmds = [
@@ -139,6 +173,7 @@ def main() -> None:
         code, out, err = run_cmd(cmd)
         text = out if out else err
         print_section(f"{title} (exit={code})", text)
+        report["commands"][title] = {"exit": code, "stdout": out, "stderr": err}
 
     port_report = "<unavailable>"
     if shutil.which("ss"):
@@ -156,13 +191,16 @@ def main() -> None:
         else:
             port_report = err or "netstat failed"
     print_section("PORT_LISTENERS", port_report)
+    report["checks"]["port_listeners"] = port_report
 
     code, out, err = run_cmd(["ps", "-ef"])
     if code == 0:
         lines = [line for line in out.splitlines() if "ollama" in line.lower()]
         print_section("PS_OLLAMA", "\n".join(lines[:20]) if lines else "no ollama processes found")
+        report["checks"]["ps_ollama"] = lines[:20]
     else:
         print_section("PS_OLLAMA", err or "ps failed")
+        report["checks"]["ps_ollama"] = [err or "ps failed"]
 
     if shutil.which("systemctl"):
         status_cmds = [
@@ -177,18 +215,22 @@ def main() -> None:
                 lines = text.splitlines()
                 text = "\n".join(lines[:40])
             print_section(f"{title} (exit={code})", text)
+            report["checks"][title] = {"exit": code, "stdout": out, "stderr": err}
 
     local_models: set[str] = set()
     endpoint_error = ""
     try:
         ver = fetch_json(endpoint, "/api/version", timeout=10, retry_delays=retry_delays)
         print_section("API_VERSION", json.dumps(ver, ensure_ascii=False))
+        report["api"]["version"] = ver
     except urllib.error.HTTPError as exc:
         endpoint_error = f"HTTP {exc.code} {exc.reason}"
         print_section("API_VERSION", endpoint_error)
+        report["api"]["version_error"] = endpoint_error
     except Exception as exc:  # noqa: BLE001
         endpoint_error = str(exc)
         print_section("API_VERSION", endpoint_error)
+        report["api"]["version_error"] = endpoint_error
 
     try:
         tags_payload = fetch_json(endpoint, "/api/tags", timeout=20, retry_delays=retry_delays)
@@ -206,12 +248,15 @@ def main() -> None:
             "sample": sample,
         }
         print_section("API_TAGS", json.dumps(tags_info, ensure_ascii=False))
+        report["api"]["tags"] = tags_info
     except urllib.error.HTTPError as exc:
         endpoint_error = endpoint_error or f"HTTP {exc.code} {exc.reason}"
         print_section("API_TAGS", f"HTTP {exc.code} {exc.reason}")
+        report["api"]["tags_error"] = f"HTTP {exc.code} {exc.reason}"
     except Exception as exc:  # noqa: BLE001
         endpoint_error = endpoint_error or str(exc)
         print_section("API_TAGS", str(exc))
+        report["api"]["tags_error"] = str(exc)
 
     runnable = []
     if required_targets and local_models:
@@ -231,15 +276,37 @@ def main() -> None:
         f"diag_required_targets_runnable={','.join(runnable) if runnable else '<none>'}",
     ]
     if endpoint_error:
+        failure_class = "ollama_not_visible"
+        failure_detail = endpoint_error
         summary_lines.append("diag_failure_class=ollama_not_visible")
         summary_lines.append(f"diag_failure_detail={endpoint_error}")
     elif required_targets and not runnable:
+        failure_class = "model_missing"
+        failure_detail = "no runnable required targets found"
         summary_lines.append("diag_failure_class=model_missing")
         summary_lines.append("diag_failure_detail=no runnable required targets found")
     else:
+        failure_class = "none"
+        failure_detail = ""
         summary_lines.append("diag_failure_class=none")
         summary_lines.append("diag_failure_detail=")
     print_section("DIAG_SUMMARY", "\n".join(summary_lines))
+    report["summary"] = {
+        "model_count": len(local_models),
+        "required_targets_count": len(required_targets),
+        "required_targets_runnable_count": len(runnable),
+        "required_targets_runnable": runnable,
+        "failure_class": failure_class,
+        "failure_detail": failure_detail,
+    }
+
+    if args.json_out:
+        out_path = Path(args.json_out)
+        if not out_path.is_absolute():
+            out_path = Path.cwd() / out_path
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"diag_json_out={out_path}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,241 @@
+name: Publish Benchmark Artifact
+
+on:
+  workflow_run:
+    workflows: ["Weekly Benchmark"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "Weekly Benchmark run id to publish (optional for workflow_run trigger)"
+        required: false
+        default: ""
+        type: string
+      retry_delays_s:
+        description: "Base retry delays for artifact download and push (CSV seconds)"
+        required: false
+        default: "5,10,20"
+        type: string
+      rate_limit_delay_s:
+        description: "Minimum retry delay when 429/rate-limit is detected (seconds)"
+        required: false
+        default: "60"
+        type: string
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Resolve source run id
+        id: source
+        run: |
+          RUN_ID="${{ github.event.workflow_run.id }}"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.source_run_id }}" ]; then
+            RUN_ID="${{ github.event.inputs.source_run_id }}"
+          fi
+          if [ -z "${RUN_ID}" ]; then
+            echo "failure_class=artifact_download_failure"
+            echo "failure_detail=missing source run id"
+            echo "::error title=FailureClass::artifact_download_failure - missing source run id"
+            exit 1
+          fi
+          echo "run_id=${RUN_ID}" >>"${GITHUB_OUTPUT}"
+          echo "source_run_id=${RUN_ID}"
+
+      - name: Download benchmark collection artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN_ID: ${{ steps.source.outputs.run_id }}
+          RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s || '5,10,20' }}
+          RATE_LIMIT_DELAY_S: ${{ github.event.inputs.rate_limit_delay_s || '60' }}
+        run: |
+          retry_list="${RETRY_DELAYS_S:-5,10,20}"
+          IFS=',' read -r -a retry_parts <<<"${retry_list}"
+          rm -rf artifact-source
+          mkdir -p artifact-source
+
+          run_with_retry() {
+            local label="$1"
+            shift
+            local max_attempts=$(( ${#retry_parts[@]} + 1 ))
+            local attempt=0
+            local output=""
+            last_rate_limited=0
+
+            while [ "${attempt}" -lt "${max_attempts}" ]; do
+              echo "${label}_attempt=${attempt}"
+              output="$("$@" 2>&1)" && { echo "${output}"; return 0; }
+              echo "${output}"
+
+              if [ "${attempt}" -ge "$((max_attempts - 1))" ]; then
+                break
+              fi
+
+              local base_delay
+              base_delay="$(echo "${retry_parts[${attempt}]}" | xargs)"
+              if ! [[ "${base_delay}" =~ ^[0-9]+$ ]]; then
+                base_delay=20
+              fi
+
+              local wait_s="${base_delay}"
+              local exp_delay=$((5 * (2 ** attempt)))
+              if [ "${exp_delay}" -gt "${wait_s}" ]; then
+                wait_s="${exp_delay}"
+              fi
+              if echo "${output}" | grep -Eiq "429|too many requests|rate limit"; then
+                last_rate_limited=1
+                local rl_delay
+                rl_delay="$(echo "${RATE_LIMIT_DELAY_S:-60}" | xargs)"
+                if ! [[ "${rl_delay}" =~ ^[0-9]+$ ]]; then
+                  rl_delay=60
+                fi
+                if [ "${rl_delay}" -gt "${wait_s}" ]; then
+                  wait_s="${rl_delay}"
+                fi
+              fi
+
+              local jitter=$((RANDOM % 8))
+              local sleep_s=$((wait_s + jitter))
+              echo "${label}_retry_wait_s=${sleep_s}"
+              sleep "${sleep_s}"
+              attempt=$((attempt + 1))
+            done
+            return 1
+          }
+
+          if ! run_with_retry artifact_download gh run download "${SOURCE_RUN_ID}" --name benchmark-collection --dir artifact-source --repo "${GITHUB_REPOSITORY}"; then
+            if [ "${last_rate_limited}" -eq 1 ]; then
+              echo "failure_class=artifact_download_rate_limited"
+              echo "failure_detail=rate limited while downloading benchmark-collection artifact from run ${SOURCE_RUN_ID}"
+              echo "::error title=FailureClass::artifact_download_rate_limited - rate limited while downloading benchmark-collection artifact from run ${SOURCE_RUN_ID}"
+            else
+              echo "failure_class=artifact_download_failure"
+              echo "failure_detail=failed to download benchmark-collection artifact from run ${SOURCE_RUN_ID}"
+              echo "::error title=FailureClass::artifact_download_failure - failed to download benchmark-collection artifact from run ${SOURCE_RUN_ID}"
+            fi
+            exit 1
+          fi
+
+      - name: Validate and apply artifact
+        run: |
+          if ! python scripts/validate-benchmark-artifact.py --source-dir artifact-source --apply --report-file logs/artifact-validation-report.json; then
+            echo "failure_class=artifact_validation_failure"
+            echo "failure_detail=benchmark artifact schema validation failed"
+            echo "::error title=FailureClass::artifact_validation_failure - benchmark artifact schema validation failed"
+            exit 1
+          fi
+
+      - name: Build model catalog
+        run: python scripts/build-model-catalog.py
+
+      - name: Build sitemap
+        run: python scripts/build-sitemap.py
+
+      - name: Run quality gate
+        run: python scripts/quality-gate.py
+
+      - name: Commit and push publish updates
+        env:
+          RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s || '5,10,20' }}
+          RATE_LIMIT_DELAY_S: ${{ github.event.inputs.rate_limit_delay_s || '60' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
+
+          if git diff --cached --quiet; then
+            echo "publish_result=no_changes"
+            exit 0
+          fi
+
+          git commit -m "chore: publish benchmark artifact"
+
+          retry_list="${RETRY_DELAYS_S:-5,10,20}"
+          IFS=',' read -r -a retry_parts <<<"${retry_list}"
+
+          run_with_retry() {
+            local label="$1"
+            shift
+            local max_attempts=$(( ${#retry_parts[@]} + 1 ))
+            local attempt=0
+            local output=""
+            last_rate_limited=0
+
+            while [ "${attempt}" -lt "${max_attempts}" ]; do
+              echo "${label}_attempt=${attempt}"
+              output="$("$@" 2>&1)" && { echo "${output}"; return 0; }
+              echo "${output}"
+
+              if [ "${attempt}" -ge "$((max_attempts - 1))" ]; then
+                break
+              fi
+
+              local base_delay
+              base_delay="$(echo "${retry_parts[${attempt}]}" | xargs)"
+              if ! [[ "${base_delay}" =~ ^[0-9]+$ ]]; then
+                base_delay=20
+              fi
+
+              local wait_s="${base_delay}"
+              local exp_delay=$((5 * (2 ** attempt)))
+              if [ "${exp_delay}" -gt "${wait_s}" ]; then
+                wait_s="${exp_delay}"
+              fi
+              if echo "${output}" | grep -Eiq "429|too many requests|rate limit"; then
+                last_rate_limited=1
+                local rl_delay
+                rl_delay="$(echo "${RATE_LIMIT_DELAY_S:-60}" | xargs)"
+                if ! [[ "${rl_delay}" =~ ^[0-9]+$ ]]; then
+                  rl_delay=60
+                fi
+                if [ "${rl_delay}" -gt "${wait_s}" ]; then
+                  wait_s="${rl_delay}"
+                fi
+              fi
+
+              local jitter=$((RANDOM % 8))
+              local sleep_s=$((wait_s + jitter))
+              echo "${label}_retry_wait_s=${sleep_s}"
+              sleep "${sleep_s}"
+              attempt=$((attempt + 1))
+            done
+            return 1
+          }
+
+          if ! run_with_retry git_push git push; then
+            if [ "${last_rate_limited}" -eq 1 ]; then
+              echo "failure_class=publish_push_rate_limited"
+              echo "failure_detail=git push rate limited after retries"
+              echo "::error title=FailureClass::publish_push_rate_limited - git push rate limited after retries"
+            else
+              echo "failure_class=publish_push_failure"
+              echo "failure_detail=git push failed after retries"
+              echo "::error title=FailureClass::publish_push_failure - git push failed after retries"
+            fi
+            exit 1
+          fi
+
+      - name: Upload publish diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-benchmark-diagnostics
+          if-no-files-found: warn
+          retention-days: 21
+          path: |
+            logs/artifact-validation-report.json
+            logs

@@ -22,7 +22,7 @@ on:
         type: string
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   benchmark-on-3090:
@@ -56,7 +56,7 @@ jobs:
           LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
           LV_WEEKLY_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
         run: |
-          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}"
+          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-diagnostics-before.json
 
       - name: Ollama preflight
         if: steps.checkout.conclusion == 'success'
@@ -108,22 +108,16 @@ jobs:
           fi
           python scripts/cluster-benchmark.py --endpoints "${LV_CLUSTER_ENDPOINTS}" --min-endpoints 2 --allow-empty
 
-      - name: Build model catalog
-        if: steps.checkout.conclusion == 'success'
-        run: python scripts/build-model-catalog.py
-
-      - name: Build sitemap
-        if: steps.checkout.conclusion == 'success'
-        run: python scripts/build-sitemap.py
-
-      - name: Commit benchmark updates
-        if: steps.checkout.conclusion == 'success'
+      - name: Runner diagnostics snapshot (publish payload)
+        if: always() && steps.checkout.conclusion == 'success'
+        env:
+          LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
+          OLLAMA_HOST: http://127.0.0.1:11434
+          OLLAMA_MODELS: /mnt/d/Ollama
+          LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
+          LV_WEEKLY_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
-          git diff --cached --quiet || git commit -m "chore: weekly benchmark update"
-          git push
+          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out src/data/runner-status.json
 
       - name: Runner diagnostics (on failure)
         if: failure() && steps.checkout.conclusion == 'success'
@@ -134,4 +128,20 @@ jobs:
           LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
           LV_WEEKLY_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
         run: |
-          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}"
+          python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-diagnostics-failure.json
+
+      - name: Upload benchmark collection artifact
+        if: always() && steps.checkout.conclusion == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-collection
+          if-no-files-found: error
+          retention-days: 21
+          path: |
+            src/data/status.json
+            src/data/benchmark-results.json
+            src/data/cluster-benchmarks.json
+            src/data/benchmark-changelog.json
+            src/data/runner-status.json
+            logs
+            public/screenshots
