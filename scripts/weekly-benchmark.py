@@ -642,6 +642,7 @@ def main() -> None:
     )
 
     reports: list[dict[str, Any]] = []
+    runnable_target_count = 0
     for model, num_predict in targets:
         model_tag = model.strip().lower()
         canonical_model_tag = tag_aliases.get(model_tag, model_tag)
@@ -650,7 +651,7 @@ def main() -> None:
                 "model": model_tag,
                 "canonical_model": canonical_model_tag,
                 "num_predict": num_predict,
-                "status": "error",
+                "status": "skipped",
                 "runs": [],
                 "error": "model tag not found in model-catalog (or alias map) (ollama_tag mismatch)",
                 "error_type": "unknown_model_tag",
@@ -664,7 +665,7 @@ def main() -> None:
                 "model": model_tag,
                 "canonical_model": canonical_model_tag,
                 "num_predict": num_predict,
-                "status": "error",
+                "status": "skipped",
                 "runs": [],
                 "error": "model not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
                 "error_type": "missing_model",
@@ -672,6 +673,7 @@ def main() -> None:
             reports.append(report)
             append_log(log_file, {"level": "error", "event": "model_missing", **report})
             continue
+        runnable_target_count += 1
         report = benchmark_model(
             endpoint=endpoint,
             model=model_tag,
@@ -687,7 +689,10 @@ def main() -> None:
         reports.append(report)
 
     success_reports = [r for r in reports if r.get("status") == "ok" and r.get("runs")]
+    skipped_reports = [r for r in reports if r.get("status") == "skipped"]
     failed_reports = [r for r in reports if r.get("status") != "ok"]
+    min_success_configured = max(0, args.min_success)
+    min_success_required = min(min_success_configured, runnable_target_count)
     gpu_after = collect_gpu_snapshot()
 
     gpu_name = "unknown"
@@ -773,7 +778,10 @@ def main() -> None:
         "pre_cooldown_s": pre_cooldown_s,
         "success_count": len(success_reports),
         "failed_count": len(failed_reports),
-        "min_success_required": max(0, args.min_success),
+        "skipped_count": len(skipped_reports),
+        "runnable_target_count": runnable_target_count,
+        "min_success_configured": min_success_configured,
+        "min_success_required": min_success_required,
     }
 
     env_name = "unknown-gpu"
@@ -826,21 +834,31 @@ def main() -> None:
             "ts": utc_now_iso(),
             "success_count": len(success_reports),
             "failed_count": len(failed_reports),
+            "skipped_count": len(skipped_reports),
+            "runnable_target_count": runnable_target_count,
+            "min_success_configured": min_success_configured,
+            "min_success_required": min_success_required,
             "updated_results": should_write_results,
             "changed_models": changed_models,
         },
     )
 
-    print(f"weekly benchmark completed: success={len(success_reports)}, failed={len(failed_reports)}")
+    print(
+        "weekly benchmark completed: "
+        f"success={len(success_reports)}, failed={len(failed_reports)}, skipped={len(skipped_reports)}"
+    )
     print(f"results file: {RESULTS_FILE}")
     print(f"log file: {log_file}")
     if not should_write_results:
         print(f"no significant model changes detected (> {args.min_delta} tok/s); results file unchanged")
 
-    min_success_required = max(0, args.min_success)
+    if not args.allow_empty and runnable_target_count == 0:
+        raise SystemExit("no runnable benchmark targets available on runner")
     if not args.allow_empty and len(success_reports) < min_success_required:
         raise SystemExit(
-            f"successful benchmark samples below threshold: {len(success_reports)} < {min_success_required}"
+            "successful benchmark samples below threshold: "
+            f"{len(success_reports)} < {min_success_required} "
+            f"(configured={min_success_configured}, runnable={runnable_target_count})"
         )
 
 
