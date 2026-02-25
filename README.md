@@ -75,6 +75,7 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `OLLAMA_MODELS` (runner/service-side Ollama model directory, for example `/mnt/d/Ollama`)
 - `LV_WEEKLY_TARGETS` (default: `qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96`; supports both family targets and explicit tags)
 - `LV_FAMILY_TARGET_HINTS` (default: `qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,llama3.3=70`; preferred size hint when resolving family targets to a local installed tag)
+- `LV_NETWORK_RETRY_DELAYS_S` (default: `5,10,20`; transient network retry backoff for Ollama API requests)
 - `LV_RUNS_PER_MODEL` (default: `2`)
 - `LV_BENCHMARK_HISTORY_LIMIT` (default: `20`)
 - `LV_BENCHMARK_NUM_CTX` (default: `4096`; fixed context window for apples-to-apples runs)
@@ -93,6 +94,7 @@ Self-hosted runner preflight:
 - `python scripts/ollama-preflight.py --required-targets "$LV_WEEKLY_TARGETS"`
 - Validates `/api/tags` visibility before benchmark starts.
 - When required targets are family names (for example `qwen3.5`), preflight treats any local tag in that family as runnable.
+- Uses `LV_NETWORK_RETRY_DELAYS_S` retry backoff (default `5,10,20`) before failing on transient connection issues.
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
 

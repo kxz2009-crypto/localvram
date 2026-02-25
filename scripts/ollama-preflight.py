@@ -8,6 +8,8 @@ import time
 import urllib.error
 import urllib.request
 
+DEFAULT_NETWORK_RETRY_DELAYS_S = "5,10,20"
+
 
 def normalize_endpoint(endpoint: str) -> str:
     return (endpoint or "").strip().rstrip("/")
@@ -27,6 +29,33 @@ def parse_targets(raw: str) -> list[str]:
         seen.add(part)
         out.append(part)
     return out
+
+
+def parse_retry_delays(raw: str, default: list[float] | None = None) -> list[float]:
+    delays: list[float] = []
+    for chunk in str(raw or "").split(","):
+        part = chunk.strip()
+        if not part:
+            continue
+        try:
+            val = float(part)
+        except ValueError:
+            continue
+        if val >= 0:
+            delays.append(val)
+    if delays:
+        return delays
+    return list(default or [])
+
+
+def format_retry_delays(delays: list[float]) -> str:
+    out: list[str] = []
+    for val in delays:
+        if float(val).is_integer():
+            out.append(str(int(val)))
+        else:
+            out.append(f"{val:g}")
+    return ",".join(out) if out else "<none>"
 
 
 def model_family(tag_or_family: str) -> str:
@@ -80,11 +109,22 @@ def start_ollama_service(endpoint: str) -> None:
 
 
 def fetch_local_models_with_retry(
-    endpoint: str, retries: int = 20, sleep_s: float = 1.0, require_non_empty: bool = False
+    endpoint: str,
+    retries: int = 20,
+    sleep_s: float = 1.0,
+    require_non_empty: bool = False,
+    retry_delays: list[float] | None = None,
 ) -> set[str]:
     last_error: Exception | None = None
     last_models: set[str] = set()
-    for _ in range(max(1, retries)):
+    if retry_delays is not None:
+        delays = [max(0.0, x) for x in retry_delays]
+        attempts = len(delays) + 1
+    else:
+        attempts = max(1, retries)
+        delays = [max(0.0, sleep_s)] * max(0, attempts - 1)
+
+    for attempt in range(attempts):
         try:
             models = fetch_local_models(endpoint)
             last_models = models
@@ -92,7 +132,8 @@ def fetch_local_models_with_retry(
                 return models
         except Exception as exc:  # noqa: BLE001
             last_error = exc
-        time.sleep(max(0.0, sleep_s))
+        if attempt < len(delays):
+            time.sleep(delays[attempt])
     if last_error is None:
         return last_models
     raise last_error
@@ -108,6 +149,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--allow-empty-models", action="store_true")
     parser.add_argument("--allow-no-runnable-targets", action="store_true")
     parser.add_argument("--restart-if-empty", action="store_true")
+    parser.add_argument(
+        "--network-retry-delays",
+        default=os.getenv("LV_NETWORK_RETRY_DELAYS_S", DEFAULT_NETWORK_RETRY_DELAYS_S),
+        help="Comma-separated retry delays in seconds for transient network errors (example: 5,10,20).",
+    )
     return parser.parse_args()
 
 
@@ -115,21 +161,30 @@ def main() -> None:
     args = parse_args()
     endpoint = normalize_endpoint(args.endpoint)
     required_targets = parse_targets(args.required_targets)
+    network_retry_delays = parse_retry_delays(args.network_retry_delays, [5.0, 10.0, 20.0])
 
     print(f"ollama_endpoint={endpoint}")
     print(f"ollama_models_dir={os.getenv('OLLAMA_MODELS', '')}")
+    print(f"ollama_network_retry_delays_s={format_retry_delays(network_retry_delays)}")
     try:
-        local_models = fetch_local_models(endpoint)
-    except urllib.error.URLError as exc:
-        raise SystemExit(f"failed to connect to Ollama endpoint: {exc}") from exc
+        local_models = fetch_local_models_with_retry(endpoint, retry_delays=network_retry_delays)
     except urllib.error.HTTPError as exc:
         raise SystemExit(f"Ollama endpoint returned HTTP {exc.code}: {exc.reason}") from exc
+    except urllib.error.URLError as exc:
+        raise SystemExit(f"failed to connect to Ollama endpoint: {exc}") from exc
+    except Exception as exc:  # noqa: BLE001
+        raise SystemExit(f"failed to query Ollama endpoint: {exc}") from exc
 
     if args.restart_if_empty and len(local_models) == 0:
         print("ollama_models_count=0, attempting service restart")
         start_ollama_service(endpoint)
         try:
-            local_models = fetch_local_models_with_retry(endpoint, retries=25, sleep_s=1.0, require_non_empty=True)
+            restart_retry_delays = [1.0, 2.0, 3.0] + network_retry_delays
+            local_models = fetch_local_models_with_retry(
+                endpoint,
+                require_non_empty=True,
+                retry_delays=restart_retry_delays,
+            )
         except Exception as exc:  # noqa: BLE001
             raise SystemExit(f"failed to recover Ollama service after restart: {exc}") from exc
 

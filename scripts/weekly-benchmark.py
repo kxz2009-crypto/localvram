@@ -29,6 +29,7 @@ DEFAULT_TARGETS = "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=
 DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64,qwen3.5:122b=48"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PRE_COOLDOWN_S = 5.0
+DEFAULT_NETWORK_RETRY_DELAYS_S = "5,10,20"
 DEFAULT_AUTO_PRIORITY_TAGS = "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b"
 DEFAULT_FAMILY_TARGET_HINTS = "qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,llama3.3=70"
 DEFAULT_PROMPT = (
@@ -133,7 +134,13 @@ def classify_error(error_text: str) -> str:
     return "runtime"
 
 
-def api_request(endpoint: str, route: str, payload: dict[str, Any] | None = None, timeout: int = 600) -> dict[str, Any]:
+def api_request(
+    endpoint: str,
+    route: str,
+    payload: dict[str, Any] | None = None,
+    timeout: int = 600,
+    retry_delays: list[float] | None = None,
+) -> dict[str, Any]:
     url = f"{normalize_endpoint(endpoint)}{route}"
     data = None
     method = "GET"
@@ -142,25 +149,43 @@ def api_request(endpoint: str, route: str, payload: dict[str, Any] | None = None
         data = json.dumps(payload).encode("utf-8")
         method = "POST"
         headers = {"Content-Type": "application/json"}
-    req = urllib.request.Request(url, data=data, method=method, headers=headers)
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        body = ""
+    retry_plan = [max(0.0, x) for x in (retry_delays or [])]
+    retryable_http_codes = {408, 425, 429, 500, 502, 503, 504}
+
+    for attempt in range(len(retry_plan) + 1):
+        req = urllib.request.Request(url, data=data, method=method, headers=headers)
         try:
-            body = exc.read().decode("utf-8", errors="ignore")
-        except Exception:  # noqa: BLE001
+            with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
             body = ""
-        detail = body[:500].replace("\n", " ").strip()
-        message = f"HTTP {exc.code} {exc.reason}"
-        if detail:
-            message = f"{message}: {detail}"
-        raise RuntimeError(message) from exc
+            try:
+                body = exc.read().decode("utf-8", errors="ignore")
+            except Exception:  # noqa: BLE001
+                body = ""
+            detail = body[:500].replace("\n", " ").strip()
+            message = f"HTTP {exc.code} {exc.reason}"
+            if detail:
+                message = f"{message}: {detail}"
+            if exc.code in retryable_http_codes and attempt < len(retry_plan):
+                time.sleep(retry_plan[attempt])
+                continue
+            raise RuntimeError(message) from exc
+        except urllib.error.URLError as exc:
+            if attempt < len(retry_plan):
+                time.sleep(retry_plan[attempt])
+                continue
+            raise RuntimeError(f"request failed: {exc}") from exc
+        except TimeoutError as exc:
+            if attempt < len(retry_plan):
+                time.sleep(retry_plan[attempt])
+                continue
+            raise RuntimeError(f"request timed out: {exc}") from exc
+    raise RuntimeError("request failed with exhausted retries")
 
 
-def list_local_models(endpoint: str) -> set[str]:
-    payload = api_request(endpoint, "/api/tags", None, timeout=20)
+def list_local_models(endpoint: str, retry_delays: list[float] | None = None) -> set[str]:
+    payload = api_request(endpoint, "/api/tags", None, timeout=20, retry_delays=retry_delays)
     models = set()
     for item in payload.get("models", []):
         name = str(item.get("name", "")).strip()
@@ -251,6 +276,33 @@ def parse_tag_list(raw: str) -> list[str]:
         seen.add(tag)
         out.append(tag)
     return out
+
+
+def parse_retry_delays(raw: str, default: list[float] | None = None) -> list[float]:
+    delays: list[float] = []
+    for chunk in str(raw or "").split(","):
+        part = chunk.strip()
+        if not part:
+            continue
+        try:
+            val = float(part)
+        except ValueError:
+            continue
+        if val >= 0:
+            delays.append(val)
+    if delays:
+        return delays
+    return list(default or [])
+
+
+def format_retry_delays(delays: list[float]) -> str:
+    out: list[str] = []
+    for val in delays:
+        if float(val).is_integer():
+            out.append(str(int(val)))
+        else:
+            out.append(f"{val:g}")
+    return ",".join(out) if out else "<none>"
 
 
 def model_family(tag_or_family: str) -> str:
@@ -611,6 +663,7 @@ def run_single_generation(
     num_predict: int,
     num_ctx: int,
     timeout_s: int,
+    retry_delays: list[float] | None = None,
 ) -> dict[str, Any]:
     payload = {
         "model": model,
@@ -619,7 +672,13 @@ def run_single_generation(
         "options": {"temperature": 0, "num_predict": num_predict, "num_ctx": num_ctx},
     }
     started_at = time.perf_counter()
-    response = api_request(endpoint, "/api/generate", payload=payload, timeout=timeout_s)
+    response = api_request(
+        endpoint,
+        "/api/generate",
+        payload=payload,
+        timeout=timeout_s,
+        retry_delays=retry_delays,
+    )
     wall_s = max(0.001, time.perf_counter() - started_at)
     eval_count = int(response.get("eval_count") or 0)
     eval_s = ns_to_seconds(response.get("eval_duration"))
@@ -652,6 +711,7 @@ def benchmark_model(
     runs: int,
     warmup_predict: int,
     log_file: Path,
+    retry_delays: list[float] | None = None,
 ) -> dict[str, Any]:
     model_report: dict[str, Any] = {
         "model": model,
@@ -663,13 +723,21 @@ def benchmark_model(
     }
     if warmup_predict > 0:
         try:
-            run_single_generation(endpoint, model, prompt, warmup_predict, num_ctx, timeout_s)
+            run_single_generation(endpoint, model, prompt, warmup_predict, num_ctx, timeout_s, retry_delays=retry_delays)
         except Exception as exc:  # noqa: BLE001
             append_log(log_file, {"level": "warn", "event": "warmup_failed", "model": model, "error": str(exc)})
 
     for idx in range(runs):
         try:
-            row = run_single_generation(endpoint, model, prompt, num_predict, num_ctx, timeout_s)
+            row = run_single_generation(
+                endpoint,
+                model,
+                prompt,
+                num_predict,
+                num_ctx,
+                timeout_s,
+                retry_delays=retry_delays,
+            )
             row["run_index"] = idx + 1
             model_report["runs"].append(row)
             append_log(log_file, {"level": "info", "event": "benchmark_run", **row})
@@ -772,6 +840,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--runs", type=int, default=int(os.getenv("LV_RUNS_PER_MODEL", "2")))
     parser.add_argument("--timeout", type=int, default=int(os.getenv("LV_BENCHMARK_TIMEOUT_S", "600")))
+    parser.add_argument(
+        "--network-retry-delays",
+        default=os.getenv("LV_NETWORK_RETRY_DELAYS_S", DEFAULT_NETWORK_RETRY_DELAYS_S),
+        help="Comma-separated retry delays in seconds for transient network errors (example: 5,10,20).",
+    )
     parser.add_argument("--warmup-predict", type=int, default=int(os.getenv("LV_WARMUP_PREDICT", "24")))
     parser.add_argument("--num-ctx", type=int, default=int(os.getenv("LV_BENCHMARK_NUM_CTX", str(DEFAULT_NUM_CTX))))
     parser.add_argument(
@@ -814,10 +887,12 @@ def main() -> None:
     deleted_logs = prune_old_logs(LOG_DIR, "weekly-benchmark-", max(0, args.log_retention_days))
 
     if args.dry_run:
+        network_retry_delays = parse_retry_delays(args.network_retry_delays, [5.0, 10.0, 20.0])
         print("dry-run: weekly benchmark execution skipped")
         print(f"endpoint={redacted_endpoint}")
         print(f"targets={args.targets}")
         print(f"family_target_hints={args.family_target_hints}")
+        print(f"network_retry_delays_s={format_retry_delays(network_retry_delays)}")
         print(f"extra_targets={args.extra_targets}")
         print(f"include_heavy_targets={args.include_heavy_targets}")
         print(f"heavy_targets={args.heavy_targets}")
@@ -834,6 +909,7 @@ def main() -> None:
     auto_backfill_max = max(0, env_int("LV_AUTO_BACKFILL_TARGETS_MAX", 6))
     auto_priority_tags = parse_tag_list(os.getenv("LV_AUTO_PRIORITY_TAGS", DEFAULT_AUTO_PRIORITY_TAGS))
     family_target_hints = parse_family_target_hints(args.family_target_hints)
+    network_retry_delays = parse_retry_delays(args.network_retry_delays, [5.0, 10.0, 20.0])
 
     base_targets = parse_targets(args.targets)
     extra_targets = parse_targets(args.extra_targets) if str(args.extra_targets).strip() else []
@@ -846,8 +922,8 @@ def main() -> None:
     tag_params = load_model_tag_params()
 
     try:
-        local_models = list_local_models(endpoint)
-    except urllib.error.URLError as exc:
+        local_models = list_local_models(endpoint, retry_delays=network_retry_delays)
+    except RuntimeError as exc:
         raise SystemExit(f"failed to connect to Ollama at {endpoint}: {exc}") from exc
     local_models = {x.lower() for x in local_models}
     local_tag_by_canonical = build_local_tag_by_canonical(local_models, known_tags, tag_aliases)
@@ -927,6 +1003,7 @@ def main() -> None:
             "auto_backfill_enabled": auto_backfill_enabled,
             "auto_backfill_max": auto_backfill_max,
             "auto_backfill_targets": auto_backfill_targets,
+            "network_retry_delays_s": network_retry_delays,
             "num_ctx": max(256, args.num_ctx),
             "temperature": 0,
             "pre_cooldown_s": pre_cooldown_s,
@@ -1041,6 +1118,7 @@ def main() -> None:
             runs=max(1, args.runs),
             warmup_predict=max(0, args.warmup_predict),
             log_file=log_file,
+            retry_delays=network_retry_delays,
         )
         report["requested_model"] = model_tag
         report["canonical_model"] = canonical_model_tag
