@@ -29,6 +29,7 @@ DEFAULT_TARGETS = "qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:
 DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PRE_COOLDOWN_S = 5.0
+DEFAULT_AUTO_PRIORITY_TAGS = "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b"
 DEFAULT_PROMPT = (
     "You are an inference benchmark probe. "
     "Respond with exactly three short bullet points about local LLM deployment stability."
@@ -180,6 +181,25 @@ def load_known_model_tags() -> set[str]:
     return tags
 
 
+def load_model_tag_params() -> dict[str, float]:
+    catalog = read_json(MODEL_CATALOG_FILE, {"items": []})
+    out: dict[str, float] = {}
+    for row in catalog.get("items", []):
+        tag = str(row.get("ollama_tag", "")).strip().lower()
+        if not tag:
+            continue
+        try:
+            params_b = float(row.get("params_b"))
+        except (TypeError, ValueError):
+            continue
+        if params_b <= 0:
+            continue
+        prev = out.get(tag)
+        if prev is None or params_b < prev:
+            out[tag] = params_b
+    return out
+
+
 def load_tag_aliases() -> dict[str, str]:
     payload = read_json(TAG_ALIASES_FILE, {"aliases": {}})
     aliases = payload.get("aliases", {})
@@ -204,6 +224,44 @@ def env_bool(name: str, default: bool = False) -> bool:
     if val in {"0", "false", "no", "off"}:
         return False
     return default
+
+
+def env_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    try:
+        return int(raw)
+    except ValueError:
+        return default
+
+
+def parse_tag_list(raw: str) -> list[str]:
+    out: list[str] = []
+    seen: set[str] = set()
+    for chunk in raw.split(","):
+        tag = chunk.strip().lower()
+        if not tag:
+            continue
+        if "=" in tag:
+            tag = tag.rsplit("=", 1)[0].strip()
+        if not tag or tag in seen:
+            continue
+        seen.add(tag)
+        out.append(tag)
+    return out
+
+
+def recommend_num_predict(params_b: float | None) -> int:
+    if params_b is None:
+        return 96
+    if params_b <= 14:
+        return 128
+    if params_b <= 34:
+        return 96
+    if params_b <= 72:
+        return 64
+    return 48
 
 
 def extract_legacy_model_map(payload: Any) -> dict[str, dict[str, Any]]:
@@ -597,7 +655,14 @@ def main() -> None:
         print("temperature=0")
         print(f"log_retention_days={args.log_retention_days}")
         print(f"min_success={max(0, args.min_success)}")
+        print(f"auto_backfill_targets={env_bool('LV_AUTO_BACKFILL_TARGETS', True)}")
+        print(f"auto_backfill_max={max(0, env_int('LV_AUTO_BACKFILL_TARGETS_MAX', 6))}")
         return
+
+    min_success_configured = max(0, args.min_success)
+    auto_backfill_enabled = env_bool("LV_AUTO_BACKFILL_TARGETS", True)
+    auto_backfill_max = max(0, env_int("LV_AUTO_BACKFILL_TARGETS_MAX", 6))
+    auto_priority_tags = parse_tag_list(os.getenv("LV_AUTO_PRIORITY_TAGS", DEFAULT_AUTO_PRIORITY_TAGS))
 
     base_targets = parse_targets(args.targets)
     extra_targets = parse_targets(args.extra_targets) if str(args.extra_targets).strip() else []
@@ -613,6 +678,52 @@ def main() -> None:
     except urllib.error.URLError as exc:
         raise SystemExit(f"failed to connect to Ollama at {endpoint}: {exc}") from exc
     local_models = {x.lower() for x in local_models}
+
+    auto_backfill_targets: list[tuple[str, int]] = []
+    if auto_backfill_enabled and min_success_configured > 0 and auto_backfill_max > 0:
+        tag_params = load_model_tag_params()
+        local_tag_by_canonical: dict[str, str] = {}
+        for local_tag in local_models:
+            canonical = tag_aliases.get(local_tag, local_tag)
+            if known_tags and canonical not in known_tags:
+                continue
+            chosen = local_tag_by_canonical.get(canonical)
+            if chosen is None or local_tag == canonical:
+                local_tag_by_canonical[canonical] = local_tag
+
+        existing_canonical_targets = {tag_aliases.get(model, model) for model, _ in targets}
+        runnable_existing = 0
+        for model, _ in targets:
+            canonical = tag_aliases.get(model, model)
+            if known_tags and canonical not in known_tags:
+                continue
+            if model in local_models or canonical in local_tag_by_canonical:
+                runnable_existing += 1
+
+        needed = max(0, min_success_configured - runnable_existing)
+        budget = min(needed, auto_backfill_max)
+        if budget > 0:
+            candidate_canonicals: list[str] = []
+            for raw_tag in auto_priority_tags:
+                canonical = tag_aliases.get(raw_tag, raw_tag)
+                if canonical in local_tag_by_canonical and canonical not in candidate_canonicals:
+                    candidate_canonicals.append(canonical)
+            for canonical in sorted(local_tag_by_canonical.keys(), key=lambda t: (tag_params.get(t, 9999.0), t)):
+                if canonical not in candidate_canonicals:
+                    candidate_canonicals.append(canonical)
+
+            for canonical in candidate_canonicals:
+                if len(auto_backfill_targets) >= budget:
+                    break
+                if canonical in existing_canonical_targets:
+                    continue
+                model_for_runner = local_tag_by_canonical[canonical]
+                num_predict = recommend_num_predict(tag_params.get(canonical))
+                auto_backfill_targets.append((model_for_runner, num_predict))
+                existing_canonical_targets.add(canonical)
+
+            if auto_backfill_targets:
+                targets = merge_targets(targets, auto_backfill_targets)
 
     pre_cooldown_s = max(0.0, args.pre_cooldown_s)
     if pre_cooldown_s > 0:
@@ -631,6 +742,9 @@ def main() -> None:
             "extra_targets": extra_targets,
             "heavy_targets_enabled": bool(args.include_heavy_targets),
             "heavy_targets": heavy_targets,
+            "auto_backfill_enabled": auto_backfill_enabled,
+            "auto_backfill_max": auto_backfill_max,
+            "auto_backfill_targets": auto_backfill_targets,
             "num_ctx": max(256, args.num_ctx),
             "temperature": 0,
             "pre_cooldown_s": pre_cooldown_s,
@@ -691,7 +805,6 @@ def main() -> None:
     success_reports = [r for r in reports if r.get("status") == "ok" and r.get("runs")]
     skipped_reports = [r for r in reports if r.get("status") == "skipped"]
     failed_reports = [r for r in reports if r.get("status") != "ok"]
-    min_success_configured = max(0, args.min_success)
     min_success_required = min(min_success_configured, runnable_target_count)
     gpu_after = collect_gpu_snapshot()
 
@@ -770,6 +883,7 @@ def main() -> None:
         "gpu_before": gpu_before,
         "gpu_after": gpu_after,
         "targets": [{"model": m, "num_predict": n, "num_ctx": max(256, args.num_ctx), "temperature": 0} for m, n in targets],
+        "auto_backfill_targets": [{"model": m, "num_predict": n} for m, n in auto_backfill_targets],
         "results": reports,
         "changed_models": changed_models,
         "significant_tps_delta": max(0.0, args.min_delta),

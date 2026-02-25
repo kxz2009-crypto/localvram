@@ -79,6 +79,9 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `LV_SIGNIFICANT_TPS_DELTA` (default: `0.5`; only write measured map when delta exceeds this)
 - `LV_BENCHMARK_LOG_RETENTION_DAYS` (default: `30`)
 - `LV_VERIFIED_TOOLTIP` (optional; tooltip text for measured hardware badges)
+- `LV_AUTO_BACKFILL_TARGETS` (default: `true`; auto-add locally installed known model tags when runnable targets are below threshold)
+- `LV_AUTO_BACKFILL_TARGETS_MAX` (default: `6`; cap for auto-added benchmark targets per run)
+- `LV_AUTO_PRIORITY_TAGS` (default: `qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b`; preferred order for auto-added targets)
 - `PUBLIC_AMAZON_PRICE_3090` (optional UI price label for local recommendation modules)
 - `PUBLIC_RUNPOD_A100_PRICE` (optional UI price label for cloud recommendation modules)
 
