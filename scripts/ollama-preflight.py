@@ -29,6 +29,17 @@ def parse_targets(raw: str) -> list[str]:
     return out
 
 
+def model_family(tag_or_family: str) -> str:
+    value = str(tag_or_family).strip().lower()
+    if not value:
+        return ""
+    return value.split(":", 1)[0].strip()
+
+
+def is_family_target(target: str) -> bool:
+    return ":" not in str(target).strip().lower()
+
+
 def is_variant(local_tag: str, base_tag: str) -> bool:
     if local_tag == base_tag:
         return True
@@ -130,7 +141,13 @@ def main() -> None:
     if required_targets:
         runnable: list[str] = []
         for target in required_targets:
-            if any(is_variant(local_tag, target) for local_tag in local_models):
+            family_target = is_family_target(target)
+            if family_target:
+                target_family = model_family(target)
+                ok = any(model_family(local_tag) == target_family for local_tag in local_models)
+            else:
+                ok = any(is_variant(local_tag, target) for local_tag in local_models)
+            if ok:
                 runnable.append(target)
         print(f"required_targets_count={len(required_targets)}")
         print(f"required_targets_runnable_count={len(runnable)}")

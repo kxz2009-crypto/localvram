@@ -25,11 +25,12 @@ TAG_ALIASES_FILE = ROOT / "src" / "data" / "benchmark-tag-aliases.json"
 LOG_DIR = ROOT / "logs"
 SCREENSHOT_DIR = ROOT / "public" / "screenshots"
 
-DEFAULT_TARGETS = "qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96,qwen3.5:35b=96"
+DEFAULT_TARGETS = "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96"
 DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64,qwen3.5:122b=48"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PRE_COOLDOWN_S = 5.0
 DEFAULT_AUTO_PRIORITY_TAGS = "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b"
+DEFAULT_FAMILY_TARGET_HINTS = "qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,llama3.3=70"
 DEFAULT_PROMPT = (
     "You are an inference benchmark probe. "
     "Respond with exactly three short bullet points about local LLM deployment stability."
@@ -252,6 +253,69 @@ def parse_tag_list(raw: str) -> list[str]:
     return out
 
 
+def model_family(tag_or_family: str) -> str:
+    value = str(tag_or_family).strip().lower()
+    if not value:
+        return ""
+    return value.split(":", 1)[0].strip()
+
+
+def parse_family_target_hints(raw: str) -> dict[str, float]:
+    hints: dict[str, float] = {}
+    for chunk in str(raw or "").split(","):
+        part = chunk.strip().lower()
+        if not part or "=" not in part:
+            continue
+        family_raw, pref_raw = part.split("=", 1)
+        family = model_family(family_raw)
+        if not family:
+            continue
+        try:
+            pref = float(pref_raw.strip())
+        except ValueError:
+            continue
+        if pref > 0:
+            hints[family] = pref
+    return hints
+
+
+def parse_params_from_size_token(size_token: str) -> float | None:
+    token = str(size_token).strip().lower()
+    if not token:
+        return None
+    match = re.match(r"^e([0-9]+(?:\.[0-9]+)?)b$", token)
+    if match:
+        return float(match.group(1))
+    match = re.match(r"^([0-9]+(?:\.[0-9]+)?)x([0-9]+(?:\.[0-9]+)?)b$", token)
+    if match:
+        return float(match.group(1)) * float(match.group(2))
+    match = re.match(r"^([0-9]+(?:\.[0-9]+)?)b-a([0-9]+(?:\.[0-9]+)?)b$", token)
+    if match:
+        return float(match.group(1))
+    match = re.match(r"^([0-9]+(?:\.[0-9]+)?)b$", token)
+    if match:
+        return float(match.group(1))
+    match = re.match(r"^([0-9]+(?:\.[0-9]+)?)m$", token)
+    if match:
+        return float(match.group(1)) / 1000.0
+    return None
+
+
+def parse_params_from_tag(tag: str) -> float | None:
+    raw = str(tag).strip().lower()
+    if ":" not in raw:
+        return None
+    size_part = raw.split(":", 1)[1]
+    match = re.search(
+        r"(e[0-9]+(?:\.[0-9]+)?b|[0-9]+(?:\.[0-9]+)?x[0-9]+(?:\.[0-9]+)?b|"
+        r"[0-9]+(?:\.[0-9]+)?b-a[0-9]+(?:\.[0-9]+)?b|[0-9]+(?:\.[0-9]+)?b|[0-9]+(?:\.[0-9]+)?m)",
+        size_part,
+    )
+    if not match:
+        return None
+    return parse_params_from_size_token(match.group(1))
+
+
 def _looks_like_variant(tag: str, base: str) -> bool:
     if tag == base:
         return True
@@ -282,6 +346,21 @@ def infer_canonical_tag(local_tag: str, known_tags: set[str], tag_aliases: dict[
     for known in sorted(known_tags, key=len, reverse=True):
         if _looks_like_variant(canonical, known):
             return known
+
+    family = model_family(canonical)
+    family_known = [tag for tag in known_tags if model_family(tag) == family]
+    if family_known:
+        desired_params = parse_params_from_tag(canonical)
+
+        def _score(known_tag: str) -> tuple[Any, ...]:
+            known_params = parse_params_from_tag(known_tag)
+            if desired_params is not None and known_params is not None:
+                return (0, abs(known_params - desired_params), known_params, known_tag)
+            if known_params is not None:
+                return (1, known_params, known_tag)
+            return (2, known_tag)
+
+        return min(family_known, key=_score)
     return canonical
 
 
@@ -299,6 +378,42 @@ def build_local_tag_by_canonical(
         if chosen is None or local_tag == canonical:
             out[canonical] = local_tag
     return out
+
+
+def estimate_params_for_tag(tag: str, tag_params: dict[str, float], known_tags: set[str], tag_aliases: dict[str, str]) -> float | None:
+    raw_tag = str(tag).strip().lower()
+    if not raw_tag:
+        return None
+    canonical = infer_canonical_tag(raw_tag, known_tags, tag_aliases)
+    params = tag_params.get(canonical)
+    if params is not None:
+        return params
+    return parse_params_from_tag(raw_tag)
+
+
+def select_local_model_for_family(
+    family: str,
+    local_models: set[str],
+    family_target_hints: dict[str, float],
+    tag_params: dict[str, float],
+    known_tags: set[str],
+    tag_aliases: dict[str, str],
+) -> str:
+    family_norm = model_family(family)
+    if not family_norm:
+        return ""
+    candidates = [tag for tag in local_models if model_family(tag) == family_norm]
+    if not candidates:
+        return ""
+    desired = family_target_hints.get(family_norm, 14.0)
+
+    def _score(candidate: str) -> tuple[Any, ...]:
+        params = estimate_params_for_tag(candidate, tag_params, known_tags, tag_aliases)
+        if params is None:
+            return (1, 9999.0, 9999.0, candidate)
+        return (0, abs(params - desired), params, candidate)
+
+    return min(sorted(candidates), key=_score)
 
 
 def recommend_num_predict(params_b: float | None) -> int:
@@ -642,6 +757,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run real weekly Ollama benchmarks.")
     parser.add_argument("--endpoint", default=resolve_default_endpoint())
     parser.add_argument("--targets", default=os.getenv("LV_WEEKLY_TARGETS", DEFAULT_TARGETS))
+    parser.add_argument(
+        "--family-target-hints",
+        default=os.getenv("LV_FAMILY_TARGET_HINTS", DEFAULT_FAMILY_TARGET_HINTS),
+        help="Family target size hints in B params, for example qwen3=8,deepseek-r1=14.",
+    )
     parser.add_argument("--extra-targets", default=os.getenv("LV_WEEKLY_EXTRA_TARGETS", ""))
     parser.add_argument("--heavy-targets", default=os.getenv("LV_WEEKLY_HEAVY_TARGETS", DEFAULT_HEAVY_TARGETS))
     parser.add_argument(
@@ -697,6 +817,7 @@ def main() -> None:
         print("dry-run: weekly benchmark execution skipped")
         print(f"endpoint={redacted_endpoint}")
         print(f"targets={args.targets}")
+        print(f"family_target_hints={args.family_target_hints}")
         print(f"extra_targets={args.extra_targets}")
         print(f"include_heavy_targets={args.include_heavy_targets}")
         print(f"heavy_targets={args.heavy_targets}")
@@ -712,6 +833,7 @@ def main() -> None:
     auto_backfill_enabled = env_bool("LV_AUTO_BACKFILL_TARGETS", True)
     auto_backfill_max = max(0, env_int("LV_AUTO_BACKFILL_TARGETS_MAX", 6))
     auto_priority_tags = parse_tag_list(os.getenv("LV_AUTO_PRIORITY_TAGS", DEFAULT_AUTO_PRIORITY_TAGS))
+    family_target_hints = parse_family_target_hints(args.family_target_hints)
 
     base_targets = parse_targets(args.targets)
     extra_targets = parse_targets(args.extra_targets) if str(args.extra_targets).strip() else []
@@ -721,6 +843,7 @@ def main() -> None:
         raise SystemExit("no valid benchmark targets configured")
     known_tags = load_known_model_tags()
     tag_aliases = load_tag_aliases()
+    tag_params = load_model_tag_params()
 
     try:
         local_models = list_local_models(endpoint)
@@ -731,15 +854,32 @@ def main() -> None:
 
     auto_backfill_targets: list[tuple[str, int]] = []
     if auto_backfill_enabled and min_success_configured > 0 and auto_backfill_max > 0:
-        tag_params = load_model_tag_params()
-
-        existing_canonical_targets = {tag_aliases.get(model, model) for model, _ in targets}
+        existing_canonical_targets: set[str] = set()
+        for model, _ in targets:
+            model_tag = str(model).strip().lower()
+            if ":" in model_tag:
+                existing_canonical_targets.add(infer_canonical_tag(model_tag, known_tags, tag_aliases))
+                continue
+            family = model_family(model_tag)
+            if family:
+                existing_canonical_targets.add(family)
+            selected = select_local_model_for_family(
+                model_tag, local_models, family_target_hints, tag_params, known_tags, tag_aliases
+            )
+            if selected:
+                existing_canonical_targets.add(infer_canonical_tag(selected, known_tags, tag_aliases))
         runnable_existing = 0
         for model, _ in targets:
-            canonical = tag_aliases.get(model, model)
-            if known_tags and canonical not in known_tags:
+            model_tag = str(model).strip().lower()
+            if ":" not in model_tag:
+                selected = select_local_model_for_family(
+                    model_tag, local_models, family_target_hints, tag_params, known_tags, tag_aliases
+                )
+                if selected:
+                    runnable_existing += 1
                 continue
-            if model in local_models or canonical in local_tag_by_canonical:
+            canonical = infer_canonical_tag(model_tag, known_tags, tag_aliases)
+            if model_tag in local_models or canonical in local_tag_by_canonical:
                 runnable_existing += 1
 
         needed = max(0, min_success_configured - runnable_existing)
@@ -801,39 +941,68 @@ def main() -> None:
     runnable_target_count = 0
     for model, num_predict in targets:
         model_tag = model.strip().lower()
-        canonical_model_tag = tag_aliases.get(model_tag, model_tag)
         runner_model_tag = model_tag
-        if known_tags and canonical_model_tag not in known_tags:
-            report = {
-                "model": model_tag,
-                "canonical_model": canonical_model_tag,
-                "num_predict": num_predict,
-                "status": "skipped",
-                "runs": [],
-                "error": "model tag not found in model-catalog (or alias map) (ollama_tag mismatch)",
-                "error_type": "unknown_model_tag",
-            }
-            reports.append(report)
-            append_log(log_file, {"level": "error", "event": "model_tag_unknown", **report})
-            continue
-
-        if model_tag not in local_models:
-            fallback_tag = local_tag_by_canonical.get(canonical_model_tag)
-            if fallback_tag:
-                runner_model_tag = fallback_tag
-            else:
+        if ":" not in model_tag:
+            selected = select_local_model_for_family(
+                model_tag, local_models, family_target_hints, tag_params, known_tags, tag_aliases
+            )
+            if not selected:
                 report = {
                     "model": model_tag,
-                    "canonical_model": canonical_model_tag,
+                    "canonical_model": model_tag,
                     "num_predict": num_predict,
                     "status": "skipped",
                     "runs": [],
-                    "error": "model not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
-                    "error_type": "missing_model",
+                    "error": "model family not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
+                    "error_type": "missing_family",
                 }
                 reports.append(report)
-                append_log(log_file, {"level": "error", "event": "model_missing", **report})
+                append_log(log_file, {"level": "error", "event": "model_family_missing", **report})
                 continue
+            runner_model_tag = selected
+            canonical_model_tag = infer_canonical_tag(runner_model_tag, known_tags, tag_aliases)
+            append_log(
+                log_file,
+                {
+                    "level": "info",
+                    "event": "family_target_resolved",
+                    "model_requested": model_tag,
+                    "model_runner": runner_model_tag,
+                    "canonical_model": canonical_model_tag,
+                    "num_predict": num_predict,
+                },
+            )
+        else:
+            canonical_model_tag = infer_canonical_tag(model_tag, known_tags, tag_aliases)
+            if model_tag not in local_models:
+                fallback_tag = local_tag_by_canonical.get(canonical_model_tag)
+                if fallback_tag:
+                    runner_model_tag = fallback_tag
+                else:
+                    family_fallback = select_local_model_for_family(
+                        model_family(canonical_model_tag),
+                        local_models,
+                        family_target_hints,
+                        tag_params,
+                        known_tags,
+                        tag_aliases,
+                    )
+                    if family_fallback:
+                        runner_model_tag = family_fallback
+                        canonical_model_tag = infer_canonical_tag(runner_model_tag, known_tags, tag_aliases)
+                    else:
+                        report = {
+                            "model": model_tag,
+                            "canonical_model": canonical_model_tag,
+                            "num_predict": num_predict,
+                            "status": "skipped",
+                            "runs": [],
+                            "error": "model not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
+                            "error_type": "missing_model",
+                        }
+                        reports.append(report)
+                        append_log(log_file, {"level": "error", "event": "model_missing", **report})
+                        continue
 
         if runner_model_tag != model_tag:
             append_log(
