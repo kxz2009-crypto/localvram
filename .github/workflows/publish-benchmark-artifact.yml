@@ -430,3 +430,42 @@ jobs:
               });
               core.info("created new ops alert issue");
             }
+
+      - name: Resolve alert issues on recovery (publish)
+        if: always() && success() && steps.checkout.conclusion == 'success'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Publish Benchmark Artifact
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const prefix = `[OPS-ALERT] ${workflow}:`;
+            const now = new Date().toISOString();
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+
+            const targets = issues.filter((issue) => issue.title.startsWith(prefix));
+            for (const issue of targets) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: `Recovered at ${now}. Latest successful run: ${runUrl}`
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                state: "closed"
+              });
+              core.info(`closed recovered alert issue #${issue.number}`);
+            }
