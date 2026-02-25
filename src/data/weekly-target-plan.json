@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-02-25T00:00:00Z",
+  "endpoint": "http://127.0.0.1:11434",
+  "base_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96",
+  "resolved_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96",
+  "local_model_count": 0,
+  "local_models_sample": [],
+  "local_family_count": 0,
+  "local_families": [],
+  "candidate_families": [],
+  "added_targets": [],
+  "excluded_families": [
+    "all-minilm",
+    "bge-m3",
+    "deepseek-ocr",
+    "gemma3n",
+    "llama3.2-vision",
+    "llava",
+    "llava-llama3",
+    "minicpm-v",
+    "mxbai-embed-large",
+    "nomic-embed-text",
+    "qwen2.5vl",
+    "qwen3-vl",
+    "snowflake-arctic-embed"
+  ],
+  "priority_families": [
+    "qwen3.5",
+    "qwen3",
+    "deepseek-r1",
+    "qwen2.5",
+    "qwen3-coder",
+    "llama3.3",
+    "qwen2.5-coder"
+  ],
+  "warning": "bootstrap_placeholder"
+}

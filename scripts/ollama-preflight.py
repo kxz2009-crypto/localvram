@@ -2,17 +2,88 @@
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import urlparse
 
 DEFAULT_NETWORK_RETRY_DELAYS_S = "5,10,20"
 
 
 def normalize_endpoint(endpoint: str) -> str:
     return (endpoint or "").strip().rstrip("/")
+
+
+def endpoint_host_port(endpoint: str) -> tuple[str, int]:
+    raw = normalize_endpoint(endpoint)
+    parsed = urlparse(raw if "://" in raw else f"http://{raw}")
+    host = (parsed.hostname or "").strip().lower()
+    if not host:
+        host = "127.0.0.1"
+    port = int(parsed.port or 11434)
+    return host, port
+
+
+def is_loopback_host(host: str) -> bool:
+    return str(host or "").strip().lower() in {"127.0.0.1", "localhost", "::1"}
+
+
+def run_cmd(cmd: list[str], timeout_s: int = 8) -> tuple[int, str, str]:
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_s, check=False)
+        return proc.returncode, proc.stdout, proc.stderr
+    except Exception as exc:  # noqa: BLE001
+        return 1, "", str(exc)
+
+
+def detect_ollama_serve_processes() -> list[str]:
+    code, out, _err = run_cmd(["ps", "-ef"])
+    if code != 0:
+        return []
+    rows: list[str] = []
+    for line in out.splitlines():
+        text = line.strip().lower()
+        if "ollama serve" not in text:
+            continue
+        if "ollama-preflight.py" in text:
+            continue
+        rows.append(line.strip())
+    return rows
+
+
+def detect_port_listeners(port: int) -> list[str]:
+    port_marker = f":{port}"
+    commands: list[list[str]] = []
+    if shutil.which("ss"):
+        commands.append(["ss", "-ltnp"])
+    if shutil.which("netstat"):
+        commands.append(["netstat", "-ltnp"])
+    for cmd in commands:
+        code, out, _err = run_cmd(cmd)
+        if code != 0:
+            continue
+        lines = [line.strip() for line in out.splitlines() if port_marker in line]
+        if lines:
+            return lines
+    if shutil.which("lsof"):
+        code, out, _err = run_cmd(["lsof", f"-iTCP:{port}", "-sTCP:LISTEN", "-n", "-P"])
+        if code == 0:
+            lines = [line.strip() for line in out.splitlines() if line.strip() and port_marker in line]
+            if lines:
+                return lines
+    return []
+
+
+def has_non_ollama_listener(listener_lines: list[str]) -> bool:
+    if not listener_lines:
+        return False
+    for line in listener_lines:
+        if "ollama" not in line.lower():
+            return True
+    return False
 
 
 def parse_targets(raw: str) -> list[str]:
@@ -156,6 +227,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--allow-empty-models", action="store_true")
     parser.add_argument("--allow-no-runnable-targets", action="store_true")
     parser.add_argument("--restart-if-empty", action="store_true")
+    parser.add_argument("--skip-single-instance-guard", action="store_true")
+    parser.add_argument(
+        "--require-local-process",
+        action="store_true",
+        help="Fail if endpoint is loopback and no local 'ollama serve' process is detected.",
+    )
     parser.add_argument(
         "--network-retry-delays",
         default=os.getenv("LV_NETWORK_RETRY_DELAYS_S", DEFAULT_NETWORK_RETRY_DELAYS_S),
@@ -167,12 +244,41 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     endpoint = normalize_endpoint(args.endpoint)
+    endpoint_host, endpoint_port = endpoint_host_port(endpoint)
+    loopback_endpoint = is_loopback_host(endpoint_host)
     required_targets = parse_targets(args.required_targets)
     network_retry_delays = parse_retry_delays(args.network_retry_delays, [5.0, 10.0, 20.0])
 
     print(f"ollama_endpoint={endpoint}")
+    print(f"ollama_endpoint_host={endpoint_host}")
+    print(f"ollama_endpoint_port={endpoint_port}")
+    print(f"ollama_endpoint_is_loopback={str(loopback_endpoint).lower()}")
     print(f"ollama_models_dir={os.getenv('OLLAMA_MODELS', '')}")
     print(f"ollama_network_retry_delays_s={format_retry_delays(network_retry_delays)}")
+
+    if loopback_endpoint and not args.skip_single_instance_guard:
+        ollama_processes = detect_ollama_serve_processes()
+        listeners = detect_port_listeners(endpoint_port)
+        print(f"ollama_serve_process_count={len(ollama_processes)}")
+        print(f"ollama_port_listener_count={len(listeners)}")
+        if ollama_processes:
+            print(f"ollama_serve_process_sample={ollama_processes[:3]}")
+        if listeners:
+            print(f"ollama_port_listener_sample={listeners[:3]}")
+
+        if len(ollama_processes) > 1:
+            emit_failure_class("ollama_multi_instance", "multiple local 'ollama serve' processes detected")
+            raise SystemExit("multiple local 'ollama serve' processes detected")
+        if has_non_ollama_listener(listeners):
+            emit_failure_class("ollama_port_conflict", f"port {endpoint_port} listener is not managed by ollama")
+            raise SystemExit(f"port {endpoint_port} listener is not managed by ollama")
+        if args.require_local_process and len(ollama_processes) == 0:
+            emit_failure_class(
+                "ollama_instance_unmanaged",
+                "no local 'ollama serve' process detected for loopback endpoint",
+            )
+            raise SystemExit("no local 'ollama serve' process detected for loopback endpoint")
+
     try:
         local_models = fetch_local_models_with_retry(endpoint, retry_delays=network_retry_delays)
     except urllib.error.HTTPError as exc:

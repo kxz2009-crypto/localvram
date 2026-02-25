@@ -16,6 +16,7 @@ REQUIRED_JSON_FILES = [
 DEFAULT_COPY_OPTIONAL = [
     "src/data/runner-status.json",
     "src/data/pipeline-status.json",
+    "src/data/weekly-target-plan.json",
 ]
 DEFAULT_COPY_DIRS = [
     "logs",

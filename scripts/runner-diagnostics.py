@@ -11,6 +11,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 
 def utc_now_iso() -> str:
@@ -69,6 +70,58 @@ def normalize_endpoint(endpoint: str) -> str:
     return str(endpoint or "").strip().rstrip("/")
 
 
+def endpoint_host_port(endpoint: str) -> tuple[str, int]:
+    raw = normalize_endpoint(endpoint)
+    parsed = urlparse(raw if "://" in raw else f"http://{raw}")
+    host = (parsed.hostname or "").strip().lower()
+    if not host:
+        host = "127.0.0.1"
+    port = int(parsed.port or 11434)
+    return host, port
+
+
+def is_loopback_host(host: str) -> bool:
+    return str(host or "").strip().lower() in {"127.0.0.1", "localhost", "::1"}
+
+
+def detect_ollama_serve_processes() -> list[str]:
+    code, out, _err = run_cmd(["ps", "-ef"])
+    if code != 0:
+        return []
+    rows: list[str] = []
+    for line in out.splitlines():
+        text = line.strip().lower()
+        if "ollama serve" not in text:
+            continue
+        if "runner-diagnostics.py" in text:
+            continue
+        rows.append(line.strip())
+    return rows
+
+
+def detect_port_listeners(port: int) -> list[str]:
+    port_marker = f":{port}"
+    if shutil.which("ss"):
+        code, out, _err = run_cmd(["ss", "-ltnp"])
+        if code == 0:
+            return [line.strip() for line in out.splitlines() if port_marker in line]
+    if shutil.which("netstat"):
+        code, out, _err = run_cmd(["netstat", "-ltnp"])
+        if code == 0:
+            return [line.strip() for line in out.splitlines() if port_marker in line]
+    if shutil.which("lsof"):
+        code, out, _err = run_cmd(["lsof", f"-iTCP:{port}", "-sTCP:LISTEN", "-n", "-P"])
+        if code == 0:
+            return [line.strip() for line in out.splitlines() if line.strip() and port_marker in line]
+    return []
+
+
+def has_non_ollama_listener(listener_lines: list[str]) -> bool:
+    if not listener_lines:
+        return False
+    return any("ollama" not in line.lower() for line in listener_lines)
+
+
 def model_family(tag_or_family: str) -> str:
     value = str(tag_or_family).strip().lower()
     if not value:
@@ -111,6 +164,11 @@ def main() -> None:
 
     diag_timestamp = utc_now_iso()
     endpoint = normalize_endpoint(args.endpoint)
+    endpoint_host, endpoint_port_from_url = endpoint_host_port(endpoint)
+    port_to_check = args.port
+    if port_to_check == 11434 and endpoint_port_from_url != 11434:
+        port_to_check = endpoint_port_from_url
+    loopback_endpoint = is_loopback_host(endpoint_host)
     required_targets = parse_targets(args.required_targets)
     retry_delays = parse_retry_delays(args.network_retry_delays)
     retry_delays_text = format_retry_delays(retry_delays)
@@ -119,7 +177,7 @@ def main() -> None:
         "endpoint": endpoint,
         "required_targets": required_targets,
         "retry_delays_s": retry_delays,
-        "port": args.port,
+        "port": port_to_check,
         "env": {},
         "commands": {},
         "checks": {},
@@ -129,6 +187,8 @@ def main() -> None:
 
     print(f"diag_timestamp_utc={diag_timestamp}")
     print(f"diag_endpoint={endpoint}")
+    print(f"diag_endpoint_host={endpoint_host}")
+    print(f"diag_endpoint_is_loopback={str(loopback_endpoint).lower()}")
     print(f"diag_required_targets={','.join(required_targets) if required_targets else '<none>'}")
     print(f"diag_retry_delays_s={retry_delays_text}")
 
@@ -176,31 +236,47 @@ def main() -> None:
         report["commands"][title] = {"exit": code, "stdout": out, "stderr": err}
 
     port_report = "<unavailable>"
-    if shutil.which("ss"):
-        code, out, err = run_cmd(["ss", "-ltnp"])
-        if code == 0:
-            lines = [line for line in out.splitlines() if f":{args.port}" in line]
-            port_report = "\n".join(lines) if lines else f"no listeners on :{args.port}"
-        else:
-            port_report = err or "ss failed"
-    elif shutil.which("netstat"):
-        code, out, err = run_cmd(["netstat", "-ltnp"])
-        if code == 0:
-            lines = [line for line in out.splitlines() if f":{args.port}" in line]
-            port_report = "\n".join(lines) if lines else f"no listeners on :{args.port}"
-        else:
-            port_report = err or "netstat failed"
+    listeners = detect_port_listeners(port_to_check)
+    if listeners:
+        port_report = "\n".join(listeners)
+    else:
+        port_report = f"no listeners on :{port_to_check}"
     print_section("PORT_LISTENERS", port_report)
-    report["checks"]["port_listeners"] = port_report
+    report["checks"]["port_listeners"] = listeners[:20]
 
     code, out, err = run_cmd(["ps", "-ef"])
     if code == 0:
-        lines = [line for line in out.splitlines() if "ollama" in line.lower()]
-        print_section("PS_OLLAMA", "\n".join(lines[:20]) if lines else "no ollama processes found")
-        report["checks"]["ps_ollama"] = lines[:20]
+        all_ollama_lines = [line for line in out.splitlines() if "ollama" in line.lower()]
+        print_section("PS_OLLAMA", "\n".join(all_ollama_lines[:20]) if all_ollama_lines else "no ollama processes found")
+        report["checks"]["ps_ollama"] = all_ollama_lines[:20]
     else:
         print_section("PS_OLLAMA", err or "ps failed")
         report["checks"]["ps_ollama"] = [err or "ps failed"]
+
+    guard_failure_class = ""
+    guard_failure_detail = ""
+    ollama_serve_processes = detect_ollama_serve_processes()
+    print(f"diag_ollama_serve_process_count={len(ollama_serve_processes)}")
+    if loopback_endpoint:
+        if len(ollama_serve_processes) > 1:
+            guard_failure_class = "ollama_multi_instance"
+            guard_failure_detail = "multiple local 'ollama serve' processes detected"
+        elif has_non_ollama_listener(listeners):
+            guard_failure_class = "ollama_port_conflict"
+            guard_failure_detail = f"port {port_to_check} listener is not managed by ollama"
+        elif len(ollama_serve_processes) == 0:
+            guard_failure_class = "ollama_instance_unmanaged"
+            guard_failure_detail = "no local 'ollama serve' process detected for loopback endpoint"
+    if guard_failure_class:
+        print_section("SINGLE_INSTANCE_GUARD", f"{guard_failure_class}: {guard_failure_detail}")
+    else:
+        print_section("SINGLE_INSTANCE_GUARD", "ok")
+    report["checks"]["single_instance_guard"] = {
+        "endpoint_is_loopback": loopback_endpoint,
+        "ollama_serve_process_count": len(ollama_serve_processes),
+        "failure_class": guard_failure_class or "none",
+        "failure_detail": guard_failure_detail,
+    }
 
     if shutil.which("systemctl"):
         status_cmds = [
@@ -275,7 +351,12 @@ def main() -> None:
         f"diag_required_targets_runnable_count={len(runnable)}",
         f"diag_required_targets_runnable={','.join(runnable) if runnable else '<none>'}",
     ]
-    if endpoint_error:
+    if guard_failure_class:
+        failure_class = guard_failure_class
+        failure_detail = guard_failure_detail
+        summary_lines.append(f"diag_failure_class={guard_failure_class}")
+        summary_lines.append(f"diag_failure_detail={guard_failure_detail}")
+    elif endpoint_error:
         failure_class = "ollama_not_visible"
         failure_detail = endpoint_error
         summary_lines.append("diag_failure_class=ollama_not_visible")

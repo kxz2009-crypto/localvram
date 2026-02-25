@@ -62,6 +62,7 @@ npm run dev
 - `python scripts/build-sitemap.py`
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
+- `python scripts/resolve-weekly-targets.py`
 - `python scripts/ollama-preflight.py`
 - `python scripts/runner-diagnostics.py`
 - `python scripts/validate-benchmark-artifact.py --source-dir <artifact-dir>`
@@ -94,13 +95,14 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 
 Self-hosted runner preflight:
 
-- `python scripts/ollama-preflight.py --required-targets "$LV_WEEKLY_TARGETS"`
+- `python scripts/ollama-preflight.py --required-targets "$LV_WEEKLY_TARGETS" --require-local-process`
 - Validates `/api/tags` visibility before benchmark starts.
 - When required targets are family names (for example `qwen3.5`), preflight treats any local tag in that family as runnable.
 - Uses `LV_NETWORK_RETRY_DELAYS_S` retry backoff (default `5,10,20`) before failing on transient connection issues.
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
-- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `benchmark_threshold_not_met`, `artifact_download_rate_limited`, `publish_push_rate_limited`.
+- Single-instance governance checks classify runner-side ownership problems: `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`.
+- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `artifact_download_rate_limited`, `publish_push_rate_limited`.
 - Failure alerts: `Weekly Benchmark` and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
 - Recovery handling: when workflow returns to success, open `[OPS-ALERT]` issues for that workflow are auto-commented and closed.
 
@@ -108,11 +110,13 @@ Smoke check workflow:
 
 - GitHub Actions workflow: `Runner Smoke Check` (manual trigger).
 - Runs quick diagnostics + preflight only (no full benchmark), useful after runner/Ollama upgrades.
+- Scheduled and manual runs normalize missing inputs to defaults, then auto-resolve runnable families from local `/api/tags`.
 - Scheduled daily at `01:40 UTC` (US evening window).
 
 Weekly collect/publish split:
 
 - `Weekly Benchmark` now runs only on self-hosted runner and uploads a `benchmark-collection` artifact.
+- Weekly target resolver writes `src/data/weekly-target-plan.json` and includes it in the benchmark artifact/publish sync.
 - Weekly benchmark schedule: `02:10 UTC every Wednesday` (US Tuesday evening window).
 - `Publish Benchmark Artifact` (workflow_run/manual) downloads that artifact, validates JSON payloads, rebuilds catalog/sitemap, and pushes with retry backoff (`5,10,20` default) + 429-aware wait (`rate_limit_delay_s`, default `60`) + jitter.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).

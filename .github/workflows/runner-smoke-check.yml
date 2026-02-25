@@ -29,6 +29,12 @@ on:
 permissions:
   contents: read
 
+env:
+  DEFAULT_OLLAMA_ENDPOINT: http://127.0.0.1:11434
+  DEFAULT_REQUIRED_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
+  DEFAULT_RETRY_DELAYS_S: "5,10,20"
+  OLLAMA_MODELS: /mnt/d/Ollama
+
 jobs:
   smoke-check:
     runs-on: [self-hosted, Linux, X64, gpu, 3090]
@@ -52,41 +58,79 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Normalize smoke inputs
+        id: smoke_inputs
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          endpoint="${{ github.event.inputs.endpoint }}"
+          required_targets="${{ github.event.inputs.required_targets }}"
+          retry_delays="${{ github.event.inputs.retry_delays_s }}"
+          restart_if_empty="${{ github.event.inputs.restart_if_empty }}"
+
+          if [ -z "${endpoint}" ]; then
+            endpoint="${DEFAULT_OLLAMA_ENDPOINT}"
+          fi
+          if [ -z "${required_targets}" ]; then
+            required_targets="${DEFAULT_REQUIRED_TARGETS}"
+          fi
+          if [ -z "${retry_delays}" ]; then
+            retry_delays="${DEFAULT_RETRY_DELAYS_S}"
+          fi
+          if [ -z "${restart_if_empty}" ]; then
+            restart_if_empty="true"
+          fi
+
+          {
+            echo "endpoint=${endpoint}"
+            echo "required_targets=${required_targets}"
+            echo "retry_delays_s=${retry_delays}"
+            echo "restart_if_empty=${restart_if_empty}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Resolve smoke targets
+        id: resolve_targets
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          python scripts/resolve-weekly-targets.py \
+            --endpoint "${{ steps.smoke_inputs.outputs.endpoint }}" \
+            --base-targets "${{ steps.smoke_inputs.outputs.required_targets }}" \
+            --retry-delays "${{ steps.smoke_inputs.outputs.retry_delays_s }}" \
+            --output-file "logs/weekly-target-plan-smoke.json" \
+            --github-output "${GITHUB_OUTPUT}"
+
       - name: Runner diagnostics (preflight baseline)
         if: steps.checkout.conclusion == 'success'
         env:
-          LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
-          OLLAMA_HOST: ${{ github.event.inputs.endpoint }}
-          OLLAMA_MODELS: /mnt/d/Ollama
-          LV_NETWORK_RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s }}
-          LV_WEEKLY_TARGETS: ${{ github.event.inputs.required_targets }}
+          LV_OLLAMA_ENDPOINT: ${{ steps.smoke_inputs.outputs.endpoint }}
+          OLLAMA_HOST: ${{ steps.smoke_inputs.outputs.endpoint }}
+          LV_NETWORK_RETRY_DELAYS_S: ${{ steps.smoke_inputs.outputs.retry_delays_s }}
+          LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || steps.smoke_inputs.outputs.required_targets }}
         run: |
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-smoke-before.json
 
       - name: Ollama preflight smoke
         if: steps.checkout.conclusion == 'success'
         env:
-          LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
-          OLLAMA_HOST: ${{ github.event.inputs.endpoint }}
-          OLLAMA_MODELS: /mnt/d/Ollama
-          LV_NETWORK_RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s }}
-          LV_WEEKLY_TARGETS: ${{ github.event.inputs.required_targets }}
-          INPUT_RESTART_IF_EMPTY: ${{ github.event.inputs.restart_if_empty }}
+          LV_OLLAMA_ENDPOINT: ${{ steps.smoke_inputs.outputs.endpoint }}
+          OLLAMA_HOST: ${{ steps.smoke_inputs.outputs.endpoint }}
+          LV_NETWORK_RETRY_DELAYS_S: ${{ steps.smoke_inputs.outputs.retry_delays_s }}
+          LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || steps.smoke_inputs.outputs.required_targets }}
+          INPUT_RESTART_IF_EMPTY: ${{ steps.smoke_inputs.outputs.restart_if_empty }}
         run: |
           ARGS=(--required-targets "${LV_WEEKLY_TARGETS}")
           if [ "${INPUT_RESTART_IF_EMPTY}" = "true" ]; then
             ARGS+=(--restart-if-empty)
           fi
+          ARGS+=(--require-local-process)
           python scripts/ollama-preflight.py "${ARGS[@]}"
 
       - name: Runner diagnostics (post smoke)
         if: always() && steps.checkout.conclusion == 'success'
         env:
-          LV_OLLAMA_ENDPOINT: ${{ github.event.inputs.endpoint }}
-          OLLAMA_HOST: ${{ github.event.inputs.endpoint }}
-          OLLAMA_MODELS: /mnt/d/Ollama
-          LV_NETWORK_RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s }}
-          LV_WEEKLY_TARGETS: ${{ github.event.inputs.required_targets }}
+          LV_OLLAMA_ENDPOINT: ${{ steps.smoke_inputs.outputs.endpoint }}
+          OLLAMA_HOST: ${{ steps.smoke_inputs.outputs.endpoint }}
+          LV_NETWORK_RETRY_DELAYS_S: ${{ steps.smoke_inputs.outputs.retry_delays_s }}
+          LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || steps.smoke_inputs.outputs.required_targets }}
         run: |
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-smoke-after.json
 
@@ -100,4 +144,5 @@ jobs:
           path: |
             logs/runner-smoke-before.json
             logs/runner-smoke-after.json
+            logs/weekly-target-plan-smoke.json
 

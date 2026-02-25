@@ -25,6 +25,13 @@ permissions:
   contents: read
   issues: write
 
+env:
+  LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
+  OLLAMA_HOST: http://127.0.0.1:11434
+  OLLAMA_MODELS: /mnt/d/Ollama
+  LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
+  LV_WEEKLY_BASE_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
+
 jobs:
   benchmark-on-3090:
     runs-on: [self-hosted, Linux, X64, gpu, 3090]
@@ -48,27 +55,30 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Resolve weekly targets
+        id: resolve_targets
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          python scripts/resolve-weekly-targets.py \
+            --endpoint "${LV_OLLAMA_ENDPOINT}" \
+            --base-targets "${LV_WEEKLY_BASE_TARGETS}" \
+            --retry-delays "${LV_NETWORK_RETRY_DELAYS_S}" \
+            --output-file "src/data/weekly-target-plan.json" \
+            --github-output "${GITHUB_OUTPUT}"
+
       - name: Runner diagnostics (before preflight)
         if: steps.checkout.conclusion == 'success'
         env:
-          LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
-          OLLAMA_HOST: http://127.0.0.1:11434
-          OLLAMA_MODELS: /mnt/d/Ollama
-          LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
-          LV_WEEKLY_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
+          LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || env.LV_WEEKLY_BASE_TARGETS }}
         run: |
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-diagnostics-before.json
 
       - name: Ollama preflight
         if: steps.checkout.conclusion == 'success'
         env:
-          LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
-          OLLAMA_HOST: http://127.0.0.1:11434
-          OLLAMA_MODELS: /mnt/d/Ollama
-          LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
-          LV_WEEKLY_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
+          LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || env.LV_WEEKLY_BASE_TARGETS }}
         run: |
-          python scripts/ollama-preflight.py --required-targets "${LV_WEEKLY_TARGETS}" --restart-if-empty
+          python scripts/ollama-preflight.py --required-targets "${LV_WEEKLY_TARGETS}" --restart-if-empty --require-local-process
 
       - name: Weekly benchmark
         if: steps.checkout.conclusion == 'success'
@@ -76,11 +86,7 @@ jobs:
           INPUT_INCLUDE_HEAVY: ${{ github.event.inputs.include_heavy_targets }}
           INPUT_EXTRA_TARGETS: ${{ github.event.inputs.extra_targets }}
           INPUT_TIMEOUT_S: ${{ github.event.inputs.benchmark_timeout_s }}
-          LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
-          OLLAMA_HOST: http://127.0.0.1:11434
-          OLLAMA_MODELS: /mnt/d/Ollama
-          LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
-          LV_WEEKLY_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
+          LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || env.LV_WEEKLY_BASE_TARGETS }}
           LV_MIN_SUCCESS_MODELS: "3"
           LV_AUTO_BACKFILL_TARGETS: "true"
           LV_AUTO_BACKFILL_TARGETS_MAX: "6"
@@ -112,22 +118,14 @@ jobs:
       - name: Runner diagnostics snapshot (publish payload)
         if: always() && steps.checkout.conclusion == 'success'
         env:
-          LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
-          OLLAMA_HOST: http://127.0.0.1:11434
-          OLLAMA_MODELS: /mnt/d/Ollama
-          LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
-          LV_WEEKLY_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
+          LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || env.LV_WEEKLY_BASE_TARGETS }}
         run: |
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out src/data/runner-status.json
 
       - name: Runner diagnostics (on failure)
         if: failure() && steps.checkout.conclusion == 'success'
         env:
-          LV_OLLAMA_ENDPOINT: http://127.0.0.1:11434
-          OLLAMA_HOST: http://127.0.0.1:11434
-          OLLAMA_MODELS: /mnt/d/Ollama
-          LV_NETWORK_RETRY_DELAYS_S: "5,10,20"
-          LV_WEEKLY_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
+          LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || env.LV_WEEKLY_BASE_TARGETS }}
         run: |
           python scripts/runner-diagnostics.py --required-targets "${LV_WEEKLY_TARGETS}" --json-out logs/runner-diagnostics-failure.json
 
@@ -188,6 +186,7 @@ jobs:
             src/data/benchmark-changelog.json
             src/data/runner-status.json
             src/data/pipeline-status.json
+            src/data/weekly-target-plan.json
             logs
             public/screenshots
 
