@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-02-24T16:41:44Z",
+  "updated_at": "2026-02-25T08:00:44Z",
   "history_limit": 20,
   "models": {
-    "qwen3:8b": {
-      "tokens_per_second": 122.951,
-      "latency_ms": 1146.0,
-      "prompt_tokens": 31,
+    "deepseek-r1:14b": {
+      "tokens_per_second": 75.704,
+      "latency_ms": 1830.0,
+      "prompt_tokens": 24,
       "eval_tokens": 128,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260224T164144Z-dd051ff.txt",
-      "test_time": "2026-02-24T16:41:44Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260225T080044Z-ede2810.txt",
+      "test_time": "2026-02-25T08:00:44Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -16,11 +16,63 @@
       "run_count": 2,
       "num_ctx": 4096,
       "temperature": 0,
-      "verified_tooltip": "Tested on local RTX 3090, 450W TDP, Ambient 25C"
+      "verified_tooltip": "Tested on local RTX 3090, 450W TDP, Ambient 25C",
+      "source_model_tag": "deepseek-r1:14b"
+    },
+    "qwen2.5:14b": {
+      "tokens_per_second": 78.324,
+      "latency_ms": 789.0,
+      "prompt_tokens": 50,
+      "eval_tokens": 53,
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260225T080044Z-ede2810.txt",
+      "test_time": "2026-02-25T08:00:44Z",
+      "gpu_model": "NVIDIA GeForce RTX 3090",
+      "status": "ok",
+      "error_type": "",
+      "error": "",
+      "run_count": 2,
+      "num_ctx": 4096,
+      "temperature": 0,
+      "verified_tooltip": "Tested on local RTX 3090, 450W TDP, Ambient 25C",
+      "source_model_tag": "qwen2.5:14b"
+    },
+    "qwen3-coder:30b": {
+      "tokens_per_second": 146.745,
+      "latency_ms": 640.0,
+      "prompt_tokens": 29,
+      "eval_tokens": 81,
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260225T080044Z-ede2810.txt",
+      "test_time": "2026-02-25T08:00:44Z",
+      "gpu_model": "NVIDIA GeForce RTX 3090",
+      "status": "ok",
+      "error_type": "",
+      "error": "",
+      "run_count": 2,
+      "num_ctx": 4096,
+      "temperature": 0,
+      "verified_tooltip": "Tested on local RTX 3090, 450W TDP, Ambient 25C",
+      "source_model_tag": "qwen3-coder:30b"
+    },
+    "qwen3:8b": {
+      "tokens_per_second": 126.44,
+      "latency_ms": 1119.0,
+      "prompt_tokens": 31,
+      "eval_tokens": 128,
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260225T080044Z-ede2810.txt",
+      "test_time": "2026-02-25T08:00:44Z",
+      "gpu_model": "NVIDIA GeForce RTX 3090",
+      "status": "ok",
+      "error_type": "",
+      "error": "",
+      "run_count": 2,
+      "num_ctx": 4096,
+      "temperature": 0,
+      "verified_tooltip": "Tested on local RTX 3090, 450W TDP, Ambient 25C",
+      "source_model_tag": "qwen3:8b"
     }
   },
   "latest": {
-    "updated_at": "2026-02-24T16:41:44Z",
+    "updated_at": "2026-02-25T08:00:44Z",
     "runner": {
       "hostname": "Vernon",
       "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
@@ -28,7 +80,7 @@
     },
     "ollama": {
       "endpoint": "http://127.0.x.x:11434",
-      "version": "0.15.6",
+      "version": "0.17.0",
       "available_model_count": 33
     },
     "gpu_before": {
@@ -38,10 +90,10 @@
           "name": "NVIDIA GeForce RTX 3090",
           "driver": "591.74",
           "memory_total_mb": 24576.0,
-          "memory_used_mb": 2213.0,
+          "memory_used_mb": 2048.0,
           "temperature_c": 38.0,
-          "power_w": 116.66,
-          "utilization_pct": 1.0
+          "power_w": 118.11,
+          "utilization_pct": 0.0
         }
       ]
     },
@@ -52,20 +104,14 @@
           "name": "NVIDIA GeForce RTX 3090",
           "driver": "591.74",
           "memory_total_mb": 24576.0,
-          "memory_used_mb": 7894.0,
-          "temperature_c": 46.0,
-          "power_w": 335.64,
-          "utilization_pct": 93.0
+          "memory_used_mb": 20314.0,
+          "temperature_c": 47.0,
+          "power_w": 293.57,
+          "utilization_pct": 80.0
         }
       ]
     },
     "targets": [
-      {
-        "model": "llama3:8b",
-        "num_predict": 128,
-        "num_ctx": 4096,
-        "temperature": 0
-      },
       {
         "model": "qwen3:8b",
         "num_predict": 128,
@@ -73,21 +119,26 @@
         "temperature": 0
       },
       {
-        "model": "deepseek-r1:8b",
+        "model": "deepseek-r1:14b",
         "num_predict": 128,
+        "num_ctx": 4096,
+        "temperature": 0
+      },
+      {
+        "model": "qwen2.5:14b",
+        "num_predict": 128,
+        "num_ctx": 4096,
+        "temperature": 0
+      },
+      {
+        "model": "qwen3-coder:30b",
+        "num_predict": 96,
         "num_ctx": 4096,
         "temperature": 0
       }
     ],
+    "auto_backfill_targets": [],
     "results": [
-      {
-        "model": "llama3:8b",
-        "num_predict": 128,
-        "status": "error",
-        "runs": [],
-        "error": "model not found locally (run `ollama pull` on runner first)",
-        "error_type": "missing_model"
-      },
       {
         "model": "qwen3:8b",
         "num_predict": 128,
@@ -97,55 +148,422 @@
             "model": "qwen3:8b",
             "num_predict": 128,
             "eval_count": 128,
-            "eval_duration_s": 1.035,
+            "eval_duration_s": 1.0117,
             "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 0.0089,
-            "total_duration_s": 1.1445,
-            "wall_duration_s": 1.0502,
-            "tokens_per_s": 123.666,
-            "prompt_tokens_per_s": 3488.045,
+            "prompt_eval_duration_s": 0.009,
+            "total_duration_s": 1.1246,
+            "wall_duration_s": 1.0322,
+            "tokens_per_s": 126.523,
+            "prompt_tokens_per_s": 3443.603,
             "run_index": 1
           },
           {
             "model": "qwen3:8b",
             "num_predict": 128,
             "eval_count": 128,
-            "eval_duration_s": 1.0472,
+            "eval_duration_s": 1.013,
             "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 0.0085,
-            "total_duration_s": 1.1483,
-            "wall_duration_s": 1.0537,
-            "tokens_per_s": 122.235,
-            "prompt_tokens_per_s": 3647.016,
+            "prompt_eval_duration_s": 0.0091,
+            "total_duration_s": 1.1126,
+            "wall_duration_s": 1.021,
+            "tokens_per_s": 126.357,
+            "prompt_tokens_per_s": 3397.558,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 122.951,
-        "tokens_per_s_max": 123.666,
-        "latency_s_avg": 1.146
+        "tokens_per_s_avg": 126.44,
+        "tokens_per_s_max": 126.523,
+        "latency_s_avg": 1.119,
+        "requested_model": "qwen3:8b",
+        "canonical_model": "qwen3:8b"
       },
       {
-        "model": "deepseek-r1:8b",
+        "model": "deepseek-r1:14b",
         "num_predict": 128,
-        "status": "error",
-        "runs": [],
-        "error": "model not found locally (run `ollama pull` on runner first)",
-        "error_type": "missing_model"
+        "status": "ok",
+        "runs": [
+          {
+            "model": "deepseek-r1:14b",
+            "num_predict": 128,
+            "eval_count": 128,
+            "eval_duration_s": 1.6857,
+            "prompt_eval_count": 24,
+            "prompt_eval_duration_s": 0.0135,
+            "total_duration_s": 1.8248,
+            "wall_duration_s": 1.674,
+            "tokens_per_s": 75.932,
+            "prompt_tokens_per_s": 1777.791,
+            "run_index": 1
+          },
+          {
+            "model": "deepseek-r1:14b",
+            "num_predict": 128,
+            "eval_count": 128,
+            "eval_duration_s": 1.6959,
+            "prompt_eval_count": 24,
+            "prompt_eval_duration_s": 0.0125,
+            "total_duration_s": 1.8349,
+            "wall_duration_s": 1.6838,
+            "tokens_per_s": 75.476,
+            "prompt_tokens_per_s": 1920.123,
+            "run_index": 2
+          }
+        ],
+        "error": "",
+        "error_type": "",
+        "tokens_per_s_avg": 75.704,
+        "tokens_per_s_max": 75.932,
+        "latency_s_avg": 1.83,
+        "requested_model": "deepseek-r1:14b",
+        "canonical_model": "deepseek-r1:14b"
+      },
+      {
+        "model": "qwen2.5:14b",
+        "num_predict": 128,
+        "status": "ok",
+        "runs": [
+          {
+            "model": "qwen2.5:14b",
+            "num_predict": 128,
+            "eval_count": 53,
+            "eval_duration_s": 0.6736,
+            "prompt_eval_count": 50,
+            "prompt_eval_duration_s": 0.014,
+            "total_duration_s": 0.7915,
+            "wall_duration_s": 0.7784,
+            "tokens_per_s": 78.68,
+            "prompt_tokens_per_s": 3571.709,
+            "run_index": 1
+          },
+          {
+            "model": "qwen2.5:14b",
+            "num_predict": 128,
+            "eval_count": 53,
+            "eval_duration_s": 0.6798,
+            "prompt_eval_count": 50,
+            "prompt_eval_duration_s": 0.0125,
+            "total_duration_s": 0.7859,
+            "wall_duration_s": 0.7727,
+            "tokens_per_s": 77.968,
+            "prompt_tokens_per_s": 4000.288,
+            "run_index": 2
+          }
+        ],
+        "error": "",
+        "error_type": "",
+        "tokens_per_s_avg": 78.324,
+        "tokens_per_s_max": 78.68,
+        "latency_s_avg": 0.789,
+        "requested_model": "qwen2.5:14b",
+        "canonical_model": "qwen2.5:14b"
+      },
+      {
+        "model": "qwen3-coder:30b",
+        "num_predict": 96,
+        "status": "ok",
+        "runs": [
+          {
+            "model": "qwen3-coder:30b",
+            "num_predict": 96,
+            "eval_count": 81,
+            "eval_duration_s": 0.5524,
+            "prompt_eval_count": 29,
+            "prompt_eval_duration_s": 0.008,
+            "total_duration_s": 0.6418,
+            "wall_duration_s": 0.5897,
+            "tokens_per_s": 146.631,
+            "prompt_tokens_per_s": 3628.447,
+            "run_index": 1
+          },
+          {
+            "model": "qwen3-coder:30b",
+            "num_predict": 96,
+            "eval_count": 81,
+            "eval_duration_s": 0.5515,
+            "prompt_eval_count": 29,
+            "prompt_eval_duration_s": 0.0075,
+            "total_duration_s": 0.6388,
+            "wall_duration_s": 0.587,
+            "tokens_per_s": 146.86,
+            "prompt_tokens_per_s": 3866.873,
+            "run_index": 2
+          }
+        ],
+        "error": "",
+        "error_type": "",
+        "tokens_per_s_avg": 146.745,
+        "tokens_per_s_max": 146.86,
+        "latency_s_avg": 0.64,
+        "requested_model": "qwen3-coder:30b",
+        "canonical_model": "qwen3-coder:30b"
       }
     ],
     "changed_models": [
+      "deepseek-r1:14b",
+      "qwen2.5:14b",
+      "qwen3-coder:30b",
       "qwen3:8b"
     ],
     "significant_tps_delta": 0.5,
     "num_ctx": 4096,
     "temperature": 0,
     "pre_cooldown_s": 5.0,
-    "success_count": 1,
-    "failed_count": 2
+    "success_count": 4,
+    "failed_count": 0,
+    "skipped_count": 0,
+    "runnable_target_count": 4,
+    "min_success_configured": 3,
+    "min_success_required": 3
   },
   "history": [
+    {
+      "updated_at": "2026-02-25T08:00:44Z",
+      "runner": {
+        "hostname": "Vernon",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "python": "3.11.14"
+      },
+      "ollama": {
+        "endpoint": "http://127.0.x.x:11434",
+        "version": "0.17.0",
+        "available_model_count": 33
+      },
+      "gpu_before": {
+        "available": true,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3090",
+            "driver": "591.74",
+            "memory_total_mb": 24576.0,
+            "memory_used_mb": 2048.0,
+            "temperature_c": 38.0,
+            "power_w": 118.11,
+            "utilization_pct": 0.0
+          }
+        ]
+      },
+      "gpu_after": {
+        "available": true,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3090",
+            "driver": "591.74",
+            "memory_total_mb": 24576.0,
+            "memory_used_mb": 20314.0,
+            "temperature_c": 47.0,
+            "power_w": 293.57,
+            "utilization_pct": 80.0
+          }
+        ]
+      },
+      "targets": [
+        {
+          "model": "qwen3:8b",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "deepseek-r1:14b",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwen2.5:14b",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwen3-coder:30b",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        }
+      ],
+      "auto_backfill_targets": [],
+      "results": [
+        {
+          "model": "qwen3:8b",
+          "num_predict": 128,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwen3:8b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.0117,
+              "prompt_eval_count": 31,
+              "prompt_eval_duration_s": 0.009,
+              "total_duration_s": 1.1246,
+              "wall_duration_s": 1.0322,
+              "tokens_per_s": 126.523,
+              "prompt_tokens_per_s": 3443.603,
+              "run_index": 1
+            },
+            {
+              "model": "qwen3:8b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.013,
+              "prompt_eval_count": 31,
+              "prompt_eval_duration_s": 0.0091,
+              "total_duration_s": 1.1126,
+              "wall_duration_s": 1.021,
+              "tokens_per_s": 126.357,
+              "prompt_tokens_per_s": 3397.558,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 126.44,
+          "tokens_per_s_max": 126.523,
+          "latency_s_avg": 1.119,
+          "requested_model": "qwen3:8b",
+          "canonical_model": "qwen3:8b"
+        },
+        {
+          "model": "deepseek-r1:14b",
+          "num_predict": 128,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "deepseek-r1:14b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.6857,
+              "prompt_eval_count": 24,
+              "prompt_eval_duration_s": 0.0135,
+              "total_duration_s": 1.8248,
+              "wall_duration_s": 1.674,
+              "tokens_per_s": 75.932,
+              "prompt_tokens_per_s": 1777.791,
+              "run_index": 1
+            },
+            {
+              "model": "deepseek-r1:14b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.6959,
+              "prompt_eval_count": 24,
+              "prompt_eval_duration_s": 0.0125,
+              "total_duration_s": 1.8349,
+              "wall_duration_s": 1.6838,
+              "tokens_per_s": 75.476,
+              "prompt_tokens_per_s": 1920.123,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 75.704,
+          "tokens_per_s_max": 75.932,
+          "latency_s_avg": 1.83,
+          "requested_model": "deepseek-r1:14b",
+          "canonical_model": "deepseek-r1:14b"
+        },
+        {
+          "model": "qwen2.5:14b",
+          "num_predict": 128,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwen2.5:14b",
+              "num_predict": 128,
+              "eval_count": 53,
+              "eval_duration_s": 0.6736,
+              "prompt_eval_count": 50,
+              "prompt_eval_duration_s": 0.014,
+              "total_duration_s": 0.7915,
+              "wall_duration_s": 0.7784,
+              "tokens_per_s": 78.68,
+              "prompt_tokens_per_s": 3571.709,
+              "run_index": 1
+            },
+            {
+              "model": "qwen2.5:14b",
+              "num_predict": 128,
+              "eval_count": 53,
+              "eval_duration_s": 0.6798,
+              "prompt_eval_count": 50,
+              "prompt_eval_duration_s": 0.0125,
+              "total_duration_s": 0.7859,
+              "wall_duration_s": 0.7727,
+              "tokens_per_s": 77.968,
+              "prompt_tokens_per_s": 4000.288,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 78.324,
+          "tokens_per_s_max": 78.68,
+          "latency_s_avg": 0.789,
+          "requested_model": "qwen2.5:14b",
+          "canonical_model": "qwen2.5:14b"
+        },
+        {
+          "model": "qwen3-coder:30b",
+          "num_predict": 96,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwen3-coder:30b",
+              "num_predict": 96,
+              "eval_count": 81,
+              "eval_duration_s": 0.5524,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.008,
+              "total_duration_s": 0.6418,
+              "wall_duration_s": 0.5897,
+              "tokens_per_s": 146.631,
+              "prompt_tokens_per_s": 3628.447,
+              "run_index": 1
+            },
+            {
+              "model": "qwen3-coder:30b",
+              "num_predict": 96,
+              "eval_count": 81,
+              "eval_duration_s": 0.5515,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.0075,
+              "total_duration_s": 0.6388,
+              "wall_duration_s": 0.587,
+              "tokens_per_s": 146.86,
+              "prompt_tokens_per_s": 3866.873,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 146.745,
+          "tokens_per_s_max": 146.86,
+          "latency_s_avg": 0.64,
+          "requested_model": "qwen3-coder:30b",
+          "canonical_model": "qwen3-coder:30b"
+        }
+      ],
+      "changed_models": [
+        "deepseek-r1:14b",
+        "qwen2.5:14b",
+        "qwen3-coder:30b",
+        "qwen3:8b"
+      ],
+      "significant_tps_delta": 0.5,
+      "num_ctx": 4096,
+      "temperature": 0,
+      "pre_cooldown_s": 5.0,
+      "success_count": 4,
+      "failed_count": 0,
+      "skipped_count": 0,
+      "runnable_target_count": 4,
+      "min_success_configured": 3,
+      "min_success_required": 3
+    },
     {
       "updated_at": "2026-02-24T16:41:44Z",
       "runner": {
