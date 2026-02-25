@@ -70,7 +70,13 @@ jobs:
           SOURCE_RUN_ID: ${{ steps.source.outputs.run_id }}
         run: |
           mkdir -p logs
-          gh run view "${SOURCE_RUN_ID}" --repo "${GITHUB_REPOSITORY}" --json status,conclusion,event,headSha,updatedAt,url > logs/source-run-meta.json
+          if ! gh run view "${SOURCE_RUN_ID}" --repo "${GITHUB_REPOSITORY}" --json status,conclusion,event,headSha,updatedAt,url > logs/source-run-meta.json; then
+            python -c "import json, pathlib, os; rid=os.environ.get('SOURCE_RUN_ID',''); pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'source_run_metadata_failure','failure_detail':f'failed to resolve source run metadata for run {rid}'}, ensure_ascii=False), encoding='utf-8')"
+            echo "failure_class=source_run_metadata_failure"
+            echo "failure_detail=failed to resolve source run metadata for run ${SOURCE_RUN_ID}"
+            echo "::error title=FailureClass::source_run_metadata_failure - failed to resolve source run metadata for run ${SOURCE_RUN_ID}"
+            exit 1
+          fi
           python -c "import json, os, pathlib; meta=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); pairs={'status':str(meta.get('status','')).strip(),'conclusion':str(meta.get('conclusion','')).strip(),'event':str(meta.get('event','')).strip(),'head_sha':str(meta.get('headSha','')).strip(),'updated_at':str(meta.get('updatedAt','')).strip(),'run_url':str(meta.get('url','')).strip()}; out=os.environ['GITHUB_OUTPUT']; f=open(out,'a',encoding='utf-8'); [f.write(f'{k}={v}\\n') for k,v in pairs.items()]; f.close()"
 
       - name: Download benchmark collection artifact
