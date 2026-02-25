@@ -1,5 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import runnerStatus from "../../data/runner-status.json";
+import statusReport from "../../data/status.json";
+
+const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
+const lastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
 ---
 
 <BaseLayout
@@ -12,8 +17,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      RTX 3090: Stable @ 62C | DeepSeek-R1: Verified | Ollama: 0.5.7 | Last
-      Sync: 42m ago
+      RTX 3090: Stable @ 62C | DeepSeek-R1: Verified | Ollama: {ollamaVersion} | Last
+      Sync: {lastSync}
     </div>
     <a class="mode-btn" href="/en/status/data-freshness/">Terminal Mode</a>
   </header>
