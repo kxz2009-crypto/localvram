@@ -1,6 +1,9 @@
 {
-  "updated_at": "2026-02-25T00:00:00Z",
+  "updated_at": "2026-02-25T22:00:00Z",
   "retired_families": [],
-  "retired_tags": [],
-  "notes": "Add family ids (e.g. qwen2) or full tags (e.g. qwen2:7b) to retire old models from weekly targets and auto-backfill."
+  "retired_tags": [
+    "llama3:8b",
+    "deepseek-r1:8b"
+  ],
+  "notes": "Add family ids (e.g. qwen2) or full tags (e.g. qwen2:7b) to retire old models from weekly targets and auto-backfill. Current batch retires legacy benchmark tags."
 }

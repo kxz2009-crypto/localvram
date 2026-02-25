@@ -2169,33 +2169,13 @@
       },
       "targets": [
         {
-          "model": "llama3:8b",
-          "num_predict": 128,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
           "model": "qwen3:8b",
-          "num_predict": 128,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
-          "model": "deepseek-r1:8b",
           "num_predict": 128,
           "num_ctx": 4096,
           "temperature": 0
         }
       ],
       "results": [
-        {
-          "model": "llama3:8b",
-          "num_predict": 128,
-          "status": "error",
-          "runs": [],
-          "error": "model not found locally (run `ollama pull` on runner first)",
-          "error_type": "missing_model"
-        },
         {
           "model": "qwen3:8b",
           "num_predict": 128,
@@ -2233,14 +2213,6 @@
           "tokens_per_s_avg": 122.951,
           "tokens_per_s_max": 123.666,
           "latency_s_avg": 1.146
-        },
-        {
-          "model": "deepseek-r1:8b",
-          "num_predict": 128,
-          "status": "error",
-          "runs": [],
-          "error": "model not found locally (run `ollama pull` on runner first)",
-          "error_type": "missing_model"
         }
       ],
       "changed_models": [
