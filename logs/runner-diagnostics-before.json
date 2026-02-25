@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-25T16:22:10Z",
+  "updated_at": "2026-02-25T16:20:31Z",
   "endpoint": "http://127.0.0.1:11434",
   "required_targets": [
     "qwen3",
@@ -58,7 +58,7 @@
   "checks": {
     "port_listeners": "no listeners on :11434",
     "ps_ollama": [
-      "gao20      55035   54953  0 Feb25 pts/0    00:00:08 curl --fail --show-error --location --progress-bar https://ollama.com/download/ollama-linux-amd64.tar.zst"
+      "gao20      55035   54953  0 Feb25 pts/0    00:00:07 curl --fail --show-error --location --progress-bar https://ollama.com/download/ollama-linux-amd64.tar.zst"
     ],
     "SYSTEMD_OLLAMA_IS_ACTIVE": {
       "exit": 3,
@@ -67,7 +67,7 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 3,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n     Active: activating (auto-restart) (Result: exit-code) since Thu 2026-02-26 00:22:10 CST; 501ms ago\n    Process: 65232 ExecStart=/usr/local/bin/ollama serve (code=exited, status=1/FAILURE)\n   Main PID: 65232 (code=exited, status=1/FAILURE)\n        CPU: 13ms",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n     Active: activating (auto-restart) (Result: exit-code) since Thu 2026-02-26 00:20:29 CST; 1s ago\n    Process: 64777 ExecStart=/usr/local/bin/ollama serve (code=exited, status=1/FAILURE)\n   Main PID: 64777 (code=exited, status=1/FAILURE)\n        CPU: 15ms",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
