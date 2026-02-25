@@ -167,6 +167,16 @@ jobs:
             exit 1
           fi
 
+      - name: Prune retired benchmark data
+        run: |
+          if ! python scripts/prune-retired-benchmark-data.py --report-file logs/retired-prune-report.json; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'retired_data_prune_failure','failure_detail':'failed to prune retired models from benchmark-results payload'}, ensure_ascii=False), encoding='utf-8')"
+            echo "failure_class=retired_data_prune_failure"
+            echo "failure_detail=failed to prune retired models from benchmark-results payload"
+            echo "::error title=FailureClass::retired_data_prune_failure - failed to prune retired models from benchmark-results payload"
+            exit 1
+          fi
+
       - name: Update pipeline status (weekly source)
         run: |
           python scripts/update-pipeline-status.py \

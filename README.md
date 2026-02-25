@@ -65,6 +65,7 @@ npm run dev
 - `python scripts/weekly-benchmark.py`
 - `python scripts/resolve-weekly-targets.py`
 - `python scripts/ollama-preflight.py`
+- `python scripts/prune-retired-benchmark-data.py`
 - `python scripts/runner-diagnostics.py`
 - `python scripts/validate-benchmark-artifact.py --source-dir <artifact-dir>`
 - `python scripts/update-pipeline-status.py --workflow-key <key> --run-id <id> --run-url <url>`
@@ -104,7 +105,7 @@ Self-hosted runner preflight:
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
 - Single-instance governance checks classify runner-side ownership problems: `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`.
-- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `artifact_download_rate_limited`, `publish_push_rate_limited`.
+- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`.
 - Failure alerts: `Weekly Benchmark` and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
 - Recovery handling: when workflow returns to success, open `[OPS-ALERT]` issues for that workflow are auto-commented and closed.
 - Model retirement: update `src/data/retired-models.json` to phase out old families/tags so they stop entering weekly targets and auto-backfill.
@@ -121,6 +122,7 @@ Weekly collect/publish split:
 - `Weekly Benchmark` now runs only on self-hosted runner and uploads a `benchmark-collection` artifact.
 - Weekly target resolver writes `src/data/weekly-target-plan.json` and includes it in the benchmark artifact/publish sync.
 - Weekly target plan records retirement impact (`dropped_base_targets`, retired local sample) for auditability.
+- Publish workflow prunes retired models from `src/data/benchmark-results.json` before catalog/sitemap build.
 - Weekly benchmark schedule: `02:10 UTC every Wednesday` (US Tuesday evening window).
 - `Publish Benchmark Artifact` (workflow_run/manual) downloads that artifact, validates JSON payloads, rebuilds catalog/sitemap, and pushes with retry backoff (`5,10,20` default) + 429-aware wait (`rate_limit_delay_s`, default `60`) + jitter.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
