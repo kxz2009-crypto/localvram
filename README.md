@@ -92,6 +92,7 @@ Self-hosted runner preflight:
 - `python scripts/ollama-preflight.py --required-targets "$LV_WEEKLY_TARGETS"`
 - Validates `/api/tags` visibility before benchmark starts.
 - Fails fast when no models or no runnable required targets are detected.
+- In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
 
 Cluster benchmark (`scripts/cluster-benchmark.py`):
 

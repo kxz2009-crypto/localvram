@@ -43,7 +43,7 @@ jobs:
           OLLAMA_MODELS: /mnt/d/Ollama
           LV_WEEKLY_TARGETS: qwen3:8b=128,deepseek-r1:14b=128,qwen2.5:14b=128,qwen3-coder:30b=96,qwen3.5:35b=96
         run: |
-          python scripts/ollama-preflight.py --required-targets "${LV_WEEKLY_TARGETS}"
+          python scripts/ollama-preflight.py --required-targets "${LV_WEEKLY_TARGETS}" --restart-if-empty
 
       - name: Weekly benchmark
         env:

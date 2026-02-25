@@ -2,6 +2,9 @@
 import argparse
 import json
 import os
+import subprocess
+import tempfile
+import time
 import urllib.error
 import urllib.request
 
@@ -51,6 +54,33 @@ def fetch_local_models(endpoint: str) -> set[str]:
     return names
 
 
+def start_ollama_service(endpoint: str) -> None:
+    env = dict(os.environ)
+    env.setdefault("OLLAMA_HOST", endpoint)
+    log_path = os.getenv("LV_OLLAMA_SERVE_LOG") or (
+        "/tmp/ollama-serve.log" if os.name != "nt" else os.path.join(tempfile.gettempdir(), "ollama-serve.log")
+    )
+    try:
+        subprocess.run(["pkill", "-f", "ollama serve"], check=False)
+    except Exception:
+        pass
+    with open(log_path, "ab") as logf:
+        subprocess.Popen(["ollama", "serve"], stdout=logf, stderr=logf, env=env)  # noqa: S603
+
+
+def fetch_local_models_with_retry(endpoint: str, retries: int = 20, sleep_s: float = 1.0) -> set[str]:
+    last_error: Exception | None = None
+    for _ in range(max(1, retries)):
+        try:
+            return fetch_local_models(endpoint)
+        except Exception as exc:  # noqa: BLE001
+            last_error = exc
+            time.sleep(max(0.0, sleep_s))
+    if last_error is None:
+        return set()
+    raise last_error
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate Ollama endpoint/model visibility before benchmark.")
     parser.add_argument(
@@ -60,6 +90,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--required-targets", default=os.getenv("LV_WEEKLY_TARGETS", ""))
     parser.add_argument("--allow-empty-models", action="store_true")
     parser.add_argument("--allow-no-runnable-targets", action="store_true")
+    parser.add_argument("--restart-if-empty", action="store_true")
     return parser.parse_args()
 
 
@@ -76,6 +107,14 @@ def main() -> None:
         raise SystemExit(f"failed to connect to Ollama endpoint: {exc}") from exc
     except urllib.error.HTTPError as exc:
         raise SystemExit(f"Ollama endpoint returned HTTP {exc.code}: {exc.reason}") from exc
+
+    if args.restart_if_empty and len(local_models) == 0:
+        print("ollama_models_count=0, attempting service restart")
+        start_ollama_service(endpoint)
+        try:
+            local_models = fetch_local_models_with_retry(endpoint, retries=25, sleep_s=1.0)
+        except Exception as exc:  # noqa: BLE001
+            raise SystemExit(f"failed to recover Ollama service after restart: {exc}") from exc
 
     local_models_sorted = sorted(local_models)
     print(f"ollama_models_count={len(local_models_sorted)}")
@@ -99,4 +138,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
