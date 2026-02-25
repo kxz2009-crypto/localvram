@@ -68,16 +68,22 @@ def start_ollama_service(endpoint: str) -> None:
         subprocess.Popen(["ollama", "serve"], stdout=logf, stderr=logf, env=env)  # noqa: S603
 
 
-def fetch_local_models_with_retry(endpoint: str, retries: int = 20, sleep_s: float = 1.0) -> set[str]:
+def fetch_local_models_with_retry(
+    endpoint: str, retries: int = 20, sleep_s: float = 1.0, require_non_empty: bool = False
+) -> set[str]:
     last_error: Exception | None = None
+    last_models: set[str] = set()
     for _ in range(max(1, retries)):
         try:
-            return fetch_local_models(endpoint)
+            models = fetch_local_models(endpoint)
+            last_models = models
+            if not require_non_empty or models:
+                return models
         except Exception as exc:  # noqa: BLE001
             last_error = exc
-            time.sleep(max(0.0, sleep_s))
+        time.sleep(max(0.0, sleep_s))
     if last_error is None:
-        return set()
+        return last_models
     raise last_error
 
 
@@ -112,7 +118,7 @@ def main() -> None:
         print("ollama_models_count=0, attempting service restart")
         start_ollama_service(endpoint)
         try:
-            local_models = fetch_local_models_with_retry(endpoint, retries=25, sleep_s=1.0)
+            local_models = fetch_local_models_with_retry(endpoint, retries=25, sleep_s=1.0, require_non_empty=True)
         except Exception as exc:  # noqa: BLE001
             raise SystemExit(f"failed to recover Ollama service after restart: {exc}") from exc
 
