@@ -5,7 +5,7 @@ keyword: "q4 vs q8 quality ollama"
 score: 137
 source: search_console
 status: rejected_manual
-reviewed_at: "2026-02-26T08:11:09.025157Z"
+reviewed_at: "2026-02-26T08:17:17.634097Z"
 risk_flags: missing_affiliate_disclosure,existing_blog_slug,near_duplicate_published
 reviewed_by: ops
 review_action: reject

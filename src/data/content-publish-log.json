@@ -1,8 +1,8 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-02-26T08:11:22.219444Z",
+  "updated_at": "2026-02-26T08:17:17.529430Z",
   "last_run": {
-    "run_at": "2026-02-26T08:11:22.219444Z",
+    "run_at": "2026-02-26T08:17:17.529430Z",
     "queue_date": "2026-02-26",
     "candidate_count": 0,
     "published_count": 0,
@@ -11,6 +11,33 @@
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-02-26T08:17:17.529430Z",
+      "queue_date": "2026-02-26",
+      "candidate_count": 0,
+      "published_count": 0,
+      "skipped_count": 0,
+      "published": [],
+      "skipped": []
+    },
+    {
+      "run_at": "2026-02-26T08:16:15.037718Z",
+      "queue_date": "2026-02-26",
+      "candidate_count": 2,
+      "published_count": 0,
+      "skipped_count": 2,
+      "published": [],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-02-26/01-q4-vs-q8-quality-loss.md",
+          "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
+        },
+        {
+          "draft": "content-queue/2026-02-26/02-ollama-local-cluster-network.md",
+          "reason": "similar_slug:ollama-local-cluster-network-checklist"
+        }
+      ]
+    },
     {
       "run_at": "2026-02-26T08:11:22.219444Z",
       "queue_date": "2026-02-26",
