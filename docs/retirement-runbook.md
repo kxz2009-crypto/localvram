@@ -19,7 +19,7 @@ This runbook covers the model retirement lifecycle in LocalVRAM:
 Workflow: `Publish Benchmark Artifact`  
 Manual dispatch inputs:
 
-- `source_run_id` (required in manual mode)
+- `source_run_id` (optional if using `scripts/run-publish-workflow.py`; script auto-resolves latest successful weekly run)
 - `apply_retirement_candidates` (`true`/`false`, default `false`)
 - `retirement_min_stale_runs` (default `3`)
 - `retirement_max_seen_ok_count` (default `2`)
@@ -34,41 +34,38 @@ Recommended default: start with `apply_retirement_candidates=false` for review-f
 4. If proposal is acceptable, trigger publish with `apply_retirement_candidates=true`.
 5. Verify `retired-models.json`, `benchmark-results.json`, and website status pages.
 
-## Commands (PowerShell + gh)
+## Commands (PowerShell + script wrapper)
 
 Review-only run:
 
 ```powershell
-& "C:\Program Files\GitHub CLI\gh.exe" workflow run "Publish Benchmark Artifact" `
-  -R kxz2009-crypto/localvram `
-  -f source_run_id=22405601903 `
-  -f apply_retirement_candidates=false `
-  -f retirement_min_stale_runs=3 `
-  -f retirement_max_seen_ok_count=2
+python scripts/run-publish-workflow.py `
+  --gh-path "C:\Program Files\GitHub CLI\gh.exe" `
+  --repo kxz2009-crypto/localvram `
+  --apply-retirement-candidates false `
+  --retirement-min-stale-runs 3 `
+  --retirement-max-seen-ok-count 2
 ```
 
 Apply run:
 
 ```powershell
-& "C:\Program Files\GitHub CLI\gh.exe" workflow run "Publish Benchmark Artifact" `
-  -R kxz2009-crypto/localvram `
-  -f source_run_id=22405601903 `
-  -f apply_retirement_candidates=true `
-  -f retirement_min_stale_runs=3 `
-  -f retirement_max_seen_ok_count=2
+python scripts/run-publish-workflow.py `
+  --gh-path "C:\Program Files\GitHub CLI\gh.exe" `
+  --repo kxz2009-crypto/localvram `
+  --apply-retirement-candidates true `
+  --retirement-min-stale-runs 3 `
+  --retirement-max-seen-ok-count 2
 ```
 
-Watch latest run:
+Pin a specific source run (optional):
 
 ```powershell
-& "C:\Program Files\GitHub CLI\gh.exe" run list `
-  -R kxz2009-crypto/localvram `
-  --workflow "Publish Benchmark Artifact" `
-  --limit 1
-
-& "C:\Program Files\GitHub CLI\gh.exe" run watch <RUN_ID> `
-  -R kxz2009-crypto/localvram `
-  --exit-status
+python scripts/run-publish-workflow.py `
+  --gh-path "C:\Program Files\GitHub CLI\gh.exe" `
+  --repo kxz2009-crypto/localvram `
+  --source-run-id 22405601903 `
+  --apply-retirement-candidates false
 ```
 
 ## Validation Checklist

@@ -100,6 +100,7 @@ npm run dev
 - `python scripts/report-data-freshness.py`
 - `python scripts/score-user-submission.py`
 - `python scripts/review-community-submissions.py --submission-ids <id1,id2> --action approve|reject|needs_info`
+- `python scripts/run-publish-workflow.py --gh-path "<gh.exe path>"`
 
 ## Benchmark Runtime Controls
 
@@ -162,6 +163,7 @@ Weekly collect/publish split:
 - Invalid/manual `source_run_id` is guarded: publish now verifies source run is `Weekly Benchmark` + `completed/success`, and auto-falls back to latest successful weekly run when needed.
 - Publish workflow performs a follow-up lightweight commit for `src/data/pipeline-status.json` so the publish run conclusion is persisted even when the main publish commit has already been pushed.
 - Drill workflow: `Publish Fallback Drill` (manual) dispatches publish with invalid `source_run_id` and asserts fallback evidence in logs.
+- Recommended manual dispatch wrapper: `scripts/run-publish-workflow.py` (auto-resolves latest successful weekly run ID, dispatches publish with retry, and watches run result).
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 - Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).
