@@ -4,8 +4,32 @@ import catalog from "../../../data/model-catalog.json";
 import links from "../../../data/affiliate-links.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
 
-const sampleModels = catalog.items.slice(0, 120);
+const allModels = Array.isArray(catalog.items) ? catalog.items : [];
 const benchmarkMap = benchmarkResults.models || {};
+const priorityTag = "qwen3.5:35b";
+const sampleModels = [...allModels].sort((a, b) => {
+  const aTag = String(a?.ollama_tag || "");
+  const bTag = String(b?.ollama_tag || "");
+  const aPriority = aTag === priorityTag ? 0 : 1;
+  const bPriority = bTag === priorityTag ? 0 : 1;
+  if (aPriority !== bPriority) {
+    return aPriority - bPriority;
+  }
+
+  const aMeasured = aTag && benchmarkMap[aTag]?.status === "ok" ? 0 : 1;
+  const bMeasured = bTag && benchmarkMap[bTag]?.status === "ok" ? 0 : 1;
+  if (aMeasured !== bMeasured) {
+    return aMeasured - bMeasured;
+  }
+
+  const aUpdated = Date.parse(String(a?.updated_at || "")) || 0;
+  const bUpdated = Date.parse(String(b?.updated_at || "")) || 0;
+  if (aUpdated !== bUpdated) {
+    return bUpdated - aUpdated;
+  }
+
+  return String(a?.name || "").localeCompare(String(b?.name || ""));
+});
 const firstMeasuredModel = sampleModels.find((item) => {
   if (!item.ollama_tag) {
     return false;
@@ -13,7 +37,10 @@ const firstMeasuredModel = sampleModels.find((item) => {
   const data = benchmarkMap[item.ollama_tag];
   return data && data.status === "ok" && typeof data.tokens_per_second === "number";
 });
-const defaultModelId = firstMeasuredModel?.id || sampleModels[0]?.id || "";
+const pinnedModelId =
+  sampleModels.find((item) => String(item?.ollama_tag || "") === priorityTag && String(item?.quantization || "") === "Q4")
+    ?.id || "";
+const defaultModelId = pinnedModelId || firstMeasuredModel?.id || sampleModels[0]?.id || "";
 const calculatorPath = "/en/tools/vram-calculator/";
 const calculatorUrl = `https://localvram.com${calculatorPath}`;
 const softwareSchema = {
