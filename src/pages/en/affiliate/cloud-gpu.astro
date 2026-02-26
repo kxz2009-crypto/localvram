@@ -2,12 +2,38 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import providers from "../../../data/cloud-gpu.json";
 import links from "../../../data/affiliate-links.json";
+
+const pagePath = "/en/affiliate/cloud-gpu/";
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Which cloud GPU is best when local VRAM is insufficient?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Choose a provider with enough VRAM for your model size and predictable hourly pricing."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Can I keep local inference and only burst to cloud?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. A hybrid local-first workflow is often the best trade-off for cost and flexibility."
+      }
+    }
+  ]
+};
 ---
 
 <BaseLayout
   title="Best Cloud GPU for Ollama | LocalVRAM"
   description="Compare cloud GPU options for Ollama workloads."
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={faqSchema}
 >
   <main class="container">
     <h1>Best Cloud GPU for Ollama (2026)</h1>

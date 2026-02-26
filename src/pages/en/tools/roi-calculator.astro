@@ -1,8 +1,49 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const pagePath = "/en/tools/roi-calculator/";
+const pageUrl = `https://localvram.com${pagePath}`;
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "LocalVRAM ROI Calculator",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Web",
+  url: pageUrl,
+  inLanguage: "en",
+  description: "Compare local electricity cost vs cloud GPU hourly pricing for LLM inference."
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "When should I run local instead of cloud?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "If sustained monthly usage is high and your model fits local VRAM, local deployment is usually cheaper over time."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "When should I burst to cloud?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Use cloud when your target model exceeds local VRAM or when short-term high-throughput capacity is needed."
+      }
+    }
+  ]
+};
 ---
 
-<BaseLayout title="ROI Calculator | LocalVRAM" locale="en">
+<BaseLayout
+  title="ROI Calculator | LocalVRAM"
+  description="Compare local power cost and cloud GPU cost for practical run-vs-rent decisions."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={[softwareSchema, faqSchema]}
+>
   <main class="container">
     <h1>ROI Calculator</h1>
     <p>

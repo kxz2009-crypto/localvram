@@ -6,12 +6,29 @@ import benchmarkResults from "../../../data/benchmark-results.json";
 const benchmarkMap = benchmarkResults.models || {};
 const measuredCount = Object.values(benchmarkMap).filter((item) => item?.status === "ok").length;
 const latestMeasuredAt = benchmarkResults.updated_at || changelog.updated_at || "";
+const pagePath = "/en/benchmarks/changelog/";
+const pageUrl = `https://localvram.com${pagePath}`;
+const datasetSchema = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: "LocalVRAM Benchmark Changelog",
+  description: "Date-stamped benchmark updates with environment details and measurable result deltas.",
+  url: pageUrl,
+  inLanguage: "en",
+  dateModified: latestMeasuredAt || changelog.updated_at,
+  creator: {
+    "@type": "Organization",
+    name: "LocalVRAM"
+  }
+};
 ---
 
 <BaseLayout
   title="Benchmark Changelog | LocalVRAM"
   description="Date-stamped benchmark updates with environment details and measurable result changes."
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={datasetSchema}
 >
   <main class="container">
     <h1>Benchmark Changelog</h1>

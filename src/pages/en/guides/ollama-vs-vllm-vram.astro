@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const pagePath = "/en/guides/ollama-vs-vllm-vram/";
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ollama vs vLLM VRAM Usage: Practical Comparison",
+  description: "Compare memory behavior, deployment overhead, and local workflow trade-offs between Ollama and vLLM.",
+  inLanguage: "en",
+  url: `https://localvram.com${pagePath}`,
+  author: {
+    "@type": "Organization",
+    name: "LocalVRAM"
+  }
+};
+---
+
+<BaseLayout
+  title="Ollama vs vLLM VRAM Usage | LocalVRAM"
+  description="Practical VRAM and workflow comparison between Ollama and vLLM."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={articleSchema}
+>
+  <main class="container">
+    <h1>Ollama vs vLLM: VRAM and Workflow Trade-offs</h1>
+    <p>
+      This comparison focuses on operator-level decisions: memory planning, setup complexity, and where each
+      runtime fits best in local-first workflows.
+    </p>
+
+    <section class="card">
+      <h2>Quick comparison</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Ollama</th>
+            <th>vLLM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Setup speed</td>
+            <td>Fast, local-user friendly</td>
+            <td>Higher initial setup complexity</td>
+          </tr>
+          <tr>
+            <td>Memory planning</td>
+            <td>Tag and quantization driven</td>
+            <td>Batching and serving config sensitive</td>
+          </tr>
+          <tr>
+            <td>Best fit</td>
+            <td>Single-node local deployment</td>
+            <td>High-throughput serving workloads</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href="/en/tools/vram-calculator/">Plan with VRAM Calculator</a>
+      <a class="btn" href="/en/models/">Open model catalog</a>
+    </section>
+  </main>
+</BaseLayout>
+

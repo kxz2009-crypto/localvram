@@ -1,12 +1,38 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import errorData from "../../../data/errors.json";
+
+const pagePath = "/en/errors/";
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How should I use Error KB?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Find the matching error signature, copy the recommended terminal fix, and run the shortest validated workflow."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Are fixes based on real local deployments?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Error KB entries are mapped to LocalVRAM benchmark and runner operations context."
+      }
+    }
+  ]
+};
 ---
 
 <BaseLayout
   title="Ollama Error KB | LocalVRAM"
   description="Terminal-first Ollama troubleshooting knowledge base."
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={faqSchema}
 >
   <main class="container">
     <h1>Error KB</h1>

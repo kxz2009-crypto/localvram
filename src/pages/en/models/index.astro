@@ -16,12 +16,26 @@ const q5ByTag = new Map(
 const top20Curated = items
   .filter((item) => item.is_top20_curated && item.quantization === "Q4")
   .sort((a, b) => (a.top20_rank ?? 999) - (b.top20_rank ?? 999));
+const modelsIndexSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "LocalVRAM Model Catalog",
+  url: "https://localvram.com/en/models/",
+  inLanguage: "en",
+  description: "Model catalog with VRAM requirements and local/cloud benchmark references.",
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: catalog.count
+  }
+};
 ---
 
 <BaseLayout
   title={`Model Catalog (${catalog.count}) | LocalVRAM`}
   description="200+ model profiles with VRAM requirements, local/cloud recommendations, and verified benchmark signals."
   locale="en"
+  canonicalPath="/en/models/"
+  structuredData={modelsIndexSchema}
 >
   <main class="container">
     <h1>Model Catalog ({catalog.count} profiles)</h1>

@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pagePath = "/404/";
+---
+
+<BaseLayout
+  title="Page Not Found | LocalVRAM"
+  description="The page could not be found. Continue with model search and VRAM tools."
+  locale="en"
+  canonicalPath={pagePath}
+  noindex={true}
+>
+  <main class="container">
+    <h1>404 - Page Not Found</h1>
+    <p>The page may have moved or the link is outdated.</p>
+    <section class="cta-row">
+      <a class="btn btn-primary" href="/en/models/">Open Model Catalog</a>
+      <a class="btn" href="/en/tools/vram-calculator/">Use VRAM Calculator</a>
+      <a class="btn" href="/en/status/data-freshness/">Check latest data</a>
+    </section>
+  </main>
+</BaseLayout>
+

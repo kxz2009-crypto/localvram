@@ -14,9 +14,68 @@ const firstMeasuredModel = sampleModels.find((item) => {
   return data && data.status === "ok" && typeof data.tokens_per_second === "number";
 });
 const defaultModelId = firstMeasuredModel?.id || sampleModels[0]?.id || "";
+const calculatorPath = "/en/tools/vram-calculator/";
+const calculatorUrl = `https://localvram.com${calculatorPath}`;
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "LocalVRAM VRAM Calculator",
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Web",
+  url: calculatorUrl,
+  inLanguage: "en",
+  description: "Estimate minimum and optimal VRAM for local LLM models with local-vs-cloud recommendation."
+};
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to estimate VRAM for an Ollama model",
+  description: "Use LocalVRAM calculator to estimate minimum and optimal VRAM before deployment.",
+  step: [
+    { "@type": "HowToStep", name: "Choose model", text: "Select a model profile from the dropdown." },
+    { "@type": "HowToStep", name: "Review VRAM", text: "Check minimum and optimal VRAM requirements." },
+    { "@type": "HowToStep", name: "Decide local or cloud", text: "Use hardware upgrade or cloud fallback recommendation." }
+  ]
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What does minimum VRAM mean?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Minimum VRAM is the lower bound for loading and running a profile with conservative settings."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "What does optimal VRAM mean?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Optimal VRAM is the recommended target for stable throughput and lower latency under sustained load."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Are calculator values always measured?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Measured values are clearly marked as verified. Unverified profiles use estimated baseline anchors."
+      }
+    }
+  ]
+};
 ---
 
-<BaseLayout title="VRAM Calculator | LocalVRAM" locale="en">
+<BaseLayout
+  title="VRAM Calculator | LocalVRAM"
+  description="Estimate LLM VRAM requirements and choose local GPU upgrade vs cloud fallback."
+  locale="en"
+  canonicalPath={calculatorPath}
+  structuredData={[softwareSchema, howToSchema, faqSchema]}
+>
   <main class="container">
     <h1>VRAM Calculator</h1>
     <p>Pick a model profile to get minimum VRAM, optimal VRAM, and local-vs-cloud recommendation.</p>

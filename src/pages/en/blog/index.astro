@@ -4,12 +4,22 @@ import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog", ({ data }) => data.lang === "en"))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const blogIndexSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "LocalVRAM Blog",
+  url: "https://localvram.com/en/blog/",
+  inLanguage: "en",
+  description: "Daily-updated local LLM benchmarks, fixes, and hardware guides."
+};
 ---
 
 <BaseLayout
   title="LocalVRAM Blog"
   description="Daily-updated local LLM benchmarks, fixes, and hardware guides."
   locale="en"
+  canonicalPath="/en/blog/"
+  structuredData={blogIndexSchema}
 >
   <main class="container">
     <h1>LocalVRAM Blog</h1>

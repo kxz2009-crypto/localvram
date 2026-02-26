@@ -1,12 +1,15 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import links from "../../../data/affiliate-links.json";
+
+const pagePath = "/en/affiliate/hardware-upgrade/";
 ---
 
 <BaseLayout
   title="Hardware Upgrade Simulator | LocalVRAM"
   description="See practical GPU upgrade paths for local Ollama workloads."
   locale="en"
+  canonicalPath={pagePath}
 >
   <main class="container">
     <h1>Hardware Upgrade Simulator</h1>

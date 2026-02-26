@@ -1,17 +1,49 @@
 ---
 import "../styles/global.css";
 
+type AlternateLink = {
+  hrefLang: string;
+  href: string;
+};
+
 interface Props {
   title?: string;
   description?: string;
   locale?: "en" | "zh";
+  canonicalPath?: string;
+  alternates?: AlternateLink[];
+  noindex?: boolean;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title = "LocalVRAM",
   description = "Ollama compatibility and benchmark hub.",
-  locale = "en"
+  locale = "en",
+  canonicalPath,
+  alternates = [],
+  noindex = false,
+  ogImage = "/og/default-og.svg",
+  ogType = "website",
+  publishedTime,
+  modifiedTime,
+  structuredData
 } = Astro.props as Props;
+
+const SITE_URL = "https://localvram.com";
+const path = canonicalPath || Astro.url.pathname || "/";
+const canonicalUrl = new URL(path, SITE_URL).toString();
+const ogImageUrl = new URL(ogImage, SITE_URL).toString();
+const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
+const jsonLdList = Array.isArray(structuredData)
+  ? structuredData
+  : structuredData
+    ? [structuredData]
+    : [];
 ---
 
 <!doctype html>
@@ -21,20 +53,34 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={robotsContent} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="canonical" href={`https://localvram.com${Astro.url.pathname}`} />
-    <link rel="alternate" hrefLang="en" href={`https://localvram.com/en${Astro.url.pathname.replace(/^\/(en|zh)/, "")}`} />
-    <link rel="alternate" hrefLang="zh" href={`https://localvram.com/zh${Astro.url.pathname.replace(/^\/(en|zh)/, "")}`} />
+    <link rel="canonical" href={canonicalUrl} />
+    {alternates.map((item) => (
+      <link rel="alternate" hrefLang={item.hrefLang} href={item.href} />
+    ))}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={`https://localvram.com${Astro.url.pathname}`} />
-    <meta property="og:image" content="https://localvram.com/og/default-og.svg" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content="LocalVRAM" />
+    <meta property="og:locale" content={locale === "zh" ? "zh_CN" : "en_US"} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {jsonLdList.map((item) => (
+      <script type="application/ld+json" set:html={JSON.stringify(item)} />
+    ))}
   </head>
   <body>
     <slot />
     <footer class="legal-footer">
       <a class="legal-mini-link" href="/legal/">Affiliate Disclosure &amp; Privacy Policy</a>
+      <a class="legal-mini-link" href="/en/about/methodology/">Methodology</a>
       <p class="legal-copyright">© 2026 localVRAM.com | All Rights Reserved.</p>
     </footer>
   </body>

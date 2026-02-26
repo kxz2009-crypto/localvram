@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const pagePath = "/en/hardware/apple-silicon-llm-guide/";
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Can Apple Silicon unified memory run local LLMs?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Apple Silicon can run local LLM workloads using unified memory, but model size and context length must be planned carefully."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Is unified memory equivalent to discrete GPU VRAM?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Not exactly. Unified memory is shared by CPU and GPU, so practical available memory for inference can be lower than headline capacity."
+      }
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="Apple Silicon LLM Guide | LocalVRAM"
+  description="Practical guidance for running local LLMs on Apple Silicon unified memory."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={faqSchema}
+>
+  <main class="container">
+    <h1>Apple Silicon LLM Guide</h1>
+    <p>
+      This guide is the foundation for upcoming Apple Silicon support in LocalVRAM calculators.
+      It covers planning assumptions for unified memory based local inference.
+    </p>
+
+    <section class="card">
+      <h2>Planning Rules</h2>
+      <ul>
+        <li>Treat unified memory as a shared pool: reserve headroom for OS and other tasks.</li>
+        <li>Prefer conservative quantization for larger models when memory margin is tight.</li>
+        <li>Validate with sustained-load checks, not only short single prompts.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>What comes next</h2>
+      <p>
+        LocalVRAM will add dedicated Apple Silicon presets to calculator workflows so you can compare
+        unified-memory planning with discrete VRAM planning in one place.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+

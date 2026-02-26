@@ -7,6 +7,7 @@ import tiers from "../../../data/hardware-tiers.json";
   title="Hardware Tiers | LocalVRAM"
   description="Pick Ollama models by available VRAM tier."
   locale="en"
+  canonicalPath="/en/hardware/"
 >
   <main class="container">
     <h1>Hardware VRAM Tiers</h1>
@@ -20,6 +21,13 @@ import tiers from "../../../data/hardware-tiers.json";
           </a>
         </article>
       ))}
+      <article class="card">
+        <h2>Apple Silicon</h2>
+        <p>Unified memory planning guide for local LLM inference on M-series devices.</p>
+        <a class="btn btn-primary" href="/en/hardware/apple-silicon-llm-guide/">
+          Open Apple Silicon guide
+        </a>
+      </article>
     </section>
   </main>
 </BaseLayout>

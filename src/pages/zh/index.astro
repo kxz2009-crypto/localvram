@@ -1,11 +1,27 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const zhHomeStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "LocalVRAM",
+  url: "https://localvram.com/zh/",
+  inLanguage: "zh",
+  description: "Local Ollama model compatibility and benchmark data hub."
+};
 ---
 
 <BaseLayout
   title="LocalVRAM | Compatibility Route"
   description="Local Ollama model compatibility and benchmark data hub."
   locale="zh"
+  canonicalPath="/zh/"
+  alternates={[
+    { hrefLang: "en", href: "https://localvram.com/en/" },
+    { hrefLang: "zh", href: "https://localvram.com/zh/" },
+    { hrefLang: "x-default", href: "https://localvram.com/en/" }
+  ]}
+  structuredData={zhHomeStructuredData}
 >
   <main class="container">
     <header class="simple-header">

@@ -5,12 +5,36 @@ import statusReport from "../../data/status.json";
 
 const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
 const lastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
+const homeStructuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "LocalVRAM",
+    url: "https://localvram.com/en/",
+    inLanguage: "en",
+    description: "Pick the right model for your hardware in 60 seconds."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "LocalVRAM",
+    url: "https://localvram.com/en/",
+    logo: "https://localvram.com/branding/logo.svg"
+  }
+];
 ---
 
 <BaseLayout
   title="LocalVRAM | Ollama Verified"
   description="Pick the right model for your hardware in 60 seconds."
   locale="en"
+  canonicalPath="/en/"
+  alternates={[
+    { hrefLang: "en", href: "https://localvram.com/en/" },
+    { hrefLang: "zh", href: "https://localvram.com/zh/" },
+    { hrefLang: "x-default", href: "https://localvram.com/en/" }
+  ]}
+  structuredData={homeStructuredData}
 >
   <header class="top-nav">
     <a class="brand" href="/en/">
@@ -48,6 +72,7 @@ const lastSync = String(statusReport.last_hardware_sync || statusReport.last_ver
         <a class="btn" href="/en/status/content-publish/">Content Publish</a>
         <a class="btn" href="/en/errors/">Error KB</a>
         <a class="btn" href="/en/blog/">Daily Blog</a>
+        <a class="btn" href="/en/about/methodology/">Methodology</a>
       </div>
     </section>
 
@@ -71,6 +96,16 @@ const lastSync = String(statusReport.last_hardware_sync || statusReport.last_ver
         <h2>Cluster Network</h2>
         <p>Low-competition high-intent guide for local cluster planning.</p>
         <a class="btn" href="/en/guides/ollama-local-cluster-network/">Open guide</a>
+      </article>
+      <article class="card">
+        <h2>Backend Comparison</h2>
+        <p>Ollama vs vLLM VRAM planning and operator trade-offs.</p>
+        <a class="btn" href="/en/guides/ollama-vs-vllm-vram/">Open comparison</a>
+      </article>
+      <article class="card">
+        <h2>Apple Silicon</h2>
+        <p>Unified-memory guide for M-series local LLM planning.</p>
+        <a class="btn" href="/en/hardware/apple-silicon-llm-guide/">Open guide</a>
       </article>
       <article class="card">
         <h2>Daily Updates</h2>

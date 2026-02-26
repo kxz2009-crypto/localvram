@@ -34,11 +34,16 @@ const chartPayload = {
   modelName: item.name,
 };
 
-const schema = {
+const modelPath = `/en/models/${item.id}/`;
+const modelUrl = `https://localvram.com${modelPath}`;
+const modelSchema = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
   headline: `${item.name} VRAM Requirement and Benchmark`,
   dateModified: item.updated_at,
+  inLanguage: "en",
+  url: modelUrl,
+  mainEntityOfPage: modelUrl,
   author: {
     "@type": "Organization",
     name: "LocalVRAM"
@@ -48,15 +53,41 @@ const schema = {
     name: item.name
   }
 };
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://localvram.com/en/"
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Models",
+      item: "https://localvram.com/en/models/"
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: item.name,
+      item: modelUrl
+    }
+  ]
+};
 ---
 
 <BaseLayout
   title={`${item.name} on LocalVRAM`}
   description={`${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal, with local/cloud benchmark references.`}
   locale="en"
+  canonicalPath={modelPath}
+  ogType="article"
+  modifiedTime={item.updated_at}
+  structuredData={[modelSchema, breadcrumbSchema]}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-
   <main class="container">
     <h1>{item.name}</h1>
     <p>{item.focus}. Caveat: {item.caveat}.</p>

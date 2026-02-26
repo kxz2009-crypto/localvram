@@ -1,8 +1,52 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const pagePath = "/en/tools/quantization-blind-test/";
+const pageUrl = `https://localvram.com${pagePath}`;
+const datasetSchema = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: "LocalVRAM Quantization Blind Test Snapshot",
+  description: "Blind comparison dataset and methodology for Q4 vs Q8 output quality checks.",
+  url: pageUrl,
+  inLanguage: "en",
+  creator: {
+    "@type": "Organization",
+    name: "LocalVRAM"
+  },
+  license: "https://localvram.com/legal/"
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What does this blind test compare?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "It compares answer quality between Q4 and Q8 quantization profiles without exposing which output is which."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Does this page run live inference now?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "It supports offline side-by-side samples now and can be connected to a serverless execution queue later."
+      }
+    }
+  ]
+};
 ---
 
-<BaseLayout title="Quantization Blind Test | LocalVRAM" locale="en">
+<BaseLayout
+  title="Quantization Blind Test | LocalVRAM"
+  description="Blind compare Q4 vs Q8 outputs and review quantization quality trade-offs."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={[datasetSchema, faqSchema]}
+>
   <main class="container">
     <h1>Quantization Blind Test</h1>
     <p>

@@ -27,6 +27,7 @@ def main() -> None:
         "https://localvram.com/legal/",
         "https://localvram.com/en/blog/",
         "https://localvram.com/en/updates/",
+        "https://localvram.com/en/about/methodology/",
         "https://localvram.com/en/status/data-freshness/",
         "https://localvram.com/en/status/runner-health/",
         "https://localvram.com/en/status/pipeline-status/",
@@ -35,6 +36,7 @@ def main() -> None:
         "https://localvram.com/en/status/content-publish/",
         "https://localvram.com/en/errors/",
         "https://localvram.com/en/hardware/",
+        "https://localvram.com/en/hardware/apple-silicon-llm-guide/",
         "https://localvram.com/en/models/",
         "https://localvram.com/en/benchmarks/",
         "https://localvram.com/en/benchmarks/changelog/",
@@ -45,6 +47,7 @@ def main() -> None:
         "https://localvram.com/en/affiliate/cloud-gpu/",
         "https://localvram.com/en/affiliate/hardware-upgrade/",
         "https://localvram.com/en/guides/ollama-local-cluster-network/",
+        "https://localvram.com/en/guides/ollama-vs-vllm-vram/",
     ]
 
     for item in error_data.get("errors", []):
