@@ -7,9 +7,29 @@ This runbook covers auto-publishing queue drafts into live blog posts.
 - Queue source: `content-queue/<YYYY-MM-DD>/*.md`
 - Blog output: `src/content/blog/*.md`
 - Publish log: `src/data/content-publish-log.json`
+- Review gate log: `src/data/content-review-log.json`
 - Status page: `/en/status/content-publish/`
 
-## 2) Auto-publish command
+## 2) Review gate first (required)
+
+```bash
+python scripts/review-content-queue.py
+```
+
+The gate updates each draft `status`:
+
+- `approved_auto`: safe to auto-publish
+- `pending_manual_review`: needs human decision
+- keeps manual terminal states: `approved_manual`, `rejected_manual`
+
+Manual review actions:
+
+```bash
+python scripts/review-content-drafts.py --queue-date 2026-02-26 --slugs q4-vs-q8-quality-loss --action approve --reviewer ops
+python scripts/review-content-drafts.py --queue-date 2026-02-26 --drafts 03-en-tools-quantization-blind-test.md --action reject --reviewer ops --note "low factual value"
+```
+
+## 3) Auto-publish command
 
 ```bash
 python scripts/publish-content-queue.py
@@ -27,7 +47,9 @@ Defaults:
 - max publish: `2` (`LV_CONTENT_AUTO_PUBLISH_MAX`)
 - min score: `120` (`LV_CONTENT_AUTO_PUBLISH_MIN_SCORE`)
 
-## 3) Dedupe behavior
+Only drafts in `approved_auto` / `approved_manual` status are publishable.
+
+## 4) Dedupe behavior
 
 Drafts are skipped when:
 
@@ -36,17 +58,19 @@ Drafts are skipped when:
 - candidate topic is too similar to an existing post slug
 - run already reached `--max-publish`
 
-## 4) Validation
+## 5) Validation
 
 ```bash
 python scripts/build-sitemap.py
 python scripts/quality-gate.py
 ```
 
-## 5) CI integration
+## 6) CI integration
 
-- `daily-content.yml` runs `publish-content-queue.py` after draft generation.
+- `daily-content.yml` now runs: `daily-content-agent.py` -> `review-content-queue.py` -> `publish-content-queue.py`.
 - same workflow commits:
+  - draft status updates under `content-queue/`
+  - `src/data/content-review-log.json`
   - new blog posts in `src/content/blog/`
   - `src/data/content-publish-log.json`
   - updated `src/data/daily-updates.json`

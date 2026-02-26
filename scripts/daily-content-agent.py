@@ -170,6 +170,7 @@ Users searching for "{keyword}" are usually deciding whether to run locally or m
 
 ## Monetization placement (compliant)
 
+- Affiliate Disclosure: This draft may include affiliate links. LocalVRAM may earn a commission at no extra cost.
 - Keep disclosure line near CTA modules.
 - Use one local recommendation CTA and one cloud fallback CTA.
 - Keep wording factual: measured vs estimated must stay explicit.

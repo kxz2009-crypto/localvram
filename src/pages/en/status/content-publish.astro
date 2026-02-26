@@ -1,11 +1,14 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import report from "../../../data/content-publish-log.json";
+import reviewLog from "../../../data/content-review-log.json";
 
 const lastRun = (report.last_run || {}) as Record<string, any>;
 const history = Array.isArray(report.history) ? report.history.slice(0, 12) : [];
 const publishedRows = Array.isArray(lastRun.published) ? lastRun.published : [];
 const skippedRows = Array.isArray(lastRun.skipped) ? lastRun.skipped : [];
+const lastReview = (reviewLog.last_run || {}) as Record<string, any>;
+const reviewFlags = Object.entries((lastReview.risk_flag_counts || {}) as Record<string, number>);
 ---
 
 <BaseLayout
@@ -42,7 +45,58 @@ const skippedRows = Array.isArray(lastRun.skipped) ? lastRun.skipped : [];
         <h2>History Size</h2>
         <p>{history.length}</p>
       </article>
+      <article class="card">
+        <h2>Review Pending</h2>
+        <p>{lastReview.pending_manual_review_count ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Review High Risk</h2>
+        <p>{lastReview.high_risk_count ?? 0}</p>
+      </article>
     </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Risk Review Snapshot</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Run At</td><td>{lastReview.run_at || "never"}</td></tr>
+          <tr><td>Queue Date</td><td>{lastReview.queue_date || "-"}</td></tr>
+          <tr><td>Reviewed</td><td>{lastReview.reviewed_count ?? 0}</td></tr>
+          <tr><td>Auto Approved</td><td>{lastReview.auto_approved_count ?? 0}</td></tr>
+          <tr><td>Pending Manual</td><td>{lastReview.pending_manual_review_count ?? 0}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Top Risk Flags</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Risk Flag</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {reviewFlags.length === 0 ? (
+            <tr><td colSpan={2}>No risk flags in last review run.</td></tr>
+          ) : (
+            reviewFlags.map(([flag, count]) => (
+              <tr>
+                <td>{flag}</td>
+                <td>{count}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
 
     <section class="card" style="margin-top: 16px;">
       <h2>Last Published Posts</h2>

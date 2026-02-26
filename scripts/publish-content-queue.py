@@ -209,7 +209,7 @@ def collect_candidates(queue_dir: Path, queue_date: str, min_score: float) -> li
         candidate_slug = slugify(base_slug)
         topic_key = normalize_topic_key(keyword, candidate_slug)
 
-        if status != "draft":
+        if status not in {"approved_auto", "approved_manual"}:
             continue
         if score < min_score:
             continue
@@ -235,7 +235,9 @@ def collect_candidates(queue_dir: Path, queue_date: str, min_score: float) -> li
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Publish high-score drafts from content-queue into src/content/blog.")
+    parser = argparse.ArgumentParser(
+        description="Publish approved high-score drafts from content-queue into src/content/blog."
+    )
     parser.add_argument("--queue-date", default="")
     parser.add_argument("--max-publish", type=int, default=int(os.getenv("LV_CONTENT_AUTO_PUBLISH_MAX", "2")))
     parser.add_argument("--min-score", type=float, default=float(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_SCORE", "120")))

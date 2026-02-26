@@ -4,7 +4,9 @@ date: 2026-02-26
 keyword: "q4 vs q8 quality loss ollama"
 score: 360
 source: opportunity
-status: draft
+status: pending_manual_review
+reviewed_at: "2026-02-26T08:00:06.206539Z"
+risk_flags: low_content_words,missing_affiliate_disclosure,near_duplicate_published
 ---
 
 ## Why this topic now

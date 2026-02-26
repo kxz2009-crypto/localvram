@@ -22,6 +22,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "community-reports.json",
     ROOT / "src" / "data" / "submission-review.json",
     ROOT / "src" / "data" / "content-publish-log.json",
+    ROOT / "src" / "data" / "content-review-log.json",
 ]
 REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "models" / "index.astro",
@@ -103,6 +104,12 @@ def main() -> None:
         print("quality gate failed: content-publish-log.json missing history list")
         sys.exit(1)
     print("content publish log snapshot ok")
+
+    content_review = json.loads((ROOT / "src" / "data" / "content-review-log.json").read_text(encoding="utf-8-sig"))
+    if not isinstance(content_review.get("history"), list):
+        print("quality gate failed: content-review-log.json missing history list")
+        sys.exit(1)
+    print("content review log snapshot ok")
 
     blog_dir = ROOT / "src" / "content" / "blog"
     if not blog_dir.exists():

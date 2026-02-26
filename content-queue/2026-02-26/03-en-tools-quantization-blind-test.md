@@ -4,7 +4,9 @@ date: 2026-02-26
 keyword: "q4 vs q8 quality ollama"
 score: 137
 source: search_console
-status: draft
+status: pending_manual_review
+reviewed_at: "2026-02-26T08:00:06.206539Z"
+risk_flags: missing_affiliate_disclosure,existing_blog_slug,near_duplicate_published
 ---
 
 ## Why this topic now

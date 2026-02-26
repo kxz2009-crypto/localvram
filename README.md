@@ -59,6 +59,7 @@ npm run dev
 - Community submissions: `src/data/community-reports.json`
 - Submission review snapshot: `src/data/submission-review.json`
 - Content publish log: `src/data/content-publish-log.json`
+- Content review log: `src/data/content-review-log.json`
 - CTA mapping: `src/data/cta-rules.json`
 - Model catalog (200+): `src/data/model-catalog.json`
 - Measured benchmark map: `src/data/benchmark-results.json` (keyed by `ollama_tag`)
@@ -79,6 +80,8 @@ npm run dev
 - `python scripts/import-affiliate-events.py --source-file <raw-export.jsonl>`
 - `python scripts/refresh-affiliate-funnel.py --source-file <raw-export.jsonl>`
 - `python scripts/build-submission-review.py`
+- `python scripts/review-content-queue.py`
+- `python scripts/review-content-drafts.py --queue-date <YYYY-MM-DD> --slugs <slug1,slug2> --action approve|reject|needs_info`
 - `python scripts/publish-content-queue.py`
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
