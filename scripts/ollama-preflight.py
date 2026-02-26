@@ -185,6 +185,9 @@ def start_ollama_service(endpoint: str) -> None:
     except Exception:
         pass
     ollama_bin = shutil.which("ollama") or "ollama"
+    print(f"ollama_recovery_binary={ollama_bin}")
+    print(f"ollama_recovery_host={ollama_host}")
+    print(f"ollama_recovery_log_path={log_path}")
     with open(log_path, "ab") as logf:
         proc = subprocess.Popen([ollama_bin, "serve"], stdout=logf, stderr=logf, env=env)  # noqa: S603
     time.sleep(1.2)
@@ -308,15 +311,25 @@ def main() -> None:
                         for line in tail:
                             print(line)
                         print("ollama_local_recovery_log_tail_end")
-                time.sleep(2.0)
-                ollama_processes = detect_ollama_serve_processes()
-                listeners = detect_port_listeners(endpoint_port)
+                for _ in range(8):
+                    ollama_processes = detect_ollama_serve_processes()
+                    listeners = detect_port_listeners(endpoint_port)
+                    if ollama_processes:
+                        break
+                    time.sleep(1.0)
                 print(f"ollama_serve_process_count_after_recovery={len(ollama_processes)}")
                 print(f"ollama_port_listener_count_after_recovery={len(listeners)}")
                 if ollama_processes:
                     print(f"ollama_serve_process_sample_after_recovery={ollama_processes[:3]}")
                 if listeners:
                     print(f"ollama_port_listener_sample_after_recovery={listeners[:3]}")
+                if len(ollama_processes) == 0:
+                    tail = log_tail(recovery_log_path, max_lines=40)
+                    if tail:
+                        print("ollama_local_recovery_log_tail_begin")
+                        for line in tail:
+                            print(line)
+                        print("ollama_local_recovery_log_tail_end")
             if len(ollama_processes) == 0:
                 emit_failure_class(
                     "ollama_instance_unmanaged",
