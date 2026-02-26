@@ -54,6 +54,35 @@ def normalize_conclusion(value: str) -> str:
     return str(value or "").strip().lower()
 
 
+def normalize_event(value: str) -> str:
+    return str(value or "").strip().lower()
+
+
+def to_bool(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    text = str(value or "").strip().lower()
+    return text in {"1", "true", "yes", "y", "on"}
+
+
+def slo_exempt_reason(row: dict[str, Any]) -> str:
+    if to_bool(row.get("slo_exempt")):
+        return str(row.get("slo_exempt_reason", "")).strip() or "explicit_slo_exempt"
+
+    event = normalize_event(row.get("event", ""))
+    failure_class = str(row.get("failure_class", "")).strip()
+    failure_detail = str(row.get("failure_detail", "")).strip().lower()
+
+    # Manual drill / operator guardrail cases should not impact production SLO.
+    if event == "workflow_dispatch" and failure_class in {"source_run_discovery_failure", "source_run_not_publishable"}:
+        return "manual_dispatch_input_guard"
+    # Backward compatibility for older publish failures before source-run guard classification changed.
+    if event == "workflow_dispatch" and failure_class == "artifact_download_failure" and "missing source run id" in failure_detail:
+        return "manual_dispatch_missing_source_run_id_legacy"
+
+    return ""
+
+
 def safe_rate(success: int, total: int) -> float:
     if total <= 0:
         return 0.0
@@ -196,13 +225,31 @@ def main() -> None:
         windows: dict[str, Any] = {}
         for days in window_days:
             since_dt = reference_dt - dt.timedelta(days=days)
-            scoped = []
+            scoped_all: list[dict[str, Any]] = []
             for row in rows:
                 row_time = parse_iso_utc(str(row.get("updated_at", "")))
                 if row_time is None:
                     continue
                 if row_time >= since_dt:
-                    scoped.append(row)
+                    scoped_all.append(row)
+            scoped: list[dict[str, Any]] = []
+            excluded_reason_counts: Counter[str] = Counter()
+            excluded_runs: list[dict[str, str]] = []
+            for row in scoped_all:
+                reason = slo_exempt_reason(row)
+                if reason:
+                    excluded_reason_counts[reason] += 1
+                    excluded_runs.append(
+                        {
+                            "run_id": str(row.get("run_id", "")).strip(),
+                            "conclusion": normalize_conclusion(row.get("conclusion", "")),
+                            "failure_class": str(row.get("failure_class", "")).strip(),
+                            "event": normalize_event(row.get("event", "")),
+                            "reason": reason,
+                        }
+                    )
+                    continue
+                scoped.append(row)
             total = len(scoped)
             success = len([row for row in scoped if normalize_conclusion(row.get("conclusion", "")) == "success"])
             failure = total - success
@@ -228,6 +275,9 @@ def main() -> None:
                 "top_failure_action": action_for_failure_class(fail_key) if fail_key != "none" else "",
                 "top_failures": top_failure_rows,
                 "failure_class_counts": dict(sorted(fail_counter.items(), key=lambda x: x[0])),
+                "excluded_runs_count": len(excluded_runs),
+                "excluded_reason_counts": dict(sorted(excluded_reason_counts.items(), key=lambda x: x[0])),
+                "excluded_runs_sample": excluded_runs[:10],
             }
 
         default_window = windows.get("7") or windows.get("28") or next(iter(windows.values()))
@@ -265,6 +315,7 @@ def main() -> None:
 
     since_28 = reference_dt - dt.timedelta(days=28)
     global_28_rows: list[dict[str, Any]] = []
+    global_28_excluded_reason_counts: Counter[str] = Counter()
     for row in history_rows:
         workflow_key = str(row.get("workflow_key", "")).strip()
         if workflow_key not in workflow_keys:
@@ -273,6 +324,10 @@ def main() -> None:
         if row_time is None:
             continue
         if row_time >= since_28:
+            reason = slo_exempt_reason(row)
+            if reason:
+                global_28_excluded_reason_counts[reason] += 1
+                continue
             global_28_rows.append(row)
     global_28_top = top_failures(global_28_rows, limit=5)
 
@@ -295,6 +350,7 @@ def main() -> None:
             "window_start": iso_no_micros(since_28),
             "window_end": iso_no_micros(reference_dt),
             "global_top_failures": global_28_top,
+            "global_excluded_reason_counts": dict(sorted(global_28_excluded_reason_counts.items(), key=lambda x: x[0])),
             "workflows_28d": sorted(
                 workflow_recommendations_28d,
                 key=lambda x: (-(int(x.get("count", 0) or 0)), str(x.get("workflow_name", ""))),

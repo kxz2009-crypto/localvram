@@ -140,6 +140,7 @@ Self-hosted runner preflight:
 - Uses `LV_NETWORK_RETRY_DELAYS_S` retry backoff (default `5,10,20`) before failing on transient connection issues.
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
+- If preflight requires local process and detects none on loopback endpoint, it now attempts one local `ollama serve` recovery before failing.
 - Single-instance governance checks classify runner-side ownership problems: `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`.
 - Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `source_run_discovery_failure`, `source_run_metadata_failure`, `source_run_not_publishable`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`, `retirement_candidates_failure`, `retirement_review_failure`, `retirement_apply_prune_failure`, `daily_content_failed`, `daily_content_push_failure`, `daily_content_status_sync_failure`.
 - Failure alerts: `Weekly Benchmark`, `Daily Content Agent`, and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
@@ -175,6 +176,7 @@ Weekly collect/content/publish split:
 - Recommended one-shot orchestrator: `scripts/run-weekly-publish-pipeline.py` (dispatch weekly benchmark, wait for success, then auto-dispatch publish).
 - Orchestrator failure drill-down: when weekly fails, `run-weekly-publish-pipeline.py` prints weekly failure class/detail and (by default) auto-dispatches `Runner Smoke Check`, then prints smoke run/conclusion for rapid triage.
 - Optional recovery mode: add `--retry-weekly-after-smoke true` so orchestrator retries one weekly run after smoke success (useful for transient network/service blips).
+- Pipeline SLO excludes manual-dispatch guardrail failures (for example missing/invalid `source_run_id`) from success-rate denominator while retaining audit trail in `excluded_reason_counts`.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 - Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).

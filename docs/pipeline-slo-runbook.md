@@ -28,6 +28,7 @@ python scripts/build-pipeline-slo.py --target-success-rate 95 --window-days 7,28
   - `publish_benchmark_artifact`
 - Weekly report window: rolling 7 days.
 - Failure taxonomy source: `failure_class` in `pipeline-status.json` history.
+- SLO denominator excludes manual-dispatch guardrail failures (for example missing/invalid `source_run_id`) so drill/operator-input errors do not distort production reliability.
 
 ## 4) Operational usage
 
@@ -42,6 +43,7 @@ The SLO snapshot now includes:
 
 - `failure_recommendations.global_top_failures` (cross-workflow TopN)
 - `failure_recommendations.workflows_28d` (per-workflow TopN + action text)
+- `failure_recommendations.global_excluded_reason_counts` (why runs were excluded from denominator)
 
 ## 5) CI integration
 

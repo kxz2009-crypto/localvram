@@ -273,11 +273,28 @@ def main() -> None:
             emit_failure_class("ollama_port_conflict", f"port {endpoint_port} listener is not managed by ollama")
             raise SystemExit(f"port {endpoint_port} listener is not managed by ollama")
         if args.require_local_process and len(ollama_processes) == 0:
-            emit_failure_class(
-                "ollama_instance_unmanaged",
-                "no local 'ollama serve' process detected for loopback endpoint",
-            )
-            raise SystemExit("no local 'ollama serve' process detected for loopback endpoint")
+            if args.restart_if_empty:
+                print("ollama_local_process_missing=1")
+                print("ollama_local_recovery_attempt=start_ollama_serve")
+                start_ollama_service(endpoint)
+                time.sleep(2.0)
+                ollama_processes = detect_ollama_serve_processes()
+                listeners = detect_port_listeners(endpoint_port)
+                print(f"ollama_serve_process_count_after_recovery={len(ollama_processes)}")
+                print(f"ollama_port_listener_count_after_recovery={len(listeners)}")
+                if ollama_processes:
+                    print(f"ollama_serve_process_sample_after_recovery={ollama_processes[:3]}")
+                if listeners:
+                    print(f"ollama_port_listener_sample_after_recovery={listeners[:3]}")
+            if len(ollama_processes) == 0:
+                emit_failure_class(
+                    "ollama_instance_unmanaged",
+                    "no local 'ollama serve' process detected for loopback endpoint",
+                )
+                raise SystemExit("no local 'ollama serve' process detected for loopback endpoint")
+            if has_non_ollama_listener(listeners):
+                emit_failure_class("ollama_port_conflict", f"port {endpoint_port} listener is not managed by ollama")
+                raise SystemExit(f"port {endpoint_port} listener is not managed by ollama")
 
     try:
         local_models = fetch_local_models_with_retry(endpoint, retry_delays=network_retry_delays)
