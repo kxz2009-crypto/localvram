@@ -51,6 +51,7 @@ npm run dev
 - Model catalog (200+): `src/data/model-catalog.json`
 - Measured benchmark map: `src/data/benchmark-results.json` (keyed by `ollama_tag`)
 - Retirement policy: `src/data/retired-models.json` (retired families/tags)
+- Retirement candidates: `src/data/retirement-candidates.json` (auto-generated stale model suggestions)
 - Public benchmark API endpoint: `/api/benchmark.json`
 - Affiliate links: `src/data/affiliate-links.json` (replace placeholders)
 - Affiliate redirect worker code: `functions/`
@@ -66,6 +67,7 @@ npm run dev
 - `python scripts/resolve-weekly-targets.py`
 - `python scripts/ollama-preflight.py`
 - `python scripts/prune-retired-benchmark-data.py`
+- `python scripts/generate-retirement-candidates.py`
 - `python scripts/runner-diagnostics.py`
 - `python scripts/validate-benchmark-artifact.py --source-dir <artifact-dir>`
 - `python scripts/update-pipeline-status.py --workflow-key <key> --run-id <id> --run-url <url>`
@@ -105,7 +107,7 @@ Self-hosted runner preflight:
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
 - Single-instance governance checks classify runner-side ownership problems: `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`.
-- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`.
+- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`, `retirement_candidates_failure`.
 - Failure alerts: `Weekly Benchmark` and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
 - Recovery handling: when workflow returns to success, open `[OPS-ALERT]` issues for that workflow are auto-commented and closed.
 - Model retirement: update `src/data/retired-models.json` to phase out old families/tags so they stop entering weekly targets and auto-backfill.
@@ -123,6 +125,7 @@ Weekly collect/publish split:
 - Weekly target resolver writes `src/data/weekly-target-plan.json` and includes it in the benchmark artifact/publish sync.
 - Weekly target plan records retirement impact (`dropped_base_targets`, retired local sample) for auditability.
 - Publish workflow prunes retired models from `src/data/benchmark-results.json` before catalog/sitemap build.
+- Publish workflow generates `src/data/retirement-candidates.json` from benchmark history to assist next retirement batch review.
 - Weekly benchmark schedule: `02:10 UTC every Wednesday` (US Tuesday evening window).
 - `Publish Benchmark Artifact` (workflow_run/manual) downloads that artifact, validates JSON payloads, rebuilds catalog/sitemap, and pushes with retry backoff (`5,10,20` default) + 429-aware wait (`rate_limit_delay_s`, default `60`) + jitter.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).

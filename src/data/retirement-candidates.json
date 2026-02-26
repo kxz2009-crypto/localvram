@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-02-26T04:45:20Z",
+  "results_file": "E:\\SaaS\\Localvram\\src\\data\\benchmark-results.json",
+  "weekly_target_plan_file": "E:\\SaaS\\Localvram\\src\\data\\weekly-target-plan.json",
+  "retired_policy_file": "E:\\SaaS\\Localvram\\src\\data\\retired-models.json",
+  "latest_run_updated_at": "2026-02-25T16:20:32Z",
+  "history_run_count": 8,
+  "stale_run_threshold": 3,
+  "max_candidates": 50,
+  "current_plan_refs": [
+    "qwen3",
+    "deepseek-r1",
+    "qwen2.5",
+    "qwen3-coder",
+    "qwen3.5"
+  ],
+  "retired_families": [],
+  "retired_tags": [
+    "deepseek-r1:8b",
+    "llama3:8b"
+  ],
+  "observed_tag_count": 10,
+  "candidate_count": 0,
+  "candidates": []
+}

@@ -177,6 +177,16 @@ jobs:
             exit 1
           fi
 
+      - name: Generate retirement candidates
+        run: |
+          if ! python scripts/generate-retirement-candidates.py --output-file src/data/retirement-candidates.json; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'retirement_candidates_failure','failure_detail':'failed to generate retirement candidates from benchmark history'}, ensure_ascii=False), encoding='utf-8')"
+            echo "failure_class=retirement_candidates_failure"
+            echo "failure_detail=failed to generate retirement candidates from benchmark history"
+            echo "::error title=FailureClass::retirement_candidates_failure - failed to generate retirement candidates from benchmark history"
+            exit 1
+          fi
+
       - name: Update pipeline status (weekly source)
         run: |
           python scripts/update-pipeline-status.py \
@@ -207,7 +217,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/weekly-target-plan.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
+          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/weekly-target-plan.json src/data/retirement-candidates.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
 
           if git diff --cached --quiet; then
             echo "publish_result=no_changes"
