@@ -24,7 +24,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 
     <section class="card terminal-card">
       <h2>Precheck command</h2>
-      <pre><code>python scripts/score-user-submission.py --model-id llama-70b-q4 --hardware "RTX 4090 24GB + WSL2" --score 0.91</code></pre>
+      <pre><code>python scripts/score-user-submission.py --model-id llama-70b-q4 --hardware "RTX 4090 24GB + WSL2" --score 0.91 --submitter-id github:your-id --issue-url "https://github.com/kxz2009-crypto/localvram/issues/123"</code></pre>
     </section>
 
     <section class="card">
@@ -34,6 +34,9 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       </p>
       <a class="btn btn-primary" href="https://github.com/kxz2009-crypto/localvram/issues/new">
         Open GitHub issue
+      </a>
+      <a class="btn" href="/en/status/submission-review/" style="margin-left: 8px;">
+        View review queue
       </a>
     </section>
   </main>

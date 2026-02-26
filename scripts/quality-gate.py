@@ -18,6 +18,8 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "retirement-proposal.json",
     ROOT / "src" / "data" / "search-console-keywords.json",
     ROOT / "src" / "data" / "conversion-funnel.json",
+    ROOT / "src" / "data" / "community-reports.json",
+    ROOT / "src" / "data" / "submission-review.json",
 ]
 REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "models" / "index.astro",
@@ -26,6 +28,7 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "benchmarks" / "changelog.astro",
     ROOT / "src" / "pages" / "en" / "benchmarks" / "submit-result.astro",
     ROOT / "src" / "pages" / "en" / "status" / "conversion-funnel.astro",
+    ROOT / "src" / "pages" / "en" / "status" / "submission-review.astro",
 ]
 
 
@@ -79,6 +82,12 @@ def main() -> None:
         print("quality gate failed: conversion-funnel.json missing funnel object")
         sys.exit(1)
     print("conversion funnel snapshot ok")
+
+    submission_review = json.loads((ROOT / "src" / "data" / "submission-review.json").read_text(encoding="utf-8-sig"))
+    if not isinstance(submission_review.get("summary"), dict):
+        print("quality gate failed: submission-review.json missing summary object")
+        sys.exit(1)
+    print("submission review snapshot ok")
 
     blog_dir = ROOT / "src" / "content" / "blog"
     if not blog_dir.exists():

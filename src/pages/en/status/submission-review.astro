@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import report from "../../../data/submission-review.json";
+
+const summary = report.summary || {};
+const riskRows = Array.isArray(report.risk_breakdown) ? report.risk_breakdown : [];
+const submitterRows = Array.isArray(report.top_submitters) ? report.top_submitters : [];
+const modelRows = Array.isArray(report.top_models) ? report.top_models : [];
+const pendingRows = Array.isArray(report.pending_review_sample) ? report.pending_review_sample : [];
+---
+
+<BaseLayout
+  title="Submission Review Queue | LocalVRAM"
+  description="Community benchmark submission queue health and risk snapshot."
+  locale="en"
+>
+  <main class="container">
+    <h1>Submission Review Queue</h1>
+    <p>Review backlog, risk flags, and submitter concentration for community benchmark reports.</p>
+
+    <div class="card-grid">
+      <article class="card">
+        <h2>Total Reports</h2>
+        <p>{summary.total_reports ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Pending</h2>
+        <p>{summary.pending_reports ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Stale Pending</h2>
+        <p>{summary.stale_pending_reports ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>High Risk</h2>
+        <p>{summary.high_risk_reports ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Generated At</h2>
+        <p>{report.generated_at || "unknown"}</p>
+      </article>
+      <article class="card">
+        <h2>Stale Threshold</h2>
+        <p>{report.stale_days_threshold ?? 7} day(s)</p>
+      </article>
+    </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Pending Review Sample</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Submission</th>
+            <th>Model</th>
+            <th>Score</th>
+            <th>Status</th>
+            <th>Age (days)</th>
+            <th>Risk Flags</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pendingRows.length === 0 ? (
+            <tr><td colSpan={6}>No pending submission.</td></tr>
+          ) : (
+            pendingRows.map((row) => (
+              <tr>
+                <td>{row.submission_id || "-"}</td>
+                <td>{row.model_id || "-"}</td>
+                <td>{typeof row.precheck_score === "number" ? row.precheck_score.toFixed(3) : "-"}</td>
+                <td>{row.status || "-"}</td>
+                <td>{row.age_days ?? "-"}</td>
+                <td>{Array.isArray(row.risk_flags) && row.risk_flags.length > 0 ? row.risk_flags.join(", ") : "-"}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Risk Breakdown</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Risk Flag</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {riskRows.length === 0 ? (
+            <tr><td colSpan={2}>No risk flags recorded.</td></tr>
+          ) : (
+            riskRows.map((row) => (
+              <tr>
+                <td>{row.risk_flag || "-"}</td>
+                <td>{row.count ?? 0}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Top Submitters</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Submitter</th>
+            <th>Reports</th>
+          </tr>
+        </thead>
+        <tbody>
+          {submitterRows.length === 0 ? (
+            <tr><td colSpan={2}>No submitter records.</td></tr>
+          ) : (
+            submitterRows.map((row) => (
+              <tr>
+                <td>{row.submitter_id || "-"}</td>
+                <td>{row.reports ?? 0}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Top Models In Queue</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Reports</th>
+          </tr>
+        </thead>
+        <tbody>
+          {modelRows.length === 0 ? (
+            <tr><td colSpan={2}>No model records.</td></tr>
+          ) : (
+            modelRows.map((row) => (
+              <tr>
+                <td>{row.model_id || "-"}</td>
+                <td>{row.reports ?? 0}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>

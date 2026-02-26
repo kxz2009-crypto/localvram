@@ -8,6 +8,7 @@ Operations runbooks:
 
 - `docs/retirement-runbook.md`
 - `docs/conversion-funnel-runbook.md`
+- `docs/submission-review-runbook.md`
 
 ## Stack
 
@@ -54,6 +55,8 @@ npm run dev
 - Search Console backfeed: `src/data/search-console-keywords.json`
 - Affiliate click export (sanitized): `src/data/affiliate-click-events.json`
 - Conversion funnel snapshot: `src/data/conversion-funnel.json`
+- Community submissions: `src/data/community-reports.json`
+- Submission review snapshot: `src/data/submission-review.json`
 - CTA mapping: `src/data/cta-rules.json`
 - Model catalog (200+): `src/data/model-catalog.json`
 - Measured benchmark map: `src/data/benchmark-results.json` (keyed by `ollama_tag`)
@@ -71,6 +74,7 @@ npm run dev
 - `python scripts/build-model-catalog.py`
 - `python scripts/build-sitemap.py`
 - `python scripts/build-conversion-funnel.py`
+- `python scripts/build-submission-review.py`
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
 - `python scripts/resolve-weekly-targets.py`
@@ -83,6 +87,7 @@ npm run dev
 - `python scripts/update-pipeline-status.py --workflow-key <key> --run-id <id> --run-url <url>`
 - `python scripts/cluster-benchmark.py`
 - `python scripts/report-data-freshness.py`
+- `python scripts/score-user-submission.py`
 
 ## Benchmark Runtime Controls
 
@@ -145,6 +150,7 @@ Weekly collect/publish split:
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 - Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).
+- Submission review page: `/en/status/submission-review/` (source file `src/data/submission-review.json`).
 
 Cluster benchmark (`scripts/cluster-benchmark.py`):
 
