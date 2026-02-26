@@ -62,17 +62,26 @@ jobs:
 
       - name: Resolve source run id
         id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           RUN_ID="${{ github.event.workflow_run.id }}"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.source_run_id }}" ]; then
             RUN_ID="${{ github.event.inputs.source_run_id }}"
           fi
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -z "${RUN_ID}" ]; then
+            AUTO_RUN_ID="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/weekly-benchmark.yml/runs?status=completed&per_page=30" --jq '.workflow_runs[] | select(.conclusion=="success") | .id' 2>/dev/null | head -n 1 | tr -d '[:space:]')"
+            if [ -n "${AUTO_RUN_ID}" ]; then
+              RUN_ID="${AUTO_RUN_ID}"
+              echo "auto_resolved_source_run_id=${RUN_ID}"
+            fi
+          fi
           if [ -z "${RUN_ID}" ]; then
             mkdir -p logs
-            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'artifact_download_failure','failure_detail':'missing source run id'}, ensure_ascii=False), encoding='utf-8')"
-            echo "failure_class=artifact_download_failure"
-            echo "failure_detail=missing source run id"
-            echo "::error title=FailureClass::artifact_download_failure - missing source run id"
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'source_run_discovery_failure','failure_detail':'missing source run id and auto-discovery failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "failure_class=source_run_discovery_failure"
+            echo "failure_detail=missing source run id and auto-discovery failed"
+            echo "::error title=FailureClass::source_run_discovery_failure - missing source run id and auto-discovery failed"
             exit 1
           fi
           echo "run_id=${RUN_ID}" >>"${GITHUB_OUTPUT}"
