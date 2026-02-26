@@ -12,6 +12,7 @@ Operations runbooks:
 - `docs/content-publish-runbook.md`
 - `docs/pipeline-slo-runbook.md`
 - `docs/ops-review-runbook.md`
+- `docs/weekly-publish-runbook.md`
 
 ## Stack
 
@@ -104,6 +105,7 @@ npm run dev
 - `python scripts/review-community-submissions.py --submission-ids <id1,id2> --action approve|reject|needs_info`
 - `python scripts/ops-review.py submission --submission-ids <id1,id2> --action approve|reject|needs_info --reviewer ops [--dry-run] [--git-commit --git-push]`
 - `python scripts/run-publish-workflow.py --gh-path "<gh.exe path>"`
+- `python scripts/run-weekly-publish-pipeline.py --gh-path "<gh.exe path>"`
 
 ## Benchmark Runtime Controls
 
@@ -168,6 +170,7 @@ Weekly collect/content/publish split:
 - Publish workflow performs a follow-up lightweight commit for `src/data/pipeline-status.json` so the publish run conclusion is persisted even when the main publish commit has already been pushed.
 - Drill workflow: `Publish Fallback Drill` (manual) dispatches publish with invalid `source_run_id` and asserts fallback evidence in logs.
 - Recommended manual dispatch wrapper: `scripts/run-publish-workflow.py` (auto-resolves latest successful weekly run ID, dispatches publish with retry, and watches run result).
+- Recommended one-shot orchestrator: `scripts/run-weekly-publish-pipeline.py` (dispatch weekly benchmark, wait for success, then auto-dispatch publish).
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 - Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).
