@@ -92,6 +92,7 @@ npm run dev
 - `python scripts/cluster-benchmark.py`
 - `python scripts/report-data-freshness.py`
 - `python scripts/score-user-submission.py`
+- `python scripts/review-community-submissions.py --submission-ids <id1,id2> --action approve|reject|needs_info`
 
 ## Benchmark Runtime Controls
 
