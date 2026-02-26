@@ -57,6 +57,7 @@ def main() -> None:
     parser.add_argument("--notes", default="")
     parser.add_argument("--reports-file", default=str(DEFAULT_REPORTS_FILE))
     parser.add_argument("--allow-non-pending", action="store_true", help="Allow re-reviewing non-pending statuses.")
+    parser.add_argument("--dry-run", action="store_true", help="Preview status updates without writing file.")
     args = parser.parse_args()
 
     submission_ids = normalize_ids(args.submission_ids)
@@ -107,7 +108,7 @@ def main() -> None:
         touched += 1
         applied_ids.append(submission_id)
 
-    if touched > 0:
+    if touched > 0 and not args.dry_run:
         payload["updated_at"] = now
         save_json(reports_path, payload)
 
@@ -120,6 +121,7 @@ def main() -> None:
         print(f"skipped_missing={','.join(skipped_missing)}")
     if skipped_non_pending:
         print(f"skipped_non_pending={','.join(skipped_non_pending)}")
+    print(f"dry_run={'true' if args.dry_run else 'false'}")
 
 
 if __name__ == "__main__":

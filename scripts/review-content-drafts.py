@@ -85,6 +85,7 @@ def main() -> None:
     parser.add_argument("--action", required=True, choices=["approve", "reject", "needs_info"])
     parser.add_argument("--reviewer", default="manual_reviewer")
     parser.add_argument("--note", default="")
+    parser.add_argument("--dry-run", action="store_true", help="Preview updates without writing draft files.")
     args = parser.parse_args()
 
     queue_date = str(args.queue_date).strip() or read_latest_queue_date()
@@ -122,13 +123,16 @@ def main() -> None:
         frontmatter["review_action"] = args.action
         if str(args.note).strip():
             frontmatter["review_note"] = str(args.note).strip()
-        write_draft(path, frontmatter, body)
+        if not args.dry_run:
+            write_draft(path, frontmatter, body)
         updated += 1
-        print(f"updated={path.relative_to(ROOT)} status={status}")
+        prefix = "would_update" if args.dry_run else "updated"
+        print(f"{prefix}={path.relative_to(ROOT)} status={status}")
 
     print(f"queue_date={queue_date}")
     print(f"updated_count={updated}")
     print(f"action={args.action}")
+    print(f"dry_run={'true' if args.dry_run else 'false'}")
 
 
 if __name__ == "__main__":

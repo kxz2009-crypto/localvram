@@ -124,6 +124,7 @@ def parse_args() -> argparse.Namespace:
     content.add_argument("--reviewer", default="ops")
     content.add_argument("--note", default="")
     content.add_argument("--quality-gate", action="store_true")
+    content.add_argument("--dry-run", action="store_true")
     content.add_argument("--git-commit", action="store_true")
     content.add_argument("--git-push", action="store_true")
     content.add_argument("--git-commit-message", default="")
@@ -141,6 +142,7 @@ def parse_args() -> argparse.Namespace:
         help="Skip rebuilding submission snapshot after review.",
     )
     submission.add_argument("--quality-gate", action="store_true")
+    submission.add_argument("--dry-run", action="store_true")
     submission.add_argument("--git-commit", action="store_true")
     submission.add_argument("--git-push", action="store_true")
     submission.add_argument("--git-commit-message", default="")
@@ -154,6 +156,8 @@ def run_content(args: argparse.Namespace) -> None:
         raise SystemExit("content review needs at least one selector: --drafts or --slugs")
     if args.git_push and not args.git_commit:
         raise SystemExit("--git-push requires --git-commit")
+    if args.dry_run and (args.git_commit or args.git_push):
+        raise SystemExit("--dry-run cannot be combined with --git-commit/--git-push")
 
     cmd_args = ["--action", args.action, "--reviewer", args.reviewer]
     if str(args.queue_date).strip():
@@ -164,6 +168,8 @@ def run_content(args: argparse.Namespace) -> None:
         cmd_args.extend(["--slugs", str(args.slugs).strip()])
     if str(args.note).strip():
         cmd_args.extend(["--note", str(args.note).strip()])
+    if args.dry_run:
+        cmd_args.append("--dry-run")
 
     result = run_script("review-content-drafts.py", cmd_args, "content-manual-review")
     changed_files = parse_updated_paths(result.stdout)
@@ -185,6 +191,8 @@ def run_content(args: argparse.Namespace) -> None:
 def run_submission(args: argparse.Namespace) -> None:
     if args.git_push and not args.git_commit:
         raise SystemExit("--git-push requires --git-commit")
+    if args.dry_run and (args.git_commit or args.git_push):
+        raise SystemExit("--dry-run cannot be combined with --git-commit/--git-push")
 
     cmd_args = [
         "--submission-ids",
@@ -198,13 +206,17 @@ def run_submission(args: argparse.Namespace) -> None:
         cmd_args.extend(["--notes", str(args.note).strip()])
     if args.allow_non_pending:
         cmd_args.append("--allow-non-pending")
+    if args.dry_run:
+        cmd_args.append("--dry-run")
 
     run_script("review-community-submissions.py", cmd_args, "submission-manual-review")
     changed_files = ["src/data/community-reports.json"]
 
-    if not args.skip_snapshot_refresh:
+    if not args.skip_snapshot_refresh and not args.dry_run:
         run_script("build-submission-review.py", [], "refresh-submission-snapshot")
         changed_files.append("src/data/submission-review.json")
+    elif args.dry_run:
+        print("dry_run_info=skip submission-review snapshot refresh in dry-run mode")
 
     if args.quality_gate:
         run_script("quality-gate.py", [], "quality-gate")

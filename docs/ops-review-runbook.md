@@ -32,6 +32,18 @@ python scripts/ops-review.py content \
 
 Optional: include `--quality-gate` to run `scripts/quality-gate.py` after the action.
 
+Dry-run preview (no file write):
+
+```bash
+python scripts/ops-review.py content \
+  --queue-date 2026-02-26 \
+  --drafts 03-en-tools-quantization-blind-test.md \
+  --action reject \
+  --reviewer ops \
+  --note "existing slug/topic duplicate" \
+  --dry-run
+```
+
 Auto commit + push (optional):
 
 ```bash
@@ -64,6 +76,7 @@ Optional flags:
 - `--skip-snapshot-refresh`: skip `build-submission-review.py`
 - `--allow-non-pending`: allow re-reviewing non-pending rows
 - `--quality-gate`: run `scripts/quality-gate.py` at end
+- `--dry-run`: preview only; no file writes (and no snapshot refresh)
 - `--git-commit`: stage only review-related files and commit
 - `--git-push`: push after commit (requires `--git-commit`)
 - `--git-commit-message`: custom commit message
@@ -76,3 +89,4 @@ Optional flags:
   - `scripts/review-community-submissions.py`
 - Use `ops-review.py` as the default operator command to reduce manual mistakes and command drift.
 - Safety default: auto-commit mode refuses to run when pre-staged files exist, to avoid accidental mixed commits.
+- Safety rule: `--dry-run` cannot be combined with `--git-commit`/`--git-push`.

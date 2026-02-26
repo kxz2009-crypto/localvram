@@ -68,6 +68,17 @@ python scripts/ops-review.py submission \
   --note "validated logs and reproducibility"
 ```
 
+Dry-run preview:
+
+```bash
+python scripts/ops-review.py submission \
+  --submission-ids f9ba21e73260,4d9248019034 \
+  --action approve \
+  --reviewer ops:gao20 \
+  --note "validated logs and reproducibility" \
+  --dry-run
+```
+
 Optional one-shot commit/push:
 
 ```bash

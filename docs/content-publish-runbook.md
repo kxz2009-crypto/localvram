@@ -29,6 +29,12 @@ python scripts/ops-review.py content --queue-date 2026-02-26 --slugs q4-vs-q8-qu
 python scripts/ops-review.py content --queue-date 2026-02-26 --drafts 03-en-tools-quantization-blind-test.md --action reject --reviewer ops --note "low factual value"
 ```
 
+Dry-run preview:
+
+```bash
+python scripts/ops-review.py content --queue-date 2026-02-26 --drafts 03-en-tools-quantization-blind-test.md --action reject --reviewer ops --note "low factual value" --dry-run
+```
+
 Optional one-shot commit/push:
 
 ```bash
