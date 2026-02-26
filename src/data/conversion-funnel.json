@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-02-26T06:30:21.584947Z",
+  "window_days": 30,
+  "window_start": "2026-01-27T06:30:21.584947Z",
+  "window_end": "2026-02-26T06:30:21.584947Z",
+  "sources": {
+    "search_console_file": "src/data/search-console-keywords.json",
+    "affiliate_events_file": "src/data/affiliate-click-events.json",
+    "search_console_updated_at": "2026-02-24T10:00:00Z"
+  },
+  "funnel": {
+    "organic_search_clicks": 84,
+    "decision_page_clicks": 67,
+    "affiliate_redirect_clicks": 0,
+    "cloud_redirect_clicks": 0,
+    "hardware_redirect_clicks": 0,
+    "search_to_affiliate_pct": 0.0,
+    "search_to_cloud_pct": 0.0,
+    "affiliate_to_cloud_pct": 0.0
+  },
+  "breakdown": {
+    "providers": [],
+    "routes": [],
+    "source_pages": [],
+    "search_landings": [
+      {
+        "landing": "/en/models/llama-70b-q4/",
+        "clicks": 31,
+        "share_pct": 36.9
+      },
+      {
+        "landing": "/en/tools/quantization-blind-test/",
+        "clicks": 22,
+        "share_pct": 26.19
+      },
+      {
+        "landing": "/en/blog/best-local-rag-models-2026/",
+        "clicks": 17,
+        "share_pct": 20.24
+      },
+      {
+        "landing": "/en/affiliate/cloud-gpu/",
+        "clicks": 14,
+        "share_pct": 16.67
+      }
+    ]
+  },
+  "data_quality": {
+    "search_console_items": 4,
+    "affiliate_event_items_total": 0,
+    "affiliate_event_items_in_window": 0,
+    "has_affiliate_event_feed": false,
+    "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
+  }
+}

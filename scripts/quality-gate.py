@@ -17,6 +17,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "retirement-candidates.json",
     ROOT / "src" / "data" / "retirement-proposal.json",
     ROOT / "src" / "data" / "search-console-keywords.json",
+    ROOT / "src" / "data" / "conversion-funnel.json",
 ]
 REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "models" / "index.astro",
@@ -24,6 +25,7 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "models" / "group" / "[group].astro",
     ROOT / "src" / "pages" / "en" / "benchmarks" / "changelog.astro",
     ROOT / "src" / "pages" / "en" / "benchmarks" / "submit-result.astro",
+    ROOT / "src" / "pages" / "en" / "status" / "conversion-funnel.astro",
 ]
 
 
@@ -71,6 +73,12 @@ def main() -> None:
             print(f"- Error: Model '{tag}' found in results but missing in catalog.")
         sys.exit(1)
     print(f"benchmark tag alignment ok: {len(benchmark_map)} measured tag(s)")
+
+    conversion = json.loads((ROOT / "src" / "data" / "conversion-funnel.json").read_text(encoding="utf-8-sig"))
+    if not isinstance(conversion.get("funnel"), dict):
+        print("quality gate failed: conversion-funnel.json missing funnel object")
+        sys.exit(1)
+    print("conversion funnel snapshot ok")
 
     blog_dir = ROOT / "src" / "content" / "blog"
     if not blog_dir.exists():

@@ -4,7 +4,10 @@ Production domain: `https://localvram.com`
 
 Repository: `https://github.com/kxz2009-crypto/localvram/`
 
-Operations runbook: `docs/retirement-runbook.md`
+Operations runbooks:
+
+- `docs/retirement-runbook.md`
+- `docs/conversion-funnel-runbook.md`
 
 ## Stack
 
@@ -49,6 +52,8 @@ npm run dev
 - Status freshness: `src/data/status.json`
 - Content opportunities: `src/data/content-opportunities.json`
 - Search Console backfeed: `src/data/search-console-keywords.json`
+- Affiliate click export (sanitized): `src/data/affiliate-click-events.json`
+- Conversion funnel snapshot: `src/data/conversion-funnel.json`
 - CTA mapping: `src/data/cta-rules.json`
 - Model catalog (200+): `src/data/model-catalog.json`
 - Measured benchmark map: `src/data/benchmark-results.json` (keyed by `ollama_tag`)
@@ -65,6 +70,7 @@ npm run dev
 - `python scripts/daily-content-agent.py`
 - `python scripts/build-model-catalog.py`
 - `python scripts/build-sitemap.py`
+- `python scripts/build-conversion-funnel.py`
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
 - `python scripts/resolve-weekly-targets.py`
@@ -138,6 +144,7 @@ Weekly collect/publish split:
 - Publish workflow performs a follow-up lightweight commit for `src/data/pipeline-status.json` so the publish run conclusion is persisted even when the main publish commit has already been pushed.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
+- Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).
 
 Cluster benchmark (`scripts/cluster-benchmark.py`):
 

@@ -1,0 +1,160 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import report from "../../../data/conversion-funnel.json";
+
+const funnel = report.funnel || {};
+const breakdown = report.breakdown || {};
+const quality = report.data_quality || {};
+const providerRows = Array.isArray(breakdown.providers) ? breakdown.providers : [];
+const routeRows = Array.isArray(breakdown.routes) ? breakdown.routes : [];
+const sourceRows = Array.isArray(breakdown.source_pages) ? breakdown.source_pages : [];
+const landingRows = Array.isArray(breakdown.search_landings) ? breakdown.search_landings : [];
+---
+
+<BaseLayout
+  title="Conversion Funnel | LocalVRAM"
+  description="Search intent to affiliate redirect funnel snapshot."
+  locale="en"
+>
+  <main class="container">
+    <h1>Conversion Funnel</h1>
+    <p>SEO clicks, decision-page demand, and affiliate redirect clicks in one snapshot.</p>
+
+    <div class="card-grid">
+      <article class="card">
+        <h2>Organic Search Clicks</h2>
+        <p>{funnel.organic_search_clicks ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Decision Page Clicks</h2>
+        <p>{funnel.decision_page_clicks ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Affiliate Redirect Clicks</h2>
+        <p>{funnel.affiliate_redirect_clicks ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Cloud Redirect Clicks</h2>
+        <p>{funnel.cloud_redirect_clicks ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Hardware Redirect Clicks</h2>
+        <p>{funnel.hardware_redirect_clicks ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Search → Affiliate CTR</h2>
+        <p>{funnel.search_to_affiliate_pct ?? 0}%</p>
+      </article>
+    </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Data Window</h2>
+      <p>Window: {report.window_start || "unknown"} → {report.window_end || "unknown"} ({report.window_days || 0} days)</p>
+      <p>Generated: {report.generated_at || "unknown"}</p>
+      <p>Search Console Updated: {report.sources?.search_console_updated_at || "unknown"}</p>
+      <p>{quality.note || "-"}</p>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Provider Breakdown</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Clicks</th>
+            <th>Share</th>
+          </tr>
+        </thead>
+        <tbody>
+          {providerRows.length === 0 ? (
+            <tr><td colSpan={3}>No affiliate events in current window.</td></tr>
+          ) : (
+            providerRows.map((row) => (
+              <tr>
+                <td>{row.provider || "unknown"}</td>
+                <td>{row.clicks ?? 0}</td>
+                <td>{row.share_pct ?? 0}%</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Top Routes</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Route</th>
+            <th>Clicks</th>
+            <th>Share</th>
+          </tr>
+        </thead>
+        <tbody>
+          {routeRows.length === 0 ? (
+            <tr><td colSpan={3}>No route click data in current window.</td></tr>
+          ) : (
+            routeRows.map((row) => (
+              <tr>
+                <td>{row.route || "/unknown"}</td>
+                <td>{row.clicks ?? 0}</td>
+                <td>{row.share_pct ?? 0}%</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Top Source Pages (Referer)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Page</th>
+            <th>Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sourceRows.length === 0 ? (
+            <tr><td colSpan={2}>No source-page click data in current window.</td></tr>
+          ) : (
+            sourceRows.map((row) => (
+              <tr>
+                <td>{row.page || "unknown"}</td>
+                <td>{row.clicks ?? 0}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Top Search Landing Pages</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Landing</th>
+            <th>Clicks</th>
+            <th>Share</th>
+          </tr>
+        </thead>
+        <tbody>
+          {landingRows.length === 0 ? (
+            <tr><td colSpan={3}>No Search Console landing data found.</td></tr>
+          ) : (
+            landingRows.map((row) => (
+              <tr>
+                <td>{row.landing || "/unknown"}</td>
+                <td>{row.clicks ?? 0}</td>
+                <td>{row.share_pct ?? 0}%</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>

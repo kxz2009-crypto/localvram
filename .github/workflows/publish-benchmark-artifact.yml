@@ -278,6 +278,9 @@ jobs:
       - name: Build sitemap
         run: python scripts/build-sitemap.py
 
+      - name: Build conversion funnel snapshot
+        run: python scripts/build-conversion-funnel.py
+
       - name: Run quality gate
         run: python scripts/quality-gate.py
 
@@ -289,7 +292,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/weekly-target-plan.json src/data/retired-models.json src/data/retirement-candidates.json src/data/retirement-proposal.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
+          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/weekly-target-plan.json src/data/retired-models.json src/data/retirement-candidates.json src/data/retirement-proposal.json src/data/conversion-funnel.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
 
           if git diff --cached --quiet; then
             echo "publish_result=no_changes"
