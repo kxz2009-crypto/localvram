@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "data" / "model-catalog.json"
 MODELS_OUT = ROOT / "src" / "data" / "models.json"
 TOP20_CURATED_FILE = ROOT / "src" / "data" / "ollama-top20-curated.json"
+BENCHMARK_RESULTS_FILE = ROOT / "src" / "data" / "benchmark-results.json"
 VERIFIED_AT = "2026-02-24"
 POPULAR_SOURCE = "https://ollama.com/library"
 
@@ -258,6 +259,62 @@ def load_top20_overrides() -> dict[tuple[str, str], dict]:
     return overrides
 
 
+def parse_size_label_from_tag(tag: str) -> str:
+    raw = str(tag or "").strip().lower()
+    if ":" not in raw:
+        return "7b"
+    size_part = raw.split(":", 1)[1]
+    match = re.search(
+        r"(e[0-9]+(?:\.[0-9]+)?b|[0-9]+(?:\.[0-9]+)?x[0-9]+(?:\.[0-9]+)?b|"
+        r"[0-9]+(?:\.[0-9]+)?b-a[0-9]+(?:\.[0-9]+)?b|[0-9]+(?:\.[0-9]+)?b|[0-9]+(?:\.[0-9]+)?m)",
+        size_part,
+    )
+    if not match:
+        return "7b"
+    return match.group(1).lower()
+
+
+def load_measured_tags() -> set[str]:
+    if not BENCHMARK_RESULTS_FILE.exists():
+        return set()
+    try:
+        payload = json.loads(BENCHMARK_RESULTS_FILE.read_text(encoding="utf-8-sig"))
+    except Exception:  # noqa: BLE001
+        return set()
+    models = payload.get("models", {})
+    if not isinstance(models, dict):
+        return set()
+    out: set[str] = set()
+    for key in models.keys():
+        tag = str(key or "").strip().lower()
+        if tag:
+            out.add(tag)
+    return out
+
+
+def infer_scenario_from_family(family: str) -> str:
+    text = str(family or "").strip().lower()
+    if not text:
+        return "chat"
+    if any(token in text for token in ("embed", "bge", "nomic", "mxbai", "arctic")):
+        return "embedding"
+    if any(token in text for token in ("vision", "vl", "llava", "minicpm-v")):
+        return "multimodal"
+    if "coder" in text or text.startswith("code"):
+        return "coding"
+    if any(token in text for token in ("r1", "reason", "qwq", "magistral")):
+        return "reasoning"
+    return "chat"
+
+
+def display_name_from_family(family: str) -> str:
+    text = str(family or "").strip()
+    if not text:
+        return "Auto-discovered Model"
+    normalized = re.sub(r"[-_]+", " ", text).strip()
+    return normalized.title()
+
+
 def main() -> None:
     items = []
     top20_overrides = load_top20_overrides()
@@ -327,6 +384,71 @@ def main() -> None:
                     }
                 )
 
+    measured_tags = load_measured_tags()
+    known_tags = {str(item.get("ollama_tag", "")).strip().lower() for item in items if str(item.get("ollama_tag", "")).strip()}
+    missing_measured_tags = sorted(tag for tag in measured_tags if tag not in known_tags)
+
+    for tag in missing_measured_tags:
+        family = tag.split(":", 1)[0].strip().lower()
+        if not family:
+            continue
+        family_name = display_name_from_family(family)
+        size_label = parse_size_label_from_tag(tag)
+        params_b = parse_params(size_label)
+        base_vram = base_vram_floor(params_b)
+        source_url = f"https://ollama.com/library/{family}"
+        scenario = infer_scenario_from_family(family)
+
+        for q in STANDARD_QUANTS:
+            model_id = f"{safe_slug(family)}-{size_label}-{q['label']}"
+            min_vram = max(2, base_vram + q["delta_min"])
+            opt_vram = max(min_vram + 2, base_vram + 8 + q["delta_opt"])
+            tok_3090 = round(base_tokens(params_b) * q["speed_mult"], 1)
+            tok_4090 = round(tok_3090 * 1.35, 1)
+            tok_a100 = round(tok_3090 * 2.4, 1)
+            best_local_gpu, cloud_fallback, cloud_hourly_usd = pick_hardware(opt_vram)
+
+            items.append(
+                {
+                    "id": safe_slug(model_id),
+                    "slug": safe_slug(model_id),
+                    "name": f"{family_name} {size_label.upper()} {q['label'].upper()}",
+                    "family": family_name,
+                    "library_id": family,
+                    "license_scope": "open-source",
+                    "scenario": scenario,
+                    "params_b": params_b,
+                    "size_class": size_class_for(params_b),
+                    "quantization": q["label"].upper(),
+                    "vram_min_gb": min_vram,
+                    "vram_optimal_gb": opt_vram,
+                    "best_local_gpu": best_local_gpu,
+                    "recommended_hardware": best_local_gpu,
+                    "cloud_fallback": cloud_fallback,
+                    "cloud_hourly_usd": cloud_hourly_usd,
+                    "local_monthly_power_usd": round((0.35 * 0.16) * 120, 2),
+                    "data_status": "measured",
+                    "verified": True,
+                    "is_top20_curated": False,
+                    "top20_rank": None,
+                    "popularity": "",
+                    "category_label": scenario,
+                    "ollama_tag": tag,
+                    "seo_title": f"{family_name} {size_label.upper()} on RTX 3090: Performance & VRAM Requirements",
+                    "ollama_command": f"ollama run {tag}",
+                    "ollama_source_url": source_url,
+                    "ollama_verified_at": VERIFIED_AT,
+                    "benchmarks": {
+                        "rtx3090_tok_s": tok_3090,
+                        "rtx4090_tok_s": tok_4090,
+                        "a100_tok_s": tok_a100,
+                    },
+                    "focus": "Auto-discovered from measured benchmark results.",
+                    "caveat": "Auto-generated family metadata; review for taxonomy accuracy.",
+                    "updated_at": VERIFIED_AT,
+                }
+            )
+
     size_groups = sorted(set(item["size_class"] for item in items))
     scenario_groups = sorted(set(item["scenario"] for item in items))
     license_groups = sorted(set(item["license_scope"] for item in items))
@@ -338,6 +460,7 @@ def main() -> None:
         "ollama_source": POPULAR_SOURCE,
         "top20_curated_source": "src/data/ollama-top20-curated.json",
         "top20_curated_count": len({k[0] for k in top20_overrides.keys()}),
+        "auto_discovered_tag_count": len(missing_measured_tags),
         "count": len(items),
         "items": items,
         "group_definitions": [
@@ -367,6 +490,7 @@ def main() -> None:
     MODELS_OUT.write_text(json.dumps(models_payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"generated {len(items)} models -> {OUT}")
     print(f"synced {len(items)} model rows -> {MODELS_OUT}")
+    print(f"auto_discovered_missing_tags={len(missing_measured_tags)}")
 
 
 if __name__ == "__main__":

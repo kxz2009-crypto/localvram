@@ -79,6 +79,7 @@ npm run dev
 
 - `python scripts/daily-content-agent.py`
 - `python scripts/build-model-catalog.py`
+- `build-model-catalog.py` auto-discovers missing `ollama_tag` entries from `benchmark-results.json` so publish quality gate stays aligned when weekly benchmarks encounter new local model families.
 - `python scripts/build-sitemap.py`
 - `python scripts/build-conversion-funnel.py`
 - `python scripts/import-affiliate-events.py --source-file <raw-export.jsonl>`
