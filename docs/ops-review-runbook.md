@@ -32,6 +32,19 @@ python scripts/ops-review.py content \
 
 Optional: include `--quality-gate` to run `scripts/quality-gate.py` after the action.
 
+Auto commit + push (optional):
+
+```bash
+python scripts/ops-review.py content \
+  --queue-date 2026-02-26 \
+  --drafts 03-en-tools-quantization-blind-test.md \
+  --action reject \
+  --reviewer ops \
+  --note "existing slug/topic duplicate" \
+  --git-commit \
+  --git-push
+```
+
 ## 2) Submission manual review
 
 Approve/reject/needs info:
@@ -51,6 +64,10 @@ Optional flags:
 - `--skip-snapshot-refresh`: skip `build-submission-review.py`
 - `--allow-non-pending`: allow re-reviewing non-pending rows
 - `--quality-gate`: run `scripts/quality-gate.py` at end
+- `--git-commit`: stage only review-related files and commit
+- `--git-push`: push after commit (requires `--git-commit`)
+- `--git-commit-message`: custom commit message
+- `--allow-prestaged`: allow committing even if staged files already exist
 
 ## 3) Notes
 
@@ -58,3 +75,4 @@ Optional flags:
   - `scripts/review-content-drafts.py`
   - `scripts/review-community-submissions.py`
 - Use `ops-review.py` as the default operator command to reduce manual mistakes and command drift.
+- Safety default: auto-commit mode refuses to run when pre-staged files exist, to avoid accidental mixed commits.
