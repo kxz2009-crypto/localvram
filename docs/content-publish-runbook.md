@@ -25,8 +25,14 @@ The gate updates each draft `status`:
 Manual review actions:
 
 ```bash
+python scripts/ops-review.py content --queue-date 2026-02-26 --slugs q4-vs-q8-quality-loss --action approve --reviewer ops
+python scripts/ops-review.py content --queue-date 2026-02-26 --drafts 03-en-tools-quantization-blind-test.md --action reject --reviewer ops --note "low factual value"
+```
+
+Legacy direct command (still supported):
+
+```bash
 python scripts/review-content-drafts.py --queue-date 2026-02-26 --slugs q4-vs-q8-quality-loss --action approve --reviewer ops
-python scripts/review-content-drafts.py --queue-date 2026-02-26 --drafts 03-en-tools-quantization-blind-test.md --action reject --reviewer ops --note "low factual value"
 ```
 
 ## 3) Auto-publish command

@@ -11,6 +11,7 @@ Operations runbooks:
 - `docs/submission-review-runbook.md`
 - `docs/content-publish-runbook.md`
 - `docs/pipeline-slo-runbook.md`
+- `docs/ops-review-runbook.md`
 
 ## Stack
 
@@ -84,6 +85,7 @@ npm run dev
 - `python scripts/build-submission-review.py`
 - `python scripts/review-content-queue.py`
 - `python scripts/review-content-drafts.py --queue-date <YYYY-MM-DD> --slugs <slug1,slug2> --action approve|reject|needs_info`
+- `python scripts/ops-review.py content --action approve|reject|needs_info --drafts <draft1.md,draft2.md> --reviewer ops`
 - `python scripts/publish-content-queue.py`
 - `python scripts/build-pipeline-slo.py`
 - `python scripts/quality-gate.py`
@@ -100,6 +102,7 @@ npm run dev
 - `python scripts/report-data-freshness.py`
 - `python scripts/score-user-submission.py`
 - `python scripts/review-community-submissions.py --submission-ids <id1,id2> --action approve|reject|needs_info`
+- `python scripts/ops-review.py submission --submission-ids <id1,id2> --action approve|reject|needs_info --reviewer ops`
 - `python scripts/run-publish-workflow.py --gh-path "<gh.exe path>"`
 
 ## Benchmark Runtime Controls

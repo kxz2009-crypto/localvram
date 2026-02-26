@@ -61,36 +61,38 @@ Checks include:
 Approve one or more pending submissions:
 
 ```bash
-python scripts/review-community-submissions.py \
+python scripts/ops-review.py submission \
   --submission-ids f9ba21e73260,4d9248019034 \
   --action approve \
   --reviewer ops:gao20 \
-  --notes "validated logs and reproducibility"
+  --note "validated logs and reproducibility"
 ```
 
 Reject pending submissions:
 
 ```bash
-python scripts/review-community-submissions.py \
+python scripts/ops-review.py submission \
   --submission-ids a1d1d3edd2dd \
   --action reject \
   --reviewer ops:gao20 \
-  --notes "missing reproducible logs"
+  --note "missing reproducible logs"
 ```
 
 Ask for more information:
 
 ```bash
-python scripts/review-community-submissions.py \
+python scripts/ops-review.py submission \
   --submission-ids dca6301c40c8 \
   --action needs_info \
   --reviewer ops:gao20 \
-  --notes "please attach exact prompt/context and raw run logs"
+  --note "please attach exact prompt/context and raw run logs"
 ```
 
 After any review action:
 
 ```bash
-python scripts/build-submission-review.py
 python scripts/quality-gate.py
 ```
+
+`ops-review.py submission` refreshes `submission-review.json` by default.  
+Use `--skip-snapshot-refresh` only when you explicitly want to defer snapshot update.
