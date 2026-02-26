@@ -42,6 +42,7 @@ python scripts/run-weekly-publish-pipeline.py `
 - `--smoke-required-targets "<csv>"`: optional smoke required target override.
 - `--smoke-restart-if-empty true|false`: forwarded to smoke input (default `true`).
 - `--smoke-retry-delays-s "5,10,20"`: smoke input retry CSV (defaults to `--retry-delays-s` when empty).
+- `--retry-weekly-after-smoke true|false`: when `weekly` fails but `smoke` succeeds, auto-dispatch one retry weekly run (default `false`).
 
 ## 4) Preconditions
 
@@ -55,6 +56,7 @@ python scripts/run-weekly-publish-pipeline.py `
 - Script now prints `weekly_failure_class` / `weekly_failure_detail` and a short failed-log excerpt when available.
 - By default it also dispatches `Runner Smoke Check` and prints `smoke_run_id`, `smoke_run_url`, and `smoke_conclusion`.
 - If smoke also fails, script prints `smoke_failure_class` / `smoke_failure_detail` and log hint command.
+- Optional auto-retry: set `--retry-weekly-after-smoke true` to run one extra weekly attempt after a successful smoke run.
 - Re-run after fixing runner/Ollama issue:
   - `Weekly Benchmark`
   - then this script again.

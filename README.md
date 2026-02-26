@@ -174,6 +174,7 @@ Weekly collect/content/publish split:
 - Recommended manual dispatch wrapper: `scripts/run-publish-workflow.py` (auto-resolves latest successful weekly run ID, dispatches publish with retry, and watches run result).
 - Recommended one-shot orchestrator: `scripts/run-weekly-publish-pipeline.py` (dispatch weekly benchmark, wait for success, then auto-dispatch publish).
 - Orchestrator failure drill-down: when weekly fails, `run-weekly-publish-pipeline.py` prints weekly failure class/detail and (by default) auto-dispatches `Runner Smoke Check`, then prints smoke run/conclusion for rapid triage.
+- Optional recovery mode: add `--retry-weekly-after-smoke true` so orchestrator retries one weekly run after smoke success (useful for transient network/service blips).
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 - Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).

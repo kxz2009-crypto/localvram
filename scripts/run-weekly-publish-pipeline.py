@@ -361,6 +361,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--smoke-required-targets", default="")
     parser.add_argument("--smoke-restart-if-empty", choices=["true", "false"], default="true")
     parser.add_argument("--smoke-retry-delays-s", default="")
+    parser.add_argument("--retry-weekly-after-smoke", choices=["true", "false"], default="false")
     return parser.parse_args()
 
 
@@ -391,6 +392,7 @@ def main() -> int:
         print(f"weekly_conclusion={conclusion or 'unknown'}")
         if conclusion != "success":
             print_failure_hint(args.gh_path, args.repo, weekly_run_id, retry_delays, label="weekly")
+            smoke_conclusion = ""
             if args.run_smoke_on_weekly_failure == "true":
                 print("phase=dispatch_smoke_after_weekly_failure", flush=True)
                 smoke_retry_delays_s = str(args.smoke_retry_delays_s).strip() or str(args.retry_delays_s).strip()
@@ -414,7 +416,34 @@ def main() -> int:
                 print(f"smoke_conclusion={smoke_conclusion or 'unknown'}")
                 if smoke_conclusion != "success":
                     print_failure_hint(args.gh_path, args.repo, smoke_run_id, retry_delays, label="smoke")
-            raise RuntimeError(f"weekly benchmark run did not succeed: {weekly_run_id}")
+            if args.retry_weekly_after_smoke == "true" and smoke_conclusion == "success":
+                print("phase=retry_weekly_after_smoke", flush=True)
+                retry_weekly_run_id = dispatch_weekly(
+                    gh_path=args.gh_path,
+                    repo=args.repo,
+                    workflow=args.weekly_workflow,
+                    include_heavy_targets=bool(args.include_heavy_targets),
+                    extra_targets=str(args.extra_targets),
+                    benchmark_timeout_s=str(args.benchmark_timeout_s),
+                    retry_delays=retry_delays,
+                    poll_interval_s=int(args.poll_interval_s),
+                    poll_timeout_s=int(args.poll_timeout_s),
+                )
+                print(f"phase=watch_weekly_retry run_id={retry_weekly_run_id}", flush=True)
+                retry_watch_ok = watch_run(args.gh_path, args.repo, retry_weekly_run_id, retry_delays)
+                if not retry_watch_ok:
+                    print("watch_status=weekly_retry_nonzero_continue_to_conclusion_check", flush=True)
+                retry_conclusion = run_view_field(args.gh_path, args.repo, retry_weekly_run_id, "conclusion", retry_delays).lower()
+                print(f"weekly_retry_conclusion={retry_conclusion or 'unknown'}")
+                if retry_conclusion == "success":
+                    weekly_run_id = retry_weekly_run_id
+                    conclusion = retry_conclusion
+                    print(f"weekly_recovered_by_retry_run_id={weekly_run_id}")
+                else:
+                    print_failure_hint(args.gh_path, args.repo, retry_weekly_run_id, retry_delays, label="weekly_retry")
+                    raise RuntimeError(f"weekly benchmark retry did not succeed: {retry_weekly_run_id}")
+            if conclusion != "success":
+                raise RuntimeError(f"weekly benchmark run did not succeed: {weekly_run_id}")
 
         if args.skip_publish:
             print("publish_skipped=true")
