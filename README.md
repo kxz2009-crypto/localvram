@@ -4,6 +4,8 @@ Production domain: `https://localvram.com`
 
 Repository: `https://github.com/kxz2009-crypto/localvram/`
 
+Operations runbook: `docs/retirement-runbook.md`
+
 ## Stack
 
 - Static site: Astro
