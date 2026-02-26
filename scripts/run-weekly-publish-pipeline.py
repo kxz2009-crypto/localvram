@@ -260,7 +260,9 @@ def main() -> int:
     args = parse_args()
     retry_delays = parse_retry_delays(args.retry_delays_s)
     try:
+        print("phase=auth_check", flush=True)
         assert_gh_auth(args.gh_path, retry_delays)
+        print("phase=dispatch_weekly", flush=True)
         weekly_run_id = dispatch_weekly(
             gh_path=args.gh_path,
             repo=args.repo,
@@ -272,7 +274,9 @@ def main() -> int:
             poll_interval_s=int(args.poll_interval_s),
             poll_timeout_s=int(args.poll_timeout_s),
         )
+        print(f"phase=watch_weekly run_id={weekly_run_id}", flush=True)
         watch_run(args.gh_path, args.repo, weekly_run_id, retry_delays)
+        print(f"phase=weekly_completed run_id={weekly_run_id}", flush=True)
         conclusion = run_view_field(args.gh_path, args.repo, weekly_run_id, "conclusion", retry_delays).lower()
         print(f"weekly_conclusion={conclusion or 'unknown'}")
         if conclusion != "success":
@@ -282,6 +286,7 @@ def main() -> int:
             print("publish_skipped=true")
             return 0
 
+        print(f"phase=dispatch_publish source_weekly_run_id={weekly_run_id}", flush=True)
         run_publish_wrapper(
             gh_path=args.gh_path,
             repo=args.repo,
@@ -291,6 +296,7 @@ def main() -> int:
             retirement_max_seen_ok_count=int(args.retirement_max_seen_ok_count),
             retry_delays_s=str(args.retry_delays_s),
         )
+        print("phase=pipeline_completed", flush=True)
         return 0
     except Exception as exc:
         print(f"error={exc}", file=sys.stderr)
