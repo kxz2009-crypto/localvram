@@ -47,3 +47,7 @@ The SLO snapshot now includes:
 - `weekly-benchmark.yml` rebuilds `pipeline-slo.json` after weekly status snapshot update.
 - `publish-benchmark-artifact.yml` rebuilds SLO before quality gate and again after publish final status update.
 - `daily-content.yml` rebuilds SLO to keep status pages and quality checks aligned.
+- `publish-fallback-drill.yml` provides a manual reliability drill:
+  - dispatches publish with an invalid `source_run_id`
+  - waits for completion
+  - asserts fallback evidence (`source_meta_fallback_run_id=`) exists in publish logs

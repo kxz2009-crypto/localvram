@@ -1,0 +1,76 @@
+name: Publish Fallback Drill
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  drill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Capture latest publish run baseline
+        id: baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          baseline_id="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/publish-benchmark-artifact.yml/runs?event=workflow_dispatch&per_page=1" --jq '.workflow_runs[0].id // ""' 2>/dev/null | tr -d '[:space:]')"
+          echo "baseline_id=${baseline_id}" >> "${GITHUB_OUTPUT}"
+          echo "baseline_id=${baseline_id}"
+
+      - name: Dispatch publish workflow with invalid source_run_id
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          invalid_id="drill-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "invalid_source_run_id=${invalid_id}"
+          gh workflow run "publish-benchmark-artifact.yml" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --field "source_run_id=${invalid_id}"
+
+      - name: Resolve dispatched run id
+        id: dispatched
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASELINE_ID: ${{ steps.baseline.outputs.baseline_id }}
+        run: |
+          target_id=""
+          for attempt in $(seq 1 30); do
+            latest_id="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/publish-benchmark-artifact.yml/runs?event=workflow_dispatch&per_page=5" --jq '.workflow_runs[0].id // ""' 2>/dev/null | tr -d '[:space:]')"
+            if [ -n "${latest_id}" ] && [ "${latest_id}" != "${BASELINE_ID}" ]; then
+              target_id="${latest_id}"
+              break
+            fi
+            sleep 5
+          done
+
+          if [ -z "${target_id}" ]; then
+            echo "::error::failed to locate newly dispatched publish run id"
+            exit 1
+          fi
+
+          echo "run_id=${target_id}" >> "${GITHUB_OUTPUT}"
+          echo "dispatch_run_id=${target_id}"
+
+      - name: Wait for publish completion
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_RUN_ID: ${{ steps.dispatched.outputs.run_id }}
+        run: |
+          gh run watch "${TARGET_RUN_ID}" --repo "${GITHUB_REPOSITORY}" --exit-status
+
+      - name: Assert fallback evidence in logs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_RUN_ID: ${{ steps.dispatched.outputs.run_id }}
+        run: |
+          gh run view "${TARGET_RUN_ID}" --repo "${GITHUB_REPOSITORY}" --log > /tmp/publish-drill.log
+          if grep -q "source_meta_fallback_run_id=" /tmp/publish-drill.log; then
+            echo "fallback_evidence=source_meta_fallback_run_id"
+            exit 0
+          fi
+          echo "::error::fallback evidence not found in publish logs"
+          tail -n 120 /tmp/publish-drill.log || true
+          exit 1

@@ -159,7 +159,9 @@ Weekly collect/publish split:
 - Weekly benchmark schedule: `02:10 UTC every Wednesday` (US Tuesday evening window).
 - `Publish Benchmark Artifact` (workflow_run/manual) downloads that artifact, validates JSON payloads, rebuilds catalog/sitemap, and pushes with retry backoff (`5,10,20` default) + 429-aware wait (`rate_limit_delay_s`, default `60`) + jitter.
 - Manual `Publish Benchmark Artifact` dispatch can leave `source_run_id` empty; workflow auto-resolves the latest successful `weekly-benchmark.yml` run ID.
+- Invalid/manual `source_run_id` is guarded: publish now verifies source run is `Weekly Benchmark` + `completed/success`, and auto-falls back to latest successful weekly run when needed.
 - Publish workflow performs a follow-up lightweight commit for `src/data/pipeline-status.json` so the publish run conclusion is persisted even when the main publish commit has already been pushed.
+- Drill workflow: `Publish Fallback Drill` (manual) dispatches publish with invalid `source_run_id` and asserts fallback evidence in logs.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 - Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).
