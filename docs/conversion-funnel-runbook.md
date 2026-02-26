@@ -54,6 +54,28 @@ Optional window override:
 python scripts/build-conversion-funnel.py --window-days 14
 ```
 
+## 3.1) One-shot refresh (import -> build -> validate -> optional commit/push)
+
+Use the helper script to run the full pipeline in one command:
+
+```bash
+python scripts/refresh-affiliate-funnel.py --source-file logs/affiliate-events-export.jsonl
+```
+
+Include commit + push after a successful refresh:
+
+```bash
+python scripts/refresh-affiliate-funnel.py --source-file logs/affiliate-events-export.jsonl --git-commit --git-push
+```
+
+Useful options:
+
+- `--source-format auto|json|jsonl`
+- `--source-label <label>`
+- `--window-days 30`
+- `--skip-quality-gate`
+- `--commit-message "data: refresh affiliate events and conversion funnel"`
+
 ## 4) Validation
 
 ```bash
