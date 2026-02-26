@@ -21,6 +21,9 @@ FAILURE_ACTIONS = {
     "weekly_benchmark_failed": "Inspect runner diagnostics and preflight output for Ollama visibility/target coverage.",
     "ollama_not_visible": "Restart managed Ollama service and verify /api/tags availability on runner.",
     "model_missing": "Align weekly targets with locally installed model tags and retirement policy.",
+    "daily_content_failed": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers.",
+    "daily_content_push_failure": "Check repository write permissions and retry pushing daily content updates.",
+    "daily_content_status_sync_failure": "Verify post-failure status sync commit in Daily Content Agent workflow.",
 }
 
 
@@ -109,6 +112,7 @@ def workflow_display_name(workflow_key: str) -> str:
     mapping = {
         "weekly_benchmark": "Weekly Benchmark",
         "publish_benchmark_artifact": "Publish Benchmark Artifact",
+        "daily_content": "Daily Content Agent",
     }
     return mapping.get(workflow_key, workflow_key)
 
@@ -117,7 +121,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build pipeline SLO snapshot from pipeline-status history.")
     parser.add_argument("--status-file", default=str(DEFAULT_STATUS_FILE))
     parser.add_argument("--output-file", default=str(DEFAULT_OUT_FILE))
-    parser.add_argument("--workflow-keys", default="weekly_benchmark,publish_benchmark_artifact")
+    parser.add_argument("--workflow-keys", default="weekly_benchmark,daily_content,publish_benchmark_artifact")
     parser.add_argument("--target-success-rate", type=float, default=95.0)
     parser.add_argument("--window-days", default="7,28")
     parser.add_argument("--history-limit", type=int, default=120)
@@ -204,7 +208,7 @@ def main() -> None:
             failure = total - success
             rate = safe_rate(success, total)
             slo_met = bool(total > 0 and rate >= target_success_rate)
-            if days >= 28 and not slo_met:
+            if days >= 28 and total > 0 and not slo_met:
                 pipeline_slo_met = False
             fail_key, fail_count = top_failure_class(scoped)
             top_failure_rows = top_failures(scoped, limit=3)

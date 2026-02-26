@@ -45,14 +45,15 @@ type FailureRecommendation = {
 };
 
 const workflowsMap = (pipelineStatus.workflows || {}) as Record<string, WorkflowRow>;
-const preferredOrder = ["weekly_benchmark", "publish_benchmark_artifact"];
+const preferredOrder = ["weekly_benchmark", "daily_content", "publish_benchmark_artifact"];
+const orderedKeys = [
+  ...preferredOrder.filter((key) => key in workflowsMap || key in ((pipelineSlo.workflows || {}) as Record<string, SloWorkflow>)),
+  ...Object.keys(workflowsMap).filter((key) => !preferredOrder.includes(key)),
+];
 const workflowRows: WorkflowRow[] = [
-  ...preferredOrder
+  ...orderedKeys
     .map((key) => workflowsMap[key])
     .filter((row): row is WorkflowRow => Boolean(row)),
-  ...Object.entries(workflowsMap)
-    .filter(([key]) => !preferredOrder.includes(key))
-    .map(([, value]) => value),
 ];
 
 const historyRows = Array.isArray(pipelineStatus.history) ? (pipelineStatus.history as WorkflowRow[]).slice(0, 12) : [];
@@ -74,7 +75,7 @@ const sloRows: Array<{
   streak: number;
   lastSuccess: string;
   lastFailure: string;
-}> = preferredOrder.map((key) => {
+}> = orderedKeys.map((key) => {
   const row = sloWorkflows[key] || {};
   const windows = (row.windows || {}) as Record<string, SloWindow>;
   return {
@@ -90,12 +91,12 @@ const sloRows: Array<{
 
 <BaseLayout
   title="Pipeline Status | LocalVRAM"
-  description="Latest Weekly and Publish workflow status snapshots."
+  description="Latest Weekly, Daily Content, and Publish workflow status snapshots."
   locale="en"
 >
   <main class="container">
     <h1>Pipeline Status</h1>
-    <p>Latest workflow snapshots for benchmark collection and publish pipeline.</p>
+    <p>Latest workflow snapshots for benchmark collection, daily content, and publish pipeline.</p>
 
     <div class="card-grid">
       <article class="card">

@@ -6,6 +6,7 @@
   "pipeline_slo_met": false,
   "workflow_keys": [
     "weekly_benchmark",
+    "daily_content",
     "publish_benchmark_artifact"
   ],
   "workflows": {
@@ -46,6 +47,51 @@
           "success_rate": 100.0,
           "target_success_rate": 95.0,
           "slo_met": true,
+          "top_failure_class": "none",
+          "top_failure_count": 0,
+          "top_failure_action": "",
+          "top_failures": [],
+          "failure_class_counts": {}
+        }
+      }
+    },
+    "daily_content": {
+      "workflow_key": "daily_content",
+      "workflow_name": "Daily Content Agent",
+      "latest_conclusion": "unknown",
+      "latest_updated_at": "",
+      "latest_run_id": "",
+      "latest_run_url": "",
+      "current_success_streak": 0,
+      "last_success_at": "",
+      "last_failure_at": "",
+      "windows": {
+        "7": {
+          "window_days": 7,
+          "window_start": "2026-02-19T08:54:25Z",
+          "window_end": "2026-02-26T08:54:25Z",
+          "total_runs": 0,
+          "success_runs": 0,
+          "failure_runs": 0,
+          "success_rate": 0.0,
+          "target_success_rate": 95.0,
+          "slo_met": false,
+          "top_failure_class": "none",
+          "top_failure_count": 0,
+          "top_failure_action": "",
+          "top_failures": [],
+          "failure_class_counts": {}
+        },
+        "28": {
+          "window_days": 28,
+          "window_start": "2026-01-29T08:54:25Z",
+          "window_end": "2026-02-26T08:54:25Z",
+          "total_runs": 0,
+          "success_runs": 0,
+          "failure_runs": 0,
+          "success_rate": 0.0,
+          "target_success_rate": 95.0,
+          "slo_met": false,
           "top_failure_class": "none",
           "top_failure_count": 0,
           "top_failure_action": "",
@@ -122,6 +168,7 @@
     "window_end": "2026-02-26T08:54:25Z",
     "summary_lines": [
       "Weekly Benchmark: 1/1 (100.0%), top failure=none",
+      "Daily Content Agent: 0/0 (0.0%), top failure=none",
       "Publish Benchmark Artifact: 4/5 (80.0%), top failure=artifact_download_failure"
     ]
   },
@@ -156,6 +203,9 @@
     "publish_push_failure": "Check repository write permission and remote health before retrying push.",
     "weekly_benchmark_failed": "Inspect runner diagnostics and preflight output for Ollama visibility/target coverage.",
     "ollama_not_visible": "Restart managed Ollama service and verify /api/tags availability on runner.",
-    "model_missing": "Align weekly targets with locally installed model tags and retirement policy."
+    "model_missing": "Align weekly targets with locally installed model tags and retirement policy.",
+    "daily_content_failed": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers.",
+    "daily_content_push_failure": "Check repository write permissions and retry pushing daily content updates.",
+    "daily_content_status_sync_failure": "Verify post-failure status sync commit in Daily Content Agent workflow."
   }
 }

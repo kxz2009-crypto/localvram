@@ -7,50 +7,406 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   daily-content:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v4
+        continue-on-error: true
+
+      - name: Classify checkout failure
+        if: steps.checkout.conclusion == 'failure'
+        run: |
+          mkdir -p logs
+          python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'checkout_network_failure','failure_detail':'actions/checkout failed before daily content scripts could run'}, ensure_ascii=False), encoding='utf-8')"
+          echo "::error title=FailureClass::checkout_network_failure - actions/checkout failed before daily content scripts could run"
+          exit 1
 
       - name: Setup Python
+        if: steps.checkout.conclusion == 'success'
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      - name: Prepare logs dir
+        if: always() && steps.checkout.conclusion == 'success'
+        run: mkdir -p logs
+
       - name: Run content agent
-        run: python scripts/daily-content-agent.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/daily-content-agent.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'daily-content-agent.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - daily-content-agent.py failed"
+            exit 1
+          fi
 
       - name: Review queue drafts risk gate
-        run: python scripts/review-content-queue.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/review-content-queue.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'review-content-queue.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - review-content-queue.py failed"
+            exit 1
+          fi
 
       - name: Auto-publish queue drafts to blog
-        run: python scripts/publish-content-queue.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/publish-content-queue.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'publish-content-queue.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - publish-content-queue.py failed"
+            exit 1
+          fi
 
       - name: Build model catalog
-        run: python scripts/build-model-catalog.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/build-model-catalog.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'build-model-catalog.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - build-model-catalog.py failed"
+            exit 1
+          fi
 
       - name: Build sitemap
-        run: python scripts/build-sitemap.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/build-sitemap.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'build-sitemap.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - build-sitemap.py failed"
+            exit 1
+          fi
 
       - name: Build conversion funnel snapshot
-        run: python scripts/build-conversion-funnel.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/build-conversion-funnel.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'build-conversion-funnel.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - build-conversion-funnel.py failed"
+            exit 1
+          fi
 
       - name: Build submission review snapshot
-        run: python scripts/build-submission-review.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/build-submission-review.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'build-submission-review.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - build-submission-review.py failed"
+            exit 1
+          fi
 
       - name: Build pipeline SLO snapshot
-        run: python scripts/build-pipeline-slo.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/build-pipeline-slo.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'build-pipeline-slo.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - build-pipeline-slo.py failed"
+            exit 1
+          fi
 
       - name: Run quality gate
-        run: python scripts/quality-gate.py
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/quality-gate.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'quality-gate.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - quality-gate.py failed"
+            exit 1
+          fi
 
       - name: Commit daily updates
+        if: steps.checkout.conclusion == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/content/blog public/sitemap.xml content-queue
-          git diff --cached --quiet || git commit -m "chore: daily content update"
-          git push
+          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/content/blog public/sitemap.xml content-queue
+
+          if git diff --cached --quiet; then
+            echo "daily_publish_result=no_changes"
+            exit 0
+          fi
+
+          git commit -m "chore: daily content update"
+
+          retry_parts=(5 10 20)
+          run_with_retry() {
+            local label="$1"
+            shift
+            local max_attempts=$(( ${#retry_parts[@]} + 1 ))
+            local attempt=0
+            local output=""
+            local last_rate_limited=0
+
+            while [ "${attempt}" -lt "${max_attempts}" ]; do
+              echo "${label}_attempt=${attempt}"
+              output="$("$@" 2>&1)" && { echo "${output}"; return 0; }
+              echo "${output}"
+              if [ "${attempt}" -ge "$((max_attempts - 1))" ]; then
+                break
+              fi
+
+              local wait_s="${retry_parts[${attempt}]}"
+              if echo "${output}" | grep -Eiq "429|too many requests|rate limit"; then
+                last_rate_limited=1
+                if [ 60 -gt "${wait_s}" ]; then
+                  wait_s=60
+                fi
+              fi
+              local jitter=$((RANDOM % 8))
+              sleep $((wait_s + jitter))
+              attempt=$((attempt + 1))
+            done
+            if [ "${last_rate_limited}" -eq 1 ]; then
+              python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_push_failure','failure_detail':'git push rate limited during daily content commit'}, ensure_ascii=False), encoding='utf-8')"
+            else
+              python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_push_failure','failure_detail':'git push failed during daily content commit'}, ensure_ascii=False), encoding='utf-8')"
+            fi
+            return 1
+          }
+
+          run_with_retry git_push git push
+
+      - name: Finalize pipeline status (daily)
+        id: pipeline_status_daily
+        if: always() && steps.checkout.conclusion == 'success'
+        env:
+          LV_JOB_STATUS: ${{ job.status }}
+        run: |
+          conclusion="success"
+          if [ "${LV_JOB_STATUS}" != "success" ]; then
+            conclusion="failure"
+          fi
+
+          failure_class=""
+          failure_detail=""
+          if [ -f logs/failure-context.json ]; then
+            failure_class="$(python -c "import json, pathlib; d=json.loads(pathlib.Path('logs/failure-context.json').read_text(encoding='utf-8')); print(str(d.get('failure_class','')).strip())" 2>/dev/null || true)"
+            failure_detail="$(python -c "import json, pathlib; d=json.loads(pathlib.Path('logs/failure-context.json').read_text(encoding='utf-8')); print(str(d.get('failure_detail','')).strip())" 2>/dev/null || true)"
+          fi
+          if [ "${conclusion}" = "success" ]; then
+            failure_class="none"
+            failure_detail=""
+          elif [ -z "${failure_class}" ] || [ "${failure_class}" = "none" ]; then
+            failure_class="daily_content_failed"
+          fi
+
+          python scripts/update-pipeline-status.py \
+            --workflow-key "daily_content" \
+            --workflow-name "Daily Content Agent" \
+            --run-id "${GITHUB_RUN_ID}" \
+            --run-url "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --status "completed" \
+            --conclusion "${conclusion}" \
+            --event "${GITHUB_EVENT_NAME}" \
+            --head-sha "${GITHUB_SHA}" \
+            --failure-class "${failure_class}" \
+            --failure-detail "${failure_detail}"
+
+          {
+            echo "conclusion=${conclusion}"
+            echo "failure_class=${failure_class}"
+            echo "failure_detail<<EOF"
+            echo "${failure_detail}"
+            echo "EOF"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Rebuild pipeline SLO snapshot (daily final)
+        if: always() && steps.checkout.conclusion == 'success'
+        run: python scripts/build-pipeline-slo.py
+
+      - name: Persist daily pipeline status snapshot
+        if: always() && steps.checkout.conclusion == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/pipeline-status.json src/data/pipeline-slo.json
+
+          if git diff --cached --quiet; then
+            echo "daily_status_sync=no_changes"
+            exit 0
+          fi
+
+          git commit -m "chore: sync daily pipeline status snapshot"
+
+          retry_parts=(5 10 20)
+          run_with_retry() {
+            local label="$1"
+            shift
+            local max_attempts=$(( ${#retry_parts[@]} + 1 ))
+            local attempt=0
+            local output=""
+            local last_rate_limited=0
+
+            while [ "${attempt}" -lt "${max_attempts}" ]; do
+              echo "${label}_attempt=${attempt}"
+              output="$("$@" 2>&1)" && { echo "${output}"; return 0; }
+              echo "${output}"
+              if [ "${attempt}" -ge "$((max_attempts - 1))" ]; then
+                break
+              fi
+
+              local wait_s="${retry_parts[${attempt}]}"
+              if echo "${output}" | grep -Eiq "429|too many requests|rate limit"; then
+                last_rate_limited=1
+                if [ 60 -gt "${wait_s}" ]; then
+                  wait_s=60
+                fi
+              fi
+              local jitter=$((RANDOM % 8))
+              sleep $((wait_s + jitter))
+              attempt=$((attempt + 1))
+            done
+
+            if [ "${last_rate_limited}" -eq 1 ]; then
+              python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_status_sync_failure','failure_detail':'git push rate limited while syncing daily pipeline status snapshot'}, ensure_ascii=False), encoding='utf-8')"
+            else
+              python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_status_sync_failure','failure_detail':'git push failed while syncing daily pipeline status snapshot'}, ensure_ascii=False), encoding='utf-8')"
+            fi
+            return 1
+          }
+
+          run_with_retry git_push git push
+
+      - name: Alert issue (daily checkout failure)
+        if: always() && steps.checkout.conclusion == 'failure'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Daily Content Agent
+          ALERT_FAILURE_CLASS: checkout_network_failure
+          ALERT_FAILURE_DETAIL: actions/checkout failed before daily content scripts could run
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const failureClass = process.env.ALERT_FAILURE_CLASS || "unknown_failure";
+            const failureDetail = process.env.ALERT_FAILURE_DETAIL || "";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const message = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: ${failureDetail || "-"}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: message
+              });
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: message
+              });
+            }
+
+      - name: Alert issue (daily failure)
+        if: always() && failure() && steps.checkout.conclusion == 'success'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Daily Content Agent
+          ALERT_FAILURE_CLASS: ${{ steps.pipeline_status_daily.outputs.failure_class }}
+          ALERT_FAILURE_DETAIL: ${{ steps.pipeline_status_daily.outputs.failure_detail }}
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            let failureClass = (process.env.ALERT_FAILURE_CLASS || "").trim();
+            const failureDetail = (process.env.ALERT_FAILURE_DETAIL || "").trim();
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            if (!failureClass || failureClass === "none") {
+              failureClass = "daily_content_failed";
+            }
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const message = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: ${failureDetail || "-"}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: message
+              });
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: message
+              });
+            }
+
+      - name: Resolve alert issues on recovery (daily)
+        if: always() && success() && steps.checkout.conclusion == 'success'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Daily Content Agent
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const prefix = `[OPS-ALERT] ${workflow}:`;
+            const now = new Date().toISOString();
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+
+            const targets = issues.filter((issue) => issue.title.startsWith(prefix));
+            for (const issue of targets) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: `Recovered at ${now}. Latest successful run: ${runUrl}`
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                state: "closed"
+              });
+            }

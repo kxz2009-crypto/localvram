@@ -138,8 +138,8 @@ Self-hosted runner preflight:
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
 - Single-instance governance checks classify runner-side ownership problems: `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`.
-- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `source_run_discovery_failure`, `source_run_metadata_failure`, `source_run_not_publishable`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`, `retirement_candidates_failure`, `retirement_review_failure`, `retirement_apply_prune_failure`.
-- Failure alerts: `Weekly Benchmark` and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
+- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `source_run_discovery_failure`, `source_run_metadata_failure`, `source_run_not_publishable`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`, `retirement_candidates_failure`, `retirement_review_failure`, `retirement_apply_prune_failure`, `daily_content_failed`, `daily_content_push_failure`, `daily_content_status_sync_failure`.
+- Failure alerts: `Weekly Benchmark`, `Daily Content Agent`, and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
 - Recovery handling: when workflow returns to success, open `[OPS-ALERT]` issues for that workflow are auto-commented and closed.
 - Model retirement: update `src/data/retired-models.json` to phase out old families/tags so they stop entering weekly targets and auto-backfill.
 
@@ -150,7 +150,7 @@ Smoke check workflow:
 - Scheduled and manual runs normalize missing inputs to defaults, then auto-resolve runnable families from local `/api/tags`.
 - Scheduled daily at `01:40 UTC` (US evening window).
 
-Weekly collect/publish split:
+Weekly collect/content/publish split:
 
 - `Weekly Benchmark` now runs only on self-hosted runner and uploads a `benchmark-collection` artifact.
 - Weekly target resolver writes `src/data/weekly-target-plan.json` and includes it in the benchmark artifact/publish sync.
@@ -162,6 +162,7 @@ Weekly collect/publish split:
   - `retirement_min_stale_runs` and `retirement_max_seen_ok_count` to tune review strictness
 - Weekly benchmark schedule: `02:10 UTC every Wednesday` (US Tuesday evening window).
 - `Publish Benchmark Artifact` (workflow_run/manual) downloads that artifact, validates JSON payloads, rebuilds catalog/sitemap, and pushes with retry backoff (`5,10,20` default) + 429-aware wait (`rate_limit_delay_s`, default `60`) + jitter.
+- `Daily Content Agent` now syncs `daily_content` pipeline status + SLO and persists status snapshots even on recovery/failure paths.
 - Manual `Publish Benchmark Artifact` dispatch can leave `source_run_id` empty; workflow auto-resolves the latest successful `weekly-benchmark.yml` run ID.
 - Invalid/manual `source_run_id` is guarded: publish now verifies source run is `Weekly Benchmark` + `completed/success`, and auto-falls back to latest successful weekly run when needed.
 - Publish workflow performs a follow-up lightweight commit for `src/data/pipeline-status.json` so the publish run conclusion is persisted even when the main publish commit has already been pushed.

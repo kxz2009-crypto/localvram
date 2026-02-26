@@ -1,6 +1,6 @@
 # Pipeline SLO Runbook
 
-This runbook defines how LocalVRAM tracks pipeline stability SLO for benchmark collection and publish.
+This runbook defines how LocalVRAM tracks pipeline stability SLO for benchmark collection, daily content, and publish.
 
 ## 1) Source and output
 
@@ -17,13 +17,14 @@ python scripts/build-pipeline-slo.py
 Optional flags:
 
 ```bash
-python scripts/build-pipeline-slo.py --target-success-rate 95 --window-days 7,28 --workflow-keys weekly_benchmark,publish_benchmark_artifact
+python scripts/build-pipeline-slo.py --target-success-rate 95 --window-days 7,28 --workflow-keys weekly_benchmark,daily_content,publish_benchmark_artifact
 ```
 
 ## 3) SLO definition
 
 - Primary SLO: 28-day success rate `>= 95%` for:
   - `weekly_benchmark`
+  - `daily_content`
   - `publish_benchmark_artifact`
 - Weekly report window: rolling 7 days.
 - Failure taxonomy source: `failure_class` in `pipeline-status.json` history.
@@ -46,7 +47,7 @@ The SLO snapshot now includes:
 
 - `weekly-benchmark.yml` rebuilds `pipeline-slo.json` after weekly status snapshot update.
 - `publish-benchmark-artifact.yml` rebuilds SLO before quality gate and again after publish final status update.
-- `daily-content.yml` rebuilds SLO to keep status pages and quality checks aligned.
+- `daily-content.yml` updates `daily_content` status, rebuilds SLO, and persists status/slo in both normal and recovery paths.
 - `publish-fallback-drill.yml` provides a manual reliability drill:
   - dispatches publish with an invalid `source_run_id`
   - waits for completion
