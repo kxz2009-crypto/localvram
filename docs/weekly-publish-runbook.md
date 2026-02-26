@@ -60,3 +60,39 @@ python scripts/run-weekly-publish-pipeline.py `
 - Re-run after fixing runner/Ollama issue:
   - `Weekly Benchmark`
   - then this script again.
+
+## 6) Known publish quality-gate mismatch
+
+Symptom in `Publish Benchmark Artifact` logs:
+
+- `quality gate failed: benchmark-results model tags missing in model-catalog ollama_tag`
+- Example: `Model 'ministral-3:14b' found in results but missing in catalog.`
+
+Meaning:
+
+- Weekly artifact contains a measured model tag that catalog did not include.
+
+Current fix (already in `main`):
+
+- `scripts/build-model-catalog.py` auto-discovers missing measured tags from `src/data/benchmark-results.json` and adds catalog entries before quality gate.
+
+Operator action:
+
+1. `git pull` to ensure runner/workflow uses latest `main`.
+2. Re-run `Publish Benchmark Artifact` (or rerun full weekly->publish).
+3. If still failing, fetch failed logs with retry backoff and check exact missing tags:
+
+```powershell
+$gh = "C:\Program Files\GitHub CLI\gh.exe"
+$repo = "kxz2009-crypto/localvram"
+$pubId = & $gh run list -R $repo --workflow "Publish Benchmark Artifact" --json databaseId -L 1 --jq '.[0].databaseId'
+$delays = @(5,10,20,30)
+$ok = $false
+for ($i=0; $i -le $delays.Count; $i++) {
+  $log = & $gh run view $pubId -R $repo --log-failed 2>&1
+  if ($LASTEXITCODE -eq 0) { $ok = $true; break }
+  if ($i -lt $delays.Count) { Start-Sleep -Seconds $delays[$i] }
+}
+if (-not $ok) { throw "failed to fetch logs for run $pubId" }
+$log | Select-String -Pattern "quality gate failed|missing in catalog|benchmark-results model tags"
+```
