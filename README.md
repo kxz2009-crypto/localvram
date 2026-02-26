@@ -165,6 +165,7 @@ Weekly collect/content/publish split:
 - Weekly benchmark schedule: `02:10 UTC every Wednesday` (US Tuesday evening window).
 - `Publish Benchmark Artifact` (workflow_run/manual) downloads that artifact, validates JSON payloads, rebuilds catalog/sitemap, and pushes with retry backoff (`5,10,20` default) + 429-aware wait (`rate_limit_delay_s`, default `60`) + jitter.
 - `Daily Content Agent` now syncs `daily_content` pipeline status + SLO and persists status snapshots even on recovery/failure paths.
+- `Daily Content Agent` uploads `daily-content-diagnostics` artifact (`logs` + pipeline/content snapshot files) for post-failure triage.
 - Manual `Publish Benchmark Artifact` dispatch can leave `source_run_id` empty; workflow auto-resolves the latest successful `weekly-benchmark.yml` run ID.
 - Invalid/manual `source_run_id` is guarded: publish now verifies source run is `Weekly Benchmark` + `completed/success`, and auto-falls back to latest successful weekly run when needed.
 - Publish workflow performs a follow-up lightweight commit for `src/data/pipeline-status.json` so the publish run conclusion is persisted even when the main publish commit has already been pushed.

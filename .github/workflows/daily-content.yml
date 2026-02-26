@@ -270,6 +270,21 @@ jobs:
 
           run_with_retry git_push git push
 
+      - name: Upload daily diagnostics
+        if: always() && steps.checkout.conclusion == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-content-diagnostics
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            logs
+            src/data/pipeline-status.json
+            src/data/pipeline-slo.json
+            src/data/content-review-log.json
+            src/data/content-publish-log.json
+            src/data/submission-review.json
+
       - name: Alert issue (daily checkout failure)
         if: always() && steps.checkout.conclusion == 'failure'
         uses: actions/github-script@v7
