@@ -96,3 +96,15 @@ for ($i=0; $i -le $delays.Count; $i++) {
 if (-not $ok) { throw "failed to fetch logs for run $pubId" }
 $log | Select-String -Pattern "quality gate failed|missing in catalog|benchmark-results model tags"
 ```
+
+## 7) Known qwen3.5 runtime incompatibility (412/500)
+
+Symptom:
+
+- `ollama pull qwen3.5:35b` => `412 ... requires a newer version of Ollama`
+- `ollama run qwen3.5:35b` => `500 ... unable to load model ... sha256-...`
+
+Action:
+
+- Follow [Ollama Upgrade Runbook](/docs/ollama-upgrade-runbook.md) first.
+- Re-run smoke, then weekly->publish.

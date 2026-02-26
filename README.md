@@ -13,6 +13,7 @@ Operations runbooks:
 - `docs/pipeline-slo-runbook.md`
 - `docs/ops-review-runbook.md`
 - `docs/weekly-publish-runbook.md`
+- `docs/ollama-upgrade-runbook.md`
 
 ## Stack
 
