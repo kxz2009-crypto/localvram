@@ -21,6 +21,21 @@ on:
         required: false
         default: "60"
         type: string
+      apply_retirement_candidates:
+        description: "Auto-apply reviewed retirement candidates into retired-models.json"
+        required: false
+        default: false
+        type: boolean
+      retirement_min_stale_runs:
+        description: "Auto-review minimum stale run index threshold"
+        required: false
+        default: "3"
+        type: string
+      retirement_max_seen_ok_count:
+        description: "Auto-review max historical success count for auto-approval"
+        required: false
+        default: "2"
+        type: string
 
 permissions:
   actions: read
@@ -187,6 +202,63 @@ jobs:
             exit 1
           fi
 
+      - name: Review retirement candidates
+        id: retirement_review
+        env:
+          INPUT_APPLY_RETIREMENT: ${{ github.event.inputs.apply_retirement_candidates }}
+          INPUT_MIN_STALE_RUNS: ${{ github.event.inputs.retirement_min_stale_runs }}
+          INPUT_MAX_SEEN_OK_COUNT: ${{ github.event.inputs.retirement_max_seen_ok_count }}
+        run: |
+          apply_flag="${INPUT_APPLY_RETIREMENT}"
+          min_stale_runs="${INPUT_MIN_STALE_RUNS}"
+          max_seen_ok_count="${INPUT_MAX_SEEN_OK_COUNT}"
+
+          if [ -z "${apply_flag}" ]; then
+            apply_flag="false"
+          fi
+          if [ -z "${min_stale_runs}" ]; then
+            min_stale_runs="3"
+          fi
+          if [ -z "${max_seen_ok_count}" ]; then
+            max_seen_ok_count="2"
+          fi
+
+          ARGS=(
+            --candidates-file src/data/retirement-candidates.json
+            --policy-file src/data/retired-models.json
+            --proposal-file src/data/retirement-proposal.json
+            --min-last-seen-run-index "${min_stale_runs}"
+            --max-seen-ok-count "${max_seen_ok_count}"
+            --github-output "${GITHUB_OUTPUT}"
+          )
+          if [ "${apply_flag}" = "true" ]; then
+            ARGS+=(--apply)
+          fi
+
+          if ! python scripts/review-retirement-candidates.py "${ARGS[@]}"; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'retirement_review_failure','failure_detail':'failed to review retirement candidates'}, ensure_ascii=False), encoding='utf-8')"
+            echo "failure_class=retirement_review_failure"
+            echo "failure_detail=failed to review retirement candidates"
+            echo "::error title=FailureClass::retirement_review_failure - failed to review retirement candidates"
+            exit 1
+          fi
+
+      - name: Re-prune after retirement apply
+        if: steps.retirement_review.outputs.applied_count != '0'
+        run: |
+          if ! python scripts/prune-retired-benchmark-data.py --report-file logs/retired-prune-report-post-apply.json; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'retirement_apply_prune_failure','failure_detail':'failed to prune benchmark data after retirement apply'}, ensure_ascii=False), encoding='utf-8')"
+            echo "failure_class=retirement_apply_prune_failure"
+            echo "failure_detail=failed to prune benchmark data after retirement apply"
+            echo "::error title=FailureClass::retirement_apply_prune_failure - failed to prune benchmark data after retirement apply"
+            exit 1
+          fi
+          python scripts/generate-retirement-candidates.py --output-file src/data/retirement-candidates.json
+          python scripts/review-retirement-candidates.py \
+            --candidates-file src/data/retirement-candidates.json \
+            --policy-file src/data/retired-models.json \
+            --proposal-file src/data/retirement-proposal.json
+
       - name: Update pipeline status (weekly source)
         run: |
           python scripts/update-pipeline-status.py \
@@ -217,7 +289,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/weekly-target-plan.json src/data/retirement-candidates.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
+          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/weekly-target-plan.json src/data/retired-models.json src/data/retirement-candidates.json src/data/retirement-proposal.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
 
           if git diff --cached --quiet; then
             echo "publish_result=no_changes"
