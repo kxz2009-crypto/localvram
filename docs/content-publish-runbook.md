@@ -93,3 +93,11 @@ python scripts/quality-gate.py
   - `src/data/content-publish-log.json`
   - updated `src/data/daily-updates.json`
 
+Manual one-shot trigger (CLI):
+
+```powershell
+python scripts/run-daily-content-workflow.py `
+  --gh-path "C:\Program Files\GitHub CLI\gh.exe" `
+  --repo kxz2009-crypto/localvram
+```
+

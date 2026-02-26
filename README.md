@@ -106,6 +106,7 @@ npm run dev
 - `python scripts/ops-review.py submission --submission-ids <id1,id2> --action approve|reject|needs_info --reviewer ops [--dry-run] [--git-commit --git-push]`
 - `python scripts/run-publish-workflow.py --gh-path "<gh.exe path>"`
 - `python scripts/run-weekly-publish-pipeline.py --gh-path "<gh.exe path>"`
+- `python scripts/run-daily-content-workflow.py --gh-path "<gh.exe path>"`
 
 ## Benchmark Runtime Controls
 
