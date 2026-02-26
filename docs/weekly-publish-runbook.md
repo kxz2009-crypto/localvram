@@ -46,6 +46,7 @@ python scripts/run-weekly-publish-pipeline.py `
 ## 5) Failure handling
 
 - If weekly run fails, publish stage is blocked by design.
+- Script now prints `weekly_failure_class` / `weekly_failure_detail` and a short failed-log excerpt when available.
 - Re-run after fixing runner/Ollama issue:
   - `Runner Smoke Check`
   - `Weekly Benchmark`

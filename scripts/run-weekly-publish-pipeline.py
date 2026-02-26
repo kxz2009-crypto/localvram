@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import subprocess
@@ -114,8 +115,6 @@ def find_new_weekly_run_id(
         if proc.returncode != 0:
             time.sleep(max(1, poll_interval_s))
             continue
-        import json
-
         try:
             payload = json.loads(proc.stdout or "{}")
         except Exception:  # noqa: BLE001
@@ -139,12 +138,13 @@ def find_new_weekly_run_id(
     raise RuntimeError("timed out waiting for weekly benchmark run id")
 
 
-def watch_run(gh_path: str, repo: str, run_id: int, retry_delays: Iterable[int]) -> None:
+def watch_run(gh_path: str, repo: str, run_id: int, retry_delays: Iterable[int]) -> bool:
     proc = run_gh(gh_path, ["run", "watch", str(run_id), "-R", repo, "--exit-status"], retry_delays, allow_retry=True)
     if proc.stdout.strip():
         print(proc.stdout.strip())
-    if proc.returncode != 0:
-        raise RuntimeError(proc.stderr.strip() or f"run watch failed for {run_id}")
+    if proc.returncode != 0 and proc.stderr.strip():
+        print(f"watch_warning={proc.stderr.strip()}", file=sys.stderr)
+    return proc.returncode == 0
 
 
 def run_view_field(gh_path: str, repo: str, run_id: int, field: str, retry_delays: Iterable[int]) -> str:
@@ -157,6 +157,60 @@ def run_view_field(gh_path: str, repo: str, run_id: int, field: str, retry_delay
     if proc.returncode != 0:
         return ""
     return (proc.stdout or "").strip()
+
+
+def print_weekly_failure_hint(gh_path: str, repo: str, run_id: int, retry_delays: Iterable[int]) -> None:
+    proc = run_gh(gh_path, ["run", "view", str(run_id), "-R", repo, "--log-failed"], retry_delays, allow_retry=True)
+    if proc.returncode != 0:
+        print(f"weekly_failure_hint=unable_to_fetch_failed_logs run_id={run_id}")
+        return
+    text = (proc.stdout or "").strip()
+    if not text:
+        print(f"weekly_failure_hint=no_failed_logs run_id={run_id}")
+        return
+
+    failure_class = ""
+    failure_detail = ""
+    for line in text.splitlines():
+        m = re.search(r"failure_class=([a-z0-9_]+)", line, re.IGNORECASE)
+        if m:
+            failure_class = m.group(1).strip().lower()
+        m = re.search(r"failure_detail=(.+)$", line, re.IGNORECASE)
+        if m:
+            failure_detail = m.group(1).strip()
+        m = re.search(r"FailureClass::([a-z0-9_]+)\s*-\s*(.+)$", line, re.IGNORECASE)
+        if m:
+            failure_class = m.group(1).strip().lower()
+            failure_detail = m.group(2).strip()
+
+    if failure_class:
+        print(f"weekly_failure_class={failure_class}")
+    if failure_detail:
+        print(f"weekly_failure_detail={failure_detail}")
+
+    focus_tokens = (
+        "Ollama preflight",
+        "failure_class=",
+        "failure_detail=",
+        "FailureClass::",
+        "ollama_",
+        "required_targets_",
+        "model_missing",
+        "ollama_not_visible",
+    )
+    focus_lines: list[str] = []
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        if any(token.lower() in line.lower() for token in focus_tokens):
+            focus_lines.append(line)
+    if focus_lines:
+        print("weekly_failure_log_excerpt_begin")
+        for line in focus_lines[-20:]:
+            print(line)
+        print("weekly_failure_log_excerpt_end")
+    print(f"weekly_failure_log_command=gh run view {run_id} -R {repo} --log-failed")
 
 
 def dispatch_weekly(
@@ -275,11 +329,14 @@ def main() -> int:
             poll_timeout_s=int(args.poll_timeout_s),
         )
         print(f"phase=watch_weekly run_id={weekly_run_id}", flush=True)
-        watch_run(args.gh_path, args.repo, weekly_run_id, retry_delays)
+        watch_ok = watch_run(args.gh_path, args.repo, weekly_run_id, retry_delays)
+        if not watch_ok:
+            print("watch_status=nonzero_continue_to_conclusion_check", flush=True)
         print(f"phase=weekly_completed run_id={weekly_run_id}", flush=True)
         conclusion = run_view_field(args.gh_path, args.repo, weekly_run_id, "conclusion", retry_delays).lower()
         print(f"weekly_conclusion={conclusion or 'unknown'}")
         if conclusion != "success":
+            print_weekly_failure_hint(args.gh_path, args.repo, weekly_run_id, retry_delays)
             raise RuntimeError(f"weekly benchmark run did not succeed: {weekly_run_id}")
 
         if args.skip_publish:
