@@ -94,19 +94,71 @@ jobs:
           SOURCE_RUN_ID: ${{ steps.source.outputs.run_id }}
         run: |
           mkdir -p logs
-          if ! gh run view "${SOURCE_RUN_ID}" --repo "${GITHUB_REPOSITORY}" --json status,conclusion,event,headSha,updatedAt,url > logs/source-run-meta.json; then
+          fetch_meta() {
+            local run_id="$1"
+            gh run view "${run_id}" --repo "${GITHUB_REPOSITORY}" --json databaseId,workflowName,status,conclusion,event,headSha,updatedAt,url > logs/source-run-meta.json
+          }
+
+          resolve_latest_success() {
+            gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/weekly-benchmark.yml/runs?status=completed&per_page=30" --jq '.workflow_runs[] | select(.conclusion=="success") | .id' 2>/dev/null | head -n 1 | tr -d '[:space:]'
+          }
+
+          RUN_ID="${SOURCE_RUN_ID}"
+          used_fallback=0
+
+          if ! fetch_meta "${RUN_ID}"; then
+            fallback_id="$(resolve_latest_success)"
+            if [ -n "${fallback_id}" ] && [ "${fallback_id}" != "${RUN_ID}" ]; then
+              RUN_ID="${fallback_id}"
+              used_fallback=1
+              echo "source_meta_fallback_run_id=${RUN_ID}"
+              fetch_meta "${RUN_ID}" || true
+            fi
+          fi
+
+          if ! [ -s logs/source-run-meta.json ]; then
             python -c "import json, pathlib, os; rid=os.environ.get('SOURCE_RUN_ID',''); pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'source_run_metadata_failure','failure_detail':f'failed to resolve source run metadata for run {rid}'}, ensure_ascii=False), encoding='utf-8')"
             echo "failure_class=source_run_metadata_failure"
             echo "failure_detail=failed to resolve source run metadata for run ${SOURCE_RUN_ID}"
             echo "::error title=FailureClass::source_run_metadata_failure - failed to resolve source run metadata for run ${SOURCE_RUN_ID}"
             exit 1
           fi
-          python -c "import json, os, pathlib; meta=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); pairs={'status':str(meta.get('status','')).strip(),'conclusion':str(meta.get('conclusion','')).strip(),'event':str(meta.get('event','')).strip(),'head_sha':str(meta.get('headSha','')).strip(),'updated_at':str(meta.get('updatedAt','')).strip(),'run_url':str(meta.get('url','')).strip()}; out=os.environ['GITHUB_OUTPUT']; f=open(out,'a',encoding='utf-8'); [f.write(f'{k}={v}\\n') for k,v in pairs.items()]; f.close()"
+
+          status="$(python -c "import json, pathlib; m=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); print(str(m.get('status','')).strip())")"
+          conclusion="$(python -c "import json, pathlib; m=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); print(str(m.get('conclusion','')).strip())")"
+          workflow_name="$(python -c "import json, pathlib; m=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); print(str(m.get('workflowName','')).strip())")"
+
+          if [ "${status}" != "completed" ] || [ "${conclusion}" != "success" ] || [ "${workflow_name}" != "Weekly Benchmark" ]; then
+            if [ "${used_fallback}" -ne 1 ]; then
+              fallback_id="$(resolve_latest_success)"
+              if [ -n "${fallback_id}" ] && [ "${fallback_id}" != "${RUN_ID}" ]; then
+                RUN_ID="${fallback_id}"
+                used_fallback=1
+                echo "source_meta_fallback_run_id=${RUN_ID}"
+                if fetch_meta "${RUN_ID}"; then
+                  status="$(python -c "import json, pathlib; m=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); print(str(m.get('status','')).strip())")"
+                  conclusion="$(python -c "import json, pathlib; m=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); print(str(m.get('conclusion','')).strip())")"
+                  workflow_name="$(python -c "import json, pathlib; m=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); print(str(m.get('workflowName','')).strip())")"
+                fi
+              fi
+            fi
+          fi
+
+          if [ "${status}" != "completed" ] || [ "${conclusion}" != "success" ] || [ "${workflow_name}" != "Weekly Benchmark" ]; then
+            detail="source run ${RUN_ID} is not publishable (workflow=${workflow_name}, status=${status}, conclusion=${conclusion})"
+            DETAIL="${detail}" python -c "import json, pathlib, os; detail=os.environ.get('DETAIL',''); pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'source_run_not_publishable','failure_detail':detail}, ensure_ascii=False), encoding='utf-8')"
+            echo "failure_class=source_run_not_publishable"
+            echo "failure_detail=${detail}"
+            echo "::error title=FailureClass::source_run_not_publishable - ${detail}"
+            exit 1
+          fi
+
+          RUN_ID="${RUN_ID}" used_fallback="${used_fallback}" python -c "import json, os, pathlib; meta=json.loads(pathlib.Path('logs/source-run-meta.json').read_text(encoding='utf-8')); pairs={'resolved_run_id':str(meta.get('databaseId','')).strip() or os.environ.get('RUN_ID',''),'status':str(meta.get('status','')).strip(),'conclusion':str(meta.get('conclusion','')).strip(),'event':str(meta.get('event','')).strip(),'head_sha':str(meta.get('headSha','')).strip(),'updated_at':str(meta.get('updatedAt','')).strip(),'run_url':str(meta.get('url','')).strip(),'workflow_name':str(meta.get('workflowName','')).strip(),'source_run_resolution':('auto_fallback' if int(os.environ.get('used_fallback','0') or 0)==1 else 'direct')}; out=os.environ['GITHUB_OUTPUT']; f=open(out,'a',encoding='utf-8'); [f.write(f'{k}={v}\\n') for k,v in pairs.items()]; f.close()"
 
       - name: Download benchmark collection artifact
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_RUN_ID: ${{ steps.source.outputs.run_id }}
+          SOURCE_RUN_ID: ${{ steps.source_meta.outputs.resolved_run_id }}
           RETRY_DELAYS_S: ${{ github.event.inputs.retry_delays_s || '5,10,20' }}
           RATE_LIMIT_DELAY_S: ${{ github.event.inputs.rate_limit_delay_s || '60' }}
         run: |
@@ -273,7 +325,7 @@ jobs:
           python scripts/update-pipeline-status.py \
             --workflow-key "weekly_benchmark" \
             --workflow-name "Weekly Benchmark" \
-            --run-id "${{ steps.source.outputs.run_id }}" \
+            --run-id "${{ steps.source_meta.outputs.resolved_run_id }}" \
             --run-url "${{ steps.source_meta.outputs.run_url }}" \
             --status "${{ steps.source_meta.outputs.status }}" \
             --conclusion "${{ steps.source_meta.outputs.conclusion }}" \

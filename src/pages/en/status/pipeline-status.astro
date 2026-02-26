@@ -36,6 +36,14 @@ type SloWorkflow = {
   windows?: Record<string, SloWindow>;
 };
 
+type FailureRecommendation = {
+  workflow_key?: string;
+  workflow_name?: string;
+  failure_class?: string;
+  count?: number;
+  action?: string;
+};
+
 const workflowsMap = (pipelineStatus.workflows || {}) as Record<string, WorkflowRow>;
 const preferredOrder = ["weekly_benchmark", "publish_benchmark_artifact"];
 const workflowRows: WorkflowRow[] = [
@@ -51,6 +59,13 @@ const historyRows = Array.isArray(pipelineStatus.history) ? (pipelineStatus.hist
 const sloWorkflows = (pipelineSlo.workflows || {}) as Record<string, SloWorkflow>;
 const weeklyReport = (pipelineSlo.weekly_report || {}) as Record<string, any>;
 const weeklyLines = Array.isArray(weeklyReport.summary_lines) ? weeklyReport.summary_lines : [];
+const failureRecommendations = (pipelineSlo.failure_recommendations || {}) as Record<string, any>;
+const globalTopFailures = Array.isArray(failureRecommendations.global_top_failures)
+  ? (failureRecommendations.global_top_failures as FailureRecommendation[])
+  : [];
+const workflowTopFailures = Array.isArray(failureRecommendations.workflows_28d)
+  ? (failureRecommendations.workflows_28d as FailureRecommendation[])
+  : [];
 
 const sloRows: Array<{
   workflowName: string;
@@ -155,6 +170,64 @@ const sloRows: Array<{
           {weeklyLines.map((line) => <li>{line}</li>)}
         </ul>
       )}
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Top Failure Classes (28d)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Failure Class</th>
+            <th>Count</th>
+            <th>Recommended Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {globalTopFailures.length === 0 ? (
+            <tr>
+              <td colSpan={3}>No failed runs in the selected window.</td>
+            </tr>
+          ) : (
+            globalTopFailures.map((row) => (
+              <tr>
+                <td>{row.failure_class || "unknown_failure"}</td>
+                <td>{row.count ?? 0}</td>
+                <td>{row.action || "-"}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Workflow Failure Actions (28d)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Workflow</th>
+            <th>Failure Class</th>
+            <th>Count</th>
+            <th>Recommended Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {workflowTopFailures.length === 0 ? (
+            <tr>
+              <td colSpan={4}>No workflow-level recommendations yet.</td>
+            </tr>
+          ) : (
+            workflowTopFailures.map((row) => (
+              <tr>
+                <td>{row.workflow_name || row.workflow_key || "-"}</td>
+                <td>{row.failure_class || "unknown_failure"}</td>
+                <td>{row.count ?? 0}</td>
+                <td>{row.action || "-"}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
     </section>
 
     <section class="card" style="margin-top: 16px;">

@@ -134,7 +134,7 @@ Self-hosted runner preflight:
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
 - Single-instance governance checks classify runner-side ownership problems: `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`.
-- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `source_run_discovery_failure`, `source_run_metadata_failure`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`, `retirement_candidates_failure`, `retirement_review_failure`, `retirement_apply_prune_failure`.
+- Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `source_run_discovery_failure`, `source_run_metadata_failure`, `source_run_not_publishable`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`, `retirement_candidates_failure`, `retirement_review_failure`, `retirement_apply_prune_failure`.
 - Failure alerts: `Weekly Benchmark` and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
 - Recovery handling: when workflow returns to success, open `[OPS-ALERT]` issues for that workflow are auto-commented and closed.
 - Model retirement: update `src/data/retired-models.json` to phase out old families/tags so they stop entering weekly targets and auto-backfill.

@@ -31,7 +31,10 @@
           "target_success_rate": 95.0,
           "slo_met": true,
           "top_failure_class": "none",
-          "top_failure_count": 0
+          "top_failure_count": 0,
+          "top_failure_action": "",
+          "top_failures": [],
+          "failure_class_counts": {}
         },
         "28": {
           "window_days": 28,
@@ -44,7 +47,10 @@
           "target_success_rate": 95.0,
           "slo_met": true,
           "top_failure_class": "none",
-          "top_failure_count": 0
+          "top_failure_count": 0,
+          "top_failure_action": "",
+          "top_failures": [],
+          "failure_class_counts": {}
         }
       }
     },
@@ -70,7 +76,18 @@
           "target_success_rate": 95.0,
           "slo_met": false,
           "top_failure_class": "artifact_download_failure",
-          "top_failure_count": 1
+          "top_failure_count": 1,
+          "top_failure_action": "Verify source_run_id resolution and artifact name consistency before download.",
+          "top_failures": [
+            {
+              "failure_class": "artifact_download_failure",
+              "count": 1,
+              "action": "Verify source_run_id resolution and artifact name consistency before download."
+            }
+          ],
+          "failure_class_counts": {
+            "artifact_download_failure": 1
+          }
         },
         "28": {
           "window_days": 28,
@@ -83,7 +100,18 @@
           "target_success_rate": 95.0,
           "slo_met": false,
           "top_failure_class": "artifact_download_failure",
-          "top_failure_count": 1
+          "top_failure_count": 1,
+          "top_failure_action": "Verify source_run_id resolution and artifact name consistency before download.",
+          "top_failures": [
+            {
+              "failure_class": "artifact_download_failure",
+              "count": 1,
+              "action": "Verify source_run_id resolution and artifact name consistency before download."
+            }
+          ],
+          "failure_class_counts": {
+            "artifact_download_failure": 1
+          }
         }
       }
     }
@@ -96,5 +124,38 @@
       "Weekly Benchmark: 1/1 (100.0%), top failure=none",
       "Publish Benchmark Artifact: 3/4 (75.0%), top failure=artifact_download_failure"
     ]
+  },
+  "failure_recommendations": {
+    "window_days": 28,
+    "window_start": "2026-01-29T07:00:14Z",
+    "window_end": "2026-02-26T07:00:14Z",
+    "global_top_failures": [
+      {
+        "failure_class": "artifact_download_failure",
+        "count": 1,
+        "action": "Verify source_run_id resolution and artifact name consistency before download."
+      }
+    ],
+    "workflows_28d": [
+      {
+        "workflow_key": "publish_benchmark_artifact",
+        "workflow_name": "Publish Benchmark Artifact",
+        "failure_class": "artifact_download_failure",
+        "count": 1,
+        "action": "Verify source_run_id resolution and artifact name consistency before download."
+      }
+    ]
+  },
+  "failure_action_catalog": {
+    "artifact_download_failure": "Verify source_run_id resolution and artifact name consistency before download.",
+    "artifact_download_rate_limited": "Increase rate_limit_delay_s and keep 5/10/20+ retry backoff for artifact API calls.",
+    "source_run_discovery_failure": "Validate workflow_dispatch inputs and auto-resolve latest successful weekly run id.",
+    "source_run_metadata_failure": "Check GH API token scope and run visibility; retry metadata fetch before download.",
+    "source_run_not_publishable": "Only publish from completed+success Weekly Benchmark runs.",
+    "publish_push_rate_limited": "Apply longer push backoff and avoid concurrent publish jobs.",
+    "publish_push_failure": "Check repository write permission and remote health before retrying push.",
+    "weekly_benchmark_failed": "Inspect runner diagnostics and preflight output for Ollama visibility/target coverage.",
+    "ollama_not_visible": "Restart managed Ollama service and verify /api/tags availability on runner.",
+    "model_missing": "Align weekly targets with locally installed model tags and retirement policy."
   }
 }

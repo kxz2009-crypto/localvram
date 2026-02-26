@@ -37,6 +37,11 @@ When SLO is not met:
 3. Prioritize fixes by highest failure frequency.
 4. Re-run workflow and verify SLO trend improves in next runs.
 
+The SLO snapshot now includes:
+
+- `failure_recommendations.global_top_failures` (cross-workflow TopN)
+- `failure_recommendations.workflows_28d` (per-workflow TopN + action text)
+
 ## 5) CI integration
 
 - `weekly-benchmark.yml` rebuilds `pipeline-slo.json` after weekly status snapshot update.
