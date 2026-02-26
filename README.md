@@ -9,6 +9,7 @@ Operations runbooks:
 - `docs/retirement-runbook.md`
 - `docs/conversion-funnel-runbook.md`
 - `docs/submission-review-runbook.md`
+- `docs/content-publish-runbook.md`
 
 ## Stack
 
@@ -57,6 +58,7 @@ npm run dev
 - Conversion funnel snapshot: `src/data/conversion-funnel.json`
 - Community submissions: `src/data/community-reports.json`
 - Submission review snapshot: `src/data/submission-review.json`
+- Content publish log: `src/data/content-publish-log.json`
 - CTA mapping: `src/data/cta-rules.json`
 - Model catalog (200+): `src/data/model-catalog.json`
 - Measured benchmark map: `src/data/benchmark-results.json` (keyed by `ollama_tag`)
@@ -75,6 +77,7 @@ npm run dev
 - `python scripts/build-sitemap.py`
 - `python scripts/build-conversion-funnel.py`
 - `python scripts/build-submission-review.py`
+- `python scripts/publish-content-queue.py`
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
 - `python scripts/resolve-weekly-targets.py`
@@ -151,6 +154,7 @@ Weekly collect/publish split:
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 - Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).
 - Submission review page: `/en/status/submission-review/` (source file `src/data/submission-review.json`).
+- Content publish status page: `/en/status/content-publish/` (source file `src/data/content-publish-log.json`).
 
 Cluster benchmark (`scripts/cluster-benchmark.py`):
 

@@ -20,6 +20,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "conversion-funnel.json",
     ROOT / "src" / "data" / "community-reports.json",
     ROOT / "src" / "data" / "submission-review.json",
+    ROOT / "src" / "data" / "content-publish-log.json",
 ]
 REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "models" / "index.astro",
@@ -29,6 +30,7 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "benchmarks" / "submit-result.astro",
     ROOT / "src" / "pages" / "en" / "status" / "conversion-funnel.astro",
     ROOT / "src" / "pages" / "en" / "status" / "submission-review.astro",
+    ROOT / "src" / "pages" / "en" / "status" / "content-publish.astro",
 ]
 
 
@@ -88,6 +90,12 @@ def main() -> None:
         print("quality gate failed: submission-review.json missing summary object")
         sys.exit(1)
     print("submission review snapshot ok")
+
+    content_publish = json.loads((ROOT / "src" / "data" / "content-publish-log.json").read_text(encoding="utf-8-sig"))
+    if not isinstance(content_publish.get("history"), list):
+        print("quality gate failed: content-publish-log.json missing history list")
+        sys.exit(1)
+    print("content publish log snapshot ok")
 
     blog_dir = ROOT / "src" / "content" / "blog"
     if not blog_dir.exists():

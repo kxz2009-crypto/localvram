@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import report from "../../../data/content-publish-log.json";
+
+const lastRun = (report.last_run || {}) as Record<string, any>;
+const history = Array.isArray(report.history) ? report.history.slice(0, 12) : [];
+const publishedRows = Array.isArray(lastRun.published) ? lastRun.published : [];
+const skippedRows = Array.isArray(lastRun.skipped) ? lastRun.skipped : [];
+---
+
+<BaseLayout
+  title="Content Publish Status | LocalVRAM"
+  description="Auto-publish status for content-queue to blog pipeline."
+  locale="en"
+>
+  <main class="container">
+    <h1>Content Publish Status</h1>
+    <p>Tracks auto-publish runs from queue drafts into live blog posts.</p>
+
+    <div class="card-grid">
+      <article class="card">
+        <h2>Last Run</h2>
+        <p>{lastRun.run_at || "never"}</p>
+      </article>
+      <article class="card">
+        <h2>Queue Date</h2>
+        <p>{lastRun.queue_date || "-"}</p>
+      </article>
+      <article class="card">
+        <h2>Candidates</h2>
+        <p>{lastRun.candidate_count ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Published</h2>
+        <p>{lastRun.published_count ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>Skipped</h2>
+        <p>{lastRun.skipped_count ?? 0}</p>
+      </article>
+      <article class="card">
+        <h2>History Size</h2>
+        <p>{history.length}</p>
+      </article>
+    </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Last Published Posts</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Slug</th>
+            <th>Score</th>
+            <th>Intent</th>
+            <th>Source Draft</th>
+          </tr>
+        </thead>
+        <tbody>
+          {publishedRows.length === 0 ? (
+            <tr><td colSpan={4}>No posts published in last run.</td></tr>
+          ) : (
+            publishedRows.map((row) => (
+              <tr>
+                <td><a href={`/en/blog/${row.slug}/`}>{row.slug}</a></td>
+                <td>{row.score ?? "-"}</td>
+                <td>{row.intent || "-"}</td>
+                <td>{row.source_draft || "-"}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Last Skip Reasons</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Draft</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          {skippedRows.length === 0 ? (
+            <tr><td colSpan={2}>No skipped drafts in last run.</td></tr>
+          ) : (
+            skippedRows.slice(0, 40).map((row) => (
+              <tr>
+                <td>{row.draft || "-"}</td>
+                <td>{row.reason || "-"}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Recent Runs</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Run At</th>
+            <th>Queue Date</th>
+            <th>Candidates</th>
+            <th>Published</th>
+            <th>Skipped</th>
+          </tr>
+        </thead>
+        <tbody>
+          {history.length === 0 ? (
+            <tr><td colSpan={5}>No history yet.</td></tr>
+          ) : (
+            history.map((row) => (
+              <tr>
+                <td>{row.run_at || "-"}</td>
+                <td>{row.queue_date || "-"}</td>
+                <td>{row.candidate_count ?? 0}</td>
+                <td>{row.published_count ?? 0}</td>
+                <td>{row.skipped_count ?? 0}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>

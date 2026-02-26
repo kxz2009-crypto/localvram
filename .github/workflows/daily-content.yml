@@ -23,6 +23,9 @@ jobs:
       - name: Run content agent
         run: python scripts/daily-content-agent.py
 
+      - name: Auto-publish queue drafts to blog
+        run: python scripts/publish-content-queue.py
+
       - name: Build model catalog
         run: python scripts/build-model-catalog.py
 
@@ -42,6 +45,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json public/sitemap.xml content-queue
+          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/content/blog public/sitemap.xml content-queue
           git diff --cached --quiet || git commit -m "chore: daily content update"
           git push

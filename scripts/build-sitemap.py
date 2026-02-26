@@ -32,6 +32,7 @@ def main() -> None:
         "https://localvram.com/en/status/pipeline-status/",
         "https://localvram.com/en/status/conversion-funnel/",
         "https://localvram.com/en/status/submission-review/",
+        "https://localvram.com/en/status/content-publish/",
         "https://localvram.com/en/errors/",
         "https://localvram.com/en/hardware/",
         "https://localvram.com/en/models/",
