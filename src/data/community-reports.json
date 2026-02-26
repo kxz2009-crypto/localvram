@@ -1,5 +1,92 @@
 {
   "version": "2026.02.26",
-  "updated_at": "",
-  "reports": []
+  "updated_at": "2026-02-26T06:42:45.384179Z",
+  "reports": [
+    {
+      "submission_id": "f9ba21e73260",
+      "submitted_at": "2026-02-26T06:42:44.633678Z",
+      "model_id": "qwen3-8b-q4",
+      "hardware": "RTX 3090 24GB + WSL2",
+      "submitter_id": "github:alice",
+      "issue_url": "https://github.com/kxz2009-crypto/localvram/issues/101",
+      "notes": "",
+      "precheck_score": 0.93,
+      "risk_flags": [],
+      "status": "pending_manual_review",
+      "queue_bucket": "manual_review"
+    },
+    {
+      "submission_id": "4d9248019034",
+      "submitted_at": "2026-02-26T06:42:44.796988Z",
+      "model_id": "deepseek-r1-14b-q4",
+      "hardware": "RTX 4090 24GB + WSL2",
+      "submitter_id": "github:bob",
+      "issue_url": "https://github.com/kxz2009-crypto/localvram/issues/102",
+      "notes": "",
+      "precheck_score": 0.62,
+      "risk_flags": [
+        "low_precheck_score"
+      ],
+      "status": "pending_manual_review",
+      "queue_bucket": "manual_review"
+    },
+    {
+      "submission_id": "a1d1d3edd2dd",
+      "submitted_at": "2026-02-26T06:42:44.943711Z",
+      "model_id": "qwen2.5-14b-q4",
+      "hardware": "RTX 3090 24GB + Linux",
+      "submitter_id": "github:carol",
+      "issue_url": "",
+      "notes": "",
+      "precheck_score": 0.88,
+      "risk_flags": [
+        "missing_issue_url"
+      ],
+      "status": "pending_manual_review",
+      "queue_bucket": "manual_review"
+    },
+    {
+      "submission_id": "dca6301c40c8",
+      "submitted_at": "2026-02-26T06:42:45.087713Z",
+      "model_id": "qwen3-8b-q4",
+      "hardware": "RTX 3090 24GB + WSL2",
+      "submitter_id": "github:alice",
+      "issue_url": "https://github.com/kxz2009-crypto/localvram/issues/103",
+      "notes": "",
+      "precheck_score": 0.94,
+      "risk_flags": [
+        "duplicate_submission_window"
+      ],
+      "status": "pending_duplicate_review",
+      "queue_bucket": "duplicate_review"
+    },
+    {
+      "submission_id": "d5213b981960",
+      "submitted_at": "2026-02-26T06:42:45.240426Z",
+      "model_id": "llama3.3-70b-q4",
+      "hardware": "2x RTX 4090 + Linux",
+      "submitter_id": "github:dave",
+      "issue_url": "https://github.com/kxz2009-crypto/localvram/issues/104",
+      "notes": "",
+      "precheck_score": 0.9,
+      "risk_flags": [],
+      "status": "pending_manual_review",
+      "queue_bucket": "manual_review"
+    },
+    {
+      "submission_id": "973f9b4c111c",
+      "submitted_at": "2026-02-26T06:42:45.384179Z",
+      "model_id": "mistral-small-24b-q4",
+      "hardware": "RTX 4090 24GB + Linux",
+      "submitter_id": "github:dave",
+      "issue_url": "https://github.com/kxz2009-crypto/localvram/issues/105",
+      "notes": "",
+      "precheck_score": 0.91,
+      "risk_flags": [
+        "submitter_rate_limited"
+      ],
+      "status": "rejected_rate_limited",
+      "queue_bucket": "rejected"
+    }
+  ]
 }
