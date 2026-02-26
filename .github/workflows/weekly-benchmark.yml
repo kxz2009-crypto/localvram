@@ -172,6 +172,10 @@ jobs:
             echo "EOF"
           } >> "${GITHUB_OUTPUT}"
 
+      - name: Build pipeline SLO snapshot
+        if: always() && steps.checkout.conclusion == 'success'
+        run: python scripts/build-pipeline-slo.py
+
       - name: Upload benchmark collection artifact
         if: always() && steps.checkout.conclusion == 'success'
         uses: actions/upload-artifact@v4
@@ -186,6 +190,7 @@ jobs:
             src/data/benchmark-changelog.json
             src/data/runner-status.json
             src/data/pipeline-status.json
+            src/data/pipeline-slo.json
             src/data/weekly-target-plan.json
             logs
             public/screenshots

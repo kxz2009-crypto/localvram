@@ -281,6 +281,9 @@ jobs:
             --head-sha "${{ steps.source_meta.outputs.head_sha }}" \
             --updated-at "${{ steps.source_meta.outputs.updated_at }}"
 
+      - name: Build pipeline SLO snapshot
+        run: python scripts/build-pipeline-slo.py
+
       - name: Build model catalog
         run: python scripts/build-model-catalog.py
 
@@ -304,7 +307,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/weekly-target-plan.json src/data/retired-models.json src/data/retirement-candidates.json src/data/retirement-proposal.json src/data/conversion-funnel.json src/data/submission-review.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
+          git add src/data/status.json src/data/benchmark-results.json src/data/cluster-benchmarks.json src/data/benchmark-changelog.json src/data/runner-status.json src/data/pipeline-status.json src/data/pipeline-slo.json src/data/weekly-target-plan.json src/data/retired-models.json src/data/retirement-candidates.json src/data/retirement-proposal.json src/data/conversion-funnel.json src/data/submission-review.json src/data/models.json src/data/model-catalog.json public/sitemap.xml public/screenshots logs
 
           if git diff --cached --quiet; then
             echo "publish_result=no_changes"
@@ -426,6 +429,10 @@ jobs:
             echo "EOF"
           } >> "${GITHUB_OUTPUT}"
 
+      - name: Rebuild pipeline SLO snapshot (final)
+        if: always() && steps.checkout.conclusion == 'success'
+        run: python scripts/build-pipeline-slo.py
+
       - name: Persist publish pipeline status snapshot
         if: always() && steps.checkout.conclusion == 'success'
         env:
@@ -435,7 +442,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add src/data/pipeline-status.json
+          git add src/data/pipeline-status.json src/data/pipeline-slo.json
           if git diff --cached --quiet; then
             echo "pipeline status snapshot unchanged; skip sync commit"
             exit 0

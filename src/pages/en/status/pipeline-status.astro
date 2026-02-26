@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import pipelineStatus from "../../../data/pipeline-status.json";
+import pipelineSlo from "../../../data/pipeline-slo.json";
 
 type WorkflowRow = {
   workflow_key?: string;
@@ -16,6 +17,25 @@ type WorkflowRow = {
   updated_at?: string;
 };
 
+type SloWindow = {
+  total_runs?: number;
+  success_runs?: number;
+  failure_runs?: number;
+  success_rate?: number;
+  target_success_rate?: number;
+  slo_met?: boolean;
+  top_failure_class?: string;
+};
+
+type SloWorkflow = {
+  workflow_key?: string;
+  workflow_name?: string;
+  current_success_streak?: number;
+  last_success_at?: string;
+  last_failure_at?: string;
+  windows?: Record<string, SloWindow>;
+};
+
 const workflowsMap = (pipelineStatus.workflows || {}) as Record<string, WorkflowRow>;
 const preferredOrder = ["weekly_benchmark", "publish_benchmark_artifact"];
 const workflowRows: WorkflowRow[] = [
@@ -28,6 +48,29 @@ const workflowRows: WorkflowRow[] = [
 ];
 
 const historyRows = Array.isArray(pipelineStatus.history) ? (pipelineStatus.history as WorkflowRow[]).slice(0, 12) : [];
+const sloWorkflows = (pipelineSlo.workflows || {}) as Record<string, SloWorkflow>;
+const weeklyReport = (pipelineSlo.weekly_report || {}) as Record<string, any>;
+const weeklyLines = Array.isArray(weeklyReport.summary_lines) ? weeklyReport.summary_lines : [];
+
+const sloRows: Array<{
+  workflowName: string;
+  w7: SloWindow;
+  w28: SloWindow;
+  streak: number;
+  lastSuccess: string;
+  lastFailure: string;
+}> = preferredOrder.map((key) => {
+  const row = sloWorkflows[key] || {};
+  const windows = (row.windows || {}) as Record<string, SloWindow>;
+  return {
+    workflowName: row.workflow_name || key,
+    w7: windows["7"] || {},
+    w28: windows["28"] || {},
+    streak: Number(row.current_success_streak || 0),
+    lastSuccess: String(row.last_success_at || ""),
+    lastFailure: String(row.last_failure_at || ""),
+  };
+});
 ---
 
 <BaseLayout
@@ -38,6 +81,25 @@ const historyRows = Array.isArray(pipelineStatus.history) ? (pipelineStatus.hist
   <main class="container">
     <h1>Pipeline Status</h1>
     <p>Latest workflow snapshots for benchmark collection and publish pipeline.</p>
+
+    <div class="card-grid">
+      <article class="card">
+        <h2>Pipeline SLO (28d)</h2>
+        <p>{pipelineSlo.pipeline_slo_met ? "Met" : "Not met"}</p>
+      </article>
+      <article class="card">
+        <h2>Target Success Rate</h2>
+        <p>{pipelineSlo.target_success_rate ?? 95}%</p>
+      </article>
+      <article class="card">
+        <h2>Reference Time</h2>
+        <p>{pipelineSlo.reference_time || "-"}</p>
+      </article>
+      <article class="card">
+        <h2>Weekly Report Window</h2>
+        <p>{weeklyReport.window_start || "-"} -> {weeklyReport.window_end || "-"}</p>
+      </article>
+    </div>
 
     <div class="card-grid">
       {workflowRows.map((row) => (
@@ -54,6 +116,46 @@ const historyRows = Array.isArray(pipelineStatus.history) ? (pipelineStatus.hist
         </article>
       ))}
     </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Workflow SLO Metrics</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Workflow</th>
+            <th>7d Success</th>
+            <th>28d Success</th>
+            <th>28d Target</th>
+            <th>Current Success Streak</th>
+            <th>Top Failure (28d)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sloRows.map((row) => (
+            <tr>
+              <td>{row.workflowName}</td>
+              <td>{row.w7.success_runs ?? 0}/{row.w7.total_runs ?? 0} ({row.w7.success_rate ?? 0}%)</td>
+              <td>{row.w28.success_runs ?? 0}/{row.w28.total_runs ?? 0} ({row.w28.success_rate ?? 0}%)</td>
+              <td>{row.w28.target_success_rate ?? pipelineSlo.target_success_rate ?? 95}% ({row.w28.slo_met ? "met" : "miss"})</td>
+              <td>{row.streak}</td>
+              <td>{row.w28.top_failure_class || "none"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p>Last success/failure timestamps are available in raw data: <code>src/data/pipeline-slo.json</code>.</p>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Weekly Ops Summary</h2>
+      {weeklyLines.length === 0 ? (
+        <p>No weekly summary lines yet.</p>
+      ) : (
+        <ul>
+          {weeklyLines.map((line) => <li>{line}</li>)}
+        </ul>
+      )}
+    </section>
 
     <section class="card" style="margin-top: 16px;">
       <h2>Recent Pipeline History</h2>

@@ -10,6 +10,7 @@ Operations runbooks:
 - `docs/conversion-funnel-runbook.md`
 - `docs/submission-review-runbook.md`
 - `docs/content-publish-runbook.md`
+- `docs/pipeline-slo-runbook.md`
 
 ## Stack
 
@@ -60,6 +61,7 @@ npm run dev
 - Submission review snapshot: `src/data/submission-review.json`
 - Content publish log: `src/data/content-publish-log.json`
 - Content review log: `src/data/content-review-log.json`
+- Pipeline SLO snapshot: `src/data/pipeline-slo.json`
 - CTA mapping: `src/data/cta-rules.json`
 - Model catalog (200+): `src/data/model-catalog.json`
 - Measured benchmark map: `src/data/benchmark-results.json` (keyed by `ollama_tag`)
@@ -83,6 +85,7 @@ npm run dev
 - `python scripts/review-content-queue.py`
 - `python scripts/review-content-drafts.py --queue-date <YYYY-MM-DD> --slugs <slug1,slug2> --action approve|reject|needs_info`
 - `python scripts/publish-content-queue.py`
+- `python scripts/build-pipeline-slo.py`
 - `python scripts/quality-gate.py`
 - `python scripts/weekly-benchmark.py`
 - `python scripts/resolve-weekly-targets.py`

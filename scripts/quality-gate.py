@@ -23,6 +23,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "submission-review.json",
     ROOT / "src" / "data" / "content-publish-log.json",
     ROOT / "src" / "data" / "content-review-log.json",
+    ROOT / "src" / "data" / "pipeline-slo.json",
 ]
 REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "models" / "index.astro",
@@ -110,6 +111,15 @@ def main() -> None:
         print("quality gate failed: content-review-log.json missing history list")
         sys.exit(1)
     print("content review log snapshot ok")
+
+    pipeline_slo = json.loads((ROOT / "src" / "data" / "pipeline-slo.json").read_text(encoding="utf-8-sig"))
+    if not isinstance(pipeline_slo.get("workflows"), dict):
+        print("quality gate failed: pipeline-slo.json missing workflows object")
+        sys.exit(1)
+    if not isinstance(pipeline_slo.get("weekly_report"), dict):
+        print("quality gate failed: pipeline-slo.json missing weekly_report object")
+        sys.exit(1)
+    print("pipeline slo snapshot ok")
 
     blog_dir = ROOT / "src" / "content" / "blog"
     if not blog_dir.exists():
