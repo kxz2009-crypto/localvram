@@ -17,7 +17,8 @@ What it does:
 1. Dispatches `weekly-benchmark.yml`.
 2. Watches run until completion.
 3. Requires weekly result to be `success`.
-4. Dispatches publish via `run-publish-workflow.py` using that weekly run id.
+4. Waits for auto `workflow_run` publish and watches it (`--publish-mode auto` default).
+5. Falls back to manual publish only when requested (`--publish-mode auto-then-manual` or `manual`).
 
 ## 2) Weekly only (no publish)
 
@@ -43,6 +44,11 @@ python scripts/run-weekly-publish-pipeline.py `
 - `--smoke-restart-if-empty true|false`: forwarded to smoke input (default `true`).
 - `--smoke-retry-delays-s "5,10,20"`: smoke input retry CSV (defaults to `--retry-delays-s` when empty).
 - `--retry-weekly-after-smoke true|false`: when `weekly` fails but `smoke` succeeds, auto-dispatch one retry weekly run (default `false`).
+- `--publish-mode auto|manual|auto-then-manual`:
+  - `auto` (default): wait and watch auto `workflow_run` publish only.
+  - `manual`: always dispatch `run-publish-workflow.py`.
+  - `auto-then-manual`: try auto publish first, dispatch manual publish only if auto run is not available/successful.
+- `--publish-workflow publish-benchmark-artifact.yml`: publish workflow file id/name to watch/dispatch.
 
 ## 4) Preconditions
 

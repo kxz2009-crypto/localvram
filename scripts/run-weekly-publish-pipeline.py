@@ -76,10 +76,16 @@ def parse_run_id_from_stdout(stdout: str) -> int | None:
         return None
 
 
-def latest_workflow_run_id(gh_path: str, repo: str, workflow: str, retry_delays: Iterable[int]) -> int | None:
+def latest_workflow_run_id(
+    gh_path: str,
+    repo: str,
+    workflow: str,
+    retry_delays: Iterable[int],
+    event: str = "workflow_dispatch",
+) -> int | None:
     proc = run_gh(
         gh_path,
-        ["api", f"repos/{repo}/actions/workflows/{workflow}/runs?event=workflow_dispatch&per_page=5", "--jq", ".workflow_runs[0].id"],
+        ["api", f"repos/{repo}/actions/workflows/{workflow}/runs?event={event}&per_page=5", "--jq", ".workflow_runs[0].id"],
         retry_delays,
         allow_retry=True,
     )
@@ -103,12 +109,13 @@ def find_new_workflow_run_id(
     retry_delays: Iterable[int],
     poll_interval_s: int,
     poll_timeout_s: int,
+    event: str = "workflow_dispatch",
 ) -> int:
     deadline = time.time() + max(10, poll_timeout_s)
     while time.time() < deadline:
         proc = run_gh(
             gh_path,
-            ["api", f"repos/{repo}/actions/workflows/{workflow}/runs?event=workflow_dispatch&per_page=10"],
+            ["api", f"repos/{repo}/actions/workflows/{workflow}/runs?event={event}&per_page=10"],
             retry_delays,
             allow_retry=True,
         )
@@ -224,7 +231,7 @@ def dispatch_weekly(
     poll_interval_s: int,
     poll_timeout_s: int,
 ) -> int:
-    baseline = latest_workflow_run_id(gh_path, repo, workflow, retry_delays)
+    baseline = latest_workflow_run_id(gh_path, repo, workflow, retry_delays, event="workflow_dispatch")
     started_at = datetime.now(timezone.utc)
 
     args = ["workflow", "run", workflow, "-R", repo]
@@ -252,6 +259,7 @@ def dispatch_weekly(
             retry_delays=retry_delays,
             poll_interval_s=poll_interval_s,
             poll_timeout_s=poll_timeout_s,
+            event="workflow_dispatch",
         )
     print(f"weekly_run_id={run_id}")
     print(f"weekly_run_url=https://github.com/{repo}/actions/runs/{run_id}")
@@ -270,7 +278,7 @@ def dispatch_smoke(
     poll_interval_s: int,
     poll_timeout_s: int,
 ) -> int:
-    baseline = latest_workflow_run_id(gh_path, repo, workflow, retry_delays)
+    baseline = latest_workflow_run_id(gh_path, repo, workflow, retry_delays, event="workflow_dispatch")
     started_at = datetime.now(timezone.utc)
 
     args = ["workflow", "run", workflow, "-R", repo]
@@ -300,6 +308,7 @@ def dispatch_smoke(
             retry_delays=retry_delays,
             poll_interval_s=poll_interval_s,
             poll_timeout_s=poll_timeout_s,
+            event="workflow_dispatch",
         )
     print(f"smoke_run_id={run_id}")
     print(f"smoke_run_url=https://github.com/{repo}/actions/runs/{run_id}")
@@ -340,6 +349,32 @@ def run_publish_wrapper(
         raise RuntimeError("publish wrapper failed")
 
 
+def wait_auto_publish_workflow_run(
+    gh_path: str,
+    repo: str,
+    workflow: str,
+    retry_delays: Iterable[int],
+    poll_interval_s: int,
+    poll_timeout_s: int,
+) -> int:
+    baseline = latest_workflow_run_id(gh_path, repo, workflow, retry_delays, event="workflow_run")
+    started_at = datetime.now(timezone.utc)
+    run_id = find_new_workflow_run_id(
+        gh_path=gh_path,
+        repo=repo,
+        workflow=workflow,
+        baseline_id=baseline,
+        started_at=started_at,
+        retry_delays=retry_delays,
+        poll_interval_s=poll_interval_s,
+        poll_timeout_s=poll_timeout_s,
+        event="workflow_run",
+    )
+    print(f"auto_publish_run_id={run_id}")
+    print(f"auto_publish_run_url=https://github.com/{repo}/actions/runs/{run_id}")
+    return run_id
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Dispatch Weekly Benchmark and optionally auto-chain Publish Benchmark Artifact.")
     parser.add_argument("--gh-path", default="gh")
@@ -362,6 +397,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--smoke-restart-if-empty", choices=["true", "false"], default="true")
     parser.add_argument("--smoke-retry-delays-s", default="")
     parser.add_argument("--retry-weekly-after-smoke", choices=["true", "false"], default="false")
+    parser.add_argument(
+        "--publish-mode",
+        choices=["auto", "manual", "auto-then-manual"],
+        default="auto",
+        help="auto: wait workflow_run publish only; manual: always dispatch publish wrapper; auto-then-manual: fallback to manual when auto publish run is not found in time.",
+    )
+    parser.add_argument("--publish-workflow", default="publish-benchmark-artifact.yml")
     return parser.parse_args()
 
 
@@ -449,16 +491,49 @@ def main() -> int:
             print("publish_skipped=true")
             return 0
 
-        print(f"phase=dispatch_publish source_weekly_run_id={weekly_run_id}", flush=True)
-        run_publish_wrapper(
-            gh_path=args.gh_path,
-            repo=args.repo,
-            source_run_id=weekly_run_id,
-            apply_retirement_candidates=args.apply_retirement_candidates,
-            retirement_min_stale_runs=int(args.retirement_min_stale_runs),
-            retirement_max_seen_ok_count=int(args.retirement_max_seen_ok_count),
-            retry_delays_s=str(args.retry_delays_s),
-        )
+        did_manual_publish = False
+        if args.publish_mode in {"auto", "auto-then-manual"}:
+            try:
+                print(f"phase=wait_auto_publish source_weekly_run_id={weekly_run_id}", flush=True)
+                auto_publish_run_id = wait_auto_publish_workflow_run(
+                    gh_path=args.gh_path,
+                    repo=args.repo,
+                    workflow=str(args.publish_workflow),
+                    retry_delays=retry_delays,
+                    poll_interval_s=int(args.poll_interval_s),
+                    poll_timeout_s=int(args.poll_timeout_s),
+                )
+                print(f"phase=watch_auto_publish run_id={auto_publish_run_id}", flush=True)
+                auto_watch_ok = watch_run(args.gh_path, args.repo, auto_publish_run_id, retry_delays)
+                if not auto_watch_ok:
+                    print("watch_status=auto_publish_nonzero_continue_to_conclusion_check", flush=True)
+                auto_conclusion = run_view_field(args.gh_path, args.repo, auto_publish_run_id, "conclusion", retry_delays).lower()
+                print(f"auto_publish_conclusion={auto_conclusion or 'unknown'}")
+                if auto_conclusion == "success":
+                    print("phase=pipeline_completed", flush=True)
+                    return 0
+                print_failure_hint(args.gh_path, args.repo, auto_publish_run_id, retry_delays, label="auto_publish")
+                if args.publish_mode == "auto":
+                    raise RuntimeError(f"auto publish run did not succeed: {auto_publish_run_id}")
+            except Exception as exc:  # noqa: BLE001
+                print(f"auto_publish_error={exc}")
+                if args.publish_mode == "auto":
+                    raise
+
+        if args.publish_mode in {"manual", "auto-then-manual"}:
+            print(f"phase=dispatch_publish source_weekly_run_id={weekly_run_id}", flush=True)
+            run_publish_wrapper(
+                gh_path=args.gh_path,
+                repo=args.repo,
+                source_run_id=weekly_run_id,
+                apply_retirement_candidates=args.apply_retirement_candidates,
+                retirement_min_stale_runs=int(args.retirement_min_stale_runs),
+                retirement_max_seen_ok_count=int(args.retirement_max_seen_ok_count),
+                retry_delays_s=str(args.retry_delays_s),
+            )
+            did_manual_publish = True
+        if not did_manual_publish and args.publish_mode not in {"auto", "auto-then-manual"}:
+            raise RuntimeError(f"unsupported publish mode: {args.publish_mode}")
         print("phase=pipeline_completed", flush=True)
         return 0
     except Exception as exc:

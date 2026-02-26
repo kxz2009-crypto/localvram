@@ -107,7 +107,7 @@ npm run dev
 - `python scripts/review-community-submissions.py --submission-ids <id1,id2> --action approve|reject|needs_info`
 - `python scripts/ops-review.py submission --submission-ids <id1,id2> --action approve|reject|needs_info --reviewer ops [--dry-run] [--git-commit --git-push]`
 - `python scripts/run-publish-workflow.py --gh-path "<gh.exe path>"`
-- `python scripts/run-weekly-publish-pipeline.py --gh-path "<gh.exe path>"`
+- `python scripts/run-weekly-publish-pipeline.py --gh-path "<gh.exe path>" --publish-mode auto`
 - `python scripts/run-daily-content-workflow.py --gh-path "<gh.exe path>"`
 
 ## Benchmark Runtime Controls
@@ -178,6 +178,10 @@ Weekly collect/content/publish split:
 - Drill workflow: `Publish Fallback Drill` (manual) dispatches publish with invalid `source_run_id` and asserts fallback evidence in logs.
 - Recommended manual dispatch wrapper: `scripts/run-publish-workflow.py` (auto-resolves latest successful weekly run ID, dispatches publish with retry, and watches run result).
 - Recommended one-shot orchestrator: `scripts/run-weekly-publish-pipeline.py` (dispatch weekly benchmark, wait for success, then auto-dispatch publish).
+- Orchestrator publish mode:
+  - `--publish-mode auto` (default): wait/watch auto `workflow_run` publish.
+  - `--publish-mode manual`: always manual-dispatch publish wrapper.
+  - `--publish-mode auto-then-manual`: auto publish first, manual fallback only when needed.
 - Orchestrator failure drill-down: when weekly fails, `run-weekly-publish-pipeline.py` prints weekly failure class/detail and (by default) auto-dispatches `Runner Smoke Check`, then prints smoke run/conclusion for rapid triage.
 - Optional recovery mode: add `--retry-weekly-after-smoke true` so orchestrator retries one weekly run after smoke success (useful for transient network/service blips).
 - Pipeline SLO excludes manual-dispatch guardrail failures (for example missing/invalid `source_run_id`) from success-rate denominator while retaining audit trail in `excluded_reason_counts`.
