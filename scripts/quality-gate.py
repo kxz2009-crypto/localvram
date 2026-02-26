@@ -17,6 +17,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "retirement-candidates.json",
     ROOT / "src" / "data" / "retirement-proposal.json",
     ROOT / "src" / "data" / "search-console-keywords.json",
+    ROOT / "src" / "data" / "affiliate-click-events.json",
     ROOT / "src" / "data" / "conversion-funnel.json",
     ROOT / "src" / "data" / "community-reports.json",
     ROOT / "src" / "data" / "submission-review.json",
@@ -84,6 +85,12 @@ def main() -> None:
         print("quality gate failed: conversion-funnel.json missing funnel object")
         sys.exit(1)
     print("conversion funnel snapshot ok")
+
+    affiliate_events = json.loads((ROOT / "src" / "data" / "affiliate-click-events.json").read_text(encoding="utf-8-sig"))
+    if not isinstance(affiliate_events.get("events"), list):
+        print("quality gate failed: affiliate-click-events.json missing events list")
+        sys.exit(1)
+    print(f"affiliate click events snapshot ok: {len(affiliate_events.get('events', []))} event(s)")
 
     submission_review = json.loads((ROOT / "src" / "data" / "submission-review.json").read_text(encoding="utf-8-sig"))
     if not isinstance(submission_review.get("summary"), dict):

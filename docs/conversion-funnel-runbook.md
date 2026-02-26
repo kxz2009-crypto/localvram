@@ -36,6 +36,14 @@ Recommended: exclude IP/user-agent fields from committed snapshots.
 
 ## 3) Build conversion snapshot
 
+If you have a fresh raw export (JSON/JSONL/NDJSON), import it first:
+
+```bash
+python scripts/import-affiliate-events.py --source-file logs/affiliate-events-export.jsonl --source-label "cloudflare-kv-2026-02-26"
+```
+
+Then build conversion snapshot:
+
 ```bash
 python scripts/build-conversion-funnel.py
 ```
@@ -54,6 +62,7 @@ python scripts/quality-gate.py
 
 Checks include:
 
+- `src/data/affiliate-click-events.json` exists with an `events` array
 - `src/data/conversion-funnel.json` exists
 - `funnel` object exists in the generated snapshot
 - `/en/status/conversion-funnel/` page exists
@@ -62,4 +71,3 @@ Checks include:
 
 - `daily-content.yml` rebuilds conversion funnel snapshot daily.
 - `publish-benchmark-artifact.yml` rebuilds conversion funnel snapshot before quality gate and publish commit.
-

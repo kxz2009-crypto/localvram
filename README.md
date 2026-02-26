@@ -76,6 +76,7 @@ npm run dev
 - `python scripts/build-model-catalog.py`
 - `python scripts/build-sitemap.py`
 - `python scripts/build-conversion-funnel.py`
+- `python scripts/import-affiliate-events.py --source-file <raw-export.jsonl>`
 - `python scripts/build-submission-review.py`
 - `python scripts/publish-content-queue.py`
 - `python scripts/quality-gate.py`
