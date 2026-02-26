@@ -1,12 +1,15 @@
 {
-  "updated_at": "2026-02-25T16:20:31Z",
+  "updated_at": "2026-02-26T11:25:50Z",
   "endpoint": "http://127.0.0.1:11434",
   "required_targets": [
     "qwen3",
     "deepseek-r1",
     "qwen2.5",
     "qwen3-coder",
-    "qwen3.5"
+    "qwen3.5",
+    "llama3.3",
+    "qwen2.5-coder",
+    "ministral-3"
   ],
   "retry_delays_s": [
     5.0,
@@ -56,18 +59,26 @@
     }
   },
   "checks": {
-    "port_listeners": "no listeners on :11434",
-    "ps_ollama": [
-      "gao20      55035   54953  0 Feb25 pts/0    00:00:07 curl --fail --show-error --location --progress-bar https://ollama.com/download/ollama-linux-amd64.tar.zst"
+    "port_listeners": [
+      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=86131,fd=3))"
     ],
+    "ps_ollama": [
+      "gao20      86131       1  0 19:18 ?        00:00:00 /usr/local/bin/ollama serve"
+    ],
+    "single_instance_guard": {
+      "endpoint_is_loopback": true,
+      "ollama_serve_process_count": 1,
+      "failure_class": "none",
+      "failure_detail": ""
+    },
     "SYSTEMD_OLLAMA_IS_ACTIVE": {
-      "exit": 3,
-      "stdout": "activating",
+      "exit": 0,
+      "stdout": "active",
       "stderr": ""
     },
     "SYSTEMD_OLLAMA_STATUS": {
-      "exit": 3,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n     Active: activating (auto-restart) (Result: exit-code) since Thu 2026-02-26 00:20:29 CST; 1s ago\n    Process: 64777 ExecStart=/usr/local/bin/ollama serve (code=exited, status=1/FAILURE)\n   Main PID: 64777 (code=exited, status=1/FAILURE)\n        CPU: 15ms",
+      "exit": 0,
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Thu 2026-02-26 19:18:20 CST; 7min ago\n   Main PID: 86131 (ollama)\n      Tasks: 14 (limit: 57694)\n     Memory: 12.3M (peak: 265.5M)\n        CPU: 460ms\n     CGroup: /system.slice/ollama.service\n             └─86131 /usr/local/bin/ollama serve\n\nFeb 26 19:23:41 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:23:41 | 200 |  157.542908ms |       127.0.0.1 | GET      \"/api/tags\"\nFeb 26 19:23:42 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:23:42 | 200 |      31.636µs |       127.0.0.1 | GET      \"/api/version\"\nFeb 26 19:23:42 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:23:42 | 200 |       31.05µs |       127.0.0.1 | GET      \"/api/version\"\nFeb 26 19:23:42 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:23:42 | 200 |  159.921641ms |       127.0.0.1 | GET      \"/api/tags\"\nFeb 26 19:23:42 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:23:42 | 200 |  162.068008ms |       127.0.0.1 | GET      \"/api/tags\"\nFeb 26 19:23:43 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:23:43 | 200 |      23.269µs |       127.0.0.1 | GET      \"/api/version\"\nFeb 26 19:23:43 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:23:43 | 200 |        29.5µs |       127.0.0.1 | GET      \"/api/version\"\nFeb 26 19:23:43 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:23:43 | 200 |  157.498613ms |       127.0.0.1 | GET      \"/api/tags\"\nFeb 26 19:25:49 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:25:49 | 200 |  147.602188ms |       127.0.0.1 | GET      \"/api/tags\"\nFeb 26 19:25:50 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:25:50 | 200 |      36.297µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
@@ -81,7 +92,7 @@
       "version": "0.17.0"
     },
     "tags": {
-      "model_count": 34,
+      "model_count": 35,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -97,25 +108,28 @@
         "llama3.3:70b-instruct-q4_k_m",
         "llama3.3:latest",
         "llama4:latest",
+        "minimax-m2.5:cloud",
         "ministral-3:14b",
         "mistral-small:22b",
         "qwen2.5-coder:32b",
         "qwen2.5:14b",
-        "qwen2.5:32b",
-        "qwen2.5:72b"
+        "qwen2.5:32b"
       ]
     }
   },
   "summary": {
-    "model_count": 34,
-    "required_targets_count": 5,
-    "required_targets_runnable_count": 5,
+    "model_count": 35,
+    "required_targets_count": 8,
+    "required_targets_runnable_count": 8,
     "required_targets_runnable": [
       "qwen3",
       "deepseek-r1",
       "qwen2.5",
       "qwen3-coder",
-      "qwen3.5"
+      "qwen3.5",
+      "llama3.3",
+      "qwen2.5-coder",
+      "ministral-3"
     ],
     "failure_class": "none",
     "failure_detail": ""

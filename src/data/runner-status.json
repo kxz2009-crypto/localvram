@@ -1,12 +1,15 @@
 {
-  "updated_at": "2026-02-25T16:22:10Z",
+  "updated_at": "2026-02-26T11:35:08Z",
   "endpoint": "http://127.0.0.1:11434",
   "required_targets": [
     "qwen3",
     "deepseek-r1",
     "qwen2.5",
     "qwen3-coder",
-    "qwen3.5"
+    "qwen3.5",
+    "llama3.3",
+    "qwen2.5-coder",
+    "ministral-3"
   ],
   "retry_delays_s": [
     5.0,
@@ -56,18 +59,27 @@
     }
   },
   "checks": {
-    "port_listeners": "no listeners on :11434",
-    "ps_ollama": [
-      "gao20      55035   54953  0 Feb25 pts/0    00:00:08 curl --fail --show-error --location --progress-bar https://ollama.com/download/ollama-linux-amd64.tar.zst"
+    "port_listeners": [
+      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=86131,fd=3))"
     ],
+    "ps_ollama": [
+      "gao20      86131       1  0 19:19 ?        00:00:08 /usr/local/bin/ollama serve",
+      "gao20      90807   86131 68 19:34 ?        00:00:13 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-bfb40fc6bb9c3b2ed529b480e04f824c005ea8f86733d4ebbf0c204de484891e --port 46629"
+    ],
+    "single_instance_guard": {
+      "endpoint_is_loopback": true,
+      "ollama_serve_process_count": 1,
+      "failure_class": "none",
+      "failure_detail": ""
+    },
     "SYSTEMD_OLLAMA_IS_ACTIVE": {
-      "exit": 3,
-      "stdout": "activating",
+      "exit": 0,
+      "stdout": "active",
       "stderr": ""
     },
     "SYSTEMD_OLLAMA_STATUS": {
-      "exit": 3,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n     Active: activating (auto-restart) (Result: exit-code) since Thu 2026-02-26 00:22:10 CST; 501ms ago\n    Process: 65232 ExecStart=/usr/local/bin/ollama serve (code=exited, status=1/FAILURE)\n   Main PID: 65232 (code=exited, status=1/FAILURE)\n        CPU: 13ms",
+      "exit": 0,
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Thu 2026-02-26 19:18:20 CST; 16min ago\n   Main PID: 86131 (ollama)\n      Tasks: 69 (limit: 57694)\n     Memory: 1.3G (peak: 41.5G)\n        CPU: 11min 23.012s\n     CGroup: /system.slice/ollama.service\n             ├─86131 /usr/local/bin/ollama serve\n             └─90807 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-bfb40fc6bb9c3b2ed529b480e04f824c005ea8f86733d4ebbf0c204de484891e --port 46629\n\nFeb 26 19:34:52 Vernon ollama[86131]: time=2026-02-26T19:34:52.236+08:00 level=INFO source=device.go:267 msg=\"compute graph\" device=CPU size=\"10.0 MiB\"\nFeb 26 19:34:52 Vernon ollama[86131]: time=2026-02-26T19:34:52.236+08:00 level=INFO source=device.go:272 msg=\"total memory\" size=\"10.2 GiB\"\nFeb 26 19:34:52 Vernon ollama[86131]: time=2026-02-26T19:34:52.236+08:00 level=INFO source=sched.go:566 msg=\"loaded runners\" count=1\nFeb 26 19:34:52 Vernon ollama[86131]: time=2026-02-26T19:34:52.236+08:00 level=INFO source=server.go:1350 msg=\"waiting for llama runner to start responding\"\nFeb 26 19:34:52 Vernon ollama[86131]: time=2026-02-26T19:34:52.236+08:00 level=INFO source=server.go:1384 msg=\"waiting for server to become available\" status=\"llm server loading model\"\nFeb 26 19:35:03 Vernon ollama[86131]: time=2026-02-26T19:35:03.773+08:00 level=INFO source=server.go:1388 msg=\"llama runner started in 13.88 seconds\"\nFeb 26 19:35:04 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:35:04 | 200 | 15.167089512s |       127.0.0.1 | POST     \"/api/generate\"\nFeb 26 19:35:06 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:35:06 | 200 |   2.14723406s |       127.0.0.1 | POST     \"/api/generate\"\nFeb 26 19:35:08 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:35:08 | 200 |  2.060080569s |       127.0.0.1 | POST     \"/api/generate\"\nFeb 26 19:35:09 Vernon ollama[86131]: [GIN] 2026/02/26 - 19:35:09 | 200 |      24.119µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
@@ -81,7 +93,7 @@
       "version": "0.17.0"
     },
     "tags": {
-      "model_count": 34,
+      "model_count": 35,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -97,25 +109,28 @@
         "llama3.3:70b-instruct-q4_k_m",
         "llama3.3:latest",
         "llama4:latest",
+        "minimax-m2.5:cloud",
         "ministral-3:14b",
         "mistral-small:22b",
         "qwen2.5-coder:32b",
         "qwen2.5:14b",
-        "qwen2.5:32b",
-        "qwen2.5:72b"
+        "qwen2.5:32b"
       ]
     }
   },
   "summary": {
-    "model_count": 34,
-    "required_targets_count": 5,
-    "required_targets_runnable_count": 5,
+    "model_count": 35,
+    "required_targets_count": 8,
+    "required_targets_runnable_count": 8,
     "required_targets_runnable": [
       "qwen3",
       "deepseek-r1",
       "qwen2.5",
       "qwen3-coder",
-      "qwen3.5"
+      "qwen3.5",
+      "llama3.3",
+      "qwen2.5-coder",
+      "ministral-3"
     ],
     "failure_class": "none",
     "failure_detail": ""

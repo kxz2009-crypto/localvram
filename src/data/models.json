@@ -1,6 +1,6 @@
 {
   "version": "2026.02.24.ollama-popular",
-  "count": 549,
+  "count": 553,
   "models": [
     {
       "id": "llama31-8b-q4",
@@ -4393,6 +4393,38 @@
         "CLOUD"
       ],
       "verified": false
+    },
+    {
+      "id": "ministral-3-14b-q4",
+      "name": "Ministral 3 14B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ministral-3-14b-q5",
+      "name": "Ministral 3 14B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ministral-3-14b-q8",
+      "name": "Ministral 3 14B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": true
+    },
+    {
+      "id": "ministral-3-14b-fp16",
+      "name": "Ministral 3 14B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": true
     }
   ]
 }
