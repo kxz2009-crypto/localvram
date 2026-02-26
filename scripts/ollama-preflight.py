@@ -173,8 +173,10 @@ def fetch_local_models(endpoint: str) -> set[str]:
 
 
 def start_ollama_service(endpoint: str) -> None:
+    host, port = endpoint_host_port(endpoint)
+    ollama_host = f"{host}:{port}"
     env = dict(os.environ)
-    env.setdefault("OLLAMA_HOST", endpoint)
+    env["OLLAMA_HOST"] = ollama_host
     log_path = os.getenv("LV_OLLAMA_SERVE_LOG") or (
         "/tmp/ollama-serve.log" if os.name != "nt" else os.path.join(tempfile.gettempdir(), "ollama-serve.log")
     )
@@ -182,8 +184,23 @@ def start_ollama_service(endpoint: str) -> None:
         subprocess.run(["pkill", "-f", "ollama serve"], check=False)
     except Exception:
         pass
+    ollama_bin = shutil.which("ollama") or "ollama"
     with open(log_path, "ab") as logf:
-        subprocess.Popen(["ollama", "serve"], stdout=logf, stderr=logf, env=env)  # noqa: S603
+        proc = subprocess.Popen([ollama_bin, "serve"], stdout=logf, stderr=logf, env=env)  # noqa: S603
+    time.sleep(1.2)
+    if proc.poll() is not None:
+        raise RuntimeError(f"ollama serve exited quickly (code={proc.returncode}), log={log_path}")
+
+
+def log_tail(path: str, max_lines: int = 20) -> list[str]:
+    try:
+        text = Path(path).read_text(encoding="utf-8", errors="replace")
+    except Exception:  # noqa: BLE001
+        return []
+    rows = [line.rstrip() for line in text.splitlines() if line.strip()]
+    if not rows:
+        return []
+    return rows[-max_lines:]
 
 
 def fetch_local_models_with_retry(
@@ -255,6 +272,9 @@ def main() -> None:
     print(f"ollama_endpoint_is_loopback={str(loopback_endpoint).lower()}")
     print(f"ollama_models_dir={os.getenv('OLLAMA_MODELS', '')}")
     print(f"ollama_network_retry_delays_s={format_retry_delays(network_retry_delays)}")
+    recovery_log_path = os.getenv("LV_OLLAMA_SERVE_LOG") or (
+        "/tmp/ollama-serve.log" if os.name != "nt" else os.path.join(tempfile.gettempdir(), "ollama-serve.log")
+    )
 
     if loopback_endpoint and not args.skip_single_instance_guard:
         ollama_processes = detect_ollama_serve_processes()
@@ -276,7 +296,18 @@ def main() -> None:
             if args.restart_if_empty:
                 print("ollama_local_process_missing=1")
                 print("ollama_local_recovery_attempt=start_ollama_serve")
-                start_ollama_service(endpoint)
+                try:
+                    start_ollama_service(endpoint)
+                    print("ollama_local_recovery_start_ok=true")
+                except Exception as exc:  # noqa: BLE001
+                    print("ollama_local_recovery_start_ok=false")
+                    print(f"ollama_local_recovery_start_error={exc}")
+                    tail = log_tail(recovery_log_path, max_lines=20)
+                    if tail:
+                        print("ollama_local_recovery_log_tail_begin")
+                        for line in tail:
+                            print(line)
+                        print("ollama_local_recovery_log_tail_end")
                 time.sleep(2.0)
                 ollama_processes = detect_ollama_serve_processes()
                 listeners = detect_port_listeners(endpoint_port)
@@ -310,7 +341,18 @@ def main() -> None:
 
     if args.restart_if_empty and len(local_models) == 0:
         print("ollama_models_count=0, attempting service restart")
-        start_ollama_service(endpoint)
+        try:
+            start_ollama_service(endpoint)
+            print("ollama_local_recovery_start_ok=true")
+        except Exception as exc:  # noqa: BLE001
+            print("ollama_local_recovery_start_ok=false")
+            print(f"ollama_local_recovery_start_error={exc}")
+            tail = log_tail(recovery_log_path, max_lines=20)
+            if tail:
+                print("ollama_local_recovery_log_tail_begin")
+                for line in tail:
+                    print(line)
+                print("ollama_local_recovery_log_tail_end")
         try:
             restart_retry_delays = [1.0, 2.0, 3.0] + network_retry_delays
             local_models = fetch_local_models_with_retry(

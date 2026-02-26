@@ -141,6 +141,7 @@ Self-hosted runner preflight:
 - Fails fast when no models or no runnable required targets are detected.
 - In weekly workflow, preflight runs with `--restart-if-empty` to auto-recover `ollama serve` when model list is unexpectedly empty.
 - If preflight requires local process and detects none on loopback endpoint, it now attempts one local `ollama serve` recovery before failing.
+- Preflight recovery now normalizes `OLLAMA_HOST` to `host:port` and prints startup error + log tail when `ollama serve` exits immediately.
 - Single-instance governance checks classify runner-side ownership problems: `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`.
 - Failure classes in logs: `checkout_network_failure`, `ollama_not_visible`, `model_missing`, `ollama_multi_instance`, `ollama_port_conflict`, `ollama_instance_unmanaged`, `benchmark_threshold_not_met`, `source_run_discovery_failure`, `source_run_metadata_failure`, `source_run_not_publishable`, `artifact_download_rate_limited`, `publish_push_rate_limited`, `retired_data_prune_failure`, `retirement_candidates_failure`, `retirement_review_failure`, `retirement_apply_prune_failure`, `daily_content_failed`, `daily_content_push_failure`, `daily_content_status_sync_failure`.
 - Failure alerts: `Weekly Benchmark`, `Daily Content Agent`, and `Publish Benchmark Artifact` auto-create or update GitHub Issues with title `[OPS-ALERT] <workflow>: <failure_class>`.
