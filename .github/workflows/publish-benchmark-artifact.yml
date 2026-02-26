@@ -37,6 +37,10 @@ on:
         default: "2"
         type: string
 
+concurrency:
+  group: publish-benchmark-${{ github.ref_name }}-${{ github.event.workflow_run.id || github.event.inputs.source_run_id || github.run_id }}
+  cancel-in-progress: false
+
 permissions:
   actions: read
   contents: write
@@ -384,6 +388,10 @@ jobs:
               output="$("$@" 2>&1)" && { echo "${output}"; return 0; }
               echo "${output}"
 
+              if echo "${output}" | grep -Eiq "non-fast-forward|fetch first|rejected"; then
+                git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || true
+              fi
+
               if [ "${attempt}" -ge "$((max_attempts - 1))" ]; then
                 break
               fi
@@ -517,6 +525,10 @@ jobs:
               echo "${label}_attempt=${attempt}"
               output="$("$@" 2>&1)" && { echo "${output}"; return 0; }
               echo "${output}"
+
+              if echo "${output}" | grep -Eiq "non-fast-forward|fetch first|rejected"; then
+                git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || true
+              fi
 
               if [ "${attempt}" -ge "$((max_attempts - 1))" ]; then
                 break
