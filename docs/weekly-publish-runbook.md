@@ -36,6 +36,12 @@ python scripts/run-weekly-publish-pipeline.py `
 - `--retry-delays-s "5,10,20"`: network retry backoff for `gh` calls.
 - `--apply-retirement-candidates true|false`: forwarded to publish stage.
 - `--retirement-min-stale-runs <n>` / `--retirement-max-seen-ok-count <n>`: forwarded to publish stage.
+- `--run-smoke-on-weekly-failure true|false`: when weekly fails, auto-dispatch `Runner Smoke Check` (default `true`).
+- `--smoke-workflow runner-smoke-check.yml`: smoke workflow id/name for dispatch.
+- `--smoke-endpoint http://127.0.0.1:11434`: smoke check endpoint input.
+- `--smoke-required-targets "<csv>"`: optional smoke required target override.
+- `--smoke-restart-if-empty true|false`: forwarded to smoke input (default `true`).
+- `--smoke-retry-delays-s "5,10,20"`: smoke input retry CSV (defaults to `--retry-delays-s` when empty).
 
 ## 4) Preconditions
 
@@ -47,7 +53,8 @@ python scripts/run-weekly-publish-pipeline.py `
 
 - If weekly run fails, publish stage is blocked by design.
 - Script now prints `weekly_failure_class` / `weekly_failure_detail` and a short failed-log excerpt when available.
+- By default it also dispatches `Runner Smoke Check` and prints `smoke_run_id`, `smoke_run_url`, and `smoke_conclusion`.
+- If smoke also fails, script prints `smoke_failure_class` / `smoke_failure_detail` and log hint command.
 - Re-run after fixing runner/Ollama issue:
-  - `Runner Smoke Check`
   - `Weekly Benchmark`
   - then this script again.

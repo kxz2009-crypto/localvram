@@ -173,6 +173,7 @@ Weekly collect/content/publish split:
 - Drill workflow: `Publish Fallback Drill` (manual) dispatches publish with invalid `source_run_id` and asserts fallback evidence in logs.
 - Recommended manual dispatch wrapper: `scripts/run-publish-workflow.py` (auto-resolves latest successful weekly run ID, dispatches publish with retry, and watches run result).
 - Recommended one-shot orchestrator: `scripts/run-weekly-publish-pipeline.py` (dispatch weekly benchmark, wait for success, then auto-dispatch publish).
+- Orchestrator failure drill-down: when weekly fails, `run-weekly-publish-pipeline.py` prints weekly failure class/detail and (by default) auto-dispatches `Runner Smoke Check`, then prints smoke run/conclusion for rapid triage.
 - Runner health status page: `/en/status/runner-health/` (source file `src/data/runner-status.json` from diagnostics snapshot).
 - Pipeline status page: `/en/status/pipeline-status/` (source file `src/data/pipeline-status.json`).
 - Conversion funnel page: `/en/status/conversion-funnel/` (source file `src/data/conversion-funnel.json`).
