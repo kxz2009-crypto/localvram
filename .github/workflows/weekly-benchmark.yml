@@ -78,7 +78,8 @@ jobs:
         env:
           LV_WEEKLY_TARGETS: ${{ steps.resolve_targets.outputs.resolved_targets_csv || env.LV_WEEKLY_BASE_TARGETS }}
         run: |
-          python scripts/ollama-preflight.py --required-targets "${LV_WEEKLY_TARGETS}" --restart-if-empty --require-local-process
+          set -o pipefail
+          python scripts/ollama-preflight.py --required-targets "${LV_WEEKLY_TARGETS}" --restart-if-empty --require-local-process 2>&1 | tee logs/ollama-preflight-weekly.log
 
       - name: Weekly benchmark
         if: steps.checkout.conclusion == 'success'

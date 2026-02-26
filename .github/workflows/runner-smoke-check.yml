@@ -122,7 +122,8 @@ jobs:
             ARGS+=(--restart-if-empty)
           fi
           ARGS+=(--require-local-process)
-          python scripts/ollama-preflight.py "${ARGS[@]}"
+          set -o pipefail
+          python scripts/ollama-preflight.py "${ARGS[@]}" 2>&1 | tee logs/ollama-preflight-smoke.log
 
       - name: Runner diagnostics (post smoke)
         if: always() && steps.checkout.conclusion == 'success'
@@ -145,4 +146,5 @@ jobs:
             logs/runner-smoke-before.json
             logs/runner-smoke-after.json
             logs/weekly-target-plan-smoke.json
+            logs/ollama-preflight-smoke.log
 
