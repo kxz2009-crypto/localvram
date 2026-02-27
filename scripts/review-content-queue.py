@@ -166,7 +166,7 @@ def main() -> None:
     parser.add_argument("--min-score", type=float, default=120.0)
     parser.add_argument("--min-words", type=int, default=180)
     parser.add_argument("--max-quote-ratio", type=float, default=0.35)
-    parser.add_argument("--duplicate-threshold", type=float, default=0.74)
+    parser.add_argument("--duplicate-threshold", type=float, default=0.90)
     parser.add_argument("--history-limit", type=int, default=60)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(

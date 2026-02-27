@@ -14,6 +14,8 @@ UPDATES_FILE = ROOT / "src" / "data" / "daily-updates.json"
 DRAFT_INDEX_FILE = ROOT / "src" / "data" / "daily-content-drafts.json"
 BENCHMARK_FILE = ROOT / "src" / "data" / "benchmark-results.json"
 AFFILIATE_LINKS_FILE = ROOT / "src" / "data" / "affiliate-links.json"
+PUBLISH_LOG_FILE = ROOT / "src" / "data" / "content-publish-log.json"
+BLOG_DIR = ROOT / "src" / "content" / "blog"
 QUEUE_DIR = ROOT / "content-queue"
 
 
@@ -31,6 +33,129 @@ def save_json(path: Path, payload: Any) -> None:
 def slugify(value: str) -> str:
     cleaned = re.sub(r"[^a-zA-Z0-9]+", "-", (value or "").strip().lower()).strip("-")
     return cleaned or "untitled"
+
+
+def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
+    if not text.startswith("---\n"):
+        return {}, text.strip()
+    parts = text.split("\n---\n", 1)
+    if len(parts) != 2:
+        return {}, text.strip()
+    header = parts[0][4:]
+    body = parts[1].strip()
+    out: dict[str, str] = {}
+    for raw in header.splitlines():
+        line = raw.strip()
+        if not line or ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        k = key.strip()
+        v = value.strip()
+        if v.startswith('"') and v.endswith('"') and len(v) >= 2:
+            v = v[1:-1]
+        out[k] = v
+    return out, body
+
+
+def dump_frontmatter(frontmatter: dict[str, str]) -> str:
+    lines: list[str] = []
+    for key, value in frontmatter.items():
+        raw = str(value)
+        if re.search(r"[\s:#]", raw) or raw == "":
+            escaped = raw.replace("\\", "\\\\").replace('"', '\\"')
+            raw = f'"{escaped}"'
+        lines.append(f"{key}: {raw}")
+    return "---\n" + "\n".join(lines) + "\n---\n"
+
+
+def archive_stale_queue_drafts(queue_day_dir: Path, marker: str) -> None:
+    for stale_file in queue_day_dir.glob("*.md"):
+        try:
+            raw = stale_file.read_text(encoding="utf-8-sig")
+            frontmatter, body = parse_frontmatter(raw)
+            if not frontmatter:
+                frontmatter = {"title": stale_file.stem}
+            frontmatter["status"] = "rejected_manual"
+            frontmatter["reviewed_at"] = marker
+            content = f"{dump_frontmatter(frontmatter)}\n{body.strip()}\n"
+            stale_file.write_text(content, encoding="utf-8")
+        except OSError:
+            # Stale queue files should not break generation.
+            continue
+
+
+def parse_iso_utc(value: str) -> dt.datetime | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    if raw.endswith("Z"):
+        raw = raw[:-1] + "+00:00"
+    try:
+        parsed = dt.datetime.fromisoformat(raw)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=dt.timezone.utc)
+    return parsed.astimezone(dt.timezone.utc)
+
+
+def topic_key(item: dict[str, Any]) -> str:
+    keyword = slugify(str(item.get("keyword", "")).strip())
+    if keyword and keyword != "untitled":
+        return keyword
+    slug = slugify(str(item.get("slug", "")).strip())
+    if slug and slug != "untitled":
+        return slug
+    return ""
+
+
+def collect_blocked_topics(today: dt.date, lookback_days: int = 30) -> tuple[set[str], set[str]]:
+    blocked_slugs: set[str] = set()
+    blocked_topics: set[str] = set()
+
+    if BLOG_DIR.exists():
+        for post in BLOG_DIR.glob("*.md"):
+            blocked_slugs.add(post.stem.strip().lower())
+            raw = post.read_text(encoding="utf-8-sig")
+            frontmatter, _ = parse_frontmatter(raw)
+            k = slugify(str(frontmatter.get("keyword", "")).strip())
+            if k and k != "untitled":
+                blocked_topics.add(k)
+
+    publish_log = load_json(PUBLISH_LOG_FILE, {"history": []})
+    for run in publish_log.get("history", []):
+        if not isinstance(run, dict):
+            continue
+        for item in run.get("published", []):
+            if not isinstance(item, dict):
+                continue
+            s = slugify(str(item.get("slug", "")).strip())
+            if s and s != "untitled":
+                blocked_slugs.add(s)
+            t = slugify(str(item.get("topic_key", "")).strip())
+            if t and t != "untitled":
+                blocked_topics.add(t)
+
+    threshold = today - dt.timedelta(days=max(1, int(lookback_days)))
+    draft_index = load_json(DRAFT_INDEX_FILE, {"items": []})
+    for item in draft_index.get("items", []):
+        if not isinstance(item, dict):
+            continue
+        row_date = str(item.get("date", "")).strip()
+        try:
+            parsed_date = dt.date.fromisoformat(row_date)
+        except ValueError:
+            continue
+        if parsed_date < threshold:
+            continue
+        s = slugify(str(item.get("slug", "")).strip())
+        if s and s != "untitled":
+            blocked_slugs.add(s)
+        t = topic_key(item)
+        if t:
+            blocked_topics.add(t)
+
+    return blocked_slugs, blocked_topics
 
 
 def score(item: dict[str, Any]) -> int:
@@ -78,6 +203,31 @@ def dedupe_candidates(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return out
 
 
+def filter_fresh_candidates(
+    items: list[dict[str, Any]],
+    *,
+    blocked_slugs: set[str],
+    blocked_topics: set[str],
+    min_score: int,
+) -> list[dict[str, Any]]:
+    selected: list[dict[str, Any]] = []
+    for item in sorted(dedupe_candidates(items), key=score_with_boost, reverse=True):
+        current_score = score_with_boost(item)
+        if current_score < min_score:
+            continue
+        s = slugify(item.get("slug") or item.get("keyword") or "")
+        t = topic_key(item)
+        if s in blocked_slugs:
+            continue
+        if t and t in blocked_topics:
+            continue
+        blocked_slugs.add(s)
+        if t:
+            blocked_topics.add(t)
+        selected.append(item)
+    return selected
+
+
 def pick_measured_highlights(max_count: int = 3) -> list[dict[str, Any]]:
     payload = load_json(BENCHMARK_FILE, {"models": {}})
     rows = payload.get("models", {})
@@ -102,6 +252,52 @@ def pick_measured_highlights(max_count: int = 3) -> list[dict[str, Any]]:
         )
     measured.sort(key=lambda x: x["tokens_per_second"], reverse=True)
     return measured[:max_count]
+
+
+def build_benchmark_fallback_candidates(max_count: int = 120) -> list[dict[str, Any]]:
+    payload = load_json(BENCHMARK_FILE, {"models": {}})
+    rows = payload.get("models", {})
+    if not isinstance(rows, dict):
+        return []
+
+    now_utc = dt.datetime.now(dt.timezone.utc)
+    candidates: list[dict[str, Any]] = []
+    for tag, row in rows.items():
+        if not isinstance(row, dict):
+            continue
+        if str(row.get("status", "")).strip().lower() != "ok":
+            continue
+        tps = row.get("tokens_per_second")
+        if not isinstance(tps, (int, float)):
+            continue
+
+        tested_at = parse_iso_utc(str(row.get("test_time", "")))
+        age_days = 14
+        if tested_at is not None:
+            age_days = max(0, int((now_utc - tested_at).total_seconds() // 86400))
+        freshness_gap = max(3, 10 - min(age_days, 7))
+        search_intent = min(10, max(4, int(float(tps) // 15) + 3))
+        commercial_intent = min(10, max(4, int(float(tps) // 20) + 4))
+
+        tag_text = str(tag).strip()
+        slug = f"model-{slugify(tag_text.replace(':', '-'))}-local-benchmark"
+        keyword = f"{tag_text} local inference benchmark"
+        candidates.append(
+            {
+                "slug": slug,
+                "keyword": keyword,
+                "landing": "/en/models/",
+                "search_intent_score": search_intent,
+                "commercial_intent_score": commercial_intent,
+                "freshness_gap_score": freshness_gap,
+                "clicks": 0,
+                "ctr": 0.0,
+                "source": "benchmark_fallback",
+            }
+        )
+
+    candidates.sort(key=score_with_boost, reverse=True)
+    return candidates[:max_count]
 
 
 def build_title(keyword: str, date_iso: str) -> str:
@@ -179,6 +375,11 @@ Users searching for "{keyword}" are usually deciding whether to run locally or m
 
 def main() -> None:
     max_drafts = max(1, int(os.getenv("LV_CONTENT_DRAFT_COUNT", "3")))
+    min_candidate_score = max(0, int(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_SCORE", "120")))
+    today = dt.date.today()
+    today_iso = today.isoformat()
+    blocked_slugs, blocked_topics = collect_blocked_topics(today, lookback_days=30)
+
     opportunities = load_json(OPPORTUNITY_FILE, {"items": []})
     ranked = sorted(opportunities.get("items", []), key=score, reverse=True)
     seeded = [{**row, "source": "opportunity"} for row in ranked]
@@ -187,20 +388,33 @@ def main() -> None:
     sc_rows = [candidate_from_sc(item) for item in sc_payload.get("items", [])]
     sc_ranked = sorted(sc_rows, key=score_with_boost, reverse=True)
 
-    combined = dedupe_candidates(seeded + sc_ranked)
-    selected = sorted(combined, key=score_with_boost, reverse=True)[:max_drafts]
+    primary = filter_fresh_candidates(
+        seeded + sc_ranked,
+        blocked_slugs=blocked_slugs,
+        blocked_topics=blocked_topics,
+        min_score=min_candidate_score,
+    )
+    selected = primary[:max_drafts]
+    if len(selected) < max_drafts:
+        fallback = filter_fresh_candidates(
+            build_benchmark_fallback_candidates(max_count=200),
+            blocked_slugs=blocked_slugs,
+            blocked_topics=blocked_topics,
+            min_score=min_candidate_score,
+        )
+        selected.extend(fallback[: max_drafts - len(selected)])
 
     links = load_json(AFFILIATE_LINKS_FILE, {"runpod": "/go/runpod", "vast": "/go/vast"})
     measured = pick_measured_highlights(max_count=3)
 
-    today = dt.date.today().isoformat()
-    queue_day_dir = QUEUE_DIR / today
+    queue_day_dir = QUEUE_DIR / today_iso
     queue_day_dir.mkdir(parents=True, exist_ok=True)
+    archive_stale_queue_drafts(queue_day_dir, marker=f"{today_iso}T00:00:00Z")
 
     draft_records = []
     for idx, item in enumerate(selected, start=1):
         slug = slugify(item.get("slug") or item.get("keyword") or f"draft-{idx}")[:80]
-        title = build_title(str(item.get("keyword", "")).strip(), today)
+        title = build_title(str(item.get("keyword", "")).strip(), today_iso)
         draft_text = draft_markdown(
             title=title,
             keyword=str(item.get("keyword", "")).strip(),
@@ -209,13 +423,13 @@ def main() -> None:
             measured=measured,
             links=links,
             landing=str(item.get("landing", "")).strip(),
-            date_iso=today,
+            date_iso=today_iso,
         )
         draft_path = queue_day_dir / f"{idx:02d}-{slug}.md"
         draft_path.write_text(draft_text, encoding="utf-8")
         draft_records.append(
             {
-                "date": today,
+                "date": today_iso,
                 "slug": slug,
                 "title": title,
                 "keyword": str(item.get("keyword", "")),
@@ -227,12 +441,12 @@ def main() -> None:
         )
 
     updates = load_json(UPDATES_FILE, {"items": []})
-    updates["items"] = [row for row in updates.get("items", []) if row.get("date") != today]
+    updates["items"] = [row for row in updates.get("items", []) if row.get("date") != today_iso]
     updates["items"].insert(
         0,
         {
-            "date": today,
-            "summary": "Agent ranked SEO opportunities and generated review-ready content drafts.",
+            "date": today_iso,
+            "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
             "candidates": draft_records,
         },
     )
@@ -240,8 +454,8 @@ def main() -> None:
     save_json(UPDATES_FILE, updates)
 
     draft_index = load_json(DRAFT_INDEX_FILE, {"updated_at": "", "items": []})
-    existing = [row for row in draft_index.get("items", []) if row.get("date") != today]
-    draft_index["updated_at"] = f"{today}T00:00:00Z"
+    existing = [row for row in draft_index.get("items", []) if row.get("date") != today_iso]
+    draft_index["updated_at"] = f"{today_iso}T00:00:00Z"
     draft_index["items"] = (draft_records + existing)[:120]
     save_json(DRAFT_INDEX_FILE, draft_index)
 
