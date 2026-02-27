@@ -1,0 +1,85 @@
+name: Weekly Opportunity Refresh
+
+on:
+  schedule:
+    - cron: "45 1 * * 5"
+  workflow_dispatch:
+    inputs:
+      replace_count:
+        description: "Override weekly replace count (0 uses policy)"
+        required: false
+        default: "0"
+        type: string
+      target_size:
+        description: "Override target pool size (0 uses policy)"
+        required: false
+        default: "0"
+        type: string
+      cooldown_days:
+        description: "Override cooldown days (0 uses policy)"
+        required: false
+        default: "0"
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Refresh content opportunities pool
+        env:
+          INPUT_REPLACE_COUNT: ${{ github.event.inputs.replace_count }}
+          INPUT_TARGET_SIZE: ${{ github.event.inputs.target_size }}
+          INPUT_COOLDOWN_DAYS: ${{ github.event.inputs.cooldown_days }}
+        run: |
+          ARGS=()
+          if [ -n "${INPUT_REPLACE_COUNT}" ] && [ "${INPUT_REPLACE_COUNT}" != "0" ]; then
+            ARGS+=(--replace-count "${INPUT_REPLACE_COUNT}")
+          fi
+          if [ -n "${INPUT_TARGET_SIZE}" ] && [ "${INPUT_TARGET_SIZE}" != "0" ]; then
+            ARGS+=(--target-size "${INPUT_TARGET_SIZE}")
+          fi
+          if [ -n "${INPUT_COOLDOWN_DAYS}" ] && [ "${INPUT_COOLDOWN_DAYS}" != "0" ]; then
+            ARGS+=(--cooldown-days "${INPUT_COOLDOWN_DAYS}")
+          fi
+          python scripts/refresh-content-opportunities.py "${ARGS[@]}"
+
+      - name: Commit refreshed pool
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/content-opportunities.json
+          if git diff --cached --quiet; then
+            echo "opportunity_refresh=no_changes"
+            exit 0
+          fi
+          git commit -m "chore: refresh weekly content opportunities pool"
+
+          retry_parts=(5 10 20)
+          run_with_retry() {
+            local max_attempts=$(( ${#retry_parts[@]} + 1 ))
+            local attempt=0
+            local output=""
+            while [ "${attempt}" -lt "${max_attempts}" ]; do
+              output="$(git push 2>&1)" && { echo "${output}"; return 0; }
+              echo "${output}"
+              if [ "${attempt}" -ge "$((max_attempts - 1))" ]; then
+                break
+              fi
+              sleep "${retry_parts[${attempt}]}"
+              attempt=$((attempt + 1))
+            done
+            return 1
+          }
+
+          run_with_retry
