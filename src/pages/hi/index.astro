@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../data/root-alternates";
+
+const pagePath = "/hi/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "LocalVRAM Hindi",
+  url: "https://localvram.com/hi/",
+  inLanguage: "hi",
+  description: "Hindi route for LocalVRAM multilingual SEO expansion."
+};
+---
+
+<BaseLayout
+  title="LocalVRAM | Hindi"
+  description="Hindi route for LocalVRAM multilingual SEO expansion."
+  locale="hi"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <header class="simple-header">
+      <img src="/branding/logo.svg" alt="LocalVRAM" />
+      <a class="btn" href="/en/">English</a>
+    </header>
+    <section class="hero">
+      <img class="verified-pill" src="/branding/ollama-verified-pill.svg" alt="Ollama Verified" />
+      <h1>Hindi locale route is now active</h1>
+      <p>
+        SEO and operations for Hindi run independently from English and Chinese.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/en/tools/vram-calculator/">Open core tool</a>
+        <a class="btn" href="/en/status/data-freshness/">Data freshness</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

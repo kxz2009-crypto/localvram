@@ -9,7 +9,7 @@ type AlternateLink = {
 interface Props {
   title?: string;
   description?: string;
-  locale?: "en" | "zh";
+  locale?: "en" | "es" | "pt" | "fr" | "de" | "ru" | "ja" | "ko" | "ar" | "hi" | "id" | "zh";
   canonicalPath?: string;
   canonicalOrigin?: string;
   alternates?: AlternateLink[];
@@ -43,6 +43,21 @@ const path = canonicalPath || Astro.url.pathname || "/";
 const canonicalUrl = new URL(path, siteUrl).toString();
 const ogImageUrl = new URL(ogImage, siteUrl).toString();
 const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
+const ogLocaleByLang: Record<string, string> = {
+  en: "en_US",
+  es: "es_ES",
+  pt: "pt_BR",
+  fr: "fr_FR",
+  de: "de_DE",
+  ru: "ru_RU",
+  ja: "ja_JP",
+  ko: "ko_KR",
+  ar: "ar_SA",
+  hi: "hi_IN",
+  id: "id_ID",
+  zh: "zh_CN"
+};
+const ogLocale = ogLocaleByLang[locale] || "en_US";
 const jsonLdList = Array.isArray(structuredData)
   ? structuredData
   : structuredData
@@ -69,7 +84,7 @@ const jsonLdList = Array.isArray(structuredData)
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:site_name" content="LocalVRAM" />
-    <meta property="og:locale" content={locale === "zh" ? "zh_CN" : "en_US"} />
+    <meta property="og:locale" content={ogLocale} />
     {publishedTime && <meta property="article:published_time" content={publishedTime} />}
     {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
     <meta name="twitter:card" content="summary_large_image" />

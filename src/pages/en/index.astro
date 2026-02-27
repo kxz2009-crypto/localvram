@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import runnerStatus from "../../data/runner-status.json";
 import statusReport from "../../data/status.json";
+import { ROOT_ALTERNATES } from "../../data/root-alternates";
 
 const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
 const lastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
@@ -29,11 +30,7 @@ const homeStructuredData = [
   description="Pick the right model for your hardware in 60 seconds."
   locale="en"
   canonicalPath="/en/"
-  alternates={[
-    { hrefLang: "en", href: "https://localvram.com/en/" },
-    { hrefLang: "zh-CN", href: "https://localvram.cn/zh/" },
-    { hrefLang: "x-default", href: "https://localvram.com/en/" }
-  ]}
+  alternates={ROOT_ALTERNATES}
   structuredData={homeStructuredData}
 >
   <header class="top-nav">

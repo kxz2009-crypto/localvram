@@ -2,8 +2,8 @@
 
 Goal:
 
-- Global: `localvram.com` (English-first)
-- Chinese: `localvram.cn` (primary for Baidu/WeChat/ByteDance ecosystem)
+- Global: `localvram.com` (`en/es/pt/fr/de/ru/ja/ko/ar/hi/id` independent locale operations)
+- Chinese: `localvram.cn` (`zh-CN` primary for Baidu/WeChat/ByteDance ecosystem)
 - Alias only: `zh.localvram.com` -> 301 redirect to `localvram.cn`
 
 ## 1) Cloudflare redirect rules (copy/paste)

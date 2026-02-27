@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../data/root-alternates";
 
 const zhHomeStructuredData = {
   "@context": "https://schema.org",
@@ -16,11 +17,7 @@ const zhHomeStructuredData = {
   description="Local Ollama model compatibility and benchmark data hub."
   locale="zh"
   canonicalPath="/zh/"
-  alternates={[
-    { hrefLang: "en", href: "https://localvram.com/en/" },
-    { hrefLang: "zh-CN", href: "https://localvram.cn/zh/" },
-    { hrefLang: "x-default", href: "https://localvram.com/en/" }
-  ]}
+  alternates={ROOT_ALTERNATES}
   structuredData={zhHomeStructuredData}
 >
   <main class="container">

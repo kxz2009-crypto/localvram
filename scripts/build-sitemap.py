@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT_EN = ROOT / "public" / "sitemap.xml"
 OUT_CN = ROOT / "public" / "sitemap-cn.xml"
+COM_LOCALES = ["en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"]
 
 
 def load_json(path: Path) -> dict:
@@ -17,8 +18,8 @@ def blog_slugs() -> list[str]:
     return sorted([p.stem for p in blog_dir.glob("*.md")])
 
 
-def zh_static_paths() -> list[str]:
-    pages_root = ROOT / "src" / "pages" / "zh"
+def locale_static_paths(locale: str) -> list[str]:
+    pages_root = ROOT / "src" / "pages" / locale
     if not pages_root.exists():
         return []
     paths: list[str] = []
@@ -31,13 +32,14 @@ def zh_static_paths() -> list[str]:
             parts = parts[:-1]
         else:
             parts[-1] = parts[-1].removesuffix(".astro")
-        path = "/zh/" + "/".join(parts)
+        path = f"/{locale}/" + "/".join(parts)
         if not path.endswith("/"):
             path += "/"
         path = path.replace("//", "/")
         paths.append(path)
-    if "/zh/" not in paths:
-        paths.append("/zh/")
+    locale_root = f"/{locale}/"
+    if locale_root not in paths:
+        paths.append(locale_root)
     return sorted(set(paths))
 
 
@@ -54,55 +56,32 @@ def main() -> None:
     hardware_data = load_json(ROOT / "src" / "data" / "hardware-tiers.json")
     model_catalog = load_json(ROOT / "src" / "data" / "model-catalog.json")
 
-    base_urls_en = [
-        "https://localvram.com/en/",
-        "https://localvram.com/legal/",
-        "https://localvram.com/en/blog/",
-        "https://localvram.com/en/updates/",
-        "https://localvram.com/en/about/methodology/",
-        "https://localvram.com/en/status/data-freshness/",
-        "https://localvram.com/en/status/runner-health/",
-        "https://localvram.com/en/status/pipeline-status/",
-        "https://localvram.com/en/status/conversion-funnel/",
-        "https://localvram.com/en/status/submission-review/",
-        "https://localvram.com/en/status/content-publish/",
-        "https://localvram.com/en/errors/",
-        "https://localvram.com/en/hardware/",
-        "https://localvram.com/en/hardware/apple-silicon-llm-guide/",
-        "https://localvram.com/en/models/",
-        "https://localvram.com/en/benchmarks/",
-        "https://localvram.com/en/benchmarks/changelog/",
-        "https://localvram.com/en/benchmarks/submit-result/",
-        "https://localvram.com/en/tools/vram-calculator/",
-        "https://localvram.com/en/tools/roi-calculator/",
-        "https://localvram.com/en/tools/quantization-blind-test/",
-        "https://localvram.com/en/affiliate/cloud-gpu/",
-        "https://localvram.com/en/affiliate/hardware-upgrade/",
-        "https://localvram.com/en/guides/ollama-local-cluster-network/",
-        "https://localvram.com/en/guides/ollama-vs-vllm-vram/",
-    ]
+    base_urls_com = ["https://localvram.com/legal/"]
+    for locale in COM_LOCALES:
+        for path in locale_static_paths(locale):
+            base_urls_com.append(f"https://localvram.com{path}")
 
     for item in error_data.get("errors", []):
-        base_urls_en.append(f"https://localvram.com/en/errors/{item['id']}/")
+        base_urls_com.append(f"https://localvram.com/en/errors/{item['id']}/")
 
     for tier in hardware_data.get("tiers", []):
-        base_urls_en.append(f"https://localvram.com/en/hardware/{tier['vram_gb']}gb-vram-models/")
+        base_urls_com.append(f"https://localvram.com/en/hardware/{tier['vram_gb']}gb-vram-models/")
 
     for slug in blog_slugs():
-        base_urls_en.append(f"https://localvram.com/en/blog/{slug}/")
+        base_urls_com.append(f"https://localvram.com/en/blog/{slug}/")
 
     for group in model_catalog.get("group_definitions", []):
-        base_urls_en.append(f"https://localvram.com/en/models/group/{group['id']}/")
+        base_urls_com.append(f"https://localvram.com/en/models/group/{group['id']}/")
 
     for item in model_catalog.get("items", []):
-        base_urls_en.append(f"https://localvram.com/en/models/{item['id']}/")
+        base_urls_com.append(f"https://localvram.com/en/models/{item['id']}/")
 
-    zh_paths = zh_static_paths()
+    zh_paths = locale_static_paths("zh")
     base_urls_cn = [f"https://localvram.cn{path}" for path in zh_paths]
 
-    write_sitemap(OUT_EN, base_urls_en)
+    write_sitemap(OUT_EN, base_urls_com)
     write_sitemap(OUT_CN, base_urls_cn)
-    print(f"generated {OUT_EN} with {len(sorted(set(base_urls_en)))} urls")
+    print(f"generated {OUT_EN} with {len(sorted(set(base_urls_com)))} urls")
     print(f"generated {OUT_CN} with {len(sorted(set(base_urls_cn)))} urls")
 
 

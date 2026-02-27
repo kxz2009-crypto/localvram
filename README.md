@@ -1,6 +1,9 @@
 # LocalVRAM
 
-Production domain: `https://localvram.com`
+Production domains:
+
+- `https://localvram.com` (en/es/pt/fr/de/ru/ja/ko/ar/hi/id)
+- `https://localvram.cn` (zh-CN)
 
 Repository: `https://github.com/kxz2009-crypto/localvram/`
 
@@ -15,6 +18,7 @@ Operations runbooks:
 - `docs/weekly-publish-runbook.md`
 - `docs/ollama-upgrade-runbook.md`
 - `docs/cn-domain-i18n-rollout-runbook.md`
+- `docs/seo-multilingual-operations-v1.md`
 
 ## Stack
 
@@ -30,6 +34,12 @@ Operations runbooks:
 - Build output directory: `dist`
 - Root directory: `/`
 - Environment variable: `NODE_VERSION=20`
+
+## Multilingual SEO Operations
+
+- `.com` locales (`/en/`, `/es/`, `/pt/`, `/fr/`, `/de/`, `/ru/`, `/ja/`, `/ko/`, `/ar/`, `/hi/`, `/id/`) are operated per-locale with separate keyword and content plans.
+- `.cn` is the Chinese primary operation track with independent indexing and distribution.
+- Root-page `hreflang` cluster now includes `en`, `es`, `pt`, `fr`, `de`, `ru`, `ja`, `ko`, `ar`, `hi`, `id`, `zh-CN`, and `x-default`.
 
 ## Affiliate Redirects (Cloudflare Workers on Pages Functions)
 
@@ -83,6 +93,7 @@ npm run dev
 - `python scripts/build-model-catalog.py`
 - `build-model-catalog.py` auto-discovers missing `ollama_tag` entries from `benchmark-results.json` so publish quality gate stays aligned when weekly benchmarks encounter new local model families.
 - `python scripts/build-sitemap.py`
+- `pwsh scripts/init-seo-ops-tables.ps1 -Force`
 - `python scripts/build-conversion-funnel.py`
 - `python scripts/import-affiliate-events.py --source-file <raw-export.jsonl>`
 - `python scripts/refresh-affiliate-funnel.py --source-file <raw-export.jsonl>`
