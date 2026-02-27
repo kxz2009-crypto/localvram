@@ -37,7 +37,7 @@ jobs:
           BASELINE_ID: ${{ steps.baseline.outputs.baseline_id }}
         run: |
           target_id=""
-          for attempt in $(seq 1 30); do
+          for _ in $(seq 1 30); do
             latest_id="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/publish-benchmark-artifact.yml/runs?event=workflow_dispatch&per_page=5" --jq '.workflow_runs[0].id // ""' 2>/dev/null | tr -d '[:space:]')"
             if [ -n "${latest_id}" ] && [ "${latest_id}" != "${BASELINE_ID}" ]; then
               target_id="${latest_id}"
