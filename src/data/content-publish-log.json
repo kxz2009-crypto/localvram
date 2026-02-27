@@ -1,16 +1,73 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-02-27T03:15:05.903152Z",
+  "updated_at": "2026-02-27T17:17:33.669763Z",
   "last_run": {
-    "run_at": "2026-02-27T03:15:05.903152Z",
+    "run_at": "2026-02-27T17:17:33.669763Z",
     "queue_date": "2026-02-27",
-    "candidate_count": 0,
-    "published_count": 0,
-    "skipped_count": 0,
-    "published": [],
-    "skipped": []
+    "candidate_count": 3,
+    "published_count": 2,
+    "skipped_count": 1,
+    "published": [
+      {
+        "slug": "model-qwen3-8b-local-benchmark",
+        "title": "Qwen3:8B Local Inference Benchmark: Practical Guide (2026)",
+        "topic_key": "qwen3-8b-local-inference-benchmark",
+        "score": 1000.0,
+        "source_draft": "content-queue/2026-02-27/02-model-qwen3-8b-local-benchmark.md",
+        "out_file": "src/content/blog/model-qwen3-8b-local-benchmark.md",
+        "intent": "benchmark"
+      },
+      {
+        "slug": "model-qwen3-coder-30b-local-benchmark",
+        "title": "Qwen3-Coder:30B Local Inference Benchmark: Practical Guide (2026)",
+        "topic_key": "qwen3-coder-30b-local-inference-benchmark",
+        "score": 1000.0,
+        "source_draft": "content-queue/2026-02-27/01-model-qwen3-coder-30b-local-benchmark.md",
+        "out_file": "src/content/blog/model-qwen3-coder-30b-local-benchmark.md",
+        "intent": "benchmark"
+      }
+    ],
+    "skipped": [
+      {
+        "draft": "content-queue/2026-02-27/03-model-deepseek-r1-14b-local-benchmark.md",
+        "reason": "max_publish_reached"
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-02-27T17:17:33.669763Z",
+      "queue_date": "2026-02-27",
+      "candidate_count": 3,
+      "published_count": 2,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "model-qwen3-8b-local-benchmark",
+          "title": "Qwen3:8B Local Inference Benchmark: Practical Guide (2026)",
+          "topic_key": "qwen3-8b-local-inference-benchmark",
+          "score": 1000.0,
+          "source_draft": "content-queue/2026-02-27/02-model-qwen3-8b-local-benchmark.md",
+          "out_file": "src/content/blog/model-qwen3-8b-local-benchmark.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "model-qwen3-coder-30b-local-benchmark",
+          "title": "Qwen3-Coder:30B Local Inference Benchmark: Practical Guide (2026)",
+          "topic_key": "qwen3-coder-30b-local-inference-benchmark",
+          "score": 1000.0,
+          "source_draft": "content-queue/2026-02-27/01-model-qwen3-coder-30b-local-benchmark.md",
+          "out_file": "src/content/blog/model-qwen3-coder-30b-local-benchmark.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-02-27/03-model-deepseek-r1-14b-local-benchmark.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-02-27T03:15:05.903152Z",
       "queue_date": "2026-02-27",

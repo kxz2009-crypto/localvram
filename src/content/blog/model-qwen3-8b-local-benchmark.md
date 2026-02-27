@@ -1,17 +1,16 @@
 ---
-title: "Ollama Local Cluster Network: Practical Guide (2026)"
-date: 2026-02-27
-keyword: "ollama local cluster network"
-score: 336
-source: opportunity
-status: rejected_manual
-reviewed_at: "2026-02-27T17:17:33.596339Z"
-risk_flags: ""
+title: "Qwen3:8B Local Inference Benchmark: Practical Guide (2026)"
+description: "Users searching for \"qwen3:8b local inference benchmark\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansi"
+pubDate: 2026-02-27
+updatedDate: 2026-02-27
+tags: ["ollama", "qwen3", "8b", "inference", "benchmark"]
+lang: en
+intent: benchmark
 ---
 
 ## Why this topic now
 
-Users searching for "ollama local cluster network" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "qwen3:8b local inference benchmark" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 

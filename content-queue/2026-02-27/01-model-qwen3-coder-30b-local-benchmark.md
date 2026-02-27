@@ -1,17 +1,17 @@
 ---
-title: "Ollama Local Cluster Network: Practical Guide (2026)"
+title: "Qwen3-Coder:30B Local Inference Benchmark: Practical Guide (2026)"
 date: 2026-02-27
-keyword: "ollama local cluster network"
-score: 336
-source: opportunity
-status: rejected_manual
+keyword: "qwen3-coder:30b local inference benchmark"
+score: 1000
+source: benchmark_fallback
+status: approved_auto
 reviewed_at: "2026-02-27T17:17:33.596339Z"
 risk_flags: ""
 ---
 
 ## Why this topic now
 
-Users searching for "ollama local cluster network" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "qwen3-coder:30b local inference benchmark" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 
