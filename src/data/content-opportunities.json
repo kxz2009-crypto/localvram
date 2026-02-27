@@ -1,19 +1,228 @@
 {
-  "updated_at": "2026-02-22T00:00:00Z",
+  "updated_at": "2026-02-27T17:30:00Z",
+  "rotation_policy": {
+    "target_pool_size": 30,
+    "refresh_cadence": "weekly",
+    "weekly_replace_count": 8,
+    "cooldown_days": 30,
+    "next_refresh_at": "2026-03-06T00:00:00Z",
+    "sources": [
+      "search_console",
+      "benchmark_changes",
+      "affiliate_click_paths",
+      "manual_editor_boost"
+    ]
+  },
   "items": [
     {
-      "slug": "ollama-local-cluster-network",
-      "keyword": "ollama local cluster network",
-      "search_intent_score": 8,
-      "commercial_intent_score": 7,
-      "freshness_gap_score": 6
+      "slug": "llama-70b-on-rtx-3090-local-setup",
+      "keyword": "llama 70b on rtx 3090 local setup",
+      "search_intent_score": 10,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
     },
     {
-      "slug": "q4-vs-q8-quality-loss",
+      "slug": "qwen35-35b-vram-requirements-guide",
+      "keyword": "qwen3.5 35b vram requirements",
+      "search_intent_score": 9,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "qwen35-122b-cloud-vs-local-cost",
+      "keyword": "qwen3.5 122b cloud vs local cost",
+      "search_intent_score": 9,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "deepseek-r1-14b-3090-benchmark",
+      "keyword": "deepseek r1 14b rtx 3090 benchmark",
+      "search_intent_score": 9,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 9
+    },
+    {
+      "slug": "qwen3-coder-30b-local-coding-stack",
+      "keyword": "qwen3 coder 30b local coding setup",
+      "search_intent_score": 8,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "best-24gb-vram-models-2026",
+      "keyword": "best 24gb vram models 2026",
+      "search_intent_score": 10,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "16gb-vram-model-selection-guide",
+      "keyword": "best local llm for 16gb vram",
+      "search_intent_score": 9,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "12gb-vram-entry-local-llm-guide",
+      "keyword": "best local llm for 12gb vram",
+      "search_intent_score": 9,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 7
+    },
+    {
+      "slug": "8gb-vram-starter-local-llm-guide",
+      "keyword": "best local llm for 8gb vram",
+      "search_intent_score": 8,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "cuda-out-of-memory-ollama-fixes-2026",
+      "keyword": "cuda out of memory ollama fix",
+      "search_intent_score": 10,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "ollama-vs-vllm-throughput-comparison-2026",
+      "keyword": "ollama vs vllm throughput comparison",
+      "search_intent_score": 9,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "runpod-vs-vast-for-local-llm-fallback",
+      "keyword": "runpod vs vast for local llm",
+      "search_intent_score": 8,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "best-local-rag-models-under-24gb-vram",
+      "keyword": "best local rag models under 24gb vram",
+      "search_intent_score": 9,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "q4-vs-q8-quality-loss-ollama-guide",
       "keyword": "q4 vs q8 quality loss ollama",
       "search_intent_score": 9,
       "commercial_intent_score": 8,
-      "freshness_gap_score": 5
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "qwen25-coder-32b-self-host-guide",
+      "keyword": "qwen2.5 coder 32b self host guide",
+      "search_intent_score": 8,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "llama4-local-inference-feasibility-check",
+      "keyword": "llama 4 local inference feasibility",
+      "search_intent_score": 8,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "ministral-3-14b-local-benchmark-guide",
+      "keyword": "ministral 3 14b local benchmark",
+      "search_intent_score": 8,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 9
+    },
+    {
+      "slug": "qwen3-8b-latency-tuning-playbook",
+      "keyword": "qwen3 8b latency tuning ollama",
+      "search_intent_score": 8,
+      "commercial_intent_score": 7,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu",
+      "keyword": "deepseek r1 32b rent cloud gpu or local",
+      "search_intent_score": 8,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "best-embedding-models-for-local-rag-2026",
+      "keyword": "best embedding models for local rag",
+      "search_intent_score": 8,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "apple-silicon-vs-rtx3090-local-llm",
+      "keyword": "apple silicon vs rtx 3090 local llm",
+      "search_intent_score": 8,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "ollama-home-lab-network-checklist",
+      "keyword": "ollama home lab network checklist",
+      "search_intent_score": 8,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 7
+    },
+    {
+      "slug": "multi-gpu-local-llm-roi-calculator-guide",
+      "keyword": "multi gpu local llm roi",
+      "search_intent_score": 7,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "vram-calculator-how-to-estimate-model-fit",
+      "keyword": "vram calculator model fit estimation",
+      "search_intent_score": 8,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "rtx4090-vs-rtx3090-for-local-llm",
+      "keyword": "rtx 4090 vs rtx 3090 local llm",
+      "search_intent_score": 9,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "budget-gpu-upgrade-path-for-local-llm",
+      "keyword": "budget gpu upgrade for local llm",
+      "search_intent_score": 8,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 7
+    },
+    {
+      "slug": "cloud-burst-strategy-for-local-llm-teams",
+      "keyword": "cloud burst strategy for local llm teams",
+      "search_intent_score": 7,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "data-residency-compliance-with-local-llm",
+      "keyword": "data residency compliance local llm",
+      "search_intent_score": 7,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "local-llm-customer-support-rag-stack",
+      "keyword": "local llm customer support rag stack",
+      "search_intent_score": 8,
+      "commercial_intent_score": 9,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "weekly-local-llm-benchmark-roundup-template",
+      "keyword": "weekly local llm benchmark roundup",
+      "search_intent_score": 7,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 10
     }
   ]
 }
