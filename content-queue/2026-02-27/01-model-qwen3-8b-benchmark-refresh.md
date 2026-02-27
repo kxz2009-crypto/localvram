@@ -1,17 +1,17 @@
 ---
-title: "Qwen3-Coder:30B Local Inference Benchmark: Practical Guide (2026)"
+title: "Qwen3:8B Local Inference Benchmark Update: Practical Guide (2026)"
 date: 2026-02-27
-keyword: "qwen3-coder:30b local inference benchmark"
+keyword: "qwen3:8b local inference benchmark update"
 score: 1000
-source: benchmark_fallback
-status: rejected_manual
+source: opportunity
+status: pending_manual_review
 reviewed_at: "2026-02-27T17:41:45.816865Z"
-risk_flags: existing_blog_slug,near_duplicate_published
+risk_flags: near_duplicate_published
 ---
 
 ## Why this topic now
 
-Users searching for "qwen3-coder:30b local inference benchmark" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "qwen3:8b local inference benchmark update" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 

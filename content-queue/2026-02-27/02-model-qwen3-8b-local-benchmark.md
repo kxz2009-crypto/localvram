@@ -4,9 +4,9 @@ date: 2026-02-27
 keyword: "qwen3:8b local inference benchmark"
 score: 1000
 source: benchmark_fallback
-status: approved_auto
-reviewed_at: "2026-02-27T17:17:33.596339Z"
-risk_flags: ""
+status: rejected_manual
+reviewed_at: "2026-02-27T17:41:45.816865Z"
+risk_flags: existing_blog_slug,near_duplicate_published
 ---
 
 ## Why this topic now
