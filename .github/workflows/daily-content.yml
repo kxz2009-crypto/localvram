@@ -169,6 +169,31 @@ jobs:
 
           run_with_retry git_push git push
 
+      - name: Evaluate daily publish outcome
+        id: publish_guard
+        if: always() && steps.checkout.conclusion == 'success'
+        run: |
+          published_count="$(python -c "import json, pathlib; p=pathlib.Path('src/data/content-publish-log.json'); d=json.loads(p.read_text(encoding='utf-8-sig')) if p.exists() else {}; r=d.get('last_run',{}) if isinstance(d,dict) else {}; print(int(r.get('published_count',0) or 0))" 2>/dev/null || echo 0)"
+          candidate_count="$(python -c "import json, pathlib; p=pathlib.Path('src/data/content-publish-log.json'); d=json.loads(p.read_text(encoding='utf-8-sig')) if p.exists() else {}; r=d.get('last_run',{}) if isinstance(d,dict) else {}; print(int(r.get('candidate_count',0) or 0))" 2>/dev/null || echo 0)"
+          queue_date="$(python -c "import json, pathlib; p=pathlib.Path('src/data/content-publish-log.json'); d=json.loads(p.read_text(encoding='utf-8-sig')) if p.exists() else {}; r=d.get('last_run',{}) if isinstance(d,dict) else {}; print(str(r.get('queue_date','')).strip())" 2>/dev/null || true)"
+
+          if [ -z "${queue_date}" ]; then
+            queue_date="$(date -u +%F)"
+          fi
+
+          {
+            echo "published_count=${published_count}"
+            echo "candidate_count=${candidate_count}"
+            echo "queue_date=${queue_date}"
+          } >> "${GITHUB_OUTPUT}"
+
+          if [ "${published_count}" -le 0 ]; then
+            echo "zero_publish=true" >> "${GITHUB_OUTPUT}"
+            echo "::warning title=ZeroPublishDetected::daily content run completed with published_count=0 (queue_date=${queue_date}, candidate_count=${candidate_count})"
+          else
+            echo "zero_publish=false" >> "${GITHUB_OUTPUT}"
+          fi
+
       - name: Finalize pipeline status (daily)
         id: pipeline_status_daily
         if: always() && steps.checkout.conclusion == 'success'
@@ -388,8 +413,64 @@ jobs:
               });
             }
 
+      - name: Alert issue (daily zero publish)
+        if: always() && steps.checkout.conclusion == 'success' && steps.publish_guard.outputs.zero_publish == 'true'
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Daily Content Agent
+          ALERT_FAILURE_CLASS: daily_content_zero_publish
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ALERT_QUEUE_DATE: ${{ steps.publish_guard.outputs.queue_date }}
+          ALERT_PUBLISHED_COUNT: ${{ steps.publish_guard.outputs.published_count }}
+          ALERT_CANDIDATE_COUNT: ${{ steps.publish_guard.outputs.candidate_count }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const failureClass = process.env.ALERT_FAILURE_CLASS || "daily_content_zero_publish";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const queueDate = process.env.ALERT_QUEUE_DATE || "";
+            const publishedCount = process.env.ALERT_PUBLISHED_COUNT || "0";
+            const candidateCount = process.env.ALERT_CANDIDATE_COUNT || "0";
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const message = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Queue date: ${queueDate || "-"}
+            - Candidate count: ${candidateCount}
+            - Published count: ${publishedCount}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: message
+              });
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: message
+              });
+            }
+
       - name: Resolve alert issues on recovery (daily)
-        if: always() && success() && steps.checkout.conclusion == 'success'
+        if: always() && success() && steps.checkout.conclusion == 'success' && steps.publish_guard.outputs.zero_publish != 'true'
         uses: actions/github-script@v7
         env:
           ALERT_WORKFLOW: Daily Content Agent
