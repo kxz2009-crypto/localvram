@@ -4,7 +4,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "public" / "sitemap.xml"
+OUT_EN = ROOT / "public" / "sitemap.xml"
+OUT_CN = ROOT / "public" / "sitemap-cn.xml"
 
 
 def load_json(path: Path) -> dict:
@@ -16,14 +17,45 @@ def blog_slugs() -> list[str]:
     return sorted([p.stem for p in blog_dir.glob("*.md")])
 
 
+def zh_static_paths() -> list[str]:
+    pages_root = ROOT / "src" / "pages" / "zh"
+    if not pages_root.exists():
+        return []
+    paths: list[str] = []
+    for file in pages_root.rglob("*.astro"):
+        rel = file.relative_to(pages_root)
+        parts = list(rel.parts)
+        if any(("[" in part) or ("]" in part) for part in parts):
+            continue
+        if parts[-1] == "index.astro":
+            parts = parts[:-1]
+        else:
+            parts[-1] = parts[-1].removesuffix(".astro")
+        path = "/zh/" + "/".join(parts)
+        if not path.endswith("/"):
+            path += "/"
+        path = path.replace("//", "/")
+        paths.append(path)
+    if "/zh/" not in paths:
+        paths.append("/zh/")
+    return sorted(set(paths))
+
+
+def write_sitemap(out: Path, urls: list[str]) -> None:
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for url in sorted(set(urls)):
+        lines.extend(["  <url>", f"    <loc>{url}</loc>", "  </url>"])
+    lines.append("</urlset>")
+    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     error_data = load_json(ROOT / "src" / "data" / "errors.json")
     hardware_data = load_json(ROOT / "src" / "data" / "hardware-tiers.json")
     model_catalog = load_json(ROOT / "src" / "data" / "model-catalog.json")
 
-    base_urls = [
+    base_urls_en = [
         "https://localvram.com/en/",
-        "https://localvram.com/zh/",
         "https://localvram.com/legal/",
         "https://localvram.com/en/blog/",
         "https://localvram.com/en/updates/",
@@ -51,28 +83,27 @@ def main() -> None:
     ]
 
     for item in error_data.get("errors", []):
-        base_urls.append(f"https://localvram.com/en/errors/{item['id']}/")
+        base_urls_en.append(f"https://localvram.com/en/errors/{item['id']}/")
 
     for tier in hardware_data.get("tiers", []):
-        base_urls.append(f"https://localvram.com/en/hardware/{tier['vram_gb']}gb-vram-models/")
+        base_urls_en.append(f"https://localvram.com/en/hardware/{tier['vram_gb']}gb-vram-models/")
 
     for slug in blog_slugs():
-        base_urls.append(f"https://localvram.com/en/blog/{slug}/")
+        base_urls_en.append(f"https://localvram.com/en/blog/{slug}/")
 
     for group in model_catalog.get("group_definitions", []):
-        base_urls.append(f"https://localvram.com/en/models/group/{group['id']}/")
+        base_urls_en.append(f"https://localvram.com/en/models/group/{group['id']}/")
 
     for item in model_catalog.get("items", []):
-        base_urls.append(f"https://localvram.com/en/models/{item['id']}/")
+        base_urls_en.append(f"https://localvram.com/en/models/{item['id']}/")
 
-    urls = sorted(set(base_urls))
+    zh_paths = zh_static_paths()
+    base_urls_cn = [f"https://localvram.cn{path}" for path in zh_paths]
 
-    lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for url in urls:
-        lines.extend(["  <url>", f"    <loc>{url}</loc>", "  </url>"])
-    lines.append("</urlset>")
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"generated {OUT} with {len(urls)} urls")
+    write_sitemap(OUT_EN, base_urls_en)
+    write_sitemap(OUT_CN, base_urls_cn)
+    print(f"generated {OUT_EN} with {len(sorted(set(base_urls_en)))} urls")
+    print(f"generated {OUT_CN} with {len(sorted(set(base_urls_cn)))} urls")
 
 
 if __name__ == "__main__":

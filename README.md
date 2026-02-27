@@ -110,7 +110,7 @@ npm run dev
 - `python scripts/run-publish-workflow.py --gh-path "<gh.exe path>"`
 - `python scripts/run-weekly-publish-pipeline.py --gh-path "<gh.exe path>" --publish-mode auto`
 - `python scripts/run-daily-content-workflow.py --gh-path "<gh.exe path>"`
-- `python scripts/push-baidu-urls.py --site https://localvram.cn --sitemap-url https://localvram.cn/sitemap.xml --dry-run`
+- `python scripts/push-baidu-urls.py --site https://localvram.cn --sitemap-url https://localvram.cn/sitemap-cn.xml --dry-run`
 
 ## Benchmark Runtime Controls
 

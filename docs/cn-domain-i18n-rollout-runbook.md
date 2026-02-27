@@ -90,7 +90,7 @@ Then in layout:
 Keep separate sitemaps:
 
 - `https://localvram.com/sitemap.xml` -> English URLs only
-- `https://localvram.cn/sitemap.xml` -> Chinese URLs only
+- `https://localvram.cn/sitemap-cn.xml` -> Chinese URLs only
 
 Do not include `zh.localvram.com` URLs in sitemap.
 

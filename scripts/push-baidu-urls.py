@@ -87,7 +87,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Push CN URLs to Baidu via ordinary push API.")
     parser.add_argument("--site", default="https://localvram.cn", help="Primary CN site URL (used for host filter).")
     parser.add_argument("--token", default="", help="Baidu push token. Can also be set by BAIDU_PUSH_TOKEN.")
-    parser.add_argument("--sitemap-url", default="https://localvram.cn/sitemap.xml")
+    parser.add_argument("--sitemap-url", default="https://localvram.cn/sitemap-cn.xml")
     parser.add_argument("--urls-file", default="", help="Optional plain text URL list, one URL per line.")
     parser.add_argument("--limit", type=int, default=5000, help="Maximum URLs to push in this run.")
     parser.add_argument("--batch-size", type=int, default=500, help="URLs per POST request.")

@@ -1,0 +1,9 @@
+﻿date,slot,priority_bucket,page_url,page_type,model_tag,is_newest,is_older_than_30d,score,status_24h,status_72h,replace_if_no_progress,notes
+2026-02-26,1,latest,https://localvram.com/en/models/qwen35-35b-q4/,model,qwen3.5:35b,1,0,4,planned,,,no,fixed first slot
+2026-02-26,2,latest,https://localvram.com/en/models/qwen35-122b-q4/,model,qwen3.5:122b,1,0,4,planned,,,yes,
+2026-02-26,3,latest,https://localvram.com/en/models/ministral-3-14b-q4/,model,ministral-3:14b,1,0,4,planned,,,yes,
+2026-02-26,4,latest,https://localvram.com/en/models/qwen3-vl-32b-q4/,model,qwen3-vl:32b,1,0,4,planned,,,yes,
+2026-02-26,5,latest,https://localvram.com/en/models/qwen3-vl-30b-q4/,model,qwen3-vl:30b,1,0,4,planned,,,yes,
+2026-02-26,6,older_than_30d,https://localvram.com/en/models/qwen2.5-14b-q4/,model,qwen2.5:14b,0,1,4,planned,,,yes,
+2026-02-26,7,older_than_30d,https://localvram.com/en/models/qwen3-8b-q4/,model,qwen3:8b,0,1,4,planned,,,yes,
+2026-02-26,8,fallback,https://localvram.com/en/tools/vram-calculator/,tool,,0,0,5,planned,,,no,fallback high-value page
