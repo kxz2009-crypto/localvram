@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-27T17:31:07.007640Z",
+  "updated_at": "2026-02-27T17:32:58.120629Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
@@ -12,29 +12,21 @@
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-02-27T17:31:07.007640Z",
+    "last_refresh_at": "2026-02-27T17:32:58.120629Z",
     "last_refresh_summary": {
-      "incoming_count": 8,
-      "removed_count": 8,
+      "incoming_count": 4,
+      "removed_count": 4,
       "incoming_topic_keys": [
-        "deepseek-r1-14b-local-inference-benchmark-update",
-        "llama-70b-on-3090",
-        "ministral-3-14b-local-inference-benchmark-update",
-        "qwen2-5-14b-local-inference-benchmark-update",
-        "qwen2-5-coder-32b-local-inference-benchmark-update",
-        "qwen3-5-35b-local-inference-benchmark-update",
-        "qwen3-8b-local-inference-benchmark-update",
-        "qwen3-coder-30b-local-inference-benchmark-update"
+        "best-local-rag-model",
+        "llama3-3-70b-local-inference-benchmark-update",
+        "qwen3-5-122b-local-inference-benchmark-update",
+        "runpod-a100-ollama"
       ],
       "removed_topic_keys": [
-        "best-embedding-models-for-local-rag",
-        "best-local-llm-for-12gb-vram",
-        "best-local-llm-for-8gb-vram",
-        "budget-gpu-upgrade-for-local-llm",
-        "data-residency-compliance-local-llm",
-        "ollama-home-lab-network-checklist",
-        "qwen3-8b-latency-tuning-ollama",
-        "vram-calculator-model-fit-estimation"
+        "cloud-burst-strategy-for-local-llm-teams",
+        "llama-70b-on-3090",
+        "qwen2-5-coder-32b-local-inference-benchmark-update",
+        "qwen3-5-35b-local-inference-benchmark-update"
       ],
       "blocked_recent_topic_count": 6
     }
@@ -209,13 +201,6 @@
       "freshness_gap_score": 8
     },
     {
-      "slug": "cloud-burst-strategy-for-local-llm-teams",
-      "keyword": "cloud burst strategy for local llm teams",
-      "search_intent_score": 7,
-      "commercial_intent_score": 10,
-      "freshness_gap_score": 8
-    },
-    {
       "slug": "multi-gpu-local-llm-roi-calculator-guide",
       "keyword": "multi gpu local llm roi",
       "search_intent_score": 7,
@@ -230,25 +215,32 @@
       "freshness_gap_score": 10
     },
     {
-      "slug": "model-qwen2-5-coder-32b-benchmark-refresh",
-      "keyword": "qwen2.5-coder:32b local inference benchmark update",
-      "search_intent_score": 6,
-      "commercial_intent_score": 6,
-      "freshness_gap_score": 10
-    },
-    {
-      "slug": "en-models-llama-70b-q4",
-      "keyword": "llama 70b on 3090",
-      "search_intent_score": 3,
-      "commercial_intent_score": 10,
-      "freshness_gap_score": 10
-    },
-    {
-      "slug": "model-qwen3-5-35b-benchmark-refresh",
-      "keyword": "qwen3.5:35b local inference benchmark update",
+      "slug": "en-affiliate-cloud-gpu",
+      "keyword": "runpod a100 ollama",
       "search_intent_score": 5,
-      "commercial_intent_score": 6,
+      "commercial_intent_score": 7,
+      "freshness_gap_score": 8
+    },
+    {
+      "slug": "model-llama3-3-70b-benchmark-refresh",
+      "keyword": "llama3.3:70b local inference benchmark update",
+      "search_intent_score": 4,
+      "commercial_intent_score": 5,
       "freshness_gap_score": 10
+    },
+    {
+      "slug": "model-qwen3-5-122b-benchmark-refresh",
+      "keyword": "qwen3.5:122b local inference benchmark update",
+      "search_intent_score": 4,
+      "commercial_intent_score": 5,
+      "freshness_gap_score": 10
+    },
+    {
+      "slug": "en-blog-best-local-rag-models-2026",
+      "keyword": "best local rag model",
+      "search_intent_score": 3,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 8
     }
   ]
 }
