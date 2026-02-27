@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/es/tools/vram-calculator/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "VRAM Calculator ES",
+  url: "https://localvram.com/es/tools/vram-calculator/",
+  inLanguage: "es"
+};
+---
+
+<BaseLayout
+  title="LocalVRAM ES | VRAM Calculator"
+  description="Spanish CTA conversion entry."
+  locale="es"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="card">
+      <h1>VRAM Calculator (ES)</h1>
+      <p>CTA conversion page for Spanish funnel routing.</p>
+      <div class="cta-row">
+        <a class="btn" href="/es/guides/local-llm-cost-vs-cloud/">Back to topic page</a>
+        <a class="btn" href="/es/models/qwen35-35b-q4/">Back to model page</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
