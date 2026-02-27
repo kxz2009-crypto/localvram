@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+
+def parse_retry_delays(raw: str) -> list[int]:
+    out: list[int] = []
+    for piece in (raw or "").split(","):
+        piece = piece.strip()
+        if not piece:
+            continue
+        try:
+            out.append(max(0, int(piece)))
+        except ValueError:
+            continue
+    return out or [5, 10, 20]
+
+
+def parse_sitemap(xml_text: str) -> list[str]:
+    root = ET.fromstring(xml_text)
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    urls: list[str] = []
+    for loc in root.findall(".//sm:url/sm:loc", ns):
+        if loc.text:
+            urls.append(loc.text.strip())
+    return urls
+
+
+def fetch_text(url: str, timeout: int) -> str:
+    with urllib.request.urlopen(url, timeout=timeout) as resp:  # noqa: S310
+        return resp.read().decode("utf-8", errors="replace")
+
+
+def read_urls_from_file(path: Path) -> list[str]:
+    urls: list[str] = []
+    for line in path.read_text(encoding="utf-8-sig").splitlines():
+        url = line.strip()
+        if not url or url.startswith("#"):
+            continue
+        urls.append(url)
+    return urls
+
+
+def chunked(items: list[str], size: int) -> list[list[str]]:
+    return [items[i : i + size] for i in range(0, len(items), size)]
+
+
+def post_with_retry(endpoint: str, payload_lines: list[str], retry_delays: list[int], timeout: int) -> str:
+    data = ("\n".join(payload_lines) + "\n").encode("utf-8")
+    req = urllib.request.Request(endpoint, data=data, method="POST", headers={"Content-Type": "text/plain"})
+    attempts = len(retry_delays) + 1
+    last_error = ""
+    for i in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
+                return resp.read().decode("utf-8", errors="replace")
+        except urllib.error.HTTPError as exc:
+            body = ""
+            try:
+                body = exc.read().decode("utf-8", errors="replace")
+            except Exception:  # noqa: BLE001
+                body = ""
+            last_error = f"HTTP {exc.code} {exc.reason} {body}".strip()
+            if i < len(retry_delays):
+                time.sleep(retry_delays[i])
+                continue
+            raise RuntimeError(last_error) from exc
+        except urllib.error.URLError as exc:
+            last_error = f"URL error: {exc}"
+            if i < len(retry_delays):
+                time.sleep(retry_delays[i])
+                continue
+            raise RuntimeError(last_error) from exc
+    raise RuntimeError(last_error or "unknown push error")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Push CN URLs to Baidu via ordinary push API.")
+    parser.add_argument("--site", default="https://localvram.cn", help="Primary CN site URL (used for host filter).")
+    parser.add_argument("--token", default="", help="Baidu push token. Can also be set by BAIDU_PUSH_TOKEN.")
+    parser.add_argument("--sitemap-url", default="https://localvram.cn/sitemap.xml")
+    parser.add_argument("--urls-file", default="", help="Optional plain text URL list, one URL per line.")
+    parser.add_argument("--limit", type=int, default=5000, help="Maximum URLs to push in this run.")
+    parser.add_argument("--batch-size", type=int, default=500, help="URLs per POST request.")
+    parser.add_argument("--retry-delays-s", default="5,10,20")
+    parser.add_argument("--timeout-s", type=int, default=30)
+    parser.add_argument("--dry-run", action="store_true", help="Print candidate URLs only, do not push.")
+    args = parser.parse_args()
+
+    token = args.token.strip() or os.environ.get("BAIDU_PUSH_TOKEN", "").strip()
+
+    site = args.site.strip().rstrip("/")
+    site_host = urllib.parse.urlsplit(site).netloc
+    if not site_host:
+        raise SystemExit("invalid --site")
+
+    if args.urls_file:
+        urls = read_urls_from_file(Path(args.urls_file))
+    else:
+        xml_text = fetch_text(args.sitemap_url, timeout=max(5, args.timeout_s))
+        urls = parse_sitemap(xml_text)
+
+    filtered: list[str] = []
+    seen: set[str] = set()
+    for url in urls:
+        host = urllib.parse.urlsplit(url).netloc
+        if host != site_host:
+            continue
+        if url in seen:
+            continue
+        seen.add(url)
+        filtered.append(url)
+    filtered = filtered[: max(0, args.limit)]
+
+    print(f"site_host={site_host}")
+    print(f"candidate_urls={len(filtered)}")
+    if filtered:
+        print(f"first_url={filtered[0]}")
+        print(f"last_url={filtered[-1]}")
+
+    if args.dry_run:
+        print("dry_run=true")
+        return 0
+
+    if not token:
+        raise SystemExit("missing token: pass --token or set BAIDU_PUSH_TOKEN")
+    if not filtered:
+        print("nothing_to_push=true")
+        return 0
+
+    endpoint = f"http://data.zz.baidu.com/urls?site={site_host}&token={token}"
+    retry_delays = parse_retry_delays(args.retry_delays_s)
+    batches = chunked(filtered, max(1, args.batch_size))
+    print(f"batch_count={len(batches)}")
+    ok = 0
+    for idx, batch in enumerate(batches, start=1):
+        body = post_with_retry(endpoint, batch, retry_delays=retry_delays, timeout=max(5, args.timeout_s))
+        ok += len(batch)
+        print(f"batch={idx}/{len(batches)} pushed={len(batch)} response={body}")
+    print(f"pushed_total={ok}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
