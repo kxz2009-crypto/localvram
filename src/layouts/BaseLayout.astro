@@ -11,6 +11,7 @@ interface Props {
   description?: string;
   locale?: "en" | "zh";
   canonicalPath?: string;
+  canonicalOrigin?: string;
   alternates?: AlternateLink[];
   noindex?: boolean;
   ogImage?: string;
@@ -25,6 +26,7 @@ const {
   description = "Ollama compatibility and benchmark hub.",
   locale = "en",
   canonicalPath,
+  canonicalOrigin,
   alternates = [],
   noindex = false,
   ogImage = "/og/default-og.svg",
@@ -34,10 +36,12 @@ const {
   structuredData
 } = Astro.props as Props;
 
-const SITE_URL = "https://localvram.com";
+const EN_SITE_URL = "https://localvram.com";
+const ZH_SITE_URL = "https://localvram.cn";
+const siteUrl = (canonicalOrigin || (locale === "zh" ? ZH_SITE_URL : EN_SITE_URL)).replace(/\/$/, "");
 const path = canonicalPath || Astro.url.pathname || "/";
-const canonicalUrl = new URL(path, SITE_URL).toString();
-const ogImageUrl = new URL(ogImage, SITE_URL).toString();
+const canonicalUrl = new URL(path, siteUrl).toString();
+const ogImageUrl = new URL(ogImage, siteUrl).toString();
 const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
 const jsonLdList = Array.isArray(structuredData)
   ? structuredData
