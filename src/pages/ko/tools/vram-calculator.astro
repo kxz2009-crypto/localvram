@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/ko/tools/vram-calculator/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "VRAM Calculator KO",
+  url: "https://localvram.com/ko/tools/vram-calculator/",
+  inLanguage: "ko"
+};
+---
+
+<BaseLayout
+  title="LocalVRAM KO | VRAM Calculator"
+  description="Korean CTA conversion entry."
+  locale="ko"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="card">
+      <h1>VRAM Calculator (KO)</h1>
+      <p>CTA conversion page for Korean funnel routing.</p>
+      <div class="cta-row">
+        <a class="btn" href="/ko/guides/local-llm-cost-vs-cloud/">Back to topic page</a>
+        <a class="btn" href="/ko/models/qwen35-35b-q4/">Back to model page</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -26,7 +26,7 @@ Status code: 301
 URL: concat("https://localvram.cn", http.request.uri.path, if(len(http.request.uri.query) > 0, concat("?", http.request.uri.query), ""))
 ```
 
-### Rule B (required): lock old `/zh/...` path on .com -> `.cn/zh/...`
+### Rule B (enable only after ICP approval): lock old `/zh/...` path on .com -> `.cn/zh/...`
 
 Condition:
 
@@ -45,6 +45,7 @@ URL: if(http.request.uri.path eq "/zh", concat("https://localvram.cn/zh", if(len
 Notes:
 
 - Keep Rule A above Rule B.
+- Enable only when `localvram.cn` is live and healthy.
 - This rule keeps `/zh/...` path structure on `.cn` and hard-locks Chinese traffic away from `.com`.
 
 ### Code fallback (recommended for Pages project-level enforcement)
@@ -54,6 +55,8 @@ If dashboard rules are delayed or not applied yet, keep a Pages Function route:
 - `functions/zh/[[path]].js`
 - Behavior: when host is `localvram.com` or `www.localvram.com`, return `301` to `https://localvram.cn/zh/...` (preserve query)
 - For `localvram.cn` host, continue normal request handling (no redirect)
+- Safety switch: set Pages environment variable `LV_ZH_CN_CUTOVER=true` to enable redirect.
+- Default behavior with empty/false flag: no redirect (serve `.com/zh/...` directly).
 
 ## 2) Canonical + hreflang policy
 
