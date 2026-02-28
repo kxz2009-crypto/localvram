@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/zh/models/qwen35-35b-q4/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Qwen3.5 35B Q4 本地部署说明（中文）",
+  url: "https://localvram.com/zh/models/qwen35-35b-q4/",
+  inLanguage: "zh"
+};
+---
+
+<BaseLayout
+  title="LocalVRAM 中文 | Qwen3.5 35B Q4"
+  description="中文模型页，连接专题页与转化工具页。"
+  locale="zh"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="card">
+      <h1>Qwen3.5 35B Q4（中文）</h1>
+      <p>该页面是中文漏斗中的模型决策页，承接专题流量并引导到工具转化。</p>
+      <div class="cta-row">
+        <a class="btn" href="/zh/guides/local-llm-cost-vs-cloud/">返回专题页</a>
+        <a class="btn btn-primary" href="/zh/tools/vram-calculator/">前往 VRAM 工具</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

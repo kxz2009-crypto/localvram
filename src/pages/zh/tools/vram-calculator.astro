@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/zh/tools/vram-calculator/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "VRAM 计算器（中文）",
+  url: "https://localvram.com/zh/tools/vram-calculator/",
+  inLanguage: "zh"
+};
+---
+
+<BaseLayout
+  title="LocalVRAM 中文 | VRAM 计算器"
+  description="中文转化入口页。"
+  locale="zh"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="card">
+      <h1>VRAM 计算器（中文）</h1>
+      <p>这是中文漏斗的转化页面，用于将选型意图导向工具动作。</p>
+      <div class="cta-row">
+        <a class="btn" href="/zh/guides/local-llm-cost-vs-cloud/">返回专题页</a>
+        <a class="btn" href="/zh/models/qwen35-35b-q4/">返回模型页</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
