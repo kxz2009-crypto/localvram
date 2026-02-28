@@ -26,12 +26,12 @@ Status code: 301
 URL: concat("https://localvram.cn", http.request.uri.path, if(len(http.request.uri.query) > 0, concat("?", http.request.uri.query), ""))
 ```
 
-### Rule B (optional): old `/zh/...` path on .com -> `.cn/...`
+### Rule B (required): lock old `/zh/...` path on .com -> `.cn/zh/...`
 
 Condition:
 
 ```txt
-(http.host eq "localvram.com" and starts_with(http.request.uri.path, "/zh/"))
+(http.host eq "localvram.com" and (http.request.uri.path eq "/zh" or starts_with(http.request.uri.path, "/zh/")))
 ```
 
 Action:
@@ -39,13 +39,13 @@ Action:
 ```txt
 Dynamic redirect
 Status code: 301
-URL: concat("https://localvram.cn", substring(http.request.uri.path, 3), if(len(http.request.uri.query) > 0, concat("?", http.request.uri.query), ""))
+URL: if(http.request.uri.path eq "/zh", concat("https://localvram.cn/zh", if(len(http.request.uri.query) > 0, concat("?", http.request.uri.query), "")), concat("https://localvram.cn/zh", substring(http.request.uri.path, 3), if(len(http.request.uri.query) > 0, concat("?", http.request.uri.query), "")))
 ```
 
 Notes:
 
-- `substring(path, 3)` removes `/zh` prefix.
 - Keep Rule A above Rule B.
+- This rule keeps `/zh/...` path structure on `.cn` and hard-locks Chinese traffic away from `.com`.
 
 ## 2) Canonical + hreflang policy
 
