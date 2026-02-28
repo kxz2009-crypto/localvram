@@ -3,6 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import links from "../../../data/affiliate-links.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 
 export function getStaticPaths() {
   return catalog.items.map((item) => ({
@@ -33,6 +34,8 @@ const chartPayload = {
   hasMeasured: hasRealBenchmark,
   modelName: item.name,
 };
+const localizedModelIds = new Set(["qwen35-35b-q4"]);
+const modelAlternates = localizedModelIds.has(String(item.id || "")) ? ROOT_ALTERNATES : [];
 
 const modelPath = `/en/models/${item.id}/`;
 const modelUrl = `https://localvram.com${modelPath}`;
@@ -84,6 +87,7 @@ const breadcrumbSchema = {
   description={`${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal, with local/cloud benchmark references.`}
   locale="en"
   canonicalPath={modelPath}
+  alternates={modelAlternates}
   ogType="article"
   modifiedTime={item.updated_at}
   structuredData={[modelSchema, breadcrumbSchema]}

@@ -3,6 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import links from "../../../data/affiliate-links.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 
 const allModels = Array.isArray(catalog.items) ? catalog.items : [];
 const benchmarkMap = benchmarkResults.models || {};
@@ -101,6 +102,7 @@ const faqSchema = {
   description="Estimate LLM VRAM requirements and choose local GPU upgrade vs cloud fallback."
   locale="en"
   canonicalPath={calculatorPath}
+  alternates={ROOT_ALTERNATES}
   structuredData={[softwareSchema, howToSchema, faqSchema]}
 >
   <main class="container">
