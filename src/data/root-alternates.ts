@@ -1,3 +1,5 @@
+const ZH_SITE_ORIGIN = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+
 export const ROOT_ALTERNATES = [
   { hrefLang: "en", href: "https://localvram.com/en/" },
   { hrefLang: "es", href: "https://localvram.com/es/" },
@@ -10,6 +12,6 @@ export const ROOT_ALTERNATES = [
   { hrefLang: "ar", href: "https://localvram.com/ar/" },
   { hrefLang: "hi", href: "https://localvram.com/hi/" },
   { hrefLang: "id", href: "https://localvram.com/id/" },
-  { hrefLang: "zh-CN", href: "https://localvram.com/zh/" },
+  { hrefLang: "zh-CN", href: `${ZH_SITE_ORIGIN}/zh/` },
   { hrefLang: "x-default", href: "https://localvram.com/en/" }
 ] as const;

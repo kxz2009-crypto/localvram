@@ -57,6 +57,7 @@ If dashboard rules are delayed or not applied yet, keep a Pages Function route:
 - For `localvram.cn` host, continue normal request handling (no redirect)
 - Safety switch: set Pages environment variable `LV_ZH_CN_CUTOVER=true` to enable redirect.
 - Default behavior with empty/false flag: no redirect (serve `.com/zh/...` directly).
+- Canonical/hreflang switch: set `PUBLIC_ZH_SITE_ORIGIN=https://localvram.cn` at cutover time.
 
 ## 2) Canonical + hreflang policy
 
