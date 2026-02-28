@@ -47,6 +47,14 @@ Notes:
 - Keep Rule A above Rule B.
 - This rule keeps `/zh/...` path structure on `.cn` and hard-locks Chinese traffic away from `.com`.
 
+### Code fallback (recommended for Pages project-level enforcement)
+
+If dashboard rules are delayed or not applied yet, keep a Pages Function route:
+
+- `functions/zh/[[path]].js`
+- Behavior: when host is `localvram.com` or `www.localvram.com`, return `301` to `https://localvram.cn/zh/...` (preserve query)
+- For `localvram.cn` host, continue normal request handling (no redirect)
+
 ## 2) Canonical + hreflang policy
 
 Single-language pages should point to their own primary domain:
