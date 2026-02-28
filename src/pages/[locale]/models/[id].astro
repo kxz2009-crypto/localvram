@@ -1,0 +1,125 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  const reservedModelIds = new Set(["qwen35-35b-q4", "qwen35-122b-cloud", "qwen35-35b-fp16"]);
+  const localizedItems = catalog.items.filter((item) => !reservedModelIds.has(String(item.id || "")));
+  return WAVE2_LOCALES.flatMap((locale) =>
+    localizedItems.map((item) => ({
+      params: { locale, id: item.id },
+      props: { item }
+    }))
+  );
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for localized model page: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const { item } = Astro.props;
+if (!item || !item.id) {
+  throw new Error("Missing model item payload for localized model page.");
+}
+
+const pagePath = `/${locale}/models/${item.id}/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const monthlyCloud40h = Math.round((Number(item.cloud_hourly_usd || 0) * 40) * 100) / 100;
+const monthlyCloud120h = Math.round((Number(item.cloud_hourly_usd || 0) * 120) * 100) / 100;
+const modelSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: `${item.name} localized profile`,
+  inLanguage: locale,
+  url: pageUrl,
+  about: {
+    "@type": "SoftwareApplication",
+    name: item.name
+  }
+};
+---
+
+<BaseLayout
+  title={`${item.name} | LocalVRAM ${locale.toUpperCase()}`}
+  description={`${item.name}: ${item.vram_min_gb}GB min VRAM, ${item.vram_optimal_gb}GB optimal, and local/cloud planning anchors.`}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  ogType="article"
+  modifiedTime={item.updated_at}
+  structuredData={modelSchema}
+>
+  <main class="container">
+    <h1>{item.name}</h1>
+    <p>{item.focus}. Caveat: {item.caveat}.</p>
+
+    <section class="card">
+      <h2>Hardware Snapshot</h2>
+      <table class="table">
+        <tbody>
+          <tr><th>Family</th><td>{item.family}</td></tr>
+          <tr><th>Scenario</th><td>{item.scenario}</td></tr>
+          <tr><th>Quantization</th><td>{item.quantization}</td></tr>
+          <tr><th>VRAM minimum</th><td>{item.vram_min_gb}GB</td></tr>
+          <tr><th>VRAM optimal</th><td>{item.vram_optimal_gb}GB</td></tr>
+          <tr><th>Best local GPU</th><td>{item.best_local_gpu}</td></tr>
+          <tr><th>Cloud fallback</th><td>{item.cloud_fallback}</td></tr>
+          <tr><th>Updated</th><td>{item.updated_at}</td></tr>
+          <tr><th>Ollama tag</th><td><code>{item.ollama_tag || "-"}</code></td></tr>
+          <tr>
+            <th>Source</th>
+            <td><a class="btn" href={item.ollama_source_url}>Library reference</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Benchmark Anchors</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Hardware</th>
+            <th>Expected tok/s</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>RTX 3090 24GB</td><td>{item.benchmarks.rtx3090_tok_s}</td></tr>
+          <tr><td>RTX 4090 24GB</td><td>{item.benchmarks.rtx4090_tok_s}</td></tr>
+          <tr><td>A100 80GB</td><td>{item.benchmarks.a100_tok_s}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Local vs Cloud Cost Hint</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            <th>40h / month</th>
+            <th>120h / month</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cloud GPU</td><td>${monthlyCloud40h}</td><td>${monthlyCloud120h}</td></tr>
+          <tr><td>Local power (est.)</td><td>${item.local_monthly_power_usd}</td><td>${item.local_monthly_power_usd}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+      <a class="btn" href={`/${locale}/guides/local-llm-cost-vs-cloud/`}>{copy.ctaCostGuide}</a>
+      <a class="btn" href={`/${locale}/guides/ollama-vs-vllm-vram/`}>{copy.ctaRuntimeGuide}</a>
+      <a class="btn" href={`/${locale}/models/qwen35-35b-q4/`}>{copy.ctaModel35}</a>
+    </section>
+  </main>
+</BaseLayout>

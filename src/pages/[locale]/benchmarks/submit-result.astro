@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for localized benchmark submit page: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/benchmarks/submit-result/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Submit benchmark result",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Submit Benchmark Result`}
+  description="Submission entry for community benchmark runs with precheck and review flow."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={pageSchema}
+>
+  <main class="container">
+    <h1>Submit Your Test Result</h1>
+    <p>Community submissions are accepted after automated precheck and manual validation.</p>
+
+    <section class="card">
+      <h2>Required submission fields</h2>
+      <ul>
+        <li>Model ID, hardware profile, runtime backend, and context length.</li>
+        <li>Measured throughput and latency with reproducible command details.</li>
+        <li>Issue link with logs/screenshots attached.</li>
+      </ul>
+    </section>
+
+    <section class="card terminal-card">
+      <h2>Precheck command</h2>
+      <pre><code>python scripts/score-user-submission.py --model-id llama-70b-q4 --hardware "RTX 4090 24GB + WSL2" --score 0.91 --submitter-id github:your-id --issue-url "https://github.com/kxz2009-crypto/localvram/issues/123"</code></pre>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href={`/${locale}/status/submission-review/`}>Open Submission Review</a>
+      <a class="btn" href={`/${locale}/errors/`}>Open Error KB</a>
+      <a class="btn" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+    </section>
+  </main>
+</BaseLayout>

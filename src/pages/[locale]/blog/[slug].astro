@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => data.lang === "en");
+  return WAVE2_LOCALES.flatMap((locale) =>
+    posts.map((post) => ({
+      params: { locale, slug: post.slug },
+      props: { post }
+    }))
+  );
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for localized blog post: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const { post } = Astro.props;
+const { Content } = await render(post);
+const postPath = `/${locale}/blog/${post.slug}/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const postUrl = `${siteOrigin}${postPath}`;
+const publishedIso = post.data.pubDate.toISOString();
+const modifiedIso = (post.data.updatedDate || post.data.pubDate).toISOString();
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: publishedIso,
+  dateModified: modifiedIso,
+  inLanguage: locale,
+  url: postUrl
+};
+---
+
+<BaseLayout
+  title={`${post.data.title} | LocalVRAM ${locale.toUpperCase()}`}
+  description={post.data.description}
+  locale={locale}
+  canonicalPath={postPath}
+  alternates={ROOT_ALTERNATES}
+  ogType="article"
+  publishedTime={publishedIso}
+  modifiedTime={modifiedIso}
+  structuredData={articleSchema}
+>
+  <main class="container">
+    <article class="post-page">
+      <header class="post-header">
+        <h1>{post.data.title}</h1>
+        <p>{post.data.description}</p>
+        <div class="meta-row">
+          <span>Published: {post.data.pubDate.toISOString().slice(0, 10)}</span>
+          {post.data.updatedDate && <span>Updated: {post.data.updatedDate.toISOString().slice(0, 10)}</span>}
+          <span>Intent: {post.data.intent}</span>
+        </div>
+      </header>
+
+      <section class="prose">
+        <Content />
+      </section>
+
+      <section class="cta-row">
+        <a class="btn" href={`/${locale}/blog/`}>Back to Blog Hub</a>
+        <a class="btn" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+        <a class="btn btn-primary" href={`/${locale}/status/data-freshness/`}>Open Data Freshness</a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>

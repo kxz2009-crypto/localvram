@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import statusReport from "../../../data/status.json";
+import runnerStatus from "../../../data/runner-status.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for localized methodology page: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/about/methodology/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "Methodology",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Methodology`}
+  description="How benchmark data is measured, validated, and published."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={pageSchema}
+>
+  <main class="container">
+    <h1>Methodology</h1>
+    <section class="card">
+      <h2>Runtime Environment</h2>
+      <ul>
+        <li>Primary GPU host: RTX 3090 (24GB) with sustained-load benchmark workflow.</li>
+        <li>Observed Ollama API version: {runnerStatus?.api?.version?.version || "unknown"}.</li>
+        <li>Latest hardware sync: {statusReport.last_hardware_sync || statusReport.last_verified || "unknown"}.</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Data Classification</h2>
+      <ul>
+        <li>Measured: direct benchmark observations with verified run context.</li>
+        <li>Estimated: baseline anchors before measured data is available.</li>
+        <li>Every publish cycle updates changelog and operational status pages.</li>
+      </ul>
+    </section>
+    <section class="cta-row">
+      <a class="btn" href={`/${locale}/status/`}>Open Status Hub</a>
+      <a class="btn" href={`/${locale}/benchmarks/changelog/`}>Open Benchmark Changelog</a>
+      <a class="btn btn-primary" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+    </section>
+  </main>
+</BaseLayout>

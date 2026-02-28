@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for localized status hub: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/status/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Status Hub",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Status Hub`}
+  description="Operational status hub for data freshness, pipeline health, and conversion guardrails."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={pageSchema}
+>
+  <main class="container">
+    <h1>Status Hub</h1>
+    <section class="card-grid">
+      <article class="card"><h2>Data Freshness</h2><a class="btn btn-primary" href={`/${locale}/status/data-freshness/`}>Open</a></article>
+      <article class="card"><h2>Pipeline Status</h2><a class="btn btn-primary" href={`/${locale}/status/pipeline-status/`}>Open</a></article>
+      <article class="card"><h2>Runner Health</h2><a class="btn btn-primary" href={`/${locale}/status/runner-health/`}>Open</a></article>
+      <article class="card"><h2>Conversion Funnel</h2><a class="btn btn-primary" href={`/${locale}/status/conversion-funnel/`}>Open</a></article>
+      <article class="card"><h2>Content Publish</h2><a class="btn btn-primary" href={`/${locale}/status/content-publish/`}>Open</a></article>
+      <article class="card"><h2>Submission Review</h2><a class="btn btn-primary" href={`/${locale}/status/submission-review/`}>Open</a></article>
+    </section>
+    <section class="cta-row">
+      <a class="btn" href={`/${locale}/benchmarks/`}>Open Benchmark Hub</a>
+      <a class="btn btn-primary" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import tiers from "../../../data/hardware-tiers.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.flatMap((locale) => {
+    const tierPaths = tiers.tiers.map((tier) => ({
+      params: { locale, slug: `${tier.vram_gb}gb-vram-models` },
+      props: { tier, isApple: false }
+    }));
+    const applePath = {
+      params: { locale, slug: "apple-silicon-llm-guide" },
+      props: { tier: null, isApple: true }
+    };
+    return [...tierPaths, applePath];
+  });
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for localized hardware detail: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const { tier, isApple } = Astro.props;
+const slug = String(Astro.params.slug || "");
+const pagePath = `/${locale}/hardware/${slug}/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: isApple ? "Apple Silicon LLM Guide" : `${tier.vram_gb}GB VRAM models`,
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={isApple ? `LocalVRAM ${locale.toUpperCase()} | Apple Silicon Guide` : `${tier.vram_gb}GB VRAM Models | LocalVRAM ${locale.toUpperCase()}`}
+  description={isApple ? "Practical guidance for running local LLMs on Apple Silicon unified memory." : tier.summary}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={pageSchema}
+>
+  <main class="container">
+    {isApple ? (
+      <>
+        <h1>Apple Silicon LLM Guide</h1>
+        <section class="card">
+          <ul>
+            <li>Reserve unified memory headroom for OS and background workload.</li>
+            <li>Use conservative quantization when memory pressure is near the limit.</li>
+            <li>Validate stability with sustained tests, not only one-shot prompts.</li>
+          </ul>
+        </section>
+      </>
+    ) : (
+      <>
+        <h1>{tier.title}</h1>
+        <p>{tier.summary}</p>
+        <section class="card">
+          <h2>Recommended models</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Fit</th>
+                <th>Expected tok/s</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tier.recommended_models.map((model) => (
+                <tr>
+                  <td>{model.name}</td>
+                  <td>{model.fit}</td>
+                  <td>{model.expected_tok_s}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      </>
+    )}
+
+    <section class="cta-row">
+      <a class="btn" href={`/${locale}/hardware/`}>Back to hardware tiers</a>
+      <a class="btn" href={`/${locale}/models/`}>Open model catalog</a>
+      <a class="btn btn-primary" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+    </section>
+  </main>
+</BaseLayout>

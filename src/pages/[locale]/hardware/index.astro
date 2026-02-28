@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import tiers from "../../../data/hardware-tiers.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for localized hardware hub: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const pagePath = `/${locale}/hardware/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Hardware VRAM tiers",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Hardware Tiers`}
+  description="Pick local model routes by available VRAM tier."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={pageSchema}
+>
+  <main class="container">
+    <h1>Hardware VRAM Tiers</h1>
+    <section class="card-grid">
+      {tiers.tiers.map((tier) => (
+        <article class="card">
+          <h2>{tier.vram_gb}GB VRAM</h2>
+          <p>{tier.summary}</p>
+          <a class="btn btn-primary" href={`/${locale}/hardware/${tier.vram_gb}gb-vram-models/`}>
+            View recommended models
+          </a>
+        </article>
+      ))}
+      <article class="card">
+        <h2>Apple Silicon</h2>
+        <p>Unified memory planning guide for local LLM inference on M-series devices.</p>
+        <a class="btn btn-primary" href={`/${locale}/hardware/apple-silicon-llm-guide/`}>
+          Open Apple Silicon guide
+        </a>
+      </article>
+    </section>
+  </main>
+</BaseLayout>

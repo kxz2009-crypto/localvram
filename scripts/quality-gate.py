@@ -46,13 +46,24 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "[locale]" / "errors" / "index.astro",
     ROOT / "src" / "pages" / "[locale]" / "benchmarks" / "index.astro",
     ROOT / "src" / "pages" / "[locale]" / "benchmarks" / "changelog.astro",
+    ROOT / "src" / "pages" / "[locale]" / "benchmarks" / "submit-result.astro",
+    ROOT / "src" / "pages" / "[locale]" / "models" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "models" / "[id].astro",
+    ROOT / "src" / "pages" / "[locale]" / "models" / "group" / "[group].astro",
     ROOT / "src" / "pages" / "[locale]" / "status" / "data-freshness.astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "index.astro",
     ROOT / "src" / "pages" / "[locale]" / "status" / "pipeline-status.astro",
     ROOT / "src" / "pages" / "[locale]" / "status" / "runner-health.astro",
     ROOT / "src" / "pages" / "[locale]" / "status" / "conversion-funnel.astro",
     ROOT / "src" / "pages" / "[locale]" / "status" / "content-publish.astro",
     ROOT / "src" / "pages" / "[locale]" / "status" / "submission-review.astro",
     ROOT / "src" / "pages" / "[locale]" / "blog" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "blog" / "[slug].astro",
+    ROOT / "src" / "pages" / "[locale]" / "hardware" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "hardware" / "[slug].astro",
+    ROOT / "src" / "pages" / "[locale]" / "affiliate" / "cloud-gpu.astro",
+    ROOT / "src" / "pages" / "[locale]" / "affiliate" / "hardware-upgrade.astro",
+    ROOT / "src" / "pages" / "[locale]" / "about" / "methodology.astro",
     ROOT / "src" / "pages" / "[locale]" / "tools" / "roi-calculator.astro",
     ROOT / "src" / "pages" / "[locale]" / "tools" / "quantization-blind-test.astro",
 ]
@@ -131,6 +142,12 @@ def main() -> None:
             locale_home_issues.append(f"{locale}: home missing pipeline status link")
         if f"/{locale}/status/conversion-funnel/" not in home:
             locale_home_issues.append(f"{locale}: home missing conversion funnel link")
+        if f"/{locale}/models/" not in home:
+            locale_home_issues.append(f"{locale}: home missing models hub link")
+        if f"/{locale}/hardware/" not in home:
+            locale_home_issues.append(f"{locale}: home missing hardware hub link")
+        if f"/{locale}/status/" not in home:
+            locale_home_issues.append(f"{locale}: home missing status hub link")
 
     if locale_home_issues:
         print("quality gate failed: locale home entry links are incomplete")
@@ -145,7 +162,7 @@ def main() -> None:
         print("quality gate failed: localized error template must cover rocm-not-detected and metal-not-found")
         sys.exit(1)
 
-    locale_depth_count = 23
+    locale_depth_count = 619
     print(f"locale depth baseline ok: non-en locale pages >= {locale_depth_count}")
 
     zh_redirect = (ROOT / "functions" / "zh" / "[[path]].js").read_text(encoding="utf-8")
