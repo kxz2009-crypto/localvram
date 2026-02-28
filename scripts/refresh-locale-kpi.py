@@ -68,11 +68,18 @@ def parse_sitemap_locale_counts(path: Path, locales: set[str]) -> dict[str, int]
 
 
 def parse_search_console(path: Path, locales: set[str]) -> dict[str, dict[str, float]]:
+    if not path.exists():
+        return {
+            locale: {"impressions": 0.0, "clicks": 0.0, "weighted_pos_sum": 0.0, "indexed_urls": 0.0}
+            for locale in locales
+        }
+
     payload = json.loads(path.read_text(encoding="utf-8-sig"))
     items = payload.get("items", []) if isinstance(payload, dict) else []
     stats: dict[str, dict[str, float]] = {
-        locale: {"impressions": 0.0, "clicks": 0.0, "weighted_pos_sum": 0.0} for locale in locales
+        locale: {"impressions": 0.0, "clicks": 0.0, "weighted_pos_sum": 0.0, "indexed_urls": 0.0} for locale in locales
     }
+    indexed_landing_by_locale: dict[str, set[str]] = {locale: set() for locale in locales}
     for item in items:
         if not isinstance(item, dict):
             continue
@@ -89,6 +96,12 @@ def parse_search_console(path: Path, locales: set[str]) -> dict[str, dict[str, f
         stats[locale]["impressions"] += impressions
         stats[locale]["clicks"] += clicks
         stats[locale]["weighted_pos_sum"] += position * impressions
+        if impressions > 0 and landing:
+            indexed_landing_by_locale[locale].add(landing)
+
+    for locale in locales:
+        stats[locale]["indexed_urls"] = float(len(indexed_landing_by_locale[locale]))
+
     return stats
 
 
@@ -116,13 +129,13 @@ def build_row(
     date_iso: str,
     locale: str,
     owner: str,
+    indexed_urls: int,
     discovered_urls: int,
     impressions: float,
     clicks: float,
     weighted_pos_sum: float,
     due_date: str,
 ) -> dict[str, str]:
-    indexed_urls = 0
     index_rate = 0.0 if discovered_urls <= 0 else (indexed_urls / discovered_urls) * 100.0
     ctr = 0.0 if impressions <= 0 else (clicks / impressions) * 100.0
     avg_pos = 0.0 if impressions <= 0 else (weighted_pos_sum / impressions)
@@ -171,12 +184,17 @@ def main() -> int:
     new_rows: list[dict[str, str]] = []
     for locale in locales:
         owner = latest_owner(rows, locale, "localvram.com")
-        s = sc_stats.get(locale, {"impressions": 0.0, "clicks": 0.0, "weighted_pos_sum": 0.0})
+        s = sc_stats.get(locale, {"impressions": 0.0, "clicks": 0.0, "weighted_pos_sum": 0.0, "indexed_urls": 0.0})
+        discovered_urls = int(sitemap_counts.get(locale, 0))
+        indexed_urls = int(round(float(s.get("indexed_urls", 0.0) or 0.0)))
+        if discovered_urls > 0:
+            indexed_urls = max(0, min(discovered_urls, indexed_urls))
         row = build_row(
             date_iso=date_iso,
             locale=locale,
             owner=owner,
-            discovered_urls=int(sitemap_counts.get(locale, 0)),
+            indexed_urls=indexed_urls,
+            discovered_urls=discovered_urls,
             impressions=float(s.get("impressions", 0.0)),
             clicks=float(s.get("clicks", 0.0)),
             weighted_pos_sum=float(s.get("weighted_pos_sum", 0.0)),
@@ -191,7 +209,7 @@ def main() -> int:
     for row in new_rows:
         print(
             "kpi_row="
-            f"{row['date']} {row['locale']} discovered={row['discovered_urls']} "
+            f"{row['date']} {row['locale']} indexed={row['indexed_urls']} discovered={row['discovered_urls']} "
             f"impr={row['impressions']} clicks={row['clicks']} next={row['next_action']}"
         )
     print(f"kpi_file={KPI_FILE}")

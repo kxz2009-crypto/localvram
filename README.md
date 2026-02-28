@@ -97,6 +97,7 @@ npm run dev
 - `python scripts/build-conversion-funnel.py`
 - `python scripts/import-affiliate-events.py --source-file <raw-export.jsonl>`
 - `python scripts/refresh-affiliate-funnel.py --source-file <raw-export.jsonl>`
+- `python scripts/fetch-search-console-keywords.py --site-url <sc-property> --credentials-json <service-account-json> --locales "en,es,pt,..."`
 - `python scripts/build-submission-review.py`
 - `python scripts/review-content-queue.py`
 - `python scripts/review-content-drafts.py --queue-date <YYYY-MM-DD> --slugs <slug1,slug2> --action approve|reject|needs_info`
@@ -146,6 +147,13 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `LV_AUTO_PRIORITY_TAGS` (default: `qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b`; preferred order for auto-added targets)
 - `PUBLIC_AMAZON_PRICE_3090` (optional UI price label for local recommendation modules)
 - `PUBLIC_RUNPOD_A100_PRICE` (optional UI price label for cloud recommendation modules)
+
+Locale KPI + Search Console sync:
+
+- Workflow: `Locale KPI Refresh (72h Cadence)`
+- Repository variable: `GSC_SITE_URL` (for example `sc-domain:localvram.com`)
+- Repository secret: `GSC_SERVICE_ACCOUNT_JSON` (service-account JSON string, read-only Search Console access)
+- Sync script refreshes `src/data/search-console-keywords.json` before KPI upsert
 
 Self-hosted runner preflight:
 
