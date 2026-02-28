@@ -1,12 +1,17 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import links from "../../../data/affiliate-links.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/en/guides/ollama-local-cluster-network/";
 ---
 
 <BaseLayout
   title="Ollama Local Cluster Network Guide | LocalVRAM"
   description="Topology and performance checklist for local Ollama cluster setups."
   locale="en"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
 >
   <main class="container">
     <h1>Ollama Local Cluster Network Guide</h1>

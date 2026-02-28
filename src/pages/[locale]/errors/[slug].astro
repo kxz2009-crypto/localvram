@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import errorData from "../../../data/errors.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  const localizedErrorIds = new Set(["rocm-not-detected", "metal-not-found"]);
+  return WAVE2_LOCALES.flatMap((locale) =>
+    errorData.errors
+      .filter((item) => localizedErrorIds.has(String(item.id || "")))
+      .map((item) => ({
+        params: { locale, slug: item.id },
+        props: { item }
+      }))
+  );
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for localized error page: ${localeParam}`);
+}
+
+const { item } = Astro.props;
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/errors/${item.id}/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: `Fix ${item.title}`,
+  inLanguage: locale,
+  url: pageUrl,
+  step: item.fixes.map((fix) => ({
+    "@type": "HowToStep",
+    name: fix.label,
+    text: fix.command
+  }))
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | ${item.title}`}
+  description={item.symptom}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  ogType="article"
+  structuredData={howToSchema}
+>
+  <main class="container">
+    <h1>{item.title}</h1>
+    <p>{item.symptom}</p>
+
+    <section class="card terminal-card">
+      <h2>Raw stack trace</h2>
+      <pre><code>{item.raw_stack_trace}</code></pre>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Common causes</h2>
+        <ul>
+          {item.causes.map((cause) => <li>{cause}</li>)}
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Copy-fix commands</h2>
+        <ul>
+          {item.fixes.map((fix) => (
+            <li>
+              <strong>{fix.label}</strong>
+              <code>{fix.command}</code>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+      <a class="btn" href={`/${locale}/tools/roi-calculator/`}>Open ROI Calculator</a>
+      <a class="btn" href={`/${locale}/models/qwen35-122b-cloud/`}>{copy.ctaModel122}</a>
+    </section>
+  </main>
+</BaseLayout>

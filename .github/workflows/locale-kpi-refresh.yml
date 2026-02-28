@@ -15,9 +15,15 @@ on:
         required: false
         default: ""
         type: string
+      allow_stub_data:
+        description: "Allow stale or non-API snapshot (temporary fallback only)"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   refresh-kpi:
@@ -30,6 +36,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Prepare logs dir
+        if: always()
+        run: mkdir -p logs
 
       - name: Sync Search Console keywords snapshot
         env:
@@ -56,6 +66,36 @@ jobs:
             --days 28 \
             --row-limit 160 \
             --output "src/data/search-console-keywords.json"
+
+      - name: Validate Search Console coverage
+        env:
+          INPUT_LOCALES: ${{ github.event.inputs.locales }}
+          INPUT_ALLOW_STUB: ${{ github.event.inputs.allow_stub_data }}
+        run: |
+          LOCALES="${INPUT_LOCALES}"
+          if [ -z "${LOCALES}" ]; then
+            LOCALES="es,pt,ja,fr,de,ko,ru,ar,hi,id"
+          fi
+
+          ALLOW_STUB="${INPUT_ALLOW_STUB}"
+          if [ -z "${ALLOW_STUB}" ]; then
+            ALLOW_STUB="false"
+          fi
+
+          if [ "${GITHUB_EVENT_NAME}" != "workflow_dispatch" ]; then
+            ALLOW_STUB="false"
+          fi
+
+          if ! python scripts/check-search-console-coverage.py \
+            --file "src/data/search-console-keywords.json" \
+            --locales "${LOCALES},en" \
+            --max-age-hours 96 \
+            --min-items-per-locale 1 \
+            --allow-stub-data "${ALLOW_STUB}"; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'gsc_coverage_failure','failure_detail':'search-console snapshot is stale, missing locales, or not sourced from live GSC API'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::gsc_coverage_failure - search-console snapshot is stale, missing locales, or not sourced from live GSC API"
+            exit 1
+          fi
 
       - name: Refresh locale KPI rows
         env:
@@ -87,3 +127,101 @@ jobs:
 
           git commit -m "chore: refresh locale kpi tracker"
           git push
+
+      - name: Alert issue (locale kpi failure)
+        if: always() && failure()
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Locale KPI Refresh
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const fs = require("fs");
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+
+            let failureClass = "locale_kpi_refresh_failed";
+            let failureDetail = "";
+            if (fs.existsSync("logs/failure-context.json")) {
+              try {
+                const payload = JSON.parse(fs.readFileSync("logs/failure-context.json", "utf8"));
+                failureClass = String(payload.failure_class || failureClass).trim() || failureClass;
+                failureDetail = String(payload.failure_detail || "").trim();
+              } catch (err) {
+                failureDetail = `failed to parse failure-context.json: ${String(err)}`;
+              }
+            }
+
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const body = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: ${failureDetail || "-"}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body
+              });
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body
+              });
+            }
+
+      - name: Resolve alert issues on recovery (locale kpi)
+        if: always() && success()
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Locale KPI Refresh
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const prefix = `[OPS-ALERT] ${workflow}:`;
+            const now = new Date().toISOString();
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+
+            const targets = issues.filter((issue) => issue.title.startsWith(prefix));
+            for (const issue of targets) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: `Recovered at ${now}. Latest successful run: ${runUrl}`
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                state: "closed"
+              });
+            }

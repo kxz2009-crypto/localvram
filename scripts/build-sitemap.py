@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT_EN = ROOT / "public" / "sitemap.xml"
 OUT_CN = ROOT / "public" / "sitemap-cn.xml"
 COM_LOCALES = ["en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"]
+GLOBAL_LOCALE_TEMPLATE_ROOT = ROOT / "src" / "pages" / "[locale]"
 
 
 def load_json(path: Path) -> dict:
@@ -20,23 +21,30 @@ def blog_slugs() -> list[str]:
 
 def locale_static_paths(locale: str) -> list[str]:
     pages_root = ROOT / "src" / "pages" / locale
-    if not pages_root.exists():
-        return []
     paths: list[str] = []
-    for file in pages_root.rglob("*.astro"):
-        rel = file.relative_to(pages_root)
-        parts = list(rel.parts)
-        if any(("[" in part) or ("]" in part) for part in parts):
-            continue
-        if parts[-1] == "index.astro":
-            parts = parts[:-1]
-        else:
-            parts[-1] = parts[-1].removesuffix(".astro")
-        path = f"/{locale}/" + "/".join(parts)
-        if not path.endswith("/"):
-            path += "/"
-        path = path.replace("//", "/")
-        paths.append(path)
+
+    roots = []
+    if pages_root.exists():
+        roots.append(pages_root)
+    if GLOBAL_LOCALE_TEMPLATE_ROOT.exists():
+        roots.append(GLOBAL_LOCALE_TEMPLATE_ROOT)
+
+    for root in roots:
+        for file in root.rglob("*.astro"):
+            rel = file.relative_to(root)
+            parts = list(rel.parts)
+            if any(("[" in part) or ("]" in part) for part in parts):
+                continue
+            if parts[-1] == "index.astro":
+                parts = parts[:-1]
+            else:
+                parts[-1] = parts[-1].removesuffix(".astro")
+            path = f"/{locale}/" + "/".join(parts)
+            if not path.endswith("/"):
+                path += "/"
+            path = path.replace("//", "/")
+            paths.append(path)
+
     locale_root = f"/{locale}/"
     if locale_root not in paths:
         paths.append(locale_root)

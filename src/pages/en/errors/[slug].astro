@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import errorData from "../../../data/errors.json";
 import affiliateLinks from "../../../data/affiliate-links.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 
 export function getStaticPaths() {
   return errorData.errors.map((item) => ({
@@ -13,6 +14,8 @@ export function getStaticPaths() {
 const { item } = Astro.props;
 const pagePath = `/en/errors/${item.id}/`;
 const pageUrl = `https://localvram.com${pagePath}`;
+const localizedErrorIds = new Set(["cuda-out-of-memory"]);
+const errorAlternates = localizedErrorIds.has(String(item.id || "")) ? ROOT_ALTERNATES : [];
 
 const howToSchema = {
   "@context": "https://schema.org",
@@ -99,6 +102,7 @@ const breadcrumbSchema = {
   description={item.symptom}
   locale="en"
   canonicalPath={pagePath}
+  alternates={errorAlternates}
   ogType="article"
   structuredData={[howToSchema, faqSchema, techArticleSchema, breadcrumbSchema]}
 >

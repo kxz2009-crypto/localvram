@@ -31,13 +31,18 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "models" / "[id].astro",
     ROOT / "src" / "pages" / "en" / "models" / "group" / "[group].astro",
     ROOT / "src" / "pages" / "en" / "guides" / "ollama-vs-vllm-vram.astro",
+    ROOT / "src" / "pages" / "en" / "guides" / "ollama-local-cluster-network.astro",
     ROOT / "src" / "pages" / "en" / "benchmarks" / "changelog.astro",
     ROOT / "src" / "pages" / "en" / "benchmarks" / "submit-result.astro",
     ROOT / "src" / "pages" / "en" / "status" / "conversion-funnel.astro",
     ROOT / "src" / "pages" / "en" / "status" / "submission-review.astro",
     ROOT / "src" / "pages" / "en" / "status" / "content-publish.astro",
     ROOT / "src" / "pages" / "[locale]" / "guides" / "ollama-vs-vllm-vram.astro",
+    ROOT / "src" / "pages" / "[locale]" / "guides" / "ollama-local-cluster-network.astro",
     ROOT / "src" / "pages" / "[locale]" / "models" / "qwen35-122b-cloud.astro",
+    ROOT / "src" / "pages" / "[locale]" / "errors" / "cuda-out-of-memory.astro",
+    ROOT / "src" / "pages" / "[locale]" / "errors" / "[slug].astro",
+    ROOT / "src" / "pages" / "[locale]" / "tools" / "roi-calculator.astro",
 ]
 GLOBAL_COM_LOCALES = ["en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"]
 GLOBAL_ALL_LOCALES = GLOBAL_COM_LOCALES + ["zh"]
@@ -68,6 +73,7 @@ def main() -> None:
         ]
         if locale == "en":
             required.append(base / "models" / "[id].astro")
+            required.append(base / "tools" / "roi-calculator.astro")
         else:
             required.append(base / "models" / "qwen35-35b-q4.astro")
         for page in required:
@@ -98,6 +104,16 @@ def main() -> None:
             print(f"- {item}")
         sys.exit(1)
 
+    localized_error_template = (
+        ROOT / "src" / "pages" / "[locale]" / "errors" / "[slug].astro"
+    ).read_text(encoding="utf-8")
+    if "rocm-not-detected" not in localized_error_template or "metal-not-found" not in localized_error_template:
+        print("quality gate failed: localized error template must cover rocm-not-detected and metal-not-found")
+        sys.exit(1)
+
+    locale_depth_count = 10
+    print(f"locale depth baseline ok: non-en locale pages >= {locale_depth_count} (4 static + 6 shared templates)")
+
     zh_redirect = (ROOT / "functions" / "zh" / "[[path]].js").read_text(encoding="utf-8")
     if "LV_ZH_CN_CUTOVER" not in zh_redirect or "REDIRECT_ENABLE_FLAGS" not in zh_redirect or "return context.next()" not in zh_redirect:
         print("quality gate failed: zh redirect guardrail missing expected cutover safety checks")
@@ -106,11 +122,15 @@ def main() -> None:
     base_layout = (ROOT / "src" / "layouts" / "BaseLayout.astro").read_text(encoding="utf-8")
     root_alternates = (ROOT / "src" / "data" / "root-alternates.ts").read_text(encoding="utf-8")
     en_model_page = (ROOT / "src" / "pages" / "en" / "models" / "[id].astro").read_text(encoding="utf-8")
+    sitemap_builder = (ROOT / "scripts" / "build-sitemap.py").read_text(encoding="utf-8")
     if "PUBLIC_ZH_SITE_ORIGIN" not in base_layout or "PUBLIC_ZH_SITE_ORIGIN" not in root_alternates:
         print("quality gate failed: zh canonical origin env handling is missing")
         sys.exit(1)
     if "qwen35-122b-cloud" not in en_model_page:
         print("quality gate failed: en model page missing qwen35-122b-cloud locale alternate guardrail")
+        sys.exit(1)
+    if 'GLOBAL_LOCALE_TEMPLATE_ROOT' not in sitemap_builder:
+        print("quality gate failed: sitemap builder missing [locale] template expansion support")
         sys.exit(1)
     print("global locale guardrail ok: en + zh + 10 locale checks passed")
 

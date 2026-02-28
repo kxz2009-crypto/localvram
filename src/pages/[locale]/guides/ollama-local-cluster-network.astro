@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for cluster guide: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/guides/ollama-local-cluster-network/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Ollama Local Cluster Network Guide",
+  description: "Latency, throughput, and operation checklist for local cluster deployment.",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Ollama Cluster Guide`}
+  description="Local cluster network checklist for Ollama deployments."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={articleSchema}
+>
+  <main class="container">
+    <section class="card">
+      <h1>Ollama Local Cluster Network Guide</h1>
+      <p>Use this page to plan node topology, network jitter budget, and throughput fallback path before scaling.</p>
+      <ul>
+        <li>Baseline topology: 1 main GPU node + helper routing node, fixed benchmark prompt set.</li>
+        <li>Network target: stable LAN and low cross-node latency before adding model shards.</li>
+        <li>Fallback plan: when queue pressure grows, route heavy requests to cloud-first model path.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={`/${locale}/models/qwen35-122b-cloud/`}>{copy.ctaModel122}</a>
+        <a class="btn" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+        <a class="btn" href={`/${locale}/guides/ollama-vs-vllm-vram/`}>{copy.ctaRuntimeGuide}</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
