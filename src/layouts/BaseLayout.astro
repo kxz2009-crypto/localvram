@@ -75,6 +75,7 @@ const jsonLdList = Array.isArray(structuredData)
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robotsContent} />
+    <meta http-equiv="X-Robots-Tag" content={robotsContent} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href={canonicalUrl} />
     {resolvedAlternates.map((item) => (
