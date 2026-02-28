@@ -4,8 +4,8 @@ date: 2026-02-28
 keyword: "llama 70b on rtx 3090 local setup"
 score: 720
 source: opportunity
-status: pending_manual_review
-reviewed_at: "2026-02-28T02:58:09.954445Z"
+status: rejected_manual
+reviewed_at: "2026-02-28T10:49:04.168905Z"
 risk_flags: near_duplicate_published
 ---
 

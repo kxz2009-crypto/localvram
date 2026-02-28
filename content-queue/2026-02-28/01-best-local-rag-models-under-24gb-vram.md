@@ -1,17 +1,17 @@
 ---
-title: "Qwen3.5 122B Cloud Vs Local Cost: Practical Guide (2026)"
+title: "Best Local Rag Models Under 24Gb Vram: Practical Guide (2026)"
 date: 2026-02-28
-keyword: "qwen3.5 122b cloud vs local cost"
-score: 720
+keyword: "best local rag models under 24gb vram"
+score: 648
 source: opportunity
-status: rejected_manual
+status: pending_manual_review
 reviewed_at: "2026-02-28T10:49:04.168905Z"
 risk_flags: near_duplicate_published
 ---
 
 ## Why this topic now
 
-Users searching for "qwen3.5 122b cloud vs local cost" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "best local rag models under 24gb vram" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 
