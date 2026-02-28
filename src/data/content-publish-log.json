@@ -1,40 +1,63 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-02-28T10:47:27.825578Z",
+  "updated_at": "2026-02-28T11:08:58.923123Z",
   "last_run": {
-    "run_at": "2026-02-28T10:47:27.825578Z",
+    "run_at": "2026-02-28T11:08:58.923123Z",
     "queue_date": "2026-02-28",
-    "candidate_count": 3,
+    "candidate_count": 2,
     "published_count": 2,
-    "skipped_count": 1,
+    "skipped_count": 0,
     "published": [
       {
-        "slug": "llama-70b-on-rtx-3090-local-setup",
-        "title": "Llama 70B On Rtx 3090 Local Setup: Practical Guide (2026)",
-        "topic_key": "llama-70b-on-rtx-3090-local-setup",
-        "score": 720.0,
-        "source_draft": "content-queue/2026-02-28/01-llama-70b-on-rtx-3090-local-setup.md",
-        "out_file": "src/content/blog/llama-70b-on-rtx-3090-local-setup.md",
+        "slug": "qwen35-35b-vram-requirements-guide",
+        "title": "Qwen3.5 35B Vram Requirements: Practical Guide (2026)",
+        "topic_key": "qwen3-5-35b-vram-requirements",
+        "score": 648.0,
+        "source_draft": "content-queue/2026-02-28/02-qwen35-35b-vram-requirements-guide.md",
+        "out_file": "src/content/blog/qwen35-35b-vram-requirements-guide.md",
         "intent": "hardware"
       },
       {
-        "slug": "qwen35-122b-cloud-vs-local-cost",
-        "title": "Qwen3.5 122B Cloud Vs Local Cost: Practical Guide (2026)",
-        "topic_key": "qwen3-5-122b-cloud-vs-local-cost",
-        "score": 720.0,
-        "source_draft": "content-queue/2026-02-28/02-qwen35-122b-cloud-vs-local-cost.md",
-        "out_file": "src/content/blog/qwen35-122b-cloud-vs-local-cost.md",
-        "intent": "cost"
+        "slug": "cuda-out-of-memory-ollama-fixes-2026",
+        "title": "Cuda Out Of Memory Ollama Fix: Practical Guide (2026)",
+        "topic_key": "cuda-out-of-memory-ollama-fix",
+        "score": 640.0,
+        "source_draft": "content-queue/2026-02-28/03-cuda-out-of-memory-ollama-fixes-2026.md",
+        "out_file": "src/content/blog/cuda-out-of-memory-ollama-fixes-2026.md",
+        "intent": "troubleshooting"
       }
     ],
-    "skipped": [
-      {
-        "draft": "content-queue/2026-02-28/03-rtx4090-vs-rtx3090-for-local-llm.md",
-        "reason": "max_publish_reached"
-      }
-    ]
+    "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-02-28T11:08:58.923123Z",
+      "queue_date": "2026-02-28",
+      "candidate_count": 2,
+      "published_count": 2,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "qwen35-35b-vram-requirements-guide",
+          "title": "Qwen3.5 35B Vram Requirements: Practical Guide (2026)",
+          "topic_key": "qwen3-5-35b-vram-requirements",
+          "score": 648.0,
+          "source_draft": "content-queue/2026-02-28/02-qwen35-35b-vram-requirements-guide.md",
+          "out_file": "src/content/blog/qwen35-35b-vram-requirements-guide.md",
+          "intent": "hardware"
+        },
+        {
+          "slug": "cuda-out-of-memory-ollama-fixes-2026",
+          "title": "Cuda Out Of Memory Ollama Fix: Practical Guide (2026)",
+          "topic_key": "cuda-out-of-memory-ollama-fix",
+          "score": 640.0,
+          "source_draft": "content-queue/2026-02-28/03-cuda-out-of-memory-ollama-fixes-2026.md",
+          "out_file": "src/content/blog/cuda-out-of-memory-ollama-fixes-2026.md",
+          "intent": "troubleshooting"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-02-28T10:47:27.825578Z",
       "queue_date": "2026-02-28",

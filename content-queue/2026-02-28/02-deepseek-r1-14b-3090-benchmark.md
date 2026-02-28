@@ -4,9 +4,9 @@ date: 2026-02-28
 keyword: "deepseek r1 14b rtx 3090 benchmark"
 score: 648
 source: opportunity
-status: pending_manual_review
-reviewed_at: "2026-02-28T10:49:04.168905Z"
-risk_flags: near_duplicate_published
+status: rejected_manual
+reviewed_at: "2026-02-28T11:08:58.848736Z"
+risk_flags: ""
 ---
 
 ## Why this topic now

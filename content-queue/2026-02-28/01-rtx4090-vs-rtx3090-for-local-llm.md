@@ -1,17 +1,17 @@
 ---
-title: "Ollama Vs Vllm Throughput Comparison: Practical Guide (2026)"
+title: "Rtx 4090 Vs Rtx 3090 Local Llm: Practical Guide (2026)"
 date: 2026-02-28
-keyword: "ollama vs vllm throughput comparison"
-score: 648
+keyword: "rtx 4090 vs rtx 3090 local llm"
+score: 720
 source: opportunity
-status: rejected_manual
+status: pending_manual_review
 reviewed_at: "2026-02-28T11:08:58.848736Z"
-risk_flags: ""
+risk_flags: duplicate_queue_topic
 ---
 
 ## Why this topic now
 
-Users searching for "ollama vs vllm throughput comparison" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "rtx 4090 vs rtx 3090 local llm" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 

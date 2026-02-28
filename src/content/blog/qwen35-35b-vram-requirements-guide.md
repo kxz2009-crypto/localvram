@@ -1,17 +1,16 @@
 ---
-title: "Ollama Vs Vllm Throughput Comparison: Practical Guide (2026)"
-date: 2026-02-28
-keyword: "ollama vs vllm throughput comparison"
-score: 648
-source: opportunity
-status: rejected_manual
-reviewed_at: "2026-02-28T11:08:58.848736Z"
-risk_flags: ""
+title: "Qwen3.5 35B Vram Requirements: Practical Guide (2026)"
+description: "Users searching for \"qwen3.5 35b vram requirements\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
+pubDate: 2026-02-28
+updatedDate: 2026-02-28
+tags: ["ollama", "qwen3", "35b", "vram", "requirements"]
+lang: en
+intent: hardware
 ---
 
 ## Why this topic now
 
-Users searching for "ollama vs vllm throughput comparison" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "qwen3.5 35b vram requirements" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 
