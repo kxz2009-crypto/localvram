@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for error index: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/errors/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const errorSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Error KB",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Error KB`}
+  description="Troubleshooting hub for CUDA OOM, ROCm detection, and Metal backend issues."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={errorSchema}
+>
+  <main class="container">
+    <section class="card">
+      <h1>Error KB</h1>
+      <p>Start from common local runtime failures and move to copy-fix command pages.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={`/${locale}/errors/cuda-out-of-memory/`}>CUDA OOM Fix</a>
+        <a class="btn" href={`/${locale}/errors/rocm-not-detected/`}>ROCm Not Detected</a>
+        <a class="btn" href={`/${locale}/errors/metal-not-found/`}>Metal Not Found</a>
+        <a class="btn" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

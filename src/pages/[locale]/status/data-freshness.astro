@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for data freshness: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/status/data-freshness/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const statusSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Data Freshness",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Data Freshness`}
+  description="Check benchmark sync cadence, model verification recency, and operational status."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={statusSchema}
+>
+  <main class="container">
+    <section class="card">
+      <h1>Data Freshness</h1>
+      <p>This locale status page links to benchmark recency and operational snapshots.</p>
+      <ul>
+        <li>Hardware sync and latest GPU thermal checkpoint.</li>
+        <li>Benchmark artifact publish state.</li>
+        <li>Pipeline guardrail and alert status.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={`/${locale}/benchmarks/changelog/`}>Open Benchmark Changelog</a>
+        <a class="btn" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+        <a class="btn" href="/en/status/data-freshness/">Global Ops Status (EN)</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

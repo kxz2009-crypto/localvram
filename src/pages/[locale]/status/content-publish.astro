@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for content publish status: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/status/content-publish/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const statusSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Content Publish Status",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Content Publish Status`}
+  description="Publishing status entry for locale content cadence and daily output guardrails."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={statusSchema}
+>
+  <main class="container">
+    <section class="card">
+      <h1>Content Publish Status</h1>
+      <p>Monitor whether locale publishing and review cycles keep a stable cadence.</p>
+      <ul>
+        <li>Daily published count and zero-output alert state.</li>
+        <li>Review queue and approval turnaround.</li>
+        <li>Backlog prioritization for topic and model pages.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={`/${locale}/blog/`}>Open Blog Hub</a>
+        <a class="btn" href={`/${locale}/status/submission-review/`}>Open Submission Review</a>
+        <a class="btn" href="/en/status/content-publish/">Global Publish Status (EN)</a>
+        <a class="btn" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -40,9 +40,21 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "[locale]" / "guides" / "ollama-vs-vllm-vram.astro",
     ROOT / "src" / "pages" / "[locale]" / "guides" / "ollama-local-cluster-network.astro",
     ROOT / "src" / "pages" / "[locale]" / "models" / "qwen35-122b-cloud.astro",
+    ROOT / "src" / "pages" / "[locale]" / "models" / "qwen35-35b-fp16.astro",
     ROOT / "src" / "pages" / "[locale]" / "errors" / "cuda-out-of-memory.astro",
     ROOT / "src" / "pages" / "[locale]" / "errors" / "[slug].astro",
+    ROOT / "src" / "pages" / "[locale]" / "errors" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "benchmarks" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "benchmarks" / "changelog.astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "data-freshness.astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "pipeline-status.astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "runner-health.astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "conversion-funnel.astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "content-publish.astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "submission-review.astro",
+    ROOT / "src" / "pages" / "[locale]" / "blog" / "index.astro",
     ROOT / "src" / "pages" / "[locale]" / "tools" / "roi-calculator.astro",
+    ROOT / "src" / "pages" / "[locale]" / "tools" / "quantization-blind-test.astro",
 ]
 GLOBAL_COM_LOCALES = ["en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"]
 GLOBAL_ALL_LOCALES = GLOBAL_COM_LOCALES + ["zh"]
@@ -104,6 +116,28 @@ def main() -> None:
             print(f"- {item}")
         sys.exit(1)
 
+    locale_home_issues: list[str] = []
+    for locale in [x for x in GLOBAL_ALL_LOCALES if x != "en"]:
+        home = (ROOT / "src" / "pages" / locale / "index.astro").read_text(encoding="utf-8")
+        if f"/{locale}/tools/vram-calculator/" not in home:
+            locale_home_issues.append(f"{locale}: home missing vram-calculator link")
+        if f"/{locale}/tools/quantization-blind-test/" not in home:
+            locale_home_issues.append(f"{locale}: home missing quantization-blind-test link")
+        if f"/{locale}/benchmarks/changelog/" not in home:
+            locale_home_issues.append(f"{locale}: home missing benchmark changelog link")
+        if f"/{locale}/benchmarks/" not in home:
+            locale_home_issues.append(f"{locale}: home missing benchmark hub link")
+        if f"/{locale}/status/pipeline-status/" not in home:
+            locale_home_issues.append(f"{locale}: home missing pipeline status link")
+        if f"/{locale}/status/conversion-funnel/" not in home:
+            locale_home_issues.append(f"{locale}: home missing conversion funnel link")
+
+    if locale_home_issues:
+        print("quality gate failed: locale home entry links are incomplete")
+        for item in locale_home_issues:
+            print(f"- {item}")
+        sys.exit(1)
+
     localized_error_template = (
         ROOT / "src" / "pages" / "[locale]" / "errors" / "[slug].astro"
     ).read_text(encoding="utf-8")
@@ -111,8 +145,8 @@ def main() -> None:
         print("quality gate failed: localized error template must cover rocm-not-detected and metal-not-found")
         sys.exit(1)
 
-    locale_depth_count = 10
-    print(f"locale depth baseline ok: non-en locale pages >= {locale_depth_count} (4 static + 6 shared templates)")
+    locale_depth_count = 23
+    print(f"locale depth baseline ok: non-en locale pages >= {locale_depth_count}")
 
     zh_redirect = (ROOT / "functions" / "zh" / "[[path]].js").read_text(encoding="utf-8")
     if "LV_ZH_CN_CUTOVER" not in zh_redirect or "REDIRECT_ENABLE_FLAGS" not in zh_redirect or "return context.next()" not in zh_redirect:

@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { LOCALE_WAVE2, WAVE2_LOCALES, type Wave2Locale } from "../../../data/locale-wave2-copy";
+
+export function getStaticPaths() {
+  return WAVE2_LOCALES.map((locale) => ({
+    params: { locale }
+  }));
+}
+
+const localeParam = String(Astro.params.locale || "");
+if (!Object.prototype.hasOwnProperty.call(LOCALE_WAVE2, localeParam)) {
+  throw new Error(`Unsupported locale for conversion funnel: ${localeParam}`);
+}
+
+const locale = localeParam as Wave2Locale;
+const copy = LOCALE_WAVE2[locale];
+const pagePath = `/${locale}/status/conversion-funnel/`;
+const zhOrigin = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
+const siteOrigin = locale === "zh" ? zhOrigin : "https://localvram.com";
+const pageUrl = `${siteOrigin}${pagePath}`;
+const funnelSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Conversion Funnel",
+  inLanguage: locale,
+  url: pageUrl
+};
+---
+
+<BaseLayout
+  title={`LocalVRAM ${locale.toUpperCase()} | Conversion Funnel`}
+  description="Conversion funnel status entry for topic, model, and CTA flow performance."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={funnelSchema}
+>
+  <main class="container">
+    <section class="card">
+      <h1>Conversion Funnel</h1>
+      <p>Track how locale traffic moves from topic pages to model pages and final CTA actions.</p>
+      <ul>
+        <li>Entry pages and first-click distribution.</li>
+        <li>Model page assist and drop-off points.</li>
+        <li>CTA conversion trend and locale variance.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={`/${locale}/guides/local-llm-cost-vs-cloud/`}>{copy.ctaCostGuide}</a>
+        <a class="btn" href={`/${locale}/models/qwen35-35b-q4/`}>{copy.ctaModel35}</a>
+        <a class="btn" href={`/${locale}/tools/vram-calculator/`}>{copy.ctaTool}</a>
+        <a class="btn" href="/en/status/conversion-funnel/">Global Funnel Status (EN)</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
