@@ -6,6 +6,14 @@ import { ROOT_ALTERNATES } from "../../data/root-alternates";
 
 const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
 const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
+const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
+
+function formatGpuTemperature(value: number): string {
+  if (!Number.isFinite(value) || value <= 0) {
+    return "unknown";
+  }
+  return `${Math.round(value)}°C`;
+}
 
 function formatUtcDisplay(value: string): string {
   const text = String(value || "").trim();
@@ -20,6 +28,7 @@ function formatUtcDisplay(value: string): string {
 }
 
 const lastSyncUtc = formatUtcDisplay(rawLastSync);
+const gpuTemperature = formatGpuTemperature(rawGpuTemperature);
 const homeStructuredData = [
   {
     "@context": "https://schema.org",
@@ -52,7 +61,7 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      RTX 3090: Stable @ 62°C | DeepSeek-R1: Verified | Ollama: {ollamaVersion} | Last
+      RTX 3090: Stable @ {gpuTemperature} | DeepSeek-R1: Verified | Ollama: {ollamaVersion} | Last
       Sync: <span id="last-sync-local">local time loading...</span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href="/en/status/data-freshness/">Terminal Mode</a>

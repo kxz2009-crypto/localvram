@@ -805,13 +805,33 @@ def benchmark_model(
     return model_report
 
 
-def update_status(success_count: int, now_iso: str) -> None:
+def extract_primary_gpu_metrics(gpu_snapshot: dict[str, Any]) -> tuple[float | None, str]:
+    if not isinstance(gpu_snapshot, dict):
+        return None, ""
+    gpus = gpu_snapshot.get("gpus", [])
+    if not isinstance(gpus, list) or not gpus:
+        return None, ""
+    first = gpus[0] if isinstance(gpus[0], dict) else {}
+    gpu_name = str(first.get("name", "")).strip()
+    temp_raw = first.get("temperature_c")
+    try:
+        temperature_c = float(temp_raw)
+    except (TypeError, ValueError):
+        temperature_c = None
+    if isinstance(temperature_c, float) and temperature_c <= 0:
+        temperature_c = None
+    return temperature_c, gpu_name
+
+
+def update_status(success_count: int, now_iso: str, gpu_snapshot: dict[str, Any]) -> None:
     status = read_json(
         STATUS_FILE,
         {
             "last_verified": "",
             "last_hardware_sync": "",
             "freshness_score": 80,
+            "latest_gpu_temperature_c": None,
+            "latest_gpu_model": "",
         },
     )
     score_before = int(status.get("freshness_score", 80))
@@ -821,6 +841,11 @@ def update_status(success_count: int, now_iso: str) -> None:
     else:
         status["freshness_score"] = max(0, score_before - 5)
     status["last_hardware_sync"] = now_iso
+    latest_temp_c, latest_gpu_model = extract_primary_gpu_metrics(gpu_snapshot)
+    if latest_temp_c is not None:
+        status["latest_gpu_temperature_c"] = round(latest_temp_c, 1)
+    if latest_gpu_model:
+        status["latest_gpu_model"] = latest_gpu_model
     write_json(STATUS_FILE, status)
 
 
@@ -1328,9 +1353,10 @@ def main() -> None:
             },
         )
 
-        update_status(len(success_reports), now_iso)
+        update_status(len(success_reports), now_iso, gpu_after)
         update_changelog(success_reports, failed_reports, env_name, now_iso)
     else:
+        update_status(len(success_reports), now_iso, gpu_after)
         append_log(
             log_file,
             {
