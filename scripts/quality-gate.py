@@ -35,6 +35,8 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "status" / "submission-review.astro",
     ROOT / "src" / "pages" / "en" / "status" / "content-publish.astro",
 ]
+GLOBAL_COM_LOCALES = ["en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"]
+GLOBAL_ALL_LOCALES = GLOBAL_COM_LOCALES + ["zh"]
 
 
 def main() -> None:
@@ -51,6 +53,58 @@ def main() -> None:
         for item in missing_pages:
             print(f"- {item}")
         sys.exit(1)
+
+    locale_missing: list[str] = []
+    for locale in GLOBAL_ALL_LOCALES:
+        base = ROOT / "src" / "pages" / locale
+        required = [
+            base / "index.astro",
+            base / "guides" / "local-llm-cost-vs-cloud.astro",
+            base / "tools" / "vram-calculator.astro",
+        ]
+        if locale == "en":
+            required.append(base / "models" / "[id].astro")
+        else:
+            required.append(base / "models" / "qwen35-35b-q4.astro")
+        for page in required:
+            if not page.exists():
+                locale_missing.append(str(page))
+
+    if locale_missing:
+        print("quality gate failed: missing locale funnel pages")
+        for item in locale_missing:
+            print(f"- {item}")
+        sys.exit(1)
+
+    funnel_issues: list[str] = []
+    for locale in [x for x in GLOBAL_ALL_LOCALES if x != "en"]:
+        guide = (ROOT / "src" / "pages" / locale / "guides" / "local-llm-cost-vs-cloud.astro").read_text(encoding="utf-8")
+        model = (ROOT / "src" / "pages" / locale / "models" / "qwen35-35b-q4.astro").read_text(encoding="utf-8")
+        tool = (ROOT / "src" / "pages" / locale / "tools" / "vram-calculator.astro").read_text(encoding="utf-8")
+        if f"/{locale}/models/qwen35-35b-q4/" not in guide or f"/{locale}/tools/vram-calculator/" not in guide:
+            funnel_issues.append(f"{locale}: guide missing model/tool links")
+        if f"/{locale}/guides/local-llm-cost-vs-cloud/" not in model or f"/{locale}/tools/vram-calculator/" not in model:
+            funnel_issues.append(f"{locale}: model missing guide/tool links")
+        if f"/{locale}/guides/local-llm-cost-vs-cloud/" not in tool or f"/{locale}/models/qwen35-35b-q4/" not in tool:
+            funnel_issues.append(f"{locale}: tool missing guide/model links")
+
+    if funnel_issues:
+        print("quality gate failed: locale funnel link loop is incomplete")
+        for item in funnel_issues:
+            print(f"- {item}")
+        sys.exit(1)
+
+    zh_redirect = (ROOT / "functions" / "zh" / "[[path]].js").read_text(encoding="utf-8")
+    if "LV_ZH_CN_CUTOVER" not in zh_redirect or "REDIRECT_ENABLE_FLAGS" not in zh_redirect or "return context.next()" not in zh_redirect:
+        print("quality gate failed: zh redirect guardrail missing expected cutover safety checks")
+        sys.exit(1)
+
+    base_layout = (ROOT / "src" / "layouts" / "BaseLayout.astro").read_text(encoding="utf-8")
+    root_alternates = (ROOT / "src" / "data" / "root-alternates.ts").read_text(encoding="utf-8")
+    if "PUBLIC_ZH_SITE_ORIGIN" not in base_layout or "PUBLIC_ZH_SITE_ORIGIN" not in root_alternates:
+        print("quality gate failed: zh canonical origin env handling is missing")
+        sys.exit(1)
+    print("global locale guardrail ok: en + zh + 10 locale checks passed")
 
     models = json.loads((ROOT / "src" / "data" / "models.json").read_text(encoding="utf-8"))
     model_catalog = json.loads((ROOT / "src" / "data" / "model-catalog.json").read_text(encoding="utf-8"))
