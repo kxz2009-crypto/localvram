@@ -1,17 +1,16 @@
 ---
-title: "Llama 70B On Rtx 3090 Local Setup: Practical Guide (2026)"
-date: 2026-02-28
-keyword: "llama 70b on rtx 3090 local setup"
-score: 720
-source: opportunity
-status: rejected_manual
-reviewed_at: "2026-02-28T13:01:15.760716Z"
-risk_flags: existing_blog_slug,near_duplicate_published
+title: "Best Local Rag Models Under 24Gb Vram: Practical Guide (2026)"
+description: "Users searching for \"best local rag models under 24gb vram\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expa"
+pubDate: 2026-02-28
+updatedDate: 2026-02-28
+tags: ["ollama", "best", "rag", "models", "under"]
+lang: en
+intent: hardware
 ---
 
 ## Why this topic now
 
-Users searching for "llama 70b on rtx 3090 local setup" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "best local rag models under 24gb vram" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 

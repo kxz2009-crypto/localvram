@@ -4,8 +4,8 @@ date: 2026-02-28
 keyword: "rtx 4090 vs rtx 3090 local llm"
 score: 720
 source: opportunity
-status: pending_manual_review
-reviewed_at: "2026-02-28T11:08:58.848736Z"
+status: rejected_manual
+reviewed_at: "2026-02-28T13:01:15.760716Z"
 risk_flags: duplicate_queue_topic
 ---
 

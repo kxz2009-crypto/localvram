@@ -1,35 +1,73 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-02-28T11:08:58.923123Z",
+  "updated_at": "2026-02-28T13:01:15.838337Z",
   "last_run": {
-    "run_at": "2026-02-28T11:08:58.923123Z",
+    "run_at": "2026-02-28T13:01:15.838337Z",
     "queue_date": "2026-02-28",
-    "candidate_count": 2,
+    "candidate_count": 3,
     "published_count": 2,
-    "skipped_count": 0,
+    "skipped_count": 1,
     "published": [
       {
-        "slug": "qwen35-35b-vram-requirements-guide",
-        "title": "Qwen3.5 35B Vram Requirements: Practical Guide (2026)",
-        "topic_key": "qwen3-5-35b-vram-requirements",
+        "slug": "best-local-rag-models-under-24gb-vram",
+        "title": "Best Local Rag Models Under 24Gb Vram: Practical Guide (2026)",
+        "topic_key": "best-local-rag-models-under-24gb-vram",
         "score": 648.0,
-        "source_draft": "content-queue/2026-02-28/02-qwen35-35b-vram-requirements-guide.md",
-        "out_file": "src/content/blog/qwen35-35b-vram-requirements-guide.md",
+        "source_draft": "content-queue/2026-02-28/01-best-local-rag-models-under-24gb-vram.md",
+        "out_file": "src/content/blog/best-local-rag-models-under-24gb-vram.md",
         "intent": "hardware"
       },
       {
-        "slug": "cuda-out-of-memory-ollama-fixes-2026",
-        "title": "Cuda Out Of Memory Ollama Fix: Practical Guide (2026)",
-        "topic_key": "cuda-out-of-memory-ollama-fix",
-        "score": 640.0,
-        "source_draft": "content-queue/2026-02-28/03-cuda-out-of-memory-ollama-fixes-2026.md",
-        "out_file": "src/content/blog/cuda-out-of-memory-ollama-fixes-2026.md",
-        "intent": "troubleshooting"
+        "slug": "deepseek-r1-14b-3090-benchmark",
+        "title": "Deepseek R1 14B Rtx 3090 Benchmark: Practical Guide (2026)",
+        "topic_key": "deepseek-r1-14b-rtx-3090-benchmark",
+        "score": 648.0,
+        "source_draft": "content-queue/2026-02-28/02-deepseek-r1-14b-3090-benchmark.md",
+        "out_file": "src/content/blog/deepseek-r1-14b-3090-benchmark.md",
+        "intent": "hardware"
       }
     ],
-    "skipped": []
+    "skipped": [
+      {
+        "draft": "content-queue/2026-02-28/03-ollama-vs-vllm-throughput-comparison-2026.md",
+        "reason": "max_publish_reached"
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-02-28T13:01:15.838337Z",
+      "queue_date": "2026-02-28",
+      "candidate_count": 3,
+      "published_count": 2,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "best-local-rag-models-under-24gb-vram",
+          "title": "Best Local Rag Models Under 24Gb Vram: Practical Guide (2026)",
+          "topic_key": "best-local-rag-models-under-24gb-vram",
+          "score": 648.0,
+          "source_draft": "content-queue/2026-02-28/01-best-local-rag-models-under-24gb-vram.md",
+          "out_file": "src/content/blog/best-local-rag-models-under-24gb-vram.md",
+          "intent": "hardware"
+        },
+        {
+          "slug": "deepseek-r1-14b-3090-benchmark",
+          "title": "Deepseek R1 14B Rtx 3090 Benchmark: Practical Guide (2026)",
+          "topic_key": "deepseek-r1-14b-rtx-3090-benchmark",
+          "score": 648.0,
+          "source_draft": "content-queue/2026-02-28/02-deepseek-r1-14b-3090-benchmark.md",
+          "out_file": "src/content/blog/deepseek-r1-14b-3090-benchmark.md",
+          "intent": "hardware"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-02-28/03-ollama-vs-vllm-throughput-comparison-2026.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-02-28T11:08:58.923123Z",
       "queue_date": "2026-02-28",

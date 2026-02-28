@@ -1,17 +1,16 @@
 ---
-title: "Llama 70B On Rtx 3090 Local Setup: Practical Guide (2026)"
-date: 2026-02-28
-keyword: "llama 70b on rtx 3090 local setup"
-score: 720
-source: opportunity
-status: rejected_manual
-reviewed_at: "2026-02-28T13:01:15.760716Z"
-risk_flags: existing_blog_slug,near_duplicate_published
+title: "Deepseek R1 14B Rtx 3090 Benchmark: Practical Guide (2026)"
+description: "Users searching for \"deepseek r1 14b rtx 3090 benchmark\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansi"
+pubDate: 2026-02-28
+updatedDate: 2026-02-28
+tags: ["ollama", "deepseek", "r1", "14b", "rtx"]
+lang: en
+intent: hardware
 ---
 
 ## Why this topic now
 
-Users searching for "llama 70b on rtx 3090 local setup" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "deepseek r1 14b rtx 3090 benchmark" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 
