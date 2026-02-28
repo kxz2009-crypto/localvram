@@ -1,10 +1,11 @@
 const COM_HOSTS = new Set(["localvram.com", "www.localvram.com"]);
 const CN_ORIGIN = "https://localvram.cn";
-const REDIRECT_ENABLE_FLAGS = new Set(["1", "true", "yes", "on"]);
+const REDIRECT_DISABLE_FLAGS = new Set(["0", "false", "no", "off"]);
 
 export async function onRequest(context) {
   const cutoverRaw = String(context.env?.LV_ZH_CN_CUTOVER || "").trim().toLowerCase();
-  if (!REDIRECT_ENABLE_FLAGS.has(cutoverRaw)) {
+  // Default-on cutover: disable only when explicitly set to a falsey flag.
+  if (REDIRECT_DISABLE_FLAGS.has(cutoverRaw)) {
     return context.next();
   }
 
