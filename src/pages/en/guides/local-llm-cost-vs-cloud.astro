@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/en/guides/local-llm-cost-vs-cloud/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Local LLM Cost vs Cloud GPU: Practical Decision Guide",
+  url: "https://localvram.com/en/guides/local-llm-cost-vs-cloud/",
+  inLanguage: "en",
+  description: "Use measured benchmarks and VRAM constraints to choose local GPU upgrades vs cloud GPU rental."
+};
+---
+
+<BaseLayout
+  title="LocalVRAM | Local LLM Cost vs Cloud GPU"
+  description="Practical guide to decide local deployment vs cloud GPU for LLM workloads."
+  locale="en"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="card">
+      <h1>Local LLM Cost vs Cloud: Decision Guide</h1>
+      <p>
+        Start here when choosing between buying local hardware and renting cloud GPUs. This page is the topic entry
+        point in the multilingual conversion funnel.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/en/models/qwen35-35b-q4/">Model page</a>
+        <a class="btn" href="/en/tools/vram-calculator/">VRAM calculator</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
