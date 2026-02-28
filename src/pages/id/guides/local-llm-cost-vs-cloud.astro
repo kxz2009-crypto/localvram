@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/id/guides/local-llm-cost-vs-cloud/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Local LLM cost vs cloud (ID)",
+  url: "https://localvram.com/id/guides/local-llm-cost-vs-cloud/",
+  inLanguage: "id",
+  description: "Topic entry for Indonesian rollout funnel."
+};
+---
+
+<BaseLayout
+  title="LocalVRAM ID | Local cost vs cloud"
+  description="Topic entry for Indonesian rollout funnel."
+  locale="id"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>Local LLM cost vs cloud (ID)</h1>
+      <p>This topic page starts the Indonesian SEO funnel for cost planning and deployment choice.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/id/models/qwen35-35b-q4/">Model page</a>
+        <a class="btn" href="/id/tools/vram-calculator/">CTA tool</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

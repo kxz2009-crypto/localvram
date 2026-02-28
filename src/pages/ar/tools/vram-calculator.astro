@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/ar/tools/vram-calculator/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "VRAM Calculator AR",
+  url: "https://localvram.com/ar/tools/vram-calculator/",
+  inLanguage: "ar"
+};
+---
+
+<BaseLayout
+  title="LocalVRAM AR | VRAM Calculator"
+  description="Arabic CTA conversion entry."
+  locale="ar"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="card">
+      <h1>VRAM Calculator (AR)</h1>
+      <p>CTA conversion page for Arabic funnel routing.</p>
+      <div class="cta-row">
+        <a class="btn" href="/ar/guides/local-llm-cost-vs-cloud/">Back to topic page</a>
+        <a class="btn" href="/ar/models/qwen35-35b-q4/">Back to model page</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

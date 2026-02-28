@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/id/models/qwen35-35b-q4/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Qwen3.5 35B Q4 deployment note (ID)",
+  url: "https://localvram.com/id/models/qwen35-35b-q4/",
+  inLanguage: "id"
+};
+---
+
+<BaseLayout
+  title="LocalVRAM ID | Qwen3.5 35B Q4"
+  description="Indonesian model page in rollout funnel."
+  locale="id"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="card">
+      <h1>Qwen3.5 35B Q4 (ID)</h1>
+      <p>This page is the model step between topic discovery and CTA conversion.</p>
+      <div class="cta-row">
+        <a class="btn" href="/id/guides/local-llm-cost-vs-cloud/">Back to topic page</a>
+        <a class="btn btn-primary" href="/id/tools/vram-calculator/">Go to CTA tool</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
