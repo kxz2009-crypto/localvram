@@ -8,7 +8,7 @@ on:
       locales:
         description: "Locales CSV to refresh"
         required: false
-        default: "es,pt,ja,fr,de,ko"
+        default: "es,pt,ja,fr,de,ko,ru,ar,hi,id"
         type: string
       date:
         description: "ISO date override (YYYY-MM-DD). Empty uses UTC today."
@@ -38,7 +38,7 @@ jobs:
         run: |
           LOCALES="${INPUT_LOCALES}"
           if [ -z "${LOCALES}" ]; then
-            LOCALES="es,pt,ja,fr,de,ko"
+            LOCALES="es,pt,ja,fr,de,ko,ru,ar,hi,id"
           fi
 
           DATE_ARG="${INPUT_DATE}"
