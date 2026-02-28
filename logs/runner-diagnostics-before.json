@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-26T19:19:15Z",
+  "updated_at": "2026-02-28T16:47:59Z",
   "endpoint": "http://127.0.0.1:11434",
   "required_targets": [
     "qwen3",
@@ -60,11 +60,10 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=199,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=171,fd=3))"
     ],
     "ps_ollama": [
-      "gao20        199       1  0 03:08 ?        00:00:01 /usr/local/bin/ollama serve",
-      "gao20       1292     199 99 03:12 ?        00:12:56 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-93c83617a40560a61cda911ee327efdb5b5fbd39caa8b777a4ec565c0af1af3d --port 45017"
+      "gao20        171       1  0 Feb28 ?        00:00:00 /usr/local/bin/ollama serve"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -79,7 +78,7 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Fri 2026-02-27 03:08:04 CST; 11min ago\n   Main PID: 199 (ollama)\n      Tasks: 60 (limit: 57695)\n     Memory: 45.4G (peak: 45.9G swap: 45.8G swap peak: 45.8G)\n        CPU: 14min 7.376s\n     CGroup: /system.slice/ollama.service\n             ├─ 199 /usr/local/bin/ollama serve\n             └─1292 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-93c83617a40560a61cda911ee327efdb5b5fbd39caa8b777a4ec565c0af1af3d --port 45017\n\nFeb 27 03:12:22 Vernon ollama[199]: time=2026-02-27T03:12:22.362+08:00 level=INFO source=device.go:262 msg=\"compute graph\" device=CUDA0 size=\"1.9 GiB\"\nFeb 27 03:12:22 Vernon ollama[199]: time=2026-02-27T03:12:22.362+08:00 level=INFO source=device.go:267 msg=\"compute graph\" device=CPU size=\"1.4 GiB\"\nFeb 27 03:12:22 Vernon ollama[199]: time=2026-02-27T03:12:22.362+08:00 level=INFO source=device.go:272 msg=\"total memory\" size=\"83.4 GiB\"\nFeb 27 03:12:22 Vernon ollama[199]: time=2026-02-27T03:12:22.382+08:00 level=INFO source=sched.go:566 msg=\"loaded runners\" count=1\nFeb 27 03:12:22 Vernon ollama[199]: time=2026-02-27T03:12:22.382+08:00 level=INFO source=server.go:1350 msg=\"waiting for llama runner to start responding\"\nFeb 27 03:12:22 Vernon ollama[199]: time=2026-02-27T03:12:22.383+08:00 level=INFO source=server.go:1384 msg=\"waiting for server to become available\" status=\"llm server loading model\"\nFeb 27 03:14:04 Vernon ollama[199]: time=2026-02-27T03:14:04.086+08:00 level=INFO source=server.go:1388 msg=\"llama runner started in 106.42 seconds\"\nFeb 27 03:15:15 Vernon ollama[199]: [GIN] 2026/02/27 - 03:15:15 | 200 |         2m59s |       127.0.0.1 | POST     \"/api/generate\"\nFeb 27 03:19:15 Vernon ollama[199]: [GIN] 2026/02/27 - 03:19:15 | 200 |  157.534553ms |       127.0.0.1 | GET      \"/api/tags\"\nFeb 27 03:19:15 Vernon ollama[199]: [GIN] 2026/02/27 - 03:19:15 | 200 |       38.76µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Sat 2026-02-28 17:43:05 CST; 7h ago\n   Main PID: 171 (ollama)\n      Tasks: 14 (limit: 57695)\n     Memory: 35.4M (peak: 445.9M)\n        CPU: 1.221s\n     CGroup: /system.slice/ollama.service\n             └─171 /usr/local/bin/ollama serve\n\nMar 01 00:02:13 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:13 | 200 |   157.76581ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:02:14 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:14 | 200 |      24.026µs |       127.0.0.1 | GET      \"/api/version\"\nMar 01 00:02:14 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:14 | 200 |      26.334µs |       127.0.0.1 | GET      \"/api/version\"\nMar 01 00:02:14 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:14 | 200 |   164.34055ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:02:14 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:14 | 200 |  156.121624ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:02:15 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:15 | 200 |      22.282µs |       127.0.0.1 | GET      \"/api/version\"\nMar 01 00:02:15 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:15 | 200 |      23.092µs |       127.0.0.1 | GET      \"/api/version\"\nMar 01 00:02:15 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:15 | 200 |   158.15008ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:47:58 Vernon ollama[171]: [GIN] 2026/03/01 - 00:47:58 | 200 |  378.270603ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:47:59 Vernon ollama[171]: [GIN] 2026/03/01 - 00:47:59 | 200 |      22.257µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
