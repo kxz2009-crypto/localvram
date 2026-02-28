@@ -1,18 +1,75 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-02-28T10:49:04.237162Z",
+  "updated_at": "2026-02-28T10:47:27.825578Z",
   "last_run": {
-    "run_at": "2026-02-28T10:49:04.237162Z",
+    "run_at": "2026-02-28T10:47:27.825578Z",
     "queue_date": "2026-02-28",
-    "candidate_count": 0,
-    "published_count": 0,
-    "skipped_count": 0,
-    "published": [],
-    "skipped": []
+    "candidate_count": 3,
+    "published_count": 2,
+    "skipped_count": 1,
+    "published": [
+      {
+        "slug": "llama-70b-on-rtx-3090-local-setup",
+        "title": "Llama 70B On Rtx 3090 Local Setup: Practical Guide (2026)",
+        "topic_key": "llama-70b-on-rtx-3090-local-setup",
+        "score": 720.0,
+        "source_draft": "content-queue/2026-02-28/01-llama-70b-on-rtx-3090-local-setup.md",
+        "out_file": "src/content/blog/llama-70b-on-rtx-3090-local-setup.md",
+        "intent": "hardware"
+      },
+      {
+        "slug": "qwen35-122b-cloud-vs-local-cost",
+        "title": "Qwen3.5 122B Cloud Vs Local Cost: Practical Guide (2026)",
+        "topic_key": "qwen3-5-122b-cloud-vs-local-cost",
+        "score": 720.0,
+        "source_draft": "content-queue/2026-02-28/02-qwen35-122b-cloud-vs-local-cost.md",
+        "out_file": "src/content/blog/qwen35-122b-cloud-vs-local-cost.md",
+        "intent": "cost"
+      }
+    ],
+    "skipped": [
+      {
+        "draft": "content-queue/2026-02-28/03-rtx4090-vs-rtx3090-for-local-llm.md",
+        "reason": "max_publish_reached"
+      }
+    ]
   },
   "history": [
     {
-      "run_at": "2026-02-28T10:49:04.237162Z",
+      "run_at": "2026-02-28T10:47:27.825578Z",
+      "queue_date": "2026-02-28",
+      "candidate_count": 3,
+      "published_count": 2,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "llama-70b-on-rtx-3090-local-setup",
+          "title": "Llama 70B On Rtx 3090 Local Setup: Practical Guide (2026)",
+          "topic_key": "llama-70b-on-rtx-3090-local-setup",
+          "score": 720.0,
+          "source_draft": "content-queue/2026-02-28/01-llama-70b-on-rtx-3090-local-setup.md",
+          "out_file": "src/content/blog/llama-70b-on-rtx-3090-local-setup.md",
+          "intent": "hardware"
+        },
+        {
+          "slug": "qwen35-122b-cloud-vs-local-cost",
+          "title": "Qwen3.5 122B Cloud Vs Local Cost: Practical Guide (2026)",
+          "topic_key": "qwen3-5-122b-cloud-vs-local-cost",
+          "score": 720.0,
+          "source_draft": "content-queue/2026-02-28/02-qwen35-122b-cloud-vs-local-cost.md",
+          "out_file": "src/content/blog/qwen35-122b-cloud-vs-local-cost.md",
+          "intent": "cost"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-02-28/03-rtx4090-vs-rtx3090-for-local-llm.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
+    {
+      "run_at": "2026-02-28T10:46:49.293867Z",
       "queue_date": "2026-02-28",
       "candidate_count": 0,
       "published_count": 0,

@@ -19,6 +19,31 @@ DISCLOSURE_PATTERN = re.compile(
     r"(affiliate disclosure|affiliate link|may earn a commission|commission at no extra cost)",
     re.IGNORECASE,
 )
+TOPIC_STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "be",
+    "by",
+    "for",
+    "from",
+    "how",
+    "in",
+    "is",
+    "it",
+    "local",
+    "of",
+    "on",
+    "or",
+    "that",
+    "the",
+    "to",
+    "vs",
+    "with",
+}
 
 
 @dataclass
@@ -34,8 +59,16 @@ class ReviewItem:
     status_after: str
     word_count: int
     similarity_score: float
+    topic_similarity_score: float
     similarity_slug: str
     risk_flags: list[str]
+
+
+@dataclass
+class BlogSignature:
+    slug: str
+    full_tokens: set[str]
+    topic_tokens: set[str]
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -108,6 +141,10 @@ def normalize_text(text: str) -> list[str]:
     return re.findall(r"[a-z0-9]{3,}", (text or "").lower())
 
 
+def normalize_topic_text(text: str) -> list[str]:
+    return [token for token in normalize_text(text) if token not in TOPIC_STOPWORDS]
+
+
 def jaccard_similarity(a_tokens: set[str], b_tokens: set[str]) -> float:
     if not a_tokens or not b_tokens:
         return 0.0
@@ -146,17 +183,25 @@ def domain_allowed(url: str, allowed_domains: set[str]) -> bool:
     return False
 
 
-def collect_blog_signatures() -> list[tuple[str, set[str]]]:
-    out: list[tuple[str, set[str]]] = []
+def collect_blog_signatures() -> list[BlogSignature]:
+    out: list[BlogSignature] = []
     if not BLOG_DIR.exists():
         return out
     for path in BLOG_DIR.glob("*.md"):
         raw = path.read_text(encoding="utf-8-sig")
         frontmatter, body = parse_frontmatter(raw)
         title = str(frontmatter.get("title", "")).strip()
+        keyword = str(frontmatter.get("keyword", "")).strip()
         desc = str(frontmatter.get("description", "")).strip()
-        signature = " ".join([title, desc, body[:1800]])
-        out.append((path.stem, set(normalize_text(signature))))
+        full_signature = " ".join([title, desc, body[:1800]])
+        topic_signature = " ".join([title, keyword, path.stem.replace("-", " ")])
+        out.append(
+            BlogSignature(
+                slug=path.stem,
+                full_tokens=set(normalize_text(full_signature)),
+                topic_tokens=set(normalize_topic_text(topic_signature)),
+            )
+        )
     return out
 
 
@@ -167,6 +212,7 @@ def main() -> None:
     parser.add_argument("--min-words", type=int, default=180)
     parser.add_argument("--max-quote-ratio", type=float, default=0.35)
     parser.add_argument("--duplicate-threshold", type=float, default=0.90)
+    parser.add_argument("--duplicate-topic-threshold", type=float, default=0.55)
     parser.add_argument("--history-limit", type=int, default=60)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(
@@ -187,7 +233,7 @@ def main() -> None:
         if item.strip()
     }
     blog_signatures = collect_blog_signatures()
-    blog_slugs = {slug for slug, _ in blog_signatures}
+    blog_slugs = {item.slug for item in blog_signatures}
 
     reviewers = {"approved_manual", "rejected_manual"}
     risk_counter: dict[str, int] = {}
@@ -212,6 +258,7 @@ def main() -> None:
         topic_to_paths.setdefault(topic_key, []).append(path)
         flags: list[str] = []
         similarity_score = 0.0
+        topic_similarity_score = 0.0
         similarity_slug = ""
         wc = word_count(body)
 
@@ -234,12 +281,27 @@ def main() -> None:
             flags.append("existing_blog_slug")
 
         candidate_tokens = set(normalize_text(" ".join([title, keyword, body[:1800]])))
-        for existing_slug, existing_tokens in blog_signatures:
-            sim = jaccard_similarity(candidate_tokens, existing_tokens)
+        candidate_topic_tokens = set(normalize_topic_text(" ".join([title, keyword, slug.replace("-", " ")])))
+        duplicate_slug = ""
+        duplicate_score = 0.0
+        duplicate_topic_score = 0.0
+        for existing in blog_signatures:
+            sim = jaccard_similarity(candidate_tokens, existing.full_tokens)
+            topic_sim = jaccard_similarity(candidate_topic_tokens, existing.topic_tokens)
             if sim > similarity_score:
                 similarity_score = sim
-                similarity_slug = existing_slug
-        if similarity_score >= float(args.duplicate_threshold) and similarity_slug:
+                similarity_slug = existing.slug
+                topic_similarity_score = topic_sim
+            if sim >= float(args.duplicate_threshold) and topic_sim >= float(args.duplicate_topic_threshold):
+                if sim > duplicate_score:
+                    duplicate_score = sim
+                    duplicate_topic_score = topic_sim
+                    duplicate_slug = existing.slug
+
+        if duplicate_slug:
+            similarity_slug = duplicate_slug
+            similarity_score = duplicate_score
+            topic_similarity_score = duplicate_topic_score
             flags.append("near_duplicate_published")
 
         if status_before in reviewers:
@@ -263,6 +325,7 @@ def main() -> None:
                 status_after=status_after,
                 word_count=wc,
                 similarity_score=similarity_score,
+                topic_similarity_score=topic_similarity_score,
                 similarity_slug=similarity_slug,
                 risk_flags=flags,
             )
@@ -335,6 +398,7 @@ def main() -> None:
                     "risk_flags": item.risk_flags,
                     "similarity": {
                         "score": round(item.similarity_score, 4),
+                        "topic_score": round(item.topic_similarity_score, 4),
                         "slug": item.similarity_slug,
                     },
                 }
