@@ -37,7 +37,7 @@ const {
 } = Astro.props as Props;
 
 const EN_SITE_URL = "https://localvram.com";
-const ZH_SITE_URL = "https://localvram.cn";
+const ZH_SITE_URL = "https://localvram.com";
 const siteUrl = (canonicalOrigin || (locale === "zh" ? ZH_SITE_URL : EN_SITE_URL)).replace(/\/$/, "");
 const path = canonicalPath || Astro.url.pathname || "/";
 const canonicalUrl = new URL(path, siteUrl).toString();

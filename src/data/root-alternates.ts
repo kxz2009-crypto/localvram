@@ -10,6 +10,6 @@ export const ROOT_ALTERNATES = [
   { hrefLang: "ar", href: "https://localvram.com/ar/" },
   { hrefLang: "hi", href: "https://localvram.com/hi/" },
   { hrefLang: "id", href: "https://localvram.com/id/" },
-  { hrefLang: "zh-CN", href: "https://localvram.cn/zh/" },
+  { hrefLang: "zh-CN", href: "https://localvram.com/zh/" },
   { hrefLang: "x-default", href: "https://localvram.com/en/" }
 ] as const;
