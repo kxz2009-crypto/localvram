@@ -34,7 +34,7 @@ const chartPayload = {
   hasMeasured: hasRealBenchmark,
   modelName: item.name,
 };
-const localizedModelIds = new Set(["qwen35-35b-q4"]);
+const localizedModelIds = new Set(["qwen35-35b-q4", "qwen35-122b-cloud"]);
 const modelAlternates = localizedModelIds.has(String(item.id || "")) ? ROOT_ALTERNATES : [];
 
 const modelPath = `/en/models/${item.id}/`;
