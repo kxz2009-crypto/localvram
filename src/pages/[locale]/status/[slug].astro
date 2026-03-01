@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { STATUS_ROUTE_ITEMS, type RouteManifestItem } from "../../../data/i18n-route-manifest";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+
+export function getStaticPaths() {
+  return STANDARD_I18N_LOCALES.flatMap((locale) =>
+    STATUS_ROUTE_ITEMS.map((item) => ({
+      params: { locale, slug: item.slug },
+      props: { locale, item },
+    })),
+  );
+}
+
+const { locale, item } = Astro.props as { locale: ComLocale; item: RouteManifestItem };
+const pagePath = withLocale(locale, item.enPath);
+---
+
+<BaseLayout
+  title={`${item.title} (${locale.toUpperCase()}) | LocalVRAM`}
+  description={item.description}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={true}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{item.title}</h1>
+      <p>{item.description}</p>
+      <p>
+        This status route is available for i18n parity validation. Full localized operational copy will be
+        enabled after quality checks.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={item.enPath}>Open English Source</a>
+        <a class="btn" href={withLocale(locale, "/en/status/")}>Back to Status Hub</a>
+        <a class="btn" href={withLocale(locale, "/en/guides/")}>Open Guides Hub</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Current Rollout State</h2>
+        <p>Route parity and locale-level canonical paths are active for staged validation.</p>
+      </article>
+      <article class="card">
+        <h2>Next Step</h2>
+        <p>Replace fallback content with locale-specific operations messaging and glossary-safe terms.</p>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
+

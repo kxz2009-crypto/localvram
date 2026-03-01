@@ -1,0 +1,100 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../data/root-alternates";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../config/i18n";
+import { withLocale } from "../../lib/locale-paths";
+
+export function getStaticPaths() {
+  return STANDARD_I18N_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: ComLocale };
+const pagePath = `/${locale}/`;
+
+const guideEntries = [
+  {
+    title: "Best Coding Models",
+    href: withLocale(locale, "/en/guides/best-coding-models/"),
+  },
+  {
+    title: "Best RAG Models",
+    href: withLocale(locale, "/en/guides/best-rag-models/"),
+  },
+  {
+    title: "Ollama vs vLLM VRAM",
+    href: withLocale(locale, "/en/guides/ollama-vs-vllm-vram/"),
+  },
+];
+
+const statusEntries = [
+  {
+    title: "Data Freshness",
+    href: withLocale(locale, "/en/status/data-freshness/"),
+  },
+  {
+    title: "Pipeline Status",
+    href: withLocale(locale, "/en/status/pipeline-status/"),
+  },
+  {
+    title: "Runner Health",
+    href: withLocale(locale, "/en/status/runner-health/"),
+  },
+];
+---
+
+<BaseLayout
+  title={`LocalVRAM (${locale.toUpperCase()}) | i18n Preview Hub`}
+  description="Localized route skeleton for home, guides, and status sections. Content fallback is temporarily English during i18n rollout."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={true}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>LocalVRAM {locale.toUpperCase()} route is active</h1>
+      <p>
+        This locale is in rollout mode. Navigation, route parity, and SEO tags are under staged validation.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={withLocale(locale, "/en/guides/")}>Open Guides Hub</a>
+        <a class="btn" href={withLocale(locale, "/en/status/")}>Open Status Hub</a>
+        <a class="btn" href="/en/">Open English Source</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Guides</h2>
+        <p>Locale skeleton routes mapped 1:1 to English guide slugs.</p>
+        <ul class="locale-list">
+          {guideEntries.map((item) => (
+            <li><a href={item.href}>{item.title}</a></li>
+          ))}
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Status</h2>
+        <p>Operational dashboards mirrored for locale path parity.</p>
+        <ul class="locale-list">
+          {statusEntries.map((item) => (
+            <li><a href={item.href}>{item.title}</a></li>
+          ))}
+        </ul>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .locale-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+</style>
+

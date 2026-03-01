@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { ROOT_ALTERNATES, buildLocaleAlternates } from "../data/root-alternates";
+import { DEFAULT_LOCALE, OG_LOCALE_BY_LANG, isLocalizedComPath, isRtlLocale } from "../config/i18n";
 
 type AlternateLink = {
   hrefLang: string;
@@ -10,7 +11,7 @@ type AlternateLink = {
 interface Props {
   title?: string;
   description?: string;
-  locale?: "en";
+  locale?: keyof typeof OG_LOCALE_BY_LANG;
   canonicalPath?: string;
   canonicalOrigin?: string;
   alternates?: AlternateLink[];
@@ -25,7 +26,7 @@ interface Props {
 const {
   title = "LocalVRAM",
   description = "Ollama compatibility and benchmark hub.",
-  locale = "en",
+  locale = DEFAULT_LOCALE,
   canonicalPath,
   canonicalOrigin,
   alternates,
@@ -42,11 +43,12 @@ const siteUrl = (canonicalOrigin || EN_SITE_URL).replace(/\/$/, "");
 const path = canonicalPath || Astro.url.pathname || "/";
 const canonicalUrl = new URL(path, siteUrl).toString();
 const normalizedAlternates = alternates === ROOT_ALTERNATES ? buildLocaleAlternates(path) : alternates;
-const shouldAutoAlternates = normalizedAlternates === undefined && !noindex && /^\/en(\/|$)/.test(path);
+const shouldAutoAlternates = normalizedAlternates === undefined && !noindex && isLocalizedComPath(path);
 const resolvedAlternates = shouldAutoAlternates ? buildLocaleAlternates(path) : (normalizedAlternates || []);
 const ogImageUrl = new URL(ogImage, siteUrl).toString();
 const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
-const ogLocale = "en_US";
+const ogLocale = OG_LOCALE_BY_LANG[locale] || OG_LOCALE_BY_LANG[DEFAULT_LOCALE];
+const htmlDir = isRtlLocale(locale) ? "rtl" : "ltr";
 const jsonLdList = Array.isArray(structuredData)
   ? structuredData
   : structuredData
@@ -59,7 +61,7 @@ const footerCopy = {
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} dir={htmlDir}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

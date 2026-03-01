@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { STATUS_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+
+export function getStaticPaths() {
+  return STANDARD_I18N_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: ComLocale };
+const pagePath = `/${locale}/status/`;
+---
+
+<BaseLayout
+  title={`LocalVRAM (${locale.toUpperCase()}) Status`}
+  description="Localized status route skeleton for pipeline and operations visibility."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={true}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>Status Hub ({locale.toUpperCase()})</h1>
+      <p>
+        Operational dashboards are available as localized route skeletons. Full locale content is staged per
+        rollout plan.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>Back to Locale Home</a>
+        <a class="btn" href="/en/status/pipeline-status/">Open English Status</a>
+      </div>
+    </section>
+
+    <section class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Status Page</th>
+            <th>Localized Path</th>
+            <th>English Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {STATUS_ROUTE_ITEMS.map((item) => (
+            <tr>
+              <td>{item.title}</td>
+              <td><a href={withLocale(locale, item.enPath)}>{withLocale(locale, item.enPath)}</a></td>
+              <td><a href={item.enPath}>{item.enPath}</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>

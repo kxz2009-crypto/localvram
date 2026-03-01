@@ -45,7 +45,13 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "status" / "conversion-funnel.astro",
     ROOT / "src" / "pages" / "en" / "status" / "content-publish.astro",
     ROOT / "src" / "pages" / "en" / "status" / "submission-review.astro",
+    ROOT / "src" / "pages" / "[locale]" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "guides" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "guides" / "[slug].astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "status" / "[slug].astro",
 ]
+EXPECTED_COM_LOCALES = {"en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"}
 
 
 def main() -> None:
@@ -63,30 +69,51 @@ def main() -> None:
             print(f"- {item}")
         sys.exit(1)
 
-    locale_template_dir = ROOT / "src" / "pages" / "[locale]"
-    if locale_template_dir.exists():
-        print("quality gate failed: localized template directory still exists")
-        print(f"- {locale_template_dir}")
-        sys.exit(1)
-
     page_dirs = [p.name for p in (ROOT / "src" / "pages").iterdir() if p.is_dir()]
     unexpected_locale_dirs = sorted(
-        x for x in page_dirs if x not in {"en", "api"} and len(x) == 2 and x.isalpha()
+        x
+        for x in page_dirs
+        if len(x) == 2 and x.isalpha() and x not in EXPECTED_COM_LOCALES
     )
     if unexpected_locale_dirs:
-        print("quality gate failed: non-EN locale directories still exist")
+        print("quality gate failed: unexpected locale directories found")
         for item in unexpected_locale_dirs:
             print(f"- src/pages/{item}")
         sys.exit(1)
 
+    i18n_config_path = ROOT / "src" / "config" / "i18n.ts"
+    if not i18n_config_path.exists():
+        print("quality gate failed: missing src/config/i18n.ts")
+        sys.exit(1)
+    i18n_config = i18n_config_path.read_text(encoding="utf-8")
+    for token in ['DEFAULT_LOCALE = "en"', "STANDARD_I18N_LOCALES", "HREFLANG_ROLLOUT_LOCALES", '"ko"', '"ar"', '"id"']:
+        if token not in i18n_config:
+            print(f"quality gate failed: i18n config missing token {token}")
+            sys.exit(1)
+
     base_layout = (ROOT / "src" / "layouts" / "BaseLayout.astro").read_text(encoding="utf-8")
-    if 'locale?: "en";' not in base_layout:
-        print('quality gate failed: BaseLayout locale type is not restricted to "en"')
+    if "OG_LOCALE_BY_LANG" not in base_layout or "isRtlLocale" not in base_layout:
+        print("quality gate failed: BaseLayout missing i18n locale metadata support")
         sys.exit(1)
-    if "PUBLIC_ZH_SITE_ORIGIN" in base_layout:
-        print("quality gate failed: BaseLayout still references PUBLIC_ZH_SITE_ORIGIN")
+    if 'dir={htmlDir}' not in base_layout:
+        print("quality gate failed: BaseLayout missing rtl/ltr html direction binding")
         sys.exit(1)
-    print("layout locale scope ok: EN-only")
+
+    redirects_file = ROOT / "public" / "_redirects"
+    if not redirects_file.exists():
+        print("quality gate failed: public/_redirects missing")
+        sys.exit(1)
+    redirects_text = redirects_file.read_text(encoding="utf-8")
+    required_redirect_lines = [
+        "/ /en/ 301",
+        "/zh https://localvram.cn/zh/ 301",
+        "/zh/* https://localvram.cn/zh/:splat 301",
+    ]
+    for line in required_redirect_lines:
+        if line not in redirects_text:
+            print(f"quality gate failed: missing redirect rule '{line}'")
+            sys.exit(1)
+    print("i18n baseline checks ok: locale config + layout + zh redirect rules")
 
     models = json.loads((ROOT / "src" / "data" / "models.json").read_text(encoding="utf-8"))
     model_catalog = json.loads((ROOT / "src" / "data" / "model-catalog.json").read_text(encoding="utf-8"))
