@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { ROOT_ALTERNATES } from "../../data/root-alternates";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../config/i18n";
 import { withLocale } from "../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../lib/i18n-copy";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -13,6 +14,9 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props as { locale: ComLocale };
 const pagePath = `/${locale}/`;
+const copy = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() });
+const text = copy.fields;
+const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 
 const guideEntries = [
   {
@@ -46,30 +50,28 @@ const statusEntries = [
 ---
 
 <BaseLayout
-  title={`LocalVRAM (${locale.toUpperCase()}) | i18n Preview Hub`}
-  description="Localized route skeleton for home, guides, and status sections. Content fallback is temporarily English during i18n rollout."
+  title={text.meta_title}
+  description={text.meta_description}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
-  noindex={true}
+  noindex={shouldNoindex}
 >
   <main class="container">
     <section class="hero">
-      <h1>LocalVRAM {locale.toUpperCase()} route is active</h1>
-      <p>
-        This locale is in rollout mode. Navigation, route parity, and SEO tags are under staged validation.
-      </p>
+      <h1>{text.hero_title}</h1>
+      <p>{text.hero_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={withLocale(locale, "/en/guides/")}>Open Guides Hub</a>
-        <a class="btn" href={withLocale(locale, "/en/status/")}>Open Status Hub</a>
-        <a class="btn" href="/en/">Open English Source</a>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/guides/")}>{text.cta_guides}</a>
+        <a class="btn" href={withLocale(locale, "/en/status/")}>{text.cta_status}</a>
+        <a class="btn" href="/en/">{text.cta_english}</a>
       </div>
     </section>
 
     <section class="card-grid">
       <article class="card">
-        <h2>Guides</h2>
-        <p>Locale skeleton routes mapped 1:1 to English guide slugs.</p>
+        <h2>{text.guides_title}</h2>
+        <p>{text.guides_desc}</p>
         <ul class="locale-list">
           {guideEntries.map((item) => (
             <li><a href={item.href}>{item.title}</a></li>
@@ -77,8 +79,8 @@ const statusEntries = [
         </ul>
       </article>
       <article class="card">
-        <h2>Status</h2>
-        <p>Operational dashboards mirrored for locale path parity.</p>
+        <h2>{text.status_title}</h2>
+        <p>{text.status_desc}</p>
         <ul class="locale-list">
           {statusEntries.map((item) => (
             <li><a href={item.href}>{item.title}</a></li>
@@ -97,4 +99,3 @@ const statusEntries = [
     gap: 0.4rem;
   }
 </style>
-

@@ -4,6 +4,7 @@ import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import { GUIDE_ROUTE_ITEMS, type RouteManifestItem } from "../../../data/i18n-route-manifest";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.flatMap((locale) =>
@@ -16,41 +17,44 @@ export function getStaticPaths() {
 
 const { locale, item } = Astro.props as { locale: ComLocale; item: RouteManifestItem };
 const pagePath = withLocale(locale, item.enPath);
+const copy = resolvePageCopy("guides-detail", locale, {
+  localeUpper: locale.toUpperCase(),
+  itemTitle: item.title,
+  itemDescription: item.description,
+});
+const text = copy.fields;
+const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 ---
 
 <BaseLayout
-  title={`${item.title} (${locale.toUpperCase()}) | LocalVRAM`}
-  description={item.description}
+  title={text.meta_title}
+  description={text.meta_description}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
-  noindex={true}
+  noindex={shouldNoindex}
 >
   <main class="container">
     <section class="hero">
       <h1>{item.title}</h1>
       <p>{item.description}</p>
-      <p>
-        This localized page is in staged rollout mode. Content quality gates and glossary checks are applied
-        before index enablement.
-      </p>
+      <p>{text.rollout_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={item.enPath}>Open English Source</a>
-        <a class="btn" href={withLocale(locale, "/en/guides/")}>Back to Guides Hub</a>
-        <a class="btn" href={withLocale(locale, "/en/status/")}>Open Status Hub</a>
+        <a class="btn btn-primary" href={item.enPath}>{text.cta_open_english}</a>
+        <a class="btn" href={withLocale(locale, "/en/guides/")}>{text.cta_back_hub}</a>
+        <a class="btn" href={withLocale(locale, "/en/status/")}>{text.cta_open_status}</a>
       </div>
     </section>
 
     <section class="card-grid">
       <article class="card">
-        <h2>Current Rollout State</h2>
-        <p>Route is active, canonical is locale-scoped, and hreflang is controlled by staged rollout policy.</p>
+        <h2>{text.state_title}</h2>
+        <p>{text.state_desc}</p>
       </article>
       <article class="card">
-        <h2>Next Step</h2>
-        <p>Replace fallback copy with fully localized content after glossary and terminology checks pass.</p>
+        <h2>{text.next_title}</h2>
+        <p>{text.next_desc}</p>
       </article>
     </section>
   </main>
 </BaseLayout>
-

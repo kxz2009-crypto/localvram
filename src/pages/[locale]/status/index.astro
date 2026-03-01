@@ -4,6 +4,7 @@ import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import { STATUS_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -14,26 +15,26 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props as { locale: ComLocale };
 const pagePath = `/${locale}/status/`;
+const copy = resolvePageCopy("status-index", locale, { localeUpper: locale.toUpperCase() });
+const text = copy.fields;
+const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 ---
 
 <BaseLayout
-  title={`LocalVRAM (${locale.toUpperCase()}) Status`}
-  description="Localized status route skeleton for pipeline and operations visibility."
+  title={text.meta_title}
+  description={text.meta_description}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
-  noindex={true}
+  noindex={shouldNoindex}
 >
   <main class="container">
     <section class="hero">
-      <h1>Status Hub ({locale.toUpperCase()})</h1>
-      <p>
-        Operational dashboards are available as localized route skeletons. Full locale content is staged per
-        rollout plan.
-      </p>
+      <h1>{text.hero_title}</h1>
+      <p>{text.hero_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>Back to Locale Home</a>
-        <a class="btn" href="/en/status/pipeline-status/">Open English Status</a>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
+        <a class="btn" href="/en/status/pipeline-status/">{text.cta_open_english}</a>
       </div>
     </section>
 
@@ -41,9 +42,9 @@ const pagePath = `/${locale}/status/`;
       <table>
         <thead>
           <tr>
-            <th>Status Page</th>
-            <th>Localized Path</th>
-            <th>English Source</th>
+            <th>{text.table_col_item}</th>
+            <th>{text.table_col_localized_path}</th>
+            <th>{text.table_col_en_source}</th>
           </tr>
         </thead>
         <tbody>

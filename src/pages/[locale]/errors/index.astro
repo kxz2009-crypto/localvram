@@ -4,6 +4,7 @@ import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import errorData from "../../../data/errors.json";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -15,25 +16,26 @@ export function getStaticPaths() {
 const { locale } = Astro.props as { locale: ComLocale };
 const pagePath = `/${locale}/errors/`;
 const errorItems = Array.isArray(errorData?.errors) ? errorData.errors : [];
+const copy = resolvePageCopy("errors-index", locale, { localeUpper: locale.toUpperCase() });
+const text = copy.fields;
+const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 ---
 
 <BaseLayout
-  title={`LocalVRAM (${locale.toUpperCase()}) Error KB`}
-  description="Localized error knowledge-base route skeleton aligned to English troubleshooting slugs."
+  title={text.meta_title}
+  description={text.meta_description}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
-  noindex={true}
+  noindex={shouldNoindex}
 >
   <main class="container">
     <section class="hero">
-      <h1>Error KB ({locale.toUpperCase()})</h1>
-      <p>
-        Error routes are mirrored to preserve parity with English troubleshooting pages during i18n staging.
-      </p>
+      <h1>{text.hero_title}</h1>
+      <p>{text.hero_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>Back to Locale Home</a>
-        <a class="btn" href="/en/errors/">Open English Error KB</a>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
+        <a class="btn" href="/en/errors/">{text.cta_open_english}</a>
       </div>
     </section>
 
@@ -41,9 +43,9 @@ const errorItems = Array.isArray(errorData?.errors) ? errorData.errors : [];
       <table>
         <thead>
           <tr>
-            <th>Error ID</th>
-            <th>Localized Path</th>
-            <th>English Source</th>
+            <th>{text.table_col_item}</th>
+            <th>{text.table_col_localized_path}</th>
+            <th>{text.table_col_en_source}</th>
           </tr>
         </thead>
         <tbody>
@@ -64,4 +66,3 @@ const errorItems = Array.isArray(errorData?.errors) ? errorData.errors : [];
     </section>
   </main>
 </BaseLayout>
-

@@ -4,6 +4,7 @@ import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import errorData from "../../../data/errors.json";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 
 export function getStaticPaths() {
   const items = Array.isArray(errorData?.errors) ? errorData.errors : [];
@@ -20,29 +21,33 @@ const errorId = String(item?.id || "").trim();
 const symptom = String(item?.symptom || "Troubleshooting reference");
 const enPath = `/en/errors/${errorId}/`;
 const pagePath = withLocale(locale, enPath);
+const copy = resolvePageCopy("errors-detail", locale, {
+  localeUpper: locale.toUpperCase(),
+  errorId,
+  symptom,
+});
+const text = copy.fields;
+const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 ---
 
 <BaseLayout
-  title={`${errorId} (${locale.toUpperCase()}) | LocalVRAM Error KB`}
-  description={symptom}
+  title={text.meta_title}
+  description={text.meta_description}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
-  noindex={true}
+  noindex={shouldNoindex}
 >
   <main class="container">
     <section class="hero">
       <h1>{errorId}</h1>
       <p>{symptom}</p>
-      <p>
-        Localized troubleshooting route is staged. Full locale copy will replace English fallback after QA.
-      </p>
+      <p>{text.rollout_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={enPath}>Open English Source</a>
-        <a class="btn" href={withLocale(locale, "/en/errors/")}>Back to Error KB</a>
-        <a class="btn" href={withLocale(locale, "/en/status/submission-review/")}>Open Submission Review</a>
+        <a class="btn btn-primary" href={enPath}>{text.cta_open_english}</a>
+        <a class="btn" href={withLocale(locale, "/en/errors/")}>{text.cta_back_hub}</a>
+        <a class="btn" href={withLocale(locale, "/en/status/submission-review/")}>{text.cta_open_submission_review}</a>
       </div>
     </section>
   </main>
 </BaseLayout>
-

@@ -1,0 +1,315 @@
+{
+  "fallback_noindex_threshold": 0.2,
+  "required_locales": [
+    "es",
+    "pt",
+    "fr",
+    "de",
+    "ru",
+    "ja",
+    "ko",
+    "ar",
+    "hi",
+    "id"
+  ],
+  "pages": {
+    "locale-home": {
+      "en": {
+        "meta_title": "LocalVRAM ({localeUpper}) | i18n Preview Hub",
+        "meta_description": "Localized route skeleton for home, guides, and status sections. Content fallback is temporarily English during i18n rollout.",
+        "hero_title": "LocalVRAM {localeUpper} route is active",
+        "hero_intro": "This locale is in rollout mode. Navigation, route parity, and SEO tags are under staged validation.",
+        "cta_guides": "Open Guides Hub",
+        "cta_status": "Open Status Hub",
+        "cta_english": "Open English Source",
+        "guides_title": "Guides",
+        "guides_desc": "Locale skeleton routes mapped 1:1 to English guide slugs.",
+        "status_title": "Status",
+        "status_desc": "Operational dashboards mirrored for locale path parity."
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "guides-index": {
+      "en": {
+        "meta_title": "LocalVRAM ({localeUpper}) Guides",
+        "meta_description": "Localized guides route skeleton aligned to English guide slugs.",
+        "hero_title": "Guides Hub ({localeUpper})",
+        "hero_intro": "Guide route parity is enabled. During rollout, page copy may temporarily fall back to English.",
+        "cta_back_home": "Back to Locale Home",
+        "cta_open_english": "Open English Guides",
+        "table_col_item": "Guide",
+        "table_col_localized_path": "Localized Path",
+        "table_col_en_source": "English Source"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "guides-detail": {
+      "en": {
+        "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+        "meta_description": "{itemDescription}",
+        "rollout_intro": "This localized page is in staged rollout mode. Content quality gates and glossary checks are applied before index enablement.",
+        "cta_open_english": "Open English Source",
+        "cta_back_hub": "Back to Guides Hub",
+        "cta_open_status": "Open Status Hub",
+        "state_title": "Current Rollout State",
+        "state_desc": "Route is active, canonical is locale-scoped, and hreflang is controlled by staged rollout policy.",
+        "next_title": "Next Step",
+        "next_desc": "Replace fallback copy with fully localized content after glossary and terminology checks pass."
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "status-index": {
+      "en": {
+        "meta_title": "LocalVRAM ({localeUpper}) Status",
+        "meta_description": "Localized status route skeleton for pipeline and operations visibility.",
+        "hero_title": "Status Hub ({localeUpper})",
+        "hero_intro": "Operational dashboards are available as localized route skeletons. Full locale content is staged per rollout plan.",
+        "cta_back_home": "Back to Locale Home",
+        "cta_open_english": "Open English Status",
+        "table_col_item": "Status Page",
+        "table_col_localized_path": "Localized Path",
+        "table_col_en_source": "English Source"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "status-detail": {
+      "en": {
+        "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+        "meta_description": "{itemDescription}",
+        "rollout_intro": "This status route is available for i18n parity validation. Full localized operational copy will be enabled after quality checks.",
+        "cta_open_english": "Open English Source",
+        "cta_back_hub": "Back to Status Hub",
+        "cta_open_guides": "Open Guides Hub",
+        "state_title": "Current Rollout State",
+        "state_desc": "Route parity and locale-level canonical paths are active for staged validation.",
+        "next_title": "Next Step",
+        "next_desc": "Replace fallback content with locale-specific operations messaging and glossary-safe terms."
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "tools-index": {
+      "en": {
+        "meta_title": "LocalVRAM ({localeUpper}) Tools",
+        "meta_description": "Localized tool route skeletons aligned to English utility pages.",
+        "hero_title": "Tools Hub ({localeUpper})",
+        "hero_intro": "Tool routes are active for i18n parity. During staged rollout, utility page copy may temporarily use English fallback.",
+        "cta_back_home": "Back to Locale Home",
+        "cta_open_english": "Open English Tools",
+        "table_col_item": "Tool",
+        "table_col_localized_path": "Localized Path",
+        "table_col_en_source": "English Source"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "tools-detail": {
+      "en": {
+        "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+        "meta_description": "{itemDescription}",
+        "rollout_intro": "Utility page route parity is enabled for i18n staging. Full localized instructions are enabled after terminology QA.",
+        "cta_open_english": "Open English Source",
+        "cta_back_hub": "Back to Tools Hub",
+        "cta_open_models": "Open Model Catalog"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "errors-index": {
+      "en": {
+        "meta_title": "LocalVRAM ({localeUpper}) Error KB",
+        "meta_description": "Localized error knowledge-base route skeleton aligned to English troubleshooting slugs.",
+        "hero_title": "Error KB ({localeUpper})",
+        "hero_intro": "Error routes are mirrored to preserve parity with English troubleshooting pages during i18n staging.",
+        "cta_back_home": "Back to Locale Home",
+        "cta_open_english": "Open English Error KB",
+        "table_col_item": "Error ID",
+        "table_col_localized_path": "Localized Path",
+        "table_col_en_source": "English Source"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "errors-detail": {
+      "en": {
+        "meta_title": "{errorId} ({localeUpper}) | LocalVRAM Error KB",
+        "meta_description": "{symptom}",
+        "rollout_intro": "Localized troubleshooting route is staged. Full locale copy will replace English fallback after QA.",
+        "cta_open_english": "Open English Source",
+        "cta_back_hub": "Back to Error KB",
+        "cta_open_submission_review": "Open Submission Review"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "models-index": {
+      "en": {
+        "meta_title": "LocalVRAM ({localeUpper}) Model Catalog",
+        "meta_description": "Localized model catalog route skeleton with slug parity to English model pages.",
+        "hero_title": "Model Catalog ({localeUpper})",
+        "hero_intro": "Model routes and group routes are staged for locale parity. Full translated model metadata is planned in later rollout.",
+        "cta_back_home": "Back to Locale Home",
+        "cta_open_english": "Open English Model Catalog",
+        "kpi_models": "Models",
+        "kpi_groups": "Groups",
+        "table_col_item": "Resource",
+        "table_col_localized_path": "Localized Path",
+        "table_col_en_source": "English Source",
+        "label_group": "Group",
+        "label_model": "Model"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "models-detail": {
+      "en": {
+        "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
+        "meta_description": "Localized route skeleton for {modelName}. VRAM baseline: {minVram}GB min, {optimalVram}GB optimal.",
+        "hero_intro": "Staged locale route for model detail parity. Full translated model profile is enabled after terminology and data QA.",
+        "kpi_min_vram": "Minimum VRAM",
+        "kpi_optimal_vram": "Optimal VRAM",
+        "cta_open_english": "Open English Source",
+        "cta_back_hub": "Back to Models Hub",
+        "cta_open_vram": "Open VRAM Calculator"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    },
+    "models-group": {
+      "en": {
+        "meta_title": "{groupName} ({localeUpper}) | LocalVRAM Models",
+        "meta_description": "Localized route skeleton for model group '{groupName}'.",
+        "hero_intro": "Group route parity is active. Group-level text is currently staged and will be localized after glossary QA.",
+        "cta_open_english": "Open English Source",
+        "cta_back_hub": "Back to Models Hub",
+        "cta_open_vram": "Open VRAM Calculator"
+      },
+      "locales": {
+        "es": {},
+        "pt": {},
+        "fr": {},
+        "de": {},
+        "ru": {},
+        "ja": {},
+        "ko": {},
+        "ar": {},
+        "hi": {},
+        "id": {}
+      }
+    }
+  }
+}

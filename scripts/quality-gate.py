@@ -24,6 +24,8 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "content-publish-log.json",
     ROOT / "src" / "data" / "content-review-log.json",
     ROOT / "src" / "data" / "pipeline-slo.json",
+    ROOT / "src" / "data" / "i18n-copy.json",
+    ROOT / "src" / "data" / "i18n-glossary.json",
 ]
 REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "index.astro",
@@ -59,6 +61,21 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "[locale]" / "models" / "group" / "[group].astro",
 ]
 EXPECTED_COM_LOCALES = {"en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"}
+EXPECTED_STANDARD_LOCALES = EXPECTED_COM_LOCALES - {"en"}
+REQUIRED_I18N_COPY_PAGES = {
+    "locale-home",
+    "guides-index",
+    "guides-detail",
+    "status-index",
+    "status-detail",
+    "tools-index",
+    "tools-detail",
+    "errors-index",
+    "errors-detail",
+    "models-index",
+    "models-detail",
+    "models-group",
+}
 
 
 def main() -> None:
@@ -121,6 +138,93 @@ def main() -> None:
             print(f"quality gate failed: missing redirect rule '{line}'")
             sys.exit(1)
     print("i18n baseline checks ok: locale config + layout + zh redirect rules")
+
+    i18n_copy = json.loads((ROOT / "src" / "data" / "i18n-copy.json").read_text(encoding="utf-8"))
+    i18n_glossary = json.loads((ROOT / "src" / "data" / "i18n-glossary.json").read_text(encoding="utf-8"))
+    threshold = i18n_copy.get("fallback_noindex_threshold")
+    if not isinstance(threshold, (int, float)) or threshold < 0 or threshold > 1:
+        print("quality gate failed: i18n-copy.json fallback_noindex_threshold must be between 0 and 1")
+        sys.exit(1)
+
+    required_locales = set(i18n_copy.get("required_locales", []))
+    if required_locales != EXPECTED_STANDARD_LOCALES:
+        print("quality gate failed: i18n-copy.json required_locales must exactly match standard locales")
+        print(f"- expected: {sorted(EXPECTED_STANDARD_LOCALES)}")
+        print(f"- actual: {sorted(required_locales)}")
+        sys.exit(1)
+
+    pages = i18n_copy.get("pages")
+    if not isinstance(pages, dict):
+        print("quality gate failed: i18n-copy.json pages must be an object")
+        sys.exit(1)
+
+    missing_copy_pages = sorted(REQUIRED_I18N_COPY_PAGES - set(pages.keys()))
+    if missing_copy_pages:
+        print("quality gate failed: i18n-copy.json missing required page ids")
+        for item in missing_copy_pages:
+            print(f"- {item}")
+        sys.exit(1)
+
+    protected_terms = i18n_glossary.get("protected_terms", [])
+    if not isinstance(protected_terms, list) or not protected_terms:
+        print("quality gate failed: i18n-glossary.json protected_terms must be a non-empty list")
+        sys.exit(1)
+    protected_terms = [str(x).strip() for x in protected_terms if str(x).strip()]
+    if not protected_terms:
+        print("quality gate failed: i18n-glossary.json protected_terms must include non-empty strings")
+        sys.exit(1)
+
+    for page_id in sorted(REQUIRED_I18N_COPY_PAGES):
+        page_entry = pages.get(page_id, {})
+        en_fields = page_entry.get("en")
+        if not isinstance(en_fields, dict) or not en_fields:
+            print(f"quality gate failed: i18n-copy.json page '{page_id}' missing non-empty en fields")
+            sys.exit(1)
+        if "meta_title" not in en_fields or "meta_description" not in en_fields:
+            print(f"quality gate failed: i18n-copy.json page '{page_id}' missing meta_title/meta_description")
+            sys.exit(1)
+
+        locales = page_entry.get("locales")
+        if not isinstance(locales, dict):
+            print(f"quality gate failed: i18n-copy.json page '{page_id}' locales must be an object")
+            sys.exit(1)
+        locale_keys = set(locales.keys())
+        if locale_keys != EXPECTED_STANDARD_LOCALES:
+            print(f"quality gate failed: i18n-copy.json page '{page_id}' locales must include exact 10 standard locales")
+            print(f"- expected: {sorted(EXPECTED_STANDARD_LOCALES)}")
+            print(f"- actual: {sorted(locale_keys)}")
+            sys.exit(1)
+
+        for locale_key, localized_fields in locales.items():
+            if not isinstance(localized_fields, dict):
+                print(
+                    f"quality gate failed: i18n-copy.json page '{page_id}' locale '{locale_key}' must be an object"
+                )
+                sys.exit(1)
+            for field_name, field_value in localized_fields.items():
+                if not isinstance(field_value, str):
+                    print(
+                        f"quality gate failed: i18n-copy.json page '{page_id}' locale '{locale_key}' field '{field_name}' must be string"
+                    )
+                    sys.exit(1)
+                if field_name not in en_fields:
+                    print(
+                        f"quality gate failed: i18n-copy.json page '{page_id}' locale '{locale_key}' has unknown field '{field_name}'"
+                    )
+                    sys.exit(1)
+                if not field_value.strip():
+                    continue
+                en_text = str(en_fields.get(field_name, ""))
+                for term in protected_terms:
+                    if term in en_text and term not in field_value:
+                        print(
+                            f"quality gate failed: i18n glossary lock broken on page '{page_id}' locale '{locale_key}' field '{field_name}' for term '{term}'"
+                        )
+                        sys.exit(1)
+
+    print(
+        f"i18n copy checks ok: pages={len(REQUIRED_I18N_COPY_PAGES)} locales={len(EXPECTED_STANDARD_LOCALES)} threshold={threshold}"
+    )
 
     models = json.loads((ROOT / "src" / "data" / "models.json").read_text(encoding="utf-8"))
     model_catalog = json.loads((ROOT / "src" / "data" / "model-catalog.json").read_text(encoding="utf-8"))

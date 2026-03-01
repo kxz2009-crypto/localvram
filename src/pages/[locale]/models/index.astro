@@ -4,6 +4,7 @@ import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import modelCatalog from "../../../data/model-catalog.json";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -16,36 +17,36 @@ const { locale } = Astro.props as { locale: ComLocale };
 const pagePath = `/${locale}/models/`;
 const items = Array.isArray(modelCatalog?.items) ? modelCatalog.items : [];
 const groupDefs = Array.isArray(modelCatalog?.group_definitions) ? modelCatalog.group_definitions : [];
+const copy = resolvePageCopy("models-index", locale, { localeUpper: locale.toUpperCase() });
+const text = copy.fields;
+const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 ---
 
 <BaseLayout
-  title={`LocalVRAM (${locale.toUpperCase()}) Model Catalog`}
-  description="Localized model catalog route skeleton with slug parity to English model pages."
+  title={text.meta_title}
+  description={text.meta_description}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
-  noindex={true}
+  noindex={shouldNoindex}
 >
   <main class="container">
     <section class="hero">
-      <h1>Model Catalog ({locale.toUpperCase()})</h1>
-      <p>
-        Model routes and group routes are staged for locale parity. Full translated model metadata is planned in
-        later rollout.
-      </p>
+      <h1>{text.hero_title}</h1>
+      <p>{text.hero_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>Back to Locale Home</a>
-        <a class="btn" href="/en/models/">Open English Model Catalog</a>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
+        <a class="btn" href="/en/models/">{text.cta_open_english}</a>
       </div>
     </section>
 
     <section class="kpi-row">
       <article class="kpi">
-        <h3>Models</h3>
+        <h3>{text.kpi_models}</h3>
         <p>{items.length}</p>
       </article>
       <article class="kpi">
-        <h3>Groups</h3>
+        <h3>{text.kpi_groups}</h3>
         <p>{groupDefs.length}</p>
       </article>
     </section>
@@ -54,9 +55,9 @@ const groupDefs = Array.isArray(modelCatalog?.group_definitions) ? modelCatalog.
       <table>
         <thead>
           <tr>
-            <th>Resource</th>
-            <th>Localized Path</th>
-            <th>English Source</th>
+            <th>{text.table_col_item}</th>
+            <th>{text.table_col_localized_path}</th>
+            <th>{text.table_col_en_source}</th>
           </tr>
         </thead>
         <tbody>
@@ -66,7 +67,7 @@ const groupDefs = Array.isArray(modelCatalog?.group_definitions) ? modelCatalog.
             const localizedPath = withLocale(locale, enPath);
             return (
               <tr>
-                <td>Group: {id}</td>
+                <td>{text.label_group}: {id}</td>
                 <td><a href={localizedPath}>{localizedPath}</a></td>
                 <td><a href={enPath}>{enPath}</a></td>
               </tr>
@@ -78,7 +79,7 @@ const groupDefs = Array.isArray(modelCatalog?.group_definitions) ? modelCatalog.
             const localizedPath = withLocale(locale, enPath);
             return (
               <tr>
-                <td>Model: {id}</td>
+                <td>{text.label_model}: {id}</td>
                 <td><a href={localizedPath}>{localizedPath}</a></td>
                 <td><a href={enPath}>{enPath}</a></td>
               </tr>
@@ -89,4 +90,3 @@ const groupDefs = Array.isArray(modelCatalog?.group_definitions) ? modelCatalog.
     </section>
   </main>
 </BaseLayout>
-
