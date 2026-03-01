@@ -34,9 +34,6 @@ const chartPayload = {
   hasMeasured: hasRealBenchmark,
   modelName: item.name,
 };
-const localizedModelIds = new Set(["qwen35-35b-q4", "qwen35-122b-cloud"]);
-const modelAlternates = localizedModelIds.has(String(item.id || "")) ? ROOT_ALTERNATES : [];
-
 const modelPath = `/en/models/${item.id}/`;
 const modelUrl = `https://localvram.com${modelPath}`;
 const modelSchema = {
@@ -87,7 +84,7 @@ const breadcrumbSchema = {
   description={`${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal, with local/cloud benchmark references.`}
   locale="en"
   canonicalPath={modelPath}
-  alternates={modelAlternates}
+  alternates={ROOT_ALTERNATES}
   ogType="article"
   modifiedTime={item.updated_at}
   structuredData={[modelSchema, breadcrumbSchema]}

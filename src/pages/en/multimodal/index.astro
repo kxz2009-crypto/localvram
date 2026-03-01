@@ -1,0 +1,123 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+
+const pagePath = "/en/multimodal/";
+const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+const multimodalItems = allItems.filter((item) => item.scenario === "multimodal");
+
+const localFirstRows = [...multimodalItems]
+  .filter((item) => item.vram_optimal_gb <= 24)
+  .sort((a, b) => a.vram_optimal_gb - b.vram_optimal_gb || b.params_b - a.params_b)
+  .slice(0, 14);
+
+const cloudFirstRows = [...multimodalItems]
+  .filter((item) => item.vram_optimal_gb > 24)
+  .sort((a, b) => b.params_b - a.params_b)
+  .slice(0, 10);
+
+const sizeClassSummary = [...multimodalItems].reduce((acc, item) => {
+  const key = String(item.size_class || "unknown");
+  acc[key] = (acc[key] || 0) + 1;
+  return acc;
+}, {});
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "LocalVRAM Multimodal Hub",
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: "en",
+  description: "Multimodal model hub for vision-capable local inference with VRAM planning."
+};
+---
+
+<BaseLayout
+  title="Multimodal Models Hub | LocalVRAM"
+  description="Multimodal model hub with local-first and cloud-first picks for vision-capable workloads."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={collectionSchema}
+>
+  <main class="container">
+    <h1>Multimodal Models Hub</h1>
+    <p>
+      Use this hub to shortlist image-capable models by memory budget. Start with local-first options, then escalate to
+      larger cloud-first profiles only when your tasks need heavier reasoning depth.
+    </p>
+
+    <section class="kpi-row">
+      <article class="kpi">
+        <h2>{multimodalItems.length}</h2>
+        <p>Total multimodal profiles</p>
+      </article>
+      <article class="kpi">
+        <h2>{localFirstRows.length}</h2>
+        <p>Local-first picks</p>
+      </article>
+      <article class="kpi">
+        <h2>{cloudFirstRows.length}</h2>
+        <p>Cloud-first picks</p>
+      </article>
+      <article class="kpi">
+        <h2>{Object.keys(sizeClassSummary).length}</h2>
+        <p>Size classes covered</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Local-first multimodal picks (<=24GB optimal)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>3090 tok/s</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {localFirstRows.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td>{item.benchmarks.rtx3090_tok_s}</td>
+              <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Cloud-first multimodal picks (>24GB optimal)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>Cloud fallback</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cloudFirstRows.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td>{item.cloud_fallback}</td>
+              <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href="/en/multimodal/vision-guide/">Open vision guide</a>
+      <a class="btn" href="/en/models/group/multimodal/">Open multimodal group</a>
+      <a class="btn" href="/en/tools/vram-calculator/">Estimate VRAM</a>
+    </section>
+  </main>
+</BaseLayout>
+

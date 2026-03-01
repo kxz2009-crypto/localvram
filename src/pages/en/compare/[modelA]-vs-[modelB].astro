@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
+
+export function getStaticPaths() {
+  const curatedPairs = [
+    ["qwen35-35b-q4", "llama31-70b-q4"],
+    ["deepseek-r1-14b-q4", "ministral-3-14b-q4"],
+    ["qwen3-coder-30b-q4", "deepseek-coder-v2-16b-q4"],
+    ["qwen3-8b-q4", "mistral-7b-q4"],
+    ["qwen3-vl-8b-q4", "qwen25vl-7b-q4"],
+    ["llama31-8b-q4", "gemma3-12b-q4"]
+  ];
+  const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+  const modelById = new Map(allItems.map((item) => [item.id, item]));
+
+  return curatedPairs
+    .filter(([leftId, rightId]) => modelById.has(leftId) && modelById.has(rightId))
+    .map(([leftId, rightId]) => ({
+      params: { modelA: leftId, modelB: rightId },
+      props: {
+        left: modelById.get(leftId),
+        right: modelById.get(rightId)
+      }
+    }));
+}
+
+const { left, right } = Astro.props;
+const comparePath = `/en/compare/${left.id}-vs-${right.id}/`;
+const compareUrl = `https://localvram.com${comparePath}`;
+const benchmarkMap = benchmarkResults.models || {};
+const leftMeasured = left.ollama_tag ? benchmarkMap[left.ollama_tag] : null;
+const rightMeasured = right.ollama_tag ? benchmarkMap[right.ollama_tag] : null;
+
+const localRecommendation =
+  left.vram_optimal_gb <= 24 && right.vram_optimal_gb > 24
+    ? `${left.name} is easier for local-first setups.`
+    : right.vram_optimal_gb <= 24 && left.vram_optimal_gb > 24
+      ? `${right.name} is easier for local-first setups.`
+      : "Both models need similar local planning. Compare scenario fit and latency targets.";
+
+const compareSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: `${left.name} vs ${right.name}`,
+  description: "Side-by-side model comparison of VRAM requirements, benchmark anchors, and deployment path.",
+  inLanguage: "en",
+  url: compareUrl
+};
+---
+
+<BaseLayout
+  title={`${left.name} vs ${right.name} | LocalVRAM`}
+  description={`Compare ${left.name} and ${right.name}: VRAM floor, benchmark anchors, and local-vs-cloud recommendation.`}
+  locale="en"
+  canonicalPath={comparePath}
+  structuredData={compareSchema}
+>
+  <main class="container">
+    <h1>{left.name} vs {right.name}</h1>
+    <p>
+      This comparison page is designed for operator decisions. Check VRAM fit first, then use measured signals where
+      available.
+    </p>
+
+    <section class="card">
+      <h2>Specification comparison</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>{left.name}</th>
+            <th>{right.name}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Scenario</td>
+            <td>{left.scenario}</td>
+            <td>{right.scenario}</td>
+          </tr>
+          <tr>
+            <td>Parameters</td>
+            <td>{left.params_b}B</td>
+            <td>{right.params_b}B</td>
+          </tr>
+          <tr>
+            <td>VRAM min</td>
+            <td>{left.vram_min_gb}GB</td>
+            <td>{right.vram_min_gb}GB</td>
+          </tr>
+          <tr>
+            <td>VRAM optimal</td>
+            <td>{left.vram_optimal_gb}GB</td>
+            <td>{right.vram_optimal_gb}GB</td>
+          </tr>
+          <tr>
+            <td>3090 tok/s (baseline)</td>
+            <td>{left.benchmarks.rtx3090_tok_s}</td>
+            <td>{right.benchmarks.rtx3090_tok_s}</td>
+          </tr>
+          <tr>
+            <td>Measured 3090 tokens/s</td>
+            <td>{leftMeasured?.status === "ok" ? leftMeasured.tokens_per_second : "N/A"}</td>
+            <td>{rightMeasured?.status === "ok" ? rightMeasured.tokens_per_second : "N/A"}</td>
+          </tr>
+          <tr>
+            <td>Cloud fallback</td>
+            <td>{left.cloud_fallback}</td>
+            <td>{right.cloud_fallback}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Deployment recommendation</h2>
+      <p>{localRecommendation}</p>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href={`/en/models/${left.id}/`}>Open {left.name}</a>
+      <a class="btn btn-primary" href={`/en/models/${right.id}/`}>Open {right.name}</a>
+      <a class="btn" href="/en/tools/vram-calculator/">Estimate VRAM</a>
+    </section>
+  </main>
+</BaseLayout>

@@ -10,7 +10,7 @@ type AlternateLink = {
 interface Props {
   title?: string;
   description?: string;
-  locale?: "en" | "es" | "pt" | "fr" | "de" | "ru" | "ja" | "ko" | "ar" | "hi" | "id" | "zh";
+  locale?: "en";
   canonicalPath?: string;
   canonicalOrigin?: string;
   alternates?: AlternateLink[];
@@ -28,7 +28,7 @@ const {
   locale = "en",
   canonicalPath,
   canonicalOrigin,
-  alternates = [],
+  alternates,
   noindex = false,
   ogImage = "/og/default-og.svg",
   ogType = "website",
@@ -38,33 +38,24 @@ const {
 } = Astro.props as Props;
 
 const EN_SITE_URL = "https://localvram.com";
-const ZH_SITE_URL = (import.meta.env.PUBLIC_ZH_SITE_ORIGIN || "https://localvram.com").replace(/\/$/, "");
-const siteUrl = (canonicalOrigin || (locale === "zh" ? ZH_SITE_URL : EN_SITE_URL)).replace(/\/$/, "");
+const siteUrl = (canonicalOrigin || EN_SITE_URL).replace(/\/$/, "");
 const path = canonicalPath || Astro.url.pathname || "/";
 const canonicalUrl = new URL(path, siteUrl).toString();
-const resolvedAlternates = alternates === ROOT_ALTERNATES ? buildLocaleAlternates(path) : alternates;
+const normalizedAlternates = alternates === ROOT_ALTERNATES ? buildLocaleAlternates(path) : alternates;
+const shouldAutoAlternates = normalizedAlternates === undefined && !noindex && /^\/en(\/|$)/.test(path);
+const resolvedAlternates = shouldAutoAlternates ? buildLocaleAlternates(path) : (normalizedAlternates || []);
 const ogImageUrl = new URL(ogImage, siteUrl).toString();
 const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
-const ogLocaleByLang: Record<string, string> = {
-  en: "en_US",
-  es: "es_ES",
-  pt: "pt_BR",
-  fr: "fr_FR",
-  de: "de_DE",
-  ru: "ru_RU",
-  ja: "ja_JP",
-  ko: "ko_KR",
-  ar: "ar_SA",
-  hi: "hi_IN",
-  id: "id_ID",
-  zh: "zh_CN"
-};
-const ogLocale = ogLocaleByLang[locale] || "en_US";
+const ogLocale = "en_US";
 const jsonLdList = Array.isArray(structuredData)
   ? structuredData
   : structuredData
     ? [structuredData]
     : [];
+const footerCopy = {
+  legalText: "Affiliate Disclosure & Privacy Policy",
+  rightsText: "All Rights Reserved."
+};
 ---
 
 <!doctype html>
@@ -101,8 +92,8 @@ const jsonLdList = Array.isArray(structuredData)
   <body>
     <slot />
     <footer class="legal-footer">
-      <a class="legal-mini-link" href="/legal/">Affiliate Disclosure &amp; Privacy Policy</a>
-      <p class="legal-copyright">© 2026 localVRAM.com | All Rights Reserved.</p>
+      <a class="legal-mini-link" href="/legal/">{footerCopy.legalText}</a>
+      <p class="legal-copyright">© 2026 localVRAM.com | {footerCopy.rightsText}</p>
     </footer>
   </body>
 </html>

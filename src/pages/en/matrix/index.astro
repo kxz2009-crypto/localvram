@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+
+const pagePath = "/en/matrix/";
+const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+const tiers = [8, 12, 16, 24, 48];
+const scenarios = [
+  { id: "chat", label: "Chat" },
+  { id: "coding", label: "Coding" },
+  { id: "multimodal", label: "Multimodal" },
+  { id: "reasoning", label: "Reasoning" },
+  { id: "embedding", label: "Embedding" }
+];
+
+function compatibleCount(scenarioId, vramTier) {
+  return allItems.filter((item) => item.scenario === scenarioId && item.vram_min_gb <= vramTier).length;
+}
+
+const matrixSchema = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: "LocalVRAM Compatibility Matrix",
+  description: "Compatibility matrix by workload scenario and VRAM tier.",
+  inLanguage: "en",
+  url: `https://localvram.com${pagePath}`
+};
+---
+
+<BaseLayout
+  title="Compatibility Matrix | LocalVRAM"
+  description="Compatibility matrix of local LLM workloads by scenario and VRAM tier."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={matrixSchema}
+>
+  <main class="container">
+    <h1>Compatibility Matrix</h1>
+    <p>
+      This matrix shows how many catalog profiles can run at each VRAM tier, split by workload scenario. Use it as a
+      planning shortcut before checking individual model pages.
+    </p>
+
+    <section class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            {tiers.map((tier) => <th>{tier}GB tier</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {scenarios.map((scenario) => (
+            <tr>
+              <td>{scenario.label}</td>
+              {tiers.map((tier) => <td>{compatibleCount(scenario.id, tier)}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>How to use this matrix</h2>
+      <ol>
+        <li>Pick your actual VRAM ceiling first.</li>
+        <li>Find the scenario row that matches your workload.</li>
+        <li>Open model pages from that subset and compare measured signals.</li>
+      </ol>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href="/en/models/">Open model catalog</a>
+      <a class="btn" href="/en/tools/vram-calculator/">Estimate with calculator</a>
+      <a class="btn" href="/en/hardware/">Open hardware tiers</a>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,124 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
+
+const pagePath = "/en/guides/best-rag-models/";
+const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+const benchmarkMap = benchmarkResults.models || {};
+
+const embeddingRows = allItems
+  .filter((item) => item.scenario === "embedding")
+  .sort((a, b) => a.vram_optimal_gb - b.vram_optimal_gb || b.params_b - a.params_b)
+  .slice(0, 10);
+
+const generatorRows = allItems
+  .filter((item) => (item.scenario === "chat" || item.scenario === "reasoning") && item.vram_optimal_gb <= 24)
+  .sort((a, b) => {
+    const aMeasured = a.ollama_tag && benchmarkMap[a.ollama_tag]?.status === "ok" ? 0 : 1;
+    const bMeasured = b.ollama_tag && benchmarkMap[b.ollama_tag]?.status === "ok" ? 0 : 1;
+    if (aMeasured !== bMeasured) {
+      return aMeasured - bMeasured;
+    }
+    return a.vram_optimal_gb - b.vram_optimal_gb || b.params_b - a.params_b;
+  })
+  .slice(0, 12);
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Best RAG models for local pipelines in 2026",
+  description: "Pick retrieval and generation models for RAG under local VRAM limits.",
+  inLanguage: "en",
+  url: `https://localvram.com${pagePath}`,
+  author: {
+    "@type": "Organization",
+    name: "LocalVRAM"
+  }
+};
+---
+
+<BaseLayout
+  title="Best RAG Models (2026) | LocalVRAM"
+  description="Practical local RAG model picks: embedding models plus generation models ranked by VRAM fit and measured signals."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={articleSchema}
+>
+  <main class="container">
+    <h1>Best RAG Models for Local Deployments</h1>
+    <p>
+      Strong RAG results come from the pairing of retrieval and generation. Use this page as a planning hub, then open
+      model detail pages for measured signals and hardware paths.
+    </p>
+
+    <section class="card">
+      <h2>Embedding models for retrieval quality</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>Category</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {embeddingRows.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td>{item.category_label}</td>
+              <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Generation models for local answer quality</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>3090 tok/s</th>
+            <th>Data</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {generatorRows.map((item) => {
+            const measured = item.ollama_tag && benchmarkMap[item.ollama_tag]?.status === "ok";
+            return (
+              <tr>
+                <td>{item.name}</td>
+                <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+                <td>{item.benchmarks.rtx3090_tok_s}</td>
+                <td>{measured ? "Measured" : "Estimated"}</td>
+                <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Recommended local RAG flow</h2>
+      <ol>
+        <li>Pick an embedding model that fits your latency and memory budget.</li>
+        <li>Use a 7B to 32B generator model that can sustain your expected context length.</li>
+        <li>Tune retrieval quality first, then upgrade generation model size if needed.</li>
+      </ol>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href="/en/blog/best-local-rag-models-2026/">Read RAG field notes</a>
+      <a class="btn" href="/en/models/group/embedding/">Open embedding group</a>
+      <a class="btn" href="/en/tools/vram-calculator/">Estimate VRAM for your stack</a>
+    </section>
+  </main>
+</BaseLayout>
+

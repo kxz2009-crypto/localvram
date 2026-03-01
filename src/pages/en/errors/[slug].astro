@@ -14,8 +14,6 @@ export function getStaticPaths() {
 const { item } = Astro.props;
 const pagePath = `/en/errors/${item.id}/`;
 const pageUrl = `https://localvram.com${pagePath}`;
-const localizedErrorIds = new Set(["cuda-out-of-memory"]);
-const errorAlternates = localizedErrorIds.has(String(item.id || "")) ? ROOT_ALTERNATES : [];
 
 const howToSchema = {
   "@context": "https://schema.org",
@@ -102,7 +100,7 @@ const breadcrumbSchema = {
   description={item.symptom}
   locale="en"
   canonicalPath={pagePath}
-  alternates={errorAlternates}
+  alternates={ROOT_ALTERNATES}
   ogType="article"
   structuredData={[howToSchema, faqSchema, techArticleSchema, breadcrumbSchema]}
 >

@@ -1,0 +1,134 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
+
+const pagePath = "/en/guides/best-coding-models/";
+const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+const benchmarkMap = benchmarkResults.models || {};
+const codingItems = allItems.filter((item) => item.scenario === "coding");
+
+const rankedCoding = [...codingItems].sort((a, b) => {
+  const aMeasured = a.ollama_tag && benchmarkMap[a.ollama_tag]?.status === "ok" ? 0 : 1;
+  const bMeasured = b.ollama_tag && benchmarkMap[b.ollama_tag]?.status === "ok" ? 0 : 1;
+  if (aMeasured !== bMeasured) {
+    return aMeasured - bMeasured;
+  }
+  if (a.vram_optimal_gb !== b.vram_optimal_gb) {
+    return a.vram_optimal_gb - b.vram_optimal_gb;
+  }
+  return b.params_b - a.params_b;
+});
+
+const localFirstRows = rankedCoding.filter((item) => item.vram_optimal_gb <= 24).slice(0, 12);
+const heavyRows = rankedCoding.filter((item) => item.vram_optimal_gb > 24).slice(0, 8);
+const measuredCount = rankedCoding.filter((item) => item.ollama_tag && benchmarkMap[item.ollama_tag]?.status === "ok").length;
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Best coding models for local inference in 2026",
+  description: "Select coding-focused models by VRAM budget, measured benchmarks, and local-vs-cloud path.",
+  inLanguage: "en",
+  url: `https://localvram.com${pagePath}`,
+  author: {
+    "@type": "Organization",
+    name: "LocalVRAM"
+  }
+};
+---
+
+<BaseLayout
+  title="Best Coding Models (2026) | LocalVRAM"
+  description="Best coding models for local LLM workflows, ranked by VRAM fit, measured data, and practical deployment path."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={articleSchema}
+>
+  <main class="container">
+    <h1>Best Coding Models for Local LLM Workflows</h1>
+    <p>
+      This guide prioritizes practical coding models you can run today with clear VRAM requirements. Ranking favors
+      measured profiles first, then stable local fit under 24GB VRAM.
+    </p>
+
+    <section class="kpi-row">
+      <article class="kpi">
+        <h2>{codingItems.length}</h2>
+        <p>Coding profiles in catalog</p>
+      </article>
+      <article class="kpi">
+        <h2>{measuredCount}</h2>
+        <p>Measured coding profiles</p>
+      </article>
+      <article class="kpi">
+        <h2>{localFirstRows.length}</h2>
+        <p>Local-first picks (<=24GB optimal)</p>
+      </article>
+      <article class="kpi">
+        <h2>{heavyRows.length}</h2>
+        <p>Heavy picks (cloud-first)</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Local-first coding picks (<=24GB optimal)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>3090 tok/s</th>
+            <th>Data</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {localFirstRows.map((item) => {
+            const measured = item.ollama_tag && benchmarkMap[item.ollama_tag]?.status === "ok";
+            return (
+              <tr>
+                <td>{item.name}</td>
+                <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+                <td>{item.benchmarks.rtx3090_tok_s}</td>
+                <td>{measured ? "Measured" : "Estimated"}</td>
+                <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Heavy coding models (cloud-first)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>Cloud fallback</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {heavyRows.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td>{item.cloud_fallback}</td>
+              <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href="/en/tools/vram-calculator/">Estimate VRAM before deployment</a>
+      <a class="btn" href="/en/models/group/coding/">Open coding group hub</a>
+      <a class="btn" href="/en/guides/local-llm-cost-vs-cloud/">Run-vs-rent decision guide</a>
+    </section>
+  </main>
+</BaseLayout>
+

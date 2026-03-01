@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
+
+const pagePath = "/en/hardware/verified-3090/";
+const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+const benchmarkMap = benchmarkResults.models || {};
+const modelByTag = new Map(allItems.map((item) => [String(item.ollama_tag || ""), item]));
+
+const measuredRows = Object.entries(benchmarkMap)
+  .filter(([, row]) => row?.status === "ok" && typeof row.tokens_per_second === "number")
+  .map(([tag, row]) => {
+    const model = modelByTag.get(String(tag)) || null;
+    return {
+      tag,
+      name: model?.name || String(tag),
+      id: model?.id || "",
+      tokensPerSecond: Number(row.tokens_per_second),
+      latencyMs: Number(row.latency_ms || 0),
+      testTime: String(row.test_time || "unknown"),
+      gpuModel: String(row.gpu_model || "RTX 3090")
+    };
+  })
+  .sort((a, b) => b.tokensPerSecond - a.tokensPerSecond);
+
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Verified on RTX 3090",
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: "en",
+  description: "Measured local benchmark pages validated on RTX 3090."
+};
+---
+
+<BaseLayout
+  title="Verified on RTX 3090 | LocalVRAM"
+  description="Measured model benchmarks validated on RTX 3090 with latency and throughput snapshots."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={pageSchema}
+>
+  <main class="container">
+    <h1>Verified on RTX 3090</h1>
+    <p>
+      This page tracks model tags with measured local runs on RTX 3090. Use it when you want evidence-backed local
+      performance instead of pure baseline estimates.
+    </p>
+
+    <section class="card">
+      <h2>Measured model tags</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Tag</th>
+            <th>Tokens/s</th>
+            <th>Latency (ms)</th>
+            <th>Test time</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {measuredRows.map((row) => (
+            <tr>
+              <td>{row.name}</td>
+              <td><code>{row.tag}</code></td>
+              <td>{row.tokensPerSecond.toFixed(1)}</td>
+              <td>{row.latencyMs > 0 ? row.latencyMs : "-"}</td>
+              <td>{row.testTime}</td>
+              <td>{row.id ? <a class="btn" href={`/en/models/${row.id}/`}>Open</a> : "-"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Validation notes</h2>
+      <ul>
+        <li>Measured rows come from actual benchmark snapshots, not template placeholders.</li>
+        <li>Catalog baseline values stay visible on model pages for comparison.</li>
+        <li>For heavy profiles, use cloud fallback links after local saturation.</li>
+      </ul>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href="/en/benchmarks/changelog/">Open benchmark changelog</a>
+      <a class="btn" href="/en/models/">Open model catalog</a>
+      <a class="btn" href="/en/tools/vram-calculator/">Estimate VRAM</a>
+    </section>
+  </main>
+</BaseLayout>
+

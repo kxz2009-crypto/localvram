@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+
+const pagePath = "/en/multimodal/vision-guide/";
+const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+const multimodalItems = allItems.filter((item) => item.scenario === "multimodal");
+
+const starterTier = multimodalItems
+  .filter((item) => item.vram_optimal_gb <= 12)
+  .sort((a, b) => a.vram_optimal_gb - b.vram_optimal_gb || b.params_b - a.params_b)
+  .slice(0, 6);
+
+const balancedTier = multimodalItems
+  .filter((item) => item.vram_optimal_gb > 12 && item.vram_optimal_gb <= 24)
+  .sort((a, b) => a.vram_optimal_gb - b.vram_optimal_gb || b.params_b - a.params_b)
+  .slice(0, 8);
+
+const heavyTier = multimodalItems
+  .filter((item) => item.vram_optimal_gb > 24)
+  .sort((a, b) => b.params_b - a.params_b)
+  .slice(0, 8);
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to choose a local vision model by VRAM",
+  description: "Select multimodal models by local VRAM constraints before moving to cloud fallback.",
+  step: [
+    { "@type": "HowToStep", name: "Define image task", text: "Set target task: OCR, chart reading, or general image QA." },
+    { "@type": "HowToStep", name: "Pick VRAM tier", text: "Start at <=12GB, then move to <=24GB if quality is not enough." },
+    { "@type": "HowToStep", name: "Escalate only if needed", text: "Use cloud-first profiles only for complex reasoning requirements." }
+  ]
+};
+---
+
+<BaseLayout
+  title="Multimodal Vision Guide | LocalVRAM"
+  description="Vision-model selection guide for local multimodal inference across starter, balanced, and heavy VRAM tiers."
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={howToSchema}
+>
+  <main class="container">
+    <h1>Multimodal Vision Guide</h1>
+    <p>
+      Pick vision-capable models by memory ceiling first. This keeps deployment stable and prevents over-sizing before
+      you have evidence that a heavier profile is required.
+    </p>
+
+    <section class="card">
+      <h2>Starter tier (<=12GB optimal)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {starterTier.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Balanced tier (13GB-24GB optimal)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {balancedTier.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Heavy tier (>24GB optimal)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>VRAM min/optimal</th>
+            <th>Cloud fallback</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {heavyTier.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td>{item.cloud_fallback}</td>
+              <td><a class="btn" href={`/en/models/${item.id}/`}>Open</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href="/en/multimodal/">Back to multimodal hub</a>
+      <a class="btn" href="/en/models/group/multimodal/">Open multimodal group</a>
+      <a class="btn" href="/en/tools/vram-calculator/">Estimate VRAM</a>
+    </section>
+  </main>
+</BaseLayout>
+
