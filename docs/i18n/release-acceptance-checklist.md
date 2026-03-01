@@ -8,9 +8,9 @@ This checklist is for releasing:
 
 ## Fixed Rollback Point
 Current rollback baseline:
-- commit: `f978bb8`
-- tag: `rollback-i18n-baseline-20260301`
-- branch: `rollback/i18n-baseline-20260301`
+- commit: `ff67f00`
+- tag: `rollback-i18n-20260301-c4`
+- branch: `main` (tagged checkpoint)
 
 If release goes wrong, rollback to the tag above.
 
