@@ -26,6 +26,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "pipeline-slo.json",
     ROOT / "src" / "data" / "i18n-copy.json",
     ROOT / "src" / "data" / "i18n-glossary.json",
+    ROOT / "src" / "data" / "i18n-rollout.json",
 ]
 REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "index.astro",
@@ -110,9 +111,34 @@ def main() -> None:
         print("quality gate failed: missing src/config/i18n.ts")
         sys.exit(1)
     i18n_config = i18n_config_path.read_text(encoding="utf-8")
-    for token in ['DEFAULT_LOCALE = "en"', "STANDARD_I18N_LOCALES", "HREFLANG_ROLLOUT_LOCALES", '"ko"', '"ar"', '"id"']:
+    for token in [
+        'DEFAULT_LOCALE = "en"',
+        "STANDARD_I18N_LOCALES",
+        "HREFLANG_ROLLOUT_LOCALES",
+        "SITEMAP_ROLLOUT_LOCALES",
+        '"ko"',
+        '"ar"',
+        '"id"',
+    ]:
         if token not in i18n_config:
             print(f"quality gate failed: i18n config missing token {token}")
+            sys.exit(1)
+
+    rollout_config = json.loads((ROOT / "src" / "data" / "i18n-rollout.json").read_text(encoding="utf-8"))
+    for key in ("hreflang_rollout_locales", "sitemap_rollout_locales"):
+        raw = rollout_config.get(key)
+        if not isinstance(raw, list) or not raw:
+            print(f"quality gate failed: i18n-rollout.json {key} must be a non-empty array")
+            sys.exit(1)
+        values = [str(x).strip().lower() for x in raw if str(x).strip()]
+        if "en" not in values:
+            print(f"quality gate failed: i18n-rollout.json {key} must include 'en'")
+            sys.exit(1)
+        unknown = sorted(x for x in values if x not in EXPECTED_COM_LOCALES)
+        if unknown:
+            print(f"quality gate failed: i18n-rollout.json {key} contains unknown locales")
+            for item in unknown:
+                print(f"- {item}")
             sys.exit(1)
 
     base_layout = (ROOT / "src" / "layouts" / "BaseLayout.astro").read_text(encoding="utf-8")

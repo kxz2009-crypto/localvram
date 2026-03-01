@@ -68,13 +68,15 @@ Expected:
 ## Phase 4: SEO Verification (PowerShell)
 ```powershell
 $domain='https://localvram.com'
-curl.exe -s "$domain/sitemap.xml" | Select-String -Pattern '/zh/|/ko/|/ja/|/es/|/en/'
+curl.exe -s "$domain/sitemap-index.xml" | Select-String -Pattern 'sitemap-en.xml|sitemap-es.xml|sitemap-ja.xml|sitemap-ko.xml'
+curl.exe -s "$domain/sitemap-en.xml" | Select-String -Pattern '/zh/|/en/'
+curl.exe -s "$domain/sitemap.xml" | Select-String -Pattern 'sitemap-en.xml'
 curl.exe -s "$domain/en/" | Select-String -Pattern 'canonical|hreflang|x-default'
 curl.exe -s "$domain/ja/" | Select-String -Pattern 'canonical|hreflang|x-default'
 ```
 
 Expected:
-1. Sitemap includes required locale paths.
+1. Sitemap index lists only currently rollout-enabled locale sitemaps.
 2. No `.com` sitemap entries under `/zh/`.
 3. Canonical and hreflang tags are present and consistent.
 
@@ -96,4 +98,3 @@ git push --force-with-lease origin main
 ```
 
 Then redeploy Pages and purge cache.
-

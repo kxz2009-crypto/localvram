@@ -1,3 +1,5 @@
+import rolloutConfig from "../data/i18n-rollout.json";
+
 export const DEFAULT_LOCALE = "en" as const;
 
 export const STANDARD_I18N_LOCALES = [
@@ -15,10 +17,36 @@ export const STANDARD_I18N_LOCALES = [
 
 export const COM_LOCALES = [DEFAULT_LOCALE, ...STANDARD_I18N_LOCALES] as const;
 export type ComLocale = (typeof COM_LOCALES)[number];
-export const HREFLANG_ROLLOUT_LOCALES: readonly ComLocale[] = [DEFAULT_LOCALE];
 
 const COM_LOCALE_SET = new Set<string>(COM_LOCALES);
 const RTL_LOCALE_SET = new Set<string>(["ar"]);
+
+function sanitizeRolloutLocales(
+  raw: unknown,
+  fallback: readonly ComLocale[],
+): readonly ComLocale[] {
+  if (!Array.isArray(raw)) {
+    return fallback;
+  }
+  const sanitized = raw
+    .map((item) => String(item || "").toLowerCase())
+    .filter((item): item is ComLocale => COM_LOCALE_SET.has(item));
+  const unique = Array.from(new Set<ComLocale>(sanitized));
+  if (!unique.includes(DEFAULT_LOCALE)) {
+    unique.unshift(DEFAULT_LOCALE);
+  }
+  return unique.length ? unique : fallback;
+}
+
+export const HREFLANG_ROLLOUT_LOCALES: readonly ComLocale[] = sanitizeRolloutLocales(
+  rolloutConfig?.hreflang_rollout_locales,
+  [DEFAULT_LOCALE],
+);
+
+export const SITEMAP_ROLLOUT_LOCALES: readonly ComLocale[] = sanitizeRolloutLocales(
+  rolloutConfig?.sitemap_rollout_locales,
+  HREFLANG_ROLLOUT_LOCALES,
+);
 
 export const OG_LOCALE_BY_LANG: Record<ComLocale, string> = {
   en: "en_US",

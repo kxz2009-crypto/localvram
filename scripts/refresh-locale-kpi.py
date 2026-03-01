@@ -7,6 +7,7 @@ import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,19 +52,54 @@ def save_rows(path: Path, rows: list[dict[str, str]]) -> None:
             writer.writerow({field: row.get(field, "") for field in KPI_FIELDS})
 
 
+def _sitemap_loc_to_local_path(loc: str) -> Path | None:
+    loc = str(loc or "").strip()
+    if not loc:
+        return None
+    if loc.startswith("http://") or loc.startswith("https://"):
+        parts = urlsplit(loc)
+        if not parts.path:
+            return None
+        return ROOT / "public" / parts.path.lstrip("/")
+    if loc.startswith("/"):
+        return ROOT / "public" / loc.lstrip("/")
+    return ROOT / "public" / loc
+
+
 def parse_sitemap_locale_counts(path: Path, locales: set[str]) -> dict[str, int]:
-    xml_text = path.read_text(encoding="utf-8")
-    root = ET.fromstring(xml_text)
     ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     counts = {locale: 0 for locale in locales}
-    for node in root.findall("sm:url/sm:loc", ns):
-        loc = (node.text or "").strip()
-        m = re.match(r"^https?://[^/]+/([a-z]{2})(/|$)", loc)
-        if not m:
-            continue
-        locale = m.group(1)
-        if locale in counts:
-            counts[locale] += 1
+    visited: set[Path] = set()
+
+    def parse_file(file_path: Path) -> None:
+        real = file_path.resolve()
+        if real in visited or not file_path.exists():
+            return
+        visited.add(real)
+
+        xml_text = file_path.read_text(encoding="utf-8")
+        root = ET.fromstring(xml_text)
+        root_name = root.tag.rsplit("}", 1)[-1]
+
+        if root_name == "urlset":
+            for node in root.findall("sm:url/sm:loc", ns):
+                loc = (node.text or "").strip()
+                m = re.match(r"^https?://[^/]+/([a-z]{2})(/|$)", loc)
+                if not m:
+                    continue
+                locale = m.group(1)
+                if locale in counts:
+                    counts[locale] += 1
+            return
+
+        if root_name == "sitemapindex":
+            for node in root.findall("sm:sitemap/sm:loc", ns):
+                nested_path = _sitemap_loc_to_local_path(node.text or "")
+                if nested_path is not None:
+                    parse_file(nested_path)
+            return
+
+    parse_file(path)
     return counts
 
 

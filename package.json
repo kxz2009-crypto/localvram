@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "python scripts/build-sitemap.py && astro build",
     "preview": "astro preview",
+    "sitemap:build": "python scripts/build-sitemap.py",
     "check:quality": "python scripts/quality-gate.py",
     "report:freshness": "python scripts/report-data-freshness.py"
   },
