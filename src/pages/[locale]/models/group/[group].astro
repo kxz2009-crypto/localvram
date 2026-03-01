@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../../data/root-alternates";
+import modelCatalog from "../../../../data/model-catalog.json";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../../config/i18n";
+import { withLocale } from "../../../../lib/locale-paths";
+
+export function getStaticPaths() {
+  const groups = Array.isArray(modelCatalog?.group_definitions) ? modelCatalog.group_definitions : [];
+  return STANDARD_I18N_LOCALES.flatMap((locale) =>
+    groups.map((group) => ({
+      params: { locale, group: String(group?.id || "").trim() },
+      props: { locale, group },
+    })),
+  );
+}
+
+const { locale, group } = Astro.props as { locale: ComLocale; group: Record<string, unknown> };
+const groupId = String(group?.id || "").trim();
+const groupName = String(group?.name || groupId || "Model Group");
+const enPath = `/en/models/group/${groupId}/`;
+const pagePath = withLocale(locale, enPath);
+---
+
+<BaseLayout
+  title={`${groupName} (${locale.toUpperCase()}) | LocalVRAM Models`}
+  description={`Localized route skeleton for model group '${groupName}'.`}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={true}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{groupName}</h1>
+      <p>
+        Group route parity is active. Group-level text is currently staged and will be localized after glossary QA.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={enPath}>Open English Source</a>
+        <a class="btn" href={withLocale(locale, "/en/models/")}>Back to Models Hub</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>Open VRAM Calculator</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+

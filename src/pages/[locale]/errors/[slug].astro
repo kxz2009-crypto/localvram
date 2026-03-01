@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import errorData from "../../../data/errors.json";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+
+export function getStaticPaths() {
+  const items = Array.isArray(errorData?.errors) ? errorData.errors : [];
+  return STANDARD_I18N_LOCALES.flatMap((locale) =>
+    items.map((item) => ({
+      params: { locale, slug: String(item?.id || "").trim() },
+      props: { locale, item },
+    })),
+  );
+}
+
+const { locale, item } = Astro.props as { locale: ComLocale; item: Record<string, unknown> };
+const errorId = String(item?.id || "").trim();
+const symptom = String(item?.symptom || "Troubleshooting reference");
+const enPath = `/en/errors/${errorId}/`;
+const pagePath = withLocale(locale, enPath);
+---
+
+<BaseLayout
+  title={`${errorId} (${locale.toUpperCase()}) | LocalVRAM Error KB`}
+  description={symptom}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={true}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{errorId}</h1>
+      <p>{symptom}</p>
+      <p>
+        Localized troubleshooting route is staged. Full locale copy will replace English fallback after QA.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={enPath}>Open English Source</a>
+        <a class="btn" href={withLocale(locale, "/en/errors/")}>Back to Error KB</a>
+        <a class="btn" href={withLocale(locale, "/en/status/submission-review/")}>Open Submission Review</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+

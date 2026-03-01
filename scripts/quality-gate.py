@@ -50,6 +50,13 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "[locale]" / "guides" / "[slug].astro",
     ROOT / "src" / "pages" / "[locale]" / "status" / "index.astro",
     ROOT / "src" / "pages" / "[locale]" / "status" / "[slug].astro",
+    ROOT / "src" / "pages" / "[locale]" / "tools" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "tools" / "[slug].astro",
+    ROOT / "src" / "pages" / "[locale]" / "errors" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "errors" / "[slug].astro",
+    ROOT / "src" / "pages" / "[locale]" / "models" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "models" / "[id].astro",
+    ROOT / "src" / "pages" / "[locale]" / "models" / "group" / "[group].astro",
 ]
 EXPECTED_COM_LOCALES = {"en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"}
 

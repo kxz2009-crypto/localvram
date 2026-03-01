@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import modelCatalog from "../../../data/model-catalog.json";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+
+export function getStaticPaths() {
+  const items = Array.isArray(modelCatalog?.items) ? modelCatalog.items : [];
+  return STANDARD_I18N_LOCALES.flatMap((locale) =>
+    items.map((item) => ({
+      params: { locale, id: String(item?.id || "").trim() },
+      props: { locale, item },
+    })),
+  );
+}
+
+const { locale, item } = Astro.props as { locale: ComLocale; item: Record<string, unknown> };
+const modelId = String(item?.id || "").trim();
+const modelName = String(item?.name || modelId || "Model");
+const enPath = `/en/models/${modelId}/`;
+const pagePath = withLocale(locale, enPath);
+const minVram = Number(item?.vram_min_gb || 0);
+const optimalVram = Number(item?.vram_optimal_gb || 0);
+---
+
+<BaseLayout
+  title={`${modelName} (${locale.toUpperCase()}) | LocalVRAM`}
+  description={`Localized route skeleton for ${modelName}. VRAM baseline: ${minVram}GB min, ${optimalVram}GB optimal.`}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={true}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{modelName}</h1>
+      <p>
+        Staged locale route for model detail parity. Full translated model profile is enabled after terminology
+        and data QA.
+      </p>
+      <div class="kpi-row">
+        <article class="kpi">
+          <h3>Minimum VRAM</h3>
+          <p>{minVram} GB</p>
+        </article>
+        <article class="kpi">
+          <h3>Optimal VRAM</h3>
+          <p>{optimalVram} GB</p>
+        </article>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={enPath}>Open English Source</a>
+        <a class="btn" href={withLocale(locale, "/en/models/")}>Back to Models Hub</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>Open VRAM Calculator</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+

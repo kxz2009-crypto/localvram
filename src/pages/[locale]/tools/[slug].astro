@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { TOOL_ROUTE_ITEMS, type RouteManifestItem } from "../../../data/i18n-route-manifest";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+
+export function getStaticPaths() {
+  return STANDARD_I18N_LOCALES.flatMap((locale) =>
+    TOOL_ROUTE_ITEMS.map((item) => ({
+      params: { locale, slug: item.slug },
+      props: { locale, item },
+    })),
+  );
+}
+
+const { locale, item } = Astro.props as { locale: ComLocale; item: RouteManifestItem };
+const pagePath = withLocale(locale, item.enPath);
+---
+
+<BaseLayout
+  title={`${item.title} (${locale.toUpperCase()}) | LocalVRAM`}
+  description={item.description}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={true}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{item.title}</h1>
+      <p>{item.description}</p>
+      <p>
+        Utility page route parity is enabled for i18n staging. Full localized instructions are enabled after
+        terminology QA.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={item.enPath}>Open English Source</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/")}>Back to Tools Hub</a>
+        <a class="btn" href={withLocale(locale, "/en/models/")}>Open Model Catalog</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+

@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import errorData from "../../../data/errors.json";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+
+export function getStaticPaths() {
+  return STANDARD_I18N_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: ComLocale };
+const pagePath = `/${locale}/errors/`;
+const errorItems = Array.isArray(errorData?.errors) ? errorData.errors : [];
+---
+
+<BaseLayout
+  title={`LocalVRAM (${locale.toUpperCase()}) Error KB`}
+  description="Localized error knowledge-base route skeleton aligned to English troubleshooting slugs."
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={true}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>Error KB ({locale.toUpperCase()})</h1>
+      <p>
+        Error routes are mirrored to preserve parity with English troubleshooting pages during i18n staging.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>Back to Locale Home</a>
+        <a class="btn" href="/en/errors/">Open English Error KB</a>
+      </div>
+    </section>
+
+    <section class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Error ID</th>
+            <th>Localized Path</th>
+            <th>English Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {errorItems.map((item) => {
+            const id = String(item?.id || "").trim();
+            const enPath = `/en/errors/${id}/`;
+            const localizedPath = withLocale(locale, enPath);
+            return (
+              <tr>
+                <td>{id}</td>
+                <td><a href={localizedPath}>{localizedPath}</a></td>
+                <td><a href={enPath}>{enPath}</a></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>
+

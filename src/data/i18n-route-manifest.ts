@@ -77,3 +77,23 @@ export const STATUS_ROUTE_ITEMS: RouteManifestItem[] = [
   },
 ];
 
+export const TOOL_ROUTE_ITEMS: RouteManifestItem[] = [
+  {
+    slug: "quantization-blind-test",
+    title: "Quantization Blind Test",
+    description: "Blind test workflow for quantization quality and response utility.",
+    enPath: "/en/tools/quantization-blind-test/",
+  },
+  {
+    slug: "roi-calculator",
+    title: "ROI Calculator",
+    description: "Run-vs-rent ROI estimation for local and cloud deployment decisions.",
+    enPath: "/en/tools/roi-calculator/",
+  },
+  {
+    slug: "vram-calculator",
+    title: "VRAM Calculator",
+    description: "Estimate practical VRAM requirements by model class and runtime setup.",
+    enPath: "/en/tools/vram-calculator/",
+  },
+];
