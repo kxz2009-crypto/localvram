@@ -1,40 +1,73 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-02-28T13:01:15.838337Z",
+  "updated_at": "2026-03-01T03:28:34.664966Z",
   "last_run": {
-    "run_at": "2026-02-28T13:01:15.838337Z",
-    "queue_date": "2026-02-28",
+    "run_at": "2026-03-01T03:28:34.664966Z",
+    "queue_date": "2026-03-01",
     "candidate_count": 3,
     "published_count": 2,
     "skipped_count": 1,
     "published": [
       {
-        "slug": "best-local-rag-models-under-24gb-vram",
-        "title": "Best Local Rag Models Under 24Gb Vram: Practical Guide (2026)",
-        "topic_key": "best-local-rag-models-under-24gb-vram",
-        "score": 648.0,
-        "source_draft": "content-queue/2026-02-28/01-best-local-rag-models-under-24gb-vram.md",
-        "out_file": "src/content/blog/best-local-rag-models-under-24gb-vram.md",
+        "slug": "rtx4090-vs-rtx3090-for-local-llm",
+        "title": "Rtx 4090 Vs Rtx 3090 Local Llm: Practical Guide (2026)",
+        "topic_key": "rtx-4090-vs-rtx-3090-local-llm",
+        "score": 720.0,
+        "source_draft": "content-queue/2026-03-01/01-rtx4090-vs-rtx3090-for-local-llm.md",
+        "out_file": "src/content/blog/rtx4090-vs-rtx3090-for-local-llm.md",
         "intent": "hardware"
       },
       {
-        "slug": "deepseek-r1-14b-3090-benchmark",
-        "title": "Deepseek R1 14B Rtx 3090 Benchmark: Practical Guide (2026)",
-        "topic_key": "deepseek-r1-14b-rtx-3090-benchmark",
-        "score": 648.0,
-        "source_draft": "content-queue/2026-02-28/02-deepseek-r1-14b-3090-benchmark.md",
-        "out_file": "src/content/blog/deepseek-r1-14b-3090-benchmark.md",
-        "intent": "hardware"
+        "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu",
+        "title": "Deepseek R1 32B Rent Cloud Gpu Or Local: Practical Guide (2026)",
+        "topic_key": "deepseek-r1-32b-rent-cloud-gpu-or-local",
+        "score": 640.0,
+        "source_draft": "content-queue/2026-03-01/02-deepseek-r1-32b-when-to-rent-cloud-gpu.md",
+        "out_file": "src/content/blog/deepseek-r1-32b-when-to-rent-cloud-gpu.md",
+        "intent": "cost"
       }
     ],
     "skipped": [
       {
-        "draft": "content-queue/2026-02-28/03-ollama-vs-vllm-throughput-comparison-2026.md",
+        "draft": "content-queue/2026-03-01/03-model-deepseek-r1-14b-benchmark-refresh.md",
         "reason": "max_publish_reached"
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-01T03:28:34.664966Z",
+      "queue_date": "2026-03-01",
+      "candidate_count": 3,
+      "published_count": 2,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "rtx4090-vs-rtx3090-for-local-llm",
+          "title": "Rtx 4090 Vs Rtx 3090 Local Llm: Practical Guide (2026)",
+          "topic_key": "rtx-4090-vs-rtx-3090-local-llm",
+          "score": 720.0,
+          "source_draft": "content-queue/2026-03-01/01-rtx4090-vs-rtx3090-for-local-llm.md",
+          "out_file": "src/content/blog/rtx4090-vs-rtx3090-for-local-llm.md",
+          "intent": "hardware"
+        },
+        {
+          "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu",
+          "title": "Deepseek R1 32B Rent Cloud Gpu Or Local: Practical Guide (2026)",
+          "topic_key": "deepseek-r1-32b-rent-cloud-gpu-or-local",
+          "score": 640.0,
+          "source_draft": "content-queue/2026-03-01/02-deepseek-r1-32b-when-to-rent-cloud-gpu.md",
+          "out_file": "src/content/blog/deepseek-r1-32b-when-to-rent-cloud-gpu.md",
+          "intent": "cost"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-03-01/03-model-deepseek-r1-14b-benchmark-refresh.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-02-28T13:01:15.838337Z",
       "queue_date": "2026-02-28",
