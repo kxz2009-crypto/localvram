@@ -125,6 +125,7 @@ def main() -> None:
             sys.exit(1)
 
     rollout_config = json.loads((ROOT / "src" / "data" / "i18n-rollout.json").read_text(encoding="utf-8"))
+    rollout_locale_sets: dict[str, set[str]] = {}
     for key in ("hreflang_rollout_locales", "sitemap_rollout_locales"):
         raw = rollout_config.get(key)
         if not isinstance(raw, list) or not raw:
@@ -140,6 +141,7 @@ def main() -> None:
             for item in unknown:
                 print(f"- {item}")
             sys.exit(1)
+        rollout_locale_sets[key] = set(values)
 
     base_layout = (ROOT / "src" / "layouts" / "BaseLayout.astro").read_text(encoding="utf-8")
     if "OG_LOCALE_BY_LANG" not in base_layout or "isRtlLocale" not in base_layout:
@@ -248,9 +250,41 @@ def main() -> None:
                         )
                         sys.exit(1)
 
+    ready_locales: set[str] = set()
+    for locale_key in EXPECTED_STANDARD_LOCALES:
+        locale_ready = True
+        for page_id in REQUIRED_I18N_COPY_PAGES:
+            page_entry = pages.get(page_id, {})
+            en_fields = page_entry.get("en", {}) if isinstance(page_entry, dict) else {}
+            locale_fields = page_entry.get("locales", {}).get(locale_key, {}) if isinstance(page_entry, dict) else {}
+            keys = list(en_fields.keys()) if isinstance(en_fields, dict) else []
+            if not keys:
+                continue
+            fallback_count = 0
+            for key in keys:
+                val = locale_fields.get(key) if isinstance(locale_fields, dict) else None
+                if not isinstance(val, str) or not val.strip():
+                    fallback_count += 1
+            fallback_ratio = fallback_count / len(keys)
+            if fallback_ratio > threshold:
+                locale_ready = False
+                break
+        if locale_ready:
+            ready_locales.add(locale_key)
+
+    for rollout_key in ("hreflang_rollout_locales", "sitemap_rollout_locales"):
+        disallowed = sorted(x for x in rollout_locale_sets.get(rollout_key, set()) if x != "en" and x not in ready_locales)
+        if disallowed:
+            print(f"quality gate failed: {rollout_key} contains locales not ready for index")
+            print(f"- ready locales: {sorted(ready_locales) if ready_locales else '(none)'}")
+            for item in disallowed:
+                print(f"- {item}")
+            sys.exit(1)
+
     print(
         f"i18n copy checks ok: pages={len(REQUIRED_I18N_COPY_PAGES)} locales={len(EXPECTED_STANDARD_LOCALES)} threshold={threshold}"
     )
+    print(f"i18n readiness ok: ready locales = {sorted(ready_locales) if ready_locales else '(none)'}")
 
     models = json.loads((ROOT / "src" / "data" / "models.json").read_text(encoding="utf-8"))
     model_catalog = json.loads((ROOT / "src" / "data" / "model-catalog.json").read_text(encoding="utf-8"))

@@ -15,6 +15,8 @@ Current rollback baseline:
 If release goes wrong, rollback to the tag above.
 
 ## Phase 0: Pre-Deploy Gate
+0. Run readiness audit:
+   - `python scripts/i18n-readiness.py`
 1. `Page Manifest` coverage is complete for all `page_id`.
 2. English-to-10-locale page parity check passes.
 3. `zh_policy` is `redirect_to_cn` for all `.com` pages.
