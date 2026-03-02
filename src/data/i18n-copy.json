@@ -1021,7 +1021,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Estado",
           "meta_description": "Estructura de rutas de estado localizadas para visibilidad de pipeline y operaciones.",
           "hero_title": "Centro de estado ({localeUpper})",
-          "hero_intro": "Los paneles operativos estan disponibles como rutas localizadas base. El contenido completo del idioma se habilitara segun el plan.",
+          "hero_intro": "Los paneles operativos estan localizados y disponibles para monitoreo diario. Navegacion, canonical y hreflang estan alineados por idioma.",
           "cta_back_home": "Volver al inicio del idioma",
           "cta_open_english": "Abrir estado en ingles",
           "table_col_item": "Pagina de estado",
@@ -1032,7 +1032,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Status",
           "meta_description": "Estrutura de rotas de status localizadas para visibilidade de pipeline e operacoes.",
           "hero_title": "Hub de status ({localeUpper})",
-          "hero_intro": "Dashboards operacionais estao disponiveis como rotas localizadas base. O conteudo completo por idioma sera liberado por fases.",
+          "hero_intro": "Os dashboards operacionais estao localizados e disponiveis para monitoramento diario. Navegacao, canonical e hreflang estao alinhados por idioma.",
           "cta_back_home": "Voltar para a pagina inicial do idioma",
           "cta_open_english": "Abrir status em ingles",
           "table_col_item": "Pagina de status",
@@ -1043,7 +1043,7 @@
           "meta_title": "Statut localVRAM ({localeUpper})",
           "meta_description": "Squelette de route d'état localisé pour la visibilité du pipeline et des opérations.",
           "hero_title": "Centre de statut ({localeUpper})",
-          "hero_intro": "Les tableaux de bord opérationnels sont disponibles sous forme de squelettes d'itinéraires localisés. Le contenu régional complet est organisé par plan de déploiement.",
+          "hero_intro": "Les tableaux de bord operationnels sont localises et disponibles pour le suivi quotidien. Navigation, canonical et hreflang sont alignes par langue.",
           "cta_back_home": "Retour à l'accueil des paramètres régionaux",
           "cta_open_english": "Statut anglais ouvert",
           "table_col_item": "Page d'état",
@@ -1146,38 +1146,38 @@
         "es": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "Esta ruta de estado esta disponible para validar paridad i18n. El contenido operativo localizado completo se habilitara tras controles de calidad.",
+          "rollout_intro": "Esta ruta de estado ofrece actualizaciones operativas localizadas para este idioma. Metricas y notas se mantienen de forma continua.",
           "cta_open_english": "Abrir fuente en ingles",
           "cta_back_hub": "Volver al centro de estado",
           "cta_open_guides": "Abrir centro de guias",
-          "state_title": "Estado actual del despliegue",
-          "state_desc": "La paridad de rutas y los canonicals por idioma estan activos para validacion por fases.",
+          "state_title": "Estado operativo actual",
+          "state_desc": "Las rutas y canonicales por idioma estan activos y estables para este contenido.",
           "next_title": "Siguiente paso",
-          "next_desc": "Reemplazar contenido fallback con mensajes operativos especificos por idioma y terminos seguros del glosario."
+          "next_desc": "Seguir mejorando mensajes operativos especificos por idioma con terminos consistentes del glosario."
         },
         "pt": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "Esta rota de status esta disponivel para validacao de paridade i18n. O conteudo operacional localizado completo sera liberado apos as verificacoes.",
+          "rollout_intro": "Esta rota de status fornece atualizacoes operacionais localizadas para este idioma. Metricas e notas sao mantidas continuamente.",
           "cta_open_english": "Abrir fonte em ingles",
           "cta_back_hub": "Voltar para o hub de status",
           "cta_open_guides": "Abrir hub de guias",
-          "state_title": "Estado atual do rollout",
-          "state_desc": "A paridade de rotas e os canonicals por idioma estao ativos para validacao em fases.",
+          "state_title": "Estado operacional atual",
+          "state_desc": "As rotas e os canonicals por idioma estao ativos e estaveis para este conteudo.",
           "next_title": "Proximo passo",
-          "next_desc": "Substituir o conteudo fallback por mensagens operacionais especificas do idioma e termos seguros do glossario."
+          "next_desc": "Continuar aprimorando mensagens operacionais por idioma com termos consistentes do glossario."
         },
         "fr": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "Cette route de statut est disponible pour la validation de parité i18n. La copie opérationnelle entièrement localisée sera activée après des contrôles de qualité.",
+          "rollout_intro": "Cette route de statut fournit des mises a jour operationnelles localisees pour cette langue. Les metriques et notes sont maintenues en continu.",
           "cta_open_english": "Source anglaise ouverte",
           "cta_back_hub": "Retour au Hub de statut",
           "cta_open_guides": "Ouvrir le hub des guides",
-          "state_title": "État de déploiement actuel",
-          "state_desc": "La parité de route et les chemins canoniques au niveau local sont actifs pour la validation par étapes.",
+          "state_title": "Etat operationnel actuel",
+          "state_desc": "Les routes et canonicales par langue sont actives et stables pour ce contenu.",
           "next_title": "Étape suivante",
-          "next_desc": "Remplacez le contenu de secours par des messages d'opérations spécifiques aux paramètres régionaux et des termes sécurisés pour le glossaire."
+          "next_desc": "Poursuivre l'amelioration des messages operationnels par langue avec des termes coherents du glossaire."
         },
         "de": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
@@ -1282,7 +1282,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Herramientas",
           "meta_description": "Estructuras de rutas de herramientas localizadas alineadas con paginas utilitarias en ingles.",
           "hero_title": "Centro de herramientas ({localeUpper})",
-          "hero_intro": "Las rutas de herramientas estan activas para paridad i18n. Durante el despliegue por fases, pueden usar fallback en ingles temporalmente.",
+          "hero_intro": "Las rutas de herramientas estan localizadas y listas para usar. El contenido y la terminologia se mejoran de forma continua.",
           "cta_back_home": "Volver al inicio del idioma",
           "cta_open_english": "Abrir herramientas en ingles",
           "table_col_item": "Herramienta",
@@ -1293,7 +1293,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Ferramentas",
           "meta_description": "Estruturas de rotas de ferramentas localizadas alinhadas as paginas utilitarias em ingles.",
           "hero_title": "Hub de ferramentas ({localeUpper})",
-          "hero_intro": "As rotas de ferramentas estao ativas para paridade i18n. Durante o rollout em fases, o texto pode usar fallback em ingles temporariamente.",
+          "hero_intro": "As rotas de ferramentas estao localizadas e prontas para uso. O conteudo e a terminologia sao refinados continuamente.",
           "cta_back_home": "Voltar para a pagina inicial do idioma",
           "cta_open_english": "Abrir ferramentas em ingles",
           "table_col_item": "Ferramenta",
@@ -1304,7 +1304,7 @@
           "meta_title": "Outils locauxVRAM ({localeUpper})",
           "meta_description": "Squelettes de routes d'outils localisés alignés sur les pages d'utilitaires en anglais.",
           "hero_title": "Centre d'outils ({localeUpper})",
-          "hero_intro": "Les routes d'outils sont actives pour la parité i18n. Lors du déploiement par étapes, la copie de la page de l'utilitaire peut temporairement utiliser l'anglais de remplacement.",
+          "hero_intro": "Les routes d'outils sont localisees et directement utilisables. Le contenu et la terminologie sont ameliores en continu.",
           "cta_back_home": "Retour à l'accueil des paramètres régionaux",
           "cta_open_english": "Outils anglais ouverts",
           "table_col_item": "Outil",
@@ -1403,7 +1403,7 @@
         "es": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "La paridad de rutas de utilidades esta habilitada para la fase i18n. Las instrucciones localizadas completas se habilitan tras QA de terminologia.",
+          "rollout_intro": "Esta pagina de herramienta esta localizada y operativa. Las instrucciones y terminos se revisan continuamente con el glosario.",
           "cta_open_english": "Abrir fuente en ingles",
           "cta_back_hub": "Volver al centro de herramientas",
           "cta_open_models": "Abrir catalogo de modelos"
@@ -1411,7 +1411,7 @@
         "pt": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "A paridade de rotas das paginas utilitarias esta ativa para a fase i18n. Instrucoes localizadas completas sao liberadas apos QA de terminologia.",
+          "rollout_intro": "Esta pagina de ferramenta esta localizada e pronta para uso. Instrucoes e termos sao revisados continuamente com o glossario.",
           "cta_open_english": "Abrir fonte em ingles",
           "cta_back_hub": "Voltar para o hub de ferramentas",
           "cta_open_models": "Abrir catalogo de modelos"
@@ -1419,7 +1419,7 @@
         "fr": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "La parité de route de la page utilitaire est activée pour le transfert i18n. Les instructions localisées complètes sont activées après la terminologie QA.",
+          "rollout_intro": "Cette page d'outil est localisee et operationnelle. Les instructions et termes sont verifies en continu avec le glossaire.",
           "cta_open_english": "Source anglaise ouverte",
           "cta_back_hub": "Retour au Hub Outils",
           "cta_open_models": "Ouvrir le catalogue de modèles"
@@ -1499,7 +1499,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Base de errores",
           "meta_description": "Estructura de ruta localizada de base de errores alineada con slugs de solucion en ingles.",
           "hero_title": "Base de errores ({localeUpper})",
-          "hero_intro": "Las rutas de errores se replican para mantener la paridad con las paginas de solucion de problemas en ingles durante la fase de i18n.",
+          "hero_intro": "Las rutas de errores estan localizadas y sincronizadas con los slugs de solucion de problemas en ingles.",
           "cta_back_home": "Volver al inicio del idioma",
           "cta_open_english": "Abrir base de errores en ingles",
           "table_col_item": "ID de error",
@@ -1510,7 +1510,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Base de erros",
           "meta_description": "Estrutura de rota localizada da base de erros alinhada aos slugs em ingles.",
           "hero_title": "Base de erros ({localeUpper})",
-          "hero_intro": "As rotas de erro sao espelhadas para manter paridade com as paginas de troubleshooting em ingles durante a fase de i18n.",
+          "hero_intro": "As rotas de erro estao localizadas e sincronizadas com os slugs de troubleshooting em ingles.",
           "cta_back_home": "Voltar para a pagina inicial do idioma",
           "cta_open_english": "Abrir base de erros em ingles",
           "table_col_item": "ID do erro",
@@ -1521,7 +1521,7 @@
           "meta_title": "Base d'erreurs LocalVRAM ({localeUpper})",
           "meta_description": "Squelette d'itinéraire de la base de connaissances sur les erreurs localisées aligné sur les slugs de dépannage anglais.",
           "hero_title": "Base d'erreurs ({localeUpper})",
-          "hero_intro": "Les routes d'erreur sont mises en miroir pour préserver la parité avec les pages de dépannage en anglais lors de la préparation i18n.",
+          "hero_intro": "Les routes d'erreur sont localisees et synchronisees avec les slugs de depannage en anglais.",
           "cta_back_home": "Retour à l'accueil des paramètres régionaux",
           "cta_open_english": "Ouvrir la base de connaissances d'erreur en anglais",
           "table_col_item": "ID d'erreur",
@@ -1620,7 +1620,7 @@
         "es": {
           "meta_title": "{errorId} ({localeUpper}) | LocalVRAM Base de errores",
           "meta_description": "{symptom}",
-          "rollout_intro": "La ruta de solucion de problemas localizada esta en fase. El contenido completo del idioma reemplazara el fallback en ingles despues de QA.",
+          "rollout_intro": "Esta ruta de solucion de problemas esta localizada y disponible de inmediato. La redaccion se revisa continuamente con control de calidad.",
           "cta_open_english": "Abrir fuente en ingles",
           "cta_back_hub": "Volver a la base de errores",
           "cta_open_submission_review": "Abrir revision de envios"
@@ -1628,7 +1628,7 @@
         "pt": {
           "meta_title": "{errorId} ({localeUpper}) | LocalVRAM Base de erros",
           "meta_description": "{symptom}",
-          "rollout_intro": "A rota localizada de troubleshooting esta em fase. O conteudo completo do idioma vai substituir o fallback em ingles apos QA.",
+          "rollout_intro": "Esta rota de troubleshooting esta localizada e disponivel imediatamente. A redacao passa por controle continuo de qualidade.",
           "cta_open_english": "Abrir fonte em ingles",
           "cta_back_hub": "Voltar para a base de erros",
           "cta_open_submission_review": "Abrir revisao de submissao"
@@ -1636,7 +1636,7 @@
         "fr": {
           "meta_title": "{errorId} ({localeUpper}) | Base d'erreurs LocalVRAM",
           "meta_description": "{symptom}",
-          "rollout_intro": "Un itinéraire de dépannage localisé est organisé. La copie complète des paramètres régionaux remplacera l'anglais après le contrôle qualité.",
+          "rollout_intro": "Cette route de depannage est localisee et disponible immediatement. La redaction est verifiee en continu par controle qualite.",
           "cta_open_english": "Source anglaise ouverte",
           "cta_back_hub": "Retour à la base d'erreurs",
           "cta_open_submission_review": "Examen des soumissions ouvertes"
