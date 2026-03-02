@@ -3,6 +3,14 @@
   "source_locale": "en",
   "phrases": [
     {
+      "en": "200+ model pages grouped by license, size class, and workload scenario.",
+      "translation": ""
+    },
+    {
+      "en": "Apple Silicon",
+      "translation": ""
+    },
+    {
       "en": "Back to Error KB",
       "translation": "Zurück zur Fehler-KB"
     },
@@ -27,8 +35,64 @@
       "translation": "Zurück zum Tools Hub"
     },
     {
+      "en": "Backend Comparison",
+      "translation": ""
+    },
+    {
+      "en": "Benchmark Changelog",
+      "translation": ""
+    },
+    {
+      "en": "Best Coding Models",
+      "translation": ""
+    },
+    {
+      "en": "Best RAG Models",
+      "translation": ""
+    },
+    {
+      "en": "Cluster Network",
+      "translation": ""
+    },
+    {
+      "en": "Compare cloud GPUs",
+      "translation": ""
+    },
+    {
+      "en": "Compatibility Matrix",
+      "translation": ""
+    },
+    {
+      "en": "Content Publish",
+      "translation": ""
+    },
+    {
+      "en": "Conversion Funnel",
+      "translation": ""
+    },
+    {
       "en": "Current Rollout State",
       "translation": "Aktueller Rollout-Status"
+    },
+    {
+      "en": "Daily Blog",
+      "translation": ""
+    },
+    {
+      "en": "Daily Updates",
+      "translation": ""
+    },
+    {
+      "en": "Data Freshness",
+      "translation": ""
+    },
+    {
+      "en": "Data Status",
+      "translation": ""
+    },
+    {
+      "en": "Date-stamped benchmark deltas with environment snapshots and contributor pipeline.",
+      "translation": ""
     },
     {
       "en": "English Source",
@@ -37,6 +101,10 @@
     {
       "en": "Error ID",
       "translation": "Fehler-ID"
+    },
+    {
+      "en": "Error KB",
+      "translation": ""
     },
     {
       "en": "Error KB ({localeUpper})",
@@ -67,12 +135,12 @@
       "translation": "Die Guide-Route-Parität ist aktiviert. Während der Einführung wird die Seitenkopie möglicherweise vorübergehend auf Englisch zurückgesetzt."
     },
     {
-      "en": "Guides",
-      "translation": "Führer"
-    },
-    {
       "en": "Guides Hub ({localeUpper})",
       "translation": "Guides Hub ({localeUpper})"
+    },
+    {
+      "en": "Head-to-head comparisons for high-intent model decisions.",
+      "translation": ""
     },
     {
       "en": "LocalVRAM ({localeUpper}) Error KB",
@@ -95,16 +163,8 @@
       "translation": "LocalVRAM ({localeUpper}) Tools"
     },
     {
-      "en": "LocalVRAM ({localeUpper}) | i18n Preview Hub",
-      "translation": "LocalVRAM ({localeUpper}) | i18n-Vorschau-Hub"
-    },
-    {
-      "en": "LocalVRAM {localeUpper} route is active",
-      "translation": "LocalVRAM {localeUpper}-Route ist aktiv"
-    },
-    {
-      "en": "Locale skeleton routes mapped 1:1 to English guide slugs.",
-      "translation": "Lokale Skelettrouten, die 1:1 auf englische Leitschnecken abgebildet sind."
+      "en": "LocalVRAM ({localeUpper}) | GPU VRAM Calculator & Model Benchmarks",
+      "translation": ""
     },
     {
       "en": "Localized Path",
@@ -121,10 +181,6 @@
     {
       "en": "Localized model catalog route skeleton with slug parity to English model pages.",
       "translation": "Lokalisiertes Routengerüst des Modellkatalogs mit Slug-Parität zu englischen Modellseiten."
-    },
-    {
-      "en": "Localized route skeleton for home, guides, and status sections. Content fallback is temporarily English during i18n rollout.",
-      "translation": "Lokalisiertes Routengerüst für Home-, Guides- und Statusabschnitte. Der Inhalts-Fallback ist während der i18n-Einführung vorübergehend auf Englisch verfügbar."
     },
     {
       "en": "Localized route skeleton for model group '{groupName}'.",
@@ -147,6 +203,14 @@
       "translation": "Lokalisierte Fehlerbehebungsroute wird inszeniert. Nach der Qualitätssicherung ersetzt die vollständige Kopie des Gebietsschemas das englische Fallback."
     },
     {
+      "en": "Low-competition high-intent guide for local cluster planning.",
+      "translation": ""
+    },
+    {
+      "en": "Methodology",
+      "translation": ""
+    },
+    {
       "en": "Minimum VRAM",
       "translation": "Mindest-VRAM"
     },
@@ -155,8 +219,20 @@
       "translation": "Modell"
     },
     {
+      "en": "Model Catalog (200+)",
+      "translation": ""
+    },
+    {
       "en": "Model Catalog ({localeUpper})",
       "translation": "Modellkatalog ({localeUpper})"
+    },
+    {
+      "en": "Model Comparisons",
+      "translation": ""
+    },
+    {
+      "en": "Model Scale Hub",
+      "translation": ""
     },
     {
       "en": "Model routes and group routes are staged for locale parity. Full translated model metadata is planned in later rollout.",
@@ -167,8 +243,20 @@
       "translation": "Modelle"
     },
     {
+      "en": "Multimodal Hub",
+      "translation": ""
+    },
+    {
+      "en": "Navigation Hubs",
+      "translation": ""
+    },
+    {
       "en": "Next Step",
       "translation": "Nächster Schritt"
+    },
+    {
+      "en": "Ollama vs vLLM VRAM planning and operator trade-offs.",
+      "translation": ""
     },
     {
       "en": "Open English Error KB",
@@ -215,16 +303,56 @@
       "translation": "Öffnen Sie den VRAM-Rechner"
     },
     {
+      "en": "Open comparison",
+      "translation": ""
+    },
+    {
+      "en": "Open guide",
+      "translation": ""
+    },
+    {
+      "en": "Open model catalog",
+      "translation": ""
+    },
+    {
+      "en": "Open sample compare page",
+      "translation": ""
+    },
+    {
+      "en": "Open update feed",
+      "translation": ""
+    },
+    {
+      "en": "Open verification page",
+      "translation": ""
+    },
+    {
       "en": "Operational dashboards are available as localized route skeletons. Full locale content is staged per rollout plan.",
       "translation": "Betriebsdashboards stehen als lokalisierte Routengerüste zur Verfügung. Der vollständige Gebietsinhalt wird pro Rollout-Plan bereitgestellt."
     },
     {
-      "en": "Operational dashboards mirrored for locale path parity.",
-      "translation": "Betriebs-Dashboards werden für die Parität des Gebietsschemas gespiegelt."
-    },
-    {
       "en": "Optimal VRAM",
       "translation": "Optimaler VRAM"
+    },
+    {
+      "en": "Pick the right model for your GPU in 60 seconds",
+      "translation": ""
+    },
+    {
+      "en": "Pipeline Status",
+      "translation": ""
+    },
+    {
+      "en": "Quantization Blind Test",
+      "translation": ""
+    },
+    {
+      "en": "ROI calculator and cloud fallback links at each decision point.",
+      "translation": ""
+    },
+    {
+      "en": "Real-world compatibility, sustained-load benchmarks, and direct run vs rent decisions.",
+      "translation": ""
     },
     {
       "en": "Replace fallback content with locale-specific operations messaging and glossary-safe terms.",
@@ -247,12 +375,24 @@
       "translation": "Routenparität und kanonische Pfade auf Gebietsschemaebene sind für die gestaffelte Validierung aktiv."
     },
     {
+      "en": "Run or Rent",
+      "translation": ""
+    },
+    {
+      "en": "Runner Health",
+      "translation": ""
+    },
+    {
+      "en": "Runtime Comparison Guide",
+      "translation": ""
+    },
+    {
       "en": "Staged locale route for model detail parity. Full translated model profile is enabled after terminology and data QA.",
       "translation": "Gestaffelte Locale-Route für Modelldetailparität. Das vollständig übersetzte Modellprofil wird nach der Terminologie- und Daten-QA aktiviert."
     },
     {
-      "en": "Status",
-      "translation": "Status"
+      "en": "Start VRAM Calculator",
+      "translation": ""
     },
     {
       "en": "Status Hub ({localeUpper})",
@@ -263,8 +403,16 @@
       "translation": "Statusseite"
     },
     {
-      "en": "This locale is in rollout mode. Navigation, route parity, and SEO tags are under staged validation.",
-      "translation": "Dieses Gebietsschema befindet sich im Rollout-Modus. Navigation, Routenparität und SEO-Tags werden stufenweise validiert."
+      "en": "Submission Review",
+      "translation": ""
+    },
+    {
+      "en": "Terminal-first troubleshooting pages with copy-fix workflow.",
+      "translation": ""
+    },
+    {
+      "en": "Thermal drop-off tracking and 1-hour sustained load runs.",
+      "translation": ""
     },
     {
       "en": "This localized page is in staged rollout mode. Content quality gates and glossary checks are applied before index enablement.",
@@ -287,8 +435,36 @@
       "translation": "Tools-Hub ({localeUpper})"
     },
     {
+      "en": "Tools, model pages, hardware tiers, and status monitors",
+      "translation": ""
+    },
+    {
+      "en": "Top issue fix",
+      "translation": ""
+    },
+    {
+      "en": "Unified-memory guide for M-series local LLM planning.",
+      "translation": ""
+    },
+    {
+      "en": "Use verified local LLM benchmarks to choose models for your GPU, estimate VRAM, compare runtimes, and decide when to run local versus rent cloud GPUs.",
+      "translation": ""
+    },
+    {
       "en": "Utility page route parity is enabled for i18n staging. Full localized instructions are enabled after terminology QA.",
       "translation": "Die Routenparität der Dienstprogrammseite ist für das i18n-Staging aktiviert. Vollständig lokalisierte Anweisungen werden nach der Terminologie-QA aktiviert."
+    },
+    {
+      "en": "Verified on RTX 3090",
+      "translation": ""
+    },
+    {
+      "en": "View changelog",
+      "translation": ""
+    },
+    {
+      "en": "What was updated today for SEO ranking and user decisions.",
+      "translation": ""
     },
     {
       "en": "{errorId} ({localeUpper}) | LocalVRAM Error KB",

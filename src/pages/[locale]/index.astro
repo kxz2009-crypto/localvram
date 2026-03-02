@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import runnerStatus from "../../data/runner-status.json";
+import statusReport from "../../data/status.json";
 import { ROOT_ALTERNATES } from "../../data/root-alternates";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../config/i18n";
 import { withLocale } from "../../lib/locale-paths";
@@ -18,33 +20,51 @@ const copy = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUppe
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 
-const guideEntries = [
-  {
-    title: "Best Coding Models",
-    href: withLocale(locale, "/en/guides/best-coding-models/"),
-  },
-  {
-    title: "Best RAG Models",
-    href: withLocale(locale, "/en/guides/best-rag-models/"),
-  },
-  {
-    title: "Ollama vs vLLM VRAM",
-    href: withLocale(locale, "/en/guides/ollama-vs-vllm-vram/"),
-  },
-];
+const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
+const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
+const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 
-const statusEntries = [
+function formatGpuTemperature(value: number): string {
+  if (!Number.isFinite(value) || value <= 0) {
+    return "unknown";
+  }
+  return `${Math.round(value)}°C`;
+}
+
+function formatUtcDisplay(value: string): string {
+  const text = String(value || "").trim();
+  if (!text || text === "unknown") {
+    return "unknown";
+  }
+  const date = new Date(text);
+  if (Number.isNaN(date.getTime())) {
+    return text;
+  }
+  return date.toISOString().replace(".000Z", "Z");
+}
+
+function localHref(enPath: string): string {
+  return withLocale(locale, enPath);
+}
+
+const lastSyncUtc = formatUtcDisplay(rawLastSync);
+const gpuTemperature = formatGpuTemperature(rawGpuTemperature);
+
+const homeStructuredData = [
   {
-    title: "Data Freshness",
-    href: withLocale(locale, "/en/status/data-freshness/"),
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "LocalVRAM",
+    url: `https://localvram.com/${locale}/`,
+    inLanguage: locale,
+    description: text.meta_description || "Pick the right model for your hardware in 60 seconds.",
   },
   {
-    title: "Pipeline Status",
-    href: withLocale(locale, "/en/status/pipeline-status/"),
-  },
-  {
-    title: "Runner Health",
-    href: withLocale(locale, "/en/status/runner-health/"),
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "LocalVRAM",
+    url: `https://localvram.com/${locale}/`,
+    logo: "https://localvram.com/branding/logo.svg",
   },
 ];
 ---
@@ -55,47 +75,131 @@ const statusEntries = [
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
+  structuredData={homeStructuredData}
   noindex={shouldNoindex}
 >
+  <header class="top-nav">
+    <a class="brand" href={localHref("/en/")}>
+      <img src="/branding/logo.svg" alt="LocalVRAM" />
+    </a>
+    <div class="ticker">
+      RTX 3090: Stable @ {gpuTemperature} | DeepSeek-R1: Verified | Ollama: {ollamaVersion} | Last
+      Sync: <span id="last-sync-local">local time loading...</span> (UTC {lastSyncUtc})
+    </div>
+    <a class="mode-btn" href={localHref("/en/status/data-freshness/")}>{text.nav_data_status}</a>
+  </header>
+
   <main class="container">
     <section class="hero">
+      <img
+        class="verified-pill"
+        src="/branding/ollama-verified-pill.svg"
+        alt="Ollama Verified"
+      />
       <h1>{text.hero_title}</h1>
       <p>{text.hero_intro}</p>
+      <h2>{text.nav_hubs_title}</h2>
+      <h3>{text.nav_hubs_intro}</h3>
       <div class="cta-row">
-        <a class="btn btn-primary" href={withLocale(locale, "/en/guides/")}>{text.cta_guides}</a>
-        <a class="btn" href={withLocale(locale, "/en/status/")}>{text.cta_status}</a>
-        <a class="btn" href="/en/">{text.cta_english}</a>
+        <a class="btn btn-primary" href={localHref("/en/tools/vram-calculator/")}>{text.cta_start_vram}</a>
+        <a class="btn" href={localHref("/en/models/")}>{text.cta_model_catalog}</a>
+        <a class="btn" href={localHref("/en/tools/quantization-blind-test/")}>{text.cta_quant_test}</a>
+        <a class="btn" href={localHref("/en/guides/ollama-vs-vllm-vram/")}>{text.cta_runtime_guide}</a>
+        <a class="btn" href={localHref("/en/guides/best-coding-models/")}>{text.cta_best_coding}</a>
+        <a class="btn" href={localHref("/en/guides/best-rag-models/")}>{text.cta_best_rag}</a>
+        <a class="btn" href="/en/benchmarks/changelog/">{text.cta_benchmark_changelog}</a>
+        <a class="btn" href={localHref("/en/status/data-freshness/")}>{text.cta_data_freshness}</a>
+        <a class="btn" href={localHref("/en/status/runner-health/")}>{text.cta_runner_health}</a>
+        <a class="btn" href={localHref("/en/status/pipeline-status/")}>{text.cta_pipeline_status}</a>
+        <a class="btn" href={localHref("/en/status/conversion-funnel/")}>{text.cta_conversion_funnel}</a>
+        <a class="btn" href={localHref("/en/status/submission-review/")}>{text.cta_submission_review}</a>
+        <a class="btn" href={localHref("/en/status/content-publish/")}>{text.cta_content_publish}</a>
+        <a class="btn" href="/en/matrix/">{text.cta_compat_matrix}</a>
+        <a class="btn" href="/en/multimodal/">{text.cta_multimodal_hub}</a>
+        <a class="btn" href={localHref("/en/errors/")}>{text.cta_error_kb}</a>
+        <a class="btn" href="/en/blog/">{text.cta_daily_blog}</a>
+        <a class="btn" href="/en/about/methodology/">{text.cta_methodology}</a>
       </div>
     </section>
 
     <section class="card-grid">
       <article class="card">
-        <h2>{text.guides_title}</h2>
-        <p>{text.guides_desc}</p>
-        <ul class="locale-list">
-          {guideEntries.map((item) => (
-            <li><a href={item.href}>{item.title}</a></li>
-          ))}
-        </ul>
+        <h2>Verified on 3090</h2>
+        <p>Thermal drop-off tracking and 1-hour sustained load runs.</p>
+        <a class="btn" href="/en/hardware/verified-3090/">Open verification page</a>
       </article>
       <article class="card">
-        <h2>{text.status_title}</h2>
-        <p>{text.status_desc}</p>
-        <ul class="locale-list">
-          {statusEntries.map((item) => (
-            <li><a href={item.href}>{item.title}</a></li>
-          ))}
-        </ul>
+        <h2>Error KB</h2>
+        <p>Terminal-first troubleshooting pages with copy-fix workflow.</p>
+        <a class="btn" href={localHref("/en/errors/cuda-out-of-memory/")}>Top issue fix</a>
+      </article>
+      <article class="card">
+        <h2>Run or Rent</h2>
+        <p>ROI calculator and cloud fallback links at each decision point.</p>
+        <a class="btn" href="/en/affiliate/cloud-gpu/">Compare cloud GPUs</a>
+      </article>
+      <article class="card">
+        <h2>Cluster Network</h2>
+        <p>Low-competition high-intent guide for local cluster planning.</p>
+        <a class="btn" href={localHref("/en/guides/ollama-local-cluster-network/")}>Open guide</a>
+      </article>
+      <article class="card">
+        <h2>Backend Comparison</h2>
+        <p>Ollama vs vLLM VRAM planning and operator trade-offs.</p>
+        <a class="btn" href={localHref("/en/guides/ollama-vs-vllm-vram/")}>Open comparison</a>
+      </article>
+      <article class="card">
+        <h2>Model Comparisons</h2>
+        <p>Head-to-head comparisons for high-intent model decisions.</p>
+        <a class="btn" href="/en/compare/qwen35-35b-q4-vs-llama31-70b-q4/">Open sample compare page</a>
+      </article>
+      <article class="card">
+        <h2>Apple Silicon</h2>
+        <p>Unified-memory guide for M-series local LLM planning.</p>
+        <a class="btn" href="/en/hardware/apple-silicon-llm-guide/">Open guide</a>
+      </article>
+      <article class="card">
+        <h2>Daily Updates</h2>
+        <p>What was updated today for SEO ranking and user decisions.</p>
+        <a class="btn" href="/en/updates/">Open update feed</a>
+      </article>
+      <article class="card">
+        <h2>Model Scale Hub</h2>
+        <p>200+ model pages grouped by license, size class, and workload scenario.</p>
+        <a class="btn" href={localHref("/en/models/")}>Open model catalog</a>
+      </article>
+      <article class="card">
+        <h2>Benchmark Changelog</h2>
+        <p>Date-stamped benchmark deltas with environment snapshots and contributor pipeline.</p>
+        <a class="btn" href="/en/benchmarks/changelog/">View changelog</a>
       </article>
     </section>
   </main>
+  <script define:vars={{ rawLastSync }}>
+    const localSyncNode = document.getElementById("last-sync-local");
+    if (localSyncNode) {
+      const raw = String(rawLastSync || "").trim();
+      if (!raw || raw === "unknown") {
+        localSyncNode.textContent = "unknown";
+      } else {
+        const date = new Date(raw);
+        if (Number.isNaN(date.getTime())) {
+          localSyncNode.textContent = raw;
+        } else {
+          const parts = new Intl.DateTimeFormat(undefined, {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+            timeZoneName: "short"
+          }).formatToParts(date);
+          const part = (type) => parts.find((item) => item.type === type)?.value || "";
+          localSyncNode.textContent = `${part("year")}-${part("month")}-${part("day")} ${part("hour")}:${part("minute")}:${part("second")} ${part("timeZoneName") || "local"}`;
+        }
+      }
+    }
+  </script>
 </BaseLayout>
-
-<style>
-  .locale-list {
-    margin: 0;
-    padding-left: 1.25rem;
-    display: grid;
-    gap: 0.4rem;
-  }
-</style>
