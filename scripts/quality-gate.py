@@ -81,8 +81,9 @@ REQUIRED_I18N_COPY_PAGES = {
 }
 PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
 FORBIDDEN_I18N_FRAGMENTS = {
-    "fr": ["Erreur Ko", "Ko d'erreur"],
-    "ar": ["خطأ بالكيلو بايت", "خطأ كيلو بايت"],
+    "fr": ["Erreur Ko", "Ko d'erreur", "Pomme Silicium", "Démarrer VRAM Calculatrice"],
+    "ko": ["RTX 3090에 확인됨", "공개 비교", "애플실리콘"],
+    "ar": ["خطأ بالكيلو بايت", "خطأ كيلو بايت", "مراكز الملاحة", "اختبار أعمى الكمي", "أبل السيليكون"],
 }
 
 
