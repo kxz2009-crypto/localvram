@@ -19,7 +19,13 @@ export function getStaticPaths() {
 const { locale, item } = Astro.props as { locale: ComLocale; item: RouteManifestItem };
 const pagePath = withLocale(locale, item.enPath);
 const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
-const localizedItem = localizeRouteItem(item, home);
+const previewCopy = resolvePageCopy("guides-detail", locale, {
+  localeUpper: locale.toUpperCase(),
+  itemTitle: item.title,
+  itemDescription: item.description,
+});
+const previewText = previewCopy.fields;
+const localizedItem = localizeRouteItem(item, home, previewText.rollout_intro);
 const copy = resolvePageCopy("guides-detail", locale, {
   localeUpper: locale.toUpperCase(),
   itemTitle: localizedItem.title,

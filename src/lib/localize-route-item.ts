@@ -42,12 +42,13 @@ const ROUTE_COPY_KEYS: Record<string, RouteCopyKeyMap> = {
 export function localizeRouteItem(
   item: RouteManifestItem,
   homeFields: Record<string, string>,
+  fallbackDescription = "",
 ): LocalizedRouteItem {
   const keys = ROUTE_COPY_KEYS[item.enPath] || {};
   const title = keys.titleKey ? homeFields[keys.titleKey] : "";
   const description = keys.descriptionKey ? homeFields[keys.descriptionKey] : "";
   return {
     title: String(title || item.title || "").trim(),
-    description: String(description || homeFields.hero_intro || item.description || "").trim(),
+    description: String(description || fallbackDescription || homeFields.hero_intro || item.description || "").trim(),
   };
 }
