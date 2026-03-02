@@ -54,9 +54,45 @@
           "status_title": "Status",
           "status_desc": "Dashboards operacionais espelhados para manter paridade de caminhos por idioma."
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "LocalVRAM ({localeUpper}) | Centre de prévisualisation i18n",
+          "meta_description": "Squelette d'itinéraire localisé pour les sections d'accueil, de guides et de statut. Le contenu de secours est temporairement en anglais lors du déploiement d'i18n.",
+          "hero_title": "La route LocalVRAM {localeUpper} est active",
+          "hero_intro": "Ces paramètres régionaux sont en mode déploiement. La navigation, la parité d'itinéraire et les balises SEO sont en cours de validation par étapes.",
+          "cta_guides": "Ouvrir le hub des guides",
+          "cta_status": "Ouvrir le centre d'état",
+          "cta_english": "Source anglaise ouverte",
+          "guides_title": "Guides",
+          "guides_desc": "Itinéraires squelettes locaux cartographiés 1: 1 avec des limaces guides anglaises.",
+          "status_title": "Statut",
+          "status_desc": "Tableaux de bord opérationnels mis en miroir pour la parité des chemins régionaux."
+        },
+        "de": {
+          "meta_title": "LocalVRAM ({localeUpper}) | i18n-Vorschau-Hub",
+          "meta_description": "Lokalisiertes Routengerüst für Home-, Guides- und Statusabschnitte. Der Inhalts-Fallback ist während der i18n-Einführung vorübergehend auf Englisch verfügbar.",
+          "hero_title": "LocalVRAM {localeUpper}-Route ist aktiv",
+          "hero_intro": "Dieses Gebietsschema befindet sich im Rollout-Modus. Navigation, Routenparität und SEO-Tags werden stufenweise validiert.",
+          "cta_guides": "Öffnen Sie den Guides Hub",
+          "cta_status": "Öffnen Sie den Status-Hub",
+          "cta_english": "Öffnen Sie die englische Quelle",
+          "guides_title": "Führer",
+          "guides_desc": "Lokale Skelettrouten, die 1:1 auf englische Leitschnecken abgebildet sind.",
+          "status_title": "Status",
+          "status_desc": "Betriebs-Dashboards werden für die Parität des Gebietsschemas gespiegelt."
+        },
+        "ru": {
+          "meta_title": "ЛокальныйVRAM ({localeUpper}) | Центр предварительного просмотра i18n",
+          "meta_description": "Локализованный скелет маршрута для дома, путеводителей и разделов статуса. Во время развертывания i18n резервный контент временно переведен на английский язык.",
+          "hero_title": "Маршрут LocalVRAM {localeUpper} активен",
+          "hero_intro": "Этот языковой стандарт находится в режиме развертывания. Навигация, четность маршрутов и теги SEO проходят поэтапную проверку.",
+          "cta_guides": "Открыть Центр руководств",
+          "cta_status": "Открыть Статус-центр",
+          "cta_english": "Открытый английский исходный код",
+          "guides_title": "Путеводители",
+          "guides_desc": "Скелетные маршруты локали сопоставлены 1:1 с английскими путеводителями.",
+          "status_title": "Статус",
+          "status_desc": "Операционные панели мониторинга зеркально отображены для проверки четности пути к локали."
+        },
         "ja": {
           "meta_title": "LocalVRAM ({localeUpper}) | i18n プレビューハブ",
           "meta_description": "ホーム、ガイド、ステータス向けのローカライズ済みルート骨格です。i18nロールアウト中は一時的に英語フォールバックを使用します。",
@@ -111,9 +147,39 @@
           "table_col_localized_path": "Caminho localizado",
           "table_col_en_source": "Fonte em ingles"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "Guides locauxVRAM ({localeUpper})",
+          "meta_description": "Les guides localisés acheminent le squelette aligné sur les limaces de guidage anglaises.",
+          "hero_title": "Centre de guides ({localeUpper})",
+          "hero_intro": "La parité d'itinéraire de guidage est activée. Lors du déploiement, la copie des pages peut temporairement revenir à l'anglais.",
+          "cta_back_home": "Retour à l'accueil des paramètres régionaux",
+          "cta_open_english": "Guides ouverts en anglais",
+          "table_col_item": "Guide",
+          "table_col_localized_path": "Chemin localisé",
+          "table_col_en_source": "Source anglaise"
+        },
+        "de": {
+          "meta_title": "LocalVRAM ({localeUpper}) Anleitungen",
+          "meta_description": "Lokalisierte Führungen leiten das Skelett entlang englischer Führungsschnecken.",
+          "hero_title": "Guides Hub ({localeUpper})",
+          "hero_intro": "Die Guide-Route-Parität ist aktiviert. Während der Einführung wird die Seitenkopie möglicherweise vorübergehend auf Englisch zurückgesetzt.",
+          "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
+          "cta_open_english": "Öffnen Sie englische Reiseführer",
+          "table_col_item": "Führung",
+          "table_col_localized_path": "Lokalisierter Pfad",
+          "table_col_en_source": "Englische Quelle"
+        },
+        "ru": {
+          "meta_title": "LocalVRAM ({localeUpper}) Руководства",
+          "meta_description": "Скелет маршрута локализованных направляющих соответствует английским направляющим.",
+          "hero_title": "Центр направляющих ({localeUpper})",
+          "hero_intro": "Контроль четности маршрутов включен. Во время развертывания копирование страниц может временно вернуться к английскому языку.",
+          "cta_back_home": "Вернуться на главную страницу локали",
+          "cta_open_english": "Открытые английские руководства",
+          "table_col_item": "Гид",
+          "table_col_localized_path": "Локализованный путь",
+          "table_col_en_source": "Английский источник"
+        },
         "ja": {
           "meta_title": "LocalVRAM ({localeUpper}) ガイド",
           "meta_description": "英語ガイドslugに合わせたローカライズ済みガイドルートの骨格です。",
@@ -169,9 +235,42 @@
           "next_title": "Proximo passo",
           "next_desc": "Substituir o fallback por conteudo totalmente localizado apos aprovacao do glossario e da terminologia."
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Cette page localisée est en mode de déploiement par étapes. Les contrôles de qualité du contenu et les contrôles de glossaire sont appliqués avant l'activation de l'index.",
+          "cta_open_english": "Source anglaise ouverte",
+          "cta_back_hub": "Retour au Hub des guides",
+          "cta_open_status": "Ouvrir le centre d'état",
+          "state_title": "État de déploiement actuel",
+          "state_desc": "La route est active, canonique est limitée aux paramètres régionaux et hreflang est contrôlé par une politique de déploiement par étapes.",
+          "next_title": "Étape suivante",
+          "next_desc": "Remplacez la copie de secours par un contenu entièrement localisé une fois les vérifications du glossaire et de la terminologie réussies."
+        },
+        "de": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Diese lokalisierte Seite befindet sich im gestaffelten Rollout-Modus. Vor der Indexaktivierung werden Inhaltsqualitäts-Gates und Glossarprüfungen angewendet.",
+          "cta_open_english": "Öffnen Sie die englische Quelle",
+          "cta_back_hub": "Zurück zum Guides Hub",
+          "cta_open_status": "Öffnen Sie den Status-Hub",
+          "state_title": "Aktueller Rollout-Status",
+          "state_desc": "Die Route ist aktiv, die kanonische Route ist auf das Gebietsschema beschränkt und Hreflang wird durch eine gestaffelte Rollout-Richtlinie gesteuert.",
+          "next_title": "Nächster Schritt",
+          "next_desc": "Ersetzen Sie die Ersatzkopie durch vollständig lokalisierte Inhalte, nachdem die Glossar- und Terminologieprüfungen bestanden wurden."
+        },
+        "ru": {
+          "meta_title": "{itemTitle} ({localeUpper}) | ЛокальныйVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Эта локализованная страница находится в режиме поэтапного внедрения. Перед включением индексирования применяются контрольные параметры качества контента и проверки глоссария.",
+          "cta_open_english": "Открытый английский исходный код",
+          "cta_back_hub": "Вернуться в Центр руководств",
+          "cta_open_status": "Открыть Статус-центр",
+          "state_title": "Текущее состояние внедрения",
+          "state_desc": "Маршрут активен, канонический зависит от локали, а hreflang контролируется политикой поэтапного развертывания.",
+          "next_title": "Следующий шаг",
+          "next_desc": "Замените резервную копию полностью локализованным контентом после прохождения проверок глоссария и терминологии."
+        },
         "ja": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
@@ -225,9 +324,39 @@
           "table_col_localized_path": "Caminho localizado",
           "table_col_en_source": "Fonte em ingles"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "Statut localVRAM ({localeUpper})",
+          "meta_description": "Squelette de route d'état localisé pour la visibilité du pipeline et des opérations.",
+          "hero_title": "Centre de statut ({localeUpper})",
+          "hero_intro": "Les tableaux de bord opérationnels sont disponibles sous forme de squelettes d'itinéraires localisés. Le contenu régional complet est organisé par plan de déploiement.",
+          "cta_back_home": "Retour à l'accueil des paramètres régionaux",
+          "cta_open_english": "Statut anglais ouvert",
+          "table_col_item": "Page d'état",
+          "table_col_localized_path": "Chemin localisé",
+          "table_col_en_source": "Source anglaise"
+        },
+        "de": {
+          "meta_title": "LocalVRAM ({localeUpper}) Status",
+          "meta_description": "Lokalisiertes Statusroutengerüst für Pipeline- und Betriebstransparenz.",
+          "hero_title": "Status-Hub ({localeUpper})",
+          "hero_intro": "Betriebsdashboards stehen als lokalisierte Routengerüste zur Verfügung. Der vollständige Gebietsinhalt wird pro Rollout-Plan bereitgestellt.",
+          "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
+          "cta_open_english": "Öffnen Sie den englischen Status",
+          "table_col_item": "Statusseite",
+          "table_col_localized_path": "Lokalisierter Pfad",
+          "table_col_en_source": "Englische Quelle"
+        },
+        "ru": {
+          "meta_title": "Статус LocalVRAM ({localeUpper})",
+          "meta_description": "Локализованный скелет маршрута статуса для видимости конвейера и операций.",
+          "hero_title": "Хаб статуса ({localeUpper})",
+          "hero_intro": "Операционные панели доступны в виде локализованных скелетов маршрутов. Полный языковой контент размещается в соответствии с планом развертывания.",
+          "cta_back_home": "Вернуться на главную страницу локали",
+          "cta_open_english": "Открытый английский статус",
+          "table_col_item": "Страница статуса",
+          "table_col_localized_path": "Локализованный путь",
+          "table_col_en_source": "Английский источник"
+        },
         "ja": {
           "meta_title": "LocalVRAM ({localeUpper}) ステータス",
           "meta_description": "パイプラインと運用可視化のためのローカライズ済みステータスルート骨格です。",
@@ -283,9 +412,42 @@
           "next_title": "Proximo passo",
           "next_desc": "Substituir o conteudo fallback por mensagens operacionais especificas do idioma e termos seguros do glossario."
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Cette route de statut est disponible pour la validation de parité i18n. La copie opérationnelle entièrement localisée sera activée après des contrôles de qualité.",
+          "cta_open_english": "Source anglaise ouverte",
+          "cta_back_hub": "Retour au Hub de statut",
+          "cta_open_guides": "Ouvrir le hub des guides",
+          "state_title": "État de déploiement actuel",
+          "state_desc": "La parité de route et les chemins canoniques au niveau local sont actifs pour la validation par étapes.",
+          "next_title": "Étape suivante",
+          "next_desc": "Remplacez le contenu de secours par des messages d'opérations spécifiques aux paramètres régionaux et des termes sécurisés pour le glossaire."
+        },
+        "de": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Diese Statusroute ist für die i18n-Paritätsvalidierung verfügbar. Nach Qualitätsprüfungen wird eine vollständig lokalisierte Betriebskopie aktiviert.",
+          "cta_open_english": "Öffnen Sie die englische Quelle",
+          "cta_back_hub": "Zurück zum Status Hub",
+          "cta_open_guides": "Öffnen Sie den Guides Hub",
+          "state_title": "Aktueller Rollout-Status",
+          "state_desc": "Routenparität und kanonische Pfade auf Gebietsschemaebene sind für die gestaffelte Validierung aktiv.",
+          "next_title": "Nächster Schritt",
+          "next_desc": "Ersetzen Sie Fallback-Inhalte durch gebietsschemaspezifische Betriebsnachrichten und glossarsichere Begriffe."
+        },
+        "ru": {
+          "meta_title": "{itemTitle} ({localeUpper}) | ЛокальныйVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Этот маршрут состояния доступен для проверки четности i18n. Полная локализованная рабочая копия будет активирована после проверки качества.",
+          "cta_open_english": "Открытый английский исходный код",
+          "cta_back_hub": "Вернуться в Статус-центр",
+          "cta_open_guides": "Открыть Центр руководств",
+          "state_title": "Текущее состояние внедрения",
+          "state_desc": "Четность маршрутов и канонические пути на уровне локали активны для поэтапной проверки.",
+          "next_title": "Следующий шаг",
+          "next_desc": "Замените резервный контент сообщениями об операциях, специфичными для локали, и терминами, безопасными для глоссария."
+        },
         "ja": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
@@ -339,9 +501,39 @@
           "table_col_localized_path": "Caminho localizado",
           "table_col_en_source": "Fonte em ingles"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "Outils locauxVRAM ({localeUpper})",
+          "meta_description": "Squelettes de routes d'outils localisés alignés sur les pages d'utilitaires en anglais.",
+          "hero_title": "Centre d'outils ({localeUpper})",
+          "hero_intro": "Les routes d'outils sont actives pour la parité i18n. Lors du déploiement par étapes, la copie de la page de l'utilitaire peut temporairement utiliser l'anglais de remplacement.",
+          "cta_back_home": "Retour à l'accueil des paramètres régionaux",
+          "cta_open_english": "Outils anglais ouverts",
+          "table_col_item": "Outil",
+          "table_col_localized_path": "Chemin localisé",
+          "table_col_en_source": "Source anglaise"
+        },
+        "de": {
+          "meta_title": "LocalVRAM ({localeUpper}) Tools",
+          "meta_description": "Lokalisierte Werkzeugroutengerüste, ausgerichtet an englischen Dienstprogrammseiten.",
+          "hero_title": "Tools-Hub ({localeUpper})",
+          "hero_intro": "Werkzeugrouten sind für i18n-Parität aktiv. Während der schrittweisen Einführung wird beim Kopieren der Dienstprogrammseite möglicherweise vorübergehend die englische Ersatzversion verwendet.",
+          "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
+          "cta_open_english": "Öffnen Sie die englischen Tools",
+          "table_col_item": "Werkzeug",
+          "table_col_localized_path": "Lokalisierter Pfad",
+          "table_col_en_source": "Englische Quelle"
+        },
+        "ru": {
+          "meta_title": "Инструменты LocalVRAM ({localeUpper})",
+          "meta_description": "Локализованные скелеты маршрутов инструментов, соответствующие английским служебным страницам.",
+          "hero_title": "Центр инструментов ({localeUpper})",
+          "hero_intro": "Маршруты инструментов активны для четности i18n. Во время поэтапного развертывания копия страницы утилиты может временно использовать резервный вариант на английском языке.",
+          "cta_back_home": "Вернуться на главную страницу локали",
+          "cta_open_english": "Открытые английские инструменты",
+          "table_col_item": "Инструмент",
+          "table_col_localized_path": "Локализованный путь",
+          "table_col_en_source": "Английский источник"
+        },
         "ja": {
           "meta_title": "LocalVRAM ({localeUpper}) ツール",
           "meta_description": "英語ユーティリティページに合わせたローカライズ済みツールルート骨格です。",
@@ -385,9 +577,30 @@
           "cta_back_hub": "Voltar para o hub de ferramentas",
           "cta_open_models": "Abrir catalogo de modelos"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "La parité de route de la page utilitaire est activée pour le transfert i18n. Les instructions localisées complètes sont activées après la terminologie QA.",
+          "cta_open_english": "Source anglaise ouverte",
+          "cta_back_hub": "Retour au Hub Outils",
+          "cta_open_models": "Ouvrir le catalogue de modèles"
+        },
+        "de": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Die Routenparität der Dienstprogrammseite ist für das i18n-Staging aktiviert. Vollständig lokalisierte Anweisungen werden nach der Terminologie-QA aktiviert.",
+          "cta_open_english": "Öffnen Sie die englische Quelle",
+          "cta_back_hub": "Zurück zum Tools Hub",
+          "cta_open_models": "Modellkatalog öffnen"
+        },
+        "ru": {
+          "meta_title": "{itemTitle} ({localeUpper}) | ЛокальныйVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Для промежуточной обработки i18n включена четность маршрута страницы утилиты. Полные локализованные инструкции доступны после проверки терминологии.",
+          "cta_open_english": "Открытый английский исходный код",
+          "cta_back_hub": "Вернуться в Центр инструментов",
+          "cta_open_models": "Открыть каталог моделей"
+        },
         "ja": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
@@ -437,9 +650,39 @@
           "table_col_localized_path": "Caminho localizado",
           "table_col_en_source": "Fonte em ingles"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "Ko d'erreur LocalVRAM ({localeUpper})",
+          "meta_description": "Squelette d'itinéraire de la base de connaissances sur les erreurs localisées aligné sur les slugs de dépannage anglais.",
+          "hero_title": "Erreur Ko ({localeUpper})",
+          "hero_intro": "Les routes d'erreur sont mises en miroir pour préserver la parité avec les pages de dépannage en anglais lors de la préparation i18n.",
+          "cta_back_home": "Retour à l'accueil des paramètres régionaux",
+          "cta_open_english": "Ouvrir la base de connaissances d'erreur en anglais",
+          "table_col_item": "ID d'erreur",
+          "table_col_localized_path": "Chemin localisé",
+          "table_col_en_source": "Source anglaise"
+        },
+        "de": {
+          "meta_title": "LocalVRAM ({localeUpper}) Fehler KB",
+          "meta_description": "Lokalisiertes Fehler-Wissensdatenbank-Routengerüst, abgestimmt auf englische Fehlerbehebungs-Slugs.",
+          "hero_title": "Fehler KB ({localeUpper})",
+          "hero_intro": "Fehlerrouten werden gespiegelt, um beim i18n-Staging die Parität mit den englischen Fehlerbehebungsseiten zu wahren.",
+          "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
+          "cta_open_english": "Öffnen Sie die englische Fehler-KB",
+          "table_col_item": "Fehler-ID",
+          "table_col_localized_path": "Lokalisierter Pfad",
+          "table_col_en_source": "Englische Quelle"
+        },
+        "ru": {
+          "meta_title": "Ошибка LocalVRAM ({localeUpper}), КБ",
+          "meta_description": "Скелет маршрутов локализованной базы знаний об ошибках, приведенный в соответствие с английскими краткими инструкциями по устранению неполадок.",
+          "hero_title": "Ошибка КБ ({localeUpper})",
+          "hero_intro": "Маршруты ошибок зеркалируются, чтобы сохранить четность со страницами устранения неполадок на английском языке во время подготовки i18n.",
+          "cta_back_home": "Вернуться на главную страницу локали",
+          "cta_open_english": "Открыть базу знаний об ошибках английского языка",
+          "table_col_item": "Идентификатор ошибки",
+          "table_col_localized_path": "Локализованный путь",
+          "table_col_en_source": "Английский источник"
+        },
         "ja": {
           "meta_title": "LocalVRAM ({localeUpper}) エラーKB",
           "meta_description": "英語トラブルシューティングslugに合わせた、ローカライズ済みエラーKBルートの骨格です。",
@@ -483,9 +726,30 @@
           "cta_back_hub": "Voltar para a base de erros",
           "cta_open_submission_review": "Abrir revisao de submissao"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "{errorId} ({localeUpper}) | Ko d'erreur LocalVRAM",
+          "meta_description": "{symptom}",
+          "rollout_intro": "Un itinéraire de dépannage localisé est organisé. La copie complète des paramètres régionaux remplacera l'anglais après le contrôle qualité.",
+          "cta_open_english": "Source anglaise ouverte",
+          "cta_back_hub": "Retour à la base de connaissances des erreurs",
+          "cta_open_submission_review": "Examen des soumissions ouvertes"
+        },
+        "de": {
+          "meta_title": "{errorId} ({localeUpper}) | LocalVRAM-Fehler-KB",
+          "meta_description": "{symptom}",
+          "rollout_intro": "Lokalisierte Fehlerbehebungsroute wird inszeniert. Nach der Qualitätssicherung ersetzt die vollständige Kopie des Gebietsschemas das englische Fallback.",
+          "cta_open_english": "Öffnen Sie die englische Quelle",
+          "cta_back_hub": "Zurück zur Fehler-KB",
+          "cta_open_submission_review": "Öffnen Sie die Einreichungsprüfung"
+        },
+        "ru": {
+          "meta_title": "{errorId} ({localeUpper}) | Ошибка LocalVRAM, КБ",
+          "meta_description": "{symptom}",
+          "rollout_intro": "Разработан локальный маршрут устранения неполадок. Полная версия локали заменит запасной вариант английского языка после проверки качества.",
+          "cta_open_english": "Открытый английский исходный код",
+          "cta_back_hub": "Вернуться к базе знаний об ошибках",
+          "cta_open_submission_review": "Открытая проверка подачи"
+        },
         "ja": {
           "meta_title": "{errorId} ({localeUpper}) | LocalVRAM エラーKB",
           "meta_description": "{symptom}",
@@ -547,9 +811,51 @@
           "label_group": "Grupo",
           "label_model": "Modelo"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "Catalogue de modèles LocalVRAM ({localeUpper})",
+          "meta_description": "Squelette d'itinéraire du catalogue de modèles localisé avec parité slug vers les pages de modèles en anglais.",
+          "hero_title": "Catalogue de modèles ({localeUpper})",
+          "hero_intro": "Les itinéraires modèles et les itinéraires de groupe sont organisés pour la parité locale. Les métadonnées du modèle entièrement traduites sont prévues lors d’un déploiement ultérieur.",
+          "cta_back_home": "Retour à l'accueil des paramètres régionaux",
+          "cta_open_english": "Ouvrir le catalogue de modèles en anglais",
+          "kpi_models": "Modèles",
+          "kpi_groups": "Groupes",
+          "table_col_item": "Ressource",
+          "table_col_localized_path": "Chemin localisé",
+          "table_col_en_source": "Source anglaise",
+          "label_group": "Groupe",
+          "label_model": "Modèle"
+        },
+        "de": {
+          "meta_title": "LocalVRAM ({localeUpper}) Modellkatalog",
+          "meta_description": "Lokalisiertes Routengerüst des Modellkatalogs mit Slug-Parität zu englischen Modellseiten.",
+          "hero_title": "Modellkatalog ({localeUpper})",
+          "hero_intro": "Modellrouten und Gruppenrouten werden für die Gebietsschemaparität bereitgestellt. Vollständig übersetzte Modellmetadaten sind für einen späteren Rollout geplant.",
+          "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
+          "cta_open_english": "Öffnen Sie den englischen Modellkatalog",
+          "kpi_models": "Modelle",
+          "kpi_groups": "Gruppen",
+          "table_col_item": "Ressource",
+          "table_col_localized_path": "Lokalisierter Pfad",
+          "table_col_en_source": "Englische Quelle",
+          "label_group": "Gruppe",
+          "label_model": "Modell"
+        },
+        "ru": {
+          "meta_title": "Каталог моделей LocalVRAM ({localeUpper})",
+          "meta_description": "Скелет маршрута локализованного каталога моделей с соответствующими URL-адресами страницам моделей на английском языке.",
+          "hero_title": "Каталог моделей ({localeUpper})",
+          "hero_intro": "Модельные и групповые маршруты подготавливаются для проверки соответствия локали. Полные переведенные метаданные модели планируются позднее.",
+          "cta_back_home": "Вернуться на главную страницу локали",
+          "cta_open_english": "Открытый каталог моделей на английском языке",
+          "kpi_models": "Модели",
+          "kpi_groups": "Группы",
+          "table_col_item": "Ресурс",
+          "table_col_localized_path": "Локализованный путь",
+          "table_col_en_source": "Английский источник",
+          "label_group": "Группа",
+          "label_model": "Модель"
+        },
         "ja": {
           "meta_title": "LocalVRAM ({localeUpper}) モデルカタログ",
           "meta_description": "英語モデルページとslugをそろえた、ローカライズ済みモデルカタログルートの骨格です。",
@@ -603,9 +909,36 @@
           "cta_back_hub": "Voltar para o hub de modelos",
           "cta_open_vram": "Abrir calculadora de VRAM"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
+          "meta_description": "Squelette de route localisé pour {modelName}. Ligne de base VRAM : {minVram}GB min, {optimalVram}GB optimale.",
+          "hero_intro": "Itinéraire local par étapes pour la parité des détails du modèle. Le profil de modèle entièrement traduit est activé après le contrôle qualité de la terminologie et des données.",
+          "kpi_min_vram": "VRAM minimum",
+          "kpi_optimal_vram": "VRAM optimal",
+          "cta_open_english": "Source anglaise ouverte",
+          "cta_back_hub": "Retour au hub des modèles",
+          "cta_open_vram": "Ouvrir le calculateur VRAM"
+        },
+        "de": {
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
+          "meta_description": "Lokalisiertes Routengerüst für {modelName}. VRAM-Basislinie: {minVram}GB min, {optimalVram}GB optimal.",
+          "hero_intro": "Gestaffelte Locale-Route für Modelldetailparität. Das vollständig übersetzte Modellprofil wird nach der Terminologie- und Daten-QA aktiviert.",
+          "kpi_min_vram": "Mindest-VRAM",
+          "kpi_optimal_vram": "Optimaler VRAM",
+          "cta_open_english": "Öffnen Sie die englische Quelle",
+          "cta_back_hub": "Zurück zum Models Hub",
+          "cta_open_vram": "Öffnen Sie den VRAM-Rechner"
+        },
+        "ru": {
+          "meta_title": "{modelName} ({localeUpper}) | ЛокальныйVRAM",
+          "meta_description": "Локализованный скелет маршрута для {modelName}. Базовый уровень VRAM: минимальный {minVram}GB, оптимальный {optimalVram}GB.",
+          "hero_intro": "Поэтапный маршрут локали для проверки четности деталей модели. Полный переведенный профиль модели активируется после проверки терминологии и данных.",
+          "kpi_min_vram": "Минимум VRAM",
+          "kpi_optimal_vram": "Оптимальный VRAM",
+          "cta_open_english": "Открытый английский исходный код",
+          "cta_back_hub": "Вернуться в Центр моделей",
+          "cta_open_vram": "Открыть калькулятор VRAM"
+        },
         "ja": {
           "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "{modelName} 向けのローカライズ済みルート骨格です。VRAM基準: 最小 {minVram}GB、推奨 {optimalVram}GB。",
@@ -648,9 +981,30 @@
           "cta_back_hub": "Voltar para o hub de modelos",
           "cta_open_vram": "Abrir calculadora de VRAM"
         },
-        "fr": {},
-        "de": {},
-        "ru": {},
+        "fr": {
+          "meta_title": "{groupName} ({localeUpper}) | Modèles locauxVRAM",
+          "meta_description": "Squelette d'itinéraire localisé pour le groupe de modèles '{groupName}'.",
+          "hero_intro": "La parité de route de groupe est active. Le texte au niveau du groupe est actuellement en préparation et sera localisé après le contrôle qualité du glossaire.",
+          "cta_open_english": "Source anglaise ouverte",
+          "cta_back_hub": "Retour au hub des modèles",
+          "cta_open_vram": "Ouvrir le calculateur VRAM"
+        },
+        "de": {
+          "meta_title": "{groupName} ({localeUpper}) | LocalVRAM-Modelle",
+          "meta_description": "Lokalisiertes Routengerüst für die Modellgruppe „{groupName}“.",
+          "hero_intro": "Gruppenroutenparität ist aktiv. Text auf Gruppenebene wird derzeit bereitgestellt und nach der Qualitätssicherung des Glossars lokalisiert.",
+          "cta_open_english": "Öffnen Sie die englische Quelle",
+          "cta_back_hub": "Zurück zum Models Hub",
+          "cta_open_vram": "Öffnen Sie den VRAM-Rechner"
+        },
+        "ru": {
+          "meta_title": "{groupName} ({localeUpper}) | Модели LocalVRAM",
+          "meta_description": "Локализованный скелет маршрута для группы моделей «{groupName}».",
+          "hero_intro": "Паритет групповых маршрутов активен. Текст на уровне группы в настоящее время находится на стадии подготовки и будет локализован после проверки глоссария.",
+          "cta_open_english": "Открытый английский исходный код",
+          "cta_back_hub": "Вернуться в Центр моделей",
+          "cta_open_vram": "Открыть калькулятор VRAM"
+        },
         "ja": {
           "meta_title": "{groupName} ({localeUpper}) | LocalVRAM モデル",
           "meta_description": "モデルグループ '{groupName}' 向けのローカライズ済みルート骨格です。",

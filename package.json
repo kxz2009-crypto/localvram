@@ -11,6 +11,7 @@
     "i18n:readiness": "python scripts/i18n-readiness.py",
     "i18n:template": "python scripts/export-i18n-translation-template.py",
     "i18n:template:all": "python scripts/export-i18n-translation-template.py --all",
+    "i18n:auto-fill-pack": "python scripts/auto-fill-i18n-pack.py",
     "i18n:apply-pack": "python scripts/apply-i18n-translation-pack.py",
     "i18n:apply-wave": "python scripts/apply-i18n-wave.py",
     "i18n:pack-status": "python scripts/i18n-pack-status.py",

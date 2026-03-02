@@ -28,6 +28,19 @@ For tracked wave files, use repo paths such as:
 
 ## 2) Fill Translations
 
+Optional machine prefill (then human QA):
+
+```powershell
+python scripts/auto-fill-i18n-pack.py --wave-dir src/data/i18n-packs/wave2 --locales fr,de,ru
+```
+
+Notes:
+
+- Auto-fill only writes empty `translation` fields by default.
+- Use `--overwrite` only when you want to replace existing translations.
+- This command depends on `deep-translator` (`python -m pip install deep-translator`).
+- Always run placeholder/quality validation before apply.
+
 Edit the exported file:
 
 - keep `en` as source text
