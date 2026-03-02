@@ -8,8 +8,8 @@ This checklist is for releasing:
 
 ## Fixed Rollback Point
 Current rollback baseline:
-- commit: `f7f203b`
-- tag: `rollback-i18n-20260301-c10`
+- commit: `4902559`
+- tag: `rollback-i18n-20260301-c17`
 - branch: `main` (tagged checkpoint)
 
 If release goes wrong, rollback to the tag above.
@@ -43,46 +43,23 @@ Do not rely on temporary emergency rules long-term.
 2. Confirm deployment status is `Success` and `Active`.
 3. Purge cache for `localvram.com` zone (`Purge Everything`).
 
-## Phase 3: Route Verification (PowerShell)
+## Phase 3: Route + SEO Verification (PowerShell)
 Run from repo root:
 
 ```powershell
-$domain='https://localvram.com'
-$locales=@('en','es','pt','fr','de','ru','ja','ko','ar','hi','id')
+powershell -ExecutionPolicy Bypass -File scripts/verify-production-i18n.ps1
+```
 
-Write-Host "== Locale roots =="
-foreach($l in $locales){
-  $url="$domain/$l/"
-  $resp = curl.exe -s -I $url
-  $status = (($resp | Select-String '^HTTP/1.1 ') | Select-Object -Last 1).Line
-  $loc = (($resp | Select-String '^Location:' | Select-Object -First 1).Line)
-  if(-not $loc){$loc='Location: (none)'}
-  "$l`t$status`t$loc"
-}
+Optional custom domains:
 
-Write-Host "`n== zh redirect behavior =="
-curl.exe -I "$domain/zh/"
-curl.exe -I "$domain/zh/test-path?utm_source=check"
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn"
 ```
 
 Expected:
 1. 11 locale roots on `.com` behave as planned (normally 200).
 2. `/zh/` and `/zh/*` always 301 to `https://localvram.cn/zh/*` with query preserved.
-
-## Phase 4: SEO Verification (PowerShell)
-```powershell
-$domain='https://localvram.com'
-curl.exe -s "$domain/sitemap-index.xml" | Select-String -Pattern 'sitemap-en.xml|sitemap-es.xml|sitemap-pt.xml|sitemap-ja.xml'
-curl.exe -s "$domain/sitemap-en.xml" | Select-String -Pattern '/zh/|/en/'
-curl.exe -s "$domain/sitemap.xml" | Select-String -Pattern 'sitemap-en.xml'
-curl.exe -s "$domain/en/" | Select-String -Pattern 'canonical|hreflang|x-default'
-curl.exe -s "$domain/ja/" | Select-String -Pattern 'canonical|hreflang|x-default'
-```
-
-Expected:
-1. Sitemap index lists only currently rollout-enabled locale sitemaps.
-2. No `.com` sitemap entries under `/zh/`.
-3. Canonical and hreflang tags are present and consistent.
+3. `/en/` hreflang cluster includes `en + 10 locales + x-default` and excludes `zh-CN`.
 
 ## Phase 5: Post-Release Monitoring (7-14 days)
 1. Monitor Cloudflare 404 logs by locale.
@@ -95,10 +72,6 @@ Expected:
 ## Emergency Rollback
 Use only if release causes SEO or routing instability.
 
-```powershell
-git checkout main
-git reset --hard rollback-i18n-20260301-c10
-git push --force-with-lease origin main
-```
-
-Then redeploy Pages and purge cache.
+1. In Cloudflare Pages, redeploy the rollback tag commit (`rollback-i18n-20260301-c17`) to production.
+2. Purge cache for `localvram.com` zone (`Purge Everything`).
+3. Re-run `scripts/verify-production-i18n.ps1` and confirm all checks pass.
