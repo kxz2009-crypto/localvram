@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -78,6 +79,18 @@ REQUIRED_I18N_COPY_PAGES = {
     "models-detail",
     "models-group",
 }
+PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
+
+
+def is_effective_fallback(en_value: object, localized_value: object) -> bool:
+    if not isinstance(localized_value, str) or not localized_value.strip():
+        return True
+    en_text = str(en_value).strip()
+    localized_text = localized_value.strip()
+    if localized_text != en_text:
+        return False
+    # Identical placeholder-only tokens are expected to stay unchanged.
+    return not bool(PLACEHOLDER_ONLY_RE.fullmatch(en_text))
 
 
 def main() -> None:
@@ -290,7 +303,7 @@ def main() -> None:
             fallback_count = 0
             for key in keys:
                 val = locale_fields.get(key) if isinstance(locale_fields, dict) else None
-                if not isinstance(val, str) or not val.strip():
+                if is_effective_fallback(en_fields.get(key), val):
                     fallback_count += 1
             fallback_ratio = fallback_count / len(keys)
             if fallback_ratio > threshold:

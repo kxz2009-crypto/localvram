@@ -1,11 +1,24 @@
 #!/usr/bin/env python3
 import json
+import re
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 COPY_FILE = ROOT / "src" / "data" / "i18n-copy.json"
 OUT_FILE = ROOT / "dist" / "seo-audit" / "i18n-readiness.json"
+PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
+
+
+def is_effective_fallback(en_value: object, localized_value: object) -> bool:
+    if not isinstance(localized_value, str) or not localized_value.strip():
+        return True
+    en_text = str(en_value).strip()
+    localized_text = localized_value.strip()
+    if localized_text != en_text:
+        return False
+    # Identical placeholder-only tokens are expected to stay unchanged.
+    return not bool(PLACEHOLDER_ONLY_RE.fullmatch(en_text))
 
 
 def main() -> int:
@@ -32,8 +45,7 @@ def main() -> int:
                     key
                     for key in keys
                     if not isinstance(locale_fields, dict)
-                    or not isinstance(locale_fields.get(key), str)
-                    or not str(locale_fields.get(key, "")).strip()
+                    or is_effective_fallback(en_fields.get(key), locale_fields.get(key))
                 ]
                 ratio = len(fallback_fields) / len(keys)
             if ratio > threshold:

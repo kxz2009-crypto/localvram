@@ -69,3 +69,4 @@ npm run build
 - Filling copy does **not** automatically enable indexability.
 - Only locales listed in `src/data/i18n-rollout.json` are rollout locales.
 - Non-rollout locales stay `noindex` by policy.
+- Readiness treats direct English copy as fallback (except placeholder-only tokens like `{itemDescription}`).
