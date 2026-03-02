@@ -41,6 +41,8 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "en" / "guides" / "local-llm-cost-vs-cloud.astro",
     ROOT / "src" / "pages" / "en" / "guides" / "ollama-vs-vllm-vram.astro",
     ROOT / "src" / "pages" / "en" / "guides" / "ollama-local-cluster-network.astro",
+    ROOT / "src" / "pages" / "en" / "blog" / "index.astro",
+    ROOT / "src" / "pages" / "en" / "blog" / "[slug].astro",
     ROOT / "src" / "pages" / "en" / "tools" / "vram-calculator.astro",
     ROOT / "src" / "pages" / "en" / "tools" / "roi-calculator.astro",
     ROOT / "src" / "pages" / "en" / "tools" / "quantization-blind-test.astro",
@@ -62,6 +64,8 @@ REQUIRED_PAGES = [
     ROOT / "src" / "pages" / "[locale]" / "models" / "index.astro",
     ROOT / "src" / "pages" / "[locale]" / "models" / "[id].astro",
     ROOT / "src" / "pages" / "[locale]" / "models" / "group" / "[group].astro",
+    ROOT / "src" / "pages" / "[locale]" / "blog" / "index.astro",
+    ROOT / "src" / "pages" / "[locale]" / "blog" / "[slug].astro",
 ]
 EXPECTED_COM_LOCALES = {"en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"}
 EXPECTED_STANDARD_LOCALES = EXPECTED_COM_LOCALES - {"en"}

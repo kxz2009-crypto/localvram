@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => data.lang === "en");
+  return STANDARD_I18N_LOCALES.flatMap((locale) =>
+    posts.map((post) => ({
+      params: { locale, slug: post.slug },
+      props: { locale, post },
+    })),
+  );
+}
+
+const { locale, post } = Astro.props as { locale: ComLocale; post: any };
+const localeUpper = locale.toUpperCase();
+const enPath = `/en/blog/${post.slug}/`;
+const pagePath = withLocale(locale, enPath);
+const home = resolvePageCopy("locale-home", locale, { localeUpper }).fields;
+const copy = resolvePageCopy("guides-detail", locale, {
+  localeUpper,
+  itemTitle: post.data.title,
+  itemDescription: post.data.description,
+});
+const text = copy.fields;
+const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+---
+
+<BaseLayout
+  title={text.meta_title}
+  description={text.meta_description}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={shouldNoindex}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{post.data.title}</h1>
+      <p>{post.data.description}</p>
+      <p>{text.rollout_intro}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={enPath}>{text.cta_open_english}</a>
+        <a class="btn" href={withLocale(locale, "/en/blog/")}>{text.cta_back_hub}</a>
+        <a class="btn" href={withLocale(locale, "/en/status/content-publish/")}>{home.cta_content_publish}</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>{text.state_title}</h2>
+        <p>{text.state_desc}</p>
+      </article>
+      <article class="card">
+        <h2>{text.next_title}</h2>
+        <p>{text.next_desc}</p>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
