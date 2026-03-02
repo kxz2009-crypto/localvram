@@ -80,6 +80,10 @@ REQUIRED_I18N_COPY_PAGES = {
     "models-group",
 }
 PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
+FORBIDDEN_I18N_FRAGMENTS = {
+    "fr": ["Erreur Ko", "Ko d'erreur"],
+    "ar": ["خطأ بالكيلو بايت", "خطأ كيلو بايت"],
+}
 
 
 def is_effective_fallback(en_value: object, localized_value: object) -> bool:
@@ -287,6 +291,12 @@ def main() -> None:
                     if term in en_text and term not in field_value:
                         print(
                             f"quality gate failed: i18n glossary lock broken on page '{page_id}' locale '{locale_key}' field '{field_name}' for term '{term}'"
+                        )
+                        sys.exit(1)
+                for bad_fragment in FORBIDDEN_I18N_FRAGMENTS.get(locale_key, []):
+                    if bad_fragment in field_value:
+                        print(
+                            f"quality gate failed: forbidden i18n fragment '{bad_fragment}' found on page '{page_id}' locale '{locale_key}' field '{field_name}'"
                         )
                         sys.exit(1)
 
