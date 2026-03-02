@@ -12,6 +12,14 @@ Output:
 
 - `dist/seo-audit/i18n-translation-qa.json`
 
+Optional export to checklist CSV:
+
+```powershell
+npm run i18n:export-review-csv
+```
+
+- output: `dist/seo-audit/i18n-manual-review-checklist.csv`
+
 ## 2) Read Two Queues
 
 1. `top_review_queue`
