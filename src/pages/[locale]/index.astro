@@ -19,26 +19,30 @@ const pagePath = `/${locale}/`;
 const copy = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const unknownLabel = String(text.label_unknown || "unknown");
+const localLoadingLabel = String(text.ticker_local_time_loading || "local time loading...");
+const localTimeZoneLabel = String(text.label_local_time_zone || "local");
 
-const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
-const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
+const ollamaVersionRaw = String(runnerStatus?.api?.version?.version || "");
+const ollamaVersion = ollamaVersionRaw && ollamaVersionRaw !== "unknown" ? ollamaVersionRaw : unknownLabel;
+const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "");
 const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 
-function formatGpuTemperature(value: number): string {
+function formatGpuTemperature(value: number, fallback: string): string {
   if (!Number.isFinite(value) || value <= 0) {
-    return "unknown";
+    return fallback;
   }
   return `${Math.round(value)}°C`;
 }
 
-function formatUtcDisplay(value: string): string {
-  const text = String(value || "").trim();
-  if (!text || text === "unknown") {
-    return "unknown";
+function formatUtcDisplay(value: string, fallback: string): string {
+  const normalized = String(value || "").trim();
+  if (!normalized || normalized === "unknown") {
+    return fallback;
   }
-  const date = new Date(text);
+  const date = new Date(normalized);
   if (Number.isNaN(date.getTime())) {
-    return text;
+    return normalized;
   }
   return date.toISOString().replace(".000Z", "Z");
 }
@@ -47,8 +51,8 @@ function localHref(enPath: string): string {
   return withLocale(locale, enPath);
 }
 
-const lastSyncUtc = formatUtcDisplay(rawLastSync);
-const gpuTemperature = formatGpuTemperature(rawGpuTemperature);
+const lastSyncUtc = formatUtcDisplay(rawLastSync, unknownLabel);
+const gpuTemperature = formatGpuTemperature(rawGpuTemperature, unknownLabel);
 
 const homeStructuredData = [
   {
@@ -83,8 +87,7 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      RTX 3090: Stable @ {gpuTemperature} | DeepSeek-R1: Verified | Ollama: {ollamaVersion} | Last
-      Sync: <span id="last-sync-local">local time loading...</span> (UTC {lastSyncUtc})
+      {text.ticker_gpu_label || "RTX 3090"}: {text.ticker_stable_label || "Stable @"} {gpuTemperature} | {text.ticker_model_label || "DeepSeek-R1"}: {text.ticker_verified_label || "Verified"} | {text.ticker_ollama_label || "Ollama"}: {ollamaVersion} | {text.ticker_last_sync_label || "Last Sync"}: <span id="last-sync-local">{localLoadingLabel}</span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href={localHref("/en/status/data-freshness/")}>{text.nav_data_status}</a>
   </header>
@@ -175,12 +178,12 @@ const homeStructuredData = [
       </article>
     </section>
   </main>
-  <script define:vars={{ rawLastSync }}>
+  <script define:vars={{ rawLastSync, unknownLabel, localTimeZoneLabel }}>
     const localSyncNode = document.getElementById("last-sync-local");
     if (localSyncNode) {
       const raw = String(rawLastSync || "").trim();
       if (!raw || raw === "unknown") {
-        localSyncNode.textContent = "unknown";
+        localSyncNode.textContent = unknownLabel;
       } else {
         const date = new Date(raw);
         if (Number.isNaN(date.getTime())) {
@@ -197,7 +200,7 @@ const homeStructuredData = [
             timeZoneName: "short"
           }).formatToParts(date);
           const part = (type) => parts.find((item) => item.type === type)?.value || "";
-          localSyncNode.textContent = `${part("year")}-${part("month")}-${part("day")} ${part("hour")}:${part("minute")}:${part("second")} ${part("timeZoneName") || "local"}`;
+          localSyncNode.textContent = `${part("year")}-${part("month")}-${part("day")} ${part("hour")}:${part("minute")}:${part("second")} ${part("timeZoneName") || localTimeZoneLabel}`;
         }
       }
     }
