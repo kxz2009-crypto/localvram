@@ -54,10 +54,53 @@ const jsonLdList = Array.isArray(structuredData)
   : structuredData
     ? [structuredData]
     : [];
-const footerCopy = {
-  legalText: "Affiliate Disclosure & Privacy Policy",
-  rightsText: "All Rights Reserved."
+const footerCopyByLocale: Record<string, { legalText: string; rightsText: string }> = {
+  en: {
+    legalText: "Affiliate Disclosure & Privacy Policy",
+    rightsText: "All Rights Reserved."
+  },
+  es: {
+    legalText: "Divulgación de afiliados y política de privacidad",
+    rightsText: "Todos los derechos reservados."
+  },
+  pt: {
+    legalText: "Divulgação de afiliados e política de privacidade",
+    rightsText: "Todos os direitos reservados."
+  },
+  fr: {
+    legalText: "Divulgation d'affiliation et politique de confidentialité",
+    rightsText: "Tous droits réservés."
+  },
+  de: {
+    legalText: "Affiliate-Hinweis und Datenschutzrichtlinie",
+    rightsText: "Alle Rechte vorbehalten."
+  },
+  ru: {
+    legalText: "Раскрытие партнерских ссылок и политика конфиденциальности",
+    rightsText: "Все права защищены."
+  },
+  ja: {
+    legalText: "アフィリエイト開示とプライバシーポリシー",
+    rightsText: "全著作権所有。"
+  },
+  ko: {
+    legalText: "제휴 고지 및 개인정보처리방침",
+    rightsText: "모든 권리 보유."
+  },
+  ar: {
+    legalText: "إفصاح الشراكات وسياسة الخصوصية",
+    rightsText: "جميع الحقوق محفوظة."
+  },
+  hi: {
+    legalText: "एफिलिएट प्रकटीकरण और गोपनीयता नीति",
+    rightsText: "सर्वाधिकार सुरक्षित।"
+  },
+  id: {
+    legalText: "Pengungkapan afiliasi & kebijakan privasi",
+    rightsText: "Hak cipta dilindungi."
+  }
 };
+const footerCopy = footerCopyByLocale[locale] || footerCopyByLocale.en;
 ---
 
 <!doctype html>

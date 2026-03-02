@@ -97,7 +97,7 @@ const homeStructuredData = [
       <img
         class="verified-pill"
         src="/branding/ollama-verified-pill.svg"
-        alt="Ollama Verified"
+        alt={`${text.ticker_ollama_label || "Ollama"} ${text.ticker_verified_label || "Verified"}`}
       />
       <h1>{text.hero_title}</h1>
       <p>{text.hero_intro}</p>
