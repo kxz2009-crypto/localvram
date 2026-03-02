@@ -25,7 +25,8 @@ If release goes wrong, rollback to the tag above.
    - hreflang cluster completeness
    - `x-default` to English path
 5. Fallback ratio check passes per locale threshold.
-6. Internal link scanner finds no forbidden cross-locale links.
+6. Internal link scanner finds no forbidden cross-locale links:
+   - `python scripts/check-locale-links.py`
 7. RTL validation (`ar`) is visually accepted.
 
 ## Phase 1: Cloudflare Rules (Simple + Stable)

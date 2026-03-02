@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -166,6 +167,16 @@ def main() -> None:
             print(f"quality gate failed: missing redirect rule '{line}'")
             sys.exit(1)
     print("i18n baseline checks ok: locale config + layout + zh redirect rules")
+
+    locale_link_checker = ROOT / "scripts" / "check-locale-links.py"
+    if not locale_link_checker.exists():
+        print("quality gate failed: missing scripts/check-locale-links.py")
+        sys.exit(1)
+    locale_link_cmd = [sys.executable, str(locale_link_checker)]
+    locale_link_result = subprocess.run(locale_link_cmd, cwd=ROOT)
+    if locale_link_result.returncode != 0:
+        print("quality gate failed: locale link checks failed")
+        sys.exit(locale_link_result.returncode)
 
     i18n_copy = json.loads((ROOT / "src" / "data" / "i18n-copy.json").read_text(encoding="utf-8"))
     i18n_glossary = json.loads((ROOT / "src" / "data" / "i18n-glossary.json").read_text(encoding="utf-8"))
