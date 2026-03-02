@@ -18,13 +18,23 @@ export function getStaticPaths() {
 
 const { locale, item } = Astro.props as { locale: ComLocale; item: Record<string, unknown> };
 const errorId = String(item?.id || "").trim();
-const symptom = String(item?.symptom || "Troubleshooting reference");
+const sourceSymptom = String(item?.symptom || "Troubleshooting reference");
 const enPath = `/en/errors/${errorId}/`;
 const pagePath = withLocale(locale, enPath);
+const previewCopy = resolvePageCopy("errors-detail", locale, {
+  localeUpper: locale.toUpperCase(),
+  errorId,
+  symptom: sourceSymptom,
+});
+const previewText = previewCopy.fields;
+const localizedSymptom =
+  locale === "en"
+    ? sourceSymptom
+    : String(previewText.rollout_intro || sourceSymptom || "Troubleshooting reference");
 const copy = resolvePageCopy("errors-detail", locale, {
   localeUpper: locale.toUpperCase(),
   errorId,
-  symptom,
+  symptom: localizedSymptom,
 });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
@@ -41,7 +51,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
   <main class="container">
     <section class="hero">
       <h1>{errorId}</h1>
-      <p>{symptom}</p>
+      <p>{localizedSymptom}</p>
       <p>{text.rollout_intro}</p>
       <div class="cta-row">
         <a class="btn btn-primary" href={enPath}>{text.cta_open_english}</a>
