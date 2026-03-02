@@ -5,6 +5,7 @@ import { TOOL_ROUTE_ITEMS, type RouteManifestItem } from "../../../data/i18n-rou
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
 import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
+import { localizeRouteItem } from "../../../lib/localize-route-item";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.flatMap((locale) =>
@@ -17,10 +18,12 @@ export function getStaticPaths() {
 
 const { locale, item } = Astro.props as { locale: ComLocale; item: RouteManifestItem };
 const pagePath = withLocale(locale, item.enPath);
+const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
+const localizedItem = localizeRouteItem(item, home);
 const copy = resolvePageCopy("tools-detail", locale, {
   localeUpper: locale.toUpperCase(),
-  itemTitle: item.title,
-  itemDescription: item.description,
+  itemTitle: localizedItem.title,
+  itemDescription: localizedItem.description,
 });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
@@ -36,8 +39,8 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 >
   <main class="container">
     <section class="hero">
-      <h1>{item.title}</h1>
-      <p>{item.description}</p>
+      <h1>{localizedItem.title}</h1>
+      <p>{localizedItem.description}</p>
       <p>{text.rollout_intro}</p>
       <div class="cta-row">
         <a class="btn btn-primary" href={item.enPath}>{text.cta_open_english}</a>

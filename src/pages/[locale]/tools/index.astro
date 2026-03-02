@@ -5,6 +5,7 @@ import { TOOL_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
 import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
+import { localizeRouteItem } from "../../../lib/localize-route-item";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -18,6 +19,7 @@ const pagePath = `/${locale}/tools/`;
 const copy = resolvePageCopy("tools-index", locale, { localeUpper: locale.toUpperCase() });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
 ---
 
 <BaseLayout
@@ -50,7 +52,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
         <tbody>
           {TOOL_ROUTE_ITEMS.map((item) => (
             <tr>
-              <td>{item.title}</td>
+              <td>{localizeRouteItem(item, home).title}</td>
               <td><a href={withLocale(locale, item.enPath)}>{withLocale(locale, item.enPath)}</a></td>
               <td><a href={item.enPath}>{item.enPath}</a></td>
             </tr>
