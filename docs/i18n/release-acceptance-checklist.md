@@ -64,6 +64,34 @@ Expected:
 2. `/zh/` and `/zh/*` always 301 to `https://localvram.cn/zh/*` with query preserved.
 3. `/en/` hreflang cluster includes `en + 10 locales + x-default` and excludes `zh-CN`.
 
+## Phase 4: 1:1 Transition Schedule (6 weeks)
+Target: complete English-to-10-locale `1:1` route parity by **2026-04-13**.
+
+Execution mode (fixed):
+1. Use **daily incremental rollout** (small batches) as default.
+2. Use **weekly unified acceptance** every Monday before next wave.
+3. Do not use a single big-bang content switch for all locales.
+
+Timeline (absolute dates):
+1. **Week 1 (2026-03-03 to 2026-03-09)**:
+   - Finish non-blog parity gaps (`home`, `tools`, `errors`, `status`, `guides`, `hardware`, `models` hubs).
+   - Ensure all locale switchers include `ZH-CN` direct link to `.cn`.
+2. **Week 2-4 (2026-03-10 to 2026-03-30)**:
+   - Blog parity rollout by slug batches (daily fixed quota).
+   - Keep slug identity with English (`/{locale}/blog/{english-slug}/`).
+   - Allow content-level fallback to English only when translation QA fails, but route must not 404.
+3. **Week 5 (2026-03-31 to 2026-04-06)**:
+   - SEO hardening: canonical/hreflang/x-default full sweep.
+   - Internal-link pollution scan (`/en/` body links must not leak to other locales except language switcher).
+4. **Week 6 (2026-04-07 to 2026-04-13)**:
+   - Freeze window for parity closure and copy QA fixes only.
+   - Final production verification and release sign-off.
+
+Daily and weekly operating rhythm:
+1. Daily (Mon-Fri): update one controlled batch, run `i18n-readiness.py`, `check-locale-links.py`, and sample curl verification.
+2. Weekly (Monday): full `verify-production-i18n.ps1` run + sitemap parity check + rollback checkpoint tag.
+3. Weekly rollback checkpoint tag format: `rollback-i18n-week-YYYYMMDD`.
+
 ## Phase 5: Post-Release Monitoring (7-14 days)
 1. Monitor Cloudflare 404 logs by locale.
 2. Monitor redirect hit volume for `/zh*`.
