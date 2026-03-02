@@ -1,0 +1,28 @@
+---
+import LocaleBridgePage from "../../../components/i18n/LocaleBridgePage.astro";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { resolvePageCopy } from "../../../lib/i18n-copy";
+import { withLocale } from "../../../lib/locale-paths";
+
+export function getStaticPaths() {
+  return STANDARD_I18N_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: ComLocale };
+const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
+const enPath = "/en/blog/";
+const pagePath = withLocale(locale, enPath);
+const title = home.cta_daily_blog;
+const description = home.card_updates_desc || home.hero_intro;
+---
+
+<LocaleBridgePage
+  locale={locale}
+  pagePath={pagePath}
+  enPath={enPath}
+  title={title}
+  description={description}
+/>

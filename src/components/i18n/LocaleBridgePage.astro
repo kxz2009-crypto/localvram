@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../data/root-alternates";
+import { withLocale } from "../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../lib/i18n-copy";
+import type { ComLocale } from "../../config/i18n";
+
+type Props = {
+  locale: ComLocale;
+  pagePath: string;
+  enPath: string;
+  title: string;
+  description: string;
+};
+
+const { locale, pagePath, enPath, title, description } = Astro.props as Props;
+const copy = resolvePageCopy("guides-detail", locale, {
+  localeUpper: locale.toUpperCase(),
+  itemTitle: title,
+  itemDescription: description,
+});
+const hubCopy = resolvePageCopy("guides-index", locale, {
+  localeUpper: locale.toUpperCase(),
+});
+const text = copy.fields;
+const hubText = hubCopy.fields;
+const shouldNoindex = shouldNoindexByFallback(
+  locale,
+  Math.max(copy.fallbackRatio, hubCopy.fallbackRatio),
+);
+---
+
+<BaseLayout
+  title={text.meta_title}
+  description={text.meta_description}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={shouldNoindex}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{title}</h1>
+      <p>{description}</p>
+      <p>{text.rollout_intro}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={enPath}>{text.cta_open_english}</a>
+        <a class="btn" href={withLocale(locale, "/en/")}>{hubText.cta_back_home}</a>
+        <a class="btn" href={withLocale(locale, "/en/status/")}>{text.cta_open_status}</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>{text.state_title}</h2>
+        <p>{text.state_desc}</p>
+      </article>
+      <article class="card">
+        <h2>{text.next_title}</h2>
+        <p>{text.next_desc}</p>
+      </article>
+    </section>
+  </main>
+</BaseLayout>

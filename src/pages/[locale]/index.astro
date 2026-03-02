@@ -107,18 +107,18 @@ const homeStructuredData = [
         <a class="btn" href={localHref("/en/guides/ollama-vs-vllm-vram/")}>{text.cta_runtime_guide}</a>
         <a class="btn" href={localHref("/en/guides/best-coding-models/")}>{text.cta_best_coding}</a>
         <a class="btn" href={localHref("/en/guides/best-rag-models/")}>{text.cta_best_rag}</a>
-        <a class="btn" href="/en/benchmarks/changelog/">{text.cta_benchmark_changelog}</a>
+        <a class="btn" href={localHref("/en/benchmarks/changelog/")}>{text.cta_benchmark_changelog}</a>
         <a class="btn" href={localHref("/en/status/data-freshness/")}>{text.cta_data_freshness}</a>
         <a class="btn" href={localHref("/en/status/runner-health/")}>{text.cta_runner_health}</a>
         <a class="btn" href={localHref("/en/status/pipeline-status/")}>{text.cta_pipeline_status}</a>
         <a class="btn" href={localHref("/en/status/conversion-funnel/")}>{text.cta_conversion_funnel}</a>
         <a class="btn" href={localHref("/en/status/submission-review/")}>{text.cta_submission_review}</a>
         <a class="btn" href={localHref("/en/status/content-publish/")}>{text.cta_content_publish}</a>
-        <a class="btn" href="/en/matrix/">{text.cta_compat_matrix}</a>
-        <a class="btn" href="/en/multimodal/">{text.cta_multimodal_hub}</a>
+        <a class="btn" href={localHref("/en/matrix/")}>{text.cta_compat_matrix}</a>
+        <a class="btn" href={localHref("/en/multimodal/")}>{text.cta_multimodal_hub}</a>
         <a class="btn" href={localHref("/en/errors/")}>{text.cta_error_kb}</a>
-        <a class="btn" href="/en/blog/">{text.cta_daily_blog}</a>
-        <a class="btn" href="/en/about/methodology/">{text.cta_methodology}</a>
+        <a class="btn" href={localHref("/en/blog/")}>{text.cta_daily_blog}</a>
+        <a class="btn" href={localHref("/en/about/methodology/")}>{text.cta_methodology}</a>
       </div>
     </section>
 
@@ -161,7 +161,7 @@ const homeStructuredData = [
       <article class="card">
         <h2>{text.card_updates_title}</h2>
         <p>{text.card_updates_desc}</p>
-        <a class="btn" href="/en/updates/">{text.card_updates_cta}</a>
+        <a class="btn" href={localHref("/en/updates/")}>{text.card_updates_cta}</a>
       </article>
       <article class="card">
         <h2>{text.card_model_hub_title}</h2>
@@ -171,7 +171,7 @@ const homeStructuredData = [
       <article class="card">
         <h2>{text.card_changelog_title}</h2>
         <p>{text.card_changelog_desc}</p>
-        <a class="btn" href="/en/benchmarks/changelog/">{text.card_changelog_cta}</a>
+        <a class="btn" href={localHref("/en/benchmarks/changelog/")}>{text.card_changelog_cta}</a>
       </article>
     </section>
   </main>
