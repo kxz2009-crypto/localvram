@@ -1056,7 +1056,7 @@
           "hero_title": "Status-Hub ({localeUpper})",
           "hero_intro": "Die Betriebs-Dashboards sind lokalisiert und für die tägliche Überwachung verfügbar. Navigation, Canonical und hreflang sind pro Sprache abgestimmt.",
           "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
-          "cta_open_english": "Öffnen Sie den englischen Status",
+          "cta_open_english": "Englischen Status öffnen",
           "table_col_item": "Statusseite",
           "table_col_localized_path": "Lokalisierter Pfad",
           "table_col_en_source": "Englische Quelle"
@@ -1067,7 +1067,7 @@
           "hero_title": "Хаб статуса ({localeUpper})",
           "hero_intro": "Операционные панели локализованы и доступны для ежедневного мониторинга. Навигация, canonical и hreflang согласованы по языкам.",
           "cta_back_home": "Вернуться на главную страницу локали",
-          "cta_open_english": "Открытый английский статус",
+          "cta_open_english": "Открыть статус на английском",
           "table_col_item": "Страница статуса",
           "table_col_localized_path": "Локализованный путь",
           "table_col_en_source": "Английский источник"
@@ -1183,25 +1183,25 @@
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
           "rollout_intro": "Diese Statusseite liefert lokalisierte Betriebsupdates für dieses Gebietsschema. Kennzahlen und Hinweise werden kontinuierlich gepflegt.",
-          "cta_open_english": "Öffnen Sie die englische Quelle",
+          "cta_open_english": "Englische Quelle öffnen",
           "cta_back_hub": "Zurück zum Status Hub",
-          "cta_open_guides": "Öffnen Sie den Guides Hub",
-          "state_title": "Aktueller Rollout-Status",
-          "state_desc": "Routenparität und kanonische Pfade auf Gebietsschemaebene sind für die gestaffelte Validierung aktiv.",
+          "cta_open_guides": "Guides-Hub öffnen",
+          "state_title": "Aktueller Betriebsstatus",
+          "state_desc": "Routen und kanonische Pfade pro Sprache sind für diese Inhalte aktiv und stabil.",
           "next_title": "Nächster Schritt",
-          "next_desc": "Ersetzen Sie Fallback-Inhalte durch gebietsschemaspezifische Betriebsnachrichten und glossarsichere Begriffe."
+          "next_desc": "Betriebliche Hinweise pro Sprache mit konsistenter Glossarterminologie weiter verfeinern."
         },
         "ru": {
           "meta_title": "{itemTitle} ({localeUpper}) | ЛокальныйVRAM",
           "meta_description": "{itemDescription}",
           "rollout_intro": "Этот статусный маршрут предоставляет локализованные операционные обновления для данной локали. Метрики и пояснения регулярно обновляются.",
-          "cta_open_english": "Открытый английский исходный код",
+          "cta_open_english": "Открыть английский источник",
           "cta_back_hub": "Вернуться в Статус-центр",
           "cta_open_guides": "Открыть Центр руководств",
-          "state_title": "Текущее состояние внедрения",
-          "state_desc": "Четность маршрутов и канонические пути на уровне локали активны для поэтапной проверки.",
+          "state_title": "Текущее операционное состояние",
+          "state_desc": "Маршруты и канонические пути по локалям активны и стабильны для этого контента.",
           "next_title": "Следующий шаг",
-          "next_desc": "Замените резервный контент сообщениями об операциях, специфичными для локали, и терминами, безопасными для глоссария."
+          "next_desc": "Продолжать улучшать операционные сообщения для локали с единообразной терминологией по глоссарию."
         },
         "ja": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
@@ -1210,10 +1210,10 @@
           "cta_open_english": "英語ソースを開く",
           "cta_back_hub": "ステータスハブに戻る",
           "cta_open_guides": "ガイドハブを開く",
-          "state_title": "現在のロールアウト状態",
-          "state_desc": "段階的検証のため、ルートパリティとロケール単位のcanonicalパスが有効です。",
+          "state_title": "現在の運用状態",
+          "state_desc": "このコンテンツでは、言語別のルートと canonical パスが有効かつ安定しています。",
           "next_title": "次のステップ",
-          "next_desc": "フォールバック内容を、ロケール別の運用メッセージと用語集に準拠した用語に置き換えます。"
+          "next_desc": "用語集に沿った一貫した用語で、ロケール別の運用文言を継続的に改善します。"
         },
         "ko": {
           "meta_title": "{itemTitle}({localeUpper}) | 로컬VRAM",
@@ -1317,7 +1317,7 @@
           "hero_title": "Tools-Hub ({localeUpper})",
           "hero_intro": "Die Tool-Routen sind lokalisiert und direkt nutzbar. Inhalte und Terminologie werden laufend präzisiert.",
           "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
-          "cta_open_english": "Öffnen Sie die englischen Tools",
+          "cta_open_english": "Englische Tools öffnen",
           "table_col_item": "Werkzeug",
           "table_col_localized_path": "Lokalisierter Pfad",
           "table_col_en_source": "Englische Quelle"
@@ -1328,7 +1328,7 @@
           "hero_title": "Центр инструментов ({localeUpper})",
           "hero_intro": "Маршруты инструментов локализованы и готовы к использованию. Формулировки и терминология регулярно уточняются.",
           "cta_back_home": "Вернуться на главную страницу локали",
-          "cta_open_english": "Открытые английские инструменты",
+          "cta_open_english": "Открыть инструменты на английском",
           "table_col_item": "Инструмент",
           "table_col_localized_path": "Локализованный путь",
           "table_col_en_source": "Английский источник"
@@ -1428,15 +1428,15 @@
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
           "rollout_intro": "Diese Tool-Seite ist lokalisiert und einsatzbereit. Hinweise und Begriffe werden fortlaufend mit dem Glossar abgeglichen.",
-          "cta_open_english": "Öffnen Sie die englische Quelle",
-          "cta_back_hub": "Zurück zum Tools Hub",
+          "cta_open_english": "Englische Quelle öffnen",
+          "cta_back_hub": "Zurück zum Tools-Hub",
           "cta_open_models": "Modellkatalog öffnen"
         },
         "ru": {
           "meta_title": "{itemTitle} ({localeUpper}) | ЛокальныйVRAM",
           "meta_description": "{itemDescription}",
           "rollout_intro": "Эта страница инструмента локализована и готова к работе. Инструкции и термины постоянно сверяются с глоссарием.",
-          "cta_open_english": "Открытый английский исходный код",
+          "cta_open_english": "Открыть английский источник",
           "cta_back_hub": "Вернуться в Центр инструментов",
           "cta_open_models": "Открыть каталог моделей"
         },
@@ -1534,7 +1534,7 @@
           "hero_title": "Fehler KB ({localeUpper})",
           "hero_intro": "Die Fehlerrouten sind lokalisiert und mit den englischen Troubleshooting-Slugs synchronisiert.",
           "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
-          "cta_open_english": "Öffnen Sie die englische Fehler-KB",
+          "cta_open_english": "Englische Fehler-KB öffnen",
           "table_col_item": "Fehler-ID",
           "table_col_localized_path": "Lokalisierter Pfad",
           "table_col_en_source": "Englische Quelle"
@@ -1645,17 +1645,17 @@
           "meta_title": "{errorId} ({localeUpper}) | LocalVRAM-Fehler-KB",
           "meta_description": "{symptom}",
           "rollout_intro": "Diese Troubleshooting-Seite ist lokalisiert und sofort nutzbar. Formulierungen werden kontinuierlich qualitätsgesichert.",
-          "cta_open_english": "Öffnen Sie die englische Quelle",
+          "cta_open_english": "Englische Quelle öffnen",
           "cta_back_hub": "Zurück zur Fehler-KB",
-          "cta_open_submission_review": "Öffnen Sie die Einreichungsprüfung"
+          "cta_open_submission_review": "Einreichungsprüfung öffnen"
         },
         "ru": {
           "meta_title": "{errorId} ({localeUpper}) | Ошибка LocalVRAM, КБ",
           "meta_description": "{symptom}",
           "rollout_intro": "Этот маршрут устранения неполадок локализован и доступен сразу. Формулировки проходят постоянный контроль качества.",
-          "cta_open_english": "Открытый английский исходный код",
+          "cta_open_english": "Открыть английский источник",
           "cta_back_hub": "Вернуться к базе знаний об ошибках",
-          "cta_open_submission_review": "Открытая проверка подачи"
+          "cta_open_submission_review": "Открыть проверку отправок"
         },
         "ja": {
           "meta_title": "{errorId} ({localeUpper}) | LocalVRAM エラーKB",
