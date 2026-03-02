@@ -245,13 +245,13 @@
           "cta_content_publish": "Publication de contenu",
           "cta_compat_matrix": "Matrice de compatibilité",
           "cta_multimodal_hub": "Hub multimodal",
-          "cta_error_kb": "Erreur Ko",
+          "cta_error_kb": "Base d'erreurs",
           "cta_daily_blog": "Blogue quotidien",
           "cta_methodology": "Méthodologie",
           "card_verified_title": "Vérifié le RTX 3090",
           "card_verified_desc": "Suivi des chutes thermiques et courses à charge soutenue d’une heure.",
           "card_verified_cta": "Ouvrir la page de vérification",
-          "card_error_title": "Erreur Ko",
+          "card_error_title": "Base d'erreurs",
           "card_error_desc": "Pages de dépannage orientées terminal avec flux de travail de copie-correction.",
           "card_error_cta": "Correction du problème principal",
           "card_run_rent_title": "Exécuter ou louer",
@@ -575,13 +575,13 @@
           "cta_content_publish": "نشر المحتوى",
           "cta_compat_matrix": "مصفوفة التوافق",
           "cta_multimodal_hub": "مركز الوسائط المتعددة",
-          "cta_error_kb": "خطأ كيلو بايت",
+          "cta_error_kb": "قاعدة الأخطاء",
           "cta_daily_blog": "المدونة اليومية",
           "cta_methodology": "المنهجية",
           "card_verified_title": "تم التحقق بتاريخ RTX 3090",
           "card_verified_desc": "تتبع الانخفاض الحراري وتشغيل الحمل المستمر لمدة ساعة واحدة.",
           "card_verified_cta": "افتح صفحة التحقق",
-          "card_error_title": "خطأ كيلو بايت",
+          "card_error_title": "قاعدة الأخطاء",
           "card_error_desc": "صفحات استكشاف الأخطاء وإصلاحها في المحطة الطرفية أولاً مع سير عمل إصلاح النسخ.",
           "card_error_cta": "إصلاح المشكلة الأعلى",
           "card_run_rent_title": "تشغيل أو استئجار",
@@ -1518,9 +1518,9 @@
           "table_col_en_source": "Fonte em ingles"
         },
         "fr": {
-          "meta_title": "Ko d'erreur LocalVRAM ({localeUpper})",
+          "meta_title": "Base d'erreurs LocalVRAM ({localeUpper})",
           "meta_description": "Squelette d'itinéraire de la base de connaissances sur les erreurs localisées aligné sur les slugs de dépannage anglais.",
-          "hero_title": "Erreur Ko ({localeUpper})",
+          "hero_title": "Base d'erreurs ({localeUpper})",
           "hero_intro": "Les routes d'erreur sont mises en miroir pour préserver la parité avec les pages de dépannage en anglais lors de la préparation i18n.",
           "cta_back_home": "Retour à l'accueil des paramètres régionaux",
           "cta_open_english": "Ouvrir la base de connaissances d'erreur en anglais",
@@ -1573,12 +1573,12 @@
           "table_col_en_source": "영어 소스"
         },
         "ar": {
-          "meta_title": "محلي VRAM ({localeUpper}) خطأ بالكيلو بايت",
+          "meta_title": "LocalVRAM ({localeUpper}) قاعدة الأخطاء",
           "meta_description": "هيكل مسار قاعدة معرفة الأخطاء المترجمة يتماشى مع الارتباطات الثابتة لاستكشاف الأخطاء وإصلاحها باللغة الإنجليزية.",
-          "hero_title": "خطأ كيلو بايت ({localeUpper})",
+          "hero_title": "قاعدة الأخطاء ({localeUpper})",
           "hero_intro": "يتم عكس مسارات الخطأ للحفاظ على التكافؤ مع صفحات استكشاف الأخطاء وإصلاحها باللغة الإنجليزية أثناء التدريج i18n.",
           "cta_back_home": "العودة إلى الصفحة الرئيسية المحلية",
-          "cta_open_english": "فتح خطأ باللغة الإنجليزية كيلو بايت",
+          "cta_open_english": "افتح قاعدة الأخطاء الإنجليزية",
           "table_col_item": "معرف الخطأ",
           "table_col_localized_path": "المسار المترجم",
           "table_col_en_source": "مصدر انجليزي"
@@ -1634,11 +1634,11 @@
           "cta_open_submission_review": "Abrir revisao de submissao"
         },
         "fr": {
-          "meta_title": "{errorId} ({localeUpper}) | Ko d'erreur LocalVRAM",
+          "meta_title": "{errorId} ({localeUpper}) | Base d'erreurs LocalVRAM",
           "meta_description": "{symptom}",
           "rollout_intro": "Un itinéraire de dépannage localisé est organisé. La copie complète des paramètres régionaux remplacera l'anglais après le contrôle qualité.",
           "cta_open_english": "Source anglaise ouverte",
-          "cta_back_hub": "Retour à la base de connaissances des erreurs",
+          "cta_back_hub": "Retour à la base d'erreurs",
           "cta_open_submission_review": "Examen des soumissions ouvertes"
         },
         "de": {
@@ -1674,11 +1674,11 @@
           "cta_open_submission_review": "공개 제출 검토"
         },
         "ar": {
-          "meta_title": "{errorId} ({localeUpper}) | خطأ محلي VRAM كيلو بايت",
+          "meta_title": "{errorId} ({localeUpper}) | قاعدة أخطاء LocalVRAM",
           "meta_description": "{symptom}",
           "rollout_intro": "يتم تنظيم مسار استكشاف الأخطاء وإصلاحها المحلي. ستحل النسخة المحلية الكاملة محل النسخة الاحتياطية باللغة الإنجليزية بعد ضمان الجودة.",
           "cta_open_english": "فتح المصدر الإنجليزي",
-          "cta_back_hub": "العودة إلى خطأ كيلو بايت",
+          "cta_back_hub": "العودة إلى قاعدة الأخطاء",
           "cta_open_submission_review": "فتح مراجعة التقديم"
         },
         "hi": {
