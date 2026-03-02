@@ -1,0 +1,112 @@
+name: Production Routing Guard
+
+on:
+  schedule:
+    - cron: "15 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  verify-production-routing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify production i18n routing
+        run: |
+          mkdir -p logs
+          if ! pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn"; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'production_routing_drift','failure_detail':'verify-production-i18n.ps1 failed against production domains'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::production_routing_drift - production routing verification failed"
+            exit 1
+          fi
+
+      - name: Alert issue (routing drift)
+        if: always() && failure()
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Production Routing Guard
+          ALERT_FAILURE_CLASS: production_routing_drift
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const failureClass = process.env.ALERT_FAILURE_CLASS || "production_routing_drift";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const body = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: verify-production-i18n.ps1 failed against production domains
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body
+              });
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body
+              });
+            }
+
+      - name: Resolve alert issues on recovery (routing guard)
+        if: always() && success()
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Production Routing Guard
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const prefix = `[OPS-ALERT] ${workflow}:`;
+            const now = new Date().toISOString();
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+
+            const targets = issues.filter((issue) => issue.title.startsWith(prefix));
+            for (const issue of targets) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: `Recovered at ${now}. Latest successful run: ${runUrl}`
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                state: "closed"
+              });
+            }

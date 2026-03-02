@@ -99,6 +99,7 @@ Daily and weekly operating rhythm:
    - hreflang conflicts
    - duplicate canonical
    - excluded by noindex spikes
+4. Keep GitHub Actions `Production Routing Guard` green (every 6 hours). Any failure is treated as Cloudflare/config drift until proven otherwise.
 
 ## Emergency Rollback
 Use only if release causes SEO or routing instability.

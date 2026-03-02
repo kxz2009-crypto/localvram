@@ -21,7 +21,9 @@
     "verify:prod:i18n": "powershell -ExecutionPolicy Bypass -File scripts/verify-production-i18n.ps1",
     "check:locale-links": "python scripts/check-locale-links.py",
     "check:quality": "python scripts/quality-gate.py",
-    "report:freshness": "python scripts/report-data-freshness.py"
+    "report:freshness": "python scripts/report-data-freshness.py",
+    "test:smoke": "python scripts/smoke-tests.py",
+    "test": "npm run check:quality && npm run test:smoke"
   },
   "dependencies": {
     "astro": "^5.2.0"

@@ -14,7 +14,26 @@ ROLLOUT_CONFIG = ROOT / "src" / "data" / "i18n-rollout.json"
 SITE_ORIGIN = "https://localvram.com"
 APPLE_SILICON_SLUG = "apple-silicon-llm-guide"
 COM_LOCALES = ["en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"]
-LOCALIZABLE_EN_PATH_RE = re.compile(r"^/en(?:/(guides|status|tools|errors|models)(?:/|$)|/)$")
+LOCALIZABLE_EN_PREFIXES = [
+    "/en/guides/",
+    "/en/status/",
+    "/en/tools/",
+    "/en/errors/",
+    "/en/models/",
+    "/en/matrix/",
+    "/en/multimodal/",
+    "/en/updates/",
+]
+LOCALIZABLE_EN_EXACT_PATHS = {
+    "/en/",
+    "/en/about/methodology/",
+    "/en/affiliate/cloud-gpu/",
+    "/en/benchmarks/changelog/",
+    "/en/blog/",
+    "/en/compare/qwen35-35b-q4-vs-llama31-70b-q4/",
+    "/en/hardware/apple-silicon-llm-guide/",
+    "/en/hardware/verified-3090/",
+}
 
 
 def load_json(path: Path) -> dict:
@@ -90,7 +109,9 @@ def replace_en_locale(url: str, locale: str) -> str:
 
 def is_localizable_en_url(url: str) -> bool:
     path = urlsplit(url).path
-    return bool(LOCALIZABLE_EN_PATH_RE.match(path))
+    if path in LOCALIZABLE_EN_EXACT_PATHS:
+        return True
+    return any(path.startswith(prefix) for prefix in LOCALIZABLE_EN_PREFIXES)
 
 
 def cleanup_stale_locale_sitemaps(rollout_locales: list[str]) -> None:

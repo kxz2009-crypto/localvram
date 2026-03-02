@@ -47,6 +47,16 @@ function Normalize-AbsoluteLocation {
 $locales = @("en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id")
 $results = @()
 
+$rootHead = Get-HeadMeta -Url "$ComDomain/"
+$rootLocation = Normalize-AbsoluteLocation -BaseDomain $ComDomain -Location $rootHead.location
+$rootOk = ($rootHead.status -eq "301") -and ($rootLocation -eq "$ComDomain/en/")
+$results += [pscustomobject]@{
+  check = "/"
+  status = $rootHead.status
+  location = $rootLocation
+  ok = if ($rootOk) { "OK" } else { "FAIL" }
+}
+
 foreach ($locale in $locales) {
   $url = "$ComDomain/$locale/"
   $head = Get-HeadMeta -Url $url
@@ -60,7 +70,9 @@ foreach ($locale in $locales) {
 }
 
 $zhChecks = @(
+  @{ from = "/zh"; to = "$CnDomain/zh/" },
   @{ from = "/zh/"; to = "$CnDomain/zh/" },
+  @{ from = "/zh/tools/vram-calculator/"; to = "$CnDomain/zh/tools/vram-calculator/" },
   @{ from = "/zh/guides/best-coding-models/?ref=qa"; to = "$CnDomain/zh/guides/best-coding-models/?ref=qa" }
 )
 

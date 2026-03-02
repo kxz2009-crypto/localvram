@@ -50,3 +50,6 @@ jobs:
         run: npm run build
         env:
           ASTRO_TELEMETRY_DISABLED: "1"
+
+      - name: Smoke tests
+        run: npm run test:smoke
