@@ -42,6 +42,18 @@ python scripts/apply-i18n-translation-pack.py --locale fr --pack dist/seo-audit/
 
 `--strict` requires every source phrase in pack to be translated.
 
+Dry-run validation (no write):
+
+```powershell
+python scripts/apply-i18n-translation-pack.py --locale fr --pack src/data/i18n-packs/wave2/i18n-template-fr.json --strict --dry-run
+```
+
+Batch apply one wave directory:
+
+```powershell
+python scripts/apply-i18n-wave.py --wave-dir src/data/i18n-packs/wave2 --locales fr,de,ru --strict --dry-run
+```
+
 ## 4) Validate
 
 ```powershell

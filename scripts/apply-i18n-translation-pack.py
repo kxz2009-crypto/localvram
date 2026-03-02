@@ -46,6 +46,11 @@ def main() -> None:
         action="store_true",
         help="Fail if any english phrase is missing/empty in pack.",
     )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate and report updates without writing to i18n-copy.json.",
+    )
     args = parser.parse_args()
 
     locale = str(args.locale).strip().lower()
@@ -62,6 +67,10 @@ def main() -> None:
 
     pack_data = json.loads(pack_path.read_text(encoding="utf-8"))
     phrase_map = load_phrase_map(pack_data)
+    pack_locale = str(pack_data.get("locale", "")).strip().lower()
+    if pack_locale and pack_locale != locale:
+        print(f"apply failed: pack locale mismatch: pack={pack_locale} cli={locale}")
+        sys.exit(1)
 
     missing: set[str] = set()
     placeholder_errors: list[str] = []
@@ -116,6 +125,10 @@ def main() -> None:
         if len(placeholder_errors) > 80:
             print(f"- ... and {len(placeholder_errors) - 80} more")
         sys.exit(1)
+
+    if args.dry_run:
+        print(f"dry-run ok: locale={locale} updated_fields={updated_fields} source_pack={pack_path}")
+        return
 
     payload["pages"] = pages
     COPY_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
