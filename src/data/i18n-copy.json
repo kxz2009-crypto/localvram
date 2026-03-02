@@ -1218,14 +1218,14 @@
         "ko": {
           "meta_title": "{itemTitle}({localeUpper}) | 로컬VRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "이 상태 경로는 i18n 패리티 검증에 사용할 수 있습니다. 전체 현지화된 운영 사본은 품질 점검 후 활성화됩니다.",
+          "rollout_intro": "이 상태 경로는 해당 로케일의 운영 업데이트를 제공합니다. 지표와 설명은 지속적으로 업데이트됩니다.",
           "cta_open_english": "영어 소스 열기",
           "cta_back_hub": "상태 허브로 돌아가기",
           "cta_open_guides": "가이드 허브 열기",
-          "state_title": "현재 출시 상태",
-          "state_desc": "단계적 검증을 위해 경로 패리티 및 로케일 수준 정식 경로가 활성화됩니다.",
+          "state_title": "현재 운영 상태",
+          "state_desc": "이 콘텐츠의 언어별 경로와 canonical 경로는 활성 상태이며 안정적입니다.",
           "next_title": "다음 단계",
-          "next_desc": "대체 콘텐츠를 로캘별 작업 메시징 및 용어집에 안전한 용어로 바꿉니다."
+          "next_desc": "용어집과 일치하는 용어를 사용해 로케일별 운영 문구를 지속적으로 개선합니다."
         },
         "ar": {
           "meta_title": "{itemTitle} ({localeUpper}) | محليVRAM",
@@ -1348,7 +1348,7 @@
           "meta_title": "로컬VRAM({localeUpper}) 도구",
           "meta_description": "영어 유틸리티 페이지에 맞춰 정렬된 현지화된 도구 경로 뼈대입니다.",
           "hero_title": "도구 허브({localeUpper})",
-          "hero_intro": "i18n 패리티에 대한 공구 경로가 활성화되어 있습니다. 단계적 롤아웃 중에 유틸리티 페이지 복사에서 일시적으로 영어 대체를 사용할 수 있습니다.",
+          "hero_intro": "도구 경로는 현지화되어 바로 사용할 수 있습니다. 문구와 용어는 지속적으로 개선됩니다.",
           "cta_back_home": "로케일 홈으로 돌아가기",
           "cta_open_english": "영어 도구 열기",
           "table_col_item": "도구",
@@ -1451,7 +1451,7 @@
         "ko": {
           "meta_title": "{itemTitle}({localeUpper}) | 로컬VRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "i18n 스테이징에 대해 유틸리티 페이지 경로 패리티가 활성화되었습니다. 용어 QA 후에는 완전히 현지화된 지침이 활성화됩니다.",
+          "rollout_intro": "이 도구 페이지는 현지화되어 바로 사용할 수 있습니다. 안내 문구와 용어는 용어집과 함께 지속적으로 검증됩니다.",
           "cta_open_english": "영어 소스 열기",
           "cta_back_hub": "도구 허브로 돌아가기",
           "cta_open_models": "모델 카탈로그 열기"
@@ -1565,7 +1565,7 @@
           "meta_title": "로컬VRAM({localeUpper}) 오류 KB",
           "meta_description": "영어 문제 해결 슬러그에 맞춰 현지화된 오류 지식 기반 경로 뼈대.",
           "hero_title": "오류 KB({localeUpper})",
-          "hero_intro": "i18n 스테이징 중에 영어 문제 해결 페이지와의 패리티를 유지하기 위해 오류 경로가 미러링됩니다.",
+          "hero_intro": "오류 경로는 현지화되어 있으며 영어 문제 해결 슬러그와 동기화되어 있습니다.",
           "cta_back_home": "로케일 홈으로 돌아가기",
           "cta_open_english": "영어 오류 KB 열기",
           "table_col_item": "오류 ID",
@@ -1668,10 +1668,10 @@
         "ko": {
           "meta_title": "{errorId}({localeUpper}) | 로컬VRAM 오류 KB",
           "meta_description": "{symptom}",
-          "rollout_intro": "현지화된 문제 해결 경로가 준비되어 있습니다. 전체 로케일 사본은 QA 이후 영어 폴백을 대체합니다.",
+          "rollout_intro": "이 문제 해결 경로는 현지화되어 즉시 사용할 수 있습니다. 문구는 지속적으로 품질 검증됩니다.",
           "cta_open_english": "영어 소스 열기",
           "cta_back_hub": "오류 KB로 돌아가기",
-          "cta_open_submission_review": "공개 제출 검토"
+          "cta_open_submission_review": "제출 검토 열기"
         },
         "ar": {
           "meta_title": "{errorId} ({localeUpper}) | قاعدة أخطاء LocalVRAM",
