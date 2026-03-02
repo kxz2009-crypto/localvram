@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-01T03:28:34.939069Z",
+  "generated_at": "2026-03-02T03:16:31.835572Z",
   "source": "src/data/community-reports.json",
   "stale_days_threshold": 7,
   "summary": {
@@ -80,7 +80,7 @@
     {
       "submission_id": "f9ba21e73260",
       "submitted_at": "2026-02-26T06:42:44.633678Z",
-      "age_days": 2,
+      "age_days": 3,
       "model_id": "qwen3-8b-q4",
       "hardware": "RTX 3090 24GB + WSL2",
       "submitter_id": "github:alice",
@@ -92,7 +92,7 @@
     {
       "submission_id": "4d9248019034",
       "submitted_at": "2026-02-26T06:42:44.796988Z",
-      "age_days": 2,
+      "age_days": 3,
       "model_id": "deepseek-r1-14b-q4",
       "hardware": "RTX 4090 24GB + WSL2",
       "submitter_id": "github:bob",
@@ -106,7 +106,7 @@
     {
       "submission_id": "a1d1d3edd2dd",
       "submitted_at": "2026-02-26T06:42:44.943711Z",
-      "age_days": 2,
+      "age_days": 3,
       "model_id": "qwen2.5-14b-q4",
       "hardware": "RTX 3090 24GB + Linux",
       "submitter_id": "github:carol",
@@ -120,7 +120,7 @@
     {
       "submission_id": "dca6301c40c8",
       "submitted_at": "2026-02-26T06:42:45.087713Z",
-      "age_days": 2,
+      "age_days": 3,
       "model_id": "qwen3-8b-q4",
       "hardware": "RTX 3090 24GB + WSL2",
       "submitter_id": "github:alice",
@@ -134,7 +134,7 @@
     {
       "submission_id": "d5213b981960",
       "submitted_at": "2026-02-26T06:42:45.240426Z",
-      "age_days": 2,
+      "age_days": 3,
       "model_id": "llama3.3-70b-q4",
       "hardware": "2x RTX 4090 + Linux",
       "submitter_id": "github:dave",

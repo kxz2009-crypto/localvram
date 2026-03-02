@@ -1,40 +1,73 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-01T03:28:34.664966Z",
+  "updated_at": "2026-03-02T03:16:31.588059Z",
   "last_run": {
-    "run_at": "2026-03-01T03:28:34.664966Z",
-    "queue_date": "2026-03-01",
+    "run_at": "2026-03-02T03:16:31.588059Z",
+    "queue_date": "2026-03-02",
     "candidate_count": 3,
     "published_count": 2,
     "skipped_count": 1,
     "published": [
       {
-        "slug": "rtx4090-vs-rtx3090-for-local-llm",
-        "title": "Rtx 4090 Vs Rtx 3090 Local Llm: Practical Guide (2026)",
-        "topic_key": "rtx-4090-vs-rtx-3090-local-llm",
-        "score": 720.0,
-        "source_draft": "content-queue/2026-03-01/01-rtx4090-vs-rtx3090-for-local-llm.md",
-        "out_file": "src/content/blog/rtx4090-vs-rtx3090-for-local-llm.md",
-        "intent": "hardware"
+        "slug": "model-ministral-3-14b-benchmark-refresh",
+        "title": "Ministral-3:14B Local Inference Benchmark Update: Practical Guide (2026)",
+        "topic_key": "ministral-3-14b-local-inference-benchmark-update",
+        "score": 640.0,
+        "source_draft": "content-queue/2026-03-02/01-model-ministral-3-14b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-ministral-3-14b-benchmark-refresh.md",
+        "intent": "benchmark"
       },
       {
-        "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu",
-        "title": "Deepseek R1 32B Rent Cloud Gpu Or Local: Practical Guide (2026)",
-        "topic_key": "deepseek-r1-32b-rent-cloud-gpu-or-local",
+        "slug": "model-qwen2-5-14b-benchmark-refresh",
+        "title": "Qwen2.5:14B Local Inference Benchmark Update: Practical Guide (2026)",
+        "topic_key": "qwen2-5-14b-local-inference-benchmark-update",
         "score": 640.0,
-        "source_draft": "content-queue/2026-03-01/02-deepseek-r1-32b-when-to-rent-cloud-gpu.md",
-        "out_file": "src/content/blog/deepseek-r1-32b-when-to-rent-cloud-gpu.md",
-        "intent": "cost"
+        "source_draft": "content-queue/2026-03-02/02-model-qwen2-5-14b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-qwen2-5-14b-benchmark-refresh.md",
+        "intent": "benchmark"
       }
     ],
     "skipped": [
       {
-        "draft": "content-queue/2026-03-01/03-model-deepseek-r1-14b-benchmark-refresh.md",
+        "draft": "content-queue/2026-03-02/03-runpod-vs-vast-for-local-llm-fallback.md",
         "reason": "max_publish_reached"
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-02T03:16:31.588059Z",
+      "queue_date": "2026-03-02",
+      "candidate_count": 3,
+      "published_count": 2,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "model-ministral-3-14b-benchmark-refresh",
+          "title": "Ministral-3:14B Local Inference Benchmark Update: Practical Guide (2026)",
+          "topic_key": "ministral-3-14b-local-inference-benchmark-update",
+          "score": 640.0,
+          "source_draft": "content-queue/2026-03-02/01-model-ministral-3-14b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-ministral-3-14b-benchmark-refresh.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "model-qwen2-5-14b-benchmark-refresh",
+          "title": "Qwen2.5:14B Local Inference Benchmark Update: Practical Guide (2026)",
+          "topic_key": "qwen2-5-14b-local-inference-benchmark-update",
+          "score": 640.0,
+          "source_draft": "content-queue/2026-03-02/02-model-qwen2-5-14b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-qwen2-5-14b-benchmark-refresh.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-03-02/03-runpod-vs-vast-for-local-llm-fallback.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-03-01T03:28:34.664966Z",
       "queue_date": "2026-03-01",

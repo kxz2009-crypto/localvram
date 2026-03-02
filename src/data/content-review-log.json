@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-01T03:28:34.591215Z",
+  "updated_at": "2026-03-02T03:16:31.517390Z",
   "last_run": {
-    "run_at": "2026-03-01T03:28:34.591215Z",
-    "queue_date": "2026-03-01",
+    "run_at": "2026-03-02T03:16:31.517390Z",
+    "queue_date": "2026-03-02",
     "reviewed_count": 3,
     "auto_approved_count": 3,
     "pending_manual_review_count": 0,
@@ -12,50 +12,104 @@
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-03-01/01-rtx4090-vs-rtx3090-for-local-llm.md",
-        "slug": "rtx4090-vs-rtx3090-for-local-llm",
-        "score": 720.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 196,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.8947,
-          "topic_score": 0.4167,
-          "slug": "deepseek-r1-14b-3090-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-01/02-deepseek-r1-32b-when-to-rent-cloud-gpu.md",
-        "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu",
-        "score": 640.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 197,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.885,
-          "topic_score": 0.3077,
-          "slug": "qwen35-122b-cloud-vs-local-cost"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-01/03-model-deepseek-r1-14b-benchmark-refresh.md",
-        "slug": "model-deepseek-r1-14b-benchmark-refresh",
+        "draft": "content-queue/2026-03-02/01-model-ministral-3-14b-benchmark-refresh.md",
+        "slug": "model-ministral-3-14b-benchmark-refresh",
         "score": 640.0,
         "status_before": "draft",
         "status_after": "approved_auto",
         "word_count": 196,
         "risk_flags": [],
         "similarity": {
-          "score": 0.9099,
-          "topic_score": 0.4615,
-          "slug": "model-qwen3-coder-30b-local-benchmark"
+          "score": 0.9459,
+          "topic_score": 0.1875,
+          "slug": "rtx4090-vs-rtx3090-for-local-llm"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-02/02-model-qwen2-5-14b-benchmark-refresh.md",
+        "slug": "model-qwen2-5-14b-benchmark-refresh",
+        "score": 640.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 196,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9375,
+          "topic_score": 0.1875,
+          "slug": "rtx4090-vs-rtx3090-for-local-llm"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-02/03-runpod-vs-vast-for-local-llm-fallback.md",
+        "slug": "runpod-vs-vast-for-local-llm-fallback",
+        "score": 640.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 195,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9725,
+          "topic_score": 0.3333,
+          "slug": "rtx4090-vs-rtx3090-for-local-llm"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-02T03:16:31.517390Z",
+      "queue_date": "2026-03-02",
+      "reviewed_count": 3,
+      "auto_approved_count": 3,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-03-02/01-model-ministral-3-14b-benchmark-refresh.md",
+          "slug": "model-ministral-3-14b-benchmark-refresh",
+          "score": 640.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 196,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9459,
+            "topic_score": 0.1875,
+            "slug": "rtx4090-vs-rtx3090-for-local-llm"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-02/02-model-qwen2-5-14b-benchmark-refresh.md",
+          "slug": "model-qwen2-5-14b-benchmark-refresh",
+          "score": 640.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 196,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9375,
+            "topic_score": 0.1875,
+            "slug": "rtx4090-vs-rtx3090-for-local-llm"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-02/03-runpod-vs-vast-for-local-llm-fallback.md",
+          "slug": "runpod-vs-vast-for-local-llm-fallback",
+          "score": 640.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 195,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9725,
+            "topic_score": 0.3333,
+            "slug": "rtx4090-vs-rtx3090-for-local-llm"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-01T03:28:34.591215Z",
       "queue_date": "2026-03-01",
