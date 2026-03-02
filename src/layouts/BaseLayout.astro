@@ -1,7 +1,15 @@
 ---
 import "../styles/global.css";
 import { ROOT_ALTERNATES, buildLocaleAlternates } from "../data/root-alternates";
-import { DEFAULT_LOCALE, OG_LOCALE_BY_LANG, isLocalizedComPath, isRtlLocale } from "../config/i18n";
+import {
+  COM_LOCALES,
+  DEFAULT_LOCALE,
+  OG_LOCALE_BY_LANG,
+  buildLocalePath,
+  isLocalizedComPath,
+  isRtlLocale,
+  stripLocalePrefix,
+} from "../config/i18n";
 
 type AlternateLink = {
   hrefLang: string;
@@ -39,6 +47,7 @@ const {
 } = Astro.props as Props;
 
 const EN_SITE_URL = "https://localvram.com";
+const ZH_SITE_URL = "https://localvram.cn";
 const siteUrl = (canonicalOrigin || EN_SITE_URL).replace(/\/$/, "");
 const path = canonicalPath || Astro.url.pathname || "/";
 const canonicalUrl = new URL(path, siteUrl).toString();
@@ -49,6 +58,30 @@ const ogImageUrl = new URL(ogImage, siteUrl).toString();
 const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
 const ogLocale = OG_LOCALE_BY_LANG[locale] || OG_LOCALE_BY_LANG[DEFAULT_LOCALE];
 const htmlDir = isRtlLocale(locale) ? "rtl" : "ltr";
+const localeTail = stripLocalePrefix(path);
+const shouldShowLocaleSwitcher = isLocalizedComPath(path);
+const localeLabelByCode: Record<string, string> = {
+  en: "EN",
+  es: "ES",
+  pt: "PT",
+  fr: "FR",
+  de: "DE",
+  ru: "RU",
+  ja: "JA",
+  ko: "KO",
+  ar: "AR",
+  hi: "HI",
+  id: "ID",
+};
+const localeSwitchLinks = shouldShowLocaleSwitcher
+  ? COM_LOCALES.map((code) => ({
+      code,
+      label: localeLabelByCode[code] || code.toUpperCase(),
+      href: new URL(buildLocalePath(code, path), EN_SITE_URL).toString(),
+    }))
+  : [];
+const zhSwitchPath = localeTail === "/" ? "/zh/" : `/zh${localeTail}`;
+const zhSwitchHref = new URL(zhSwitchPath, ZH_SITE_URL).toString();
 const jsonLdList = Array.isArray(structuredData)
   ? structuredData
   : structuredData
@@ -137,6 +170,16 @@ const footerCopy = footerCopyByLocale[locale] || footerCopyByLocale.en;
   <body>
     <slot />
     <footer class="legal-footer">
+      {shouldShowLocaleSwitcher && (
+        <nav class="locale-switcher" aria-label="Language switcher">
+          {localeSwitchLinks.map((item) => (
+            <a class:list={["locale-link", item.code === locale && "active"]} href={item.href}>
+              {item.label}
+            </a>
+          ))}
+          <a class="locale-link" href={zhSwitchHref}>ZH-CN</a>
+        </nav>
+      )}
       <a class="legal-mini-link" href="/legal/">{footerCopy.legalText}</a>
       <p class="legal-copyright">© 2026 localVRAM.com | {footerCopy.rightsText}</p>
     </footer>

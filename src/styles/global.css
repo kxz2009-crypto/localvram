@@ -400,6 +400,34 @@ li code {
   text-align: center;
 }
 
+.locale-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 0 10px;
+}
+
+.locale-link {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid #2b3647;
+  border-radius: 999px;
+  color: #8ea0ba;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.locale-link:hover {
+  border-color: #3d4e66;
+  color: #b5c3d8;
+}
+
+.locale-link.active {
+  border-color: #0ea5e9;
+  color: #d6efff;
+}
+
 .legal-mini-link {
   display: inline-block;
   color: #787878;

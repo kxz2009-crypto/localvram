@@ -168,6 +168,10 @@ def main() -> None:
     if 'dir={htmlDir}' not in base_layout:
         print("quality gate failed: BaseLayout missing rtl/ltr html direction binding")
         sys.exit(1)
+    for token in ["ZH_SITE_URL", "zhSwitchHref", "locale-switcher"]:
+        if token not in base_layout:
+            print(f"quality gate failed: BaseLayout missing locale switch token {token}")
+            sys.exit(1)
 
     i18n_copy_lib = (ROOT / "src" / "lib" / "i18n-copy.ts").read_text(encoding="utf-8")
     for token in ["HREFLANG_ROLLOUT_LOCALES", "hreflangRolloutLocaleSet.has(locale)"]:
