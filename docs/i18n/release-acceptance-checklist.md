@@ -8,8 +8,8 @@ This checklist is for releasing:
 
 ## Fixed Rollback Point
 Current rollback baseline:
-- commit: `1d63db6`
-- tag: `rollback-i18n-20260301-c19`
+- commit: `82e8c3e`
+- tag: `rollback-i18n-20260301-c22`
 - branch: `main` (tagged checkpoint)
 
 If release goes wrong, rollback to the tag above.
@@ -75,6 +75,6 @@ Expected:
 ## Emergency Rollback
 Use only if release causes SEO or routing instability.
 
-1. In Cloudflare Pages, redeploy the rollback tag commit (`rollback-i18n-20260301-c19`) to production.
+1. In Cloudflare Pages, redeploy the rollback tag commit (`rollback-i18n-20260301-c22`) to production.
 2. Purge cache for `localvram.com` zone (`Purge Everything`).
 3. Re-run `scripts/verify-production-i18n.ps1` and confirm all checks pass.
