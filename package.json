@@ -12,6 +12,7 @@
     "i18n:template": "python scripts/export-i18n-translation-template.py",
     "i18n:template:all": "python scripts/export-i18n-translation-template.py --all",
     "i18n:apply-pack": "python scripts/apply-i18n-translation-pack.py",
+    "i18n:pack-status": "python scripts/i18n-pack-status.py",
     "check:locale-links": "python scripts/check-locale-links.py",
     "check:quality": "python scripts/quality-gate.py",
     "report:freshness": "python scripts/report-data-freshness.py"

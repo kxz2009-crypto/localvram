@@ -20,6 +20,12 @@ Default output:
 
 Template includes all unique English phrases currently used by `src/data/i18n-copy.json`.
 
+For tracked wave files, use repo paths such as:
+
+- `src/data/i18n-packs/wave2/i18n-template-fr.json`
+- `src/data/i18n-packs/wave2/i18n-template-de.json`
+- `src/data/i18n-packs/wave2/i18n-template-ru.json`
+
 ## 2) Fill Translations
 
 Edit the exported file:
@@ -39,6 +45,7 @@ python scripts/apply-i18n-translation-pack.py --locale fr --pack dist/seo-audit/
 ## 4) Validate
 
 ```powershell
+python scripts/i18n-pack-status.py
 python scripts/quality-gate.py
 npm run i18n:readiness
 npm run build
