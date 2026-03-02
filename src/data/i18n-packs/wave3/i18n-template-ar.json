@@ -1,0 +1,318 @@
+{
+  "locale": "ar",
+  "source_locale": "en",
+  "phrases": [
+    {
+      "en": "Back to Error KB",
+      "translation": "العودة إلى خطأ كيلو بايت"
+    },
+    {
+      "en": "Back to Guides Hub",
+      "translation": "العودة إلى مركز الأدلة"
+    },
+    {
+      "en": "Back to Locale Home",
+      "translation": "العودة إلى الصفحة الرئيسية المحلية"
+    },
+    {
+      "en": "Back to Models Hub",
+      "translation": "العودة إلى مركز النماذج"
+    },
+    {
+      "en": "Back to Status Hub",
+      "translation": "العودة إلى مركز الحالة"
+    },
+    {
+      "en": "Back to Tools Hub",
+      "translation": "العودة إلى مركز الأدوات"
+    },
+    {
+      "en": "Current Rollout State",
+      "translation": "حالة الطرح الحالية"
+    },
+    {
+      "en": "English Source",
+      "translation": "مصدر انجليزي"
+    },
+    {
+      "en": "Error ID",
+      "translation": "معرف الخطأ"
+    },
+    {
+      "en": "Error KB ({localeUpper})",
+      "translation": "خطأ كيلو بايت ({localeUpper})"
+    },
+    {
+      "en": "Error routes are mirrored to preserve parity with English troubleshooting pages during i18n staging.",
+      "translation": "يتم عكس مسارات الخطأ للحفاظ على التكافؤ مع صفحات استكشاف الأخطاء وإصلاحها باللغة الإنجليزية أثناء التدريج i18n."
+    },
+    {
+      "en": "Group",
+      "translation": "مجموعة"
+    },
+    {
+      "en": "Group route parity is active. Group-level text is currently staged and will be localized after glossary QA.",
+      "translation": "تكافؤ مسار المجموعة نشط. يتم حاليًا تنظيم النص على مستوى المجموعة وسيتم ترجمته بعد ضمان الجودة في قاموس المصطلحات."
+    },
+    {
+      "en": "Groups",
+      "translation": "المجموعات"
+    },
+    {
+      "en": "Guide",
+      "translation": "مرشد"
+    },
+    {
+      "en": "Guide route parity is enabled. During rollout, page copy may temporarily fall back to English.",
+      "translation": "تم تمكين تكافؤ مسار الدليل. أثناء الطرح، قد تعود نسخة الصفحة مؤقتًا إلى اللغة الإنجليزية."
+    },
+    {
+      "en": "Guides",
+      "translation": "أدلة"
+    },
+    {
+      "en": "Guides Hub ({localeUpper})",
+      "translation": "مركز الأدلة ({localeUpper})"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Error KB",
+      "translation": "محلي VRAM ({localeUpper}) خطأ بالكيلو بايت"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Guides",
+      "translation": "أدلة محلية VRAM ({localeUpper})."
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Model Catalog",
+      "translation": "محلي VRAM ({localeUpper}) كتالوج النماذج"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Status",
+      "translation": "الحالة المحلية VRAM ({localeUpper})."
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Tools",
+      "translation": "أدوات محلية VRAM ({localeUpper})."
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) | i18n Preview Hub",
+      "translation": "محليVRAM ({localeUpper}) | مركز المعاينة i18n"
+    },
+    {
+      "en": "LocalVRAM {localeUpper} route is active",
+      "translation": "المسار المحلي VRAM {localeUpper} نشط"
+    },
+    {
+      "en": "Locale skeleton routes mapped 1:1 to English guide slugs.",
+      "translation": "تم تعيين المسارات الهيكلية المحلية بنسبة 1:1 إلى دليل الرخويات باللغة الإنجليزية."
+    },
+    {
+      "en": "Localized Path",
+      "translation": "المسار المترجم"
+    },
+    {
+      "en": "Localized error knowledge-base route skeleton aligned to English troubleshooting slugs.",
+      "translation": "هيكل مسار قاعدة معرفة الأخطاء المترجمة يتماشى مع الارتباطات الثابتة لاستكشاف الأخطاء وإصلاحها باللغة الإنجليزية."
+    },
+    {
+      "en": "Localized guides route skeleton aligned to English guide slugs.",
+      "translation": "أدلة محلية لتوجيه هيكل عظمي محاذاة إلى دليل الرخويات الإنجليزية."
+    },
+    {
+      "en": "Localized model catalog route skeleton with slug parity to English model pages.",
+      "translation": "الهيكل العظمي لمسار كتالوج النماذج المترجمة مع التكافؤ التقريبي مع صفحات النماذج الإنجليزية."
+    },
+    {
+      "en": "Localized route skeleton for home, guides, and status sections. Content fallback is temporarily English during i18n rollout.",
+      "translation": "هيكل المسار المترجم للمنزل والأدلة وأقسام الحالة. يكون المحتوى الاحتياطي باللغة الإنجليزية مؤقتًا أثناء طرح i18n."
+    },
+    {
+      "en": "Localized route skeleton for model group '{groupName}'.",
+      "translation": "هيكل المسار المترجم لمجموعة النماذج '{groupName}'."
+    },
+    {
+      "en": "Localized route skeleton for {modelName}. VRAM baseline: {minVram}GB min, {optimalVram}GB optimal.",
+      "translation": "هيكل المسار المترجم لـ {modelName}. VRAM خط الأساس: {minVram} جيجابايت دقيقة، {optimalVram} جيجابايت الأمثل."
+    },
+    {
+      "en": "Localized status route skeleton for pipeline and operations visibility.",
+      "translation": "هيكل مسار الحالة المحلية لرؤية خطوط الأنابيب والعمليات."
+    },
+    {
+      "en": "Localized tool route skeletons aligned to English utility pages.",
+      "translation": "تتماشى الهياكل الأساسية لمسار الأداة المترجمة مع صفحات الأدوات المساعدة باللغة الإنجليزية."
+    },
+    {
+      "en": "Localized troubleshooting route is staged. Full locale copy will replace English fallback after QA.",
+      "translation": "يتم تنظيم مسار استكشاف الأخطاء وإصلاحها المحلي. ستحل النسخة المحلية الكاملة محل النسخة الاحتياطية باللغة الإنجليزية بعد ضمان الجودة."
+    },
+    {
+      "en": "Minimum VRAM",
+      "translation": "الحد الأدنى VRAM"
+    },
+    {
+      "en": "Model",
+      "translation": "نموذج"
+    },
+    {
+      "en": "Model Catalog ({localeUpper})",
+      "translation": "كتالوج النموذج ({localeUpper})"
+    },
+    {
+      "en": "Model routes and group routes are staged for locale parity. Full translated model metadata is planned in later rollout.",
+      "translation": "يتم تنظيم المسارات النموذجية ومسارات المجموعة لتحقيق التكافؤ المحلي. ومن المقرر أن يتم طرح بيانات تعريف النموذج المترجمة بالكامل في وقت لاحق."
+    },
+    {
+      "en": "Models",
+      "translation": "نماذج"
+    },
+    {
+      "en": "Next Step",
+      "translation": "الخطوة التالية"
+    },
+    {
+      "en": "Open English Error KB",
+      "translation": "فتح خطأ باللغة الإنجليزية كيلو بايت"
+    },
+    {
+      "en": "Open English Guides",
+      "translation": "افتح أدلة اللغة الإنجليزية"
+    },
+    {
+      "en": "Open English Model Catalog",
+      "translation": "افتح كتالوج النماذج الإنجليزية"
+    },
+    {
+      "en": "Open English Source",
+      "translation": "فتح المصدر الإنجليزي"
+    },
+    {
+      "en": "Open English Status",
+      "translation": "افتح الحالة الإنجليزية"
+    },
+    {
+      "en": "Open English Tools",
+      "translation": "افتح أدوات اللغة الإنجليزية"
+    },
+    {
+      "en": "Open Guides Hub",
+      "translation": "افتح مركز الأدلة"
+    },
+    {
+      "en": "Open Model Catalog",
+      "translation": "افتح كتالوج النماذج"
+    },
+    {
+      "en": "Open Status Hub",
+      "translation": "افتح مركز الحالة"
+    },
+    {
+      "en": "Open Submission Review",
+      "translation": "فتح مراجعة التقديم"
+    },
+    {
+      "en": "Open VRAM Calculator",
+      "translation": "افتح VRAM الآلة الحاسبة"
+    },
+    {
+      "en": "Operational dashboards are available as localized route skeletons. Full locale content is staged per rollout plan.",
+      "translation": "تتوفر لوحات المعلومات التشغيلية كهياكل عظمية محلية للمسار. يتم تنظيم المحتوى المحلي الكامل وفقًا لخطة الطرح."
+    },
+    {
+      "en": "Operational dashboards mirrored for locale path parity.",
+      "translation": "يتم عكس لوحات المعلومات التشغيلية لتكافؤ المسار المحلي."
+    },
+    {
+      "en": "Optimal VRAM",
+      "translation": "الأمثل VRAM"
+    },
+    {
+      "en": "Replace fallback content with locale-specific operations messaging and glossary-safe terms.",
+      "translation": "استبدل المحتوى الاحتياطي برسائل عمليات خاصة بالإعدادات المحلية ومصطلحات آمنة للمسرد."
+    },
+    {
+      "en": "Replace fallback copy with fully localized content after glossary and terminology checks pass.",
+      "translation": "استبدل النسخة الاحتياطية بمحتوى مترجم بالكامل بعد اجتياز عمليات فحص المصطلحات والمصطلحات."
+    },
+    {
+      "en": "Resource",
+      "translation": "الموارد"
+    },
+    {
+      "en": "Route is active, canonical is locale-scoped, and hreflang is controlled by staged rollout policy.",
+      "translation": "المسار نشط، والعنوان الأساسي محدد على المستوى المحلي، ويتم التحكم في hreflang من خلال سياسة الطرح على مراحل."
+    },
+    {
+      "en": "Route parity and locale-level canonical paths are active for staged validation.",
+      "translation": "يتم تنشيط تكافؤ المسار والمسارات الأساسية على المستوى المحلي للتحقق من الصحة على مراحل."
+    },
+    {
+      "en": "Staged locale route for model detail parity. Full translated model profile is enabled after terminology and data QA.",
+      "translation": "المسار المحلي المرحلي لتكافؤ تفاصيل النموذج. يتم تمكين ملف تعريف النموذج المترجم بالكامل بعد ضمان جودة المصطلحات والبيانات."
+    },
+    {
+      "en": "Status",
+      "translation": "حالة"
+    },
+    {
+      "en": "Status Hub ({localeUpper})",
+      "translation": "مركز الحالة ({localeUpper})"
+    },
+    {
+      "en": "Status Page",
+      "translation": "صفحة الحالة"
+    },
+    {
+      "en": "This locale is in rollout mode. Navigation, route parity, and SEO tags are under staged validation.",
+      "translation": "هذه اللغة في وضع الطرح. تخضع علامات التنقل وتكافؤ المسار وعلامات تحسين محركات البحث (SEO) للتحقق المرحلي."
+    },
+    {
+      "en": "This localized page is in staged rollout mode. Content quality gates and glossary checks are applied before index enablement.",
+      "translation": "هذه الصفحة المترجمة في وضع الطرح المرحلي. يتم تطبيق بوابات جودة المحتوى وفحوصات المسرد قبل تمكين الفهرس."
+    },
+    {
+      "en": "This status route is available for i18n parity validation. Full localized operational copy will be enabled after quality checks.",
+      "translation": "مسار الحالة هذا متاح للتحقق من صحة تكافؤ i18n. سيتم تمكين النسخة التشغيلية المترجمة الكاملة بعد فحوصات الجودة."
+    },
+    {
+      "en": "Tool",
+      "translation": "أداة"
+    },
+    {
+      "en": "Tool routes are active for i18n parity. During staged rollout, utility page copy may temporarily use English fallback.",
+      "translation": "مسارات الأداة نشطة لتكافؤ i18n. أثناء الطرح المرحلي، قد تستخدم نسخة صفحة الأداة المساعدة مؤقتًا اللغة الإنجليزية الاحتياطية."
+    },
+    {
+      "en": "Tools Hub ({localeUpper})",
+      "translation": "مركز الأدوات ({localeUpper})"
+    },
+    {
+      "en": "Utility page route parity is enabled for i18n staging. Full localized instructions are enabled after terminology QA.",
+      "translation": "تم تمكين تكافؤ مسار صفحة الأداة المساعدة للتدريج i18n. يتم تمكين التعليمات المترجمة الكاملة بعد ضمان الجودة في المصطلحات."
+    },
+    {
+      "en": "{errorId} ({localeUpper}) | LocalVRAM Error KB",
+      "translation": "{errorId} ({localeUpper}) | خطأ محلي VRAM كيلو بايت"
+    },
+    {
+      "en": "{groupName} ({localeUpper}) | LocalVRAM Models",
+      "translation": "{groupName} ({localeUpper}) | نماذج محلية VRAM"
+    },
+    {
+      "en": "{itemDescription}",
+      "translation": "{itemDescription}"
+    },
+    {
+      "en": "{itemTitle} ({localeUpper}) | LocalVRAM",
+      "translation": "{itemTitle} ({localeUpper}) | محليVRAM"
+    },
+    {
+      "en": "{modelName} ({localeUpper}) | LocalVRAM",
+      "translation": "{modelName} ({localeUpper}) | محليVRAM"
+    },
+    {
+      "en": "{symptom}",
+      "translation": "{symptom}"
+    }
+  ]
+}

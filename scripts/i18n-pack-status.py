@@ -13,7 +13,7 @@ def summarize_pack(pack_file: Path) -> dict:
     locale = str(data.get("locale", "")).strip().lower() or pack_file.stem
     phrases = data.get("phrases", [])
     if not isinstance(phrases, list):
-        return {"locale": locale, "total": 0, "filled": 0, "ratio": 0.0}
+        return {"locale": locale, "total": 0, "filled": 0, "ratio": 0.0, "file": pack_file}
 
     total = 0
     filled = 0
@@ -25,7 +25,7 @@ def summarize_pack(pack_file: Path) -> dict:
         if text.strip():
             filled += 1
     ratio = (filled / total) if total else 0.0
-    return {"locale": locale, "total": total, "filled": filled, "ratio": ratio}
+    return {"locale": locale, "total": total, "filled": filled, "ratio": ratio, "file": pack_file}
 
 
 def main() -> None:
@@ -48,12 +48,12 @@ def main() -> None:
         return
 
     rows = [summarize_pack(pack_file) for pack_file in pack_files]
-    rows.sort(key=lambda item: item["locale"])
+    rows.sort(key=lambda item: (item["locale"], str(item["file"])))
 
     print("locale\tfilled/total\tratio\tfile")
-    for row, file_path in zip(rows, pack_files):
+    for row in rows:
         ratio_pct = f"{row['ratio']*100:.1f}%"
-        rel = file_path.relative_to(ROOT)
+        rel = Path(row["file"]).relative_to(ROOT)
         print(f"{row['locale']}\t{row['filled']}/{row['total']}\t{ratio_pct}\t{rel}")
 
 

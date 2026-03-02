@@ -106,10 +106,58 @@
           "status_title": "ステータス",
           "status_desc": "ロケールのパス整合性を保つため、運用ダッシュボードをミラーしています。"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "로컬VRAM({localeUpper}) | i18n 미리보기 허브",
+          "meta_description": "홈, 가이드, 상태 섹션에 대한 현지화된 경로 뼈대입니다. i18n 출시 중에는 콘텐츠 대체가 일시적으로 영어로 제공됩니다.",
+          "hero_title": "LocalVRAM {localeUpper} 경로가 활성화되었습니다.",
+          "hero_intro": "이 로케일은 출시 모드에 있습니다. 탐색, 경로 패리티 및 SEO 태그가 단계적으로 검증되고 있습니다.",
+          "cta_guides": "가이드 허브 열기",
+          "cta_status": "상태 허브 열기",
+          "cta_english": "영어 소스 열기",
+          "guides_title": "가이드",
+          "guides_desc": "로케일 기본 경로는 영어 가이드 슬러그에 1:1로 매핑됩니다.",
+          "status_title": "상태",
+          "status_desc": "로케일 경로 패리티를 위해 미러링된 운영 대시보드입니다."
+        },
+        "ar": {
+          "meta_title": "محليVRAM ({localeUpper}) | مركز المعاينة i18n",
+          "meta_description": "هيكل المسار المترجم للمنزل والأدلة وأقسام الحالة. يكون المحتوى الاحتياطي باللغة الإنجليزية مؤقتًا أثناء طرح i18n.",
+          "hero_title": "المسار المحلي VRAM {localeUpper} نشط",
+          "hero_intro": "هذه اللغة في وضع الطرح. تخضع علامات التنقل وتكافؤ المسار وعلامات تحسين محركات البحث (SEO) للتحقق المرحلي.",
+          "cta_guides": "افتح مركز الأدلة",
+          "cta_status": "افتح مركز الحالة",
+          "cta_english": "فتح المصدر الإنجليزي",
+          "guides_title": "أدلة",
+          "guides_desc": "تم تعيين المسارات الهيكلية المحلية بنسبة 1:1 إلى دليل الرخويات باللغة الإنجليزية.",
+          "status_title": "حالة",
+          "status_desc": "يتم عكس لوحات المعلومات التشغيلية لتكافؤ المسار المحلي."
+        },
+        "hi": {
+          "meta_title": "लोकलVRAM ({localeUpper}) | i18n पूर्वावलोकन हब",
+          "meta_description": "घर, गाइड और स्थिति अनुभागों के लिए स्थानीयकृत मार्ग कंकाल। i18n रोलआउट के दौरान सामग्री फ़ॉलबैक अस्थायी रूप से अंग्रेज़ी है।",
+          "hero_title": "लोकलVRAM {localeUpper} मार्ग सक्रिय है",
+          "hero_intro": "यह लोकेल रोलआउट मोड में है. नेविगेशन, रूट समता और एसईओ टैग चरणबद्ध सत्यापन के अधीन हैं।",
+          "cta_guides": "गाइड हब खोलें",
+          "cta_status": "स्टेटस हब खोलें",
+          "cta_english": "अंग्रेजी स्रोत खोलें",
+          "guides_title": "गाइड",
+          "guides_desc": "स्थानीय कंकाल मार्गों को अंग्रेजी गाइड स्लग के लिए 1:1 मैप किया गया।",
+          "status_title": "स्थिति",
+          "status_desc": "स्थानीय पथ समता के लिए परिचालनात्मक डैशबोर्ड को प्रतिबिंबित किया गया।"
+        },
+        "id": {
+          "meta_title": "LokalVRAM ({localeUpper}) | Pusat Pratinjau i18n",
+          "meta_description": "Kerangka rute yang dilokalkan untuk bagian rumah, panduan, dan status. Penggantian konten untuk sementara menggunakan bahasa Inggris selama peluncuran i18n.",
+          "hero_title": "Rute lokalVRAM {localeUpper} aktif",
+          "hero_intro": "Lokal ini sedang dalam mode peluncuran. Navigasi, paritas rute, dan tag SEO sedang dalam validasi bertahap.",
+          "cta_guides": "Buka Hub Panduan",
+          "cta_status": "Buka Pusat Status",
+          "cta_english": "Sumber Bahasa Inggris Terbuka",
+          "guides_title": "Panduan",
+          "guides_desc": "Rute kerangka lokal dipetakan 1:1 ke siput pemandu bahasa Inggris.",
+          "status_title": "Status",
+          "status_desc": "Dasbor operasional dicerminkan untuk paritas jalur lokal."
+        }
       }
     },
     "guides-index": {
@@ -191,10 +239,50 @@
           "table_col_localized_path": "ローカライズ済みパス",
           "table_col_en_source": "英語ソース"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "지역VRAM({localeUpper}) 가이드",
+          "meta_description": "현지화된 가이드는 영어 가이드 슬러그에 맞춰 정렬된 뼈대를 라우팅합니다.",
+          "hero_title": "가이드 허브({localeUpper})",
+          "hero_intro": "가이드 경로 패리티가 활성화되었습니다. 출시 중에 페이지 복사가 일시적으로 영어로 대체될 수 있습니다.",
+          "cta_back_home": "로케일 홈으로 돌아가기",
+          "cta_open_english": "영어 가이드 열기",
+          "table_col_item": "가이드",
+          "table_col_localized_path": "지역화된 경로",
+          "table_col_en_source": "영어 소스"
+        },
+        "ar": {
+          "meta_title": "أدلة محلية VRAM ({localeUpper}).",
+          "meta_description": "أدلة محلية لتوجيه هيكل عظمي محاذاة إلى دليل الرخويات الإنجليزية.",
+          "hero_title": "مركز الأدلة ({localeUpper})",
+          "hero_intro": "تم تمكين تكافؤ مسار الدليل. أثناء الطرح، قد تعود نسخة الصفحة مؤقتًا إلى اللغة الإنجليزية.",
+          "cta_back_home": "العودة إلى الصفحة الرئيسية المحلية",
+          "cta_open_english": "افتح أدلة اللغة الإنجليزية",
+          "table_col_item": "مرشد",
+          "table_col_localized_path": "المسار المترجم",
+          "table_col_en_source": "مصدر انجليزي"
+        },
+        "hi": {
+          "meta_title": "स्थानीयVRAM ({localeUpper}) मार्गदर्शक",
+          "meta_description": "स्थानीय गाइड मार्ग कंकाल अंग्रेजी गाइड स्लग से संरेखित है।",
+          "hero_title": "गाइड्स हब ({localeUpper})",
+          "hero_intro": "गाइड रूट समता सक्षम है. रोलआउट के दौरान, पेज कॉपी अस्थायी रूप से अंग्रेजी में वापस आ सकती है।",
+          "cta_back_home": "लोकेल होम पर वापस जाएँ",
+          "cta_open_english": "अंग्रेजी गाइड खोलें",
+          "table_col_item": "मार्गदर्शक",
+          "table_col_localized_path": "स्थानीयकृत पथ",
+          "table_col_en_source": "अंग्रेजी स्रोत"
+        },
+        "id": {
+          "meta_title": "Panduan LokalVRAM ({localeUpper}).",
+          "meta_description": "Kerangka rute pemandu yang dilokalkan selaras dengan siput pemandu berbahasa Inggris.",
+          "hero_title": "Pusat Panduan ({localeUpper})",
+          "hero_intro": "Paritas rute panduan diaktifkan. Selama peluncuran, salinan halaman untuk sementara mungkin kembali ke bahasa Inggris.",
+          "cta_back_home": "Kembali ke Beranda Lokal",
+          "cta_open_english": "Buka Panduan Bahasa Inggris",
+          "table_col_item": "Memandu",
+          "table_col_localized_path": "Jalur Lokal",
+          "table_col_en_source": "Sumber Bahasa Inggris"
+        }
       }
     },
     "guides-detail": {
@@ -283,10 +371,54 @@
           "next_title": "次のステップ",
           "next_desc": "用語集と用語チェック通過後、フォールバック文言を完全ローカライズ内容に置き換えます。"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "{itemTitle}({localeUpper}) | 로컬VRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "이 현지화된 페이지는 단계적 출시 모드입니다. 콘텐츠 품질 게이트 및 용어집 확인은 인덱스 활성화 전에 적용됩니다.",
+          "cta_open_english": "영어 소스 열기",
+          "cta_back_hub": "가이드 허브로 돌아가기",
+          "cta_open_status": "상태 허브 열기",
+          "state_title": "현재 출시 상태",
+          "state_desc": "경로는 활성 상태이고 표준은 로케일 범위이며 hreflang은 단계적 롤아웃 정책에 의해 제어됩니다.",
+          "next_title": "다음 단계",
+          "next_desc": "용어집 및 용어 검사를 통과한 후 대체 사본을 완전히 현지화된 콘텐츠로 교체합니다."
+        },
+        "ar": {
+          "meta_title": "{itemTitle} ({localeUpper}) | محليVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "هذه الصفحة المترجمة في وضع الطرح المرحلي. يتم تطبيق بوابات جودة المحتوى وفحوصات المسرد قبل تمكين الفهرس.",
+          "cta_open_english": "فتح المصدر الإنجليزي",
+          "cta_back_hub": "العودة إلى مركز الأدلة",
+          "cta_open_status": "افتح مركز الحالة",
+          "state_title": "حالة الطرح الحالية",
+          "state_desc": "المسار نشط، والعنوان الأساسي محدد على المستوى المحلي، ويتم التحكم في hreflang من خلال سياسة الطرح على مراحل.",
+          "next_title": "الخطوة التالية",
+          "next_desc": "استبدل النسخة الاحتياطية بمحتوى مترجم بالكامل بعد اجتياز عمليات فحص المصطلحات والمصطلحات."
+        },
+        "hi": {
+          "meta_title": "{itemTitle} ({localeUpper}) | स्थानीयVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "यह स्थानीयकृत पृष्ठ चरणबद्ध रोलआउट मोड में है। सूचकांक सक्षम करने से पहले सामग्री गुणवत्ता गेट और शब्दावली जांच लागू की जाती है।",
+          "cta_open_english": "अंग्रेजी स्रोत खोलें",
+          "cta_back_hub": "गाइड्स हब पर वापस जाएँ",
+          "cta_open_status": "स्टेटस हब खोलें",
+          "state_title": "वर्तमान रोलआउट स्थिति",
+          "state_desc": "रूट सक्रिय है, कैनोनिकल स्थानीय-स्कोप्ड है, और hreflang को चरणबद्ध रोलआउट नीति द्वारा नियंत्रित किया जाता है।",
+          "next_title": "अगला कदम",
+          "next_desc": "शब्दावली और शब्दावली जांच पास होने के बाद फ़ॉलबैक कॉपी को पूरी तरह से स्थानीयकृत सामग्री से बदलें।"
+        },
+        "id": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LokalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Halaman yang dilokalkan ini berada dalam mode peluncuran bertahap. Gerbang kualitas konten dan pemeriksaan glosarium diterapkan sebelum pengaktifan indeks.",
+          "cta_open_english": "Sumber Bahasa Inggris Terbuka",
+          "cta_back_hub": "Kembali ke Hub Panduan",
+          "cta_open_status": "Buka Pusat Status",
+          "state_title": "Status Peluncuran Saat Ini",
+          "state_desc": "Rute aktif, kanonis memiliki cakupan lokal, dan hreflang dikendalikan oleh kebijakan peluncuran bertahap.",
+          "next_title": "Langkah Selanjutnya",
+          "next_desc": "Ganti salinan cadangan dengan konten yang sepenuhnya dilokalkan setelah pemeriksaan glosarium dan terminologi berhasil."
+        }
       }
     },
     "status-index": {
@@ -368,10 +500,50 @@
           "table_col_localized_path": "ローカライズ済みパス",
           "table_col_en_source": "英語ソース"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "로컬VRAM({localeUpper}) 상태",
+          "meta_description": "파이프라인 및 작업 가시성을 위한 현지화된 상태 경로 뼈대입니다.",
+          "hero_title": "상태 허브({localeUpper})",
+          "hero_intro": "운영 대시보드는 현지화된 경로 뼈대로 사용할 수 있습니다. 전체 로캘 콘텐츠는 출시 계획에 따라 준비됩니다.",
+          "cta_back_home": "로케일 홈으로 돌아가기",
+          "cta_open_english": "영어 상태 열기",
+          "table_col_item": "상태 페이지",
+          "table_col_localized_path": "지역화된 경로",
+          "table_col_en_source": "영어 소스"
+        },
+        "ar": {
+          "meta_title": "الحالة المحلية VRAM ({localeUpper}).",
+          "meta_description": "هيكل مسار الحالة المحلية لرؤية خطوط الأنابيب والعمليات.",
+          "hero_title": "مركز الحالة ({localeUpper})",
+          "hero_intro": "تتوفر لوحات المعلومات التشغيلية كهياكل عظمية محلية للمسار. يتم تنظيم المحتوى المحلي الكامل وفقًا لخطة الطرح.",
+          "cta_back_home": "العودة إلى الصفحة الرئيسية المحلية",
+          "cta_open_english": "افتح الحالة الإنجليزية",
+          "table_col_item": "صفحة الحالة",
+          "table_col_localized_path": "المسار المترجم",
+          "table_col_en_source": "مصدر انجليزي"
+        },
+        "hi": {
+          "meta_title": "स्थानीयVRAM ({localeUpper}) स्थिति",
+          "meta_description": "पाइपलाइन और संचालन दृश्यता के लिए स्थानीयकृत स्थिति मार्ग कंकाल।",
+          "hero_title": "स्टेटस हब ({localeUpper})",
+          "hero_intro": "परिचालन डैशबोर्ड स्थानीयकृत मार्ग कंकाल के रूप में उपलब्ध हैं। रोलआउट योजना के अनुसार पूर्ण स्थानीय सामग्री का मंचन किया जाता है।",
+          "cta_back_home": "लोकेल होम पर वापस जाएँ",
+          "cta_open_english": "अंग्रेजी स्थिति खोलें",
+          "table_col_item": "स्थिति पृष्ठ",
+          "table_col_localized_path": "स्थानीयकृत पथ",
+          "table_col_en_source": "अंग्रेजी स्रोत"
+        },
+        "id": {
+          "meta_title": "Status LokalVRAM ({localeUpper}).",
+          "meta_description": "Kerangka rute status yang dilokalkan untuk visibilitas alur dan operasi.",
+          "hero_title": "Pusat Status ({localeUpper})",
+          "hero_intro": "Dasbor operasional tersedia sebagai kerangka rute lokal. Konten lokal lengkap dipentaskan per rencana peluncuran.",
+          "cta_back_home": "Kembali ke Beranda Lokal",
+          "cta_open_english": "Buka Status Bahasa Inggris",
+          "table_col_item": "Halaman Status",
+          "table_col_localized_path": "Jalur Lokal",
+          "table_col_en_source": "Sumber Bahasa Inggris"
+        }
       }
     },
     "status-detail": {
@@ -460,10 +632,54 @@
           "next_title": "次のステップ",
           "next_desc": "フォールバック内容を、ロケール別の運用メッセージと用語集に準拠した用語に置き換えます。"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "{itemTitle}({localeUpper}) | 로컬VRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "이 상태 경로는 i18n 패리티 검증에 사용할 수 있습니다. 전체 현지화된 운영 사본은 품질 점검 후 활성화됩니다.",
+          "cta_open_english": "영어 소스 열기",
+          "cta_back_hub": "상태 허브로 돌아가기",
+          "cta_open_guides": "가이드 허브 열기",
+          "state_title": "현재 출시 상태",
+          "state_desc": "단계적 검증을 위해 경로 패리티 및 로케일 수준 정식 경로가 활성화됩니다.",
+          "next_title": "다음 단계",
+          "next_desc": "대체 콘텐츠를 로캘별 작업 메시징 및 용어집에 안전한 용어로 바꿉니다."
+        },
+        "ar": {
+          "meta_title": "{itemTitle} ({localeUpper}) | محليVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "مسار الحالة هذا متاح للتحقق من صحة تكافؤ i18n. سيتم تمكين النسخة التشغيلية المترجمة الكاملة بعد فحوصات الجودة.",
+          "cta_open_english": "فتح المصدر الإنجليزي",
+          "cta_back_hub": "العودة إلى مركز الحالة",
+          "cta_open_guides": "افتح مركز الأدلة",
+          "state_title": "حالة الطرح الحالية",
+          "state_desc": "يتم تنشيط تكافؤ المسار والمسارات الأساسية على المستوى المحلي للتحقق من الصحة على مراحل.",
+          "next_title": "الخطوة التالية",
+          "next_desc": "استبدل المحتوى الاحتياطي برسائل عمليات خاصة بالإعدادات المحلية ومصطلحات آمنة للمسرد."
+        },
+        "hi": {
+          "meta_title": "{itemTitle} ({localeUpper}) | स्थानीयVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "यह स्थिति मार्ग i18n समता सत्यापन के लिए उपलब्ध है। गुणवत्ता जांच के बाद पूर्ण स्थानीयकृत परिचालन प्रतिलिपि सक्षम की जाएगी।",
+          "cta_open_english": "अंग्रेजी स्रोत खोलें",
+          "cta_back_hub": "स्टेटस हब पर वापस जाएँ",
+          "cta_open_guides": "गाइड हब खोलें",
+          "state_title": "वर्तमान रोलआउट स्थिति",
+          "state_desc": "चरणबद्ध सत्यापन के लिए रूट समता और स्थानीय-स्तरीय विहित पथ सक्रिय हैं।",
+          "next_title": "अगला कदम",
+          "next_desc": "फ़ॉलबैक सामग्री को स्थानीय-विशिष्ट संचालन संदेश और शब्दावली-सुरक्षित शब्दों से बदलें।"
+        },
+        "id": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LokalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Rute status ini tersedia untuk validasi paritas i18n. Salinan operasional lengkap yang dilokalkan akan diaktifkan setelah pemeriksaan kualitas.",
+          "cta_open_english": "Sumber Bahasa Inggris Terbuka",
+          "cta_back_hub": "Kembali ke Pusat Status",
+          "cta_open_guides": "Buka Hub Panduan",
+          "state_title": "Status Peluncuran Saat Ini",
+          "state_desc": "Paritas rute dan jalur kanonik tingkat lokal aktif untuk validasi bertahap.",
+          "next_title": "Langkah Selanjutnya",
+          "next_desc": "Ganti konten cadangan dengan pesan operasi khusus lokal dan istilah yang sesuai dengan glosarium."
+        }
       }
     },
     "tools-index": {
@@ -545,10 +761,50 @@
           "table_col_localized_path": "ローカライズ済みパス",
           "table_col_en_source": "英語ソース"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "로컬VRAM({localeUpper}) 도구",
+          "meta_description": "영어 유틸리티 페이지에 맞춰 정렬된 현지화된 도구 경로 뼈대입니다.",
+          "hero_title": "도구 허브({localeUpper})",
+          "hero_intro": "i18n 패리티에 대한 공구 경로가 활성화되어 있습니다. 단계적 롤아웃 중에 유틸리티 페이지 복사에서 일시적으로 영어 대체를 사용할 수 있습니다.",
+          "cta_back_home": "로케일 홈으로 돌아가기",
+          "cta_open_english": "영어 도구 열기",
+          "table_col_item": "도구",
+          "table_col_localized_path": "지역화된 경로",
+          "table_col_en_source": "영어 소스"
+        },
+        "ar": {
+          "meta_title": "أدوات محلية VRAM ({localeUpper}).",
+          "meta_description": "تتماشى الهياكل الأساسية لمسار الأداة المترجمة مع صفحات الأدوات المساعدة باللغة الإنجليزية.",
+          "hero_title": "مركز الأدوات ({localeUpper})",
+          "hero_intro": "مسارات الأداة نشطة لتكافؤ i18n. أثناء الطرح المرحلي، قد تستخدم نسخة صفحة الأداة المساعدة مؤقتًا اللغة الإنجليزية الاحتياطية.",
+          "cta_back_home": "العودة إلى الصفحة الرئيسية المحلية",
+          "cta_open_english": "افتح أدوات اللغة الإنجليزية",
+          "table_col_item": "أداة",
+          "table_col_localized_path": "المسار المترجم",
+          "table_col_en_source": "مصدر انجليزي"
+        },
+        "hi": {
+          "meta_title": "स्थानीयVRAM ({localeUpper}) उपकरण",
+          "meta_description": "स्थानीयकृत टूल रूट कंकाल अंग्रेजी उपयोगिता पृष्ठों से संरेखित हैं।",
+          "hero_title": "टूल्स हब ({localeUpper})",
+          "hero_intro": "i18n समता के लिए टूल रूट सक्रिय हैं। चरणबद्ध रोलआउट के दौरान, उपयोगिता पृष्ठ प्रतिलिपि अस्थायी रूप से अंग्रेजी फ़ॉलबैक का उपयोग कर सकती है।",
+          "cta_back_home": "लोकेल होम पर वापस जाएँ",
+          "cta_open_english": "अंग्रेजी उपकरण खोलें",
+          "table_col_item": "औजार",
+          "table_col_localized_path": "स्थानीयकृत पथ",
+          "table_col_en_source": "अंग्रेजी स्रोत"
+        },
+        "id": {
+          "meta_title": "Alat LokalVRAM ({localeUpper}).",
+          "meta_description": "Kerangka rute alat yang dilokalkan selaras dengan halaman utilitas berbahasa Inggris.",
+          "hero_title": "Pusat Alat ({localeUpper})",
+          "hero_intro": "Rute alat aktif untuk paritas i18n. Selama peluncuran bertahap, salinan halaman utilitas untuk sementara mungkin menggunakan fallback bahasa Inggris.",
+          "cta_back_home": "Kembali ke Beranda Lokal",
+          "cta_open_english": "Buka Alat Bahasa Inggris",
+          "table_col_item": "Alat",
+          "table_col_localized_path": "Jalur Lokal",
+          "table_col_en_source": "Sumber Bahasa Inggris"
+        }
       }
     },
     "tools-detail": {
@@ -609,10 +865,38 @@
           "cta_back_hub": "ツールハブに戻る",
           "cta_open_models": "モデルカタログを開く"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "{itemTitle}({localeUpper}) | 로컬VRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "i18n 스테이징에 대해 유틸리티 페이지 경로 패리티가 활성화되었습니다. 용어 QA 후에는 완전히 현지화된 지침이 활성화됩니다.",
+          "cta_open_english": "영어 소스 열기",
+          "cta_back_hub": "도구 허브로 돌아가기",
+          "cta_open_models": "모델 카탈로그 열기"
+        },
+        "ar": {
+          "meta_title": "{itemTitle} ({localeUpper}) | محليVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "تم تمكين تكافؤ مسار صفحة الأداة المساعدة للتدريج i18n. يتم تمكين التعليمات المترجمة الكاملة بعد ضمان الجودة في المصطلحات.",
+          "cta_open_english": "فتح المصدر الإنجليزي",
+          "cta_back_hub": "العودة إلى مركز الأدوات",
+          "cta_open_models": "افتح كتالوج النماذج"
+        },
+        "hi": {
+          "meta_title": "{itemTitle} ({localeUpper}) | स्थानीयVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "i18n स्टेजिंग के लिए उपयोगिता पृष्ठ रूट समता सक्षम है। शब्दावली QA के बाद पूर्ण स्थानीयकृत निर्देश सक्षम हो जाते हैं।",
+          "cta_open_english": "अंग्रेजी स्रोत खोलें",
+          "cta_back_hub": "टूल्स हब पर वापस जाएँ",
+          "cta_open_models": "मॉडल कैटलॉग खोलें"
+        },
+        "id": {
+          "meta_title": "{itemTitle} ({localeUpper}) | LokalVRAM",
+          "meta_description": "{itemDescription}",
+          "rollout_intro": "Paritas rute halaman utilitas diaktifkan untuk pementasan i18n. Instruksi lokal lengkap diaktifkan setelah terminologi QA.",
+          "cta_open_english": "Sumber Bahasa Inggris Terbuka",
+          "cta_back_hub": "Kembali ke Pusat Alat",
+          "cta_open_models": "Buka Katalog Model"
+        }
       }
     },
     "errors-index": {
@@ -694,10 +978,50 @@
           "table_col_localized_path": "ローカライズ済みパス",
           "table_col_en_source": "英語ソース"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "로컬VRAM({localeUpper}) 오류 KB",
+          "meta_description": "영어 문제 해결 슬러그에 맞춰 현지화된 오류 지식 기반 경로 뼈대.",
+          "hero_title": "오류 KB({localeUpper})",
+          "hero_intro": "i18n 스테이징 중에 영어 문제 해결 페이지와의 패리티를 유지하기 위해 오류 경로가 미러링됩니다.",
+          "cta_back_home": "로케일 홈으로 돌아가기",
+          "cta_open_english": "영어 오류 KB 열기",
+          "table_col_item": "오류 ID",
+          "table_col_localized_path": "지역화된 경로",
+          "table_col_en_source": "영어 소스"
+        },
+        "ar": {
+          "meta_title": "محلي VRAM ({localeUpper}) خطأ بالكيلو بايت",
+          "meta_description": "هيكل مسار قاعدة معرفة الأخطاء المترجمة يتماشى مع الارتباطات الثابتة لاستكشاف الأخطاء وإصلاحها باللغة الإنجليزية.",
+          "hero_title": "خطأ كيلو بايت ({localeUpper})",
+          "hero_intro": "يتم عكس مسارات الخطأ للحفاظ على التكافؤ مع صفحات استكشاف الأخطاء وإصلاحها باللغة الإنجليزية أثناء التدريج i18n.",
+          "cta_back_home": "العودة إلى الصفحة الرئيسية المحلية",
+          "cta_open_english": "فتح خطأ باللغة الإنجليزية كيلو بايت",
+          "table_col_item": "معرف الخطأ",
+          "table_col_localized_path": "المسار المترجم",
+          "table_col_en_source": "مصدر انجليزي"
+        },
+        "hi": {
+          "meta_title": "लोकलVRAM ({localeUpper}) त्रुटि KB",
+          "meta_description": "स्थानीयकृत त्रुटि ज्ञान-आधारित मार्ग कंकाल अंग्रेजी समस्या निवारण स्लग से संरेखित है।",
+          "hero_title": "त्रुटि KB ({localeUpper})",
+          "hero_intro": "i18n स्टेजिंग के दौरान अंग्रेजी समस्या निवारण पृष्ठों के साथ समानता बनाए रखने के लिए त्रुटि मार्गों को प्रतिबिंबित किया जाता है।",
+          "cta_back_home": "लोकेल होम पर वापस जाएँ",
+          "cta_open_english": "अंग्रेजी त्रुटि KB खोलें",
+          "table_col_item": "त्रुटि आईडी",
+          "table_col_localized_path": "स्थानीयकृत पथ",
+          "table_col_en_source": "अंग्रेजी स्रोत"
+        },
+        "id": {
+          "meta_title": "LokalVRAM ({localeUpper}) Kesalahan KB",
+          "meta_description": "Kerangka rute basis pengetahuan kesalahan yang dilokalkan selaras dengan slug pemecahan masalah bahasa Inggris.",
+          "hero_title": "Kesalahan KB ({localeUpper})",
+          "hero_intro": "Rute kesalahan dicerminkan untuk menjaga keseimbangan dengan halaman pemecahan masalah bahasa Inggris selama pementasan i18n.",
+          "cta_back_home": "Kembali ke Beranda Lokal",
+          "cta_open_english": "Buka KB Kesalahan Bahasa Inggris",
+          "table_col_item": "ID Kesalahan",
+          "table_col_localized_path": "Jalur Lokal",
+          "table_col_en_source": "Sumber Bahasa Inggris"
+        }
       }
     },
     "errors-detail": {
@@ -758,10 +1082,38 @@
           "cta_back_hub": "エラーKBに戻る",
           "cta_open_submission_review": "投稿レビューを開く"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "{errorId}({localeUpper}) | 로컬VRAM 오류 KB",
+          "meta_description": "{symptom}",
+          "rollout_intro": "현지화된 문제 해결 경로가 준비되어 있습니다. 전체 로케일 사본은 QA 이후 영어 폴백을 대체합니다.",
+          "cta_open_english": "영어 소스 열기",
+          "cta_back_hub": "오류 KB로 돌아가기",
+          "cta_open_submission_review": "공개 제출 검토"
+        },
+        "ar": {
+          "meta_title": "{errorId} ({localeUpper}) | خطأ محلي VRAM كيلو بايت",
+          "meta_description": "{symptom}",
+          "rollout_intro": "يتم تنظيم مسار استكشاف الأخطاء وإصلاحها المحلي. ستحل النسخة المحلية الكاملة محل النسخة الاحتياطية باللغة الإنجليزية بعد ضمان الجودة.",
+          "cta_open_english": "فتح المصدر الإنجليزي",
+          "cta_back_hub": "العودة إلى خطأ كيلو بايت",
+          "cta_open_submission_review": "فتح مراجعة التقديم"
+        },
+        "hi": {
+          "meta_title": "{errorId} ({localeUpper}) | स्थानीयVRAM त्रुटि KB",
+          "meta_description": "{symptom}",
+          "rollout_intro": "स्थानीयकृत समस्या निवारण मार्ग का मंचन किया जाता है। पूर्ण स्थानीय प्रतिलिपि QA के बाद अंग्रेजी फ़ॉलबैक का स्थान ले लेगी।",
+          "cta_open_english": "अंग्रेजी स्रोत खोलें",
+          "cta_back_hub": "त्रुटि KB पर वापस जाएँ",
+          "cta_open_submission_review": "सबमिशन समीक्षा खोलें"
+        },
+        "id": {
+          "meta_title": "{errorId} ({localeUpper}) | LokalVRAM Kesalahan KB",
+          "meta_description": "{symptom}",
+          "rollout_intro": "Rute pemecahan masalah yang dilokalkan dilakukan secara bertahap. Salinan lokal lengkap akan menggantikan penggantian bahasa Inggris setelah QA.",
+          "cta_open_english": "Sumber Bahasa Inggris Terbuka",
+          "cta_back_hub": "Kembali ke Kesalahan KB",
+          "cta_open_submission_review": "Tinjauan Pengiriman Terbuka"
+        }
       }
     },
     "models-index": {
@@ -871,10 +1223,66 @@
           "label_group": "グループ",
           "label_model": "モデル"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "LocalVRAM({localeUpper}) 모델 카탈로그",
+          "meta_description": "영어 모델 페이지에 대한 슬러그 패리티를 갖춘 현지화된 모델 카탈로그 경로 뼈대입니다.",
+          "hero_title": "모델 카탈로그({localeUpper})",
+          "hero_intro": "모델 경로와 그룹 경로는 로케일 패리티를 위해 준비됩니다. 전체 번역된 모델 메타데이터는 향후 출시에서 계획되어 있습니다.",
+          "cta_back_home": "로케일 홈으로 돌아가기",
+          "cta_open_english": "영어 모델 카탈로그 열기",
+          "kpi_models": "모델",
+          "kpi_groups": "여러 떼",
+          "table_col_item": "의지",
+          "table_col_localized_path": "지역화된 경로",
+          "table_col_en_source": "영어 소스",
+          "label_group": "그룹",
+          "label_model": "모델"
+        },
+        "ar": {
+          "meta_title": "محلي VRAM ({localeUpper}) كتالوج النماذج",
+          "meta_description": "الهيكل العظمي لمسار كتالوج النماذج المترجمة مع التكافؤ التقريبي مع صفحات النماذج الإنجليزية.",
+          "hero_title": "كتالوج النموذج ({localeUpper})",
+          "hero_intro": "يتم تنظيم المسارات النموذجية ومسارات المجموعة لتحقيق التكافؤ المحلي. ومن المقرر أن يتم طرح بيانات تعريف النموذج المترجمة بالكامل في وقت لاحق.",
+          "cta_back_home": "العودة إلى الصفحة الرئيسية المحلية",
+          "cta_open_english": "افتح كتالوج النماذج الإنجليزية",
+          "kpi_models": "نماذج",
+          "kpi_groups": "المجموعات",
+          "table_col_item": "الموارد",
+          "table_col_localized_path": "المسار المترجم",
+          "table_col_en_source": "مصدر انجليزي",
+          "label_group": "مجموعة",
+          "label_model": "نموذج"
+        },
+        "hi": {
+          "meta_title": "लोकलVRAM ({localeUpper}) मॉडल कैटलॉग",
+          "meta_description": "अंग्रेजी मॉडल पृष्ठों के साथ स्लग समता के साथ स्थानीयकृत मॉडल कैटलॉग मार्ग कंकाल।",
+          "hero_title": "मॉडल कैटलॉग ({localeUpper})",
+          "hero_intro": "स्थानीय समानता के लिए मॉडल मार्गों और समूह मार्गों का मंचन किया जाता है। पूर्ण अनुवादित मॉडल मेटाडेटा को बाद के रोलआउट में नियोजित किया गया है।",
+          "cta_back_home": "लोकेल होम पर वापस जाएँ",
+          "cta_open_english": "अंग्रेजी मॉडल कैटलॉग खोलें",
+          "kpi_models": "मॉडल",
+          "kpi_groups": "समूह",
+          "table_col_item": "संसाधन",
+          "table_col_localized_path": "स्थानीयकृत पथ",
+          "table_col_en_source": "अंग्रेजी स्रोत",
+          "label_group": "समूह",
+          "label_model": "नमूना"
+        },
+        "id": {
+          "meta_title": "Katalog Model LokalVRAM ({localeUpper}).",
+          "meta_description": "Kerangka rute katalog model yang dilokalkan dengan paritas slug ke halaman model bahasa Inggris.",
+          "hero_title": "Katalog Model ({localeUpper})",
+          "hero_intro": "Rute model dan rute grup dipentaskan untuk keseimbangan lokal. Metadata model yang diterjemahkan secara penuh direncanakan pada peluncuran selanjutnya.",
+          "cta_back_home": "Kembali ke Beranda Lokal",
+          "cta_open_english": "Buka Katalog Model Bahasa Inggris",
+          "kpi_models": "Model",
+          "kpi_groups": "Grup",
+          "table_col_item": "Sumber",
+          "table_col_localized_path": "Jalur Lokal",
+          "table_col_en_source": "Sumber Bahasa Inggris",
+          "label_group": "Kelompok",
+          "label_model": "Model"
+        }
       }
     },
     "models-detail": {
@@ -949,10 +1357,46 @@
           "cta_back_hub": "モデルハブに戻る",
           "cta_open_vram": "VRAM計算機を開く"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "{modelName}({localeUpper}) | 로컬VRAM",
+          "meta_description": "{modelName}에 대한 현지화된 경로 뼈대입니다. VRAM 기준: {minVram}GB 최소, {optimalVram}GB 최적.",
+          "hero_intro": "모델 세부 패리티를 위한 단계적 로케일 경로입니다. 용어 및 데이터 QA 후에 전체 번역된 모델 프로필이 활성화됩니다.",
+          "kpi_min_vram": "최소 VRAM",
+          "kpi_optimal_vram": "최적 VRAM",
+          "cta_open_english": "영어 소스 열기",
+          "cta_back_hub": "모델 허브로 돌아가기",
+          "cta_open_vram": "VRAM 계산기 열기"
+        },
+        "ar": {
+          "meta_title": "{modelName} ({localeUpper}) | محليVRAM",
+          "meta_description": "هيكل المسار المترجم لـ {modelName}. VRAM خط الأساس: {minVram} جيجابايت دقيقة، {optimalVram} جيجابايت الأمثل.",
+          "hero_intro": "المسار المحلي المرحلي لتكافؤ تفاصيل النموذج. يتم تمكين ملف تعريف النموذج المترجم بالكامل بعد ضمان جودة المصطلحات والبيانات.",
+          "kpi_min_vram": "الحد الأدنى VRAM",
+          "kpi_optimal_vram": "الأمثل VRAM",
+          "cta_open_english": "فتح المصدر الإنجليزي",
+          "cta_back_hub": "العودة إلى مركز النماذج",
+          "cta_open_vram": "افتح VRAM الآلة الحاسبة"
+        },
+        "hi": {
+          "meta_title": "{modelName} ({localeUpper}) | स्थानीयVRAM",
+          "meta_description": "{modelName} के लिए स्थानीयकृत मार्ग कंकाल। VRAM आधार रेखा: {minVram}जीबी मिनट, {optimalVram}जीबी इष्टतम।",
+          "hero_intro": "मॉडल विवरण समता के लिए चरणबद्ध स्थानीय मार्ग। शब्दावली और डेटा क्यूए के बाद पूर्ण अनुवादित मॉडल प्रोफ़ाइल सक्षम है।",
+          "kpi_min_vram": "न्यूनतम VRAM",
+          "kpi_optimal_vram": "इष्टतम VRAM",
+          "cta_open_english": "अंग्रेजी स्रोत खोलें",
+          "cta_back_hub": "मॉडल हब पर वापस",
+          "cta_open_vram": "VRAM कैलकुलेटर खोलें"
+        },
+        "id": {
+          "meta_title": "{modelName} ({localeUpper}) | LokalVRAM",
+          "meta_description": "Kerangka rute yang dilokalkan untuk {modelName}. VRAM garis dasar: {minVram}GB min, {optimalVram}GB optimal.",
+          "hero_intro": "Rute lokal bertahap untuk paritas detail model. Profil model terjemahan lengkap diaktifkan setelah terminologi dan QA data.",
+          "kpi_min_vram": "Minimal VRAM",
+          "kpi_optimal_vram": "Optimal VRAM",
+          "cta_open_english": "Sumber Bahasa Inggris Terbuka",
+          "cta_back_hub": "Kembali ke Model Hub",
+          "cta_open_vram": "Buka VRAM Kalkulator"
+        }
       }
     },
     "models-group": {
@@ -1013,10 +1457,38 @@
           "cta_back_hub": "モデルハブに戻る",
           "cta_open_vram": "VRAM計算機を開く"
         },
-        "ko": {},
-        "ar": {},
-        "hi": {},
-        "id": {}
+        "ko": {
+          "meta_title": "{groupName}({localeUpper}) | 지역VRAM 모델",
+          "meta_description": "모델 그룹 '{groupName}'의 지역화된 경로 뼈대입니다.",
+          "hero_intro": "그룹 경로 패리티가 활성화되었습니다. 그룹 수준 텍스트는 현재 준비되어 있으며 용어집 QA 후에 현지화될 예정입니다.",
+          "cta_open_english": "영어 소스 열기",
+          "cta_back_hub": "모델 허브로 돌아가기",
+          "cta_open_vram": "VRAM 계산기 열기"
+        },
+        "ar": {
+          "meta_title": "{groupName} ({localeUpper}) | نماذج محلية VRAM",
+          "meta_description": "هيكل المسار المترجم لمجموعة النماذج '{groupName}'.",
+          "hero_intro": "تكافؤ مسار المجموعة نشط. يتم حاليًا تنظيم النص على مستوى المجموعة وسيتم ترجمته بعد ضمان الجودة في قاموس المصطلحات.",
+          "cta_open_english": "فتح المصدر الإنجليزي",
+          "cta_back_hub": "العودة إلى مركز النماذج",
+          "cta_open_vram": "افتح VRAM الآلة الحاسبة"
+        },
+        "hi": {
+          "meta_title": "{groupName} ({localeUpper}) | स्थानीयVRAM मॉडल",
+          "meta_description": "मॉडल समूह '{groupName}' के लिए स्थानीयकृत मार्ग कंकाल।",
+          "hero_intro": "समूह मार्ग समता सक्रिय है. समूह-स्तरीय पाठ वर्तमान में मंचित है और शब्दावली क्यूए के बाद स्थानीयकृत किया जाएगा।",
+          "cta_open_english": "अंग्रेजी स्रोत खोलें",
+          "cta_back_hub": "मॉडल हब पर वापस",
+          "cta_open_vram": "VRAM कैलकुलेटर खोलें"
+        },
+        "id": {
+          "meta_title": "{groupName} ({localeUpper}) | LokalVRAM Model",
+          "meta_description": "Kerangka rute yang dilokalkan untuk grup model '{groupName}'.",
+          "hero_intro": "Paritas rute grup aktif. Teks tingkat grup saat ini sedang dipentaskan dan akan dilokalkan setelah glosarium QA.",
+          "cta_open_english": "Sumber Bahasa Inggris Terbuka",
+          "cta_back_hub": "Kembali ke Model Hub",
+          "cta_open_vram": "Buka VRAM Kalkulator"
+        }
       }
     }
   }

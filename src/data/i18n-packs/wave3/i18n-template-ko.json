@@ -1,0 +1,318 @@
+{
+  "locale": "ko",
+  "source_locale": "en",
+  "phrases": [
+    {
+      "en": "Back to Error KB",
+      "translation": "오류 KB로 돌아가기"
+    },
+    {
+      "en": "Back to Guides Hub",
+      "translation": "가이드 허브로 돌아가기"
+    },
+    {
+      "en": "Back to Locale Home",
+      "translation": "로케일 홈으로 돌아가기"
+    },
+    {
+      "en": "Back to Models Hub",
+      "translation": "모델 허브로 돌아가기"
+    },
+    {
+      "en": "Back to Status Hub",
+      "translation": "상태 허브로 돌아가기"
+    },
+    {
+      "en": "Back to Tools Hub",
+      "translation": "도구 허브로 돌아가기"
+    },
+    {
+      "en": "Current Rollout State",
+      "translation": "현재 출시 상태"
+    },
+    {
+      "en": "English Source",
+      "translation": "영어 소스"
+    },
+    {
+      "en": "Error ID",
+      "translation": "오류 ID"
+    },
+    {
+      "en": "Error KB ({localeUpper})",
+      "translation": "오류 KB({localeUpper})"
+    },
+    {
+      "en": "Error routes are mirrored to preserve parity with English troubleshooting pages during i18n staging.",
+      "translation": "i18n 스테이징 중에 영어 문제 해결 페이지와의 패리티를 유지하기 위해 오류 경로가 미러링됩니다."
+    },
+    {
+      "en": "Group",
+      "translation": "그룹"
+    },
+    {
+      "en": "Group route parity is active. Group-level text is currently staged and will be localized after glossary QA.",
+      "translation": "그룹 경로 패리티가 활성화되었습니다. 그룹 수준 텍스트는 현재 준비되어 있으며 용어집 QA 후에 현지화될 예정입니다."
+    },
+    {
+      "en": "Groups",
+      "translation": "여러 떼"
+    },
+    {
+      "en": "Guide",
+      "translation": "가이드"
+    },
+    {
+      "en": "Guide route parity is enabled. During rollout, page copy may temporarily fall back to English.",
+      "translation": "가이드 경로 패리티가 활성화되었습니다. 출시 중에 페이지 복사가 일시적으로 영어로 대체될 수 있습니다."
+    },
+    {
+      "en": "Guides",
+      "translation": "가이드"
+    },
+    {
+      "en": "Guides Hub ({localeUpper})",
+      "translation": "가이드 허브({localeUpper})"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Error KB",
+      "translation": "로컬VRAM({localeUpper}) 오류 KB"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Guides",
+      "translation": "지역VRAM({localeUpper}) 가이드"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Model Catalog",
+      "translation": "LocalVRAM({localeUpper}) 모델 카탈로그"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Status",
+      "translation": "로컬VRAM({localeUpper}) 상태"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) Tools",
+      "translation": "로컬VRAM({localeUpper}) 도구"
+    },
+    {
+      "en": "LocalVRAM ({localeUpper}) | i18n Preview Hub",
+      "translation": "로컬VRAM({localeUpper}) | i18n 미리보기 허브"
+    },
+    {
+      "en": "LocalVRAM {localeUpper} route is active",
+      "translation": "LocalVRAM {localeUpper} 경로가 활성화되었습니다."
+    },
+    {
+      "en": "Locale skeleton routes mapped 1:1 to English guide slugs.",
+      "translation": "로케일 기본 경로는 영어 가이드 슬러그에 1:1로 매핑됩니다."
+    },
+    {
+      "en": "Localized Path",
+      "translation": "지역화된 경로"
+    },
+    {
+      "en": "Localized error knowledge-base route skeleton aligned to English troubleshooting slugs.",
+      "translation": "영어 문제 해결 슬러그에 맞춰 현지화된 오류 지식 기반 경로 뼈대."
+    },
+    {
+      "en": "Localized guides route skeleton aligned to English guide slugs.",
+      "translation": "현지화된 가이드는 영어 가이드 슬러그에 맞춰 정렬된 뼈대를 라우팅합니다."
+    },
+    {
+      "en": "Localized model catalog route skeleton with slug parity to English model pages.",
+      "translation": "영어 모델 페이지에 대한 슬러그 패리티를 갖춘 현지화된 모델 카탈로그 경로 뼈대입니다."
+    },
+    {
+      "en": "Localized route skeleton for home, guides, and status sections. Content fallback is temporarily English during i18n rollout.",
+      "translation": "홈, 가이드, 상태 섹션에 대한 현지화된 경로 뼈대입니다. i18n 출시 중에는 콘텐츠 대체가 일시적으로 영어로 제공됩니다."
+    },
+    {
+      "en": "Localized route skeleton for model group '{groupName}'.",
+      "translation": "모델 그룹 '{groupName}'의 지역화된 경로 뼈대입니다."
+    },
+    {
+      "en": "Localized route skeleton for {modelName}. VRAM baseline: {minVram}GB min, {optimalVram}GB optimal.",
+      "translation": "{modelName}에 대한 현지화된 경로 뼈대입니다. VRAM 기준: {minVram}GB 최소, {optimalVram}GB 최적."
+    },
+    {
+      "en": "Localized status route skeleton for pipeline and operations visibility.",
+      "translation": "파이프라인 및 작업 가시성을 위한 현지화된 상태 경로 뼈대입니다."
+    },
+    {
+      "en": "Localized tool route skeletons aligned to English utility pages.",
+      "translation": "영어 유틸리티 페이지에 맞춰 정렬된 현지화된 도구 경로 뼈대입니다."
+    },
+    {
+      "en": "Localized troubleshooting route is staged. Full locale copy will replace English fallback after QA.",
+      "translation": "현지화된 문제 해결 경로가 준비되어 있습니다. 전체 로케일 사본은 QA 이후 영어 폴백을 대체합니다."
+    },
+    {
+      "en": "Minimum VRAM",
+      "translation": "최소 VRAM"
+    },
+    {
+      "en": "Model",
+      "translation": "모델"
+    },
+    {
+      "en": "Model Catalog ({localeUpper})",
+      "translation": "모델 카탈로그({localeUpper})"
+    },
+    {
+      "en": "Model routes and group routes are staged for locale parity. Full translated model metadata is planned in later rollout.",
+      "translation": "모델 경로와 그룹 경로는 로케일 패리티를 위해 준비됩니다. 전체 번역된 모델 메타데이터는 향후 출시에서 계획되어 있습니다."
+    },
+    {
+      "en": "Models",
+      "translation": "모델"
+    },
+    {
+      "en": "Next Step",
+      "translation": "다음 단계"
+    },
+    {
+      "en": "Open English Error KB",
+      "translation": "영어 오류 KB 열기"
+    },
+    {
+      "en": "Open English Guides",
+      "translation": "영어 가이드 열기"
+    },
+    {
+      "en": "Open English Model Catalog",
+      "translation": "영어 모델 카탈로그 열기"
+    },
+    {
+      "en": "Open English Source",
+      "translation": "영어 소스 열기"
+    },
+    {
+      "en": "Open English Status",
+      "translation": "영어 상태 열기"
+    },
+    {
+      "en": "Open English Tools",
+      "translation": "영어 도구 열기"
+    },
+    {
+      "en": "Open Guides Hub",
+      "translation": "가이드 허브 열기"
+    },
+    {
+      "en": "Open Model Catalog",
+      "translation": "모델 카탈로그 열기"
+    },
+    {
+      "en": "Open Status Hub",
+      "translation": "상태 허브 열기"
+    },
+    {
+      "en": "Open Submission Review",
+      "translation": "공개 제출 검토"
+    },
+    {
+      "en": "Open VRAM Calculator",
+      "translation": "VRAM 계산기 열기"
+    },
+    {
+      "en": "Operational dashboards are available as localized route skeletons. Full locale content is staged per rollout plan.",
+      "translation": "운영 대시보드는 현지화된 경로 뼈대로 사용할 수 있습니다. 전체 로캘 콘텐츠는 출시 계획에 따라 준비됩니다."
+    },
+    {
+      "en": "Operational dashboards mirrored for locale path parity.",
+      "translation": "로케일 경로 패리티를 위해 미러링된 운영 대시보드입니다."
+    },
+    {
+      "en": "Optimal VRAM",
+      "translation": "최적 VRAM"
+    },
+    {
+      "en": "Replace fallback content with locale-specific operations messaging and glossary-safe terms.",
+      "translation": "대체 콘텐츠를 로캘별 작업 메시징 및 용어집에 안전한 용어로 바꿉니다."
+    },
+    {
+      "en": "Replace fallback copy with fully localized content after glossary and terminology checks pass.",
+      "translation": "용어집 및 용어 검사를 통과한 후 대체 사본을 완전히 현지화된 콘텐츠로 교체합니다."
+    },
+    {
+      "en": "Resource",
+      "translation": "의지"
+    },
+    {
+      "en": "Route is active, canonical is locale-scoped, and hreflang is controlled by staged rollout policy.",
+      "translation": "경로는 활성 상태이고 표준은 로케일 범위이며 hreflang은 단계적 롤아웃 정책에 의해 제어됩니다."
+    },
+    {
+      "en": "Route parity and locale-level canonical paths are active for staged validation.",
+      "translation": "단계적 검증을 위해 경로 패리티 및 로케일 수준 정식 경로가 활성화됩니다."
+    },
+    {
+      "en": "Staged locale route for model detail parity. Full translated model profile is enabled after terminology and data QA.",
+      "translation": "모델 세부 패리티를 위한 단계적 로케일 경로입니다. 용어 및 데이터 QA 후에 전체 번역된 모델 프로필이 활성화됩니다."
+    },
+    {
+      "en": "Status",
+      "translation": "상태"
+    },
+    {
+      "en": "Status Hub ({localeUpper})",
+      "translation": "상태 허브({localeUpper})"
+    },
+    {
+      "en": "Status Page",
+      "translation": "상태 페이지"
+    },
+    {
+      "en": "This locale is in rollout mode. Navigation, route parity, and SEO tags are under staged validation.",
+      "translation": "이 로케일은 출시 모드에 있습니다. 탐색, 경로 패리티 및 SEO 태그가 단계적으로 검증되고 있습니다."
+    },
+    {
+      "en": "This localized page is in staged rollout mode. Content quality gates and glossary checks are applied before index enablement.",
+      "translation": "이 현지화된 페이지는 단계적 출시 모드입니다. 콘텐츠 품질 게이트 및 용어집 확인은 인덱스 활성화 전에 적용됩니다."
+    },
+    {
+      "en": "This status route is available for i18n parity validation. Full localized operational copy will be enabled after quality checks.",
+      "translation": "이 상태 경로는 i18n 패리티 검증에 사용할 수 있습니다. 전체 현지화된 운영 사본은 품질 점검 후 활성화됩니다."
+    },
+    {
+      "en": "Tool",
+      "translation": "도구"
+    },
+    {
+      "en": "Tool routes are active for i18n parity. During staged rollout, utility page copy may temporarily use English fallback.",
+      "translation": "i18n 패리티에 대한 공구 경로가 활성화되어 있습니다. 단계적 롤아웃 중에 유틸리티 페이지 복사에서 일시적으로 영어 대체를 사용할 수 있습니다."
+    },
+    {
+      "en": "Tools Hub ({localeUpper})",
+      "translation": "도구 허브({localeUpper})"
+    },
+    {
+      "en": "Utility page route parity is enabled for i18n staging. Full localized instructions are enabled after terminology QA.",
+      "translation": "i18n 스테이징에 대해 유틸리티 페이지 경로 패리티가 활성화되었습니다. 용어 QA 후에는 완전히 현지화된 지침이 활성화됩니다."
+    },
+    {
+      "en": "{errorId} ({localeUpper}) | LocalVRAM Error KB",
+      "translation": "{errorId}({localeUpper}) | 로컬VRAM 오류 KB"
+    },
+    {
+      "en": "{groupName} ({localeUpper}) | LocalVRAM Models",
+      "translation": "{groupName}({localeUpper}) | 지역VRAM 모델"
+    },
+    {
+      "en": "{itemDescription}",
+      "translation": "{itemDescription}"
+    },
+    {
+      "en": "{itemTitle} ({localeUpper}) | LocalVRAM",
+      "translation": "{itemTitle}({localeUpper}) | 로컬VRAM"
+    },
+    {
+      "en": "{modelName} ({localeUpper}) | LocalVRAM",
+      "translation": "{modelName}({localeUpper}) | 로컬VRAM"
+    },
+    {
+      "en": "{symptom}",
+      "translation": "{symptom}"
+    }
+  ]
+}

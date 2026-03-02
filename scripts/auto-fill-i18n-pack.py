@@ -36,7 +36,7 @@ def mask_text(text: str, protected_terms: list[str]) -> tuple[str, dict[str, str
 
     placeholders = sorted(set(PLACEHOLDER_RE.findall(masked)), key=len, reverse=True)
     for ph in placeholders:
-        token = f"LVPH{token_idx}TOKEN"
+        token = f"@@{token_idx}@@"
         token_idx += 1
         masked = masked.replace(ph, token)
         token_map[token] = ph
@@ -44,7 +44,7 @@ def mask_text(text: str, protected_terms: list[str]) -> tuple[str, dict[str, str
     for term in sorted(protected_terms, key=len, reverse=True):
         if term not in masked:
             continue
-        token = f"LVPT{token_idx}TOKEN"
+        token = f"##{token_idx}##"
         token_idx += 1
         masked = masked.replace(term, token)
         token_map[token] = term
@@ -111,9 +111,18 @@ def fill_pack(pack_path: Path, only_empty: bool = True) -> tuple[int, int, int, 
                 continue
 
         out = unmask_text(translated, token_map)
-        if out:
-            phrases[idx]["translation"] = out
-            updated += 1
+        if not out:
+            failed += 1
+            continue
+
+        source_ph = sorted(set(PLACEHOLDER_RE.findall(str(phrases[idx].get("en", "")))))
+        target_ph = sorted(set(PLACEHOLDER_RE.findall(out)))
+        if source_ph != target_ph:
+            failed += 1
+            continue
+
+        phrases[idx]["translation"] = out
+        updated += 1
 
     pack["phrases"] = phrases
     pack_path.write_text(json.dumps(pack, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
