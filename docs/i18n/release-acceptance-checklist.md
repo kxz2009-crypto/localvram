@@ -8,8 +8,8 @@ This checklist is for releasing:
 
 ## Fixed Rollback Point
 Current rollback baseline:
-- commit: `ff67f00`
-- tag: `rollback-i18n-20260301-c4`
+- commit: `2d13702`
+- tag: `rollback-i18n-20260301-c6`
 - branch: `main` (tagged checkpoint)
 
 If release goes wrong, rollback to the tag above.
@@ -70,7 +70,7 @@ Expected:
 ## Phase 4: SEO Verification (PowerShell)
 ```powershell
 $domain='https://localvram.com'
-curl.exe -s "$domain/sitemap-index.xml" | Select-String -Pattern 'sitemap-en.xml|sitemap-es.xml|sitemap-ja.xml|sitemap-ko.xml'
+curl.exe -s "$domain/sitemap-index.xml" | Select-String -Pattern 'sitemap-en.xml|sitemap-es.xml|sitemap-pt.xml|sitemap-ja.xml'
 curl.exe -s "$domain/sitemap-en.xml" | Select-String -Pattern '/zh/|/en/'
 curl.exe -s "$domain/sitemap.xml" | Select-String -Pattern 'sitemap-en.xml'
 curl.exe -s "$domain/en/" | Select-String -Pattern 'canonical|hreflang|x-default'
@@ -95,7 +95,7 @@ Use only if release causes SEO or routing instability.
 
 ```powershell
 git checkout main
-git reset --hard rollback-i18n-baseline-20260301
+git reset --hard rollback-i18n-20260301-c6
 git push --force-with-lease origin main
 ```
 
