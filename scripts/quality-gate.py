@@ -152,6 +152,12 @@ def main() -> None:
         print("quality gate failed: BaseLayout missing rtl/ltr html direction binding")
         sys.exit(1)
 
+    i18n_copy_lib = (ROOT / "src" / "lib" / "i18n-copy.ts").read_text(encoding="utf-8")
+    for token in ["HREFLANG_ROLLOUT_LOCALES", "hreflangRolloutLocaleSet.has(locale)"]:
+        if token not in i18n_copy_lib:
+            print(f"quality gate failed: i18n noindex rollout guard missing token {token}")
+            sys.exit(1)
+
     redirects_file = ROOT / "public" / "_redirects"
     if not redirects_file.exists():
         print("quality gate failed: public/_redirects missing")

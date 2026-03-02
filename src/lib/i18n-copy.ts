@@ -1,5 +1,10 @@
 import copyCatalog from "../data/i18n-copy.json";
-import { DEFAULT_LOCALE, STANDARD_I18N_LOCALES, type ComLocale } from "../config/i18n";
+import {
+  DEFAULT_LOCALE,
+  HREFLANG_ROLLOUT_LOCALES,
+  STANDARD_I18N_LOCALES,
+  type ComLocale,
+} from "../config/i18n";
 
 type FieldMap = Record<string, string>;
 
@@ -23,6 +28,7 @@ type CopyResolution = {
 const parsedCatalog = copyCatalog as CopyCatalog;
 const fallbackThreshold = Number(parsedCatalog.fallback_noindex_threshold || 0.2);
 const standardLocaleSet = new Set<string>(STANDARD_I18N_LOCALES);
+const hreflangRolloutLocaleSet = new Set<string>(HREFLANG_ROLLOUT_LOCALES);
 
 function applyTemplate(value: string, vars: Record<string, string | number>): string {
   return value.replace(/\{([a-zA-Z0-9_]+)\}/g, (_, key: string) => {
@@ -74,6 +80,9 @@ export function shouldNoindexByFallback(locale: ComLocale, fallbackRatio: number
   if (locale === DEFAULT_LOCALE) {
     return false;
   }
+  if (!hreflangRolloutLocaleSet.has(locale)) {
+    return true;
+  }
   return fallbackRatio > fallbackThreshold;
 }
 
@@ -91,4 +100,3 @@ export function getCopyCoverageSummary(): {
     threshold: fallbackThreshold,
   };
 }
-

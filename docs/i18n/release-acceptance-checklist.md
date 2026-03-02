@@ -28,6 +28,7 @@ If release goes wrong, rollback to the tag above.
 6. Internal link scanner finds no forbidden cross-locale links:
    - `python scripts/check-locale-links.py`
 7. RTL validation (`ar`) is visually accepted.
+8. Non-rollout locales are forced `noindex` even when copy is prefilled.
 
 ## Phase 1: Cloudflare Rules (Simple + Stable)
 Keep only durable rules:
