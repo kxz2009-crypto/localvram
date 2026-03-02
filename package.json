@@ -14,6 +14,7 @@
     "i18n:apply-pack": "python scripts/apply-i18n-translation-pack.py",
     "i18n:apply-wave": "python scripts/apply-i18n-wave.py",
     "i18n:pack-status": "python scripts/i18n-pack-status.py",
+    "i18n:validate-packs": "python scripts/validate-i18n-packs.py",
     "check:locale-links": "python scripts/check-locale-links.py",
     "check:quality": "python scripts/quality-gate.py",
     "report:freshness": "python scripts/report-data-freshness.py"

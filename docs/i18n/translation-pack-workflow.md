@@ -58,6 +58,7 @@ python scripts/apply-i18n-wave.py --wave-dir src/data/i18n-packs/wave2 --locales
 
 ```powershell
 python scripts/i18n-pack-status.py
+python scripts/validate-i18n-packs.py
 python scripts/quality-gate.py
 npm run i18n:readiness
 npm run build

@@ -184,6 +184,16 @@ def main() -> None:
         print("quality gate failed: locale link checks failed")
         sys.exit(locale_link_result.returncode)
 
+    pack_validator = ROOT / "scripts" / "validate-i18n-packs.py"
+    if not pack_validator.exists():
+        print("quality gate failed: missing scripts/validate-i18n-packs.py")
+        sys.exit(1)
+    pack_validate_cmd = [sys.executable, str(pack_validator)]
+    pack_validate_result = subprocess.run(pack_validate_cmd, cwd=ROOT)
+    if pack_validate_result.returncode != 0:
+        print("quality gate failed: i18n pack validation failed")
+        sys.exit(pack_validate_result.returncode)
+
     i18n_copy = json.loads((ROOT / "src" / "data" / "i18n-copy.json").read_text(encoding="utf-8"))
     i18n_glossary = json.loads((ROOT / "src" / "data" / "i18n-glossary.json").read_text(encoding="utf-8"))
     threshold = i18n_copy.get("fallback_noindex_threshold")
