@@ -72,6 +72,7 @@ python scripts/apply-i18n-wave.py --wave-dir src/data/i18n-packs/wave2 --locales
 ```powershell
 python scripts/i18n-pack-status.py
 python scripts/validate-i18n-packs.py
+python scripts/audit-i18n-translation-quality.py
 python scripts/quality-gate.py
 npm run i18n:readiness
 npm run build
@@ -83,3 +84,4 @@ npm run build
 - Only locales listed in `src/data/i18n-rollout.json` are rollout locales.
 - Non-rollout locales stay `noindex` by policy.
 - Readiness treats direct English copy as fallback (except placeholder-only tokens like `{itemDescription}`).
+- Translation QA report is non-blocking by default; use `--strict` to fail on `critical/high` findings.

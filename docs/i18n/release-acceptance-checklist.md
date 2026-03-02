@@ -27,8 +27,11 @@ If release goes wrong, rollback to the tag above.
 5. Fallback ratio check passes per locale threshold.
 6. Internal link scanner finds no forbidden cross-locale links:
    - `python scripts/check-locale-links.py`
-7. RTL validation (`ar`) is visually accepted.
-8. Non-rollout locales are forced `noindex` even when copy is prefilled.
+7. Translation quality report is generated and reviewed:
+   - `npm run i18n:qa-copy`
+   - review `dist/seo-audit/i18n-translation-qa.json` (`top_review_queue`, `manual_review_queue`)
+8. RTL validation (`ar`) is visually accepted.
+9. Non-rollout locales are forced `noindex` even when copy is prefilled.
 
 ## Phase 1: Cloudflare Rules (Simple + Stable)
 Keep only durable rules:

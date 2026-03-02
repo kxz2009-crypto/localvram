@@ -16,6 +16,7 @@
     "i18n:apply-wave": "python scripts/apply-i18n-wave.py",
     "i18n:pack-status": "python scripts/i18n-pack-status.py",
     "i18n:validate-packs": "python scripts/validate-i18n-packs.py",
+    "i18n:qa-copy": "python scripts/audit-i18n-translation-quality.py",
     "verify:prod:i18n": "powershell -ExecutionPolicy Bypass -File scripts/verify-production-i18n.ps1",
     "check:locale-links": "python scripts/check-locale-links.py",
     "check:quality": "python scripts/quality-gate.py",
