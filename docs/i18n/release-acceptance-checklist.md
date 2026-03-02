@@ -5,6 +5,7 @@ This checklist is for releasing:
 - `.com`: `en + es, pt, fr, de, ru, ja, ko, ar, hi, id`
 - `.cn`: independent `zh` operation
 - `.com /zh*`: redirect only
+- Daily execution tracking: `docs/i18n/execution-daily-log.md`
 
 ## Fixed Rollback Point
 Current rollback baseline:
