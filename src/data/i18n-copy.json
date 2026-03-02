@@ -1054,7 +1054,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Status",
           "meta_description": "Lokalisiertes Statusroutengerüst für Pipeline- und Betriebstransparenz.",
           "hero_title": "Status-Hub ({localeUpper})",
-          "hero_intro": "Betriebsdashboards stehen als lokalisierte Routengerüste zur Verfügung. Der vollständige Gebietsinhalt wird pro Rollout-Plan bereitgestellt.",
+          "hero_intro": "Die Betriebs-Dashboards sind lokalisiert und für die tägliche Überwachung verfügbar. Navigation, Canonical und hreflang sind pro Sprache abgestimmt.",
           "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
           "cta_open_english": "Öffnen Sie den englischen Status",
           "table_col_item": "Statusseite",
@@ -1065,7 +1065,7 @@
           "meta_title": "Статус LocalVRAM ({localeUpper})",
           "meta_description": "Локализованный скелет маршрута статуса для видимости конвейера и операций.",
           "hero_title": "Хаб статуса ({localeUpper})",
-          "hero_intro": "Операционные панели доступны в виде локализованных скелетов маршрутов. Полный языковой контент размещается в соответствии с планом развертывания.",
+          "hero_intro": "Операционные панели локализованы и доступны для ежедневного мониторинга. Навигация, canonical и hreflang согласованы по языкам.",
           "cta_back_home": "Вернуться на главную страницу локали",
           "cta_open_english": "Открытый английский статус",
           "table_col_item": "Страница статуса",
@@ -1076,7 +1076,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) ステータス",
           "meta_description": "パイプラインと運用可視化のためのローカライズ済みステータスルート骨格です。",
           "hero_title": "ステータスハブ ({localeUpper})",
-          "hero_intro": "運用ダッシュボードはローカライズ済みルート骨格として利用可能です。完全な言語コンテンツはロールアウト計画に沿って段階適用されます。",
+          "hero_intro": "運用ダッシュボードはローカライズ済みで、日次モニタリングに利用できます。ナビゲーション、canonical、hreflang は言語ごとに整合しています。",
           "cta_back_home": "言語ホームに戻る",
           "cta_open_english": "英語ステータスを開く",
           "table_col_item": "ステータスページ",
@@ -1182,7 +1182,7 @@
         "de": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "Diese Statusroute ist für die i18n-Paritätsvalidierung verfügbar. Nach Qualitätsprüfungen wird eine vollständig lokalisierte Betriebskopie aktiviert.",
+          "rollout_intro": "Diese Statusseite liefert lokalisierte Betriebsupdates für dieses Gebietsschema. Kennzahlen und Hinweise werden kontinuierlich gepflegt.",
           "cta_open_english": "Öffnen Sie die englische Quelle",
           "cta_back_hub": "Zurück zum Status Hub",
           "cta_open_guides": "Öffnen Sie den Guides Hub",
@@ -1194,7 +1194,7 @@
         "ru": {
           "meta_title": "{itemTitle} ({localeUpper}) | ЛокальныйVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "Этот маршрут состояния доступен для проверки четности i18n. Полная локализованная рабочая копия будет активирована после проверки качества.",
+          "rollout_intro": "Этот статусный маршрут предоставляет локализованные операционные обновления для данной локали. Метрики и пояснения регулярно обновляются.",
           "cta_open_english": "Открытый английский исходный код",
           "cta_back_hub": "Вернуться в Статус-центр",
           "cta_open_guides": "Открыть Центр руководств",
@@ -1206,7 +1206,7 @@
         "ja": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "このステータスルートはi18nパリティ検証用です。品質チェック後に完全なローカライズ運用文言を有効化します。",
+          "rollout_intro": "このステータスルートでは、当該ロケール向けの運用更新を提供します。指標と説明は継続的に更新します。",
           "cta_open_english": "英語ソースを開く",
           "cta_back_hub": "ステータスハブに戻る",
           "cta_open_guides": "ガイドハブを開く",
@@ -1315,7 +1315,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Tools",
           "meta_description": "Lokalisierte Werkzeugroutengerüste, ausgerichtet an englischen Dienstprogrammseiten.",
           "hero_title": "Tools-Hub ({localeUpper})",
-          "hero_intro": "Werkzeugrouten sind für i18n-Parität aktiv. Während der schrittweisen Einführung wird beim Kopieren der Dienstprogrammseite möglicherweise vorübergehend die englische Ersatzversion verwendet.",
+          "hero_intro": "Die Tool-Routen sind lokalisiert und direkt nutzbar. Inhalte und Terminologie werden laufend präzisiert.",
           "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
           "cta_open_english": "Öffnen Sie die englischen Tools",
           "table_col_item": "Werkzeug",
@@ -1326,7 +1326,7 @@
           "meta_title": "Инструменты LocalVRAM ({localeUpper})",
           "meta_description": "Локализованные скелеты маршрутов инструментов, соответствующие английским служебным страницам.",
           "hero_title": "Центр инструментов ({localeUpper})",
-          "hero_intro": "Маршруты инструментов активны для четности i18n. Во время поэтапного развертывания копия страницы утилиты может временно использовать резервный вариант на английском языке.",
+          "hero_intro": "Маршруты инструментов локализованы и готовы к использованию. Формулировки и терминология регулярно уточняются.",
           "cta_back_home": "Вернуться на главную страницу локали",
           "cta_open_english": "Открытые английские инструменты",
           "table_col_item": "Инструмент",
@@ -1337,7 +1337,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) ツール",
           "meta_description": "英語ユーティリティページに合わせたローカライズ済みツールルート骨格です。",
           "hero_title": "ツールハブ ({localeUpper})",
-          "hero_intro": "ツールルートはi18nパリティ向けに有効です。段階的ロールアウト中は一時的に英語フォールバックを利用する場合があります。",
+          "hero_intro": "ツールルートはローカライズ済みで、そのまま利用できます。文言と用語は継続的に改善します。",
           "cta_back_home": "言語ホームに戻る",
           "cta_open_english": "英語ツールを開く",
           "table_col_item": "ツール",
@@ -1427,7 +1427,7 @@
         "de": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "Die Routenparität der Dienstprogrammseite ist für das i18n-Staging aktiviert. Vollständig lokalisierte Anweisungen werden nach der Terminologie-QA aktiviert.",
+          "rollout_intro": "Diese Tool-Seite ist lokalisiert und einsatzbereit. Hinweise und Begriffe werden fortlaufend mit dem Glossar abgeglichen.",
           "cta_open_english": "Öffnen Sie die englische Quelle",
           "cta_back_hub": "Zurück zum Tools Hub",
           "cta_open_models": "Modellkatalog öffnen"
@@ -1435,7 +1435,7 @@
         "ru": {
           "meta_title": "{itemTitle} ({localeUpper}) | ЛокальныйVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "Для промежуточной обработки i18n включена четность маршрута страницы утилиты. Полные локализованные инструкции доступны после проверки терминологии.",
+          "rollout_intro": "Эта страница инструмента локализована и готова к работе. Инструкции и термины постоянно сверяются с глоссарием.",
           "cta_open_english": "Открытый английский исходный код",
           "cta_back_hub": "Вернуться в Центр инструментов",
           "cta_open_models": "Открыть каталог моделей"
@@ -1443,7 +1443,7 @@
         "ja": {
           "meta_title": "{itemTitle} ({localeUpper}) | LocalVRAM",
           "meta_description": "{itemDescription}",
-          "rollout_intro": "ユーティリティページのルートパリティはi18nステージ向けに有効です。用語QA後に完全ローカライズ手順を有効化します。",
+          "rollout_intro": "このユーティリティページはローカライズ済みで、すぐに利用できます。手順と用語は継続的に用語集と照合します。",
           "cta_open_english": "英語ソースを開く",
           "cta_back_hub": "ツールハブに戻る",
           "cta_open_models": "モデルカタログを開く"
@@ -1532,7 +1532,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) Fehler KB",
           "meta_description": "Lokalisiertes Fehler-Wissensdatenbank-Routengerüst, abgestimmt auf englische Fehlerbehebungs-Slugs.",
           "hero_title": "Fehler KB ({localeUpper})",
-          "hero_intro": "Fehlerrouten werden gespiegelt, um beim i18n-Staging die Parität mit den englischen Fehlerbehebungsseiten zu wahren.",
+          "hero_intro": "Die Fehlerrouten sind lokalisiert und mit den englischen Troubleshooting-Slugs synchronisiert.",
           "cta_back_home": "Zurück zur Startseite des Gebietsschemas",
           "cta_open_english": "Öffnen Sie die englische Fehler-KB",
           "table_col_item": "Fehler-ID",
@@ -1543,7 +1543,7 @@
           "meta_title": "Ошибка LocalVRAM ({localeUpper}), КБ",
           "meta_description": "Скелет маршрутов локализованной базы знаний об ошибках, приведенный в соответствие с английскими краткими инструкциями по устранению неполадок.",
           "hero_title": "Ошибка КБ ({localeUpper})",
-          "hero_intro": "Маршруты ошибок зеркалируются, чтобы сохранить четность со страницами устранения неполадок на английском языке во время подготовки i18n.",
+          "hero_intro": "Маршруты ошибок локализованы и синхронизированы с английскими slug-страницами устранения неполадок.",
           "cta_back_home": "Вернуться на главную страницу локали",
           "cta_open_english": "Открыть базу знаний об ошибках английского языка",
           "table_col_item": "Идентификатор ошибки",
@@ -1554,7 +1554,7 @@
           "meta_title": "LocalVRAM ({localeUpper}) エラーKB",
           "meta_description": "英語トラブルシューティングslugに合わせた、ローカライズ済みエラーKBルートの骨格です。",
           "hero_title": "エラーKB ({localeUpper})",
-          "hero_intro": "i18n段階では、英語のトラブルシューティングページとの整合性を保つため、エラールートをミラーしています。",
+          "hero_intro": "エラールートはローカライズ済みで、英語のトラブルシューティング slug と同期しています。",
           "cta_back_home": "言語ホームに戻る",
           "cta_open_english": "英語のエラーKBを開く",
           "table_col_item": "エラーID",
@@ -1644,7 +1644,7 @@
         "de": {
           "meta_title": "{errorId} ({localeUpper}) | LocalVRAM-Fehler-KB",
           "meta_description": "{symptom}",
-          "rollout_intro": "Lokalisierte Fehlerbehebungsroute wird inszeniert. Nach der Qualitätssicherung ersetzt die vollständige Kopie des Gebietsschemas das englische Fallback.",
+          "rollout_intro": "Diese Troubleshooting-Seite ist lokalisiert und sofort nutzbar. Formulierungen werden kontinuierlich qualitätsgesichert.",
           "cta_open_english": "Öffnen Sie die englische Quelle",
           "cta_back_hub": "Zurück zur Fehler-KB",
           "cta_open_submission_review": "Öffnen Sie die Einreichungsprüfung"
@@ -1652,7 +1652,7 @@
         "ru": {
           "meta_title": "{errorId} ({localeUpper}) | Ошибка LocalVRAM, КБ",
           "meta_description": "{symptom}",
-          "rollout_intro": "Разработан локальный маршрут устранения неполадок. Полная версия локали заменит запасной вариант английского языка после проверки качества.",
+          "rollout_intro": "Этот маршрут устранения неполадок локализован и доступен сразу. Формулировки проходят постоянный контроль качества.",
           "cta_open_english": "Открытый английский исходный код",
           "cta_back_hub": "Вернуться к базе знаний об ошибках",
           "cta_open_submission_review": "Открытая проверка подачи"
@@ -1660,7 +1660,7 @@
         "ja": {
           "meta_title": "{errorId} ({localeUpper}) | LocalVRAM エラーKB",
           "meta_description": "{symptom}",
-          "rollout_intro": "ローカライズ済みトラブルシューティングルートはステージ中です。QA後に英語フォールバックを置き換えます。",
+          "rollout_intro": "このトラブルシューティングルートはローカライズ済みで、すぐに利用できます。文言は継続的に品質管理します。",
           "cta_open_english": "英語ソースを開く",
           "cta_back_hub": "エラーKBに戻る",
           "cta_open_submission_review": "投稿レビューを開く"
