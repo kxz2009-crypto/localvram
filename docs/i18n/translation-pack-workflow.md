@@ -8,6 +8,12 @@ Use this workflow to fill locale copy in controlled waves without changing rollo
 python scripts/export-i18n-translation-template.py --locale fr
 ```
 
+Or export all standard locales in one run:
+
+```powershell
+python scripts/export-i18n-translation-template.py --all
+```
+
 Default output:
 
 - `dist/seo-audit/i18n-template-fr.json`

@@ -8,8 +8,8 @@ This checklist is for releasing:
 
 ## Fixed Rollback Point
 Current rollback baseline:
-- commit: `2d13702`
-- tag: `rollback-i18n-20260301-c6`
+- commit: `f7f203b`
+- tag: `rollback-i18n-20260301-c10`
 - branch: `main` (tagged checkpoint)
 
 If release goes wrong, rollback to the tag above.
@@ -97,7 +97,7 @@ Use only if release causes SEO or routing instability.
 
 ```powershell
 git checkout main
-git reset --hard rollback-i18n-20260301-c6
+git reset --hard rollback-i18n-20260301-c10
 git push --force-with-lease origin main
 ```
 
