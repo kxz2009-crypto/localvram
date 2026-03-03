@@ -177,3 +177,7 @@
    - Workflow summary now reports `rollback-checkpoint-tag` outcome; artifact bundle includes `logs/rollback-checkpoint-tag.log`.
 23. GitHub Actions `Weekly i18n Acceptance` manual run `22635501319`: passed with `Create weekly rollback checkpoint tag = success`.
 24. Verified remote tag exists: `rollback-i18n-week-20260303` on `origin`.
+25. Hardened `Production Routing Guard` observability:
+   - Standardized verify log output (`logs/verify-production-i18n.log`) with start/end and exit code.
+   - Failure alert now reads `logs/failure-context.json` to include concrete exit-code detail in issue body.
+   - Added always-on workflow summary and artifact upload (`production-routing-guard`).
