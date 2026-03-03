@@ -56,14 +56,18 @@
 ## 2026-03-03 (Done)
 
 ### Completed Today
-1. Finished blog copy wave 1 for top 5 high-intent slugs across 10 locales:
+1. Finished blog copy wave 1 plus wave 2 step 1 (8 slugs total) across 10 locales:
    - Added localized `title` / `description` / `cta_line` in `src/data/i18n-blog-copy.json`.
-   - Covered slugs:
+   - Wave 1 slugs:
      - `best-24gb-vram-models-2026`
      - `rtx4090-vs-rtx3090-for-local-llm`
      - `cuda-out-of-memory-ollama-fixes-2026`
      - `llama-70b-on-rtx-3090-local-setup`
      - `model-qwen3-8b-local-benchmark`
+   - Wave 2 step 1 slugs:
+     - `model-qwen3-coder-30b-local-benchmark`
+     - `best-local-rag-models-2026`
+     - `local-vs-cloud-cost-decision-framework`
 2. Wired localized blog copy into locale routes:
    - `src/pages/[locale]/blog/[slug].astro`: localized title/description and localized CTA line with English fallback.
    - `src/pages/[locale]/blog/index.astro`: localized post cards for translated slugs and fallback for remaining slugs.

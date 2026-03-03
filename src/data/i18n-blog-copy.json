@@ -296,6 +296,183 @@
           "cta_line": "Gunakan Qwen3:8B sebagai baseline, lalu bandingkan satu model yang lebih besar sebelum beli hardware."
         }
       }
+    },
+    "model-qwen3-coder-30b-local-benchmark": {
+      "en": {
+        "title": "Qwen3-Coder:30B Local Inference Benchmark: Practical Guide (2026)",
+        "description": "A practical benchmark guide for qwen3-coder:30b local inference, focused on throughput expectations, local limits, and cloud fallback boundaries.",
+        "cta_line": "Use qwen3-coder:30b for coding-heavy tasks, then define a clear cloud fallback threshold for peak load."
+      },
+      "locales": {
+        "es": {
+          "title": "Benchmark de Inferencia Local de Qwen3-Coder:30B: Guía Práctica (2026)",
+          "description": "Guía práctica para benchmark local de qwen3-coder:30b, centrada en throughput esperado, límites locales y umbrales de fallback a la nube.",
+          "cta_line": "Usa qwen3-coder:30b para tareas de código y define un umbral claro de fallback cloud para picos."
+        },
+        "pt": {
+          "title": "Benchmark de Inferência Local do Qwen3-Coder:30B: Guia Prático (2026)",
+          "description": "Guia prático de benchmark local para qwen3-coder:30b, com foco em throughput esperado, limites locais e fronteiras de fallback em nuvem.",
+          "cta_line": "Use qwen3-coder:30b para tarefas de código e defina um limiar claro de fallback cloud para picos."
+        },
+        "fr": {
+          "title": "Benchmark d'Inférence Locale Qwen3-Coder:30B : Guide Pratique (2026)",
+          "description": "Guide pratique de benchmark local pour qwen3-coder:30b, axé sur le débit attendu, les limites locales et les seuils de repli cloud.",
+          "cta_line": "Utilisez qwen3-coder:30b pour les tâches de code, puis définissez un seuil clair de fallback cloud en pic."
+        },
+        "de": {
+          "title": "Qwen3-Coder:30B Local-Inference-Benchmark: Praxisleitfaden (2026)",
+          "description": "Praxisleitfaden für lokale Benchmarks mit qwen3-coder:30b, mit Fokus auf erwarteten Durchsatz, lokale Grenzen und Cloud-Fallback-Schwellen.",
+          "cta_line": "Nutze qwen3-coder:30b für coding-lastige Aufgaben und definiere klare Cloud-Fallback-Regeln für Lastspitzen."
+        },
+        "ru": {
+          "title": "Локальный бенчмарк Qwen3-Coder:30B: Практическое руководство (2026)",
+          "description": "Практическое руководство по локальному benchmark для qwen3-coder:30b: ожидаемый throughput, локальные ограничения и пороги cloud fallback.",
+          "cta_line": "Используйте qwen3-coder:30b для задач программирования и заранее задайте порог перехода в облако."
+        },
+        "ja": {
+          "title": "Qwen3-Coder:30B ローカル推論ベンチマーク: 実践ガイド（2026）",
+          "description": "qwen3-coder:30b のローカル推論を評価する実践ガイド。期待スループット、ローカル運用限界、クラウド切替境界を整理します。",
+          "cta_line": "コーディング重視タスクは qwen3-coder:30b を基準にし、ピーク時のクラウド移行条件を先に決めてください。"
+        },
+        "ko": {
+          "title": "Qwen3-Coder:30B 로컬 추론 벤치마크: 실전 가이드 (2026)",
+          "description": "qwen3-coder:30b 로컬 추론 벤치마크 실전 가이드입니다. 예상 처리량, 로컬 한계, 클라우드 폴백 경계를 정리했습니다.",
+          "cta_line": "코딩 중심 워크로드는 qwen3-coder:30b를 기준으로 두고, 피크 부하용 클라우드 전환 기준을 먼저 정하세요."
+        },
+        "ar": {
+          "title": "قياس أداء Qwen3-Coder:30B محلياً: دليل عملي (2026)",
+          "description": "دليل عملي لقياس أداء qwen3-coder:30b محلياً مع توقعات throughput وحدود التشغيل المحلي ومعايير واضحة للتحويل إلى السحابة.",
+          "cta_line": "استخدم qwen3-coder:30b للمهام البرمجية وحدد مسبقاً عتبة التحويل إلى السحابة عند الذروة."
+        },
+        "hi": {
+          "title": "Qwen3-Coder:30B Local Inference Benchmark: Practical Guide (2026)",
+          "description": "qwen3-coder:30b लोकल इंफरेंस benchmark के लिए व्यावहारिक गाइड, जिसमें अपेक्षित throughput, local limits और cloud fallback सीमाएँ शामिल हैं।",
+          "cta_line": "कोडिंग-भारी tasks के लिए qwen3-coder:30b चुनें और peak load के लिए cloud fallback threshold पहले तय करें।"
+        },
+        "id": {
+          "title": "Benchmark Inferensi Lokal Qwen3-Coder:30B: Panduan Praktis (2026)",
+          "description": "Panduan praktis benchmark lokal untuk qwen3-coder:30b, berfokus pada throughput yang diharapkan, batas lokal, dan ambang fallback cloud.",
+          "cta_line": "Gunakan qwen3-coder:30b untuk tugas coding dan tetapkan ambang fallback cloud yang jelas untuk beban puncak."
+        }
+      }
+    },
+    "best-local-rag-models-2026": {
+      "en": {
+        "title": "Best Local RAG Models for Ollama in 2026",
+        "description": "A practical shortlist of local RAG models for 2026, with emphasis on retrieval quality, latency stability, and constrained context performance.",
+        "cta_line": "Fix retrieval and chunking quality first, then scale model size only when quality plateaus."
+      },
+      "locales": {
+        "es": {
+          "title": "Mejores Modelos RAG Locales para Ollama en 2026",
+          "description": "Lista práctica de modelos RAG locales para 2026, enfocada en calidad de recuperación, estabilidad de latencia y rendimiento con contexto limitado.",
+          "cta_line": "Optimiza primero retrieval y chunking; solo aumenta el modelo cuando la calidad se estanque."
+        },
+        "pt": {
+          "title": "Melhores Modelos RAG Locais para Ollama em 2026",
+          "description": "Lista prática de modelos RAG locais para 2026, com foco em qualidade de recuperação, estabilidade de latência e desempenho com contexto limitado.",
+          "cta_line": "Corrija retrieval e chunking primeiro; aumente o modelo apenas quando a qualidade estabilizar."
+        },
+        "fr": {
+          "title": "Meilleurs Modèles RAG Locaux pour Ollama en 2026",
+          "description": "Sélection pratique de modèles RAG locaux pour 2026, axée sur la qualité de retrieval, la stabilité de latence et la performance sous contexte limité.",
+          "cta_line": "Optimisez d'abord retrieval et chunking, puis augmentez la taille du modèle seulement si la qualité plafonne."
+        },
+        "de": {
+          "title": "Beste lokale RAG-Modelle für Ollama 2026",
+          "description": "Praxisnahe Auswahl lokaler RAG-Modelle für 2026 mit Fokus auf Retrieval-Qualität, stabile Latenz und Leistung bei begrenztem Kontext.",
+          "cta_line": "Zuerst Retrieval und Chunking optimieren, dann Modellgröße nur bei echtem Qualitätsplateau erhöhen."
+        },
+        "ru": {
+          "title": "Лучшие локальные RAG-модели для Ollama в 2026 году",
+          "description": "Практичный список локальных RAG-моделей на 2026 год с фокусом на качество retrieval, стабильную задержку и работу при ограниченном контексте.",
+          "cta_line": "Сначала улучшите retrieval и chunking, а размер модели увеличивайте только при плато качества."
+        },
+        "ja": {
+          "title": "2026年版 Ollama向け最適ローカルRAGモデル",
+          "description": "2026年のローカルRAGモデル実践リスト。検索品質、レイテンシ安定性、制約コンテキスト下の性能を重視します。",
+          "cta_line": "まず retrieval と chunking を最適化し、品質が頭打ちになってからモデルを拡大してください。"
+        },
+        "ko": {
+          "title": "2026년 Ollama용 최고의 로컬 RAG 모델",
+          "description": "2026년 로컬 RAG 모델 실전 추천 목록입니다. 검색 품질, 지연 안정성, 제한된 컨텍스트 성능을 중점으로 다룹니다.",
+          "cta_line": "먼저 retrieval과 chunking 품질을 개선하고, 품질 정체가 확인될 때만 모델 크기를 키우세요."
+        },
+        "ar": {
+          "title": "أفضل نماذج RAG المحلية لـ Ollama في 2026",
+          "description": "قائمة عملية لأفضل نماذج RAG المحلية في 2026 مع التركيز على جودة الاسترجاع واستقرار زمن الاستجابة والأداء ضمن سياق محدود.",
+          "cta_line": "حسّن جودة retrieval وchunking أولاً، ثم زد حجم النموذج فقط عند ثبات التحسن."
+        },
+        "hi": {
+          "title": "2026 में Ollama के लिए Best Local RAG Models",
+          "description": "2026 के लिए लोकल RAG मॉडल्स की व्यावहारिक सूची, जिसमें retrieval quality, latency stability और सीमित context performance पर फोकस है।",
+          "cta_line": "पहले retrieval और chunking सुधारें, फिर quality plateau होने पर ही मॉडल size बढ़ाएँ।"
+        },
+        "id": {
+          "title": "Model RAG Lokal Terbaik untuk Ollama di 2026",
+          "description": "Daftar praktis model RAG lokal untuk 2026 dengan fokus pada kualitas retrieval, stabilitas latensi, dan performa pada konteks terbatas.",
+          "cta_line": "Perbaiki retrieval dan chunking dulu, lalu naikkan ukuran model hanya saat kualitas sudah plateau."
+        }
+      }
+    },
+    "local-vs-cloud-cost-decision-framework": {
+      "en": {
+        "title": "Local vs Cloud Cost for Ollama: Decision Framework",
+        "description": "A practical decision framework for when to stay local, when to burst to cloud, and how to reduce monthly cost variance.",
+        "cta_line": "Run daily stable workloads locally and reserve cloud only for peak VRAM or throughput bursts."
+      },
+      "locales": {
+        "es": {
+          "title": "Costo Local vs Cloud para Ollama: Marco de Decisión",
+          "description": "Marco práctico para decidir cuándo mantener carga local, cuándo escalar a la nube y cómo reducir la variación mensual de costos.",
+          "cta_line": "Ejecuta cargas diarias estables en local y reserva cloud para picos de VRAM o throughput."
+        },
+        "pt": {
+          "title": "Custo Local vs Cloud para Ollama: Framework de Decisão",
+          "description": "Framework prático para decidir quando ficar local, quando usar burst em nuvem e como reduzir a variação mensal de custos.",
+          "cta_line": "Rode workloads estáveis diários localmente e deixe nuvem apenas para picos de VRAM ou throughput."
+        },
+        "fr": {
+          "title": "Coût Local vs Cloud pour Ollama : Cadre de Décision",
+          "description": "Cadre pratique pour décider quand rester en local, quand basculer en cloud et comment réduire la variance mensuelle des coûts.",
+          "cta_line": "Exécutez les charges stables en local et réservez le cloud aux pics de VRAM ou de débit."
+        },
+        "de": {
+          "title": "Local vs Cloud Kosten für Ollama: Entscheidungsrahmen",
+          "description": "Praxisnaher Entscheidungsrahmen, wann lokal sinnvoll ist, wann Cloud-Burst nötig wird und wie monatliche Kostenschwankung sinkt.",
+          "cta_line": "Stabile Tageslast lokal fahren und Cloud nur für VRAM- oder Durchsatzspitzen einsetzen."
+        },
+        "ru": {
+          "title": "Local vs Cloud стоимость для Ollama: фреймворк решений",
+          "description": "Практический фреймворк: когда оставаться на локальном запуске, когда переходить в облако и как снизить месячную вариативность затрат.",
+          "cta_line": "Стабильные ежедневные нагрузки держите локально, а облако оставляйте для пиков VRAM и throughput."
+        },
+        "ja": {
+          "title": "Ollamaのローカル運用 vs クラウドコスト: 意思決定フレームワーク",
+          "description": "ローカル継続とクラウドバーストの判断基準を整理し、月次コスト変動を抑えるための実践フレームワークです。",
+          "cta_line": "日常の安定負荷はローカルで処理し、VRAMや処理量のピーク時のみクラウドを使ってください。"
+        },
+        "ko": {
+          "title": "Ollama 로컬 vs 클라우드 비용: 의사결정 프레임워크",
+          "description": "언제 로컬을 유지하고 언제 클라우드 버스트를 써야 하는지, 월별 비용 변동을 줄이는 실전 의사결정 프레임워크입니다.",
+          "cta_line": "일상적인 안정 워크로드는 로컬에서 처리하고, VRAM·처리량 피크에서만 클라우드를 사용하세요."
+        },
+        "ar": {
+          "title": "تكلفة التشغيل المحلي مقابل السحابة في Ollama: إطار قرار عملي",
+          "description": "إطار عملي لتحديد متى تبقي التشغيل محلياً ومتى تستخدم السحابة، وكيف تقلل تذبذب التكلفة الشهرية.",
+          "cta_line": "شغّل الأحمال اليومية المستقرة محلياً، واستخدم السحابة فقط عند قمم VRAM أو معدل المعالجة."
+        },
+        "hi": {
+          "title": "Ollama के लिए Local vs Cloud Cost: Decision Framework",
+          "description": "व्यावहारिक निर्णय ढांचा: कब लोकल रहना है, कब क्लाउड burst लेना है, और मासिक लागत variance कैसे कम करना है।",
+          "cta_line": "दैनिक स्थिर workloads लोकल चलाएँ, और VRAM या throughput peak पर ही cloud इस्तेमाल करें।"
+        },
+        "id": {
+          "title": "Biaya Lokal vs Cloud untuk Ollama: Kerangka Keputusan",
+          "description": "Kerangka praktis untuk menentukan kapan tetap lokal, kapan burst ke cloud, dan cara menurunkan variansi biaya bulanan.",
+          "cta_line": "Jalankan workload harian stabil secara lokal, lalu pakai cloud hanya untuk lonjakan VRAM atau throughput."
+        }
+      }
     }
   }
 }
