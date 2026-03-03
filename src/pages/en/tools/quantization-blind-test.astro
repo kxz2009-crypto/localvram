@@ -38,25 +38,107 @@ const faqSchema = {
     }
   ]
 };
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to run a quantization blind test (Q4 vs Q8)",
+  inLanguage: "en",
+  totalTime: "PT10M",
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Prepare one benchmark prompt set",
+      text: "Use the same prompts for both quantization runs so only quantization level changes."
+    },
+    {
+      "@type": "HowToStep",
+      name: "Generate blind outputs",
+      text: "Label outputs A/B without showing which profile is Q4 or Q8."
+    },
+    {
+      "@type": "HowToStep",
+      name: "Score before reveal",
+      text: "Score factuality, structure, and latency first, then reveal quantization labels."
+    }
+  ]
+};
 ---
 
 <BaseLayout
-  title="Quantization Blind Test | LocalVRAM"
-  description="Blind compare Q4 vs Q8 outputs and review quantization quality trade-offs."
+  title="Q4 vs Q8 Quantization Blind Test (2026) | LocalVRAM"
+  description="Blind-test workflow for Q4 vs Q8 quality decisions. Compare output quality, latency, and deployment cost before choosing quantization."
   locale="en"
   canonicalPath={pagePath}
-  structuredData={[datasetSchema, faqSchema]}
+  structuredData={[datasetSchema, faqSchema, howToSchema]}
 >
   <main class="container">
-    <h1>Quantization Blind Test</h1>
+    <h1>Quantization Blind Test: Q4 vs Q8 Decision Workflow</h1>
     <p>
-      Compare outputs between Q4 and Q8 in blind mode. Backend execution queue
-      can be connected later through a serverless endpoint.
+      This tool page is designed for practical model deployment decisions. Run one blind pass before you decide between lower VRAM
+      footprint (Q4) and higher quality retention (Q8).
     </p>
-    <ul>
-      <li>Daily limit: 5 runs</li>
-      <li>Open windows: configurable</li>
-      <li>Fallback: offline side-by-side samples</li>
-    </ul>
+
+    <section class="card">
+      <h2>Fast Start Checklist</h2>
+      <ol>
+        <li>Pick one real task prompt set (coding, extraction, summarization, or customer support).</li>
+        <li>Generate two outputs: one with Q4, one with Q8. Keep temperature and prompt identical.</li>
+        <li>Hide model labels and score quality first, then reveal labels.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Scoring Rubric (Simple and Repeatable)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>How to score</th>
+            <th>Decision signal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Factual accuracy</td>
+            <td>Count factual errors or unsupported claims per output.</td>
+            <td>If Q4 error rate rises, keep Q8 for this task.</td>
+          </tr>
+          <tr>
+            <td>Instruction fidelity</td>
+            <td>Check whether required format and constraints are followed.</td>
+            <td>If Q4 misses structure repeatedly, prefer Q8.</td>
+          </tr>
+          <tr>
+            <td>Latency / throughput</td>
+            <td>Compare average tokens/s and response wait time.</td>
+            <td>If quality is close, prefer faster profile.</td>
+          </tr>
+          <tr>
+            <td>Operational cost</td>
+            <td>Estimate local VRAM pressure and cloud spillover hours.</td>
+            <td>Use lower-cost profile when quality delta is not material.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Suggested Decision Rule</h2>
+      <p>
+        Use Q4 as default only when it passes your prompt set with no material quality loss. If the workload is accuracy-sensitive
+        (analysis, compliance, code generation), use Q8 for primary path and reserve Q4 for fallback or low-priority traffic.
+      </p>
+      <ul>
+        <li>Daily limit guideline: 5 controlled blind runs per model/task pair.</li>
+        <li>Use one reviewer checklist across teams to avoid ad-hoc scoring drift.</li>
+        <li>Record final decision with benchmark link and prompt snapshot.</li>
+      </ul>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn" href="/en/blog/q4-vs-q8-quality-loss-ollama/">Read Q4 vs Q8 deep dive</a>
+      <a class="btn" href="/en/models/llama-70b-q4/">Open Llama 70B Q4 decision page</a>
+      <a class="btn btn-primary" href="/en/tools/vram-calculator/">Estimate VRAM fit</a>
+    </section>
   </main>
 </BaseLayout>

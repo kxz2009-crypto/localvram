@@ -36,6 +36,13 @@ const chartPayload = {
 };
 const modelPath = `/en/models/${item.id}/`;
 const modelUrl = `https://localvram.com${modelPath}`;
+const seoTitle =
+  typeof item.seo_title === "string" && item.seo_title.trim()
+    ? item.seo_title.trim()
+    : `${item.name} on LocalVRAM`;
+const seoDescription = `${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal. RTX 3090 ${
+  hasRealBenchmark ? `${realBenchmark.tokens_per_second} tok/s measured` : `${item.benchmarks.rtx3090_tok_s} tok/s baseline`
+}, RTX 4090 ${item.benchmarks.rtx4090_tok_s} tok/s, cloud ${item.benchmarks.a100_tok_s} tok/s.`;
 const modelSchema = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
@@ -80,8 +87,8 @@ const breadcrumbSchema = {
 ---
 
 <BaseLayout
-  title={`${item.name} on LocalVRAM`}
-  description={`${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal, with local/cloud benchmark references.`}
+  title={seoTitle}
+  description={seoDescription}
   locale="en"
   canonicalPath={modelPath}
   alternates={ROOT_ALTERNATES}

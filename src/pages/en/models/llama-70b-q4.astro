@@ -1,0 +1,169 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
+import links from "../../../data/affiliate-links.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+
+const pagePath = "/en/models/llama-70b-q4/";
+const pageUrl = `https://localvram.com${pagePath}`;
+
+const items = Array.isArray(catalog?.items) ? catalog.items : [];
+const llama33 = items.find((item) => item?.id === "llama33-70b-q4");
+const llama3 = items.find((item) => item?.id === "llama3-70b-q4");
+
+if (!llama33 || !llama3) {
+  throw new Error("llama-70b-q4 landing requires llama33-70b-q4 and llama3-70b-q4 in model catalog");
+}
+
+const benchmarkMap = benchmarkResults?.models || {};
+const llama33Measured = benchmarkMap[llama33.ollama_tag] || null;
+const llama3Measured = benchmarkMap[llama3.ollama_tag] || null;
+const hasLlama33Measured = llama33Measured?.status === "ok" && typeof llama33Measured?.tokens_per_second === "number";
+const hasLlama3Measured = llama3Measured?.status === "ok" && typeof llama3Measured?.tokens_per_second === "number";
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "Llama 70B Q4 on RTX 3090: 2026 Setup and Benchmark Comparison",
+  description:
+    "Practical Llama 70B Q4 guidance for RTX 3090 users, including measured 3090 performance and 3090 vs 4090 baseline comparison.",
+  url: pageUrl,
+  inLanguage: "en",
+  mainEntityOfPage: pageUrl,
+  author: {
+    "@type": "Organization",
+    name: "LocalVRAM"
+  }
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Can RTX 3090 run Llama 70B Q4 locally?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, in many setups. Keep context length conservative and plan cloud fallback for heavy or long-context sessions."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Should I use Llama 3 70B or Llama 3.3 70B?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Use the newer 3.3 profile first, then validate quality and latency against your workload before production rollout."
+      }
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="Llama 70B Q4 on RTX 3090 (2026): Measured Tokens/s, VRAM, and 3090 vs 4090"
+  description="Llama 70B Q4 local guide for RTX 3090 users. Includes measured 3090 benchmark anchors, VRAM requirements, and 3090 vs 4090 comparison."
+  locale="en"
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  ogType="article"
+  modifiedTime={llama33.updated_at}
+  structuredData={[articleSchema, faqSchema]}
+>
+  <main class="container">
+    <h1>Llama 70B Q4 on RTX 3090: Practical 2026 Decision Page</h1>
+    <p>
+      This page exists for users searching <code>llama 70b q4</code> directly. If you are choosing between local RTX 3090 and
+      cloud fallback, start with the measured and baseline anchors below.
+    </p>
+
+    <section class="card">
+      <h2>Quick Answer</h2>
+      <ul>
+        <li>24GB VRAM is the minimum tier for 70B Q4-class local experiments.</li>
+        <li>
+          Llama 3.3 70B Q4 is the recommended first profile for new runs, with cloud fallback for long-context workloads.
+        </li>
+        <li>
+          If your target is throughput-first production, compare 3090 vs 4090 and keep a <a href={links.runpod}>RunPod</a> path ready.
+        </li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Measured Local Anchor (RTX 3090)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Profile</th>
+            <th>Ollama tag</th>
+            <th>3090 tokens/s</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{llama33.name}</td>
+            <td><code>{llama33.ollama_tag}</code></td>
+            <td>{hasLlama33Measured ? llama33Measured.tokens_per_second : llama33.benchmarks.rtx3090_tok_s}</td>
+            <td>{hasLlama33Measured ? "Measured" : "Baseline estimate"}</td>
+          </tr>
+          <tr>
+            <td>{llama3.name}</td>
+            <td><code>{llama3.ollama_tag}</code></td>
+            <td>{hasLlama3Measured ? llama3Measured.tokens_per_second : llama3.benchmarks.rtx3090_tok_s}</td>
+            <td>{hasLlama3Measured ? "Measured" : "Baseline estimate"}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="affiliate-note">
+        Measured entries come from latest benchmark snapshots; non-measured entries are kept as clearly labeled baseline estimates.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>3090 vs 4090 vs A100 Baseline Comparison</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Profile</th>
+            <th>RTX 3090</th>
+            <th>RTX 4090</th>
+            <th>A100 80GB</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{llama33.name}</td>
+            <td>{llama33.benchmarks.rtx3090_tok_s}</td>
+            <td>{llama33.benchmarks.rtx4090_tok_s}</td>
+            <td>{llama33.benchmarks.a100_tok_s}</td>
+          </tr>
+          <tr>
+            <td>{llama3.name}</td>
+            <td>{llama3.benchmarks.rtx3090_tok_s}</td>
+            <td>{llama3.benchmarks.rtx4090_tok_s}</td>
+            <td>{llama3.benchmarks.a100_tok_s}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Recommended Execution Path</h2>
+      <ol>
+        <li>Run <code>ollama run llama3.3:70b</code> first and capture tokens/s on your own prompt set.</li>
+        <li>If latency or context ceiling blocks your target, move burst traffic to <a href={links.runpod}>RunPod</a> or <a href={links.vast}>Vast.ai</a>.</li>
+        <li>For stable daily local usage, compare with <a href="/en/blog/rtx4090-vs-rtx3090-for-local-llm/">3090 vs 4090 guide</a> before hardware spend.</li>
+      </ol>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn" href="/en/models/llama33-70b-q4/">Open Llama 3.3 70B profile</a>
+      <a class="btn" href="/en/models/llama3-70b-q4/">Open Llama 3 70B profile</a>
+      <a class="btn" href="/en/tools/quantization-blind-test/">Run Q4 vs Q8 blind test workflow</a>
+      <a class="btn btn-primary" href="/en/affiliate/hardware-upgrade/">Check local GPU upgrade path</a>
+    </section>
+    <p class="affiliate-note">We may earn a commission if you purchase via links on this page.</p>
+  </main>
+</BaseLayout>
