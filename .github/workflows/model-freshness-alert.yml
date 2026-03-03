@@ -1,0 +1,214 @@
+name: Model Freshness Alert
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+    inputs:
+      max_status_age_hours:
+        description: "Max age for status.last_verified in hours"
+        required: false
+        default: "192"
+        type: string
+      max_hardware_sync_age_hours:
+        description: "Max age for status.last_hardware_sync in hours"
+        required: false
+        default: "192"
+        type: string
+      max_search_console_age_hours:
+        description: "Max age for search-console snapshot in hours"
+        required: false
+        default: "120"
+        type: string
+      min_freshness_score:
+        description: "Minimum accepted freshness_score"
+        required: false
+        default: "70"
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Prepare logs
+        if: always()
+        run: mkdir -p logs
+
+      - name: Check data freshness
+        env:
+          INPUT_MAX_STATUS_AGE_HOURS: ${{ github.event.inputs.max_status_age_hours }}
+          INPUT_MAX_HARDWARE_SYNC_AGE_HOURS: ${{ github.event.inputs.max_hardware_sync_age_hours }}
+          INPUT_MAX_SEARCH_CONSOLE_AGE_HOURS: ${{ github.event.inputs.max_search_console_age_hours }}
+          INPUT_MIN_FRESHNESS_SCORE: ${{ github.event.inputs.min_freshness_score }}
+        run: |
+          MAX_STATUS_AGE_HOURS="${INPUT_MAX_STATUS_AGE_HOURS}"
+          MAX_HARDWARE_SYNC_AGE_HOURS="${INPUT_MAX_HARDWARE_SYNC_AGE_HOURS}"
+          MAX_SEARCH_CONSOLE_AGE_HOURS="${INPUT_MAX_SEARCH_CONSOLE_AGE_HOURS}"
+          MIN_FRESHNESS_SCORE="${INPUT_MIN_FRESHNESS_SCORE}"
+
+          if [ -z "${MAX_STATUS_AGE_HOURS}" ]; then
+            MAX_STATUS_AGE_HOURS="192"
+          fi
+          if [ -z "${MAX_HARDWARE_SYNC_AGE_HOURS}" ]; then
+            MAX_HARDWARE_SYNC_AGE_HOURS="192"
+          fi
+          if [ -z "${MAX_SEARCH_CONSOLE_AGE_HOURS}" ]; then
+            MAX_SEARCH_CONSOLE_AGE_HOURS="120"
+          fi
+          if [ -z "${MIN_FRESHNESS_SCORE}" ]; then
+            MIN_FRESHNESS_SCORE="70"
+          fi
+
+          if ! python scripts/check-data-freshness.py \
+            --max-status-age-hours "${MAX_STATUS_AGE_HOURS}" \
+            --max-hardware-sync-age-hours "${MAX_HARDWARE_SYNC_AGE_HOURS}" \
+            --max-search-console-age-hours "${MAX_SEARCH_CONSOLE_AGE_HOURS}" \
+            --min-freshness-score "${MIN_FRESHNESS_SCORE}" \
+            --report-file "logs/model-freshness-report.json"; then
+            python - <<'PY'
+from pathlib import Path
+import json
+
+report_path = Path("logs/model-freshness-report.json")
+failure_detail = "check-data-freshness.py failed"
+if report_path.exists():
+    try:
+        payload = json.loads(report_path.read_text(encoding="utf-8"))
+        errors = payload.get("errors", [])
+        if isinstance(errors, list) and errors:
+            failure_detail = "; ".join(str(x) for x in errors[:6])
+    except Exception as exc:  # noqa: BLE001
+        failure_detail = f"failed to parse model-freshness-report.json: {exc}"
+
+Path("logs/failure-context.json").write_text(
+    json.dumps(
+        {
+            "failure_class": "model_data_stale",
+            "failure_detail": failure_detail,
+        },
+        ensure_ascii=False,
+    ),
+    encoding="utf-8",
+)
+PY
+            echo "::error title=FailureClass::model_data_stale - freshness threshold exceeded"
+            exit 1
+          fi
+
+      - name: Upload freshness report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-freshness-report
+          path: logs/model-freshness-report.json
+          if-no-files-found: warn
+
+      - name: Alert issue (freshness failure)
+        if: always() && failure()
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Model Freshness Alert
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const fs = require("fs");
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+
+            let failureClass = "model_data_stale";
+            let failureDetail = "";
+            if (fs.existsSync("logs/failure-context.json")) {
+              try {
+                const payload = JSON.parse(fs.readFileSync("logs/failure-context.json", "utf8"));
+                failureClass = String(payload.failure_class || failureClass).trim() || failureClass;
+                failureDetail = String(payload.failure_detail || "").trim();
+              } catch (err) {
+                failureDetail = `failed to parse failure-context.json: ${String(err)}`;
+              }
+            }
+
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const body = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: ${failureDetail || "-"}
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body
+              });
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body
+              });
+            }
+
+      - name: Resolve alert issues on recovery (freshness)
+        if: always() && success()
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Model Freshness Alert
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const prefix = `[OPS-ALERT] ${workflow}:`;
+            const now = new Date().toISOString();
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+
+            const targets = issues.filter((issue) => issue.title.startsWith(prefix));
+            for (const issue of targets) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: `Recovered at ${now}. Latest successful run: ${runUrl}`
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                state: "closed"
+              });
+            }
