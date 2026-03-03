@@ -172,3 +172,6 @@
    - Workflow now has `issues: write` permission.
    - On job failure, it auto-creates or updates issue `[i18n] Weekly acceptance failure tracker` with run URL and per-step outcomes.
 21. GitHub Actions `Weekly i18n Acceptance` manual run `22635290030`: passed; failure-issue step was correctly skipped on success path.
+22. Automated weekly rollback checkpoint tagging on acceptance success:
+   - `Weekly i18n Acceptance` now creates/pushes `rollback-i18n-week-YYYYMMDD` tag on successful runs (idempotent).
+   - Workflow summary now reports `rollback-checkpoint-tag` outcome; artifact bundle includes `logs/rollback-checkpoint-tag.log`.

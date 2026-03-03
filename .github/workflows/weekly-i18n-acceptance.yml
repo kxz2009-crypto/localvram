@@ -7,7 +7,7 @@ on:
 
 permissions:
   actions: read
-  contents: read
+  contents: write
   issues: write
 
 jobs:
@@ -133,6 +133,23 @@ jobs:
           echo "[verify-production-i18n] exit_code=${status}" | tee -a logs/verify-production-i18n.log
           exit ${status}
 
+      - name: Create weekly rollback checkpoint tag
+        id: rollback_checkpoint_tag
+        if: ${{ success() }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --tags --force
+          tag_name="rollback-i18n-week-$(date -u +%Y%m%d)"
+          if git rev-parse -q --verify "refs/tags/${tag_name}" >/dev/null; then
+            echo "rollback checkpoint tag already exists: ${tag_name}" | tee logs/rollback-checkpoint-tag.log
+          else
+            git tag -a "${tag_name}" -m "Weekly i18n acceptance checkpoint run ${{ github.run_id }}" "${{ github.sha }}"
+            git push origin "${tag_name}"
+            echo "rollback checkpoint tag created: ${tag_name}" | tee logs/rollback-checkpoint-tag.log
+          fi
+
       - name: Publish workflow summary
         if: ${{ always() }}
         run: |
@@ -150,6 +167,7 @@ jobs:
             echo "- quality-gate: ${{ steps.quality_gate.outcome }}";
             echo "- build: ${{ steps.build.outcome }}";
             echo "- verify-production-i18n: ${{ steps.verify_production_i18n.outcome }}";
+            echo "- rollback-checkpoint-tag: ${{ steps.rollback_checkpoint_tag.outcome }}";
             if [ -f logs/seo-audit/i18n-section-parity-diff.json ]; then
               drift=$(python -c "import json;print('true' if json.load(open('logs/seo-audit/i18n-section-parity-diff.json', encoding='utf-8')).get('has_drift') else 'false')")
               echo "- section-parity-drift-detected: ${drift}";
@@ -176,6 +194,7 @@ jobs:
             logs/check-quality.log
             logs/build.log
             logs/verify-production-i18n.log
+            logs/rollback-checkpoint-tag.log
             dist/seo-audit
 
       - name: Open or update failure issue
@@ -194,6 +213,7 @@ jobs:
           QUALITY_GATE: ${{ steps.quality_gate.outcome }}
           BUILD: ${{ steps.build.outcome }}
           VERIFY_PROD_I18N: ${{ steps.verify_production_i18n.outcome }}
+          ROLLBACK_TAG: ${{ steps.rollback_checkpoint_tag.outcome }}
         run: |
           set -euo pipefail
           title="[i18n] Weekly acceptance failure tracker"
@@ -219,6 +239,7 @@ jobs:
           - quality-gate: ${QUALITY_GATE}
           - build: ${BUILD}
           - verify-production-i18n: ${VERIFY_PROD_I18N}
+          - rollback-checkpoint-tag: ${ROLLBACK_TAG}
 
           Please inspect the workflow summary and uploaded artifacts from this run.
           EOF
