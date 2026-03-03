@@ -1,0 +1,34 @@
+---
+import LocaleBridgePage from "../../../components/i18n/LocaleBridgePage.astro";
+import tiers from "../../../data/hardware-tiers.json";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+
+type Tier = {
+  vram_gb: number;
+  title: string;
+  summary: string;
+};
+
+export function getStaticPaths() {
+  const tierItems = Array.isArray(tiers?.tiers) ? (tiers.tiers as Tier[]) : [];
+  return STANDARD_I18N_LOCALES.flatMap((locale) =>
+    tierItems.map((tier) => ({
+      params: { locale, slug: `${tier.vram_gb}gb-vram-models` },
+      props: { locale, tier },
+    })),
+  );
+}
+
+const { locale, tier } = Astro.props as { locale: ComLocale; tier: Tier };
+const enPath = `/en/hardware/${tier.vram_gb}gb-vram-models/`;
+const pagePath = withLocale(locale, enPath);
+---
+
+<LocaleBridgePage
+  locale={locale}
+  pagePath={pagePath}
+  enPath={enPath}
+  title={tier.title}
+  description={tier.summary}
+/>

@@ -14,6 +14,7 @@ OUT_FILE = ROOT / "dist" / "seo-audit" / "i18n-sitemap-section-report.json"
 LOC_RE = re.compile(r"<loc>([^<]+)</loc>")
 LOCALE_RE = re.compile(r"^/([a-z]{2})(?:/|$)")
 TARGET_LOCALES = ["en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"]
+KEY_PARITY_SECTIONS = ["home", "tools", "errors", "status", "guides", "hardware", "models"]
 LOGGER = configure_logging("i18n-sitemap-section-report")
 
 
@@ -97,6 +98,20 @@ def main() -> int:
         else:
             blog_parity_ratio[locale] = round(blog_detail_counts[locale] / en_blog_details, 4)
 
+    en_sections = locale_sections.get("en", {})
+    key_section_parity_ratio: dict[str, dict[str, float | None]] = {}
+    for locale in TARGET_LOCALES:
+        if locale == "en":
+            continue
+        key_section_parity_ratio[locale] = {}
+        for section in KEY_PARITY_SECTIONS:
+            en_count = int(en_sections.get(section, 0) or 0)
+            locale_count = int(locale_sections.get(locale, {}).get(section, 0) or 0)
+            if en_count <= 0:
+                key_section_parity_ratio[locale][section] = None
+            else:
+                key_section_parity_ratio[locale][section] = round(locale_count / en_count, 4)
+
     report["locales"] = {
         locale: {
             "total_urls": sum(locale_sections[locale].values()),
@@ -108,6 +123,7 @@ def main() -> int:
     report["checks"] = {
         "en_blog_detail_urls": en_blog_details,
         "blog_parity_ratio_vs_en": blog_parity_ratio,
+        "key_section_parity_ratio_vs_en": key_section_parity_ratio,
     }
 
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -123,6 +139,11 @@ def main() -> int:
             f"blog_detail={blog_detail_counts[locale]} "
             f"parity={blog_parity_ratio[locale]}"
         )
+        parity_parts = []
+        for section in KEY_PARITY_SECTIONS:
+            ratio = key_section_parity_ratio[locale].get(section)
+            parity_parts.append(f"{section}={ratio}")
+        LOGGER.info("%s key-parity: %s", locale, ", ".join(parity_parts))
     return 0
 
 

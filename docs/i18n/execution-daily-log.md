@@ -116,6 +116,12 @@
 9. Added weekly acceptance automation for i18n:
    - Added workflow `.github/workflows/weekly-i18n-acceptance.yml` (runs every Monday and supports manual dispatch).
    - Workflow executes readiness, locale-link checks, translation QA, sitemap parity, quality gate, build, and production verify.
+10. Closed Week 1 non-blog hardware parity gap:
+   - Added `src/pages/[locale]/hardware/index.astro` and `src/pages/[locale]/hardware/[slug].astro`.
+   - Added hardware locale route files to `scripts/quality-gate.py` required page list (prevents regression).
+   - Updated `scripts/build-sitemap.py` to include `/en/hardware/` in localizable prefixes so locale sitemaps include hardware index and tier routes.
+11. Extended sitemap section observability:
+   - `scripts/i18n-sitemap-section-report.py` now emits `key_section_parity_ratio_vs_en` for `home/tools/errors/status/guides/hardware/models`.
 
 ### Evidence Snapshot (2026-03-03)
 1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
@@ -131,3 +137,5 @@
 9. `python scripts/validate-i18n-packs.py`: passes with `packs=10`, `source_phrases=131`.
 10. `npm run check:quality`: confirms strict locale-pack validation passes in gate path.
 11. Weekly acceptance automation is available in Actions as `Weekly i18n Acceptance`.
+12. `python scripts/build-sitemap.py`: locale sitemap counts increased from `627` to `632` after hardware locale route inclusion.
+13. `python scripts/i18n-sitemap-section-report.py`: all locales show key parity `home/tools/errors/status/guides/hardware/models = 1.0`.

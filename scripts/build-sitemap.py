@@ -21,6 +21,7 @@ LOCALIZABLE_EN_PREFIXES = [
     "/en/status/",
     "/en/tools/",
     "/en/errors/",
+    "/en/hardware/",
     "/en/models/",
     "/en/blog/",
     "/en/matrix/",
