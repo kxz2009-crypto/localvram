@@ -186,3 +186,4 @@
    - Added success-path step `Resolve failure issue on recovery` to close open `[i18n] Weekly acceptance failure tracker`.
    - Reordered weekly summary/artifact steps after issue-sync logic so outcomes include `open-failure-issue` and `resolve-failure-issue`.
    - Added `logs/weekly-i18n-issue-sync.log` to acceptance artifacts for audit trace.
+28. GitHub Actions `Weekly i18n Acceptance` manual run `22635918000`: passed; `resolve-failure-issue` executed successfully and issue-sync outcomes are now visible in summary.
