@@ -43,8 +43,21 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Verify affiliate link mappings
+        run: python scripts/refresh-affiliate-funnel.py --verify-only --verify-links
+
       - name: Quality gate
         run: python scripts/quality-gate.py
+
+      - name: Unit tests
+        run: npm run test:unit
 
       - name: Build
         run: npm run build

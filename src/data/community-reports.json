@@ -1,6 +1,6 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-02-26T06:42:45.384179Z",
+  "updated_at": "2026-03-03T07:30:39.887111Z",
   "reports": [
     {
       "submission_id": "f9ba21e73260",
@@ -12,8 +12,10 @@
       "notes": "",
       "precheck_score": 0.93,
       "risk_flags": [],
-      "status": "pending_manual_review",
-      "queue_bucket": "manual_review"
+      "status": "approved_manual",
+      "queue_bucket": "approved",
+      "reviewed_at": "2026-03-03T07:30:39.887111Z",
+      "reviewed_by": "ops"
     },
     {
       "submission_id": "4d9248019034",
@@ -70,8 +72,10 @@
       "notes": "",
       "precheck_score": 0.9,
       "risk_flags": [],
-      "status": "pending_manual_review",
-      "queue_bucket": "manual_review"
+      "status": "approved_manual",
+      "queue_bucket": "approved",
+      "reviewed_at": "2026-03-03T07:30:39.887111Z",
+      "reviewed_by": "ops"
     },
     {
       "submission_id": "973f9b4c111c",

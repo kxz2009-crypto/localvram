@@ -37,6 +37,7 @@ UPDATE_PIPELINE_STATUS_MODULE_PATH = SCRIPTS_DIR / "update-pipeline-status.py"
 SCORE_SUBMISSION_MODULE_PATH = SCRIPTS_DIR / "score-user-submission.py"
 RETIREMENT_CANDIDATES_MODULE_PATH = SCRIPTS_DIR / "generate-retirement-candidates.py"
 REVIEW_RETIREMENT_MODULE_PATH = SCRIPTS_DIR / "review-retirement-candidates.py"
+REFRESH_AFFILIATE_FUNNEL_MODULE_PATH = SCRIPTS_DIR / "refresh-affiliate-funnel.py"
 
 
 def load_module(module_name: str, module_path: Path):
@@ -74,6 +75,7 @@ class ExceptionPathTests(unittest.TestCase):
         cls.score_submission = load_module("score_user_submission", SCORE_SUBMISSION_MODULE_PATH)
         cls.retirement_candidates = load_module("generate_retirement_candidates", RETIREMENT_CANDIDATES_MODULE_PATH)
         cls.review_retirement = load_module("review_retirement_candidates", REVIEW_RETIREMENT_MODULE_PATH)
+        cls.refresh_affiliate = load_module("refresh_affiliate_funnel", REFRESH_AFFILIATE_FUNNEL_MODULE_PATH)
 
     def test_runner_run_cmd_exception(self):
         with patch.object(self.runner.subprocess, "run", side_effect=RuntimeError("boom")):
@@ -338,6 +340,42 @@ class ExceptionPathTests(unittest.TestCase):
         self.assertTrue(self.retirement_candidates.matches_plan("qwen3:8b-q4_k_m", ["qwen3:8b"]))
         self.assertEqual(self.review_retirement.to_int("7", default=0), 7)
         self.assertEqual(self.review_retirement.to_int("bad", default=3), 3)
+
+    def test_refresh_affiliate_parse_supported_routes(self):
+        js_text = """
+const AMAZON_RECOMMENDATIONS = {
+  "rtx-3090-24gb": { label: "x" },
+  "rtx-4090-24gb": { label: "y" }
+};
+function buildProviderTarget(provider, env) {
+  if (provider === "runpod") { return {}; }
+  if (provider === "vast") { return {}; }
+  return null;
+}
+"""
+        path = ROOT / "tmp-affiliate-lib.js"
+        path.write_text(js_text, encoding="utf-8")
+        try:
+            providers, slugs = self.refresh_affiliate.parse_supported_routes(path)
+        finally:
+            path.unlink(missing_ok=True)
+        self.assertEqual(providers, {"runpod", "vast"})
+        self.assertEqual(slugs, {"rtx-3090-24gb", "rtx-4090-24gb"})
+
+    def test_refresh_affiliate_validate_link_paths(self):
+        links = {
+            "runpod": "/go/runpod",
+            "amazon_3090": "/recommends/rtx-3090-24gb",
+            "bad": "/go/unknown",
+        }
+        passed, failed = self.refresh_affiliate.validate_link_paths(
+            links,
+            providers={"runpod", "vast"},
+            slugs={"rtx-3090-24gb"},
+        )
+        self.assertEqual(len(passed), 2)
+        self.assertEqual(len(failed), 1)
+        self.assertIn("unsupported /go provider", failed[0])
 
 
 if __name__ == "__main__":
