@@ -56,7 +56,7 @@
 ## 2026-03-03 (Done)
 
 ### Completed Today
-1. Finished blog copy wave 1 plus wave 2 step 1-2 (13 slugs total) across 10 locales:
+1. Finished blog copy wave 1 plus wave 2 step 1-3 (18 slugs total) across 10 locales:
    - Added localized `title` / `description` / `cta_line` in `src/data/i18n-blog-copy.json`.
    - Wave 1 slugs:
      - `best-24gb-vram-models-2026`
@@ -74,6 +74,12 @@
      - `deepseek-r1-32b-when-to-rent-cloud-gpu`
      - `model-qwen2-5-14b-benchmark-refresh`
      - `model-ministral-3-14b-benchmark-refresh`
+   - Wave 2 step 3 slugs:
+     - `deepseek-r1-on-rtx-3090-what-works`
+     - `qwen35-122b-cloud-vs-local-cost`
+     - `q4-vs-q8-quality-loss-ollama`
+     - `24gb-vram-models-that-actually-run`
+     - `best-local-rag-models-under-24gb-vram`
 2. Wired localized blog copy into locale routes:
    - `src/pages/[locale]/blog/[slug].astro`: localized title/description and localized CTA line with English fallback.
    - `src/pages/[locale]/blog/index.astro`: localized post cards for translated slugs and fallback for remaining slugs.
