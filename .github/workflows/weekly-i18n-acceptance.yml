@@ -59,7 +59,13 @@ jobs:
           ASTRO_TELEMETRY_DISABLED: "1"
 
       - name: Verify production i18n routes
-        run: pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn" | tee logs/verify-production-i18n.log
+        run: |
+          set -o pipefail
+          echo "[verify-production-i18n] start $(date -u +"%Y-%m-%dT%H:%M:%SZ")" | tee logs/verify-production-i18n.log
+          pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn" 2>&1 | tee -a logs/verify-production-i18n.log
+          status=${PIPESTATUS[0]}
+          echo "[verify-production-i18n] exit_code=${status}" | tee -a logs/verify-production-i18n.log
+          exit ${status}
 
       - name: Publish workflow summary
         run: |
