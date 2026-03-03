@@ -171,3 +171,4 @@
 20. Added failure alert loop for weekly acceptance:
    - Workflow now has `issues: write` permission.
    - On job failure, it auto-creates or updates issue `[i18n] Weekly acceptance failure tracker` with run URL and per-step outcomes.
+21. GitHub Actions `Weekly i18n Acceptance` manual run `22635290030`: passed; failure-issue step was correctly skipped on success path.
