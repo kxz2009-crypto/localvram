@@ -50,6 +50,9 @@ jobs:
       - name: i18n sitemap parity report
         run: npm run i18n:sitemap-report | tee logs/i18n-sitemap-report.log
 
+      - name: i18n key section parity check
+        run: npm run i18n:check-section-parity | tee logs/i18n-section-parity.log
+
       - name: Quality gate
         run: npm run check:quality | tee logs/check-quality.log
 
@@ -76,6 +79,7 @@ jobs:
             echo "- locale-links: pass";
             echo "- qa-copy: pass";
             echo "- sitemap-report: pass";
+            echo "- section-parity: pass";
             echo "- quality-gate: pass";
             echo "- build: pass";
             echo "- verify-production-i18n: pass";
@@ -90,6 +94,7 @@ jobs:
             logs/i18n-locale-links.log
             logs/i18n-qa-copy.log
             logs/i18n-sitemap-report.log
+            logs/i18n-section-parity.log
             logs/check-quality.log
             logs/build.log
             logs/verify-production-i18n.log
