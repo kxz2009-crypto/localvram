@@ -54,6 +54,16 @@ Optional window override:
 python scripts/build-conversion-funnel.py --window-days 14
 ```
 
+Cloudflare KV direct export (recommended for automation):
+
+```bash
+python scripts/export-affiliate-kv-events.py \
+  --account-id "$CF_ACCOUNT_ID" \
+  --api-token "$CF_API_TOKEN" \
+  --namespace-id "$CF_AFFILIATE_EVENTS_NAMESPACE_ID" \
+  --output-file logs/affiliate-events-export.json
+```
+
 ## 3.1) One-shot refresh (import -> build -> validate -> optional commit/push)
 
 Use the helper script to run the full pipeline in one command:
@@ -89,7 +99,15 @@ Checks include:
 - `funnel` object exists in the generated snapshot
 - `/en/status/conversion-funnel/` page exists
 
+Optional strict health check:
+
+```bash
+python scripts/check-affiliate-funnel-health.py
+```
+
 ## 5) CI integration
 
 - `daily-content.yml` rebuilds conversion funnel snapshot daily.
+- `daily-content.yml` optionally syncs Cloudflare KV affiliate events before rebuilding funnel snapshot.
 - `publish-benchmark-artifact.yml` rebuilds conversion funnel snapshot before quality gate and publish commit.
+- `affiliate-health-check.yml` validates route mapping + live redirects and enforces funnel health.

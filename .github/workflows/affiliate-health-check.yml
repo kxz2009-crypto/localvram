@@ -8,6 +8,10 @@ on:
 jobs:
   verify-affiliate-links:
     runs-on: ubuntu-latest
+    env:
+      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      CF_AFFILIATE_EVENTS_NAMESPACE_ID: ${{ secrets.CF_AFFILIATE_EVENTS_NAMESPACE_ID }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,3 +28,31 @@ jobs:
             --verify-links \
             --verify-base-url "https://localvram.com" \
             --verify-timeout-s 20
+
+      - name: Validate Cloudflare KV sync config
+        run: |
+          if [ -z "${CF_ACCOUNT_ID}" ] || [ -z "${CF_API_TOKEN}" ] || [ -z "${CF_AFFILIATE_EVENTS_NAMESPACE_ID}" ]; then
+            echo "::error title=MissingConfig::Set CF_ACCOUNT_ID, CF_API_TOKEN, CF_AFFILIATE_EVENTS_NAMESPACE_ID secrets for affiliate health checks."
+            exit 1
+          fi
+
+      - name: Export affiliate events from Cloudflare KV
+        run: |
+          python scripts/export-affiliate-kv-events.py \
+            --output-file logs/affiliate-events-export.json \
+            --max-keys 5000
+
+      - name: Refresh affiliate funnel snapshot from KV export
+        run: |
+          python scripts/refresh-affiliate-funnel.py \
+            --source-file logs/affiliate-events-export.json \
+            --source-format json \
+            --source-label cloudflare_kv_api_sync \
+            --skip-quality-gate
+
+      - name: Enforce affiliate funnel health gate
+        run: |
+          python scripts/check-affiliate-funnel-health.py \
+            --funnel-file src/data/conversion-funnel.json \
+            --min-organic-clicks-for-zero-alert 20 \
+            --max-search-console-age-hours 240

@@ -81,6 +81,28 @@ jobs:
             exit 1
           fi
 
+      - name: Sync affiliate events from Cloudflare KV (optional)
+        if: steps.checkout.conclusion == 'success'
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_AFFILIATE_EVENTS_NAMESPACE_ID: ${{ secrets.CF_AFFILIATE_EVENTS_NAMESPACE_ID }}
+        run: |
+          if [ -z "${CF_ACCOUNT_ID}" ] || [ -z "${CF_API_TOKEN}" ] || [ -z "${CF_AFFILIATE_EVENTS_NAMESPACE_ID}" ]; then
+            echo "::warning title=AffiliateSyncSkipped::Cloudflare KV secrets missing; keep existing affiliate events snapshot."
+            exit 0
+          fi
+          if ! python scripts/export-affiliate-kv-events.py --output-file logs/affiliate-events-export.json --max-keys 5000; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'export-affiliate-kv-events.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - export-affiliate-kv-events.py failed"
+            exit 1
+          fi
+          if ! python scripts/import-affiliate-events.py --source-file logs/affiliate-events-export.json --source-format json --source-label cloudflare_kv_api_sync; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'import-affiliate-events.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - import-affiliate-events.py failed"
+            exit 1
+          fi
+
       - name: Build conversion funnel snapshot
         if: steps.checkout.conclusion == 'success'
         run: |
@@ -122,7 +144,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/content/blog public/sitemap.xml content-queue
+          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/data/affiliate-click-events.json src/content/blog public/sitemap.xml public/sitemap-*.xml content-queue
 
           if git diff --cached --quiet; then
             echo "daily_publish_result=no_changes"

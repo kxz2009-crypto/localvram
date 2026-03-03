@@ -56,6 +56,10 @@ Configure in Cloudflare Pages:
 - `RUNPOD_REF` (optional, default: `kzc9gtvv`)
 - `VAST_REF_ID` (optional, default: `415258`)
 - KV binding `AFFILIATE_EVENTS` (optional, stores click events for 30 days)
+- Repository secrets for automated KV export:
+  - `CF_ACCOUNT_ID`
+  - `CF_API_TOKEN` (KV read scope)
+  - `CF_AFFILIATE_EVENTS_NAMESPACE_ID`
 
 ## Local run
 
@@ -107,6 +111,8 @@ npm run dev
 - `python scripts/build-conversion-funnel.py`
 - `python scripts/import-affiliate-events.py --source-file <raw-export.jsonl>`
 - `python scripts/refresh-affiliate-funnel.py --source-file <raw-export.jsonl>`
+- `python scripts/export-affiliate-kv-events.py --output-file logs/affiliate-events-export.json`
+- `python scripts/check-affiliate-funnel-health.py`
 - `python scripts/fetch-search-console-keywords.py --site-url <sc-property> --credentials-json <service-account-json> --locales "en,es,pt,..."`
 - `python scripts/check-search-console-coverage.py --locales "en,es,pt,fr,de,ru,ja,ko,ar,hi,id,zh" --max-age-hours 96`
 - `python scripts/build-submission-review.py`
@@ -166,6 +172,12 @@ Locale KPI + Search Console sync:
 - Repository secret: `GSC_SERVICE_ACCOUNT_JSON` (service-account JSON string, read-only Search Console access)
 - Sync script refreshes `src/data/search-console-keywords.json` before KPI upsert
 - Coverage guardrail: refresh workflow fails and opens ops alert issue when snapshot is stale, locale coverage is missing, or source is not real GSC API data (`allow_stub_data=true` only for temporary manual fallback)
+
+Affiliate funnel sync and health:
+
+- `daily-content.yml` attempts KV sync when `CF_ACCOUNT_ID`, `CF_API_TOKEN`, and `CF_AFFILIATE_EVENTS_NAMESPACE_ID` are configured.
+- `affiliate-health-check.yml` validates mapping + live redirects, exports KV events, rebuilds funnel snapshot, and enforces `check-affiliate-funnel-health.py`.
+- Health gate fails on missing feed, stale Search Console source, or zero affiliate clicks under active organic traffic.
 
 Self-hosted runner preflight:
 
