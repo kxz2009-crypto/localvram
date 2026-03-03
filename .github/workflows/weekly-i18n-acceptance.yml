@@ -8,6 +8,7 @@ on:
 permissions:
   actions: read
   contents: read
+  issues: write
 
 jobs:
   weekly-i18n-acceptance:
@@ -176,3 +177,57 @@ jobs:
             logs/build.log
             logs/verify-production-i18n.log
             dist/seo-audit
+
+      - name: Open or update failure issue
+        if: ${{ failure() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          READINESS: ${{ steps.readiness.outcome }}
+          LOCALE_LINKS: ${{ steps.locale_links.outcome }}
+          QA_COPY: ${{ steps.qa_copy.outcome }}
+          SITEMAP_REPORT: ${{ steps.sitemap_report.outcome }}
+          SECTION_PARITY_SUMMARY: ${{ steps.section_parity_summary.outcome }}
+          SECTION_PARITY_CHECK: ${{ steps.section_parity_check.outcome }}
+          SECTION_PARITY_DIFF: ${{ steps.section_parity_diff.outcome }}
+          PRESERVE_ARTIFACTS: ${{ steps.preserve_parity_artifacts.outcome }}
+          QUALITY_GATE: ${{ steps.quality_gate.outcome }}
+          BUILD: ${{ steps.build.outcome }}
+          VERIFY_PROD_I18N: ${{ steps.verify_production_i18n.outcome }}
+        run: |
+          set -euo pipefail
+          title="[i18n] Weekly acceptance failure tracker"
+          body_file=".tmp/weekly-i18n-failure-issue.md"
+          mkdir -p .tmp
+          cat > "${body_file}" <<EOF
+          Weekly i18n acceptance failed.
+
+          - run: ${RUN_URL}
+          - commit: ${{ github.sha }}
+          - actor: ${{ github.actor }}
+          - triggered_by: ${{ github.event_name }}
+
+          Step outcomes:
+          - readiness: ${READINESS}
+          - locale-links: ${LOCALE_LINKS}
+          - qa-copy: ${QA_COPY}
+          - sitemap-report: ${SITEMAP_REPORT}
+          - section-parity-summary: ${SECTION_PARITY_SUMMARY}
+          - section-parity: ${SECTION_PARITY_CHECK}
+          - section-parity-diff: ${SECTION_PARITY_DIFF}
+          - preserve-parity-artifacts: ${PRESERVE_ARTIFACTS}
+          - quality-gate: ${QUALITY_GATE}
+          - build: ${BUILD}
+          - verify-production-i18n: ${VERIFY_PROD_I18N}
+
+          Please inspect the workflow summary and uploaded artifacts from this run.
+          EOF
+
+          issue_number=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "${issue_number}" ]; then
+            gh issue comment "${issue_number}" --body-file "${body_file}"
+            echo "Updated issue #${issue_number}"
+          else
+            gh issue create --title "${title}" --body-file "${body_file}"
+            echo "Created new issue: ${title}"
+          fi

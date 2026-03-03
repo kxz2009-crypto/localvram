@@ -168,3 +168,6 @@
 17. `python scripts/diff-i18n-section-parity.py` (self-compare smoke): generated diff JSON with `has_drift=false`.
 18. `npm run check:quality`: passed after workflow hardening update; parity checks and i18n coverage remain green.
 19. GitHub Actions `Weekly i18n Acceptance` manual run `22634503056`: passed with all stages green; summary/artifact steps executed successfully.
+20. Added failure alert loop for weekly acceptance:
+   - Workflow now has `issues: write` permission.
+   - On job failure, it auto-creates or updates issue `[i18n] Weekly acceptance failure tracker` with run URL and per-step outcomes.
