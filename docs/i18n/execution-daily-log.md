@@ -110,6 +110,9 @@
 7. Added missing translation-pack files for core rollout locales:
    - Created `wave1/{es,pt,ja}` pack files with full `131/131` phrase coverage.
    - Pack-level coverage now spans all 10 standard locales.
+8. Hardened pack validation rule:
+   - `scripts/validate-i18n-packs.py` now fails when any standard locale pack is missing.
+   - Also fails when duplicate pack files exist for the same locale.
 
 ### Evidence Snapshot (2026-03-03)
 1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
@@ -123,3 +126,4 @@
 7. `npm run check:quality`: passed with i18n blog copy coverage check (`localized=27/27`, `coverage=1.000`).
 8. `python scripts/i18n-pack-status.py`: all tracked packs now `131/131` (`100.0%`).
 9. `python scripts/validate-i18n-packs.py`: passes with `packs=10`, `source_phrases=131`.
+10. `npm run check:quality`: confirms strict locale-pack validation passes in gate path.

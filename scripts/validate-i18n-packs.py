@@ -2,6 +2,7 @@
 import json
 import re
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 from logging_utils import configure_logging
@@ -66,6 +67,7 @@ def main() -> None:
         LOGGER.info("i18n pack validation ok: no pack files present")
         return
 
+    locale_files: dict[str, list[str]] = defaultdict(list)
     for pack_file in pack_files:
         rel = pack_file.relative_to(ROOT)
         pack_data = json.loads(pack_file.read_text(encoding="utf-8"))
@@ -75,6 +77,7 @@ def main() -> None:
             fail(f"{rel} missing locale")
         if locale not in STANDARD_I18N_LOCALES:
             fail(f"{rel} has unknown locale: {locale}")
+        locale_files[locale].append(str(rel).replace("\\", "/"))
 
         phrases = pack_data.get("phrases")
         if not isinstance(phrases, list):
@@ -124,6 +127,19 @@ def main() -> None:
                 "ratio": round(ratio, 6),
             }
         )
+
+    missing_locales = sorted(STANDARD_I18N_LOCALES - set(locale_files.keys()))
+    if missing_locales:
+        fail(f"missing i18n pack files for locales: {','.join(missing_locales)}")
+
+    duplicate_locale_files = {
+        locale: files for locale, files in locale_files.items() if len(files) > 1
+    }
+    if duplicate_locale_files:
+        details = "; ".join(
+            f"{locale}={','.join(sorted(files))}" for locale, files in sorted(duplicate_locale_files.items())
+        )
+        fail(f"duplicate i18n pack files detected for locale(s): {details}")
 
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
