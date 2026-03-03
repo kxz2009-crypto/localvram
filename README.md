@@ -64,6 +64,16 @@ npm install
 npm run dev
 ```
 
+## Environment and tests
+
+- Copy `.env.example` to `.env` and override runner/workflow values as needed.
+- Python scripts support centralized logs:
+  - `LV_LOG_LEVEL` (`DEBUG|INFO|WARNING|ERROR`, default `INFO`)
+  - `LV_LOG_JSON` (`true|false`, default `false`)
+- Unit tests:
+  - `npm run test:unit`
+  - `npm test` (quality gate + unit + smoke)
+
 ## Data and automation
 
 - Status freshness: `src/data/status.json`
