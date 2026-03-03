@@ -98,6 +98,12 @@
 3. Enabled controlled fallback noindex behavior for locale blog pages:
    - Detail page noindex now considers both bridge-copy fallback and slug-localization fallback.
    - Blog index noindex now considers aggregate list fallback ratio.
+4. Reduced i18n core copy fallback debt to zero:
+   - Filled remaining locale fallback fields in `src/data/i18n-copy.json` (ticker labels, locale meta titles, and page labels).
+   - `i18n-readiness` summary now reports `fallback_ratio=0.0` across all tracked pages/locales.
+5. Added anti-regression quality gate for blog localization coverage:
+   - `scripts/quality-gate.py` now requires `src/data/i18n-blog-copy.json`.
+   - Gate validates non-empty localized fields and enforces minimum blog-copy coverage ratio.
 
 ### Evidence Snapshot (2026-03-03)
 1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
@@ -107,3 +113,5 @@
    - all locales `blog_detail=27`, parity `1.0`.
 4. `npm run build`: passed (static build complete).
 5. `npm run verify:prod:i18n`: passed (`/zh*` redirect checks and hreflang checks all green).
+6. `npm run i18n:readiness`: passed, all locales ready and no fallback fields remaining in tracked pages.
+7. `npm run check:quality`: passed with i18n blog copy coverage check (`localized=27/27`, `coverage=1.000`).
