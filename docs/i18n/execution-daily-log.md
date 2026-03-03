@@ -138,6 +138,8 @@
 16. Hardened artifact persistence after build:
    - Workflow now copies parity JSONs to `logs/seo-audit/` before `build` so they are not lost when Astro rebuilds `dist/`.
    - Artifact upload now explicitly includes `logs/seo-audit/i18n-sitemap-section-report.json`, `i18n-section-parity-summary.json`, and `i18n-section-parity-diff.json`.
+17. Added backward-compatible previous-artifact lookup:
+   - Diff step now reads previous summary from `logs/seo-audit/i18n-section-parity-summary.json` first, with fallback to legacy `dist/seo-audit/...`.
 
 ### Evidence Snapshot (2026-03-03)
 1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
