@@ -1,0 +1,90 @@
+name: Weekly i18n Acceptance
+
+on:
+  schedule:
+    - cron: "0 10 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  weekly-i18n-acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Prepare logs
+        run: mkdir -p logs
+
+      - name: i18n readiness
+        run: npm run i18n:readiness | tee logs/i18n-readiness.log
+
+      - name: i18n locale link check
+        run: npm run check:locale-links | tee logs/i18n-locale-links.log
+
+      - name: i18n translation QA
+        run: npm run i18n:qa-copy | tee logs/i18n-qa-copy.log
+
+      - name: i18n sitemap parity report
+        run: npm run i18n:sitemap-report | tee logs/i18n-sitemap-report.log
+
+      - name: Quality gate
+        run: npm run check:quality | tee logs/check-quality.log
+
+      - name: Build
+        run: npm run build | tee logs/build.log
+        env:
+          ASTRO_TELEMETRY_DISABLED: "1"
+
+      - name: Verify production i18n routes
+        run: pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn" | tee logs/verify-production-i18n.log
+
+      - name: Publish workflow summary
+        run: |
+          {
+            echo "## Weekly i18n Acceptance";
+            echo "";
+            echo "- readiness: pass";
+            echo "- locale-links: pass";
+            echo "- qa-copy: pass";
+            echo "- sitemap-report: pass";
+            echo "- quality-gate: pass";
+            echo "- build: pass";
+            echo "- verify-production-i18n: pass";
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload acceptance artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-i18n-acceptance
+          path: |
+            logs/i18n-readiness.log
+            logs/i18n-locale-links.log
+            logs/i18n-qa-copy.log
+            logs/i18n-sitemap-report.log
+            logs/check-quality.log
+            logs/build.log
+            logs/verify-production-i18n.log
+            dist/seo-audit

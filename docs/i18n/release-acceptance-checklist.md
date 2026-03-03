@@ -90,7 +90,7 @@ Timeline (absolute dates):
 
 Daily and weekly operating rhythm:
 1. Daily (Mon-Fri): update one controlled batch, run `i18n-readiness.py`, `check-locale-links.py`, and sample curl verification.
-2. Weekly (Monday): full `verify-production-i18n.ps1` run + sitemap parity check + rollback checkpoint tag.
+2. Weekly (Monday): run GitHub Actions workflow `Weekly i18n Acceptance` (full readiness + QA + sitemap + build + production verify) and create rollback checkpoint tag.
 3. Weekly rollback checkpoint tag format: `rollback-i18n-week-YYYYMMDD`.
 
 ## Phase 5: Post-Release Monitoring (7-14 days)
