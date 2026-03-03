@@ -18,6 +18,7 @@
     "i18n:validate-packs": "python scripts/validate-i18n-packs.py",
     "i18n:qa-copy": "python scripts/audit-i18n-translation-quality.py",
     "i18n:sitemap-report": "python scripts/i18n-sitemap-section-report.py",
+    "i18n:section-parity-summary": "python scripts/export-i18n-section-parity-summary.py",
     "i18n:check-section-parity": "python scripts/check-i18n-section-parity.py",
     "i18n:export-review-csv": "python scripts/export-i18n-manual-review-checklist.py",
     "verify:prod:i18n": "powershell -ExecutionPolicy Bypass -File scripts/verify-production-i18n.ps1",
