@@ -87,6 +87,13 @@ jobs:
             fi
           fi
 
+      - name: Preserve section parity artifacts
+        run: |
+          mkdir -p logs/seo-audit
+          cp dist/seo-audit/i18n-sitemap-section-report.json logs/seo-audit/i18n-sitemap-section-report.json
+          cp dist/seo-audit/i18n-section-parity-summary.json logs/seo-audit/i18n-section-parity-summary.json
+          cp dist/seo-audit/i18n-section-parity-diff.json logs/seo-audit/i18n-section-parity-diff.json
+
       - name: Quality gate
         run: npm run check:quality | tee logs/check-quality.log
 
@@ -119,8 +126,8 @@ jobs:
             echo "- quality-gate: pass";
             echo "- build: pass";
             echo "- verify-production-i18n: pass";
-            if [ -f dist/seo-audit/i18n-section-parity-diff.json ]; then
-              drift=$(python -c "import json;print('true' if json.load(open('dist/seo-audit/i18n-section-parity-diff.json', encoding='utf-8')).get('has_drift') else 'false')")
+            if [ -f logs/seo-audit/i18n-section-parity-diff.json ]; then
+              drift=$(python -c "import json;print('true' if json.load(open('logs/seo-audit/i18n-section-parity-diff.json', encoding='utf-8')).get('has_drift') else 'false')")
               echo "- section-parity-drift-detected: ${drift}";
             fi
           } >> "$GITHUB_STEP_SUMMARY"
@@ -137,6 +144,9 @@ jobs:
             logs/i18n-section-parity-summary.log
             logs/i18n-section-parity.log
             logs/i18n-section-parity-diff.log
+            logs/seo-audit/i18n-sitemap-section-report.json
+            logs/seo-audit/i18n-section-parity-summary.json
+            logs/seo-audit/i18n-section-parity-diff.json
             logs/check-quality.log
             logs/build.log
             logs/verify-production-i18n.log
