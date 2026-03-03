@@ -140,6 +140,11 @@
    - Artifact upload now explicitly includes `logs/seo-audit/i18n-sitemap-section-report.json`, `i18n-section-parity-summary.json`, and `i18n-section-parity-diff.json`.
 17. Added backward-compatible previous-artifact lookup:
    - Diff step now reads previous summary from `logs/seo-audit/i18n-section-parity-summary.json` first, with fallback to legacy `dist/seo-audit/...`.
+18. Hardened failure-path observability in weekly acceptance:
+   - Added explicit step `id` markers across i18n acceptance stages.
+   - `Publish workflow summary` now runs with `if: always()` and reports each step `outcome` (`success`/`failure`/`skipped`).
+   - `Upload acceptance artifacts` now runs with `if: always()` and `if-no-files-found: warn`.
+   - `Preserve section parity artifacts` now runs with `if: always()` and uses guarded copy logic to avoid hiding root-cause failures.
 
 ### Evidence Snapshot (2026-03-03)
 1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
@@ -161,3 +166,4 @@
 15. `npm run check:quality`: passed with embedded sitemap section report + key section parity checks.
 16. `python scripts/export-i18n-section-parity-summary.py`: generated summary JSON with `mismatch_count=0`.
 17. `python scripts/diff-i18n-section-parity.py` (self-compare smoke): generated diff JSON with `has_drift=false`.
+18. `npm run check:quality`: passed after workflow hardening update; parity checks and i18n coverage remain green.

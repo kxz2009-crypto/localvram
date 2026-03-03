@@ -40,24 +40,31 @@ jobs:
         run: mkdir -p logs
 
       - name: i18n readiness
+        id: readiness
         run: npm run i18n:readiness | tee logs/i18n-readiness.log
 
       - name: i18n locale link check
+        id: locale_links
         run: npm run check:locale-links | tee logs/i18n-locale-links.log
 
       - name: i18n translation QA
+        id: qa_copy
         run: npm run i18n:qa-copy | tee logs/i18n-qa-copy.log
 
       - name: i18n sitemap parity report
+        id: sitemap_report
         run: npm run i18n:sitemap-report | tee logs/i18n-sitemap-report.log
 
       - name: i18n section parity summary
+        id: section_parity_summary
         run: npm run i18n:section-parity-summary | tee logs/i18n-section-parity-summary.log
 
       - name: i18n key section parity check
+        id: section_parity_check
         run: npm run i18n:check-section-parity | tee logs/i18n-section-parity.log
 
       - name: i18n section parity diff vs previous success
+        id: section_parity_diff
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -91,21 +98,32 @@ jobs:
           fi
 
       - name: Preserve section parity artifacts
+        id: preserve_parity_artifacts
+        if: ${{ always() }}
         run: |
           mkdir -p logs/seo-audit
-          cp dist/seo-audit/i18n-sitemap-section-report.json logs/seo-audit/i18n-sitemap-section-report.json
-          cp dist/seo-audit/i18n-section-parity-summary.json logs/seo-audit/i18n-section-parity-summary.json
-          cp dist/seo-audit/i18n-section-parity-diff.json logs/seo-audit/i18n-section-parity-diff.json
+          for f in i18n-sitemap-section-report.json i18n-section-parity-summary.json i18n-section-parity-diff.json; do
+            src="dist/seo-audit/${f}"
+            dst="logs/seo-audit/${f}"
+            if [ -f "${src}" ]; then
+              cp "${src}" "${dst}"
+            else
+              echo "[warn] missing artifact source: ${src}" | tee -a logs/i18n-section-parity-diff.log
+            fi
+          done
 
       - name: Quality gate
+        id: quality_gate
         run: npm run check:quality | tee logs/check-quality.log
 
       - name: Build
+        id: build
         run: npm run build | tee logs/build.log
         env:
           ASTRO_TELEMETRY_DISABLED: "1"
 
       - name: Verify production i18n routes
+        id: verify_production_i18n
         run: |
           set -o pipefail
           echo "[verify-production-i18n] start $(date -u +"%Y-%m-%dT%H:%M:%SZ")" | tee logs/verify-production-i18n.log
@@ -115,20 +133,22 @@ jobs:
           exit ${status}
 
       - name: Publish workflow summary
+        if: ${{ always() }}
         run: |
           {
             echo "## Weekly i18n Acceptance";
             echo "";
-            echo "- readiness: pass";
-            echo "- locale-links: pass";
-            echo "- qa-copy: pass";
-            echo "- sitemap-report: pass";
-            echo "- section-parity-summary: pass";
-            echo "- section-parity: pass";
-            echo "- section-parity-diff: pass";
-            echo "- quality-gate: pass";
-            echo "- build: pass";
-            echo "- verify-production-i18n: pass";
+            echo "- readiness: ${{ steps.readiness.outcome }}";
+            echo "- locale-links: ${{ steps.locale_links.outcome }}";
+            echo "- qa-copy: ${{ steps.qa_copy.outcome }}";
+            echo "- sitemap-report: ${{ steps.sitemap_report.outcome }}";
+            echo "- section-parity-summary: ${{ steps.section_parity_summary.outcome }}";
+            echo "- section-parity: ${{ steps.section_parity_check.outcome }}";
+            echo "- section-parity-diff: ${{ steps.section_parity_diff.outcome }}";
+            echo "- preserve-parity-artifacts: ${{ steps.preserve_parity_artifacts.outcome }}";
+            echo "- quality-gate: ${{ steps.quality_gate.outcome }}";
+            echo "- build: ${{ steps.build.outcome }}";
+            echo "- verify-production-i18n: ${{ steps.verify_production_i18n.outcome }}";
             if [ -f logs/seo-audit/i18n-section-parity-diff.json ]; then
               drift=$(python -c "import json;print('true' if json.load(open('logs/seo-audit/i18n-section-parity-diff.json', encoding='utf-8')).get('has_drift') else 'false')")
               echo "- section-parity-drift-detected: ${drift}";
@@ -136,9 +156,11 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload acceptance artifacts
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: weekly-i18n-acceptance
+          if-no-files-found: warn
           path: |
             logs/i18n-readiness.log
             logs/i18n-locale-links.log
