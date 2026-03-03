@@ -181,3 +181,4 @@
    - Standardized verify log output (`logs/verify-production-i18n.log`) with start/end and exit code.
    - Failure alert now reads `logs/failure-context.json` to include concrete exit-code detail in issue body.
    - Added always-on workflow summary and artifact upload (`production-routing-guard`).
+26. GitHub Actions `Production Routing Guard` manual run `22635720599`: passed; `alert-issue` skipped on success path, summary/artifacts uploaded.
