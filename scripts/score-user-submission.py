@@ -6,9 +6,12 @@ import json
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "data" / "community-reports.json"
+LOGGER = configure_logging("score-user-submission")
 
 
 def load_payload() -> dict[str, Any]:
@@ -136,11 +139,11 @@ def main() -> None:
     payload["updated_at"] = now.isoformat().replace("+00:00", "Z")
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"submission_id={submission_id}")
-    print(f"status={status}")
-    print(f"queue_bucket={queue_bucket}")
-    print(f"risk_flags={','.join(risk_flags) if risk_flags else 'none'}")
-    print("submission scored and queued")
+    LOGGER.info("submission_id=%s", submission_id)
+    LOGGER.info("status=%s", status)
+    LOGGER.info("queue_bucket=%s", queue_bucket)
+    LOGGER.info("risk_flags=%s", ",".join(risk_flags) if risk_flags else "none")
+    LOGGER.info("submission scored and queued")
 
 
 if __name__ == "__main__":

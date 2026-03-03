@@ -9,6 +9,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 KPI_FILE = ROOT / "docs" / "seo-ops" / "locale-kpi-tracker.csv"
@@ -30,6 +32,7 @@ KPI_FIELDS = [
     "notes",
     "next_action",
 ]
+LOGGER = configure_logging("refresh-locale-kpi")
 
 
 def load_rows(path: Path) -> list[dict[str, str]]:
@@ -243,12 +246,12 @@ def main() -> int:
     save_rows(KPI_FILE, merged)
 
     for row in new_rows:
-        print(
+        LOGGER.info(
             "kpi_row="
             f"{row['date']} {row['locale']} indexed={row['indexed_urls']} discovered={row['discovered_urls']} "
             f"impr={row['impressions']} clicks={row['clicks']} next={row['next_action']}"
         )
-    print(f"kpi_file={KPI_FILE}")
+    LOGGER.info("kpi_file=%s", KPI_FILE)
     return 0
 
 

@@ -5,6 +5,8 @@ import shutil
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_JSON_FILES = [
@@ -22,6 +24,7 @@ DEFAULT_COPY_DIRS = [
     "logs",
     "public/screenshots",
 ]
+LOGGER = configure_logging("validate-benchmark-artifact")
 
 
 def load_json(path: Path) -> object:
@@ -96,7 +99,7 @@ def main() -> None:
 
     source_dir = Path(args.source_dir).resolve()
     if not source_dir.exists():
-        print(f"artifact validation failed: source dir not found: {source_dir}")
+        LOGGER.error("artifact validation failed: source dir not found: %s", source_dir)
         sys.exit(1)
 
     source_dir = resolve_source_dir(source_dir, REQUIRED_JSON_FILES)
@@ -109,22 +112,22 @@ def main() -> None:
     }
 
     if not ok:
-        print("artifact validation failed")
+        LOGGER.error("artifact validation failed")
         for err in errors:
-            print(f"- {err}")
+            LOGGER.error("- %s", err)
     else:
-        print("artifact validation passed")
+        LOGGER.info("artifact validation passed")
 
     if ok and args.apply:
         copied = apply_artifact(source_dir)
         report["copied"] = copied
-        print(f"artifact apply completed: copied={len(copied)}")
+        LOGGER.info("artifact apply completed: copied=%s", len(copied))
 
     if args.report_file:
         out_path = (ROOT / args.report_file).resolve() if not Path(args.report_file).is_absolute() else Path(args.report_file)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"report written: {out_path}")
+        LOGGER.info("report written: %s", out_path)
 
     if not ok:
         sys.exit(1)

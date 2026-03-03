@@ -11,6 +11,8 @@ import time
 from datetime import datetime, timezone
 from typing import Iterable
 
+from logging_utils import configure_logging
+
 
 TRANSIENT_ERROR_PATTERNS = (
     "429",
@@ -24,6 +26,17 @@ TRANSIENT_ERROR_PATTERNS = (
     "tls handshake timeout",
     "eof",
 )
+LOGGER = configure_logging("run-publish-workflow")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False, flush: bool = False) -> None:
+    _ = (stderr, flush)
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def _parse_retry_delays(raw: str) -> list[int]:
@@ -60,9 +73,10 @@ def _run_gh(
             return proc
         delay = delays[attempt]
         attempt += 1
-        print(
+        emit(
             f"gh command failed ({proc.returncode}), retrying in {delay}s: {' '.join(args)}",
-            file=sys.stderr,
+            level="warning",
+            stderr=True,
         )
         time.sleep(delay)
 
@@ -156,7 +170,7 @@ def _watch_run(gh_path: str, repo: str, run_id: int, retry_delays: Iterable[int]
         allow_retry=True,
     )
     if proc.stdout.strip():
-        print(proc.stdout.strip())
+        emit(proc.stdout.strip())
     if proc.returncode != 0:
         stderr = proc.stderr.strip() or "watch failed"
         raise RuntimeError(stderr)
@@ -170,20 +184,20 @@ def _print_run_summary(gh_path: str, repo: str, run_id: int, retry_delays: Itera
         allow_retry=True,
     )
     if proc.returncode != 0:
-        print(f"run_id={run_id}")
-        print("run_summary=unavailable")
+        emit(f"run_id={run_id}")
+        emit("run_summary=unavailable")
         return
     try:
         payload = json.loads(proc.stdout or "{}")
     except json.JSONDecodeError:
-        print(f"run_id={run_id}")
-        print("run_summary=unavailable")
+        emit(f"run_id={run_id}")
+        emit("run_summary=unavailable")
         return
-    print(f"run_id={run_id}")
-    print(f"run_name={payload.get('name') or 'unknown'}")
-    print(f"run_conclusion={payload.get('conclusion') or 'unknown'}")
-    print(f"run_url={payload.get('url') or ''}")
-    print(f"run_updated_at={payload.get('updatedAt') or ''}")
+    emit(f"run_id={run_id}")
+    emit(f"run_name={payload.get('name') or 'unknown'}")
+    emit(f"run_conclusion={payload.get('conclusion') or 'unknown'}")
+    emit(f"run_url={payload.get('url') or ''}")
+    emit(f"run_updated_at={payload.get('updatedAt') or ''}")
 
 
 def _assert_gh_auth(gh_path: str, retry_delays: Iterable[int]) -> None:
@@ -233,9 +247,9 @@ def main() -> int:
                 args.weekly_workflow,
                 retry_delays,
             )
-            print(f"resolved_source_run_id={source_run_id}")
+            emit(f"resolved_source_run_id={source_run_id}")
         else:
-            print(f"source_run_id={source_run_id}")
+            emit(f"source_run_id={source_run_id}")
 
         baseline_id = _latest_publish_dispatch_run_id(
             args.gh_path,
@@ -244,7 +258,7 @@ def main() -> int:
             retry_delays,
         )
         if baseline_id is not None:
-            print(f"baseline_publish_run_id={baseline_id}")
+            emit(f"baseline_publish_run_id={baseline_id}")
 
         dispatch_args = [
             "workflow",
@@ -265,7 +279,7 @@ def main() -> int:
         if dispatch.returncode != 0:
             raise RuntimeError(dispatch.stderr.strip() or "workflow dispatch failed")
         if dispatch.stdout.strip():
-            print(dispatch.stdout.strip())
+            emit(dispatch.stdout.strip())
 
         dispatched_id = _parse_run_id_from_workflow_run_output(dispatch.stdout)
         if dispatched_id is None:
@@ -279,18 +293,18 @@ def main() -> int:
                 args.poll_interval_s,
                 args.poll_timeout_s,
             )
-            print(f"dispatched_publish_run_id={dispatched_id}")
+            emit(f"dispatched_publish_run_id={dispatched_id}")
             if run_url:
-                print(f"dispatched_publish_run_url={run_url}")
+                emit(f"dispatched_publish_run_url={run_url}")
         else:
-            print(f"dispatched_publish_run_id={dispatched_id}")
+            emit(f"dispatched_publish_run_id={dispatched_id}")
 
         if not args.no_watch:
             _watch_run(args.gh_path, args.repo, dispatched_id, retry_delays)
         _print_run_summary(args.gh_path, args.repo, dispatched_id, retry_delays)
         return 0
     except Exception as exc:
-        print(f"error={exc}", file=sys.stderr)
+        emit(f"error={exc}", level="error", stderr=True)
         return 1
 
 

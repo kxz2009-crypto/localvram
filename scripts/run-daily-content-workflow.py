@@ -11,6 +11,8 @@ import time
 from datetime import datetime, timezone
 from typing import Iterable
 
+from logging_utils import configure_logging
+
 
 TRANSIENT_ERROR_PATTERNS = (
     "429",
@@ -24,6 +26,17 @@ TRANSIENT_ERROR_PATTERNS = (
     "tls handshake timeout",
     "eof",
 )
+LOGGER = configure_logging("run-daily-content-workflow")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False, flush: bool = False) -> None:
+    _ = (stderr, flush)
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def parse_retry_delays(raw: str) -> list[int]:
@@ -53,7 +66,11 @@ def run_gh(gh_path: str, args: list[str], retry_delays: Iterable[int], allow_ret
             return proc
         wait_s = retries[attempt]
         attempt += 1
-        print(f"gh command failed ({proc.returncode}), retrying in {wait_s}s: {' '.join(args)}", file=sys.stderr)
+        emit(
+            f"gh command failed ({proc.returncode}), retrying in {wait_s}s: {' '.join(args)}",
+            level="warning",
+            stderr=True,
+        )
         time.sleep(wait_s)
 
 
@@ -138,7 +155,7 @@ def find_new_dispatch_run_id(
 def watch_run(gh_path: str, repo: str, run_id: int, retry_delays: Iterable[int]) -> None:
     proc = run_gh(gh_path, ["run", "watch", str(run_id), "-R", repo, "--exit-status"], retry_delays, allow_retry=True)
     if proc.stdout.strip():
-        print(proc.stdout.strip())
+        emit(proc.stdout.strip())
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip() or f"run watch failed: {run_id}")
 
@@ -151,20 +168,20 @@ def show_summary(gh_path: str, repo: str, run_id: int, retry_delays: Iterable[in
         allow_retry=True,
     )
     if proc.returncode != 0:
-        print(f"run_id={run_id}")
-        print("run_summary=unavailable")
+        emit(f"run_id={run_id}")
+        emit("run_summary=unavailable")
         return
     try:
         payload = json.loads(proc.stdout or "{}")
     except Exception:  # noqa: BLE001
-        print(f"run_id={run_id}")
-        print("run_summary=unavailable")
+        emit(f"run_id={run_id}")
+        emit("run_summary=unavailable")
         return
-    print(f"run_id={run_id}")
-    print(f"run_name={payload.get('name') or 'unknown'}")
-    print(f"run_conclusion={payload.get('conclusion') or 'unknown'}")
-    print(f"run_url={payload.get('url') or ''}")
-    print(f"run_updated_at={payload.get('updatedAt') or ''}")
+    emit(f"run_id={run_id}")
+    emit(f"run_name={payload.get('name') or 'unknown'}")
+    emit(f"run_conclusion={payload.get('conclusion') or 'unknown'}")
+    emit(f"run_url={payload.get('url') or ''}")
+    emit(f"run_updated_at={payload.get('updatedAt') or ''}")
 
 
 def parse_args() -> argparse.Namespace:
@@ -191,7 +208,7 @@ def main() -> int:
         if proc.returncode != 0:
             raise RuntimeError(proc.stderr.strip() or "failed to dispatch daily workflow")
         if proc.stdout.strip():
-            print(proc.stdout.strip())
+            emit(proc.stdout.strip())
 
         run_id = parse_run_id_from_stdout(proc.stdout)
         if run_id is None:
@@ -206,8 +223,8 @@ def main() -> int:
                 poll_timeout_s=int(args.poll_timeout_s),
             )
 
-        print(f"daily_run_id={run_id}")
-        print(f"daily_run_url=https://github.com/{args.repo}/actions/runs/{run_id}")
+        emit(f"daily_run_id={run_id}")
+        emit(f"daily_run_url=https://github.com/{args.repo}/actions/runs/{run_id}")
 
         if not args.no_watch:
             watch_run(args.gh_path, args.repo, run_id, retry_delays)
@@ -215,7 +232,7 @@ def main() -> int:
         show_summary(args.gh_path, args.repo, run_id, retry_delays)
         return 0
     except Exception as exc:
-        print(f"error={exc}", file=sys.stderr)
+        emit(f"error={exc}", level="error", stderr=True)
         return 1
 
 

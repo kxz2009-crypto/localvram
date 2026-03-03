@@ -5,6 +5,8 @@ from collections import defaultdict
 from pathlib import Path
 from urllib.parse import urlparse
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_DIR = ROOT / "public"
@@ -12,6 +14,7 @@ OUT_FILE = ROOT / "dist" / "seo-audit" / "i18n-sitemap-section-report.json"
 LOC_RE = re.compile(r"<loc>([^<]+)</loc>")
 LOCALE_RE = re.compile(r"^/([a-z]{2})(?:/|$)")
 TARGET_LOCALES = ["en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"]
+LOGGER = configure_logging("i18n-sitemap-section-report")
 
 
 def parse_sitemap_urls(path: Path) -> list[str]:
@@ -110,12 +113,12 @@ def main() -> int:
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUT_FILE.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    print(f"report={OUT_FILE}")
-    print(f"en_blog_detail_urls={en_blog_details}")
+    LOGGER.info("report=%s", OUT_FILE)
+    LOGGER.info("en_blog_detail_urls=%s", en_blog_details)
     for locale in TARGET_LOCALES:
         if locale == "en":
             continue
-        print(
+        LOGGER.info(
             f"{locale}: total={sum(locale_sections[locale].values())} "
             f"blog_detail={blog_detail_counts[locale]} "
             f"parity={blog_parity_ratio[locale]}"

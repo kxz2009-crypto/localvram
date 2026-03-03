@@ -5,9 +5,21 @@ import subprocess
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 APPLY_SCRIPT = ROOT / "scripts" / "apply-i18n-translation-pack.py"
+LOGGER = configure_logging("apply-i18n-wave")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def detect_locale(pack_path: Path) -> str:
@@ -34,10 +46,10 @@ def main() -> None:
 
     wave_dir = Path(args.wave_dir)
     if not wave_dir.exists():
-        print(f"apply-wave failed: directory not found: {wave_dir}")
+        emit(f"apply-wave failed: directory not found: {wave_dir}", level="error")
         sys.exit(1)
     if not APPLY_SCRIPT.exists():
-        print(f"apply-wave failed: missing script: {APPLY_SCRIPT}")
+        emit(f"apply-wave failed: missing script: {APPLY_SCRIPT}", level="error")
         sys.exit(1)
 
     locale_filter = None
@@ -46,7 +58,7 @@ def main() -> None:
 
     packs = sorted(wave_dir.glob("*.json"))
     if not packs:
-        print(f"apply-wave failed: no pack files under {wave_dir}")
+        emit(f"apply-wave failed: no pack files under {wave_dir}", level="error")
         sys.exit(1)
 
     selected: list[tuple[str, Path]] = []
@@ -54,14 +66,14 @@ def main() -> None:
         try:
             locale = detect_locale(pack)
         except Exception as exc:
-            print(f"apply-wave failed: {exc}")
+            emit(f"apply-wave failed: {exc}", level="error")
             sys.exit(1)
         if locale_filter and locale not in locale_filter:
             continue
         selected.append((locale, pack))
 
     if not selected:
-        print("apply-wave failed: no packs matched locale filter")
+        emit("apply-wave failed: no packs matched locale filter", level="error")
         sys.exit(1)
 
     for locale, pack in selected:
@@ -72,11 +84,11 @@ def main() -> None:
             cmd.append("--dry-run")
         result = subprocess.run(cmd, cwd=ROOT)
         if result.returncode != 0:
-            print(f"apply-wave failed on locale={locale} pack={pack}")
+            emit(f"apply-wave failed on locale={locale} pack={pack}", level="error")
             sys.exit(result.returncode)
 
     mode = "dry-run" if args.dry_run else "apply"
-    print(f"apply-wave {mode} complete: locales={','.join(locale for locale, _ in selected)}")
+    emit(f"apply-wave {mode} complete: locales={','.join(locale for locale, _ in selected)}")
 
 
 if __name__ == "__main__":

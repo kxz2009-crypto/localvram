@@ -3,11 +3,14 @@ import json
 import re
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 COPY_FILE = ROOT / "src" / "data" / "i18n-copy.json"
 OUT_FILE = ROOT / "dist" / "seo-audit" / "i18n-readiness.json"
 PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
+LOGGER = configure_logging("i18n-readiness")
 
 
 def is_effective_fallback(en_value: object, localized_value: object) -> bool:
@@ -76,10 +79,10 @@ def main() -> int:
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUT_FILE.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    print(f"threshold={threshold}")
-    print(f"ready_locales={','.join(ready_locales) if ready_locales else '(none)'}")
-    print(f"not_ready_locales={','.join(not_ready_locales) if not_ready_locales else '(none)'}")
-    print(f"report={OUT_FILE}")
+    LOGGER.info("threshold=%s", threshold)
+    LOGGER.info("ready_locales=%s", ",".join(ready_locales) if ready_locales else "(none)")
+    LOGGER.info("not_ready_locales=%s", ",".join(not_ready_locales) if not_ready_locales else "(none)")
+    LOGGER.info("report=%s", OUT_FILE)
     return 0
 
 

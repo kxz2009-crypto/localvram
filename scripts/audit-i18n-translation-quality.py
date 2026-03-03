@@ -6,6 +6,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
@@ -52,6 +54,7 @@ REVIEW_PAGE_IDS = [
     "status-detail",
 ]
 REVIEW_FIELD_CANDIDATES = ["meta_title", "meta_description", "hero_title", "hero_intro"]
+LOGGER = configure_logging("audit-i18n-translation-quality")
 
 
 def extract_placeholders(text: str) -> list[str]:
@@ -286,7 +289,7 @@ def main() -> None:
     out_file.parent.mkdir(parents=True, exist_ok=True)
     out_file.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    print(
+    LOGGER.info(
         "i18n translation qa report: "
         f"issues={report['summary']['total_issues']} "
         f"critical={report['summary']['critical']} "
@@ -296,9 +299,9 @@ def main() -> None:
         f"report={out_file}"
     )
     if issues:
-        print("top review queue:")
+        LOGGER.info("top review queue:")
         for item in issues[: max(args.limit, 0)]:
-            print(
+            LOGGER.info(
                 f"- [{item['severity']}] {item['locale']} {item['page_id']}.{item['field']} "
                 f"({item['code']})"
             )
@@ -306,7 +309,7 @@ def main() -> None:
     if args.strict:
         blocking = [x for x in issues if x["severity"] in {"critical", "high"}]
         if blocking:
-            print(f"i18n translation qa failed: blocking issues={len(blocking)}")
+            LOGGER.error("i18n translation qa failed: blocking issues=%s", len(blocking))
             sys.exit(1)
 
 

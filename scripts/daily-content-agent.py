@@ -6,6 +6,8 @@ import re
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OPPORTUNITY_FILE = ROOT / "src" / "data" / "content-opportunities.json"
@@ -17,6 +19,7 @@ AFFILIATE_LINKS_FILE = ROOT / "src" / "data" / "affiliate-links.json"
 PUBLISH_LOG_FILE = ROOT / "src" / "data" / "content-publish-log.json"
 BLOG_DIR = ROOT / "src" / "content" / "blog"
 QUEUE_DIR = ROOT / "content-queue"
+LOGGER = configure_logging("daily-content-agent")
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -459,11 +462,11 @@ def main() -> None:
     draft_index["items"] = (draft_records + existing)[:120]
     save_json(DRAFT_INDEX_FILE, draft_index)
 
-    print("daily content drafts generated:")
+    LOGGER.info("daily content drafts generated:")
     for idx, row in enumerate(draft_records, start=1):
-        print(f"{idx}. {row['slug']} | score={row['score']} | {row['draft_path']}")
-    print(f"updated {UPDATES_FILE}")
-    print(f"updated {DRAFT_INDEX_FILE}")
+        LOGGER.info("%s. %s | score=%s | %s", idx, row["slug"], row["score"], row["draft_path"])
+    LOGGER.info("updated %s", UPDATES_FILE)
+    LOGGER.info("updated %s", DRAFT_INDEX_FILE)
 
 
 if __name__ == "__main__":

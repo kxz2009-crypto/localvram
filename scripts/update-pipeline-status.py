@@ -5,9 +5,12 @@ import json
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_FILE = ROOT / "src" / "data" / "pipeline-status.json"
+LOGGER = configure_logging("update-pipeline-status")
 
 
 def utc_now_iso() -> str:
@@ -108,7 +111,7 @@ def main() -> None:
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"updated pipeline status: {out_path}")
+    LOGGER.info("updated pipeline status: %s", out_path)
 
 
 if __name__ == "__main__":

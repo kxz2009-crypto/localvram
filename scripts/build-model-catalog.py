@@ -3,6 +3,8 @@ import json
 import re
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "data" / "model-catalog.json"
@@ -11,6 +13,7 @@ TOP20_CURATED_FILE = ROOT / "src" / "data" / "ollama-top20-curated.json"
 BENCHMARK_RESULTS_FILE = ROOT / "src" / "data" / "benchmark-results.json"
 VERIFIED_AT = "2026-02-24"
 POPULAR_SOURCE = "https://ollama.com/library"
+LOGGER = configure_logging("build-model-catalog")
 
 
 STANDARD_QUANTS = [
@@ -488,9 +491,9 @@ def main() -> None:
         ],
     }
     MODELS_OUT.write_text(json.dumps(models_payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"generated {len(items)} models -> {OUT}")
-    print(f"synced {len(items)} model rows -> {MODELS_OUT}")
-    print(f"auto_discovered_missing_tags={len(missing_measured_tags)}")
+    LOGGER.info("generated %s models -> %s", len(items), OUT)
+    LOGGER.info("synced %s model rows -> %s", len(items), MODELS_OUT)
+    LOGGER.info("auto_discovered_missing_tags=%s", len(missing_measured_tags))
 
 
 if __name__ == "__main__":

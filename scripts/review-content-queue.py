@@ -3,10 +3,13 @@ import argparse
 import datetime as dt
 import json
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
+
+from logging_utils import configure_logging
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +47,16 @@ TOPIC_STOPWORDS = {
     "vs",
     "with",
 }
+LOGGER = configure_logging("review-content-queue")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 @dataclass
@@ -412,12 +425,12 @@ def main() -> None:
         log_payload["history"] = history[: max(10, int(args.history_limit))]
         save_json(REVIEW_LOG_FILE, log_payload)
 
-    print(f"queue_date={queue_date}")
-    print(f"reviewed_count={len(reviewed)}")
-    print(f"auto_approved_count={len([x for x in reviewed if x.status_after == 'approved_auto'])}")
-    print(f"pending_manual_review_count={len([x for x in reviewed if x.status_after == 'pending_manual_review'])}")
-    print(f"rejected_manual_count={len([x for x in reviewed if x.status_after == 'rejected_manual'])}")
-    print(f"risk_flags={json.dumps(dict(sorted(risk_counter.items())), ensure_ascii=False)}")
+    emit(f"queue_date={queue_date}")
+    emit(f"reviewed_count={len(reviewed)}")
+    emit(f"auto_approved_count={len([x for x in reviewed if x.status_after == 'approved_auto'])}")
+    emit(f"pending_manual_review_count={len([x for x in reviewed if x.status_after == 'pending_manual_review'])}")
+    emit(f"rejected_manual_count={len([x for x in reviewed if x.status_after == 'rejected_manual'])}")
+    emit(f"risk_flags={json.dumps(dict(sorted(risk_counter.items())), ensure_ascii=False)}")
 
 
 if __name__ == "__main__":

@@ -6,11 +6,14 @@ import json
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TARGET_FILE = ROOT / "src" / "data" / "affiliate-click-events.json"
 
 KNOWN_PROVIDERS = {"runpod", "vast", "amazon"}
+LOGGER = configure_logging("import-affiliate-events")
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -233,12 +236,12 @@ def main() -> None:
     target_path.parent.mkdir(parents=True, exist_ok=True)
     target_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"source_file={source_path}")
-    print(f"target_file={target_path}")
-    print(f"raw_events={len(raw_events)}")
-    print(f"events_after_merge={len(combined)}")
-    print(f"events_after_dedupe={len(deduped)}")
-    print(f"invalid_or_dropped={invalid_count}")
+    LOGGER.info("source_file=%s", source_path)
+    LOGGER.info("target_file=%s", target_path)
+    LOGGER.info("raw_events=%s", len(raw_events))
+    LOGGER.info("events_after_merge=%s", len(combined))
+    LOGGER.info("events_after_dedupe=%s", len(deduped))
+    LOGGER.info("invalid_or_dropped=%s", invalid_count)
 
 
 if __name__ == "__main__":

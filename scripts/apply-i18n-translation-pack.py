@@ -5,11 +5,23 @@ import re
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
+LOGGER = configure_logging("apply-i18n-translation-pack")
 
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def extract_placeholders(text: str) -> set[str]:
@@ -56,20 +68,20 @@ def main() -> None:
     locale = str(args.locale).strip().lower()
     pack_path = Path(args.pack)
     if not pack_path.exists():
-        print(f"apply failed: pack file not found: {pack_path}")
+        emit(f"apply failed: pack file not found: {pack_path}", level="error")
         sys.exit(1)
 
     payload = json.loads(COPY_PATH.read_text(encoding="utf-8"))
     pages = payload.get("pages", {})
     if not isinstance(pages, dict):
-        print("apply failed: i18n-copy pages must be an object")
+        emit("apply failed: i18n-copy pages must be an object", level="error")
         sys.exit(1)
 
     pack_data = json.loads(pack_path.read_text(encoding="utf-8"))
     phrase_map = load_phrase_map(pack_data)
     pack_locale = str(pack_data.get("locale", "")).strip().lower()
     if pack_locale and pack_locale != locale:
-        print(f"apply failed: pack locale mismatch: pack={pack_locale} cli={locale}")
+        emit(f"apply failed: pack locale mismatch: pack={pack_locale} cli={locale}", level="error")
         sys.exit(1)
 
     missing: set[str] = set()
@@ -113,26 +125,26 @@ def main() -> None:
         pages[page_id] = page
 
     if missing:
-        print("apply failed: translation pack missing required phrases")
+        emit("apply failed: translation pack missing required phrases", level="error")
         for text in sorted(missing):
-            print(f"- {text}")
+            emit(f"- {text}", level="error")
         sys.exit(1)
 
     if placeholder_errors:
-        print("apply failed: placeholder mismatch found")
+        emit("apply failed: placeholder mismatch found", level="error")
         for row in placeholder_errors[:80]:
-            print(f"- {row}")
+            emit(f"- {row}", level="error")
         if len(placeholder_errors) > 80:
-            print(f"- ... and {len(placeholder_errors) - 80} more")
+            emit(f"- ... and {len(placeholder_errors) - 80} more", level="error")
         sys.exit(1)
 
     if args.dry_run:
-        print(f"dry-run ok: locale={locale} updated_fields={updated_fields} source_pack={pack_path}")
+        emit(f"dry-run ok: locale={locale} updated_fields={updated_fields} source_pack={pack_path}")
         return
 
     payload["pages"] = pages
     COPY_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"applied locale={locale} updated_fields={updated_fields} source_pack={pack_path}")
+    emit(f"applied locale={locale} updated_fields={updated_fields} source_pack={pack_path}")
 
 
 if __name__ == "__main__":

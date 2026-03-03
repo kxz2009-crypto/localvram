@@ -5,6 +5,7 @@ import json
 import os
 import statistics
 import subprocess
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -13,10 +14,13 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit, urlunsplit
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 FILE = ROOT / "src" / "data" / "cluster-benchmarks.json"
 LOG_DIR = ROOT / "logs"
+LOGGER = configure_logging("cluster-benchmark")
 
 DEFAULT_ENDPOINTS = ""
 DEFAULT_MODEL = "qwen3:8b"
@@ -24,6 +28,15 @@ DEFAULT_NUM_CTX = 4096
 DEFAULT_PROMPT = (
     "Provide exactly three short bullet points about distributed local inference stability."
 )
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def utc_now_iso() -> str:
@@ -56,6 +69,7 @@ def run_cmd(args: list[str], timeout: int = 20) -> tuple[int, str, str]:
         proc = subprocess.run(args, capture_output=True, text=True, timeout=timeout, check=False)
         return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
     except Exception as exc:  # noqa: BLE001
+        LOGGER.warning("run_cmd failed args=%s error=%s", " ".join(args), exc)
         return 1, "", str(exc)
 
 
@@ -359,7 +373,7 @@ def main() -> None:
     if not endpoints:
         message = "no cluster endpoints configured"
         if args.skip_if_under_min_endpoints:
-            print(f"cluster benchmark skipped: {message}")
+            emit(f"cluster benchmark skipped: {message}", level="warning")
             return
         raise SystemExit(message)
 
@@ -368,13 +382,13 @@ def main() -> None:
     deleted_logs = prune_old_logs(LOG_DIR, "cluster-benchmark-", max(0, args.log_retention_days))
 
     if args.dry_run:
-        print("dry-run: cluster benchmark execution skipped")
-        print(f"endpoints={redacted_endpoints}")
-        print(f"model={args.model}")
-        print(f"num_ctx={max(256, args.num_ctx)}")
-        print("temperature=0")
-        print(f"min_endpoints={max(1, args.min_endpoints)}")
-        print(f"log_retention_days={args.log_retention_days}")
+        emit("dry-run: cluster benchmark execution skipped")
+        emit(f"endpoints={redacted_endpoints}")
+        emit(f"model={args.model}")
+        emit(f"num_ctx={max(256, args.num_ctx)}")
+        emit("temperature=0")
+        emit(f"min_endpoints={max(1, args.min_endpoints)}")
+        emit(f"log_retention_days={args.log_retention_days}")
         return
 
     min_endpoints = max(1, args.min_endpoints)
@@ -391,7 +405,7 @@ def main() -> None:
                     "min_endpoints": min_endpoints,
                 },
             )
-            print(message)
+            emit(message, level="warning")
             return
         raise SystemExit(message)
 
@@ -482,9 +496,9 @@ def main() -> None:
         },
     )
 
-    print(f"cluster benchmark completed: success={len(ok_reports)}, total={len(reports)}")
-    print(f"output file: {FILE}")
-    print(f"log file: {log_file}")
+    emit(f"cluster benchmark completed: success={len(ok_reports)}, total={len(reports)}")
+    emit(f"output file: {FILE}")
+    emit(f"log file: {log_file}")
 
     if not ok_reports and not args.allow_empty:
         raise SystemExit("no successful cluster benchmark samples collected")

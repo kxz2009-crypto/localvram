@@ -4,6 +4,8 @@ import re
 from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_DIR = ROOT / "public"
@@ -34,6 +36,7 @@ LOCALIZABLE_EN_EXACT_PATHS = {
     "/en/hardware/apple-silicon-llm-guide/",
     "/en/hardware/verified-3090/",
 }
+LOGGER = configure_logging("build-sitemap")
 
 
 def load_json(path: Path) -> dict:
@@ -174,12 +177,12 @@ def main() -> None:
     write_sitemap_index(OUT_INDEX, generated_sitemaps)
     OUT_INDEX_ALIAS.write_text(OUT_INDEX.read_text(encoding="utf-8"), encoding="utf-8")
 
-    print(f"generated {OUT_INDEX} with {len(generated_sitemaps)} sitemap entries")
-    print(f"generated {OUT_INDEX_ALIAS} (alias of sitemap-index.xml)")
+    LOGGER.info("generated %s with %s sitemap entries", OUT_INDEX, len(generated_sitemaps))
+    LOGGER.info("generated %s (alias of sitemap-index.xml)", OUT_INDEX_ALIAS)
     for locale in rollout_locales:
         file = PUBLIC_DIR / f"sitemap-{locale}.xml"
         count = file.read_text(encoding="utf-8").count("<url>")
-        print(f"- {file.name}: {count} urls")
+        LOGGER.info("- %s: %s urls", file.name, count)
 
 
 if __name__ == "__main__":

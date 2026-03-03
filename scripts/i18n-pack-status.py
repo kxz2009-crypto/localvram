@@ -3,9 +3,12 @@ import argparse
 import json
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PACK_DIR = ROOT / "src" / "data" / "i18n-packs"
+LOGGER = configure_logging("i18n-pack-status")
 
 
 def summarize_pack(pack_file: Path) -> dict:
@@ -39,22 +42,22 @@ def main() -> None:
 
     pack_root = Path(args.dir)
     if not pack_root.exists():
-        print(f"pack status: directory not found: {pack_root}")
+        LOGGER.info("pack status: directory not found: %s", pack_root)
         return
 
     pack_files = sorted(pack_root.rglob("*.json"))
     if not pack_files:
-        print(f"pack status: no json packs found under {pack_root}")
+        LOGGER.info("pack status: no json packs found under %s", pack_root)
         return
 
     rows = [summarize_pack(pack_file) for pack_file in pack_files]
     rows.sort(key=lambda item: (item["locale"], str(item["file"])))
 
-    print("locale\tfilled/total\tratio\tfile")
+    LOGGER.info("locale\tfilled/total\tratio\tfile")
     for row in rows:
         ratio_pct = f"{row['ratio']*100:.1f}%"
         rel = Path(row["file"]).relative_to(ROOT)
-        print(f"{row['locale']}\t{row['filled']}/{row['total']}\t{ratio_pct}\t{rel}")
+        LOGGER.info("%s\t%s/%s\t%s\t%s", row["locale"], row["filled"], row["total"], ratio_pct, rel)
 
 
 if __name__ == "__main__":

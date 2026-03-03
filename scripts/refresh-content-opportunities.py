@@ -5,8 +5,11 @@ import argparse
 import datetime as dt
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
+
+from logging_utils import configure_logging
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,6 +17,16 @@ DEFAULT_OPPORTUNITIES = ROOT / "src" / "data" / "content-opportunities.json"
 DEFAULT_SEARCH_CONSOLE = ROOT / "src" / "data" / "search-console-keywords.json"
 DEFAULT_BENCHMARK = ROOT / "src" / "data" / "benchmark-results.json"
 DEFAULT_PUBLISH_LOG = ROOT / "src" / "data" / "content-publish-log.json"
+LOGGER = configure_logging("refresh-content-opportunities")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -286,16 +299,16 @@ def main() -> int:
     if not args.dry_run:
         save_json(opportunities_path, payload)
 
-    print(f"opportunities_file={opportunities_path}")
-    print(f"target_size={target_size}")
-    print(f"replace_count={replace_count}")
-    print(f"current_size={len(combined)}")
-    print(f"incoming_count={len(added_keys)}")
-    print(f"removed_count={len(removed_keys)}")
+    emit(f"opportunities_file={opportunities_path}")
+    emit(f"target_size={target_size}")
+    emit(f"replace_count={replace_count}")
+    emit(f"current_size={len(combined)}")
+    emit(f"incoming_count={len(added_keys)}")
+    emit(f"removed_count={len(removed_keys)}")
     if added_keys:
-        print("incoming_topic_keys=" + ",".join(added_keys[:12]))
+        emit("incoming_topic_keys=" + ",".join(added_keys[:12]))
     if removed_keys:
-        print("removed_topic_keys=" + ",".join(removed_keys[:12]))
+        emit("removed_topic_keys=" + ",".join(removed_keys[:12]))
     return 0
 
 

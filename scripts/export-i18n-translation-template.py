@@ -3,10 +3,13 @@ import argparse
 import json
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
 STANDARD_I18N_LOCALES = ("es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id")
+LOGGER = configure_logging("export-i18n-translation-template")
 
 
 def collect_unique_english_phrases(payload: dict) -> list[str]:
@@ -64,7 +67,7 @@ def main() -> None:
             "phrases": [{"en": text, "translation": ""} for text in phrases],
         }
         out_path.write_text(json.dumps(template, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print(f"exported template: locale={locale} phrases={len(phrases)} file={out_path}")
+        LOGGER.info("exported template: locale=%s phrases=%s file=%s", locale, len(phrases), out_path)
 
 
 if __name__ == "__main__":

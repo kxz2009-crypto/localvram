@@ -4,10 +4,13 @@ import re
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_DIR = ROOT / "public"
 SITEMAP_LOC_RE = re.compile(r"<loc>([^<]+)</loc>")
+LOGGER = configure_logging("smoke-tests")
 
 
 def load_build_sitemap_module():
@@ -26,7 +29,7 @@ def read_sitemap_urls(path: Path) -> set[str]:
 
 
 def fail(message: str) -> None:
-    print(f"smoke tests failed: {message}")
+    LOGGER.error("smoke tests failed: %s", message)
     sys.exit(1)
 
 
@@ -53,15 +56,15 @@ def main() -> None:
         if actual_urls != expected_urls:
             missing = sorted(expected_urls - actual_urls)[:10]
             extra = sorted(actual_urls - expected_urls)[:10]
-            print(f"locale={locale} expected={len(expected_urls)} actual={len(actual_urls)}")
+            LOGGER.error("locale=%s expected=%d actual=%d", locale, len(expected_urls), len(actual_urls))
             if missing:
-                print("missing samples:")
+                LOGGER.error("missing samples:")
                 for item in missing:
-                    print(f"- {item}")
+                    LOGGER.error("- %s", item)
             if extra:
-                print("extra samples:")
+                LOGGER.error("extra samples:")
                 for item in extra:
-                    print(f"- {item}")
+                    LOGGER.error("- %s", item)
             fail(f"sitemap mismatch for locale={locale}")
 
         # Safety floor to catch accidental regressions such as 3-url locale sitemaps.
@@ -72,9 +75,9 @@ def main() -> None:
                 f"{len(actual_urls)} < {minimum_expected}"
             )
 
-        print(f"sitemap ok: locale={locale} urls={len(actual_urls)}")
+        LOGGER.info("sitemap ok: locale=%s urls=%d", locale, len(actual_urls))
 
-    print("smoke tests passed")
+    LOGGER.info("smoke tests passed")
 
 
 if __name__ == "__main__":

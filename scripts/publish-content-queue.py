@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE_ROOT = ROOT / "content-queue"
@@ -41,6 +43,7 @@ STOPWORDS = {
     "vs",
     "with",
 }
+LOGGER = configure_logging("publish-content-queue")
 
 
 @dataclass
@@ -377,14 +380,14 @@ def main() -> None:
     updates["items"] = items[:40]
     save_json(UPDATES_FILE, updates)
 
-    print(f"queue_date={queue_date}")
-    print(f"candidate_count={len(candidates)}")
-    print(f"published_count={len(published)}")
-    print(f"skipped_count={len(skipped)}")
+    LOGGER.info("queue_date=%s", queue_date)
+    LOGGER.info("candidate_count=%s", len(candidates))
+    LOGGER.info("published_count=%s", len(published))
+    LOGGER.info("skipped_count=%s", len(skipped))
     for row in published:
-        print(f"published={row['slug']} score={row['score']}")
+        LOGGER.info("published=%s score=%s", row["slug"], row["score"])
     if not published:
-        print("published=none")
+        LOGGER.info("published=none")
 
 
 if __name__ == "__main__":

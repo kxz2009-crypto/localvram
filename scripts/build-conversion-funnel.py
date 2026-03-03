@@ -7,6 +7,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SEARCH_CONSOLE_FILE = ROOT / "src" / "data" / "search-console-keywords.json"
@@ -22,6 +24,7 @@ DECISION_PREFIXES = (
     "/en/guides/",
     "/en/affiliate/",
 )
+LOGGER = configure_logging("build-conversion-funnel")
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -209,8 +212,8 @@ def main() -> None:
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"conversion_funnel_out={out_path}")
-    print(
+    LOGGER.info("conversion_funnel_out=%s", out_path)
+    LOGGER.info(
         "funnel_summary="
         f"search={organic_clicks},decision={decision_clicks},affiliate={affiliate_clicks},cloud={cloud_clicks},hardware={hardware_clicks}"
     )

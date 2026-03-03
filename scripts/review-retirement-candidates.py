@@ -5,11 +5,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATES_FILE = "src/data/retirement-candidates.json"
 DEFAULT_POLICY_FILE = "src/data/retired-models.json"
 DEFAULT_PROPOSAL_FILE = "src/data/retirement-proposal.json"
+LOGGER = configure_logging("review-retirement-candidates")
 
 
 def utc_now_iso() -> str:
@@ -167,12 +170,12 @@ def main() -> None:
         write_json(policy_path, policy)
         applied_count = len(approved_tags)
 
-    print(f"source_candidate_count={len(candidates)}")
-    print(f"auto_approved_count={len(auto_approved)}")
-    print(f"manual_review_count={len(manual_review)}")
-    print(f"apply={str(bool(args.apply)).lower()}")
-    print(f"applied_count={applied_count}")
-    print(f"retirement_proposal_out={proposal_path}")
+    LOGGER.info("source_candidate_count=%s", len(candidates))
+    LOGGER.info("auto_approved_count=%s", len(auto_approved))
+    LOGGER.info("manual_review_count=%s", len(manual_review))
+    LOGGER.info("apply=%s", str(bool(args.apply)).lower())
+    LOGGER.info("applied_count=%s", applied_count)
+    LOGGER.info("retirement_proposal_out=%s", proposal_path)
 
     if args.github_output:
         gh_out = Path(args.github_output)

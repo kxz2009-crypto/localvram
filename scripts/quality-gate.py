@@ -1,12 +1,15 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 import json
 import re
 import subprocess
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
+LOGGER = configure_logging("quality-gate")
 REQUIRED_FILES = [
     ROOT / "src" / "data" / "models.json",
     ROOT / "src" / "data" / "model-catalog.json",
@@ -91,6 +94,19 @@ FORBIDDEN_I18N_FRAGMENTS = {
 }
 
 
+def _log_print(*values: object, sep: str = " ", end: str = "\n", flush: bool = False) -> None:  # noqa: ARG001
+    message = sep.join(str(v) for v in values)
+    if not message:
+        return
+    if message.startswith("quality gate failed") or message.startswith("- Error:"):
+        LOGGER.error("%s", message)
+    else:
+        LOGGER.info("%s", message)
+
+
+log_line = _log_print
+
+
 def is_effective_fallback(en_value: object, localized_value: object) -> bool:
     if not isinstance(localized_value, str) or not localized_value.strip():
         return True
@@ -105,16 +121,16 @@ def is_effective_fallback(en_value: object, localized_value: object) -> bool:
 def main() -> None:
     missing = [str(p) for p in REQUIRED_FILES if not p.exists()]
     if missing:
-        print("quality gate failed: missing required files")
+        log_line("quality gate failed: missing required files")
         for item in missing:
-            print(f"- {item}")
+            log_line(f"- {item}")
         sys.exit(1)
 
     missing_pages = [str(p) for p in REQUIRED_PAGES if not p.exists()]
     if missing_pages:
-        print("quality gate failed: missing required pages")
+        log_line("quality gate failed: missing required pages")
         for item in missing_pages:
-            print(f"- {item}")
+            log_line(f"- {item}")
         sys.exit(1)
 
     page_dirs = [p.name for p in (ROOT / "src" / "pages").iterdir() if p.is_dir()]
@@ -124,14 +140,14 @@ def main() -> None:
         if len(x) == 2 and x.isalpha() and x not in EXPECTED_COM_LOCALES
     )
     if unexpected_locale_dirs:
-        print("quality gate failed: unexpected locale directories found")
+        log_line("quality gate failed: unexpected locale directories found")
         for item in unexpected_locale_dirs:
-            print(f"- src/pages/{item}")
+            log_line(f"- src/pages/{item}")
         sys.exit(1)
 
     i18n_config_path = ROOT / "src" / "config" / "i18n.ts"
     if not i18n_config_path.exists():
-        print("quality gate failed: missing src/config/i18n.ts")
+        log_line("quality gate failed: missing src/config/i18n.ts")
         sys.exit(1)
     i18n_config = i18n_config_path.read_text(encoding="utf-8")
     for token in [
@@ -144,7 +160,7 @@ def main() -> None:
         '"id"',
     ]:
         if token not in i18n_config:
-            print(f"quality gate failed: i18n config missing token {token}")
+            log_line(f"quality gate failed: i18n config missing token {token}")
             sys.exit(1)
 
     rollout_config = json.loads((ROOT / "src" / "data" / "i18n-rollout.json").read_text(encoding="utf-8"))
@@ -152,41 +168,41 @@ def main() -> None:
     for key in ("hreflang_rollout_locales", "sitemap_rollout_locales"):
         raw = rollout_config.get(key)
         if not isinstance(raw, list) or not raw:
-            print(f"quality gate failed: i18n-rollout.json {key} must be a non-empty array")
+            log_line(f"quality gate failed: i18n-rollout.json {key} must be a non-empty array")
             sys.exit(1)
         values = [str(x).strip().lower() for x in raw if str(x).strip()]
         if "en" not in values:
-            print(f"quality gate failed: i18n-rollout.json {key} must include 'en'")
+            log_line(f"quality gate failed: i18n-rollout.json {key} must include 'en'")
             sys.exit(1)
         unknown = sorted(x for x in values if x not in EXPECTED_COM_LOCALES)
         if unknown:
-            print(f"quality gate failed: i18n-rollout.json {key} contains unknown locales")
+            log_line(f"quality gate failed: i18n-rollout.json {key} contains unknown locales")
             for item in unknown:
-                print(f"- {item}")
+                log_line(f"- {item}")
             sys.exit(1)
         rollout_locale_sets[key] = set(values)
 
     base_layout = (ROOT / "src" / "layouts" / "BaseLayout.astro").read_text(encoding="utf-8")
     if "OG_LOCALE_BY_LANG" not in base_layout or "isRtlLocale" not in base_layout:
-        print("quality gate failed: BaseLayout missing i18n locale metadata support")
+        log_line("quality gate failed: BaseLayout missing i18n locale metadata support")
         sys.exit(1)
     if 'dir={htmlDir}' not in base_layout:
-        print("quality gate failed: BaseLayout missing rtl/ltr html direction binding")
+        log_line("quality gate failed: BaseLayout missing rtl/ltr html direction binding")
         sys.exit(1)
     for token in ["ZH_SITE_URL", "zhSwitchHref", "locale-switcher"]:
         if token not in base_layout:
-            print(f"quality gate failed: BaseLayout missing locale switch token {token}")
+            log_line(f"quality gate failed: BaseLayout missing locale switch token {token}")
             sys.exit(1)
 
     i18n_copy_lib = (ROOT / "src" / "lib" / "i18n-copy.ts").read_text(encoding="utf-8")
     for token in ["HREFLANG_ROLLOUT_LOCALES", "hreflangRolloutLocaleSet.has(locale)"]:
         if token not in i18n_copy_lib:
-            print(f"quality gate failed: i18n noindex rollout guard missing token {token}")
+            log_line(f"quality gate failed: i18n noindex rollout guard missing token {token}")
             sys.exit(1)
 
     redirects_file = ROOT / "public" / "_redirects"
     if not redirects_file.exists():
-        print("quality gate failed: public/_redirects missing")
+        log_line("quality gate failed: public/_redirects missing")
         sys.exit(1)
     redirects_text = redirects_file.read_text(encoding="utf-8")
     required_redirect_lines = [
@@ -196,100 +212,100 @@ def main() -> None:
     ]
     for line in required_redirect_lines:
         if line not in redirects_text:
-            print(f"quality gate failed: missing redirect rule '{line}'")
+            log_line(f"quality gate failed: missing redirect rule '{line}'")
             sys.exit(1)
-    print("i18n baseline checks ok: locale config + layout + zh redirect rules")
+    log_line("i18n baseline checks ok: locale config + layout + zh redirect rules")
 
     locale_link_checker = ROOT / "scripts" / "check-locale-links.py"
     if not locale_link_checker.exists():
-        print("quality gate failed: missing scripts/check-locale-links.py")
+        log_line("quality gate failed: missing scripts/check-locale-links.py")
         sys.exit(1)
     locale_link_cmd = [sys.executable, str(locale_link_checker)]
     locale_link_result = subprocess.run(locale_link_cmd, cwd=ROOT)
     if locale_link_result.returncode != 0:
-        print("quality gate failed: locale link checks failed")
+        log_line("quality gate failed: locale link checks failed")
         sys.exit(locale_link_result.returncode)
 
     pack_validator = ROOT / "scripts" / "validate-i18n-packs.py"
     if not pack_validator.exists():
-        print("quality gate failed: missing scripts/validate-i18n-packs.py")
+        log_line("quality gate failed: missing scripts/validate-i18n-packs.py")
         sys.exit(1)
     pack_validate_cmd = [sys.executable, str(pack_validator)]
     pack_validate_result = subprocess.run(pack_validate_cmd, cwd=ROOT)
     if pack_validate_result.returncode != 0:
-        print("quality gate failed: i18n pack validation failed")
+        log_line("quality gate failed: i18n pack validation failed")
         sys.exit(pack_validate_result.returncode)
 
     i18n_copy = json.loads((ROOT / "src" / "data" / "i18n-copy.json").read_text(encoding="utf-8"))
     i18n_glossary = json.loads((ROOT / "src" / "data" / "i18n-glossary.json").read_text(encoding="utf-8"))
     threshold = i18n_copy.get("fallback_noindex_threshold")
     if not isinstance(threshold, (int, float)) or threshold < 0 or threshold > 1:
-        print("quality gate failed: i18n-copy.json fallback_noindex_threshold must be between 0 and 1")
+        log_line("quality gate failed: i18n-copy.json fallback_noindex_threshold must be between 0 and 1")
         sys.exit(1)
 
     required_locales = set(i18n_copy.get("required_locales", []))
     if required_locales != EXPECTED_STANDARD_LOCALES:
-        print("quality gate failed: i18n-copy.json required_locales must exactly match standard locales")
-        print(f"- expected: {sorted(EXPECTED_STANDARD_LOCALES)}")
-        print(f"- actual: {sorted(required_locales)}")
+        log_line("quality gate failed: i18n-copy.json required_locales must exactly match standard locales")
+        log_line(f"- expected: {sorted(EXPECTED_STANDARD_LOCALES)}")
+        log_line(f"- actual: {sorted(required_locales)}")
         sys.exit(1)
 
     pages = i18n_copy.get("pages")
     if not isinstance(pages, dict):
-        print("quality gate failed: i18n-copy.json pages must be an object")
+        log_line("quality gate failed: i18n-copy.json pages must be an object")
         sys.exit(1)
 
     missing_copy_pages = sorted(REQUIRED_I18N_COPY_PAGES - set(pages.keys()))
     if missing_copy_pages:
-        print("quality gate failed: i18n-copy.json missing required page ids")
+        log_line("quality gate failed: i18n-copy.json missing required page ids")
         for item in missing_copy_pages:
-            print(f"- {item}")
+            log_line(f"- {item}")
         sys.exit(1)
 
     protected_terms = i18n_glossary.get("protected_terms", [])
     if not isinstance(protected_terms, list) or not protected_terms:
-        print("quality gate failed: i18n-glossary.json protected_terms must be a non-empty list")
+        log_line("quality gate failed: i18n-glossary.json protected_terms must be a non-empty list")
         sys.exit(1)
     protected_terms = [str(x).strip() for x in protected_terms if str(x).strip()]
     if not protected_terms:
-        print("quality gate failed: i18n-glossary.json protected_terms must include non-empty strings")
+        log_line("quality gate failed: i18n-glossary.json protected_terms must include non-empty strings")
         sys.exit(1)
 
     for page_id in sorted(REQUIRED_I18N_COPY_PAGES):
         page_entry = pages.get(page_id, {})
         en_fields = page_entry.get("en")
         if not isinstance(en_fields, dict) or not en_fields:
-            print(f"quality gate failed: i18n-copy.json page '{page_id}' missing non-empty en fields")
+            log_line(f"quality gate failed: i18n-copy.json page '{page_id}' missing non-empty en fields")
             sys.exit(1)
         if "meta_title" not in en_fields or "meta_description" not in en_fields:
-            print(f"quality gate failed: i18n-copy.json page '{page_id}' missing meta_title/meta_description")
+            log_line(f"quality gate failed: i18n-copy.json page '{page_id}' missing meta_title/meta_description")
             sys.exit(1)
 
         locales = page_entry.get("locales")
         if not isinstance(locales, dict):
-            print(f"quality gate failed: i18n-copy.json page '{page_id}' locales must be an object")
+            log_line(f"quality gate failed: i18n-copy.json page '{page_id}' locales must be an object")
             sys.exit(1)
         locale_keys = set(locales.keys())
         if locale_keys != EXPECTED_STANDARD_LOCALES:
-            print(f"quality gate failed: i18n-copy.json page '{page_id}' locales must include exact 10 standard locales")
-            print(f"- expected: {sorted(EXPECTED_STANDARD_LOCALES)}")
-            print(f"- actual: {sorted(locale_keys)}")
+            log_line(f"quality gate failed: i18n-copy.json page '{page_id}' locales must include exact 10 standard locales")
+            log_line(f"- expected: {sorted(EXPECTED_STANDARD_LOCALES)}")
+            log_line(f"- actual: {sorted(locale_keys)}")
             sys.exit(1)
 
         for locale_key, localized_fields in locales.items():
             if not isinstance(localized_fields, dict):
-                print(
+                log_line(
                     f"quality gate failed: i18n-copy.json page '{page_id}' locale '{locale_key}' must be an object"
                 )
                 sys.exit(1)
             for field_name, field_value in localized_fields.items():
                 if not isinstance(field_value, str):
-                    print(
+                    log_line(
                         f"quality gate failed: i18n-copy.json page '{page_id}' locale '{locale_key}' field '{field_name}' must be string"
                     )
                     sys.exit(1)
                 if field_name not in en_fields:
-                    print(
+                    log_line(
                         f"quality gate failed: i18n-copy.json page '{page_id}' locale '{locale_key}' has unknown field '{field_name}'"
                     )
                     sys.exit(1)
@@ -298,13 +314,13 @@ def main() -> None:
                 en_text = str(en_fields.get(field_name, ""))
                 for term in protected_terms:
                     if term in en_text and term not in field_value:
-                        print(
+                        log_line(
                             f"quality gate failed: i18n glossary lock broken on page '{page_id}' locale '{locale_key}' field '{field_name}' for term '{term}'"
                         )
                         sys.exit(1)
                 for bad_fragment in FORBIDDEN_I18N_FRAGMENTS.get(locale_key, []):
                     if bad_fragment in field_value:
-                        print(
+                        log_line(
                             f"quality gate failed: forbidden i18n fragment '{bad_fragment}' found on page '{page_id}' locale '{locale_key}' field '{field_name}'"
                         )
                         sys.exit(1)
@@ -334,16 +350,16 @@ def main() -> None:
     for rollout_key in ("hreflang_rollout_locales", "sitemap_rollout_locales"):
         disallowed = sorted(x for x in rollout_locale_sets.get(rollout_key, set()) if x != "en" and x not in ready_locales)
         if disallowed:
-            print(f"quality gate failed: {rollout_key} contains locales not ready for index")
-            print(f"- ready locales: {sorted(ready_locales) if ready_locales else '(none)'}")
+            log_line(f"quality gate failed: {rollout_key} contains locales not ready for index")
+            log_line(f"- ready locales: {sorted(ready_locales) if ready_locales else '(none)'}")
             for item in disallowed:
-                print(f"- {item}")
+                log_line(f"- {item}")
             sys.exit(1)
 
-    print(
+    log_line(
         f"i18n copy checks ok: pages={len(REQUIRED_I18N_COPY_PAGES)} locales={len(EXPECTED_STANDARD_LOCALES)} threshold={threshold}"
     )
-    print(f"i18n readiness ok: ready locales = {sorted(ready_locales) if ready_locales else '(none)'}")
+    log_line(f"i18n readiness ok: ready locales = {sorted(ready_locales) if ready_locales else '(none)'}")
 
     models = json.loads((ROOT / "src" / "data" / "models.json").read_text(encoding="utf-8"))
     model_catalog = json.loads((ROOT / "src" / "data" / "model-catalog.json").read_text(encoding="utf-8"))
@@ -352,13 +368,13 @@ def main() -> None:
     catalog_count = int(model_catalog.get("count", len(model_catalog.get("items", []))))
 
     if model_count < 200 or catalog_count < 200:
-        print(f"quality gate failed: expected >=200 models, got models={model_count}, catalog={catalog_count}")
+        log_line(f"quality gate failed: expected >=200 models, got models={model_count}, catalog={catalog_count}")
         sys.exit(1)
-    print(f"model counts ok: models={model_count}, catalog={catalog_count}")
+    log_line(f"model counts ok: models={model_count}, catalog={catalog_count}")
 
     benchmark_map = benchmark_results.get("models", {})
     if not isinstance(benchmark_map, dict):
-        print("quality gate failed: benchmark-results.json models must be an object")
+        log_line("quality gate failed: benchmark-results.json models must be an object")
         sys.exit(1)
     known_tags = {
         str(item.get("ollama_tag", "")).strip().lower()
@@ -369,64 +385,65 @@ def main() -> None:
         key for key in benchmark_map.keys() if str(key).strip().lower() not in known_tags
     )
     if unknown_tags:
-        print("quality gate failed: benchmark-results model tags missing in model-catalog ollama_tag")
+        log_line("quality gate failed: benchmark-results model tags missing in model-catalog ollama_tag")
         for tag in unknown_tags[:20]:
-            print(f"- Error: Model '{tag}' found in results but missing in catalog.")
+            log_line(f"- Error: Model '{tag}' found in results but missing in catalog.")
         sys.exit(1)
-    print(f"benchmark tag alignment ok: {len(benchmark_map)} measured tag(s)")
+    log_line(f"benchmark tag alignment ok: {len(benchmark_map)} measured tag(s)")
 
     conversion = json.loads((ROOT / "src" / "data" / "conversion-funnel.json").read_text(encoding="utf-8-sig"))
     if not isinstance(conversion.get("funnel"), dict):
-        print("quality gate failed: conversion-funnel.json missing funnel object")
+        log_line("quality gate failed: conversion-funnel.json missing funnel object")
         sys.exit(1)
-    print("conversion funnel snapshot ok")
+    log_line("conversion funnel snapshot ok")
 
     affiliate_events = json.loads((ROOT / "src" / "data" / "affiliate-click-events.json").read_text(encoding="utf-8-sig"))
     if not isinstance(affiliate_events.get("events"), list):
-        print("quality gate failed: affiliate-click-events.json missing events list")
+        log_line("quality gate failed: affiliate-click-events.json missing events list")
         sys.exit(1)
-    print(f"affiliate click events snapshot ok: {len(affiliate_events.get('events', []))} event(s)")
+    log_line(f"affiliate click events snapshot ok: {len(affiliate_events.get('events', []))} event(s)")
 
     submission_review = json.loads((ROOT / "src" / "data" / "submission-review.json").read_text(encoding="utf-8-sig"))
     if not isinstance(submission_review.get("summary"), dict):
-        print("quality gate failed: submission-review.json missing summary object")
+        log_line("quality gate failed: submission-review.json missing summary object")
         sys.exit(1)
-    print("submission review snapshot ok")
+    log_line("submission review snapshot ok")
 
     content_publish = json.loads((ROOT / "src" / "data" / "content-publish-log.json").read_text(encoding="utf-8-sig"))
     if not isinstance(content_publish.get("history"), list):
-        print("quality gate failed: content-publish-log.json missing history list")
+        log_line("quality gate failed: content-publish-log.json missing history list")
         sys.exit(1)
-    print("content publish log snapshot ok")
+    log_line("content publish log snapshot ok")
 
     content_review = json.loads((ROOT / "src" / "data" / "content-review-log.json").read_text(encoding="utf-8-sig"))
     if not isinstance(content_review.get("history"), list):
-        print("quality gate failed: content-review-log.json missing history list")
+        log_line("quality gate failed: content-review-log.json missing history list")
         sys.exit(1)
-    print("content review log snapshot ok")
+    log_line("content review log snapshot ok")
 
     pipeline_slo = json.loads((ROOT / "src" / "data" / "pipeline-slo.json").read_text(encoding="utf-8-sig"))
     if not isinstance(pipeline_slo.get("workflows"), dict):
-        print("quality gate failed: pipeline-slo.json missing workflows object")
+        log_line("quality gate failed: pipeline-slo.json missing workflows object")
         sys.exit(1)
     if not isinstance(pipeline_slo.get("weekly_report"), dict):
-        print("quality gate failed: pipeline-slo.json missing weekly_report object")
+        log_line("quality gate failed: pipeline-slo.json missing weekly_report object")
         sys.exit(1)
-    print("pipeline slo snapshot ok")
+    log_line("pipeline slo snapshot ok")
 
     blog_dir = ROOT / "src" / "content" / "blog"
     if not blog_dir.exists():
-        print("quality gate failed: src/content/blog missing")
+        log_line("quality gate failed: src/content/blog missing")
         sys.exit(1)
 
     post_count = len(list(blog_dir.glob("*.md")))
     if post_count < 6:
-        print(f"quality gate failed: expected >=6 blog posts, found {post_count}")
+        log_line(f"quality gate failed: expected >=6 blog posts, found {post_count}")
         sys.exit(1)
-    print(f"blog post count ok: {post_count}")
+    log_line(f"blog post count ok: {post_count}")
 
-    print("quality gate passed")
+    log_line("quality gate passed")
 
 
 if __name__ == "__main__":
     main()
+

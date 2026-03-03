@@ -1,15 +1,28 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+from logging_utils import configure_logging
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_RESULTS_FILE = "src/data/benchmark-results.json"
 DEFAULT_RETIRED_POLICY_FILE = "src/data/retired-models.json"
 DEFAULT_TAG_ALIASES_FILE = "src/data/benchmark-tag-aliases.json"
+LOGGER = configure_logging("prune-retired-benchmark-data")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def utc_now_iso() -> str:
@@ -217,6 +230,7 @@ def main() -> None:
 
     payload = load_json(results_path, None)
     if not isinstance(payload, dict):
+        emit(f"invalid benchmark results payload: {results_path}", level="error", stderr=True)
         raise SystemExit(f"invalid benchmark results payload: {results_path}")
 
     retired_families, retired_tags = load_retired_policy(retired_policy_path)
@@ -268,19 +282,19 @@ def main() -> None:
     if changed and not args.dry_run:
         results_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"retired_families_count={len(retired_families)}")
-    print(f"retired_tags_count={len(retired_tags)}")
-    print(f"models_removed_count={len(models_removed)}")
-    print(f"latest_removed={latest_stats}")
-    print(f"history_removed={history_stats}")
-    print(f"changed={str(changed).lower()}")
-    print(f"dry_run={str(bool(args.dry_run)).lower()}")
+    emit(f"retired_families_count={len(retired_families)}")
+    emit(f"retired_tags_count={len(retired_tags)}")
+    emit(f"models_removed_count={len(models_removed)}")
+    emit(f"latest_removed={latest_stats}")
+    emit(f"history_removed={history_stats}")
+    emit(f"changed={str(changed).lower()}")
+    emit(f"dry_run={str(bool(args.dry_run)).lower()}")
 
     if args.report_file:
         report_path = resolve_path(args.report_file)
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"report_file={report_path}")
+        emit(f"report_file={report_path}")
 
 
 if __name__ == "__main__":

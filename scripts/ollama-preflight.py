@@ -8,9 +8,14 @@ import tempfile
 import time
 import urllib.error
 import urllib.request
+from pathlib import Path
 from urllib.parse import urlparse
 
+from logging_utils import configure_logging
+
 DEFAULT_NETWORK_RETRY_DELAYS_S = "5,10,20"
+STDOUT_CONTRACT_ENV = "LV_STDOUT_CONTRACT"
+LOGGER = configure_logging("ollama-preflight")
 
 
 def normalize_endpoint(endpoint: str) -> str:
@@ -36,7 +41,24 @@ def run_cmd(cmd: list[str], timeout_s: int = 8) -> tuple[int, str, str]:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_s, check=False)
         return proc.returncode, proc.stdout, proc.stderr
     except Exception as exc:  # noqa: BLE001
+        LOGGER.warning("run_cmd failed cmd=%s error=%s", " ".join(cmd), exc)
         return 1, "", str(exc)
+
+
+def stdout_contract_enabled() -> bool:
+    raw = str(os.getenv(STDOUT_CONTRACT_ENV, "true")).strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
+
+def emit(message: str, *, level: str = "info", contract: bool = True) -> None:
+    if contract and stdout_contract_enabled():
+        print(message)
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def detect_ollama_serve_processes() -> list[str]:
@@ -131,9 +153,9 @@ def format_retry_delays(delays: list[float]) -> str:
 
 def emit_failure_class(code: str, detail: str) -> None:
     message = str(detail).strip()
-    print(f"failure_class={code}")
-    print(f"failure_detail={message}")
-    print(f"::error title=FailureClass::{code} - {message}")
+    emit(f"failure_class={code}", level="error")
+    emit(f"failure_detail={message}", level="error")
+    emit(f"::error title=FailureClass::{code} - {message}", level="error")
 
 
 def model_family(tag_or_family: str) -> str:
@@ -185,9 +207,9 @@ def start_ollama_service(endpoint: str) -> None:
     except Exception:
         pass
     ollama_bin = shutil.which("ollama") or "ollama"
-    print(f"ollama_recovery_binary={ollama_bin}")
-    print(f"ollama_recovery_host={ollama_host}")
-    print(f"ollama_recovery_log_path={log_path}")
+    emit(f"ollama_recovery_binary={ollama_bin}")
+    emit(f"ollama_recovery_host={ollama_host}")
+    emit(f"ollama_recovery_log_path={log_path}")
     with open(log_path, "ab") as logf:
         proc = subprocess.Popen([ollama_bin, "serve"], stdout=logf, stderr=logf, env=env)  # noqa: S603
     time.sleep(1.2)
@@ -269,12 +291,12 @@ def main() -> None:
     required_targets = parse_targets(args.required_targets)
     network_retry_delays = parse_retry_delays(args.network_retry_delays, [5.0, 10.0, 20.0])
 
-    print(f"ollama_endpoint={endpoint}")
-    print(f"ollama_endpoint_host={endpoint_host}")
-    print(f"ollama_endpoint_port={endpoint_port}")
-    print(f"ollama_endpoint_is_loopback={str(loopback_endpoint).lower()}")
-    print(f"ollama_models_dir={os.getenv('OLLAMA_MODELS', '')}")
-    print(f"ollama_network_retry_delays_s={format_retry_delays(network_retry_delays)}")
+    emit(f"ollama_endpoint={endpoint}")
+    emit(f"ollama_endpoint_host={endpoint_host}")
+    emit(f"ollama_endpoint_port={endpoint_port}")
+    emit(f"ollama_endpoint_is_loopback={str(loopback_endpoint).lower()}")
+    emit(f"ollama_models_dir={os.getenv('OLLAMA_MODELS', '')}")
+    emit(f"ollama_network_retry_delays_s={format_retry_delays(network_retry_delays)}")
     recovery_log_path = os.getenv("LV_OLLAMA_SERVE_LOG") or (
         "/tmp/ollama-serve.log" if os.name != "nt" else os.path.join(tempfile.gettempdir(), "ollama-serve.log")
     )
@@ -282,12 +304,12 @@ def main() -> None:
     if loopback_endpoint and not args.skip_single_instance_guard:
         ollama_processes = detect_ollama_serve_processes()
         listeners = detect_port_listeners(endpoint_port)
-        print(f"ollama_serve_process_count={len(ollama_processes)}")
-        print(f"ollama_port_listener_count={len(listeners)}")
+        emit(f"ollama_serve_process_count={len(ollama_processes)}")
+        emit(f"ollama_port_listener_count={len(listeners)}")
         if ollama_processes:
-            print(f"ollama_serve_process_sample={ollama_processes[:3]}")
+            emit(f"ollama_serve_process_sample={ollama_processes[:3]}")
         if listeners:
-            print(f"ollama_port_listener_sample={listeners[:3]}")
+            emit(f"ollama_port_listener_sample={listeners[:3]}")
 
         if len(ollama_processes) > 1:
             emit_failure_class("ollama_multi_instance", "multiple local 'ollama serve' processes detected")
@@ -297,39 +319,39 @@ def main() -> None:
             raise SystemExit(f"port {endpoint_port} listener is not managed by ollama")
         if args.require_local_process and len(ollama_processes) == 0:
             if args.restart_if_empty:
-                print("ollama_local_process_missing=1")
-                print("ollama_local_recovery_attempt=start_ollama_serve")
+                emit("ollama_local_process_missing=1", level="warning")
+                emit("ollama_local_recovery_attempt=start_ollama_serve")
                 try:
                     start_ollama_service(endpoint)
-                    print("ollama_local_recovery_start_ok=true")
+                    emit("ollama_local_recovery_start_ok=true")
                 except Exception as exc:  # noqa: BLE001
-                    print("ollama_local_recovery_start_ok=false")
-                    print(f"ollama_local_recovery_start_error={exc}")
+                    emit("ollama_local_recovery_start_ok=false", level="error")
+                    emit(f"ollama_local_recovery_start_error={exc}", level="error")
                     tail = log_tail(recovery_log_path, max_lines=20)
                     if tail:
-                        print("ollama_local_recovery_log_tail_begin")
+                        emit("ollama_local_recovery_log_tail_begin")
                         for line in tail:
-                            print(line)
-                        print("ollama_local_recovery_log_tail_end")
+                            emit(line)
+                        emit("ollama_local_recovery_log_tail_end")
                 for _ in range(8):
                     ollama_processes = detect_ollama_serve_processes()
                     listeners = detect_port_listeners(endpoint_port)
                     if ollama_processes:
                         break
                     time.sleep(1.0)
-                print(f"ollama_serve_process_count_after_recovery={len(ollama_processes)}")
-                print(f"ollama_port_listener_count_after_recovery={len(listeners)}")
+                emit(f"ollama_serve_process_count_after_recovery={len(ollama_processes)}")
+                emit(f"ollama_port_listener_count_after_recovery={len(listeners)}")
                 if ollama_processes:
-                    print(f"ollama_serve_process_sample_after_recovery={ollama_processes[:3]}")
+                    emit(f"ollama_serve_process_sample_after_recovery={ollama_processes[:3]}")
                 if listeners:
-                    print(f"ollama_port_listener_sample_after_recovery={listeners[:3]}")
+                    emit(f"ollama_port_listener_sample_after_recovery={listeners[:3]}")
                 if len(ollama_processes) == 0:
                     tail = log_tail(recovery_log_path, max_lines=40)
                     if tail:
-                        print("ollama_local_recovery_log_tail_begin")
+                        emit("ollama_local_recovery_log_tail_begin")
                         for line in tail:
-                            print(line)
-                        print("ollama_local_recovery_log_tail_end")
+                            emit(line)
+                        emit("ollama_local_recovery_log_tail_end")
             if len(ollama_processes) == 0:
                 emit_failure_class(
                     "ollama_instance_unmanaged",
@@ -353,19 +375,19 @@ def main() -> None:
         raise SystemExit(f"failed to query Ollama endpoint: {exc}") from exc
 
     if args.restart_if_empty and len(local_models) == 0:
-        print("ollama_models_count=0, attempting service restart")
+        emit("ollama_models_count=0, attempting service restart", level="warning")
         try:
             start_ollama_service(endpoint)
-            print("ollama_local_recovery_start_ok=true")
+            emit("ollama_local_recovery_start_ok=true")
         except Exception as exc:  # noqa: BLE001
-            print("ollama_local_recovery_start_ok=false")
-            print(f"ollama_local_recovery_start_error={exc}")
+            emit("ollama_local_recovery_start_ok=false", level="error")
+            emit(f"ollama_local_recovery_start_error={exc}", level="error")
             tail = log_tail(recovery_log_path, max_lines=20)
             if tail:
-                print("ollama_local_recovery_log_tail_begin")
+                emit("ollama_local_recovery_log_tail_begin")
                 for line in tail:
-                    print(line)
-                print("ollama_local_recovery_log_tail_end")
+                    emit(line)
+                emit("ollama_local_recovery_log_tail_end")
         try:
             restart_retry_delays = [1.0, 2.0, 3.0] + network_retry_delays
             local_models = fetch_local_models_with_retry(
@@ -377,9 +399,9 @@ def main() -> None:
             raise SystemExit(f"failed to recover Ollama service after restart: {exc}") from exc
 
     local_models_sorted = sorted(local_models)
-    print(f"ollama_models_count={len(local_models_sorted)}")
+    emit(f"ollama_models_count={len(local_models_sorted)}")
     sample = ", ".join(local_models_sorted[:12]) if local_models_sorted else "<empty>"
-    print(f"ollama_models_sample={sample}")
+    emit(f"ollama_models_sample={sample}")
 
     if not args.allow_empty_models and len(local_models_sorted) == 0:
         emit_failure_class("ollama_not_visible", "Ollama model list is empty")
@@ -396,9 +418,9 @@ def main() -> None:
                 ok = any(is_variant(local_tag, target) for local_tag in local_models)
             if ok:
                 runnable.append(target)
-        print(f"required_targets_count={len(required_targets)}")
-        print(f"required_targets_runnable_count={len(runnable)}")
-        print(f"required_targets_runnable={','.join(runnable) if runnable else '<none>'}")
+        emit(f"required_targets_count={len(required_targets)}")
+        emit(f"required_targets_runnable_count={len(runnable)}")
+        emit(f"required_targets_runnable={','.join(runnable) if runnable else '<none>'}")
         if not args.allow_no_runnable_targets and len(runnable) == 0:
             emit_failure_class("model_missing", "no runnable required targets found in Ollama model list")
             raise SystemExit("no runnable required targets found in Ollama model list")

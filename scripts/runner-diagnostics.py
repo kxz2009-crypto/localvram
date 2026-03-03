@@ -13,6 +13,11 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from logging_utils import configure_logging
+
+
+LOGGER = configure_logging("runner-diagnostics")
+
 
 def utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -27,8 +32,15 @@ def run_cmd(cmd: list[str], timeout: int = 12) -> tuple[int, str, str]:
 
 
 def print_section(title: str, body: str) -> None:
-    print(f"=== {title} ===")
-    print(body if body else "<empty>")
+    LOGGER.info("=== %s ===", title)
+    content = body if body else "<empty>"
+    for line in content.splitlines():
+        LOGGER.info("%s", line)
+
+
+def emit_kv(key: str, value: str) -> None:
+    message = f"{key}={value}"
+    LOGGER.info("%s", message)
 
 
 def parse_targets(raw: str) -> list[str]:
@@ -185,12 +197,12 @@ def main() -> None:
         "summary": {},
     }
 
-    print(f"diag_timestamp_utc={diag_timestamp}")
-    print(f"diag_endpoint={endpoint}")
-    print(f"diag_endpoint_host={endpoint_host}")
-    print(f"diag_endpoint_is_loopback={str(loopback_endpoint).lower()}")
-    print(f"diag_required_targets={','.join(required_targets) if required_targets else '<none>'}")
-    print(f"diag_retry_delays_s={retry_delays_text}")
+    emit_kv("diag_timestamp_utc", diag_timestamp)
+    emit_kv("diag_endpoint", endpoint)
+    emit_kv("diag_endpoint_host", endpoint_host)
+    emit_kv("diag_endpoint_is_loopback", str(loopback_endpoint).lower())
+    emit_kv("diag_required_targets", ",".join(required_targets) if required_targets else "<none>")
+    emit_kv("diag_retry_delays_s", retry_delays_text)
 
     base_lines = [
         f"runner_name={os.getenv('RUNNER_NAME', '')}",
@@ -256,7 +268,7 @@ def main() -> None:
     guard_failure_class = ""
     guard_failure_detail = ""
     ollama_serve_processes = detect_ollama_serve_processes()
-    print(f"diag_ollama_serve_process_count={len(ollama_serve_processes)}")
+    emit_kv("diag_ollama_serve_process_count", str(len(ollama_serve_processes)))
     if loopback_endpoint:
         if len(ollama_serve_processes) > 1:
             guard_failure_class = "ollama_multi_instance"
@@ -387,7 +399,7 @@ def main() -> None:
             out_path = Path.cwd() / out_path
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"diag_json_out={out_path}")
+        emit_kv("diag_json_out", str(out_path))
 
 
 if __name__ == "__main__":

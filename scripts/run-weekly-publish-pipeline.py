@@ -12,8 +12,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_OLLAMA_ENDPOINT = "http://127.0.0.1:11434"
 
 TRANSIENT_ERROR_PATTERNS = (
     "429",
@@ -27,6 +30,17 @@ TRANSIENT_ERROR_PATTERNS = (
     "tls handshake timeout",
     "eof",
 )
+LOGGER = configure_logging("run-weekly-publish-pipeline")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False, flush: bool = False) -> None:
+    _ = (stderr, flush)
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def parse_retry_delays(raw: str) -> list[int]:
@@ -56,7 +70,11 @@ def run_gh(gh_path: str, args: list[str], retry_delays: Iterable[int], allow_ret
             return proc
         delay = retries[attempt]
         attempt += 1
-        print(f"gh command failed ({proc.returncode}), retrying in {delay}s: {' '.join(args)}", file=sys.stderr)
+        emit(
+            f"gh command failed ({proc.returncode}), retrying in {delay}s: {' '.join(args)}",
+            level="warning",
+            stderr=True,
+        )
         time.sleep(delay)
 
 
@@ -148,9 +166,9 @@ def find_new_workflow_run_id(
 def watch_run(gh_path: str, repo: str, run_id: int, retry_delays: Iterable[int]) -> bool:
     proc = run_gh(gh_path, ["run", "watch", str(run_id), "-R", repo, "--exit-status"], retry_delays, allow_retry=True)
     if proc.stdout.strip():
-        print(proc.stdout.strip())
+        emit(proc.stdout.strip())
     if proc.returncode != 0 and proc.stderr.strip():
-        print(f"watch_warning={proc.stderr.strip()}", file=sys.stderr)
+        emit(f"watch_warning={proc.stderr.strip()}", level="warning", stderr=True)
     return proc.returncode == 0
 
 
@@ -169,11 +187,11 @@ def run_view_field(gh_path: str, repo: str, run_id: int, field: str, retry_delay
 def print_failure_hint(gh_path: str, repo: str, run_id: int, retry_delays: Iterable[int], label: str) -> None:
     proc = run_gh(gh_path, ["run", "view", str(run_id), "-R", repo, "--log-failed"], retry_delays, allow_retry=True)
     if proc.returncode != 0:
-        print(f"{label}_failure_hint=unable_to_fetch_failed_logs run_id={run_id}")
+        emit(f"{label}_failure_hint=unable_to_fetch_failed_logs run_id={run_id}", level="warning")
         return
     text = (proc.stdout or "").strip()
     if not text:
-        print(f"{label}_failure_hint=no_failed_logs run_id={run_id}")
+        emit(f"{label}_failure_hint=no_failed_logs run_id={run_id}", level="warning")
         return
 
     failure_class = ""
@@ -191,9 +209,9 @@ def print_failure_hint(gh_path: str, repo: str, run_id: int, retry_delays: Itera
             failure_detail = m.group(2).strip()
 
     if failure_class:
-        print(f"{label}_failure_class={failure_class}")
+        emit(f"{label}_failure_class={failure_class}")
     if failure_detail:
-        print(f"{label}_failure_detail={failure_detail}")
+        emit(f"{label}_failure_detail={failure_detail}")
 
     focus_tokens = (
         "Ollama preflight",
@@ -213,11 +231,11 @@ def print_failure_hint(gh_path: str, repo: str, run_id: int, retry_delays: Itera
         if any(token.lower() in line.lower() for token in focus_tokens):
             focus_lines.append(line)
     if focus_lines:
-        print(f"{label}_failure_log_excerpt_begin")
+        emit(f"{label}_failure_log_excerpt_begin")
         for line in focus_lines[-20:]:
-            print(line)
-        print(f"{label}_failure_log_excerpt_end")
-    print(f"{label}_failure_log_command=gh run view {run_id} -R {repo} --log-failed")
+            emit(line)
+        emit(f"{label}_failure_log_excerpt_end")
+    emit(f"{label}_failure_log_command=gh run view {run_id} -R {repo} --log-failed")
 
 
 def dispatch_weekly(
@@ -246,7 +264,7 @@ def dispatch_weekly(
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip() or "failed to dispatch weekly benchmark workflow")
     if proc.stdout.strip():
-        print(proc.stdout.strip())
+        emit(proc.stdout.strip())
 
     run_id = parse_run_id_from_stdout(proc.stdout)
     if run_id is None:
@@ -261,8 +279,8 @@ def dispatch_weekly(
             poll_timeout_s=poll_timeout_s,
             event="workflow_dispatch",
         )
-    print(f"weekly_run_id={run_id}")
-    print(f"weekly_run_url=https://github.com/{repo}/actions/runs/{run_id}")
+    emit(f"weekly_run_id={run_id}")
+    emit(f"weekly_run_url=https://github.com/{repo}/actions/runs/{run_id}")
     return run_id
 
 
@@ -295,7 +313,7 @@ def dispatch_smoke(
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip() or "failed to dispatch runner smoke check workflow")
     if proc.stdout.strip():
-        print(proc.stdout.strip())
+        emit(proc.stdout.strip())
 
     run_id = parse_run_id_from_stdout(proc.stdout)
     if run_id is None:
@@ -310,8 +328,8 @@ def dispatch_smoke(
             poll_timeout_s=poll_timeout_s,
             event="workflow_dispatch",
         )
-    print(f"smoke_run_id={run_id}")
-    print(f"smoke_run_url=https://github.com/{repo}/actions/runs/{run_id}")
+    emit(f"smoke_run_id={run_id}")
+    emit(f"smoke_run_url=https://github.com/{repo}/actions/runs/{run_id}")
     return run_id
 
 
@@ -343,7 +361,7 @@ def run_publish_wrapper(
         "--retry-delays-s",
         retry_delays_s,
     ]
-    print("dispatch_publish_command=" + " ".join(cmd))
+    emit("dispatch_publish_command=" + " ".join(cmd))
     proc = subprocess.run(cmd, check=False)
     if proc.returncode != 0:
         raise RuntimeError("publish wrapper failed")
@@ -370,8 +388,8 @@ def wait_auto_publish_workflow_run(
         poll_timeout_s=poll_timeout_s,
         event="workflow_run",
     )
-    print(f"auto_publish_run_id={run_id}")
-    print(f"auto_publish_run_url=https://github.com/{repo}/actions/runs/{run_id}")
+    emit(f"auto_publish_run_id={run_id}")
+    emit(f"auto_publish_run_url=https://github.com/{repo}/actions/runs/{run_id}")
     return run_id
 
 
@@ -392,7 +410,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--retirement-max-seen-ok-count", type=int, default=2)
     parser.add_argument("--run-smoke-on-weekly-failure", choices=["true", "false"], default="true")
     parser.add_argument("--smoke-workflow", default="runner-smoke-check.yml")
-    parser.add_argument("--smoke-endpoint", default="http://127.0.0.1:11434")
+    parser.add_argument(
+        "--smoke-endpoint",
+        default=os.getenv("LV_OLLAMA_ENDPOINT") or os.getenv("OLLAMA_HOST") or DEFAULT_OLLAMA_ENDPOINT,
+    )
     parser.add_argument("--smoke-required-targets", default="")
     parser.add_argument("--smoke-restart-if-empty", choices=["true", "false"], default="true")
     parser.add_argument("--smoke-retry-delays-s", default="")
@@ -411,9 +432,9 @@ def main() -> int:
     args = parse_args()
     retry_delays = parse_retry_delays(args.retry_delays_s)
     try:
-        print("phase=auth_check", flush=True)
+        emit("phase=auth_check", flush=True)
         assert_gh_auth(args.gh_path, retry_delays)
-        print("phase=dispatch_weekly", flush=True)
+        emit("phase=dispatch_weekly", flush=True)
         weekly_run_id = dispatch_weekly(
             gh_path=args.gh_path,
             repo=args.repo,
@@ -425,18 +446,18 @@ def main() -> int:
             poll_interval_s=int(args.poll_interval_s),
             poll_timeout_s=int(args.poll_timeout_s),
         )
-        print(f"phase=watch_weekly run_id={weekly_run_id}", flush=True)
+        emit(f"phase=watch_weekly run_id={weekly_run_id}", flush=True)
         watch_ok = watch_run(args.gh_path, args.repo, weekly_run_id, retry_delays)
         if not watch_ok:
-            print("watch_status=nonzero_continue_to_conclusion_check", flush=True)
-        print(f"phase=weekly_completed run_id={weekly_run_id}", flush=True)
+            emit("watch_status=nonzero_continue_to_conclusion_check", level="warning", flush=True)
+        emit(f"phase=weekly_completed run_id={weekly_run_id}", flush=True)
         conclusion = run_view_field(args.gh_path, args.repo, weekly_run_id, "conclusion", retry_delays).lower()
-        print(f"weekly_conclusion={conclusion or 'unknown'}")
+        emit(f"weekly_conclusion={conclusion or 'unknown'}")
         if conclusion != "success":
             print_failure_hint(args.gh_path, args.repo, weekly_run_id, retry_delays, label="weekly")
             smoke_conclusion = ""
             if args.run_smoke_on_weekly_failure == "true":
-                print("phase=dispatch_smoke_after_weekly_failure", flush=True)
+                emit("phase=dispatch_smoke_after_weekly_failure", flush=True)
                 smoke_retry_delays_s = str(args.smoke_retry_delays_s).strip() or str(args.retry_delays_s).strip()
                 smoke_run_id = dispatch_smoke(
                     gh_path=args.gh_path,
@@ -450,16 +471,16 @@ def main() -> int:
                     poll_interval_s=int(args.poll_interval_s),
                     poll_timeout_s=int(args.poll_timeout_s),
                 )
-                print(f"phase=watch_smoke run_id={smoke_run_id}", flush=True)
+                emit(f"phase=watch_smoke run_id={smoke_run_id}", flush=True)
                 smoke_watch_ok = watch_run(args.gh_path, args.repo, smoke_run_id, retry_delays)
                 if not smoke_watch_ok:
-                    print("watch_status=smoke_nonzero_continue_to_conclusion_check", flush=True)
+                    emit("watch_status=smoke_nonzero_continue_to_conclusion_check", level="warning", flush=True)
                 smoke_conclusion = run_view_field(args.gh_path, args.repo, smoke_run_id, "conclusion", retry_delays).lower()
-                print(f"smoke_conclusion={smoke_conclusion or 'unknown'}")
+                emit(f"smoke_conclusion={smoke_conclusion or 'unknown'}")
                 if smoke_conclusion != "success":
                     print_failure_hint(args.gh_path, args.repo, smoke_run_id, retry_delays, label="smoke")
             if args.retry_weekly_after_smoke == "true" and smoke_conclusion == "success":
-                print("phase=retry_weekly_after_smoke", flush=True)
+                emit("phase=retry_weekly_after_smoke", flush=True)
                 retry_weekly_run_id = dispatch_weekly(
                     gh_path=args.gh_path,
                     repo=args.repo,
@@ -471,16 +492,16 @@ def main() -> int:
                     poll_interval_s=int(args.poll_interval_s),
                     poll_timeout_s=int(args.poll_timeout_s),
                 )
-                print(f"phase=watch_weekly_retry run_id={retry_weekly_run_id}", flush=True)
+                emit(f"phase=watch_weekly_retry run_id={retry_weekly_run_id}", flush=True)
                 retry_watch_ok = watch_run(args.gh_path, args.repo, retry_weekly_run_id, retry_delays)
                 if not retry_watch_ok:
-                    print("watch_status=weekly_retry_nonzero_continue_to_conclusion_check", flush=True)
+                    emit("watch_status=weekly_retry_nonzero_continue_to_conclusion_check", level="warning", flush=True)
                 retry_conclusion = run_view_field(args.gh_path, args.repo, retry_weekly_run_id, "conclusion", retry_delays).lower()
-                print(f"weekly_retry_conclusion={retry_conclusion or 'unknown'}")
+                emit(f"weekly_retry_conclusion={retry_conclusion or 'unknown'}")
                 if retry_conclusion == "success":
                     weekly_run_id = retry_weekly_run_id
                     conclusion = retry_conclusion
-                    print(f"weekly_recovered_by_retry_run_id={weekly_run_id}")
+                    emit(f"weekly_recovered_by_retry_run_id={weekly_run_id}")
                 else:
                     print_failure_hint(args.gh_path, args.repo, retry_weekly_run_id, retry_delays, label="weekly_retry")
                     raise RuntimeError(f"weekly benchmark retry did not succeed: {retry_weekly_run_id}")
@@ -488,13 +509,13 @@ def main() -> int:
                 raise RuntimeError(f"weekly benchmark run did not succeed: {weekly_run_id}")
 
         if args.skip_publish:
-            print("publish_skipped=true")
+            emit("publish_skipped=true")
             return 0
 
         did_manual_publish = False
         if args.publish_mode in {"auto", "auto-then-manual"}:
             try:
-                print(f"phase=wait_auto_publish source_weekly_run_id={weekly_run_id}", flush=True)
+                emit(f"phase=wait_auto_publish source_weekly_run_id={weekly_run_id}", flush=True)
                 auto_publish_run_id = wait_auto_publish_workflow_run(
                     gh_path=args.gh_path,
                     repo=args.repo,
@@ -503,25 +524,25 @@ def main() -> int:
                     poll_interval_s=int(args.poll_interval_s),
                     poll_timeout_s=int(args.poll_timeout_s),
                 )
-                print(f"phase=watch_auto_publish run_id={auto_publish_run_id}", flush=True)
+                emit(f"phase=watch_auto_publish run_id={auto_publish_run_id}", flush=True)
                 auto_watch_ok = watch_run(args.gh_path, args.repo, auto_publish_run_id, retry_delays)
                 if not auto_watch_ok:
-                    print("watch_status=auto_publish_nonzero_continue_to_conclusion_check", flush=True)
+                    emit("watch_status=auto_publish_nonzero_continue_to_conclusion_check", level="warning", flush=True)
                 auto_conclusion = run_view_field(args.gh_path, args.repo, auto_publish_run_id, "conclusion", retry_delays).lower()
-                print(f"auto_publish_conclusion={auto_conclusion or 'unknown'}")
+                emit(f"auto_publish_conclusion={auto_conclusion or 'unknown'}")
                 if auto_conclusion == "success":
-                    print("phase=pipeline_completed", flush=True)
+                    emit("phase=pipeline_completed", flush=True)
                     return 0
                 print_failure_hint(args.gh_path, args.repo, auto_publish_run_id, retry_delays, label="auto_publish")
                 if args.publish_mode == "auto":
                     raise RuntimeError(f"auto publish run did not succeed: {auto_publish_run_id}")
             except Exception as exc:  # noqa: BLE001
-                print(f"auto_publish_error={exc}")
+                emit(f"auto_publish_error={exc}", level="error")
                 if args.publish_mode == "auto":
                     raise
 
         if args.publish_mode in {"manual", "auto-then-manual"}:
-            print(f"phase=dispatch_publish source_weekly_run_id={weekly_run_id}", flush=True)
+            emit(f"phase=dispatch_publish source_weekly_run_id={weekly_run_id}", flush=True)
             run_publish_wrapper(
                 gh_path=args.gh_path,
                 repo=args.repo,
@@ -534,10 +555,10 @@ def main() -> int:
             did_manual_publish = True
         if not did_manual_publish and args.publish_mode not in {"auto", "auto-then-manual"}:
             raise RuntimeError(f"unsupported publish mode: {args.publish_mode}")
-        print("phase=pipeline_completed", flush=True)
+        emit("phase=pipeline_completed", flush=True)
         return 0
     except Exception as exc:
-        print(f"error={exc}", file=sys.stderr)
+        emit(f"error={exc}", level="error", stderr=True)
         return 1
 
 

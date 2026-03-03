@@ -7,12 +7,15 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "src" / "data" / "search-console-keywords.json"
 DEFAULT_LOCALES = "en,es,pt,fr,de,ru,ja,ko,ar,hi,id"
 SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
 LOCALE_PATTERN = re.compile(r"^[a-z]{2}$")
+LOGGER = configure_logging("fetch-search-console-keywords")
 
 
 def utc_now_iso() -> str:
@@ -235,7 +238,7 @@ def main() -> int:
         )
         items = convert_rows(locale, rows)
         fetched.extend(items)
-        print(f"gsc_locale={locale} rows={len(rows)} items={len(items)}")
+        LOGGER.info("gsc_locale=%s rows=%s items=%s", locale, len(rows), len(items))
 
     output_path = Path(args.output)
     if not output_path.is_absolute():
@@ -258,8 +261,8 @@ def main() -> int:
         "items": merged_items,
     }
     write_json(output_path, payload)
-    print(f"search_console_items={len(merged_items)}")
-    print(f"search_console_file={output_path}")
+    LOGGER.info("search_console_items=%s", len(merged_items))
+    LOGGER.info("search_console_file=%s", output_path)
     return 0
 
 

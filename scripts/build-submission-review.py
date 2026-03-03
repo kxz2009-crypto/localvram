@@ -6,10 +6,13 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPORTS_FILE = ROOT / "src" / "data" / "community-reports.json"
 DEFAULT_OUTPUT_FILE = ROOT / "src" / "data" / "submission-review.json"
+LOGGER = configure_logging("build-submission-review")
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -130,8 +133,8 @@ def main() -> None:
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"submission_review_out={out_path}")
-    print(
+    LOGGER.info("submission_review_out=%s", out_path)
+    LOGGER.info(
         "submission_review_summary="
         f"total={out['summary']['total_reports']},pending={out['summary']['pending_reports']},"
         f"stale_pending={out['summary']['stale_pending_reports']},high_risk={out['summary']['high_risk_reports']}"

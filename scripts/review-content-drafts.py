@@ -1,13 +1,29 @@
 #!/usr/bin/env python3
 import argparse
 import datetime as dt
+import os
 import re
 from pathlib import Path
+
+from logging_utils import configure_logging
 
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE_ROOT = ROOT / "content-queue"
 DATE_DIR_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+STDOUT_CONTRACT_ENV = "LV_STDOUT_CONTRACT"
+LOGGER = configure_logging("review-content-drafts")
+
+
+def stdout_contract_enabled() -> bool:
+    raw = str(os.getenv(STDOUT_CONTRACT_ENV, "true")).strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
+
+def emit_contract(message: str) -> None:
+    LOGGER.info("%s", message)
+    if stdout_contract_enabled():
+        print(message)
 
 
 def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
@@ -127,12 +143,12 @@ def main() -> None:
             write_draft(path, frontmatter, body)
         updated += 1
         prefix = "would_update" if args.dry_run else "updated"
-        print(f"{prefix}={path.relative_to(ROOT)} status={status}")
+        emit_contract(f"{prefix}={path.relative_to(ROOT)} status={status}")
 
-    print(f"queue_date={queue_date}")
-    print(f"updated_count={updated}")
-    print(f"action={args.action}")
-    print(f"dry_run={'true' if args.dry_run else 'false'}")
+    emit_contract(f"queue_date={queue_date}")
+    emit_contract(f"updated_count={updated}")
+    emit_contract(f"action={args.action}")
+    emit_contract(f"dry_run={'true' if args.dry_run else 'false'}")
 
 
 if __name__ == "__main__":

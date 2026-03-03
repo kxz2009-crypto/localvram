@@ -4,10 +4,13 @@ import csv
 import json
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 QA_REPORT = ROOT / "dist" / "seo-audit" / "i18n-translation-qa.json"
 OUT_CSV = ROOT / "dist" / "seo-audit" / "i18n-manual-review-checklist.csv"
+LOGGER = configure_logging("export-i18n-manual-review-checklist")
 
 
 def main() -> None:
@@ -64,7 +67,7 @@ def main() -> None:
                 }
             )
 
-    print(f"exported manual review checklist: rows={len(rows)} file={out_path}")
+    LOGGER.info("exported manual review checklist: rows=%s file=%s", len(rows), out_path)
 
 
 if __name__ == "__main__":

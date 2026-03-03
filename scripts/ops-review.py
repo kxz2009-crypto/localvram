@@ -7,9 +7,21 @@ import subprocess
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = ROOT / "scripts"
+LOGGER = configure_logging("ops-review")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def run_script(script_name: str, script_args: list[str], label: str) -> subprocess.CompletedProcess[str]:
@@ -18,35 +30,35 @@ def run_script(script_name: str, script_args: list[str], label: str) -> subproce
         raise SystemExit(f"missing script: {script_path}")
 
     cmd = [sys.executable, str(script_path), *script_args]
-    print(f"== {label} ==")
-    print("command=" + " ".join(shlex.quote(x) for x in cmd))
+    emit(f"== {label} ==")
+    emit("command=" + " ".join(shlex.quote(x) for x in cmd))
     proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
 
     if proc.stdout.strip():
-        print(proc.stdout.strip())
+        emit(proc.stdout.strip())
     if proc.returncode != 0:
         if proc.stderr.strip():
-            print(proc.stderr.strip(), file=sys.stderr)
+            emit(proc.stderr.strip(), level="error", stderr=True)
         raise SystemExit(proc.returncode)
     if proc.stderr.strip():
-        print(proc.stderr.strip(), file=sys.stderr)
+        emit(proc.stderr.strip(), level="warning", stderr=True)
     return proc
 
 
 def run_cmd(cmd: list[str], label: str) -> subprocess.CompletedProcess[str]:
-    print(f"== {label} ==")
-    print("command=" + " ".join(shlex.quote(x) for x in cmd))
+    emit(f"== {label} ==")
+    emit("command=" + " ".join(shlex.quote(x) for x in cmd))
     proc = subprocess.run(cmd, capture_output=True, text=True, check=False, cwd=str(ROOT))
     if proc.returncode != 0:
         if proc.stdout.strip():
-            print(proc.stdout.strip())
+            emit(proc.stdout.strip())
         if proc.stderr.strip():
-            print(proc.stderr.strip(), file=sys.stderr)
+            emit(proc.stderr.strip(), level="error", stderr=True)
         raise SystemExit(proc.returncode)
     if proc.stdout.strip():
-        print(proc.stdout.strip())
+        emit(proc.stdout.strip())
     if proc.stderr.strip():
-        print(proc.stderr.strip(), file=sys.stderr)
+        emit(proc.stderr.strip(), level="warning", stderr=True)
     return proc
 
 
@@ -87,7 +99,7 @@ def run_git_commit_flow(
     allow_prestaged: bool,
 ) -> None:
     if not files_to_stage:
-        print("git_commit_skipped=no-target-files")
+        emit("git_commit_skipped=no-target-files")
         return
     if not allow_prestaged and has_pre_staged_changes():
         raise SystemExit("refusing to auto-commit: existing staged changes detected (use --allow-prestaged)")
@@ -102,7 +114,7 @@ def run_git_commit_flow(
         cwd=str(ROOT),
     )
     if has_staged.returncode == 0:
-        print("git_commit_skipped=no-staged-delta")
+        emit("git_commit_skipped=no-staged-delta")
         return
     if has_staged.returncode not in {0, 1}:
         raise SystemExit(has_staged.returncode)
@@ -216,7 +228,7 @@ def run_submission(args: argparse.Namespace) -> None:
         run_script("build-submission-review.py", [], "refresh-submission-snapshot")
         changed_files.append("src/data/submission-review.json")
     elif args.dry_run:
-        print("dry_run_info=skip submission-review snapshot refresh in dry-run mode")
+        emit("dry_run_info=skip submission-review snapshot refresh in dry-run mode")
 
     if args.quality_gate:
         run_script("quality-gate.py", [], "quality-gate")

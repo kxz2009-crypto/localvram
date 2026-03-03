@@ -6,12 +6,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_RESULTS_FILE = "src/data/benchmark-results.json"
 DEFAULT_WEEKLY_TARGET_PLAN_FILE = "src/data/weekly-target-plan.json"
 DEFAULT_RETIRED_POLICY_FILE = "src/data/retired-models.json"
 DEFAULT_OUTPUT_FILE = "src/data/retirement-candidates.json"
+LOGGER = configure_logging("generate-retirement-candidates")
 
 
 def utc_now_iso() -> str:
@@ -247,10 +250,10 @@ def main() -> None:
     }
     write_json(out_path, payload)
 
-    print(f"candidate_count={len(candidates)}")
-    print(f"observed_tag_count={len(observations)}")
-    print(f"stale_run_threshold={stale_threshold}")
-    print(f"retirement_candidates_out={out_path}")
+    LOGGER.info("candidate_count=%s", len(candidates))
+    LOGGER.info("observed_tag_count=%s", len(observations))
+    LOGGER.info("stale_run_threshold=%s", stale_threshold)
+    LOGGER.info("retirement_candidates_out=%s", out_path)
 
 
 if __name__ == "__main__":

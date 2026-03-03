@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import os
 import re
 import time
 import urllib.error
@@ -9,16 +10,25 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_BASE_TARGETS = "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96"
+DEFAULT_BASE_TARGETS = (
+    "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,"
+    "llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96"
+)
 DEFAULT_RETRY_DELAYS = "5,10,20"
-DEFAULT_PRIORITY_FAMILIES = "qwen3.5,qwen3,deepseek-r1,qwen2.5,qwen3-coder,llama3.3,qwen2.5-coder"
+DEFAULT_PRIORITY_FAMILIES = (
+    "qwen3.5,qwen3,deepseek-r1,qwen2.5,qwen3-coder,llama3.3,qwen2.5-coder,"
+    "ministral-3,gpt-oss,mistral-small"
+)
 DEFAULT_RETIRED_POLICY_FILE = "src/data/retired-models.json"
 DEFAULT_EXCLUDE_FAMILIES = (
     "bge-m3,nomic-embed-text,mxbai-embed-large,all-minilm,snowflake-arctic-embed,"
     "deepseek-ocr,llava,llava-llama3,minicpm-v,qwen3-vl,qwen2.5vl,llama3.2-vision,gemma3n"
 )
+LOGGER = configure_logging("resolve-weekly-targets")
 
 
 def utc_now_iso() -> str:
@@ -27,6 +37,10 @@ def utc_now_iso() -> str:
 
 def normalize_endpoint(endpoint: str) -> str:
     return str(endpoint or "").strip().rstrip("/")
+
+
+def resolve_default_endpoint() -> str:
+    return os.getenv("LV_OLLAMA_ENDPOINT") or os.getenv("OLLAMA_HOST") or "http://127.0.0.1:11434"
 
 
 def parse_retry_delays(raw: str) -> list[float]:
@@ -222,7 +236,7 @@ def is_family_eligible(family: str, scenario: str, excludes: set[str]) -> bool:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Resolve weekly benchmark targets from local models.")
-    parser.add_argument("--endpoint", default="http://127.0.0.1:11434")
+    parser.add_argument("--endpoint", default=resolve_default_endpoint())
     parser.add_argument("--base-targets", default=DEFAULT_BASE_TARGETS)
     parser.add_argument("--retry-delays", default=DEFAULT_RETRY_DELAYS)
     parser.add_argument("--max-new-families", type=int, default=3)
@@ -334,11 +348,11 @@ def main() -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"resolved_targets_csv={resolved_csv}")
-    print(f"added_target_count={len(added_targets)}")
+    LOGGER.info("resolved_targets_csv=%s", resolved_csv)
+    LOGGER.info("added_target_count=%d", len(added_targets))
     if warning:
-        print(f"warning={warning}")
-    print(f"weekly_target_plan_out={out_path}")
+        LOGGER.warning("warning=%s", warning)
+    LOGGER.info("weekly_target_plan_out=%s", out_path)
 
     if args.github_output:
         gh_out = Path(args.github_output)

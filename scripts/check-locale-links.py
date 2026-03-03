@@ -3,6 +3,8 @@ import re
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC_ROOT = ROOT / "src"
@@ -26,6 +28,7 @@ ANCHOR_TAG_RE = re.compile(r"<a\b[^>]*>", re.IGNORECASE | re.DOTALL)
 HREF_LITERAL_RE = re.compile(r"""href\s*=\s*(["'])(?P<href>[^"']+)\1""", re.IGNORECASE)
 HREF_EXPR_RE = re.compile(r"""href\s*=\s*\{(?P<expr>[^}]*)\}""", re.IGNORECASE | re.DOTALL)
 CLASS_RE = re.compile(r"""class\s*=\s*(["'])(?P<className>[^"']+)\1""", re.IGNORECASE)
+LOGGER = configure_logging("check-locale-links")
 
 
 def is_locale_path(href: str, locale: str) -> bool:
@@ -181,14 +184,14 @@ def main() -> None:
             )
 
     if violations:
-        print("locale link check failed: forbidden locale anchor patterns found")
+        LOGGER.error("locale link check failed: forbidden locale anchor patterns found")
         for item in violations[:80]:
-            print(f"- {item}")
+            LOGGER.error("- %s", item)
         if len(violations) > 80:
-            print(f"- ... and {len(violations) - 80} more")
+            LOGGER.error("- ... and %s more", len(violations) - 80)
         sys.exit(1)
 
-    print("locale link checks ok: no forbidden /zh anchors and no /en cross-locale leakage")
+    LOGGER.info("locale link checks ok: no forbidden /zh anchors and no /en cross-locale leakage")
 
 
 if __name__ == "__main__":

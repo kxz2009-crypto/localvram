@@ -6,6 +6,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_STATUS_FILE = ROOT / "src" / "data" / "pipeline-status.json"
@@ -25,6 +27,7 @@ FAILURE_ACTIONS = {
     "daily_content_push_failure": "Check repository write permissions and retry pushing daily content updates.",
     "daily_content_status_sync_failure": "Verify post-failure status sync commit in Daily Content Agent workflow.",
 }
+LOGGER = configure_logging("build-pipeline-slo")
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -361,8 +364,8 @@ def main() -> None:
 
     output_file.parent.mkdir(parents=True, exist_ok=True)
     output_file.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"built pipeline SLO snapshot: {output_file}")
-    print(f"pipeline_slo_met={str(pipeline_slo_met).lower()}")
+    LOGGER.info("built pipeline SLO snapshot: %s", output_file)
+    LOGGER.info("pipeline_slo_met=%s", str(pipeline_slo_met).lower())
 
 
 if __name__ == "__main__":

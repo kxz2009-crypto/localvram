@@ -2,15 +2,28 @@
 import argparse
 import datetime as dt
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+from logging_utils import configure_logging
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPORTS_FILE = ROOT / "src" / "data" / "community-reports.json"
+LOGGER = configure_logging("review-community-submissions")
 
 PENDING_STATUSES = {"pending_manual_review", "pending_duplicate_review"}
 VALID_ACTIONS = {"approve", "reject", "needs_info"}
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -112,16 +125,16 @@ def main() -> None:
         payload["updated_at"] = now
         save_json(reports_path, payload)
 
-    print(f"action={action}")
-    print(f"requested={len(submission_ids)}")
-    print(f"updated={touched}")
+    emit(f"action={action}")
+    emit(f"requested={len(submission_ids)}")
+    emit(f"updated={touched}")
     if applied_ids:
-        print(f"updated_ids={','.join(applied_ids)}")
+        emit(f"updated_ids={','.join(applied_ids)}")
     if skipped_missing:
-        print(f"skipped_missing={','.join(skipped_missing)}")
+        emit(f"skipped_missing={','.join(skipped_missing)}", level="warning")
     if skipped_non_pending:
-        print(f"skipped_non_pending={','.join(skipped_non_pending)}")
-    print(f"dry_run={'true' if args.dry_run else 'false'}")
+        emit(f"skipped_non_pending={','.join(skipped_non_pending)}", level="warning")
+    emit(f"dry_run={'true' if args.dry_run else 'false'}")
 
 
 if __name__ == "__main__":

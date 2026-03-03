@@ -6,10 +6,22 @@ import re
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_FILE = ROOT / "src" / "data" / "search-console-keywords.json"
 LOCALE_RE = re.compile(r"^[a-z]{2}$")
+LOGGER = configure_logging("check-search-console-coverage")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
 
 
 def parse_locales(raw: str) -> list[str]:
@@ -68,11 +80,11 @@ def main() -> int:
 
     required_locales = parse_locales(args.locales)
     if not required_locales:
-        print("gsc_coverage_error=no_valid_locales")
+        emit("gsc_coverage_error=no_valid_locales", level="error")
         return 1
 
     if not file_path.exists():
-        print(f"gsc_coverage_error=missing_file path={file_path}")
+        emit(f"gsc_coverage_error=missing_file path={file_path}", level="error")
         return 1
 
     payload = json.loads(file_path.read_text(encoding="utf-8-sig"))
@@ -103,11 +115,11 @@ def main() -> int:
     allow_stub = str(args.allow_stub_data).strip().lower() == "true"
     source_ok = source == str(args.expected_source).strip()
 
-    print(f"gsc_file={file_path}")
-    print(f"gsc_updated_at={updated_at_raw or 'unknown'}")
-    print(f"gsc_age_hours={age_hours}")
-    print(f"gsc_source={source or 'unknown'}")
-    print("gsc_locale_counts=" + ",".join([f"{locale}:{counts.get(locale, 0)}" for locale in required_locales]))
+    emit(f"gsc_file={file_path}")
+    emit(f"gsc_updated_at={updated_at_raw or 'unknown'}")
+    emit(f"gsc_age_hours={age_hours}")
+    emit(f"gsc_source={source or 'unknown'}")
+    emit("gsc_locale_counts=" + ",".join([f"{locale}:{counts.get(locale, 0)}" for locale in required_locales]))
 
     errors: list[str] = []
     if stale:
@@ -118,12 +130,12 @@ def main() -> int:
         errors.append("missing_locales=" + ",".join(missing_locales))
 
     if errors:
-        print("gsc_coverage_result=failed")
+        emit("gsc_coverage_result=failed", level="error")
         for error in errors:
-            print(f"gsc_coverage_error={error}")
+            emit(f"gsc_coverage_error={error}", level="error")
         return 1
 
-    print("gsc_coverage_result=ok")
+    emit("gsc_coverage_result=ok")
     return 0
 
 

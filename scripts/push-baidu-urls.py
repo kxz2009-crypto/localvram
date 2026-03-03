@@ -11,6 +11,20 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from logging_utils import configure_logging
+
+
+LOGGER = configure_logging("push-baidu-urls")
+
+
+def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
+
 
 def parse_retry_delays(raw: str) -> list[int]:
     out: list[int] = []
@@ -71,12 +85,14 @@ def post_with_retry(endpoint: str, payload_lines: list[str], retry_delays: list[
                 body = ""
             last_error = f"HTTP {exc.code} {exc.reason} {body}".strip()
             if i < len(retry_delays):
+                emit(f"retry_http_error attempt={i + 1}/{attempts} delay_s={retry_delays[i]} error={last_error}", level="warning")
                 time.sleep(retry_delays[i])
                 continue
             raise RuntimeError(last_error) from exc
         except urllib.error.URLError as exc:
             last_error = f"URL error: {exc}"
             if i < len(retry_delays):
+                emit(f"retry_url_error attempt={i + 1}/{attempts} delay_s={retry_delays[i]} error={last_error}", level="warning")
                 time.sleep(retry_delays[i])
                 continue
             raise RuntimeError(last_error) from exc
@@ -121,32 +137,32 @@ def main() -> int:
         filtered.append(url)
     filtered = filtered[: max(0, args.limit)]
 
-    print(f"site_host={site_host}")
-    print(f"candidate_urls={len(filtered)}")
+    emit(f"site_host={site_host}")
+    emit(f"candidate_urls={len(filtered)}")
     if filtered:
-        print(f"first_url={filtered[0]}")
-        print(f"last_url={filtered[-1]}")
+        emit(f"first_url={filtered[0]}")
+        emit(f"last_url={filtered[-1]}")
 
     if args.dry_run:
-        print("dry_run=true")
+        emit("dry_run=true")
         return 0
 
     if not token:
         raise SystemExit("missing token: pass --token or set BAIDU_PUSH_TOKEN")
     if not filtered:
-        print("nothing_to_push=true")
+        emit("nothing_to_push=true")
         return 0
 
     endpoint = f"http://data.zz.baidu.com/urls?site={site_host}&token={token}"
     retry_delays = parse_retry_delays(args.retry_delays_s)
     batches = chunked(filtered, max(1, args.batch_size))
-    print(f"batch_count={len(batches)}")
+    emit(f"batch_count={len(batches)}")
     ok = 0
     for idx, batch in enumerate(batches, start=1):
         body = post_with_retry(endpoint, batch, retry_delays=retry_delays, timeout=max(5, args.timeout_s))
         ok += len(batch)
-        print(f"batch={idx}/{len(batches)} pushed={len(batch)} response={body}")
-    print(f"pushed_total={ok}")
+        emit(f"batch={idx}/{len(batches)} pushed={len(batch)} response={body}")
+    emit(f"pushed_total={ok}")
     return 0
 
 

@@ -6,6 +6,8 @@ import sys
 import time
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 try:
     from deep_translator import GoogleTranslator
 except Exception as exc:  # pragma: no cover - runtime import guard
@@ -17,6 +19,7 @@ except Exception as exc:  # pragma: no cover - runtime import guard
 ROOT = Path(__file__).resolve().parents[1]
 GLOSSARY_PATH = ROOT / "src" / "data" / "i18n-glossary.json"
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
+LOGGER = configure_logging("auto-fill-i18n-pack")
 
 
 def load_protected_terms() -> list[str]:
@@ -142,7 +145,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if not args.pack and not args.wave_dir:
-        print("auto-fill failed: provide --pack or --wave-dir")
+        LOGGER.error("auto-fill failed: provide --pack or --wave-dir")
         sys.exit(1)
 
     pack_files: list[Path] = []
@@ -152,7 +155,7 @@ def main() -> None:
         pack_files.extend(sorted(Path(args.wave_dir).glob("*.json")))
 
     if not pack_files:
-        print("auto-fill failed: no pack files found")
+        LOGGER.error("auto-fill failed: no pack files found")
         sys.exit(1)
 
     locale_filter = None
@@ -162,7 +165,7 @@ def main() -> None:
     total_updated = 0
     for pack_file in pack_files:
         if not pack_file.exists():
-            print(f"auto-fill failed: pack file not found: {pack_file}")
+            LOGGER.error("auto-fill failed: pack file not found: %s", pack_file)
             sys.exit(1)
         data = json.loads(pack_file.read_text(encoding="utf-8"))
         locale = str(data.get("locale", "")).strip().lower()
@@ -170,9 +173,9 @@ def main() -> None:
             continue
         updated, failed, total, locale = fill_pack(pack_file, only_empty=not args.overwrite)
         total_updated += updated
-        print(f"auto-filled locale={locale} updated={updated}/{total} failed={failed} file={pack_file}")
+        LOGGER.info("auto-filled locale=%s updated=%s/%s failed=%s file=%s", locale, updated, total, failed, pack_file)
 
-    print(f"auto-fill complete: total_updated={total_updated}")
+    LOGGER.info("auto-fill complete: total_updated=%s", total_updated)
 
 
 if __name__ == "__main__":

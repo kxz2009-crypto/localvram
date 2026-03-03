@@ -4,6 +4,8 @@ import re
 import sys
 from pathlib import Path
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
@@ -11,6 +13,7 @@ PACK_ROOT = ROOT / "src" / "data" / "i18n-packs"
 REPORT_PATH = ROOT / "dist" / "seo-audit" / "i18n-pack-status.json"
 STANDARD_I18N_LOCALES = {"es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"}
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
+LOGGER = configure_logging("validate-i18n-packs")
 
 
 def extract_placeholders(text: str) -> set[str]:
@@ -32,7 +35,7 @@ def english_phrase_set(payload: dict) -> set[str]:
 
 
 def fail(message: str) -> None:
-    print(f"i18n pack validation failed: {message}")
+    LOGGER.error("i18n pack validation failed: %s", message)
     sys.exit(1)
 
 
@@ -53,14 +56,14 @@ def main() -> None:
     if not PACK_ROOT.exists():
         REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
         REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print("i18n pack validation ok: no pack directory present")
+        LOGGER.info("i18n pack validation ok: no pack directory present")
         return
 
     pack_files = sorted(PACK_ROOT.rglob("*.json"))
     if not pack_files:
         REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
         REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print("i18n pack validation ok: no pack files present")
+        LOGGER.info("i18n pack validation ok: no pack files present")
         return
 
     for pack_file in pack_files:
@@ -124,7 +127,7 @@ def main() -> None:
 
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(
+    LOGGER.info(
         f"i18n pack validation ok: packs={len(report['packs'])} source_phrases={len(source_phrases)} report={REPORT_PATH}"
     )
 

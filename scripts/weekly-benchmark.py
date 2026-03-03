@@ -15,6 +15,8 @@ from urllib.parse import urlsplit, urlunsplit
 from pathlib import Path
 from typing import Any
 
+from logging_utils import configure_logging
+
 
 ROOT = Path(__file__).resolve().parents[1]
 STATUS_FILE = ROOT / "src" / "data" / "status.json"
@@ -25,18 +27,29 @@ TAG_ALIASES_FILE = ROOT / "src" / "data" / "benchmark-tag-aliases.json"
 LOG_DIR = ROOT / "logs"
 SCREENSHOT_DIR = ROOT / "public" / "screenshots"
 
-DEFAULT_TARGETS = "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96"
+DEFAULT_TARGETS = (
+    "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,"
+    "llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96"
+)
 DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64,qwen3.5:122b=48"
 DEFAULT_NUM_CTX = 4096
 DEFAULT_PRE_COOLDOWN_S = 5.0
 DEFAULT_NETWORK_RETRY_DELAYS_S = "5,10,20"
 DEFAULT_RETIRED_POLICY_FILE = "src/data/retired-models.json"
-DEFAULT_AUTO_PRIORITY_TAGS = "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b"
-DEFAULT_FAMILY_TARGET_HINTS = "qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,llama3.3=70"
+DEFAULT_AUTO_PRIORITY_TAGS = (
+    "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b,"
+    "llama3.3:70b,gpt-oss:20b,mistral-small:24b"
+)
+DEFAULT_FAMILY_TARGET_HINTS = (
+    "qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,"
+    "llama3.3=70,qwen2.5-coder=32,ministral-3=14,gpt-oss=20,mistral-small=24"
+)
 DEFAULT_PROMPT = (
     "You are an inference benchmark probe. "
     "Respond with exactly three short bullet points about local LLM deployment stability."
 )
+STDOUT_CONTRACT_ENV = "LV_STDOUT_CONTRACT"
+LOGGER = configure_logging("weekly-benchmark")
 
 
 def utc_now_iso() -> str:
@@ -81,6 +94,7 @@ def run_cmd(args: list[str], timeout: int = 30) -> tuple[int, str, str]:
         proc = subprocess.run(args, capture_output=True, text=True, timeout=timeout, check=False)
         return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
     except Exception as exc:  # noqa: BLE001
+        LOGGER.warning("run_cmd failed args=%s error=%s", " ".join(args), exc)
         return 1, "", str(exc)
 
 
@@ -135,11 +149,27 @@ def classify_error(error_text: str) -> str:
     return "runtime"
 
 
+def stdout_contract_enabled() -> bool:
+    raw = str(os.getenv(STDOUT_CONTRACT_ENV, "true")).strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
+
+def emit_contract_line(message: str, *, level: str = "error") -> None:
+    if level == "error":
+        LOGGER.error("%s", message)
+    elif level == "warning":
+        LOGGER.warning("%s", message)
+    else:
+        LOGGER.info("%s", message)
+    if stdout_contract_enabled():
+        print(message)
+
+
 def emit_failure_class(code: str, detail: str) -> None:
     message = str(detail).strip()
-    print(f"failure_class={code}")
-    print(f"failure_detail={message}")
-    print(f"::error title=FailureClass::{code} - {message}")
+    emit_contract_line(f"failure_class={code}", level="error")
+    emit_contract_line(f"failure_detail={message}", level="error")
+    emit_contract_line(f"::error title=FailureClass::{code} - {message}", level="error")
 
 
 def api_request(
@@ -176,16 +206,37 @@ def api_request(
             if detail:
                 message = f"{message}: {detail}"
             if exc.code in retryable_http_codes and attempt < len(retry_plan):
+                LOGGER.warning(
+                    "api_request retryable_http_error endpoint=%s route=%s status=%s attempt=%d",
+                    redact_endpoint(endpoint),
+                    route,
+                    exc.code,
+                    attempt + 1,
+                )
                 time.sleep(retry_plan[attempt])
                 continue
             raise RuntimeError(message) from exc
         except urllib.error.URLError as exc:
             if attempt < len(retry_plan):
+                LOGGER.warning(
+                    "api_request url_error retry endpoint=%s route=%s attempt=%d error=%s",
+                    redact_endpoint(endpoint),
+                    route,
+                    attempt + 1,
+                    exc,
+                )
                 time.sleep(retry_plan[attempt])
                 continue
             raise RuntimeError(f"request failed: {exc}") from exc
         except TimeoutError as exc:
             if attempt < len(retry_plan):
+                LOGGER.warning(
+                    "api_request timeout retry endpoint=%s route=%s attempt=%d error=%s",
+                    redact_endpoint(endpoint),
+                    route,
+                    attempt + 1,
+                    exc,
+                )
                 time.sleep(retry_plan[attempt])
                 continue
             raise RuntimeError(f"request timed out: {exc}") from exc
@@ -953,23 +1004,23 @@ def main() -> None:
     if args.dry_run:
         network_retry_delays = parse_retry_delays(args.network_retry_delays, [5.0, 10.0, 20.0])
         retired_families, retired_tags, retired_policy_path = load_retired_policy(args.retired_policy_file)
-        print("dry-run: weekly benchmark execution skipped")
-        print(f"endpoint={redacted_endpoint}")
-        print(f"targets={args.targets}")
-        print(f"family_target_hints={args.family_target_hints}")
-        print(f"network_retry_delays_s={format_retry_delays(network_retry_delays)}")
-        print(f"retired_policy_file={retired_policy_path}")
-        print(f"retired_families={','.join(sorted(retired_families)) if retired_families else '<none>'}")
-        print(f"retired_tags={','.join(sorted(retired_tags)) if retired_tags else '<none>'}")
-        print(f"extra_targets={args.extra_targets}")
-        print(f"include_heavy_targets={args.include_heavy_targets}")
-        print(f"heavy_targets={args.heavy_targets}")
-        print(f"num_ctx={max(256, args.num_ctx)}")
-        print("temperature=0")
-        print(f"log_retention_days={args.log_retention_days}")
-        print(f"min_success={max(0, args.min_success)}")
-        print(f"auto_backfill_targets={env_bool('LV_AUTO_BACKFILL_TARGETS', True)}")
-        print(f"auto_backfill_max={max(0, env_int('LV_AUTO_BACKFILL_TARGETS_MAX', 6))}")
+        LOGGER.info("dry-run: weekly benchmark execution skipped")
+        LOGGER.info("endpoint=%s", redacted_endpoint)
+        LOGGER.info("targets=%s", args.targets)
+        LOGGER.info("family_target_hints=%s", args.family_target_hints)
+        LOGGER.info("network_retry_delays_s=%s", format_retry_delays(network_retry_delays))
+        LOGGER.info("retired_policy_file=%s", retired_policy_path)
+        LOGGER.info("retired_families=%s", ",".join(sorted(retired_families)) if retired_families else "<none>")
+        LOGGER.info("retired_tags=%s", ",".join(sorted(retired_tags)) if retired_tags else "<none>")
+        LOGGER.info("extra_targets=%s", args.extra_targets)
+        LOGGER.info("include_heavy_targets=%s", args.include_heavy_targets)
+        LOGGER.info("heavy_targets=%s", args.heavy_targets)
+        LOGGER.info("num_ctx=%d", max(256, args.num_ctx))
+        LOGGER.info("temperature=0")
+        LOGGER.info("log_retention_days=%d", args.log_retention_days)
+        LOGGER.info("min_success=%d", max(0, args.min_success))
+        LOGGER.info("auto_backfill_targets=%s", env_bool("LV_AUTO_BACKFILL_TARGETS", True))
+        LOGGER.info("auto_backfill_max=%d", max(0, env_int("LV_AUTO_BACKFILL_TARGETS_MAX", 6)))
         return
 
     min_success_configured = max(0, args.min_success)
@@ -1385,14 +1436,16 @@ def main() -> None:
         },
     )
 
-    print(
-        "weekly benchmark completed: "
-        f"success={len(success_reports)}, failed={len(failed_reports)}, skipped={len(skipped_reports)}"
+    LOGGER.info(
+        "weekly benchmark completed: success=%d, failed=%d, skipped=%d",
+        len(success_reports),
+        len(failed_reports),
+        len(skipped_reports),
     )
-    print(f"results file: {RESULTS_FILE}")
-    print(f"log file: {log_file}")
+    LOGGER.info("results file: %s", RESULTS_FILE)
+    LOGGER.info("log file: %s", log_file)
     if not should_write_results:
-        print(f"no significant model changes detected (> {args.min_delta} tok/s); results file unchanged")
+        LOGGER.info("no significant model changes detected (> %s tok/s); results file unchanged", args.min_delta)
 
     if not args.allow_empty and runnable_target_count == 0:
         skipped_missing = [
