@@ -5,6 +5,7 @@ import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 import { withLocale } from "../../../lib/locale-paths";
+import { resolveBlogCopy } from "../../../lib/i18n-blog-copy";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -25,13 +26,29 @@ const bridgeCopy = resolvePageCopy("guides-detail", locale, {
 const bridgeText = bridgeCopy.fields;
 const posts = (await getCollection("blog", ({ data }) => data.lang === "en"))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const postCards = posts.map((post) => {
+  const localized = resolveBlogCopy(post.slug, locale, {
+    title: post.data.title,
+    description: post.data.description,
+    ctaLine: bridgeText.rollout_intro,
+  });
+  return {
+    post,
+    localized,
+    localizedPath: withLocale(locale, `/en/blog/${post.slug}/`),
+  };
+});
+const listFallbackRatio =
+  postCards.length === 0
+    ? 0
+    : postCards.reduce((sum, card) => sum + card.localized.fallbackRatio, 0) / postCards.length;
 const enPath = "/en/blog/";
 const pagePath = withLocale(locale, enPath);
 const title = home.cta_daily_blog;
 const description = home.card_updates_desc || home.hero_intro;
 const shouldNoindex = shouldNoindexByFallback(
   locale,
-  Math.max(homeCopy.fallbackRatio, bridgeCopy.fallbackRatio),
+  Math.max(homeCopy.fallbackRatio, bridgeCopy.fallbackRatio, listFallbackRatio),
 );
 ---
 
@@ -56,16 +73,15 @@ const shouldNoindex = shouldNoindexByFallback(
     </section>
 
     <section class="post-list">
-      {posts.map((post) => {
-        const localizedPath = withLocale(locale, `/en/blog/${post.slug}/`);
+      {postCards.map((card) => {
         return (
           <article class="post-card">
-            <h2><a href={localizedPath}>{post.data.title}</a></h2>
-            <p>{post.data.description}</p>
+            <h2><a href={card.localizedPath}>{card.localized.title}</a></h2>
+            <p>{card.localized.description}</p>
             <div class="meta-row">
-              <span>{post.data.pubDate.toISOString().slice(0, 10)}</span>
-              <span>{post.data.intent}</span>
-              <span>{post.data.tags.join(", ")}</span>
+              <span>{card.post.data.pubDate.toISOString().slice(0, 10)}</span>
+              <span>{card.post.data.intent}</span>
+              <span>{card.post.data.tags.join(", ")}</span>
             </div>
           </article>
         );

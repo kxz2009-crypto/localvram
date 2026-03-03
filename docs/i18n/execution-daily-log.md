@@ -52,3 +52,31 @@
 1. Blog route parity remains `1.0` in sitemap report.
 2. At least 5 blog slugs have localized copy upgraded per locale wave.
 3. `/zh*` redirect behavior and canonical/hreflang checks stay green.
+
+## 2026-03-03 (Done)
+
+### Completed Today
+1. Finished blog copy wave 1 for top 5 high-intent slugs across 10 locales:
+   - Added localized `title` / `description` / `cta_line` in `src/data/i18n-blog-copy.json`.
+   - Covered slugs:
+     - `best-24gb-vram-models-2026`
+     - `rtx4090-vs-rtx3090-for-local-llm`
+     - `cuda-out-of-memory-ollama-fixes-2026`
+     - `llama-70b-on-rtx-3090-local-setup`
+     - `model-qwen3-8b-local-benchmark`
+2. Wired localized blog copy into locale routes:
+   - `src/pages/[locale]/blog/[slug].astro`: localized title/description and localized CTA line with English fallback.
+   - `src/pages/[locale]/blog/index.astro`: localized post cards for translated slugs and fallback for remaining slugs.
+   - `src/lib/i18n-blog-copy.ts`: centralized blog copy resolver and fallback ratio output.
+3. Enabled controlled fallback noindex behavior for locale blog pages:
+   - Detail page noindex now considers both bridge-copy fallback and slug-localization fallback.
+   - Blog index noindex now considers aggregate list fallback ratio.
+
+### Evidence Snapshot (2026-03-03)
+1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
+2. `npm run check:quality`: passed (quality gate green, blog post count `27`).
+3. `npm run i18n:sitemap-report`:
+   - `en_blog_detail_urls=27`
+   - all locales `blog_detail=27`, parity `1.0`.
+4. `npm run build`: passed (static build complete).
+5. `npm run verify:prod:i18n`: passed (`/zh*` redirect checks and hreflang checks all green).

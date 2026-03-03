@@ -5,6 +5,7 @@ import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
 import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
+import { resolveBlogCopy } from "../../../lib/i18n-blog-copy";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => data.lang === "en");
@@ -21,13 +22,23 @@ const localeUpper = locale.toUpperCase();
 const enPath = `/en/blog/${post.slug}/`;
 const pagePath = withLocale(locale, enPath);
 const home = resolvePageCopy("locale-home", locale, { localeUpper }).fields;
+const defaultCtaLine = home.hero_intro || "";
+const blogCopy = resolveBlogCopy(post.slug, locale, {
+  title: post.data.title,
+  description: post.data.description,
+  ctaLine: defaultCtaLine,
+});
 const copy = resolvePageCopy("guides-detail", locale, {
   localeUpper,
-  itemTitle: post.data.title,
-  itemDescription: post.data.description,
+  itemTitle: blogCopy.title,
+  itemDescription: blogCopy.description,
 });
 const text = copy.fields;
-const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const showExtraCtaLine = Boolean(blogCopy.ctaLine && blogCopy.ctaLine !== text.rollout_intro);
+const shouldNoindex = shouldNoindexByFallback(
+  locale,
+  Math.max(copy.fallbackRatio, blogCopy.fallbackRatio),
+);
 ---
 
 <BaseLayout
@@ -40,9 +51,10 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 >
   <main class="container">
     <section class="hero">
-      <h1>{post.data.title}</h1>
-      <p>{post.data.description}</p>
+      <h1>{blogCopy.title}</h1>
+      <p>{blogCopy.description}</p>
       <p>{text.rollout_intro}</p>
+      {showExtraCtaLine && <p>{blogCopy.ctaLine}</p>}
       <div class="cta-row">
         <a class="btn btn-primary" href={enPath}>{text.cta_open_english}</a>
         <a class="btn" href={withLocale(locale, "/en/blog/")}>{text.cta_back_hub}</a>
