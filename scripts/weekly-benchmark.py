@@ -29,7 +29,8 @@ SCREENSHOT_DIR = ROOT / "public" / "screenshots"
 
 DEFAULT_TARGETS = (
     "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,"
-    "llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96"
+    "llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,"
+    "gemma3=96,llama4=64,qwq=96"
 )
 DEFAULT_HEAVY_TARGETS = "llama3.3:70b-instruct-q4_K_M=64,qwen3.5:122b=48"
 DEFAULT_NUM_CTX = 4096
@@ -38,11 +39,13 @@ DEFAULT_NETWORK_RETRY_DELAYS_S = "5,10,20"
 DEFAULT_RETIRED_POLICY_FILE = "src/data/retired-models.json"
 DEFAULT_AUTO_PRIORITY_TAGS = (
     "qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b,"
-    "llama3.3:70b,gpt-oss:20b,mistral-small:24b"
+    "llama3.3:70b,gpt-oss:20b,mistral-small:22b,gemma3:27b,llama4:latest,"
+    "qwq:32b,qwen2.5-coder:32b"
 )
 DEFAULT_FAMILY_TARGET_HINTS = (
     "qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,"
-    "llama3.3=70,qwen2.5-coder=32,ministral-3=14,gpt-oss=20,mistral-small=24"
+    "llama3.3=70,qwen2.5-coder=32,ministral-3=14,gpt-oss=20,mistral-small=24,"
+    "gemma3=27,llama4=70,qwq=32"
 )
 DEFAULT_PROMPT = (
     "You are an inference benchmark probe. "

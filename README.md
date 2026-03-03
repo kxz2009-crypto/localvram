@@ -142,8 +142,8 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `LV_OLLAMA_ENDPOINT` (default: `http://127.0.0.1:11434`)
 - `OLLAMA_HOST` (fallback when `LV_OLLAMA_ENDPOINT` is not set)
 - `OLLAMA_MODELS` (runner/service-side Ollama model directory, for example `/mnt/d/Ollama`)
-- `LV_WEEKLY_TARGETS` (default: `qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96`; supports both family targets and explicit tags)
-- `LV_FAMILY_TARGET_HINTS` (default: `qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,llama3.3=70`; preferred size hint when resolving family targets to a local installed tag)
+- `LV_WEEKLY_TARGETS` (default: `qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96`; supports both family targets and explicit tags)
+- `LV_FAMILY_TARGET_HINTS` (default: `qwen3=8,deepseek-r1=14,qwen2.5=14,qwen3-coder=30,qwen3.5=35,llama3.3=70,qwen2.5-coder=32,ministral-3=14,gpt-oss=20,mistral-small=24,gemma3=27,llama4=70,qwq=32`; preferred size hint when resolving family targets to a local installed tag)
 - `LV_NETWORK_RETRY_DELAYS_S` (default: `5,10,20`; transient network retry backoff for Ollama API requests)
 - `LV_RETIRED_POLICY_FILE` (default: `src/data/retired-models.json`; excludes retired families/tags from targets and auto-backfill)
 - `LV_RUNS_PER_MODEL` (default: `2`)
@@ -155,7 +155,7 @@ Weekly benchmark (`scripts/weekly-benchmark.py`):
 - `LV_VERIFIED_TOOLTIP` (optional; tooltip text for measured hardware badges)
 - `LV_AUTO_BACKFILL_TARGETS` (default: `true`; auto-add locally installed known model tags when runnable targets are below threshold)
 - `LV_AUTO_BACKFILL_TARGETS_MAX` (default: `6`; cap for auto-added benchmark targets per run)
-- `LV_AUTO_PRIORITY_TAGS` (default: `qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b`; preferred order for auto-added targets)
+- `LV_AUTO_PRIORITY_TAGS` (default: `qwen3:8b,deepseek-r1:14b,qwen2.5:14b,qwen3-coder:30b,qwen3.5:35b,llama3.3:70b,gpt-oss:20b,mistral-small:22b,gemma3:27b,llama4:latest,qwq:32b,qwen2.5-coder:32b`; preferred order for auto-added targets)
 - `PUBLIC_AMAZON_PRICE_3090` (optional UI price label for local recommendation modules)
 - `PUBLIC_RUNPOD_A100_PRICE` (optional UI price label for cloud recommendation modules)
 
@@ -194,6 +194,7 @@ Weekly collect/content/publish split:
 
 - `Weekly Benchmark` now runs only on self-hosted runner and uploads a `benchmark-collection` artifact.
 - Weekly target resolver writes `src/data/weekly-target-plan.json` and includes it in the benchmark artifact/publish sync.
+- Weekly target resolver budget defaults are now `--max-new-families 5` and `--max-total-targets 15` to keep measured tag coverage expanding.
 - Weekly target plan records retirement impact (`dropped_base_targets`, retired local sample) for auditability.
 - Publish workflow prunes retired models from `src/data/benchmark-results.json` before catalog/sitemap build.
 - Publish workflow generates `src/data/retirement-candidates.json` from benchmark history to assist next retirement batch review.
