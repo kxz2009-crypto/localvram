@@ -104,6 +104,9 @@
 5. Added anti-regression quality gate for blog localization coverage:
    - `scripts/quality-gate.py` now requires `src/data/i18n-blog-copy.json`.
    - Gate validates non-empty localized fields and enforces minimum blog-copy coverage ratio.
+6. Completed translation-pack fill for tracked wave locales:
+   - Filled all remaining empty `translation` rows in wave packs by syncing from current `i18n-copy.json` locale fields.
+   - Updated packs: `wave2/{fr,de,ru}` and `wave3/{ar,hi,id,ko}` to full phrase coverage.
 
 ### Evidence Snapshot (2026-03-03)
 1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
@@ -115,3 +118,5 @@
 5. `npm run verify:prod:i18n`: passed (`/zh*` redirect checks and hreflang checks all green).
 6. `npm run i18n:readiness`: passed, all locales ready and no fallback fields remaining in tracked pages.
 7. `npm run check:quality`: passed with i18n blog copy coverage check (`localized=27/27`, `coverage=1.000`).
+8. `python scripts/i18n-pack-status.py`: all tracked packs now `131/131` (`100.0%`).
+9. `python scripts/validate-i18n-packs.py`: passed (`packs=7`, `source_phrases=131`).
