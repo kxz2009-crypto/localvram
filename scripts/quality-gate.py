@@ -30,6 +30,7 @@ REQUIRED_FILES = [
     ROOT / "src" / "data" / "content-review-log.json",
     ROOT / "src" / "data" / "pipeline-slo.json",
     ROOT / "src" / "data" / "i18n-copy.json",
+    ROOT / "src" / "data" / "i18n-blog-copy.json",
     ROOT / "src" / "data" / "i18n-glossary.json",
     ROOT / "src" / "data" / "i18n-rollout.json",
 ]
@@ -92,6 +93,8 @@ FORBIDDEN_I18N_FRAGMENTS = {
     "ko": ["RTX 3090에 확인됨", "공개 비교", "애플실리콘"],
     "ar": ["خطأ بالكيلو بايت", "خطأ كيلو بايت", "مراكز الملاحة", "اختبار أعمى الكمي", "أبل السيليكون"],
 }
+REQUIRED_I18N_BLOG_COPY_FIELDS = {"title", "description", "cta_line"}
+MIN_I18N_BLOG_COPY_COVERAGE_RATIO = 0.9
 
 
 def _log_print(*values: object, sep: str = " ", end: str = "\n", flush: bool = False) -> None:  # noqa: ARG001
@@ -440,6 +443,71 @@ def main() -> None:
         log_line(f"quality gate failed: expected >=6 blog posts, found {post_count}")
         sys.exit(1)
     log_line(f"blog post count ok: {post_count}")
+    blog_slugs = {p.stem for p in blog_dir.glob("*.md")}
+
+    i18n_blog_copy = json.loads((ROOT / "src" / "data" / "i18n-blog-copy.json").read_text(encoding="utf-8"))
+    blog_copy_slugs = i18n_blog_copy.get("slugs")
+    if not isinstance(blog_copy_slugs, dict):
+        log_line("quality gate failed: i18n-blog-copy.json slugs must be an object")
+        sys.exit(1)
+
+    for slug, entry in blog_copy_slugs.items():
+        if not isinstance(entry, dict):
+            log_line(f"quality gate failed: i18n-blog-copy.json slug '{slug}' must map to an object")
+            sys.exit(1)
+        en_entry = entry.get("en")
+        if not isinstance(en_entry, dict):
+            log_line(f"quality gate failed: i18n-blog-copy.json slug '{slug}' missing en object")
+            sys.exit(1)
+        for field_name in REQUIRED_I18N_BLOG_COPY_FIELDS:
+            field_value = en_entry.get(field_name)
+            if not isinstance(field_value, str) or not field_value.strip():
+                log_line(
+                    f"quality gate failed: i18n-blog-copy.json slug '{slug}' en field '{field_name}' must be non-empty string"
+                )
+                sys.exit(1)
+
+        locale_entries = entry.get("locales")
+        if not isinstance(locale_entries, dict):
+            log_line(f"quality gate failed: i18n-blog-copy.json slug '{slug}' locales must be an object")
+            sys.exit(1)
+        locale_keys = set(locale_entries.keys())
+        if locale_keys != EXPECTED_STANDARD_LOCALES:
+            log_line(f"quality gate failed: i18n-blog-copy.json slug '{slug}' locales must include exact 10 standard locales")
+            log_line(f"- expected: {sorted(EXPECTED_STANDARD_LOCALES)}")
+            log_line(f"- actual: {sorted(locale_keys)}")
+            sys.exit(1)
+
+        for locale_key in EXPECTED_STANDARD_LOCALES:
+            locale_fields = locale_entries.get(locale_key)
+            if not isinstance(locale_fields, dict):
+                log_line(
+                    f"quality gate failed: i18n-blog-copy.json slug '{slug}' locale '{locale_key}' must be an object"
+                )
+                sys.exit(1)
+            for field_name in REQUIRED_I18N_BLOG_COPY_FIELDS:
+                field_value = locale_fields.get(field_name)
+                if not isinstance(field_value, str) or not field_value.strip():
+                    log_line(
+                        f"quality gate failed: i18n-blog-copy.json slug '{slug}' locale '{locale_key}' field '{field_name}' must be non-empty string"
+                    )
+                    sys.exit(1)
+
+    localized_slugs = set(blog_copy_slugs.keys()) & blog_slugs
+    coverage_ratio = len(localized_slugs) / len(blog_slugs) if blog_slugs else 1.0
+    if coverage_ratio < MIN_I18N_BLOG_COPY_COVERAGE_RATIO:
+        missing_blog_copy = sorted(blog_slugs - set(blog_copy_slugs.keys()))
+        log_line(
+            "quality gate failed: i18n blog copy coverage below threshold "
+            f"({coverage_ratio:.3f} < {MIN_I18N_BLOG_COPY_COVERAGE_RATIO:.3f})"
+        )
+        for slug in missing_blog_copy[:20]:
+            log_line(f"- missing blog copy slug: {slug}")
+        sys.exit(1)
+    log_line(
+        "i18n blog copy checks ok: "
+        f"localized={len(localized_slugs)}/{len(blog_slugs)} coverage={coverage_ratio:.3f}"
+    )
 
     log_line("quality gate passed")
 
