@@ -6,9 +6,22 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+function Get-CurlExecutable {
+  $candidates = @("curl.exe", "curl")
+  foreach ($name in $candidates) {
+    $cmd = Get-Command $name -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($cmd -and $cmd.Source) {
+      return $cmd.Source
+    }
+  }
+  throw "curl executable not found. Install curl or ensure it is in PATH."
+}
+
+$script:CurlExecutable = Get-CurlExecutable
+
 function Get-HeadMeta {
   param([string]$Url)
-  $raw = curl.exe -s -I $Url
+  $raw = & $script:CurlExecutable -s -I $Url
   $statusLine = ($raw | Select-String -Pattern '^HTTP/' | Select-Object -Last 1).Line
   $locationLine = ($raw | Select-String -Pattern '^Location:' | Select-Object -First 1).Line
   $statusCode = ""
@@ -89,7 +102,7 @@ foreach ($row in $zhChecks) {
   }
 }
 
-$enHtml = curl.exe -s "$ComDomain/en/"
+$enHtml = & $script:CurlExecutable -s "$ComDomain/en/"
 $rolloutConfigPath = Join-Path $PSScriptRoot "..\src\data\i18n-rollout.json"
 if ($ExpectedHreflangLocales.Count -eq 0 -and (Test-Path $rolloutConfigPath)) {
   $rawConfig = Get-Content $rolloutConfigPath -Raw | ConvertFrom-Json
