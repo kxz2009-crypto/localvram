@@ -1,61 +1,123 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-02T03:16:31.517390Z",
+  "updated_at": "2026-03-03T03:19:50.203784Z",
   "last_run": {
-    "run_at": "2026-03-02T03:16:31.517390Z",
-    "queue_date": "2026-03-02",
+    "run_at": "2026-03-03T03:19:50.203784Z",
+    "queue_date": "2026-03-03",
     "reviewed_count": 3,
-    "auto_approved_count": 3,
-    "pending_manual_review_count": 0,
+    "auto_approved_count": 2,
+    "pending_manual_review_count": 1,
     "rejected_manual_count": 0,
-    "high_risk_count": 0,
-    "risk_flag_counts": {},
+    "high_risk_count": 1,
+    "risk_flag_counts": {
+      "near_duplicate_published": 1
+    },
     "items": [
       {
-        "draft": "content-queue/2026-03-02/01-model-ministral-3-14b-benchmark-refresh.md",
-        "slug": "model-ministral-3-14b-benchmark-refresh",
-        "score": 640.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 196,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.9459,
-          "topic_score": 0.1875,
-          "slug": "rtx4090-vs-rtx3090-for-local-llm"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-02/02-model-qwen2-5-14b-benchmark-refresh.md",
-        "slug": "model-qwen2-5-14b-benchmark-refresh",
-        "score": 640.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 196,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.9375,
-          "topic_score": 0.1875,
-          "slug": "rtx4090-vs-rtx3090-for-local-llm"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-02/03-runpod-vs-vast-for-local-llm-fallback.md",
-        "slug": "runpod-vs-vast-for-local-llm-fallback",
-        "score": 640.0,
+        "draft": "content-queue/2026-03-03/01-16gb-vram-model-selection-guide.md",
+        "slug": "16gb-vram-model-selection-guide",
+        "score": 576.0,
         "status_before": "draft",
         "status_after": "approved_auto",
         "word_count": 195,
         "risk_flags": [],
         "similarity": {
-          "score": 0.9725,
-          "topic_score": 0.3333,
+          "score": 0.955,
+          "topic_score": 0.2857,
           "slug": "rtx4090-vs-rtx3090-for-local-llm"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-03/02-apple-silicon-vs-rtx3090-local-llm.md",
+        "slug": "apple-silicon-vs-rtx3090-local-llm",
+        "score": 576.0,
+        "status_before": "draft",
+        "status_after": "pending_manual_review",
+        "word_count": 196,
+        "risk_flags": [
+          "near_duplicate_published"
+        ],
+        "similarity": {
+          "score": 0.973,
+          "topic_score": 0.6364,
+          "slug": "rtx4090-vs-rtx3090-for-local-llm"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-03/03-llama4-local-inference-feasibility-check.md",
+        "slug": "llama4-local-inference-feasibility-check",
+        "score": 576.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 194,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9725,
+          "topic_score": 0.2857,
+          "slug": "model-ministral-3-14b-benchmark-refresh"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-03T03:19:50.203784Z",
+      "queue_date": "2026-03-03",
+      "reviewed_count": 3,
+      "auto_approved_count": 2,
+      "pending_manual_review_count": 1,
+      "rejected_manual_count": 0,
+      "high_risk_count": 1,
+      "risk_flag_counts": {
+        "near_duplicate_published": 1
+      },
+      "items": [
+        {
+          "draft": "content-queue/2026-03-03/01-16gb-vram-model-selection-guide.md",
+          "slug": "16gb-vram-model-selection-guide",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 195,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.955,
+            "topic_score": 0.2857,
+            "slug": "rtx4090-vs-rtx3090-for-local-llm"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-03/02-apple-silicon-vs-rtx3090-local-llm.md",
+          "slug": "apple-silicon-vs-rtx3090-local-llm",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "pending_manual_review",
+          "word_count": 196,
+          "risk_flags": [
+            "near_duplicate_published"
+          ],
+          "similarity": {
+            "score": 0.973,
+            "topic_score": 0.6364,
+            "slug": "rtx4090-vs-rtx3090-for-local-llm"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-03/03-llama4-local-inference-feasibility-check.md",
+          "slug": "llama4-local-inference-feasibility-check",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 194,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9725,
+            "topic_score": 0.2857,
+            "slug": "model-ministral-3-14b-benchmark-refresh"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-02T03:16:31.517390Z",
       "queue_date": "2026-03-02",

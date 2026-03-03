@@ -1,40 +1,63 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-02T03:16:31.588059Z",
+  "updated_at": "2026-03-03T03:19:50.269004Z",
   "last_run": {
-    "run_at": "2026-03-02T03:16:31.588059Z",
-    "queue_date": "2026-03-02",
-    "candidate_count": 3,
+    "run_at": "2026-03-03T03:19:50.269004Z",
+    "queue_date": "2026-03-03",
+    "candidate_count": 2,
     "published_count": 2,
-    "skipped_count": 1,
+    "skipped_count": 0,
     "published": [
       {
-        "slug": "model-ministral-3-14b-benchmark-refresh",
-        "title": "Ministral-3:14B Local Inference Benchmark Update: Practical Guide (2026)",
-        "topic_key": "ministral-3-14b-local-inference-benchmark-update",
-        "score": 640.0,
-        "source_draft": "content-queue/2026-03-02/01-model-ministral-3-14b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-ministral-3-14b-benchmark-refresh.md",
-        "intent": "benchmark"
+        "slug": "16gb-vram-model-selection-guide",
+        "title": "Best Local Llm For 16Gb Vram: Practical Guide (2026)",
+        "topic_key": "best-local-llm-for-16gb-vram",
+        "score": 576.0,
+        "source_draft": "content-queue/2026-03-03/01-16gb-vram-model-selection-guide.md",
+        "out_file": "src/content/blog/16gb-vram-model-selection-guide.md",
+        "intent": "hardware"
       },
       {
-        "slug": "model-qwen2-5-14b-benchmark-refresh",
-        "title": "Qwen2.5:14B Local Inference Benchmark Update: Practical Guide (2026)",
-        "topic_key": "qwen2-5-14b-local-inference-benchmark-update",
-        "score": 640.0,
-        "source_draft": "content-queue/2026-03-02/02-model-qwen2-5-14b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-qwen2-5-14b-benchmark-refresh.md",
-        "intent": "benchmark"
+        "slug": "llama4-local-inference-feasibility-check",
+        "title": "Llama 4 Local Inference Feasibility: Practical Guide (2026)",
+        "topic_key": "llama-4-local-inference-feasibility",
+        "score": 576.0,
+        "source_draft": "content-queue/2026-03-03/03-llama4-local-inference-feasibility-check.md",
+        "out_file": "src/content/blog/llama4-local-inference-feasibility-check.md",
+        "intent": "guide"
       }
     ],
-    "skipped": [
-      {
-        "draft": "content-queue/2026-03-02/03-runpod-vs-vast-for-local-llm-fallback.md",
-        "reason": "max_publish_reached"
-      }
-    ]
+    "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-03-03T03:19:50.269004Z",
+      "queue_date": "2026-03-03",
+      "candidate_count": 2,
+      "published_count": 2,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "16gb-vram-model-selection-guide",
+          "title": "Best Local Llm For 16Gb Vram: Practical Guide (2026)",
+          "topic_key": "best-local-llm-for-16gb-vram",
+          "score": 576.0,
+          "source_draft": "content-queue/2026-03-03/01-16gb-vram-model-selection-guide.md",
+          "out_file": "src/content/blog/16gb-vram-model-selection-guide.md",
+          "intent": "hardware"
+        },
+        {
+          "slug": "llama4-local-inference-feasibility-check",
+          "title": "Llama 4 Local Inference Feasibility: Practical Guide (2026)",
+          "topic_key": "llama-4-local-inference-feasibility",
+          "score": 576.0,
+          "source_draft": "content-queue/2026-03-03/03-llama4-local-inference-feasibility-check.md",
+          "out_file": "src/content/blog/llama4-local-inference-feasibility-check.md",
+          "intent": "guide"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-03-02T03:16:31.588059Z",
       "queue_date": "2026-03-02",
