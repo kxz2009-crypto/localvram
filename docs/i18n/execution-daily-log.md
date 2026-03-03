@@ -175,3 +175,5 @@
 22. Automated weekly rollback checkpoint tagging on acceptance success:
    - `Weekly i18n Acceptance` now creates/pushes `rollback-i18n-week-YYYYMMDD` tag on successful runs (idempotent).
    - Workflow summary now reports `rollback-checkpoint-tag` outcome; artifact bundle includes `logs/rollback-checkpoint-tag.log`.
+23. GitHub Actions `Weekly i18n Acceptance` manual run `22635501319`: passed with `Create weekly rollback checkpoint tag = success`.
+24. Verified remote tag exists: `rollback-i18n-week-20260303` on `origin`.
