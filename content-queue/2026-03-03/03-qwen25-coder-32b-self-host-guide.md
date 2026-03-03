@@ -1,17 +1,17 @@
 ---
-title: "Best Local Llm For 16Gb Vram: Practical Guide (2026)"
+title: "Qwen2.5 Coder 32B Self Host Guide: Practical Guide (2026)"
 date: 2026-03-03
-keyword: "best local llm for 16gb vram"
+keyword: "qwen2.5 coder 32b self host guide"
 score: 576
 source: opportunity
-status: rejected_manual
+status: approved_auto
 reviewed_at: "2026-03-03T11:02:10.447448Z"
-risk_flags: existing_blog_slug,near_duplicate_published
+risk_flags: ""
 ---
 
 ## Why this topic now
 
-Users searching for "best local llm for 16gb vram" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+Users searching for "qwen2.5 coder 32b self host guide" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
 
 ## Verified benchmark anchor
 

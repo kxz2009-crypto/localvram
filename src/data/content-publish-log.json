@@ -1,35 +1,63 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-03T03:19:50.269004Z",
+  "updated_at": "2026-03-03T11:02:10.531188Z",
   "last_run": {
-    "run_at": "2026-03-03T03:19:50.269004Z",
+    "run_at": "2026-03-03T11:02:10.531188Z",
     "queue_date": "2026-03-03",
     "candidate_count": 2,
     "published_count": 2,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "16gb-vram-model-selection-guide",
-        "title": "Best Local Llm For 16Gb Vram: Practical Guide (2026)",
-        "topic_key": "best-local-llm-for-16gb-vram",
+        "slug": "local-llm-customer-support-rag-stack",
+        "title": "Local Llm Customer Support Rag Stack: Practical Guide (2026)",
+        "topic_key": "local-llm-customer-support-rag-stack",
         "score": 576.0,
-        "source_draft": "content-queue/2026-03-03/01-16gb-vram-model-selection-guide.md",
-        "out_file": "src/content/blog/16gb-vram-model-selection-guide.md",
-        "intent": "hardware"
+        "source_draft": "content-queue/2026-03-03/01-local-llm-customer-support-rag-stack.md",
+        "out_file": "src/content/blog/local-llm-customer-support-rag-stack.md",
+        "intent": "guide"
       },
       {
-        "slug": "llama4-local-inference-feasibility-check",
-        "title": "Llama 4 Local Inference Feasibility: Practical Guide (2026)",
-        "topic_key": "llama-4-local-inference-feasibility",
+        "slug": "qwen25-coder-32b-self-host-guide",
+        "title": "Qwen2.5 Coder 32B Self Host Guide: Practical Guide (2026)",
+        "topic_key": "qwen2-5-coder-32b-self-host-guide",
         "score": 576.0,
-        "source_draft": "content-queue/2026-03-03/03-llama4-local-inference-feasibility-check.md",
-        "out_file": "src/content/blog/llama4-local-inference-feasibility-check.md",
+        "source_draft": "content-queue/2026-03-03/03-qwen25-coder-32b-self-host-guide.md",
+        "out_file": "src/content/blog/qwen25-coder-32b-self-host-guide.md",
         "intent": "guide"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-03-03T11:02:10.531188Z",
+      "queue_date": "2026-03-03",
+      "candidate_count": 2,
+      "published_count": 2,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "local-llm-customer-support-rag-stack",
+          "title": "Local Llm Customer Support Rag Stack: Practical Guide (2026)",
+          "topic_key": "local-llm-customer-support-rag-stack",
+          "score": 576.0,
+          "source_draft": "content-queue/2026-03-03/01-local-llm-customer-support-rag-stack.md",
+          "out_file": "src/content/blog/local-llm-customer-support-rag-stack.md",
+          "intent": "guide"
+        },
+        {
+          "slug": "qwen25-coder-32b-self-host-guide",
+          "title": "Qwen2.5 Coder 32B Self Host Guide: Practical Guide (2026)",
+          "topic_key": "qwen2-5-coder-32b-self-host-guide",
+          "score": 576.0,
+          "source_draft": "content-queue/2026-03-03/03-qwen25-coder-32b-self-host-guide.md",
+          "out_file": "src/content/blog/qwen25-coder-32b-self-host-guide.md",
+          "intent": "guide"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-03-03T03:19:50.269004Z",
       "queue_date": "2026-03-03",

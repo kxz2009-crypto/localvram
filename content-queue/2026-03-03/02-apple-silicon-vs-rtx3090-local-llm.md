@@ -4,9 +4,9 @@ date: 2026-03-03
 keyword: "apple silicon vs rtx 3090 local llm"
 score: 576
 source: opportunity
-status: pending_manual_review
-reviewed_at: "2026-03-03T03:19:50.203784Z"
-risk_flags: near_duplicate_published
+status: rejected_manual
+reviewed_at: "2026-03-03T11:02:10.447448Z"
+risk_flags: ""
 ---
 
 ## Why this topic now

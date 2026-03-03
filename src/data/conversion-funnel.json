@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-03-03T03:19:50.465244Z",
+  "generated_at": "2026-03-03T11:02:54.349528Z",
   "window_days": 30,
-  "window_start": "2026-02-01T03:19:50.465244Z",
-  "window_end": "2026-03-03T03:19:50.465244Z",
+  "window_start": "2026-02-01T11:02:54.349528Z",
+  "window_end": "2026-03-03T11:02:54.349528Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -11,17 +11,77 @@
   "funnel": {
     "organic_search_clicks": 84,
     "decision_page_clicks": 67,
-    "affiliate_redirect_clicks": 0,
-    "cloud_redirect_clicks": 0,
-    "hardware_redirect_clicks": 0,
-    "search_to_affiliate_pct": 0.0,
-    "search_to_cloud_pct": 0.0,
-    "affiliate_to_cloud_pct": 0.0
+    "affiliate_redirect_clicks": 44,
+    "cloud_redirect_clicks": 17,
+    "hardware_redirect_clicks": 27,
+    "search_to_affiliate_pct": 52.38,
+    "search_to_cloud_pct": 20.24,
+    "affiliate_to_cloud_pct": 38.64
   },
   "breakdown": {
-    "providers": [],
-    "routes": [],
-    "source_pages": [],
+    "providers": [
+      {
+        "provider": "amazon",
+        "clicks": 27,
+        "share_pct": 61.36
+      },
+      {
+        "provider": "runpod",
+        "clicks": 11,
+        "share_pct": 25.0
+      },
+      {
+        "provider": "vast",
+        "clicks": 6,
+        "share_pct": 13.64
+      }
+    ],
+    "routes": [
+      {
+        "route": "/recommends/rtx-3090-24gb",
+        "clicks": 15,
+        "share_pct": 34.09
+      },
+      {
+        "route": "/go/runpod",
+        "clicks": 11,
+        "share_pct": 25.0
+      },
+      {
+        "route": "/go/vast",
+        "clicks": 6,
+        "share_pct": 13.64
+      },
+      {
+        "route": "/recommends/rtx-4090-24gb",
+        "clicks": 6,
+        "share_pct": 13.64
+      },
+      {
+        "route": "/recommends/atx3-1000w-psu",
+        "clicks": 3,
+        "share_pct": 6.82
+      },
+      {
+        "route": "/recommends/high-airflow-case",
+        "clicks": 3,
+        "share_pct": 6.82
+      }
+    ],
+    "source_pages": [
+      {
+        "page": "unknown",
+        "clicks": 40
+      },
+      {
+        "page": "/en/tools/vram-calculator/",
+        "clicks": 2
+      },
+      {
+        "page": "/en/affiliate/hardware-upgrade/",
+        "clicks": 2
+      }
+    ],
     "search_landings": [
       {
         "landing": "/en/models/llama-70b-q4/",
@@ -47,9 +107,9 @@
   },
   "data_quality": {
     "search_console_items": 4,
-    "affiliate_event_items_total": 0,
-    "affiliate_event_items_in_window": 0,
-    "has_affiliate_event_feed": false,
+    "affiliate_event_items_total": 44,
+    "affiliate_event_items_in_window": 44,
+    "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }
 }

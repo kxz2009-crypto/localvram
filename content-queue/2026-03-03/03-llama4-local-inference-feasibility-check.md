@@ -4,9 +4,9 @@ date: 2026-03-03
 keyword: "llama 4 local inference feasibility"
 score: 576
 source: opportunity
-status: approved_auto
-reviewed_at: "2026-03-03T03:19:50.203784Z"
-risk_flags: ""
+status: rejected_manual
+reviewed_at: "2026-03-03T11:02:10.447448Z"
+risk_flags: existing_blog_slug,near_duplicate_published
 ---
 
 ## Why this topic now
