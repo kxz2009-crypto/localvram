@@ -20,6 +20,7 @@
     "i18n:sitemap-report": "python scripts/i18n-sitemap-section-report.py",
     "i18n:section-parity-summary": "python scripts/export-i18n-section-parity-summary.py",
     "i18n:check-section-parity": "python scripts/check-i18n-section-parity.py",
+    "i18n:section-parity-diff": "python scripts/diff-i18n-section-parity.py --current dist/seo-audit/i18n-section-parity-summary.json --out dist/seo-audit/i18n-section-parity-diff.json",
     "i18n:export-review-csv": "python scripts/export-i18n-manual-review-checklist.py",
     "verify:prod:i18n": "powershell -ExecutionPolicy Bypass -File scripts/verify-production-i18n.ps1",
     "check:locale-links": "python scripts/check-locale-links.py",

@@ -131,6 +131,10 @@
 14. Added diff-friendly parity artifact:
    - Added `scripts/export-i18n-section-parity-summary.py` and npm script `i18n:section-parity-summary`.
    - Workflow now uploads `dist/seo-audit/i18n-section-parity-summary.json` via existing `dist/seo-audit` artifact bundle.
+15. Added automatic week-over-week parity drift diff:
+   - Added `scripts/diff-i18n-section-parity.py` and npm script `i18n:section-parity-diff`.
+   - `Weekly i18n Acceptance` now compares current summary with previous successful run artifact and emits `dist/seo-audit/i18n-section-parity-diff.json`.
+   - Workflow summary now includes `section-parity-drift-detected: true|false`.
 
 ### Evidence Snapshot (2026-03-03)
 1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
@@ -151,3 +155,4 @@
 14. `python scripts/check-i18n-section-parity.py`: passed for 10 locales and 7 key sections.
 15. `npm run check:quality`: passed with embedded sitemap section report + key section parity checks.
 16. `python scripts/export-i18n-section-parity-summary.py`: generated summary JSON with `mismatch_count=0`.
+17. `python scripts/diff-i18n-section-parity.py` (self-compare smoke): generated diff JSON with `has_drift=false`.
