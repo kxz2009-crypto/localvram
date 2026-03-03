@@ -247,6 +247,26 @@ def main() -> None:
         log_line("quality gate failed: i18n pack validation failed")
         sys.exit(pack_validate_result.returncode)
 
+    sitemap_section_reporter = ROOT / "scripts" / "i18n-sitemap-section-report.py"
+    if not sitemap_section_reporter.exists():
+        log_line("quality gate failed: missing scripts/i18n-sitemap-section-report.py")
+        sys.exit(1)
+    sitemap_report_cmd = [sys.executable, str(sitemap_section_reporter)]
+    sitemap_report_result = subprocess.run(sitemap_report_cmd, cwd=ROOT)
+    if sitemap_report_result.returncode != 0:
+        log_line("quality gate failed: i18n sitemap section report failed")
+        sys.exit(sitemap_report_result.returncode)
+
+    section_parity_checker = ROOT / "scripts" / "check-i18n-section-parity.py"
+    if not section_parity_checker.exists():
+        log_line("quality gate failed: missing scripts/check-i18n-section-parity.py")
+        sys.exit(1)
+    section_parity_cmd = [sys.executable, str(section_parity_checker)]
+    section_parity_result = subprocess.run(section_parity_cmd, cwd=ROOT)
+    if section_parity_result.returncode != 0:
+        log_line("quality gate failed: i18n key section parity check failed")
+        sys.exit(section_parity_result.returncode)
+
     i18n_copy = json.loads((ROOT / "src" / "data" / "i18n-copy.json").read_text(encoding="utf-8"))
     i18n_glossary = json.loads((ROOT / "src" / "data" / "i18n-glossary.json").read_text(encoding="utf-8"))
     threshold = i18n_copy.get("fallback_noindex_threshold")

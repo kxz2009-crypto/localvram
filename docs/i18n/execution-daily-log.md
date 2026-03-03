@@ -125,6 +125,9 @@
 12. Added hard gate for key-section parity:
    - Added `scripts/check-i18n-section-parity.py` and npm script `i18n:check-section-parity`.
    - Wired `Weekly i18n Acceptance` to fail when any key section parity is not `1.0` for rollout locales.
+13. Elevated key-section parity to daily quality gate:
+   - `scripts/quality-gate.py` now runs `i18n-sitemap-section-report.py` and `check-i18n-section-parity.py`.
+   - `npm run check:quality` now blocks merges when key section parity drifts.
 
 ### Evidence Snapshot (2026-03-03)
 1. `npm run i18n:qa-copy`: passed (`issues=0`, `critical=0`, `high=0`).
@@ -143,3 +146,4 @@
 12. `python scripts/build-sitemap.py`: locale sitemap counts increased from `627` to `632` after hardware locale route inclusion.
 13. `python scripts/i18n-sitemap-section-report.py`: all locales show key parity `home/tools/errors/status/guides/hardware/models = 1.0`.
 14. `python scripts/check-i18n-section-parity.py`: passed for 10 locales and 7 key sections.
+15. `npm run check:quality`: passed with embedded sitemap section report + key section parity checks.
