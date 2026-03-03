@@ -8,12 +8,12 @@ on:
       endpoint:
         description: "Ollama endpoint"
         required: false
-        default: "http://127.0.0.1:11434"
+        default: ""
         type: string
       required_targets:
         description: "Required targets CSV (family or tag)"
         required: false
-        default: "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96"
+        default: ""
         type: string
       restart_if_empty:
         description: "Try restarting ollama serve when model list is empty"
@@ -23,17 +23,17 @@ on:
       retry_delays_s:
         description: "Network retry delays in seconds (CSV)"
         required: false
-        default: "5,10,20"
+        default: ""
         type: string
 
 permissions:
   contents: read
 
 env:
-  DEFAULT_OLLAMA_ENDPOINT: http://127.0.0.1:11434
-  DEFAULT_REQUIRED_TARGETS: qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96
-  DEFAULT_RETRY_DELAYS_S: "5,10,20"
-  OLLAMA_MODELS: /mnt/d/Ollama
+  DEFAULT_OLLAMA_ENDPOINT: ${{ vars.LV_OLLAMA_ENDPOINT || 'http://127.0.0.1:11434' }}
+  DEFAULT_REQUIRED_TARGETS: ${{ vars.LV_WEEKLY_BASE_TARGETS || 'qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96' }}
+  DEFAULT_RETRY_DELAYS_S: ${{ vars.LV_NETWORK_RETRY_DELAYS_S || '5,10,20' }}
+  OLLAMA_MODELS: ${{ vars.OLLAMA_MODELS || '/mnt/d/Ollama' }}
 
 jobs:
   smoke-check:
