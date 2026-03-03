@@ -150,54 +150,8 @@ jobs:
             echo "rollback checkpoint tag created: ${tag_name}" | tee logs/rollback-checkpoint-tag.log
           fi
 
-      - name: Publish workflow summary
-        if: ${{ always() }}
-        run: |
-          {
-            echo "## Weekly i18n Acceptance";
-            echo "";
-            echo "- readiness: ${{ steps.readiness.outcome }}";
-            echo "- locale-links: ${{ steps.locale_links.outcome }}";
-            echo "- qa-copy: ${{ steps.qa_copy.outcome }}";
-            echo "- sitemap-report: ${{ steps.sitemap_report.outcome }}";
-            echo "- section-parity-summary: ${{ steps.section_parity_summary.outcome }}";
-            echo "- section-parity: ${{ steps.section_parity_check.outcome }}";
-            echo "- section-parity-diff: ${{ steps.section_parity_diff.outcome }}";
-            echo "- preserve-parity-artifacts: ${{ steps.preserve_parity_artifacts.outcome }}";
-            echo "- quality-gate: ${{ steps.quality_gate.outcome }}";
-            echo "- build: ${{ steps.build.outcome }}";
-            echo "- verify-production-i18n: ${{ steps.verify_production_i18n.outcome }}";
-            echo "- rollback-checkpoint-tag: ${{ steps.rollback_checkpoint_tag.outcome }}";
-            if [ -f logs/seo-audit/i18n-section-parity-diff.json ]; then
-              drift=$(python -c "import json;print('true' if json.load(open('logs/seo-audit/i18n-section-parity-diff.json', encoding='utf-8')).get('has_drift') else 'false')")
-              echo "- section-parity-drift-detected: ${drift}";
-            fi
-          } >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Upload acceptance artifacts
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: weekly-i18n-acceptance
-          if-no-files-found: warn
-          path: |
-            logs/i18n-readiness.log
-            logs/i18n-locale-links.log
-            logs/i18n-qa-copy.log
-            logs/i18n-sitemap-report.log
-            logs/i18n-section-parity-summary.log
-            logs/i18n-section-parity.log
-            logs/i18n-section-parity-diff.log
-            logs/seo-audit/i18n-sitemap-section-report.json
-            logs/seo-audit/i18n-section-parity-summary.json
-            logs/seo-audit/i18n-section-parity-diff.json
-            logs/check-quality.log
-            logs/build.log
-            logs/verify-production-i18n.log
-            logs/rollback-checkpoint-tag.log
-            dist/seo-audit
-
       - name: Open or update failure issue
+        id: open_failure_issue
         if: ${{ failure() }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -216,6 +170,7 @@ jobs:
           ROLLBACK_TAG: ${{ steps.rollback_checkpoint_tag.outcome }}
         run: |
           set -euo pipefail
+          mkdir -p logs
           title="[i18n] Weekly acceptance failure tracker"
           body_file=".tmp/weekly-i18n-failure-issue.md"
           mkdir -p .tmp
@@ -247,8 +202,77 @@ jobs:
           issue_number=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number // empty')
           if [ -n "${issue_number}" ]; then
             gh issue comment "${issue_number}" --body-file "${body_file}"
-            echo "Updated issue #${issue_number}"
+            echo "failure_issue_action=updated #${issue_number}" | tee -a logs/weekly-i18n-issue-sync.log
           else
             gh issue create --title "${title}" --body-file "${body_file}"
-            echo "Created new issue: ${title}"
+            echo "failure_issue_action=created title=${title}" | tee -a logs/weekly-i18n-issue-sync.log
           fi
+
+      - name: Resolve failure issue on recovery
+        id: resolve_failure_issue
+        if: ${{ success() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+          title="[i18n] Weekly acceptance failure tracker"
+          issue_number=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "${issue_number}" ]; then
+            gh issue comment "${issue_number}" --body "Recovered on successful weekly acceptance run: ${RUN_URL}"
+            gh issue close "${issue_number}" --comment "Closing tracker because weekly acceptance recovered: ${RUN_URL}"
+            echo "recovery_issue_action=closed #${issue_number}" | tee -a logs/weekly-i18n-issue-sync.log
+          else
+            echo "recovery_issue_action=none (no open tracker)" | tee -a logs/weekly-i18n-issue-sync.log
+          fi
+
+      - name: Publish workflow summary
+        if: ${{ always() }}
+        run: |
+          {
+            echo "## Weekly i18n Acceptance";
+            echo "";
+            echo "- readiness: ${{ steps.readiness.outcome }}";
+            echo "- locale-links: ${{ steps.locale_links.outcome }}";
+            echo "- qa-copy: ${{ steps.qa_copy.outcome }}";
+            echo "- sitemap-report: ${{ steps.sitemap_report.outcome }}";
+            echo "- section-parity-summary: ${{ steps.section_parity_summary.outcome }}";
+            echo "- section-parity: ${{ steps.section_parity_check.outcome }}";
+            echo "- section-parity-diff: ${{ steps.section_parity_diff.outcome }}";
+            echo "- preserve-parity-artifacts: ${{ steps.preserve_parity_artifacts.outcome }}";
+            echo "- quality-gate: ${{ steps.quality_gate.outcome }}";
+            echo "- build: ${{ steps.build.outcome }}";
+            echo "- verify-production-i18n: ${{ steps.verify_production_i18n.outcome }}";
+            echo "- rollback-checkpoint-tag: ${{ steps.rollback_checkpoint_tag.outcome }}";
+            echo "- open-failure-issue: ${{ steps.open_failure_issue.outcome }}";
+            echo "- resolve-failure-issue: ${{ steps.resolve_failure_issue.outcome }}";
+            if [ -f logs/seo-audit/i18n-section-parity-diff.json ]; then
+              drift=$(python -c "import json;print('true' if json.load(open('logs/seo-audit/i18n-section-parity-diff.json', encoding='utf-8')).get('has_drift') else 'false')")
+              echo "- section-parity-drift-detected: ${drift}";
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload acceptance artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-i18n-acceptance
+          if-no-files-found: warn
+          path: |
+            logs/i18n-readiness.log
+            logs/i18n-locale-links.log
+            logs/i18n-qa-copy.log
+            logs/i18n-sitemap-report.log
+            logs/i18n-section-parity-summary.log
+            logs/i18n-section-parity.log
+            logs/i18n-section-parity-diff.log
+            logs/seo-audit/i18n-sitemap-section-report.json
+            logs/seo-audit/i18n-section-parity-summary.json
+            logs/seo-audit/i18n-section-parity-diff.json
+            logs/check-quality.log
+            logs/build.log
+            logs/verify-production-i18n.log
+            logs/rollback-checkpoint-tag.log
+            logs/weekly-i18n-issue-sync.log
+            dist/seo-audit

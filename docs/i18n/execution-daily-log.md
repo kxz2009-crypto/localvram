@@ -182,3 +182,7 @@
    - Failure alert now reads `logs/failure-context.json` to include concrete exit-code detail in issue body.
    - Added always-on workflow summary and artifact upload (`production-routing-guard`).
 26. GitHub Actions `Production Routing Guard` manual run `22635720599`: passed; `alert-issue` skipped on success path, summary/artifacts uploaded.
+27. Hardened weekly i18n failure lifecycle:
+   - Added success-path step `Resolve failure issue on recovery` to close open `[i18n] Weekly acceptance failure tracker`.
+   - Reordered weekly summary/artifact steps after issue-sync logic so outcomes include `open-failure-issue` and `resolve-failure-issue`.
+   - Added `logs/weekly-i18n-issue-sync.log` to acceptance artifacts for audit trace.
