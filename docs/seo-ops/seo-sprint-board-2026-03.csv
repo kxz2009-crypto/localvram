@@ -1,0 +1,21 @@
+ID,Week,Workstream,Task,Priority,Owner,StartDate,DueDate,DefinitionOfDone,Status
+SEO-001,Week 1,Tech SEO,"Model pages: add FAQPage + BreadcrumbList schema",P0,Dev,2026-03-04,2026-03-06,"Rich Results test passes on production pages",Todo
+SEO-002,Week 1,Tech SEO,"Blog pages: add Article schema",P0,Dev,2026-03-04,2026-03-06,"Sample validation passes for 3 published posts",Todo
+SEO-003,Week 1,Tech SEO,"Tool pages: add SoftwareApplication schema",P0,Dev,2026-03-04,2026-03-07,"Schema validation has zero blocking errors",Todo
+SEO-004,Week 1,CTR,"Refresh title + description for top 20 landing pages (A)",P0,SEO,2026-03-04,2026-03-08,"Top 20 metadata updated and logged",Todo
+SEO-005,Week 1,Internal Linking,"Enforce 3-link footer rule for blog pages",P0,Content+Dev,2026-03-05,2026-03-09,"All updated/new posts include 3 deep links",Todo
+SEO-006,Week 1,Monitoring,"Lock weekly SEO report fields",P0,SEO,2026-03-06,2026-03-09,"Weekly report includes CTR, Top10, funnel metrics",Todo
+SEO-007,Week 2,Content,"Upgrade post: best-24gb-vram-models-2026",P1,Content,2026-03-11,2026-03-13,"Published with >=5 internal links and index submit",Todo
+SEO-008,Week 2,Content,"Upgrade post: rtx4090-vs-rtx3090-for-local-llm",P1,Content,2026-03-11,2026-03-13,"Published with >=5 internal links and index submit",Todo
+SEO-009,Week 2,Pillar Page,"Create pillar page: 24GB VRAM selection",P1,Content+Dev,2026-03-12,2026-03-15,"At least 8 child links and one comparison table",Todo
+SEO-010,Week 2,Pillar Page,"Create pillar page: OOM fixes",P1,Content+Dev,2026-03-12,2026-03-15,"At least 8 child links and step-by-step path",Todo
+SEO-011,Week 2,Content Refresh,"Refresh top traffic legacy posts (8 pages)",P1,Content,2026-03-11,2026-03-17,"8 pages refreshed with FAQ, comparison, CTA",Todo
+SEO-012,Week 2,Freshness,"Improve Search Console refresh cadence + alert",P0,Dev+SEO,2026-03-11,2026-03-17,"Staleness alert active and tested",Todo
+SEO-013,Week 3,CTR,"Top 20 metadata experiment round B",P0,SEO,2026-03-18,2026-03-22,"Round B deployed on at least 10 pages",Todo
+SEO-014,Week 3,Template,"Reusable model-page comparison module",P1,Dev,2026-03-18,2026-03-23,"Module rendered on existing and new model pages",Todo
+SEO-015,Week 3,Template,"Standardized next-step CTA on model pages",P1,Dev+Ops,2026-03-18,2026-03-23,"CTA click path tracked in funnel",Todo
+SEO-016,Week 3,Internal Linking,"Cross-link network: 3090/4090/24GB/OOM cluster",P1,Content,2026-03-19,2026-03-24,"Interlink coverage >=90% for target pages",Todo
+SEO-017,Week 3,Tech Audit,"Technical SEO audit: canonical/hreflang/orphan/soft404",P1,Dev+SEO,2026-03-20,2026-03-24,"Blocking issues resolved",Todo
+SEO-018,Week 4,Distribution,"Community distribution to 5 channels",P2,Ops,2026-03-25,2026-03-30,"At least 5 quality external references",Todo
+SEO-019,Week 4,Review,"30-day KPI review and next-month OKR draft",P0,SEO+Ops,2026-03-29,2026-04-01,"Review doc complete with KPI deltas",Todo
+SEO-020,Week 4,Conversion,"Second-pass optimization for SEO->affiliate path",P0,Dev+Ops,2026-03-26,2026-04-02,"Affiliate clicks improve versus baseline",Todo
