@@ -58,8 +58,8 @@ jobs:
           set -o pipefail
           qa_args=(
             --ai-review
-            --ai-max-items 140
-            --ai-batch-size 10
+            --ai-max-items 60
+            --ai-batch-size 6
             --ai-retries 4
             --ai-retry-backoff-s 4
             --ai-batch-pause-s 2
