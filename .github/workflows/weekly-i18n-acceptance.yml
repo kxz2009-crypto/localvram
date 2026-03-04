@@ -74,28 +74,62 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .tmp/prev-artifact logs
-          prev_run_id=$(gh api "/repos/${{ github.repository }}/actions/workflows/weekly-i18n-acceptance.yml/runs?status=success&per_page=20" | jq -r '.workflow_runs[] | select((.id|tostring) != "${{ github.run_id }}") | .id' | head -n 1)
+          fetch_with_retry() {
+            local url="$1"
+            local out_file="$2"
+            local attempts=3
+            local sleep_s=2
+            local i
+            for i in $(seq 1 ${attempts}); do
+              if gh api "${url}" > "${out_file}" 2>/dev/null; then
+                return 0
+              fi
+              sleep $((sleep_s * i))
+            done
+            return 1
+          }
+
+          prev_runs_json=".tmp/prev-artifact/prev-runs.json"
+          if fetch_with_retry "/repos/${{ github.repository }}/actions/workflows/weekly-i18n-acceptance.yml/runs?status=success&per_page=20" "${prev_runs_json}"; then
+            prev_run_id=$(jq -r '.workflow_runs[] | select((.id|tostring) != "${{ github.run_id }}") | .id' "${prev_runs_json}" | head -n 1)
+          else
+            echo "warn=failed_to_fetch_previous_runs" | tee logs/i18n-section-parity-diff.log
+            prev_run_id=""
+          fi
+
           if [ -z "${prev_run_id}" ] || [ "${prev_run_id}" = "null" ]; then
             echo "previous_success_run_id=none" | tee logs/i18n-section-parity-diff.log
             python scripts/diff-i18n-section-parity.py --current dist/seo-audit/i18n-section-parity-summary.json --out dist/seo-audit/i18n-section-parity-diff.json | tee -a logs/i18n-section-parity-diff.log
           else
             echo "previous_success_run_id=${prev_run_id}" | tee logs/i18n-section-parity-diff.log
-            prev_artifact_id=$(gh api "/repos/${{ github.repository }}/actions/runs/${prev_run_id}/artifacts?per_page=100" | jq -r '.artifacts[] | select(.name=="weekly-i18n-acceptance" and .expired==false) | .id' | head -n 1)
+            prev_artifacts_json=".tmp/prev-artifact/prev-artifacts.json"
+            if fetch_with_retry "/repos/${{ github.repository }}/actions/runs/${prev_run_id}/artifacts?per_page=100" "${prev_artifacts_json}"; then
+              prev_artifact_id=$(jq -r '.artifacts[] | select(.name=="weekly-i18n-acceptance" and .expired==false) | .id' "${prev_artifacts_json}" | head -n 1)
+            else
+              echo "warn=failed_to_fetch_previous_artifacts" | tee -a logs/i18n-section-parity-diff.log
+              prev_artifact_id=""
+            fi
+
             if [ -z "${prev_artifact_id}" ] || [ "${prev_artifact_id}" = "null" ]; then
               echo "previous_artifact_id=none" | tee -a logs/i18n-section-parity-diff.log
               python scripts/diff-i18n-section-parity.py --current dist/seo-audit/i18n-section-parity-summary.json --out dist/seo-audit/i18n-section-parity-diff.json | tee -a logs/i18n-section-parity-diff.log
             else
               echo "previous_artifact_id=${prev_artifact_id}" | tee -a logs/i18n-section-parity-diff.log
-              gh api "/repos/${{ github.repository }}/actions/artifacts/${prev_artifact_id}/zip" > .tmp/prev-artifact/prev.zip
-              unzip -q .tmp/prev-artifact/prev.zip -d .tmp/prev-artifact/unpacked
-              prev_summary=".tmp/prev-artifact/unpacked/logs/seo-audit/i18n-section-parity-summary.json"
-              if [ ! -f "${prev_summary}" ]; then
-                prev_summary=".tmp/prev-artifact/unpacked/dist/seo-audit/i18n-section-parity-summary.json"
-              fi
-              if [ -f "${prev_summary}" ]; then
-                python scripts/diff-i18n-section-parity.py --current dist/seo-audit/i18n-section-parity-summary.json --previous "${prev_summary}" --out dist/seo-audit/i18n-section-parity-diff.json | tee -a logs/i18n-section-parity-diff.log
+              prev_zip=".tmp/prev-artifact/prev.zip"
+              if fetch_with_retry "/repos/${{ github.repository }}/actions/artifacts/${prev_artifact_id}/zip" "${prev_zip}"; then
+                unzip -q "${prev_zip}" -d .tmp/prev-artifact/unpacked
+                prev_summary=".tmp/prev-artifact/unpacked/logs/seo-audit/i18n-section-parity-summary.json"
+                if [ ! -f "${prev_summary}" ]; then
+                  prev_summary=".tmp/prev-artifact/unpacked/dist/seo-audit/i18n-section-parity-summary.json"
+                fi
+                if [ -f "${prev_summary}" ]; then
+                  python scripts/diff-i18n-section-parity.py --current dist/seo-audit/i18n-section-parity-summary.json --previous "${prev_summary}" --out dist/seo-audit/i18n-section-parity-diff.json | tee -a logs/i18n-section-parity-diff.log
+                else
+                  echo "previous_summary_file=missing" | tee -a logs/i18n-section-parity-diff.log
+                  python scripts/diff-i18n-section-parity.py --current dist/seo-audit/i18n-section-parity-summary.json --out dist/seo-audit/i18n-section-parity-diff.json | tee -a logs/i18n-section-parity-diff.log
+                fi
               else
-                echo "previous_summary_file=missing" | tee -a logs/i18n-section-parity-diff.log
+                echo "warn=failed_to_download_previous_artifact_zip" | tee -a logs/i18n-section-parity-diff.log
                 python scripts/diff-i18n-section-parity.py --current dist/seo-audit/i18n-section-parity-summary.json --out dist/seo-audit/i18n-section-parity-diff.json | tee -a logs/i18n-section-parity-diff.log
               fi
             fi
