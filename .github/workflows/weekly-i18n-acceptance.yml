@@ -227,6 +227,60 @@ jobs:
             echo "recovery_issue_action=none (no open tracker)" | tee -a logs/weekly-i18n-issue-sync.log
           fi
 
+      - name: Sync parity drift issue
+        id: sync_parity_drift_issue
+        if: ${{ always() && steps.section_parity_diff.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+          title="[i18n] Weekly section parity drift tracker"
+          diff_file="logs/seo-audit/i18n-section-parity-diff.json"
+          if [ ! -f "${diff_file}" ]; then
+            diff_file="dist/seo-audit/i18n-section-parity-diff.json"
+          fi
+
+          if [ ! -f "${diff_file}" ]; then
+            echo "parity_drift_issue_action=skipped reason=diff_file_missing" | tee -a logs/weekly-i18n-parity-drift.log
+            exit 0
+          fi
+
+          has_drift=$(python -c "import json;print('true' if json.load(open('${diff_file}', encoding='utf-8')).get('has_drift') else 'false')")
+          if [ "${has_drift}" = "true" ]; then
+            body_file=".tmp/weekly-i18n-parity-drift-issue.md"
+            mkdir -p .tmp
+            cat > "${body_file}" <<EOF
+          Weekly i18n section parity drift detected.
+
+          - run: ${RUN_URL}
+          - commit: ${{ github.sha }}
+          - actor: ${{ github.actor }}
+          - triggered_by: ${{ github.event_name }}
+          - diff_file: ${diff_file}
+
+          Please review \`i18n-section-parity-diff.json\` in workflow artifacts.
+          EOF
+            issue_number=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number // empty')
+            if [ -n "${issue_number}" ]; then
+              gh issue comment "${issue_number}" --body-file "${body_file}"
+              echo "parity_drift_issue_action=updated #${issue_number} has_drift=true" | tee -a logs/weekly-i18n-parity-drift.log
+            else
+              gh issue create --title "${title}" --body-file "${body_file}"
+              echo "parity_drift_issue_action=created title=${title} has_drift=true" | tee -a logs/weekly-i18n-parity-drift.log
+            fi
+          else
+            issue_number=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number // empty')
+            if [ -n "${issue_number}" ]; then
+              gh issue comment "${issue_number}" --body "Recovered (no parity drift) on weekly run: ${RUN_URL}"
+              gh issue close "${issue_number}" --comment "Closing tracker because section parity drift is cleared: ${RUN_URL}"
+              echo "parity_drift_issue_action=closed #${issue_number} has_drift=false" | tee -a logs/weekly-i18n-parity-drift.log
+            else
+              echo "parity_drift_issue_action=none has_drift=false" | tee -a logs/weekly-i18n-parity-drift.log
+            fi
+          fi
+
       - name: Publish workflow summary
         if: ${{ always() }}
         run: |
@@ -247,6 +301,7 @@ jobs:
             echo "- rollback-checkpoint-tag: ${{ steps.rollback_checkpoint_tag.outcome }}";
             echo "- open-failure-issue: ${{ steps.open_failure_issue.outcome }}";
             echo "- resolve-failure-issue: ${{ steps.resolve_failure_issue.outcome }}";
+            echo "- sync-parity-drift-issue: ${{ steps.sync_parity_drift_issue.outcome }}";
             if [ -f logs/seo-audit/i18n-section-parity-diff.json ]; then
               drift=$(python -c "import json;print('true' if json.load(open('logs/seo-audit/i18n-section-parity-diff.json', encoding='utf-8')).get('has_drift') else 'false')")
               echo "- section-parity-drift-detected: ${drift}";
@@ -275,4 +330,5 @@ jobs:
             logs/verify-production-i18n.log
             logs/rollback-checkpoint-tag.log
             logs/weekly-i18n-issue-sync.log
+            logs/weekly-i18n-parity-drift.log
             dist/seo-audit

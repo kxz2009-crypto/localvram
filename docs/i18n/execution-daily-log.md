@@ -187,3 +187,7 @@
    - Reordered weekly summary/artifact steps after issue-sync logic so outcomes include `open-failure-issue` and `resolve-failure-issue`.
    - Added `logs/weekly-i18n-issue-sync.log` to acceptance artifacts for audit trace.
 28. GitHub Actions `Weekly i18n Acceptance` manual run `22635918000`: passed; `resolve-failure-issue` executed successfully and issue-sync outcomes are now visible in summary.
+29. Added parity-drift issue lifecycle automation:
+   - New step `Sync parity drift issue` auto-opens/updates `[i18n] Weekly section parity drift tracker` when `has_drift=true`.
+   - Automatically closes tracker when `has_drift=false` on successful weekly runs.
+   - Added `logs/weekly-i18n-parity-drift.log` artifact and summary outcome `sync-parity-drift-issue`.
