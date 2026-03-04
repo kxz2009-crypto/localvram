@@ -4,6 +4,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -265,6 +266,8 @@ def run_ai_review_queue(
     max_items: int,
     batch_size: int,
     timeout_s: int,
+    retries: int,
+    retry_backoff_s: int,
 ) -> tuple[list[dict], dict]:
     metadata = {
         "enabled": True,
@@ -273,6 +276,9 @@ def run_ai_review_queue(
         "batch_size": batch_size,
         "items_selected": 0,
         "batches": 0,
+        "successful_batches": 0,
+        "reviewed_items": 0,
+        "coverage": 0.0,
         "flagged": 0,
         "errors": 0,
     }
@@ -289,12 +295,24 @@ def run_ai_review_queue(
     for start in range(0, len(selected), effective_batch_size):
         batch = selected[start : start + effective_batch_size]
         metadata["batches"] += 1
-        try:
-            reviews = call_gemini_batch(batch, api_key=api_key, model=model, timeout_s=timeout_s)
-        except (RuntimeError, urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as exc:
+        reviews: list[dict] = []
+        attempts = max(retries, 1)
+        last_error: Exception | None = None
+        for attempt in range(1, attempts + 1):
+            try:
+                reviews = call_gemini_batch(batch, api_key=api_key, model=model, timeout_s=timeout_s)
+                last_error = None
+                break
+            except (RuntimeError, urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as exc:
+                last_error = exc
+                if attempt < attempts:
+                    time.sleep(max(retry_backoff_s, 1) * attempt)
+        if last_error is not None:
             metadata["errors"] += 1
-            LOGGER.warning("gemini review batch failed: %s", exc)
+            LOGGER.warning("gemini review batch failed after retries: %s", last_error)
             continue
+
+        covered_indices: set[int] = set()
 
         for review in reviews:
             try:
@@ -306,6 +324,7 @@ def run_ai_review_queue(
             severity = str(review.get("severity", "none")).lower().strip()
             if severity not in {"none", "medium", "high", "critical"}:
                 severity = "none"
+            covered_indices.add(idx)
             if severity == "none":
                 continue
 
@@ -342,7 +361,21 @@ def run_ai_review_queue(
                 }
             )
 
-    metadata["status"] = "completed"
+        if covered_indices:
+            metadata["successful_batches"] += 1
+            metadata["reviewed_items"] += len(covered_indices)
+        else:
+            metadata["errors"] += 1
+            LOGGER.warning("gemini review batch returned no valid index coverage")
+
+    if metadata["items_selected"] > 0:
+        metadata["coverage"] = round(float(metadata["reviewed_items"]) / float(metadata["items_selected"]), 4)
+    if metadata["successful_batches"] == 0 and metadata["items_selected"] > 0:
+        metadata["status"] = "no_successful_batches"
+    elif metadata["errors"] > 0:
+        metadata["status"] = "completed_with_errors"
+    else:
+        metadata["status"] = "completed"
     return ai_issues, metadata
 
 
@@ -392,6 +425,29 @@ def main() -> None:
         type=int,
         default=45,
         help="HTTP timeout in seconds for each Gemini request.",
+    )
+    parser.add_argument(
+        "--ai-retries",
+        type=int,
+        default=3,
+        help="Retry count per Gemini batch request.",
+    )
+    parser.add_argument(
+        "--ai-retry-backoff-s",
+        type=int,
+        default=2,
+        help="Base backoff seconds for Gemini request retries.",
+    )
+    parser.add_argument(
+        "--ai-min-coverage",
+        type=float,
+        default=0.9,
+        help="Minimum AI-reviewed item coverage ratio required when AI review is enabled.",
+    )
+    parser.add_argument(
+        "--ai-fail-on-errors",
+        action="store_true",
+        help="Fail when any Gemini batch still fails after retries.",
     )
     args = parser.parse_args()
 
@@ -483,6 +539,9 @@ def main() -> None:
         "batch_size": args.ai_batch_size,
         "items_selected": 0,
         "batches": 0,
+        "successful_batches": 0,
+        "reviewed_items": 0,
+        "coverage": 0.0,
         "flagged": 0,
         "errors": 0,
     }
@@ -503,6 +562,8 @@ def main() -> None:
                 max_items=args.ai_max_items,
                 batch_size=args.ai_batch_size,
                 timeout_s=args.ai_timeout_s,
+                retries=args.ai_retries,
+                retry_backoff_s=args.ai_retry_backoff_s,
             )
             for item in ai_issues:
                 locale = str(item.get("locale", ""))
@@ -518,6 +579,22 @@ def main() -> None:
                 summary["issues"] += 1
                 issues.append(item)
             issues.sort(key=lambda x: (-x["priority"], x["locale"], x["page_id"], x["field"], x["code"]))
+            if args.ai_required and ai_summary.get("status") == "no_successful_batches":
+                LOGGER.error("i18n translation qa failed: no successful Gemini review batches")
+                sys.exit(1)
+            if args.ai_required and float(ai_summary.get("coverage", 0.0)) < float(args.ai_min_coverage):
+                LOGGER.error(
+                    "i18n translation qa failed: ai coverage %.4f below required %.4f",
+                    float(ai_summary.get("coverage", 0.0)),
+                    float(args.ai_min_coverage),
+                )
+                sys.exit(1)
+            if args.ai_fail_on_errors and int(ai_summary.get("errors", 0)) > 0:
+                LOGGER.error(
+                    "i18n translation qa failed: ai review had %s failed batch(es)",
+                    int(ai_summary.get("errors", 0)),
+                )
+                sys.exit(1)
 
     report = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -546,6 +623,8 @@ def main() -> None:
         f"medium={report['summary']['medium']} "
         f"ai_status={report['ai_review']['status']} "
         f"ai_flagged={report['ai_review']['flagged']} "
+        f"ai_coverage={report['ai_review']['coverage']} "
+        f"ai_errors={report['ai_review']['errors']} "
         f"manual_queue={len(report['manual_review_queue'])} "
         f"report={out_file}"
     )

@@ -50,7 +50,7 @@ jobs:
 
       - name: i18n translation QA
         id: qa_copy
-        run: npm run i18n:qa-copy -- --ai-review --ai-required | tee logs/i18n-qa-copy.log
+        run: npm run i18n:qa-copy -- --ai-review --ai-required --ai-min-coverage 0.95 --ai-fail-on-errors | tee logs/i18n-qa-copy.log
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
