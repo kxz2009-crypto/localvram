@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import random
 import re
 import sys
 import time
@@ -204,6 +205,43 @@ def extract_json_payload(text: str) -> dict | None:
         return None
 
 
+def format_http_error(exc: urllib.error.HTTPError) -> str:
+    body = ""
+    try:
+        raw = exc.read()
+        if raw:
+            body = raw.decode("utf-8", errors="ignore").strip()
+    except Exception:
+        body = ""
+    if body:
+        return f"HTTP {exc.code}: {exc.reason} | {body[:240]}"
+    return f"HTTP {exc.code}: {exc.reason}"
+
+
+def retry_after_seconds(exc: urllib.error.HTTPError) -> int | None:
+    value = (exc.headers.get("Retry-After") or "").strip()
+    if not value:
+        return None
+    try:
+        parsed = int(value)
+        return parsed if parsed > 0 else None
+    except (TypeError, ValueError):
+        return None
+
+
+def compute_retry_delay_seconds(exc: urllib.error.HTTPError, attempt: int, base_backoff_s: int) -> int:
+    base = max(base_backoff_s, 1) * max(attempt, 1)
+    if exc.code == 429:
+        retry_after = retry_after_seconds(exc)
+        if retry_after is not None:
+            base = max(base, retry_after)
+        else:
+            # Most 429 responses are quota/rate limits; use a safer cool-down.
+            base = max(base, 12 * max(attempt, 1))
+    jitter = random.randint(0, 2)
+    return min(base + jitter, 120)
+
+
 def call_gemini_batch(items: list[dict], api_key: str, model: str, timeout_s: int) -> list[dict]:
     compact_items = [
         {
@@ -269,6 +307,7 @@ def run_ai_review_queue(
     timeout_s: int,
     retries: int,
     retry_backoff_s: int,
+    batch_pause_s: int,
 ) -> tuple[list[dict], dict]:
     metadata = {
         "enabled": True,
@@ -283,6 +322,7 @@ def run_ai_review_queue(
         "coverage": 0.0,
         "flagged": 0,
         "errors": 0,
+        "rate_limit_errors": 0,
     }
     selected = queue[: max(max_items, 0)]
     metadata["items_selected"] = len(selected)
@@ -327,14 +367,20 @@ def run_ai_review_queue(
                 else:
                     last_error = exc
                 if attempt < attempts:
-                    time.sleep(max(retry_backoff_s, 1) * attempt)
+                    if exc.code == 429:
+                        metadata["rate_limit_errors"] += 1
+                    delay = compute_retry_delay_seconds(exc, attempt=attempt, base_backoff_s=retry_backoff_s)
+                    time.sleep(delay)
             except (RuntimeError, urllib.error.URLError, TimeoutError) as exc:
                 last_error = exc
                 if attempt < attempts:
                     time.sleep(max(retry_backoff_s, 1) * attempt)
         if last_error is not None:
             metadata["errors"] += 1
-            LOGGER.warning("gemini review batch failed after retries: %s", last_error)
+            if isinstance(last_error, urllib.error.HTTPError):
+                LOGGER.warning("gemini review batch failed after retries: %s", format_http_error(last_error))
+            else:
+                LOGGER.warning("gemini review batch failed after retries: %s", last_error)
             continue
 
         covered_indices: set[int] = set()
@@ -392,6 +438,8 @@ def run_ai_review_queue(
         else:
             metadata["errors"] += 1
             LOGGER.warning("gemini review batch returned no valid index coverage")
+        if batch_pause_s > 0 and (start + effective_batch_size) < len(selected):
+            time.sleep(batch_pause_s)
 
     if metadata["items_selected"] > 0:
         metadata["coverage"] = round(float(metadata["reviewed_items"]) / float(metadata["items_selected"]), 4)
@@ -468,6 +516,12 @@ def main() -> None:
         type=float,
         default=0.9,
         help="Minimum AI-reviewed item coverage ratio required when AI review is enabled.",
+    )
+    parser.add_argument(
+        "--ai-batch-pause-s",
+        type=int,
+        default=1,
+        help="Seconds to pause between successful Gemini batches to reduce burst rate limits.",
     )
     parser.add_argument(
         "--ai-fail-on-errors",
@@ -571,6 +625,7 @@ def main() -> None:
         "coverage": 0.0,
         "flagged": 0,
         "errors": 0,
+        "rate_limit_errors": 0,
     }
     if args.ai_review:
         gemini_api_key = os.environ.get("GEMINI_API_KEY", "").strip()
@@ -591,6 +646,7 @@ def main() -> None:
                 timeout_s=args.ai_timeout_s,
                 retries=args.ai_retries,
                 retry_backoff_s=args.ai_retry_backoff_s,
+                batch_pause_s=args.ai_batch_pause_s,
             )
             for item in ai_issues:
                 locale = str(item.get("locale", ""))
@@ -653,6 +709,7 @@ def main() -> None:
         f"ai_flagged={report['ai_review']['flagged']} "
         f"ai_coverage={report['ai_review']['coverage']} "
         f"ai_errors={report['ai_review']['errors']} "
+        f"ai_rate_limit_errors={report['ai_review'].get('rate_limit_errors', 0)} "
         f"manual_queue={len(report['manual_review_queue'])} "
         f"report={out_file}"
     )

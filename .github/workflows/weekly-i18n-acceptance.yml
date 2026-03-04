@@ -56,10 +56,22 @@ jobs:
         id: qa_copy
         run: |
           set -o pipefail
-          npm run i18n:qa-copy -- --ai-review --ai-required --ai-min-coverage 0.95 --ai-fail-on-errors | tee logs/i18n-qa-copy.log
+          qa_args=(
+            --ai-review
+            --ai-max-items 140
+            --ai-batch-size 10
+            --ai-retries 4
+            --ai-retry-backoff-s 4
+            --ai-batch-pause-s 2
+          )
+          if [ "${I18N_AI_STRICT:-0}" = "1" ]; then
+            qa_args+=(--ai-required --ai-min-coverage 0.95 --ai-fail-on-errors)
+          fi
+          npm run i18n:qa-copy -- "${qa_args[@]}" | tee logs/i18n-qa-copy.log
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+          I18N_AI_STRICT: ${{ vars.I18N_AI_STRICT }}
 
       - name: i18n sitemap parity report
         id: sitemap_report
