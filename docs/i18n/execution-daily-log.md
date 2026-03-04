@@ -198,3 +198,32 @@
    - Added gate script `scripts/check-rtl-visual-signoff.py` and npm command `i18n:check-rtl-signoff`.
    - Wired `Weekly i18n Acceptance` to enforce RTL signoff recency and publish `logs/i18n-rtl-signoff.log`.
 32. GitHub Actions `Weekly i18n Acceptance` manual run `22652826579`: passed with `rtl-visual-signoff: success` and all other acceptance gates green.
+
+## 2026-03-04 (Done)
+
+### Completed Today
+1. Enabled AI-assisted i18n QA using Gemini in weekly acceptance:
+   - `scripts/audit-i18n-translation-quality.py` now supports `--ai-review` with Gemini API.
+   - Added structured AI review output (`ai_review` summary + AI-origin issues in report JSON).
+   - Added `.env.example` keys: `GEMINI_API_KEY`, `GEMINI_MODEL`.
+2. Wired weekly workflow to execute AI QA:
+   - `i18n translation QA` now runs with Gemini environment variables and `--ai-review`.
+3. Hardened weekly parity-diff step against transient GitHub API failures:
+   - Added retry wrapper for previous-run/artifact fetch and artifact-zip download.
+   - Added graceful fallback to local-only diff when remote artifact fetch fails.
+4. Enforced non-silent AI fallback behavior:
+   - `Weekly i18n Acceptance` now runs `--ai-review --ai-required`.
+   - If `GEMINI_API_KEY` is absent in Actions, the QA step fails instead of silently skipping AI.
+5. Triggered and validated weekly acceptance runs:
+   - Run `22665294185`: failed due to transient `gh api` HTTP 502 in parity-diff step (now fixed).
+   - Run `22665392792`: passed after retry/fallback hardening.
+   - Run `22667390778`: passed with Gemini secret present and AI review active.
+
+### Evidence Snapshot (2026-03-04)
+1. GitHub Actions `Weekly i18n Acceptance` run `22667390778`: passed (all critical gates green).
+2. `i18n translation QA` logs on run `22667390778`:
+   - `GEMINI_API_KEY: ***` (secret injected)
+   - `ai_status=completed`
+   - `ai_flagged=0`
+3. Local gate check:
+   - `npm run check:quality` passed with `i18n blog copy checks ok: localized=29/29 coverage=1.000`.
