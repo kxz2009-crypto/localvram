@@ -548,12 +548,12 @@
         "pt": {
           "title": "DeepSeek R1 14B em RTX 3090: Guia Prático de Benchmark (2026)",
           "description": "Um guia prático de benchmark para deepseek r1 14b em RTX 3090, incluindo taxa de transferência esperada, compensações de latência e limites de implantação.",
-          "cta_line": "Use resultados medidos na 3090 como baseline e compare uma op??o de fallback antes de escalar."
+          "cta_line": "Use resultados medidos na 3090 como baseline e compare uma opção de fallback antes de escalar."
         },
         "fr": {
           "title": "DeepSeek R1 14B sur RTX 3090 : Guide Pratique de Benchmark (2026)",
           "description": "Un guide de référence pratique pour deepseek r1 14b sur RTX 3090, comprenant le débit attendu, les compromis de latence et les limites de déploiement.",
-          "cta_line": "Utilisez les mesures 3090 comme base et comparez une option de fallback avant d'?tendre."
+          "cta_line": "Utilisez les mesures 3090 comme base et comparez une option de fallback avant d'étendre."
         },
         "de": {
           "title": "DeepSeek R1 14B auf RTX 3090: Benchmark-Praxisleitfaden (2026)",
@@ -730,7 +730,7 @@
         "fr": {
           "title": "Mise à jour du benchmark d'inférence locale Ministral-3:14B : Guide pratique (2026)",
           "description": "Une mise à jour pratique de référence pour l'inférence locale ministral-3:14b, couvrant de nouveaux signaux de performance, les limites de stabilité et les actions de déploiement.",
-          "cta_line": "Utilisez les preuves benchmark mises ? jour pour choisir tuning prompt, changement de tier ou burst cloud temporaire."
+          "cta_line": "Utilisez les preuves benchmark mises à jour pour choisir tuning prompt, changement de tier ou burst cloud temporaire."
         },
         "de": {
           "title": "Ministral-3:14B Local-Inference Benchmark Update: Praxisleitfaden (2026)",
@@ -777,7 +777,7 @@
       },
       "locales": {
         "es": {
-          "title": "DeepSeek-R1 en RTX 3090: Qu? Funciona de Verdad",
+          "title": "DeepSeek-R1 en RTX 3090: Qué Funciona de Verdad",
           "description": "Expectativas prácticas para los modelos de clase DeepSeek-R1 en RTX 3090, incluidos límites de ajuste, riesgos de estabilidad y comprobaciones de ejecución sostenida.",
           "cta_line": "Usa 3090 como baseline local de alto valor y define fallback cloud para picos de contexto largo."
         },
@@ -954,7 +954,7 @@
       },
       "locales": {
         "es": {
-          "title": "Modelos para 24GB VRAM que S? Corren en Ollama",
+          "title": "Modelos para 24GB VRAM que Sí Corren en Ollama",
           "description": "Una lista práctica de modelos que realmente funcionan con 24 GB VRAM con expectativas de ajuste realistas y consideraciones de estabilidad.",
           "cta_line": "Trate la compatibilidad como objetivos de ejecución verificados, no como afirmaciones teóricas de tarjetas modelo."
         },
@@ -1318,7 +1318,7 @@
           "cta_line": "Execute testes cegos em seus prompts de produção antes de bloquear os padrões de quantização."
         },
         "fr": {
-          "title": "Qualit? Q4 vs Q8 dans Ollama : Guide Pratique (2026)",
+          "title": "Qualité Q4 vs Q8 dans Ollama : Guide Pratique (2026)",
           "description": "Un guide de décision pratique pour les compromis de qualité entre le quatrième et le huitième trimestre en Ollama, axé sur le comportement rapide réel et le risque de déploiement.",
           "cta_line": "Faites des tests aveugles sur vos prompts de production avant de figer la quantification."
         },
@@ -1378,7 +1378,7 @@
         },
         "fr": {
           "title": "Corriger CUDA Out of Memory dans Ollama en 5 Minutes",
-          "description": "Parcours de correction rapide orient? terminal pour les erreurs CUDA OOM courantes dans Ollama.",
+          "description": "Parcours de correction rapide orienté terminal pour les erreurs CUDA OOM courantes dans Ollama.",
           "cta_line": "Réduisez la pression de quantification, le contexte et les couches GPU en séquence avant de changer de matériel."
         },
         "de": {
@@ -1443,7 +1443,7 @@
         "de": {
           "title": "Lokaler LLM Customer-Support RAG-Stack: Praxisleitfaden (2026)",
           "description": "Ein praktischer Leitfaden zum Aufbau eines lokalen RAG-Stacks für den Kundensupport mit Latenz-, Qualitäts- und Kostenleitplanken.",
-          "cta_line": "Zuerst Retrieval und Antwort-Templates stabilisieren, dann auf gr??ere Modell-Tiers skalieren."
+          "cta_line": "Zuerst Retrieval und Antwort-Templates stabilisieren, dann auf größere Modell-Tiers skalieren."
         },
         "ru": {
           "title": "Локальная LLM служба поддержки клиентов RAG Stack: Практическое руководство (2026 г.)",
@@ -1485,12 +1485,12 @@
       },
       "locales": {
         "es": {
-          "title": "Sigue siendo el Rey del VRAM: Por qu? recomendamos RTX 3090 en 2026",
+          "title": "Sigue siendo el Rey del VRAM: Por qué recomendamos RTX 3090 en 2026",
           "description": "Por qué RTX 3090 sigue siendo la puerta de enlace de 24 GB más práctica para cargas de trabajo locales de clase 70B en 2026.",
           "cta_line": "Prioriza estabilidad verificada por costo, no solo titulares de picos de benchmark."
         },
         "pt": {
-          "title": "Ainda ? o Rei do VRAM: Por que recomendamos a RTX 3090 em 2026",
+          "title": "Ainda é o Rei do VRAM: Por que recomendamos a RTX 3090 em 2026",
           "description": "Por que RTX 3090 continua sendo o gateway de 24 GB mais prático para cargas de trabalho locais de classe 70B em 2026.",
           "cta_line": "Priorize a estabilidade verificada por dólar, e não apenas os títulos de referência de pico."
         },
