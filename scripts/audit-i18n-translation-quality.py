@@ -333,6 +333,7 @@ def run_ai_review_queue(
     ai_issues: list[dict] = []
     seen: set[tuple[str, str, str, str]] = set()
     effective_batch_size = max(batch_size, 1)
+    consecutive_rate_limited_batches = 0
 
     for start in range(0, len(selected), effective_batch_size):
         batch = selected[start : start + effective_batch_size]
@@ -367,8 +368,6 @@ def run_ai_review_queue(
                 else:
                     last_error = exc
                 if attempt < attempts:
-                    if exc.code == 429:
-                        metadata["rate_limit_errors"] += 1
                     delay = compute_retry_delay_seconds(exc, attempt=attempt, base_backoff_s=retry_backoff_s)
                     time.sleep(delay)
             except (RuntimeError, urllib.error.URLError, TimeoutError) as exc:
@@ -378,9 +377,20 @@ def run_ai_review_queue(
         if last_error is not None:
             metadata["errors"] += 1
             if isinstance(last_error, urllib.error.HTTPError):
+                if last_error.code == 429:
+                    metadata["rate_limit_errors"] += 1
+                    consecutive_rate_limited_batches += 1
+                else:
+                    consecutive_rate_limited_batches = 0
                 LOGGER.warning("gemini review batch failed after retries: %s", format_http_error(last_error))
             else:
+                consecutive_rate_limited_batches = 0
                 LOGGER.warning("gemini review batch failed after retries: %s", last_error)
+            if consecutive_rate_limited_batches >= 2 and metadata["successful_batches"] == 0:
+                LOGGER.warning(
+                    "gemini review appears rate-limited (consecutive 429 batches); stopping early to avoid long no-op retries"
+                )
+                break
             continue
 
         covered_indices: set[int] = set()
@@ -435,15 +445,23 @@ def run_ai_review_queue(
         if covered_indices:
             metadata["successful_batches"] += 1
             metadata["reviewed_items"] += len(covered_indices)
+            consecutive_rate_limited_batches = 0
         else:
             metadata["errors"] += 1
+            consecutive_rate_limited_batches = 0
             LOGGER.warning("gemini review batch returned no valid index coverage")
         if batch_pause_s > 0 and (start + effective_batch_size) < len(selected):
             time.sleep(batch_pause_s)
 
     if metadata["items_selected"] > 0:
         metadata["coverage"] = round(float(metadata["reviewed_items"]) / float(metadata["items_selected"]), 4)
-    if metadata["successful_batches"] == 0 and metadata["items_selected"] > 0:
+    if (
+        metadata["successful_batches"] == 0
+        and metadata["items_selected"] > 0
+        and metadata["rate_limit_errors"] > 0
+    ):
+        metadata["status"] = "rate_limited"
+    elif metadata["successful_batches"] == 0 and metadata["items_selected"] > 0:
         metadata["status"] = "no_successful_batches"
     elif metadata["errors"] > 0:
         metadata["status"] = "completed_with_errors"
@@ -662,8 +680,11 @@ def main() -> None:
                 summary["issues"] += 1
                 issues.append(item)
             issues.sort(key=lambda x: (-x["priority"], x["locale"], x["page_id"], x["field"], x["code"]))
-            if args.ai_required and ai_summary.get("status") == "no_successful_batches":
-                LOGGER.error("i18n translation qa failed: no successful Gemini review batches")
+            if args.ai_required and ai_summary.get("status") in {"no_successful_batches", "rate_limited"}:
+                LOGGER.error(
+                    "i18n translation qa failed: no successful Gemini review batches (status=%s)",
+                    ai_summary.get("status"),
+                )
                 sys.exit(1)
             if args.ai_required and float(ai_summary.get("coverage", 0.0)) < float(args.ai_min_coverage):
                 LOGGER.error(
