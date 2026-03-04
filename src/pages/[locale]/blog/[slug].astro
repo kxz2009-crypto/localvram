@@ -1,11 +1,36 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
 import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 import { resolveBlogCopy } from "../../../lib/i18n-blog-copy";
+import { resolveBlogBody } from "../../../lib/i18n-blog-body";
+
+const markdownProcessorPromise = createMarkdownProcessor({ syntaxHighlight: false });
+
+const rewriteEnglishLinksToLocale = (html: string, locale: string): string => {
+  const localPrefix = `/${locale}/`;
+  return html
+    .replace(
+      /(href|src)=(["'])\/en\/([^"']*)\2/g,
+      (_match, attr: string, quote: string, rest: string) => `${attr}=${quote}${localPrefix}${rest}${quote}`,
+    )
+    .replace(
+      /(href|src)=(["'])https:\/\/localvram\.com\/en\/([^"']*)\2/g,
+      (_match, attr: string, quote: string, rest: string) => `${attr}=${quote}https://localvram.com${localPrefix}${rest}${quote}`,
+    )
+    .replace(
+      />(\s*)\/en\/([^<]+)</g,
+      (_match, leading: string, rest: string) => `>${leading}${localPrefix}${rest}<`,
+    )
+    .replace(
+      />(\s*)https:\/\/localvram\.com\/en\/([^<]+)</g,
+      (_match, leading: string, rest: string) => `>${leading}https://localvram.com${localPrefix}${rest}<`,
+    );
+};
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => data.lang === "en");
@@ -21,6 +46,10 @@ const { locale, post } = Astro.props as { locale: ComLocale; post: any };
 const localeUpper = locale.toUpperCase();
 const enPath = `/en/blog/${post.slug}/`;
 const pagePath = withLocale(locale, enPath);
+const bodyResolution = resolveBlogBody(post.slug, locale, post.body || "");
+const markdownProcessor = await markdownProcessorPromise;
+const rendered = await markdownProcessor.render(bodyResolution.markdown);
+const localizedHtml = rewriteEnglishLinksToLocale(rendered.code, locale);
 const home = resolvePageCopy("locale-home", locale, { localeUpper }).fields;
 const defaultCtaLine = home.hero_intro || "";
 const blogCopy = resolveBlogCopy(post.slug, locale, {
@@ -37,7 +66,7 @@ const text = copy.fields;
 const showExtraCtaLine = Boolean(blogCopy.ctaLine && blogCopy.ctaLine !== text.rollout_intro);
 const shouldNoindex = shouldNoindexByFallback(
   locale,
-  Math.max(copy.fallbackRatio, blogCopy.fallbackRatio),
+  Math.max(copy.fallbackRatio, blogCopy.fallbackRatio, bodyResolution.isLocalized ? 0 : 1),
 );
 ---
 
@@ -56,10 +85,14 @@ const shouldNoindex = shouldNoindexByFallback(
       <p>{text.rollout_intro}</p>
       {showExtraCtaLine && <p>{blogCopy.ctaLine}</p>}
       <div class="cta-row">
-        <a class="btn btn-primary" href={enPath}>{text.cta_open_english}</a>
-        <a class="btn" href={withLocale(locale, "/en/blog/")}>{text.cta_back_hub}</a>
-        <a class="btn" href={withLocale(locale, "/en/status/content-publish/")}>{home.cta_content_publish}</a>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/blog/")}>{text.cta_back_hub}</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{home.cta_start_vram}</a>
+        <a class="btn" href={withLocale(locale, "/en/errors/")}>{home.cta_error_kb}</a>
       </div>
+    </section>
+
+    <section class="prose">
+      <div set:html={localizedHtml} />
     </section>
 
     <section class="card-grid">

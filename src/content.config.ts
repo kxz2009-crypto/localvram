@@ -12,4 +12,11 @@ const blog = defineCollection({
   })
 });
 
-export const collections = { blog };
+const blogI18n = defineCollection({
+  type: "content"
+});
+
+export const collections = {
+  blog,
+  "blog-i18n": blogI18n
+};

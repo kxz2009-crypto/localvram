@@ -66,9 +66,8 @@ const shouldNoindex = shouldNoindexByFallback(
       <p>{description}</p>
       <p>{bridgeText.rollout_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={enPath}>{bridgeText.cta_open_english}</a>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/status/content-publish/")}>{home.cta_content_publish}</a>
         <a class="btn" href={withLocale(locale, "/en/")}>{home.cta_model_catalog}</a>
-        <a class="btn" href={withLocale(locale, "/en/status/content-publish/")}>{home.cta_content_publish}</a>
       </div>
     </section>
 

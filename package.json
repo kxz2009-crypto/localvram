@@ -15,6 +15,8 @@
     "i18n:apply-pack": "python scripts/apply-i18n-translation-pack.py",
     "i18n:apply-wave": "python scripts/apply-i18n-wave.py",
     "i18n:pack-status": "python scripts/i18n-pack-status.py",
+    "i18n:blog-body:auto-fill": "python scripts/auto-fill-i18n-blog-body.py",
+    "i18n:blog-body:status": "python scripts/i18n-blog-body-status.py",
     "i18n:validate-packs": "python scripts/validate-i18n-packs.py",
     "i18n:qa-copy": "python scripts/audit-i18n-translation-quality.py",
     "i18n:sitemap-report": "python scripts/i18n-sitemap-section-report.py",
