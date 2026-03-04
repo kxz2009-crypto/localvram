@@ -18,7 +18,8 @@ COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
 GLOSSARY_PATH = ROOT / "src" / "data" / "i18n-glossary.json"
 OUT_PATH = ROOT / "dist" / "seo-audit" / "i18n-translation-qa.json"
 GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
-GEMINI_MODEL_DEFAULT = (os.environ.get("GEMINI_MODEL", "") or "").strip() or "gemini-2.0-flash"
+GEMINI_MODEL_FALLBACK = "gemini-2.0-flash"
+GEMINI_MODEL_DEFAULT = (os.environ.get("GEMINI_MODEL", "") or "").strip() or GEMINI_MODEL_FALLBACK
 
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
 PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
@@ -272,6 +273,7 @@ def run_ai_review_queue(
     metadata = {
         "enabled": True,
         "model": model,
+        "effective_model": model,
         "max_items": max_items,
         "batch_size": batch_size,
         "items_selected": 0,
@@ -303,7 +305,30 @@ def run_ai_review_queue(
                 reviews = call_gemini_batch(batch, api_key=api_key, model=model, timeout_s=timeout_s)
                 last_error = None
                 break
-            except (RuntimeError, urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as exc:
+            except urllib.error.HTTPError as exc:
+                if exc.code == 404 and model != GEMINI_MODEL_FALLBACK:
+                    try:
+                        reviews = call_gemini_batch(
+                            batch,
+                            api_key=api_key,
+                            model=GEMINI_MODEL_FALLBACK,
+                            timeout_s=timeout_s,
+                        )
+                        metadata["effective_model"] = GEMINI_MODEL_FALLBACK
+                        LOGGER.warning(
+                            "gemini model '%s' not found; fallback to '%s' succeeded",
+                            model,
+                            GEMINI_MODEL_FALLBACK,
+                        )
+                        last_error = None
+                        break
+                    except (RuntimeError, urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as fallback_exc:
+                        last_error = fallback_exc
+                else:
+                    last_error = exc
+                if attempt < attempts:
+                    time.sleep(max(retry_backoff_s, 1) * attempt)
+            except (RuntimeError, urllib.error.URLError, TimeoutError) as exc:
                 last_error = exc
                 if attempt < attempts:
                     time.sleep(max(retry_backoff_s, 1) * attempt)
@@ -450,7 +475,7 @@ def main() -> None:
         help="Fail when any Gemini batch still fails after retries.",
     )
     args = parser.parse_args()
-    ai_model = (str(args.ai_model or "").strip()) or "gemini-2.0-flash"
+    ai_model = (str(args.ai_model or "").strip()) or GEMINI_MODEL_FALLBACK
 
     copy_data = json.loads(COPY_PATH.read_text(encoding="utf-8"))
     glossary_data = json.loads(GLOSSARY_PATH.read_text(encoding="utf-8"))
@@ -536,6 +561,7 @@ def main() -> None:
         "enabled": bool(args.ai_review),
         "status": "disabled",
         "model": ai_model,
+        "effective_model": ai_model,
         "max_items": args.ai_max_items,
         "batch_size": args.ai_batch_size,
         "items_selected": 0,
@@ -623,6 +649,7 @@ def main() -> None:
         f"high={report['summary']['high']} "
         f"medium={report['summary']['medium']} "
         f"ai_status={report['ai_review']['status']} "
+        f"ai_model={report['ai_review']['effective_model']} "
         f"ai_flagged={report['ai_review']['flagged']} "
         f"ai_coverage={report['ai_review']['coverage']} "
         f"ai_errors={report['ai_review']['errors']} "
