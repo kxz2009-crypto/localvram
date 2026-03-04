@@ -482,49 +482,49 @@
       },
       "locales": {
         "es": {
-          "title": "Requisitos de VRAM para Qwen3.5 35B: Gu?a Pr?ctica (2026)",
-          "description": "Gu?a pr?ctica sobre requisitos de VRAM de qwen3.5 35b, con l?mites de viabilidad local, riesgos de estabilidad y disparadores de fallback cloud.",
+          "title": "Qwen3.5 35B VRAM Requisitos: Guía Práctica (2026)",
+          "description": "Una guía práctica para los requisitos de qwen3.5 35b VRAM, con límites de viabilidad locales, riesgos de estabilidad y activadores de respaldo de la nube.",
           "cta_line": "Valida primero el margen de VRAM y define fallback cloud para contexto largo o picos."
         },
         "pt": {
-          "title": "Requisitos de VRAM do Qwen3.5 35B: Guia Pr?tico (2026)",
-          "description": "Guia pr?tico sobre requisitos de VRAM do qwen3.5 35b, com limites de viabilidade local, riscos de estabilidade e gatilhos de fallback cloud.",
+          "title": "Qwen3.5 35B VRAM Requisitos: Guia Prático (2026)",
+          "description": "Um guia prático para requisitos qwen3.5 35b VRAM, com limites de viabilidade locais, riscos de estabilidade e gatilhos de fallback na nuvem.",
           "cta_line": "Valide primeiro a folga de VRAM e defina fallback cloud para contexto longo ou picos."
         },
         "fr": {
           "title": "Exigences VRAM de Qwen3.5 35B : Guide Pratique (2026)",
-          "description": "Guide pratique des exigences VRAM de qwen3.5 35b, avec limites de faisabilit? locale, risques de stabilit? et d?clencheurs de fallback cloud.",
-          "cta_line": "Validez d'abord la marge VRAM, puis d?finissez un fallback cloud pour contexte long ou pics."
+          "description": "Un guide pratique des exigences de qwen3.5 35b VRAM, avec les limites de faisabilité locales, les risques de stabilité et les déclencheurs de repli du cloud.",
+          "cta_line": "Validez d'abord la marge VRAM, puis définissez une politique de secours cloud pour les sessions à contexte long ou de pointe."
         },
         "de": {
           "title": "Qwen3.5 35B VRAM-Anforderungen: Praxisleitfaden (2026)",
-          "description": "Praxisleitfaden zu qwen3.5-35b-VRAM-Anforderungen mit lokalen Machbarkeitsgrenzen, Stabilit?tsrisiken und Cloud-Fallback-Triggern.",
-          "cta_line": "Pr?fe zuerst VRAM-Reserve und definiere dann Cloud-Fallback f?r lange Kontexte oder Lastspitzen."
+          "description": "Ein praktischer Leitfaden zu den Anforderungen von qwen3.5 35b VRAM mit lokalen Machbarkeitsgrenzen, Stabilitätsrisiken und Cloud-Fallback-Auslösern.",
+          "cta_line": "Überprüfen Sie zuerst den Headroom von VRAM und definieren Sie dann eine Cloud-Fallback-Richtlinie für lange Kontext- oder Spitzensitzungen."
         },
         "ru": {
-          "title": "?????????? VRAM ??? Qwen3.5 35B: ???????????? ??????????? (2026)",
-          "description": "???????????? ??????????? ?? ??????????? VRAM ??? qwen3.5 35b: ??????? ?????????? ???????, ????? ???????????? ? ???????? cloud fallback.",
-          "cta_line": "??????? ????????? ????? VRAM, ????? ??????? ??????? ???????? ? ?????? ??? ???????? ????????? ? ?????."
+          "title": "Qwen3.5 35B VRAM Требования: Практическое руководство (2026 г.)",
+          "description": "Практическое руководство по требованиям qwen3.5 35b VRAM с локальными границами осуществимости, рисками стабильности и триггерами перехода к облаку.",
+          "cta_line": "Сначала проверьте запас VRAM, а затем определите резервную политику облака для длительных или пиковых сеансов."
         },
         "ja": {
-          "title": "Qwen3.5 35B ?VRAM??: ??????2026?",
-          "description": "qwen3.5 35b ?VRAM????????????????????????????????????????????",
-          "cta_line": "??VRAM???????????????????????????????????????"
+          "title": "Qwen3.5 35B VRAM 要件: 実践ガイド (2026)",
+          "description": "qwen3.5 35b VRAM 要件に関する実用的なガイド。ローカルの実現可能性の境界、安定性のリスク、クラウド フォールバック トリガーが含まれます。",
+          "cta_line": "最初に VRAM のヘッドルームを検証してから、ロングコンテキストまたはピークセッション用のクラウドフォールバックポリシーを定義します。"
         },
         "ko": {
-          "title": "Qwen3.5 35B VRAM ????: ?? ??? (2026)",
-          "description": "qwen3.5 35b VRAM ????? ?? ???? ??????. ?? ?? ??, ??? ???, ???? ?? ??? ?????.",
-          "cta_line": "?? VRAM ??? ????, ?? ????/?? ??? ???? ?? ??? ????."
+          "title": "Qwen3.5 35B VRAM 요구사항: 실용 가이드(2026)",
+          "description": "로컬 타당성 경계, 안정성 위험 및 클라우드 대체 트리거가 포함된 qwen3.5 35b VRAM 요구 사항에 대한 실용적인 가이드입니다.",
+          "cta_line": "먼저 VRAM 헤드룸을 검증한 다음 장기 컨텍스트 또는 최대 세션에 대한 클라우드 대체 정책을 정의합니다."
         },
         "ar": {
-          "title": "??????? VRAM ?????? Qwen3.5 35B: ???? ???? (2026)",
-          "description": "???? ???? ???????? VRAM ?????? ?? qwen3.5 35b? ?? ???? ??????? ?????? ?????? ????????? ??????? ??????? ??? ???????.",
-          "cta_line": "???? ????? ?? ???? VRAM ?? ???? ????? ?????? ??????? ??? ?????? ?????? ?? ??????."
+          "title": "Qwen3.5 35B VRAM المتطلبات: الدليل العملي (2026)",
+          "description": "دليل عملي لمتطلبات qwen3.5 35b VRAM، مع حدود الجدوى المحلية، ومخاطر الاستقرار، ومحفزات التراجع السحابي.",
+          "cta_line": "تحقق من صحة VRAM أولاً، ثم حدد سياسة احتياطية سحابية للسياق الطويل أو جلسات الذروة."
         },
         "hi": {
           "title": "Qwen3.5 35B VRAM Requirements: Practical Guide (2026)",
-          "description": "qwen3.5 35b ?? VRAM requirements ?? ?????????? ????, ?????? local feasibility limits, stability risks ?? cloud fallback triggers ????? ????",
-          "cta_line": "???? VRAM headroom ??????, ??? long context ?? peak load ?? ??? cloud fallback policy ?? ?????"
+          "description": "स्थानीय व्यवहार्यता सीमाओं, स्थिरता जोखिमों और क्लाउड फ़ॉलबैक ट्रिगर्स के साथ qwen3.5 35b VRAM आवश्यकताओं के लिए एक व्यावहारिक मार्गदर्शिका।",
+          "cta_line": "पहले VRAM हेडरूम को सत्यापित करें, फिर लंबे-संदर्भ या चरम सत्रों के लिए क्लाउड फ़ॉलबैक नीति परिभाषित करें।"
         },
         "id": {
           "title": "Kebutuhan VRAM Qwen3.5 35B: Panduan Praktis (2026)",
@@ -541,49 +541,49 @@
       },
       "locales": {
         "es": {
-          "title": "DeepSeek R1 14B en RTX 3090: Gu?a Pr?ctica de Benchmark (2026)",
-          "description": "Gu?a pr?ctica de benchmark para deepseek r1 14b en RTX 3090, con throughput esperado, tradeoffs de latencia y l?mites de despliegue.",
-          "cta_line": "Usa resultados medidos en 3090 como baseline y compara una opci?n de fallback antes de escalar."
+          "title": "DeepSeek R1 14B en RTX 3090: Guía práctica de referencia (2026)",
+          "description": "Una guía práctica de referencia para deepseek r1 14b en RTX 3090, que incluye el rendimiento esperado, las compensaciones de latencia y los límites de implementación.",
+          "cta_line": "Utilice los resultados medidos 3090 como punto de referencia y compare una opción alternativa antes de escalar."
         },
         "pt": {
-          "title": "DeepSeek R1 14B na RTX 3090: Guia Pr?tico de Benchmark (2026)",
-          "description": "Guia pr?tico de benchmark para deepseek r1 14b na RTX 3090, com throughput esperado, tradeoffs de lat?ncia e limites de implanta??o.",
+          "title": "DeepSeek R1 14B em RTX 3090: Guia Prático de Benchmark (2026)",
+          "description": "Um guia prático de benchmark para deepseek r1 14b em RTX 3090, incluindo taxa de transferência esperada, compensações de latência e limites de implantação.",
           "cta_line": "Use resultados medidos na 3090 como baseline e compare uma op??o de fallback antes de escalar."
         },
         "fr": {
           "title": "DeepSeek R1 14B sur RTX 3090 : Guide Pratique de Benchmark (2026)",
-          "description": "Guide pratique de benchmark pour deepseek r1 14b sur RTX 3090, avec d?bit attendu, compromis de latence et limites de d?ploiement.",
+          "description": "Un guide de référence pratique pour deepseek r1 14b sur RTX 3090, comprenant le débit attendu, les compromis de latence et les limites de déploiement.",
           "cta_line": "Utilisez les mesures 3090 comme base et comparez une option de fallback avant d'?tendre."
         },
         "de": {
           "title": "DeepSeek R1 14B auf RTX 3090: Benchmark-Praxisleitfaden (2026)",
-          "description": "Praxisnaher Benchmark-Leitfaden f?r deepseek r1 14b auf RTX 3090 mit erwartetem Durchsatz, Latenz-Trade-offs und Deploy-Grenzen.",
+          "description": "Ein praktischer Benchmark-Leitfaden für Deepseek R1 14b auf RTX 3090, einschließlich erwartetem Durchsatz, Latenzkompromissen und Bereitstellungsgrenzen.",
           "cta_line": "Nutze gemessene 3090-Werte als Basis und vergleiche eine Fallback-Option vor dem Skalieren."
         },
         "ru": {
-          "title": "DeepSeek R1 14B ?? RTX 3090: ???????????? ????????-???? (2026)",
-          "description": "???????????? ????????-???? ??? deepseek r1 14b ?? RTX 3090: ????????? throughput, ??????????? ?? ???????? ? ??????? ??????.",
-          "cta_line": "??????????? ????????? ?? 3090 ??? ???? ? ???????? ???? fallback-??????? ?? ???????????????."
+          "title": "DeepSeek R1 14B на RTX 3090: Практическое руководство по эталонному тестированию (2026 г.)",
+          "description": "Практическое руководство по тестированию Deepseek R1 14b на RTX 3090, включая ожидаемую пропускную способность, компромиссные решения по задержке и границы развертывания.",
+          "cta_line": "Используйте измеренные результаты 3090 в качестве базового уровня и сравните один резервный вариант перед масштабированием."
         },
         "ja": {
-          "title": "DeepSeek R1 14B + RTX 3090 ??????: ??????2026?",
-          "description": "deepseek r1 14b ? RTX 3090 ??????????????????????????????????????????????",
-          "cta_line": "3090 ?????????????? fallback ??1??????????"
+          "title": "DeepSeek RTX 3090 の R1 14B: ベンチマーク実践ガイド (2026)",
+          "description": "RTX 3090 のディープシーク r1 14b の実用的なベンチマーク ガイド。予想されるスループット、レイテンシのトレードオフ、展開の境界などを含みます。",
+          "cta_line": "3090 の測定結果をベースラインとして使用し、スケーリングする前に 1 つのフォールバック オプションを比較します。"
         },
         "ko": {
-          "title": "DeepSeek R1 14B + RTX 3090 ????: ?? ??? (2026)",
-          "description": "deepseek r1 14b? RTX 3090?? ???? ?? ???? ??????. ?? ???, ?? ??????, ?? ??? ????.",
-          "cta_line": "3090 ???? ????? ??, ?? ?? ?? ?? 1?? ?????."
+          "title": "RTX 3090의 DeepSeek R1 14B: 벤치마크 실용 가이드(2026)",
+          "description": "예상 처리량, 대기 시간 상쇄 및 배포 경계를 포함하여 RTX 3090의 deepseek r1 14b에 대한 실제 벤치마크 가이드입니다.",
+          "cta_line": "측정된 3090개 결과를 기준으로 사용하고 확장하기 전에 하나의 대체 옵션을 비교하십시오."
         },
         "ar": {
-          "title": "Benchmark ???? ?? DeepSeek R1 14B ??? RTX 3090 (2026)",
-          "description": "???? Benchmark ???? ?? deepseek r1 14b ??? RTX 3090 ???? throughput ??????? ???????? ??? ????????? ????? ?????.",
-          "cta_line": "????? ????? 3090 ??????? ??? ???? ????? ???? fallback ???? ??? ??????."
+          "title": "DeepSeek R1 14B في RTX 3090: الدليل العملي المعياري (2026)",
+          "description": "دليل مرجعي عملي لـ Deepseek r1 14b على RTX 3090، بما في ذلك الإنتاجية المتوقعة، ومقايضات زمن الوصول، وحدود النشر.",
+          "cta_line": "استخدم 3090 نتيجة تم قياسها كخط أساس وقارن خيارًا احتياطيًا واحدًا قبل القياس."
         },
         "hi": {
           "title": "DeepSeek R1 14B on RTX 3090: Benchmark Practical Guide (2026)",
-          "description": "RTX 3090 ?? deepseek r1 14b ?? ??? practical benchmark ????, ?????? expected throughput, latency tradeoffs ?? deployment boundaries ????? ????",
-          "cta_line": "3090 ?? measured results ?? baseline ????? ?? scale ???? ?? ???? ?? fallback option compare ?????"
+          "description": "RTX 3090 पर डीपसीक आर1 14बी के लिए एक व्यावहारिक बेंचमार्क गाइड, जिसमें अपेक्षित थ्रूपुट, विलंबता ट्रेडऑफ़ और परिनियोजन सीमाएँ शामिल हैं।",
+          "cta_line": "मापे गए 3090 परिणामों को अपनी आधार रेखा के रूप में उपयोग करें और स्केलिंग से पहले एक फ़ॉलबैक विकल्प की तुलना करें।"
         },
         "id": {
           "title": "DeepSeek R1 14B di RTX 3090: Panduan Benchmark Praktis (2026)",
@@ -600,49 +600,49 @@
       },
       "locales": {
         "es": {
-          "title": "DeepSeek R1 32B: Cu?ndo Alquilar GPU Cloud y Cu?ndo Seguir Local (2026)",
-          "description": "Gu?a pr?ctica para deepseek r1 32b: cu?ndo local alcanza, cu?ndo conviene alquilar GPU cloud y c?mo limitar costos.",
+          "title": "DeepSeek R1 32B: Cuándo alquilar la nube GPU frente a permanecer local (2026)",
+          "description": "Una guía de decisión práctica para deepseek r1 32b: cuándo lo local es suficiente, cuándo se justifica el alquiler de la nube GPU y cómo limitar los costos.",
           "cta_line": "Define umbrales objetivos por latencia y cola antes de decidir local vs cloud."
         },
         "pt": {
           "title": "DeepSeek R1 32B: Quando Alugar GPU Cloud vs Ficar Local (2026)",
-          "description": "Guia pr?tico para deepseek r1 32b: quando local ? suficiente, quando aluguel de GPU cloud compensa e como limitar custos.",
-          "cta_line": "Defina limiares objetivos por lat?ncia e fila antes de decidir local vs cloud."
+          "description": "Um guia prático de decisão para deepseek r1 32b: quando o local é suficiente, quando o aluguel da nuvem GPU é justificado e como limitar os custos.",
+          "cta_line": "Defina limites de troca objetivos por latência e profundidade da fila antes de decidir entre local e nuvem."
         },
         "fr": {
           "title": "DeepSeek R1 32B : Quand Louer un GPU Cloud vs Rester en Local (2026)",
-          "description": "Guide pratique pour deepseek r1 32b : quand le local suffit, quand louer un GPU cloud est justifi? et comment plafonner les co?ts.",
-          "cta_line": "D?finissez des seuils objectifs de latence et file d'attente avant de choisir local ou cloud."
+          "description": "Un guide de décision pratique pour deepseek r1 32b : quand le local est suffisant, quand la location du cloud GPU est justifiée et comment plafonner les coûts.",
+          "cta_line": "Définissez des seuils de commutation objectifs en fonction de la latence et de la profondeur de la file d'attente avant de choisir entre local et cloud."
         },
         "de": {
           "title": "DeepSeek R1 32B: Wann Cloud-GPU mieten und wann lokal bleiben (2026)",
-          "description": "Praxisleitfaden f?r deepseek r1 32b: wann lokal reicht, wann Cloud-GPU-Miete sinnvoll ist und wie Kosten begrenzt werden.",
-          "cta_line": "Lege objektive Umschaltwerte f?r Latenz und Queue fest, bevor du lokal vs Cloud entscheidest."
+          "description": "Ein praktischer Entscheidungsleitfaden für DeepSeek R1 32B: Wann lokal ausreicht, wann Cloud-Miete gerechtfertigt ist und wie man die Kosten begrenzen kann.",
+          "cta_line": "Legen Sie objektive Switch-Schwellenwerte nach Latenz und Warteschlangentiefe fest, bevor Sie sich für lokal oder cloud entscheiden."
         },
         "ru": {
-          "title": "DeepSeek R1 32B: ????? ?????????? ???????? GPU, ? ????? ?????????? ???????? (2026)",
-          "description": "???????????? ??????????? ??? deepseek r1 32b: ????? ?????????? ??????? ??????????, ????? ????????? ?????? cloud GPU ? ??? ?????????? ???????.",
-          "cta_line": "??????? ??????????? ?????? ?? ???????? ? ??????? ?? ?????? local vs cloud."
+          "title": "DeepSeek R1 32B: Когда арендовать облако GPU или оставаться локальным (2026)",
+          "description": "Практическое руководство по принятию решений для deepseek r1 32b: когда локального достаточно, когда аренда облака GPU оправдана и как ограничить затраты.",
+          "cta_line": "Установите целевые пороговые значения переключения по задержке и глубине очереди, прежде чем выбирать локальное или облачное решение."
         },
         "ja": {
-          "title": "DeepSeek R1 32B: ????GPU??????????????????2026?",
-          "description": "deepseek r1 32b ????????????????????????GPU????????????????????????",
-          "cta_line": "????/????????????????????????????????????"
+          "title": "DeepSeek R1 32B: クラウドをレンタルする場合 GPU とローカルに留まる場合 (2026)",
+          "description": "deepseek r1 32b の実践的な意思決定ガイド: ローカルで十分な場合、クラウド GPU のレンタルが正当化される場合、およびコストの上限を設定する方法。",
+          "cta_line": "ローカルかクラウドかを決定する前に、遅延とキューの深さによって目的のスイッチしきい値を設定します。"
         },
         "ko": {
-          "title": "DeepSeek R1 32B: ???? GPU ?? ?? vs ?? ?? ?? (2026)",
-          "description": "deepseek r1 32b ?? ???? ??????. ??? ??? ??, ???? GPU ??? ??? ??, ?? ?? ?? ??? ????.",
-          "cta_line": "??/???? ??? ??? ?? ?? ??? ? ?? ??? ?? ???? ????."
+          "title": "DeepSeek R1 32B: 클라우드 GPU 임대 시기와 현지 유지(2026)",
+          "description": "deepseek r1 32b에 대한 실용적인 의사 결정 가이드: 로컬이 충분한 경우, 클라우드 GPU 임대가 정당화되는 경우 및 비용 제한 방법.",
+          "cta_line": "로컬과 클라우드를 결정하기 전에 지연 시간과 대기열 깊이를 기준으로 객관적인 스위치 임계값을 설정하세요."
         },
         "ar": {
-          "title": "DeepSeek R1 32B: ??? ?????? GPU ????? ???? ???? ?????? (2026)",
-          "description": "???? ???? ?? deepseek r1 32b ???? ??? ???? ??????? ?????? ???? ???? ??????? GPU ????? ?????? ?????? ??? ??? ???????.",
-          "cta_line": "???? ????? ?????? ??????? ??? ??? ????????? ???? ??????? ??? ???? ?????? ????? ???????."
+          "title": "DeepSeek R1 32B: متى تستأجر السحابة GPU مقابل البقاء محليًا (2026)",
+          "description": "دليل قرار عملي لـ Deepseek r1 32b: عندما يكون المحلي كافيًا، عندما يكون تأجير السحابة GPU مبررًا، وكيفية الحد من التكاليف.",
+          "cta_line": "قم بتعيين حدود التبديل الموضوعية حسب زمن الوصول وعمق قائمة الانتظار قبل تحديد المستوى المحلي مقابل السحابة."
         },
         "hi": {
-          "title": "DeepSeek R1 32B: ?? Cloud GPU ????? ?? ??? ?? ?? Local ???? (2026)",
-          "description": "deepseek r1 32b ?? ??? practical decision ????: ?? local ???????? ??, ?? cloud GPU rental ???? ??, ?? ???? ???? ????? ?????",
-          "cta_line": "local vs cloud ?? ???? ?? ???? latency ?? queue depth ?????? switch thresholds ??? ?????"
+          "title": "DeepSeek R1 32बी: क्लाउड GPU कब किराए पर लें बनाम स्थानीय रहें (2026)",
+          "description": "डीपसीक आर1 32बी के लिए एक व्यावहारिक निर्णय मार्गदर्शिका: जब स्थानीय पर्याप्त हो, जब क्लाउड GPU किराया उचित हो, और लागत को कैसे सीमित किया जाए।",
+          "cta_line": "स्थानीय बनाम क्लाउड तय करने से पहले विलंबता और कतार की गहराई के आधार पर उद्देश्य स्विच थ्रेशोल्ड सेट करें।"
         },
         "id": {
           "title": "DeepSeek R1 32B: Kapan Sewa GPU Cloud vs Tetap Lokal (2026)",
@@ -659,49 +659,49 @@
       },
       "locales": {
         "es": {
-          "title": "Actualizaci?n de Benchmark de Inferencia Local Qwen2.5:14B: Gu?a Pr?ctica (2026)",
-          "description": "Actualizaci?n pr?ctica de benchmark para inferencia local qwen2.5:14b, con contexto de throughput reciente, chequeos de estabilidad y gu?a de despliegue.",
-          "cta_line": "Usa el delta de benchmark m?s reciente para decidir entre tuning, cambio de modelo o cloud burst."
+          "title": "Qwen2.5:14B Actualización del punto de referencia de inferencia local: guía práctica (2026)",
+          "description": "Una práctica actualización de referencia para la inferencia local qwen2.5:14b, con un nuevo contexto de rendimiento, comprobaciones de estabilidad y orientación de implementación.",
+          "cta_line": "Utilice el delta de referencia más reciente para decidir si el siguiente paso correcto es el ajuste, el cambio de modelo o la explosión de la nube."
         },
         "pt": {
-          "title": "Atualiza??o de Benchmark de Infer?ncia Local Qwen2.5:14B: Guia Pr?tico (2026)",
-          "description": "Atualiza??o pr?tica de benchmark para infer?ncia local qwen2.5:14b, com contexto de throughput recente, checagens de estabilidade e guia de implanta??o.",
+          "title": "Qwen2.5:14B Atualização de benchmark de inferência local: Guia prático (2026)",
+          "description": "Uma atualização prática de benchmark para inferência local qwen2.5:14b, com novo contexto de taxa de transferência, verificações de estabilidade e orientação de implantação.",
           "cta_line": "Use o delta mais recente de benchmark para decidir entre tuning, troca de modelo ou cloud burst."
         },
         "fr": {
-          "title": "Mise ? Jour Benchmark d'Inf?rence Locale Qwen2.5:14B : Guide Pratique (2026)",
-          "description": "Mise ? jour pratique du benchmark local qwen2.5:14b, avec contexte de d?bit r?cent, v?rifications de stabilit? et recommandations de d?ploiement.",
-          "cta_line": "Utilisez le delta benchmark r?cent pour choisir entre tuning, changement de mod?le ou burst cloud."
+          "title": "Qwen2.5:14B Mise à jour du benchmark d'inférence locale : Guide pratique (2026)",
+          "description": "Une mise à jour de référence pratique pour l'inférence locale qwen2.5:14b, avec un nouveau contexte de débit, des contrôles de stabilité et des conseils de déploiement.",
+          "cta_line": "Utilisez le dernier delta de référence pour décider si le réglage, l'échange de modèle ou le cloud burst est la prochaine étape appropriée."
         },
         "de": {
           "title": "Qwen2.5:14B Local-Inference Benchmark Update: Praxisleitfaden (2026)",
-          "description": "Praktisches Benchmark-Update f?r lokale qwen2.5:14b-Inferenz mit aktuellem Durchsatzkontext, Stabilit?tschecks und Deployment-Leitfaden.",
+          "description": "Ein praktisches Benchmark-Update für die lokale Inferenz qwen2.5:14b mit neuem Durchsatzkontext, Stabilitätsprüfungen und Bereitstellungsanleitungen.",
           "cta_line": "Nutze das aktuelle Benchmark-Delta, um zwischen Tuning, Modellwechsel oder Cloud-Burst zu entscheiden."
         },
         "ru": {
-          "title": "?????????? ?????????? ????????? Qwen2.5:14B: ???????????? ??????????? (2026)",
-          "description": "???????????? ?????????? ????????? ????????? ?????????? qwen2.5:14b: ?????? throughput-????????, ???????? ???????????? ? ???????????? ?? ??????.",
-          "cta_line": "??????????? ?????? ???????? ?????????, ????? ??????? tuning, ????? ?????? ??? cloud burst."
+          "title": "Qwen2.5:14B Обновление теста локального вывода: Практическое руководство (2026 г.)",
+          "description": "Практическое обновление тестов для локального вывода qwen2.5:14b с новым контекстом пропускной способности, проверками стабильности и руководством по развертыванию.",
+          "cta_line": "Используйте последнюю разницу в тестах, чтобы решить, является ли настройка, замена модели или облачный всплеск правильным следующим шагом."
         },
         "ja": {
-          "title": "Qwen2.5:14B ??????????????: ??????2026?",
-          "description": "qwen2.5:14b ????????????????????????????????????????????????",
-          "cta_line": "??????????????????????????????????????????"
+          "title": "Qwen2.5:14B ローカル推論ベンチマークの更新: 実践ガイド (2026)",
+          "description": "qwen2.5:14b ローカル推論の実用的なベンチマークの更新。新しいスループット コンテキスト、安定性チェック、展開ガイダンスが含まれます。",
+          "cta_line": "最新のベンチマーク デルタを使用して、チューニング、モデル スワップ、またはクラウド バーストが次の正しいステップであるかどうかを判断します。"
         },
         "ko": {
-          "title": "Qwen2.5:14B ?? ?? ???? ????: ?? ??? (2026)",
-          "description": "qwen2.5:14b ?? ?? ???? ?? ???????. ?? ??? ??, ??? ??, ?? ???? ?????.",
-          "cta_line": "?? ???? ???? ???? ??, ?? ??, ???? ??? ? ?? ??? ?????."
+          "title": "Qwen2.5:14B 로컬 추론 벤치마크 업데이트: 실용 가이드(2026)",
+          "description": "새로운 처리량 컨텍스트, 안정성 검사 및 배포 지침이 포함된 qwen2.5:14b 로컬 추론을 위한 실용적인 벤치마크 업데이트입니다.",
+          "cta_line": "최신 벤치마크 델타를 사용하여 튜닝, 모델 교환 또는 클라우드 버스트가 올바른 다음 단계인지 결정하세요."
         },
         "ar": {
-          "title": "????? Benchmark ????????? ?????? Qwen2.5:14B: ???? ???? (2026)",
-          "description": "????? ???? ??????? qwen2.5:14b ??????? ?? ???? throughput ???? ??????? ????????? ???????? ?????.",
-          "cta_line": "?????? ???? ???? ?????? ?????? ?? ??? ??? ?????? ?? tuning ?? ????? ??????? ?? cloud burst."
+          "title": "Qwen2.5:14B تحديث معيار الاستدلال المحلي: الدليل العملي (2026)",
+          "description": "تحديث معياري عملي للاستدلال المحلي qwen2.5:14b، مع سياق جديد للإنتاجية، وعمليات التحقق من الاستقرار، وإرشادات النشر.",
+          "cta_line": "استخدم أحدث دلتا معيارية لتحديد ما إذا كان الضبط أو تبديل النموذج أو انفجار السحابة هو الخطوة التالية الصحيحة."
         },
         "hi": {
           "title": "Qwen2.5:14B Local Inference Benchmark Update: Practical Guide (2026)",
-          "description": "qwen2.5:14b ???? ??????? ?? ??? practical benchmark ?????, ?????? ??? throughput context, stability checks ?? deployment guidance ????? ???",
-          "cta_line": "?? benchmark delta ?? ???? ?? ?? ????: tuning, model swap, ?? cloud burst ??? ???? ???? ??? ??? ???"
+          "description": "ताज़ा थ्रूपुट संदर्भ, स्थिरता जांच और परिनियोजन मार्गदर्शन के साथ qwen2.5:14b स्थानीय अनुमान के लिए एक व्यावहारिक बेंचमार्क अपडेट।",
+          "cta_line": "यह तय करने के लिए नवीनतम बेंचमार्क डेल्टा का उपयोग करें कि ट्यूनिंग, मॉडल स्वैप, या क्लाउड बर्स्ट सही अगला कदम है या नहीं।"
         },
         "id": {
           "title": "Pembaruan Benchmark Inferensi Lokal Qwen2.5:14B: Panduan Praktis (2026)",
@@ -718,49 +718,49 @@
       },
       "locales": {
         "es": {
-          "title": "Actualizaci?n de Benchmark de Inferencia Local Ministral-3:14B: Gu?a Pr?ctica (2026)",
-          "description": "Actualizaci?n pr?ctica de benchmark para inferencia local ministral-3:14b, con se?ales de rendimiento recientes, l?mites de estabilidad y acciones de despliegue.",
+          "title": "Actualización del punto de referencia de inferencia local Ministral-3:14B: Guía práctica (2026)",
+          "description": "Una actualización práctica de referencia para la inferencia local ministral-3:14b, que cubre nuevas señales de rendimiento, límites de estabilidad y acciones de implementación.",
           "cta_line": "Usa evidencia actualizada de benchmark para elegir entre tuning de prompt, cambio de modelo o cloud burst temporal."
         },
         "pt": {
-          "title": "Atualiza??o de Benchmark de Infer?ncia Local Ministral-3:14B: Guia Pr?tico (2026)",
-          "description": "Atualiza??o pr?tica de benchmark para infer?ncia local ministral-3:14b, cobrindo sinais recentes de performance, limites de estabilidade e a??es de rollout.",
-          "cta_line": "Use evid?ncia atualizada de benchmark para escolher entre tuning de prompt, mudan?a de tier ou cloud burst tempor?rio."
+          "title": "Atualização do benchmark de inferência local Ministral-3:14B: Guia prático (2026)",
+          "description": "Uma atualização prática de benchmark para inferência local ministerial-3:14b, cobrindo novos sinais de desempenho, limites de estabilidade e ações de implementação.",
+          "cta_line": "Use evidências de benchmark atualizadas para escolher entre ajuste imediato, mudança de nível de modelo ou explosão temporária de nuvem."
         },
         "fr": {
-          "title": "Mise ? Jour Benchmark d'Inf?rence Locale Ministral-3:14B : Guide Pratique (2026)",
-          "description": "Mise ? jour pratique du benchmark local ministral-3:14b couvrant signaux de performance r?cents, limites de stabilit? et actions de d?ploiement.",
+          "title": "Mise à jour du benchmark d'inférence locale Ministral-3:14B : Guide pratique (2026)",
+          "description": "Une mise à jour pratique de référence pour l'inférence locale ministral-3:14b, couvrant de nouveaux signaux de performance, les limites de stabilité et les actions de déploiement.",
           "cta_line": "Utilisez les preuves benchmark mises ? jour pour choisir tuning prompt, changement de tier ou burst cloud temporaire."
         },
         "de": {
           "title": "Ministral-3:14B Local-Inference Benchmark Update: Praxisleitfaden (2026)",
-          "description": "Praktisches Benchmark-Update f?r lokale ministral-3:14b-Inferenz mit aktuellen Performance-Signalen, Stabilit?tsgrenzen und Rollout-Aktionen.",
-          "cta_line": "Nutze aktualisierte Benchmark-Daten f?r die Entscheidung zwischen Prompt-Tuning, Modell-Tier-Wechsel oder tempor?rem Cloud-Burst."
+          "description": "Ein praktisches Benchmark-Update für die lokale Inferenz von ministral-3:14b, das neue Leistungssignale, Stabilitätsgrenzen und Rollout-Aktionen abdeckt.",
+          "cta_line": "Verwenden Sie aktualisierte Benchmark-Beweise, um zwischen sofortiger Optimierung, Modellstufenverschiebung oder vorübergehendem Cloud-Burst zu wählen."
         },
         "ru": {
-          "title": "?????????? ?????????? ????????? Ministral-3:14B: ???????????? ??????????? (2026)",
-          "description": "???????????? ?????????? ????????? ????????? ?????????? ministral-3:14b: ?????? ??????? ??????????????????, ??????? ???????????? ? ???????? rollout.",
-          "cta_line": "??????????? ??????????? benchmark-?????? ??? ??????: prompt tuning, ????? tier ??? ????????? cloud burst."
+          "title": "Обновление теста локального вывода Ministral-3:14B: Практическое руководство (2026 г.)",
+          "description": "Практическое обновление тестов для локального вывода ministral-3:14b, охватывающее новые сигналы производительности, границы стабильности и действия по развертыванию.",
+          "cta_line": "Используйте обновленные данные эталонного тестирования, чтобы выбирать между быстрой настройкой, сдвигом уровня модели или временным облачным всплеском."
         },
         "ja": {
-          "title": "Ministral-3:14B ??????????????: ??????2026?",
-          "description": "ministral-3:14b ????????????????????????????????????????????????",
-          "cta_line": "?????????????????????????????????????????????"
+          "title": "Ministral-3:14B ローカル推論ベンチマーク更新: 実践ガイド (2026)",
+          "description": "ministral-3:14b ローカル推論の実用的なベンチマークの更新。最新のパフォーマンス シグナル、安定性の境界、ロールアウト アクションをカバーします。",
+          "cta_line": "更新されたベンチマーク証拠を使用して、プロンプト チューニング、モデル層のシフト、または一時的なクラウド バーストのいずれかを選択します。"
         },
         "ko": {
-          "title": "Ministral-3:14B ?? ?? ???? ????: ?? ??? (2026)",
-          "description": "ministral-3:14b ?? ?? ???? ?? ???????. ?? ?? ??, ??? ??, ??? ??? ????.",
-          "cta_line": "????? ???? ??? ???? ???? ??, ?? ?? ??, ?? ???? ???? ?????."
+          "title": "Ministral-3:14B 국소 추론 벤치마크 업데이트: 실용 가이드(2026)",
+          "description": "새로운 성능 신호, 안정성 경계 및 출시 조치를 다루는 ministral-3:14b 로컬 추론을 위한 실용적인 벤치마크 업데이트입니다.",
+          "cta_line": "새로워진 벤치마크 증거를 사용하여 즉각적인 조정, 모델 계층 전환 또는 임시 클라우드 버스트 중에서 선택하세요."
         },
         "ar": {
-          "title": "????? Benchmark ????????? ?????? Ministral-3:14B: ???? ???? (2026)",
-          "description": "????? ???? ??????? ministral-3:14b ??????? ???? ?????? ???? ????? ????? ????????? ?????? ?????.",
-          "cta_line": "????? ??? ????? benchmark ??????? ??????? tuning ?? ????? tier ?? cloud burst ????."
+          "title": "تحديث مقياس الاستدلال المحلي Ministral-3:14B: الدليل العملي (2026)",
+          "description": "تحديث معياري عملي للاستدلال المحلي لـministral-3:14b، يغطي إشارات الأداء الجديدة وحدود الاستقرار وإجراءات الطرح.",
+          "cta_line": "استخدم الأدلة المعيارية المحدثة للاختيار بين الضبط الفوري، أو تغيير طبقة النموذج، أو الاندفاع السحابي المؤقت."
         },
         "hi": {
           "title": "Ministral-3:14B Local Inference Benchmark Update: Practical Guide (2026)",
-          "description": "ministral-3:14b ???? ??????? ?? ??? practical benchmark ?????, ?????? ????? performance signals, stability boundaries ?? rollout actions ????? ????",
-          "cta_line": "??????? benchmark evidence ?? ???? ?? prompt tuning, model tier shift, ?? temporary cloud burst ??????"
+          "description": "मिनिस्ट्रल-3:14बी स्थानीय अनुमान के लिए एक व्यावहारिक बेंचमार्क अपडेट, जिसमें ताजा प्रदर्शन संकेत, स्थिरता सीमाएं और रोलआउट क्रियाएं शामिल हैं।",
+          "cta_line": "त्वरित ट्यूनिंग, मॉडल टियर शिफ्ट, या अस्थायी क्लाउड बर्स्ट के बीच चयन करने के लिए ताज़ा बेंचमार्क साक्ष्य का उपयोग करें।"
         },
         "id": {
           "title": "Pembaruan Benchmark Inferensi Lokal Ministral-3:14B: Panduan Praktis (2026)",
@@ -778,48 +778,48 @@
       "locales": {
         "es": {
           "title": "DeepSeek-R1 en RTX 3090: Qu? Funciona de Verdad",
-          "description": "Expectativas pr?cticas para modelos DeepSeek-R1 en RTX 3090, con l?mites de ajuste, riesgos de estabilidad y chequeos de carga sostenida.",
+          "description": "Expectativas prácticas para los modelos de clase DeepSeek-R1 en RTX 3090, incluidos límites de ajuste, riesgos de estabilidad y comprobaciones de ejecución sostenida.",
           "cta_line": "Usa 3090 como baseline local de alto valor y define fallback cloud para picos de contexto largo."
         },
         "pt": {
           "title": "DeepSeek-R1 na RTX 3090: O que Realmente Funciona",
-          "description": "Expectativas pr?ticas para modelos DeepSeek-R1 na RTX 3090, com limites de ajuste, riscos de estabilidade e checagens de carga sustentada.",
+          "description": "Expectativas práticas para modelos de classe DeepSeek-R1 em RTX 3090, incluindo limites de ajuste, riscos de estabilidade e verificações de execução sustentada.",
           "cta_line": "Use a 3090 como baseline local de alto valor e defina fallback cloud para picos de contexto longo."
         },
         "fr": {
           "title": "DeepSeek-R1 sur RTX 3090 : Ce qui Fonctionne Vraiment",
-          "description": "Attentes pratiques pour les mod?les DeepSeek-R1 sur RTX 3090, avec limites de fit, risques de stabilit? et v?rifications en charge prolong?e.",
-          "cta_line": "Traitez la 3090 comme base locale ? fort rendement et d?finissez un fallback cloud pour les pics long contexte."
+          "description": "Attentes pratiques pour les modèles de classe DeepSeek-R1 sur RTX 3090, y compris les limites d'ajustement, les risques de stabilité et les vérifications d'exécution soutenue.",
+          "cta_line": "Traitez 3090 comme une référence locale de grande valeur, puis définissez une solution de secours cloud pour les sessions de pointe à long contexte."
         },
         "de": {
           "title": "DeepSeek-R1 auf RTX 3090: Was wirklich funktioniert",
-          "description": "Praxisnahe Erwartungen f?r DeepSeek-R1-Klasse auf RTX 3090 mit Fit-Grenzen, Stabilit?tsrisiken und Checks f?r Dauerlast.",
-          "cta_line": "Nutze die 3090 als starke lokale Basis und definiere Cloud-Fallback f?r Peak-Sessions mit langem Kontext."
+          "description": "Praktische Erwartungen für DeepSeek-R1-Klassenmodelle auf RTX 3090, einschließlich Anpassungsgrenzen, Stabilitätsrisiken und Dauerprüfungen.",
+          "cta_line": "Behandeln Sie 3090 als hochwertige lokale Basislinie und definieren Sie dann Cloud-Fallback für lange Kontext-Spitzensitzungen."
         },
         "ru": {
-          "title": "DeepSeek-R1 ?? RTX 3090: ??? ??????? ????????",
-          "description": "???????????? ???????? ??? ??????? ?????? DeepSeek-R1 ?? RTX 3090: ??????? fit, ????? ???????????? ? ???????? ?? ?????????? ????????.",
-          "cta_line": "??????????? 3090 ??? ??????? ????????? ??????? ? ??????? cloud fallback ??? ????? ? ??????? ??????????."
+          "title": "DeepSeek-R1 на RTX 3090: что на самом деле работает",
+          "description": "Практические ожидания от моделей класса DeepSeek-R1 на RTX 3090, включая границы соответствия, риски стабильности и постоянные проверки.",
+          "cta_line": "Рассматривайте 3090 как ценный локальный базовый уровень, а затем определите резервный вариант облака для пиковых сеансов с длительным контекстом."
         },
         "ja": {
-          "title": "RTX 3090?DeepSeek-R1: ??????????",
-          "description": "RTX 3090?DeepSeek-R1???????????????????????????????????????????",
-          "cta_line": "3090???????????????????????????????????????"
+          "title": "RTX 3090 の DeepSeek-R1: 実際に機能するもの",
+          "description": "RTX 3090 の DeepSeek-R1 クラス モデルに対する実際的な期待値 (適合境界、安定性リスク、持続実行チェックなど)。",
+          "cta_line": "3090 を高価値のローカル ベースラインとして扱い、長いコンテキストのピーク セッション用のクラウド フォールバックを定義します。"
         },
         "ko": {
-          "title": "RTX 3090?? DeepSeek-R1: ??? ?? ??",
-          "description": "RTX 3090?? DeepSeek-R1? ??? ??? ?? ?? ?????. ?? ??, ??? ???, ??? ?? ??? ?????.",
-          "cta_line": "3090? ??? ?? ???? ??, ?? ?? ???? ???? ?? ??? ?????."
+          "title": "RTX 3090의 DeepSeek-R1: 실제로 작동하는 것",
+          "description": "적합 경계, 안정성 위험 및 지속 실행 점검을 포함하여 RTX 3090의 DeepSeek-R1 클래스 모델에 대한 실제 기대치입니다.",
+          "cta_line": "3090을 높은 가치의 로컬 기준으로 처리한 다음 장기 컨텍스트 피크 세션에 대한 클라우드 대체를 정의합니다."
         },
         "ar": {
-          "title": "DeepSeek-R1 ??? RTX 3090: ?? ???? ???? ?????",
-          "description": "?????? ????? ?????? ????? DeepSeek-R1 ??? RTX 3090? ?? ???? ???????? ?????? ????????? ??????? ????? ???????.",
-          "cta_line": "????? 3090 ???? ??????? ?????? ???? ?????? ???? fallback ????? ???? ?????? ??????."
+          "title": "DeepSeek-R1 على RTX 3090: ما الذي يعمل بالفعل",
+          "description": "التوقعات العملية لنماذج فئة DeepSeek-R1 على RTX 3090، بما في ذلك حدود الملاءمة، ومخاطر الاستقرار، والفحوصات المستمرة.",
+          "cta_line": "تعامل مع 3090 كخط أساس محلي عالي القيمة، ثم حدد الاحتياطي السحابي لجلسات الذروة ذات السياق الطويل."
         },
         "hi": {
           "title": "DeepSeek-R1 on RTX 3090: What Actually Works",
-          "description": "RTX 3090 ?? DeepSeek-R1 ?????? ?? ?????? ?? ??? practical expectations, ?????? fit boundaries, stability risks ?? sustained-run checks ????? ????",
-          "cta_line": "3090 ?? high-value local baseline ????? ?? long-context peak sessions ?? ??? cloud fallback ?? ?????"
+          "description": "RTX 3090 पर DeepSeek-आर1 वर्ग मॉडल के लिए व्यावहारिक अपेक्षाएं, जिसमें फिट सीमाएं, स्थिरता जोखिम और निरंतर चलने वाली जांच शामिल हैं।",
+          "cta_line": "3090 को उच्च-मूल्य वाली स्थानीय आधार रेखा के रूप में मानें, फिर लंबे-संदर्भ शिखर सत्रों के लिए क्लाउड फ़ॉलबैक को परिभाषित करें।"
         },
         "id": {
           "title": "DeepSeek-R1 di RTX 3090: Yang Benar-benar Berjalan",
@@ -836,49 +836,49 @@
       },
       "locales": {
         "es": {
-          "title": "Qwen3.5 122B: Costo Cloud vs Local, Gu?a Pr?ctica (2026)",
-          "description": "Marco pr?ctico de costos para qwen3.5 122b comparando alquiler cloud y operaci?n local seg?n uso real.",
-          "cta_line": "Decide por utilizaci?n mensual e intensidad de picos, no por una sola captura de benchmark."
+          "title": "Qwen3.5 122B Nube vs Costo Local: Guía Práctica (2026)",
+          "description": "Un marco de costos práctico para qwen3.5 122b que compara el alquiler de la nube y la propiedad local bajo perfiles de uso reales.",
+          "cta_line": "Elija por utilización mensual e intensidad máxima, no por capturas de pantalla de referencia únicas."
         },
         "pt": {
-          "title": "Qwen3.5 122B: Custo Cloud vs Local, Guia Pr?tico (2026)",
-          "description": "Framework pr?tico de custos para qwen3.5 122b comparando aluguel cloud e opera??o local sob perfis reais de uso.",
-          "cta_line": "Decida por utiliza??o mensal e intensidade de picos, n?o por screenshot isolado de benchmark."
+          "title": "Qwen3.5 Nuvem 122B vs Custo Local: Guia Prático (2026)",
+          "description": "Uma estrutura de custos prática para qwen3.5 122b comparando aluguel de nuvem e propriedade local sob perfis de uso reais.",
+          "cta_line": "Escolha por utilização mensal e intensidade de pico, não por capturas de tela de benchmark únicas."
         },
         "fr": {
-          "title": "Qwen3.5 122B : Co?t Cloud vs Local, Guide Pratique (2026)",
-          "description": "Cadre pratique de co?t pour qwen3.5 122b comparant location cloud et ex?cution locale selon usage r?el.",
-          "cta_line": "Choisissez selon l'utilisation mensuelle et l'intensit? des pics, pas sur une capture benchmark isol?e."
+          "title": "Qwen3.5 122 B Cloud vs coût local : guide pratique (2026)",
+          "description": "Un cadre de coûts pratique pour qwen3.5 122b comparant la location du cloud et la propriété locale dans des profils d'utilisation réels.",
+          "cta_line": "Choisissez en fonction de l'utilisation mensuelle et de l'intensité maximale, et non en fonction de captures d'écran de référence uniques."
         },
         "de": {
           "title": "Qwen3.5 122B Cloud vs Lokal Kosten: Praxisleitfaden (2026)",
-          "description": "Praxisnaher Kostenrahmen f?r qwen3.5 122b im Vergleich von Cloud-Miete und lokalem Betrieb unter realen Nutzungsprofilen.",
-          "cta_line": "Entscheide nach Monatsauslastung und Peak-Intensit?t, nicht nach einem einzelnen Benchmark-Screenshot."
+          "description": "Ein praktischer Kostenrahmen für qwen3.5 122b, der Cloud-Miete und lokales Eigentum unter realen Nutzungsprofilen vergleicht.",
+          "cta_line": "Wählen Sie nach monatlicher Auslastung und Spitzenintensität, nicht nach einzelnen Benchmark-Screenshots."
         },
         "ru": {
-          "title": "Qwen3.5 122B: ????????? cloud vs local, ???????????? ???? (2026)",
-          "description": "???????????? ????????? ?????? ??? qwen3.5 122b: ????????? ?????? cloud ? ?????????? ???????? ??? ???????? ??????? ?????????????.",
-          "cta_line": "?????????????? ?? ???????? ???????? ? ????????????? ?????, ? ?? ?? ????????? ???????? ?????????."
+          "title": "Qwen3.5 Облако 122B против локальных затрат: Практическое руководство (2026 г.)",
+          "description": "Практическая структура затрат для qwen3.5 122b, сравнивающая аренду облака и локальное владение при реальных профилях использования.",
+          "cta_line": "Выбирайте по ежемесячному использованию и пиковой интенсивности, а не по отдельным скриншотам тестов."
         },
         "ja": {
-          "title": "Qwen3.5 122B ???? vs ???????: ??????2026?",
-          "description": "qwen3.5 122b ????????????????????????????????????????????",
-          "cta_line": "????????????????????????????????"
+          "title": "Qwen3.5 122B クラウドとローカルのコスト: 実践ガイド (2026)",
+          "description": "実際の使用状況プロファイルに基づいてクラウドのレンタルとローカル所有権を比較した、qwen3.5 122b の実用的なコスト フレームワーク。",
+          "cta_line": "単一のベンチマークのスクリーンショットではなく、月ごとの使用率とピーク強度に基づいて選択してください。"
         },
         "ko": {
-          "title": "Qwen3.5 122B ???? vs ?? ??: ?? ??? (2026)",
-          "description": "qwen3.5 122b? ?? ????? ?? ???? ??? ?? ??? ?? ?? ?? ???? ?????.",
-          "cta_line": "?? ?? ????? ??? ?? ???? ?? ??? ?????."
+          "title": "Qwen3.5 122B 클라우드 vs 로컬 비용: 실용 가이드(2026)",
+          "description": "실제 사용 프로필에 따라 클라우드 임대와 로컬 소유권을 비교하는 qwen3.5 122b의 실제 비용 프레임워크입니다.",
+          "cta_line": "단일 벤치마크 스크린샷이 아닌 월별 활용도와 최대 강도를 기준으로 선택하세요."
         },
         "ar": {
-          "title": "Qwen3.5 122B: ????? ??????? ????? ??????? ???? ???? (2026)",
-          "description": "???? ????? ???? ?? qwen3.5 122b ????? ??? ??????? ??????? ???????? ?????? ??? ????? ????????? ???????.",
-          "cta_line": "???? ????? ??? ????????? ?????? ???? ??????? ???? ???? Benchmark ?????."
+          "title": "Qwen3.5 122B السحابة مقابل التكلفة المحلية: الدليل العملي (2026)",
+          "description": "إطار عمل عملي للتكلفة لـ qwen3.5 122b يقارن الإيجار السحابي والملكية المحلية ضمن ملفات تعريف الاستخدام الحقيقية.",
+          "cta_line": "اختر حسب الاستخدام الشهري وكثافة الذروة، وليس من خلال لقطات شاشة معيارية واحدة."
         },
         "hi": {
           "title": "Qwen3.5 122B Cloud vs Local Cost: Practical Guide (2026)",
-          "description": "qwen3.5 122b ?? ??? practical cost framework, ?? real usage profile ??? cloud rental ?? local ownership ?? ????? ???? ???",
-          "cta_line": "????? monthly utilization ?? peak intensity ?? ???, single benchmark screenshot ?? ?????"
+          "description": "वास्तविक उपयोग प्रोफाइल के तहत क्लाउड रेंटल और स्थानीय स्वामित्व की तुलना करते हुए qwen3.5 122b के लिए एक व्यावहारिक लागत ढांचा।",
+          "cta_line": "मासिक उपयोग और चरम तीव्रता के आधार पर चुनें, एकल बेंचमार्क स्क्रीनशॉट के आधार पर नहीं।"
         },
         "id": {
           "title": "Qwen3.5 122B Cloud vs Biaya Lokal: Panduan Praktis (2026)",
@@ -895,49 +895,49 @@
       },
       "locales": {
         "es": {
-          "title": "P?rdida de Calidad Q4 vs Q8 en Ollama: Gu?a de Decisi?n Pr?ctica",
-          "description": "Gu?a pr?ctica para saber cu?ndo la p?rdida de calidad en Q4 es aceptable y cu?ndo conviene Q8 por m?s VRAM.",
-          "cta_line": "Usa Q4 por defecto para ajuste y velocidad, y valida con pruebas ciegas antes de producci?n."
+          "title": "Pérdida de calidad del cuarto trimestre frente al octavo trimestre en Ollama: guía práctica de decisiones",
+          "description": "Una guía práctica sobre cuándo la pérdida de calidad del cuarto trimestre es aceptable y cuándo vale la pena el VRAM adicional del Q8 en Ollama cargas de trabajo.",
+          "cta_line": "El valor predeterminado es Q4 para ajuste y velocidad, luego ejecute comprobaciones ciegas antes de pasar a producción."
         },
         "pt": {
-          "title": "Perda de Qualidade Q4 vs Q8 no Ollama: Guia Pr?tico de Decis?o",
-          "description": "Guia pr?tico para decidir quando a perda de qualidade em Q4 ? aceit?vel e quando Q8 vale o VRAM extra.",
-          "cta_line": "Use Q4 como padr?o para fit e velocidade e fa?a testes cegos antes de produ??o."
+          "title": "Perda de qualidade do 4º trimestre vs 8º trimestre em Ollama: Guia prático de decisão",
+          "description": "Um guia prático sobre quando a perda de qualidade do 4º trimestre é aceitável e quando o 8º trimestre vale o VRAM extra em Ollama cargas de trabalho.",
+          "cta_line": "O padrão é Q4 para ajuste e velocidade e, em seguida, execute verificações cegas antes de promover para produção."
         },
         "fr": {
-          "title": "Perte de Qualit? Q4 vs Q8 dans Ollama : Guide Pratique de D?cision",
-          "description": "Guide pratique pour savoir quand la perte Q4 est acceptable et quand Q8 justifie le VRAM suppl?mentaire dans Ollama.",
-          "cta_line": "Utilisez Q4 par d?faut pour fit et vitesse, puis validez via tests aveugles avant production."
+          "title": "Perte de qualité Q4 vs Q8 en Ollama : Guide de décision pratique",
+          "description": "Un guide pratique indiquant quand la perte de qualité au quatrième trimestre est acceptable et quand le quatrième trimestre vaut le VRAM supplémentaire dans les charges de travail Ollama.",
+          "cta_line": "Par défaut, Q4 pour l'ajustement et la vitesse, puis effectuez des vérifications aveugles avant de passer en production."
         },
         "de": {
-          "title": "Q4 vs Q8 Qualit?tsverlust in Ollama: Praktischer Entscheidungsleitfaden",
-          "description": "Praxisleitfaden, wann Q4-Qualit?tsverlust akzeptabel ist und wann Q8 das zus?tzliche VRAM rechtfertigt.",
-          "cta_line": "Standardm??ig Q4 f?r Fit und Geschwindigkeit nutzen, dann Blindtests vor Produktion durchf?hren."
+          "title": "Q4 vs. Q8 Qualitätsverlust in Ollama: Praktischer Entscheidungsleitfaden",
+          "description": "Ein praktischer Leitfaden, wann Q4-Qualitätseinbußen akzeptabel sind und wann Q8 den zusätzlichen VRAM in Ollama Workloads wert ist.",
+          "cta_line": "Gehen Sie für Eignung und Geschwindigkeit standardmäßig auf Q4 und führen Sie dann blinde Eingabeaufforderungsprüfungen durch, bevor Sie zur Produktion übergehen."
         },
         "ru": {
-          "title": "?????? ???????? Q4 vs Q8 ? Ollama: ???????????? ???? ?? ??????",
-          "description": "???????????? ????, ????? ?????? ???????? Q4 ????????? ? ????? Q8 ??????????? ?????????????? VRAM ? Ollama.",
-          "cta_line": "?? ????????? ??????????? Q4 ??? fit ? ????????, ????? ????????? ?????? ???????? ???????? ?? ??????????."
+          "title": "Потеря качества в четвертом квартале и восьмом квартале в Ollama: практическое руководство по принятию решений",
+          "description": "Практическое руководство о том, когда потеря качества в четвертом квартале допустима, а в каких случаях Q8 стоит дополнительных VRAM в рабочих нагрузках Ollama.",
+          "cta_line": "По умолчанию используется Q4 для соответствия и скорости, затем перед запуском в производство выполните слепую проверку подсказок."
         },
         "ja": {
-          "title": "Ollama?Q4 vs Q8???: ?????????",
-          "description": "Q4???????????????Q8???VRAM??????????????????????",
-          "cta_line": "??Q4??????????????????????????????????"
+          "title": "Ollama における第 4 四半期と第 8 四半期の品質低下: 実践的な意思決定ガイド",
+          "description": "第 4 四半期の品質低下が許容される時期と、第 8 四半期に Ollama ワークロードの VRAM を追加する価値がある場合についての実践的なガイド。",
+          "cta_line": "適合性と速度をデフォルトで Q4 に設定し、本番環境に昇格する前にブラインド プロンプト チェックを実行します。"
         },
         "ko": {
-          "title": "Ollama Q4 vs Q8 ?? ??: ?? ???? ???",
-          "description": "Q4 ?? ??? ???? ??? Q8? ?? VRAM? ??? ??? Ollama ???? ???? ?????.",
-          "cta_line": "??? Q4? ????, ?? ?? ? ????? ???? ???? ?????."
+          "title": "Ollama의 Q4 및 Q8 품질 손실: 실제 결정 가이드",
+          "description": "Q4 품질 손실이 허용되는 시기와 Q8이 Ollama 워크로드에서 추가 VRAM 가치가 있는 경우에 대한 실용적인 가이드입니다.",
+          "cta_line": "적합성과 속도를 위해 Q4를 기본값으로 설정한 다음 생산으로 승격하기 전에 블라인드 프롬프트 검사를 실행합니다."
         },
         "ar": {
-          "title": "????? ?????? ??? Q4 ?Q8 ?? Ollama: ???? ???? ????",
-          "description": "???? ???? ???? ??? ???? ????? ?????? ?? Q4 ??????? ???? ????? Q8 ??????? VRAM ???????.",
-          "cta_line": "???? Q4 ?????? ????????? ?????? ????????? ?? ???? ???????? ????? ??? ???????."
+          "title": "Q4 مقابل Q8 فقدان الجودة في Ollama: دليل القرار العملي",
+          "description": "دليل عملي لمعرفة متى يكون فقدان الجودة في الربع الرابع مقبولًا ومتى يستحق الربع الثامن VRAM الإضافي في أعباء العمل Ollama.",
+          "cta_line": "افتراضيًا على Q4 من أجل الملاءمة والسرعة، ثم قم بإجراء فحوصات سريعة عمياء قبل الترقية إلى الإنتاج."
         },
         "hi": {
-          "title": "Ollama ??? Q4 vs Q8 Quality Loss: Practical Decision Guide",
-          "description": "?? ?????????? ???? ????? ?? ?? Q4 quality loss ?? ????????? ?? ?? Ollama ??? Q8 ?? ??? ???????? VRAM ?? ???? ???",
-          "cta_line": "???????? ??? ?? Q4 ???? ?? production ?? ???? blind prompt checks ??????"
+          "title": "Ollama में Q4 बनाम Q8 गुणवत्ता हानि: व्यावहारिक निर्णय मार्गदर्शिका",
+          "description": "कब Q4 गुणवत्ता हानि स्वीकार्य है और कब Q8 ##0# कार्यभार में अतिरिक्त VRAM के लायक है, इसके लिए एक व्यावहारिक मार्गदर्शिका।",
+          "cta_line": "फिट और गति के लिए Q4 को डिफ़ॉल्ट करें, फिर उत्पादन को बढ़ावा देने से पहले अंधाधुंध जांच करें।"
         },
         "id": {
           "title": "Kehilangan Kualitas Q4 vs Q8 di Ollama: Panduan Keputusan Praktis",
@@ -955,48 +955,48 @@
       "locales": {
         "es": {
           "title": "Modelos para 24GB VRAM que S? Corren en Ollama",
-          "description": "Lista pr?ctica de modelos que s? corren en 24GB VRAM, con expectativas realistas de ajuste y estabilidad.",
-          "cta_line": "Trata la compatibilidad como ejecuciones verificadas, no como promesas te?ricas."
+          "description": "Una lista práctica de modelos que realmente funcionan con 24 GB VRAM con expectativas de ajuste realistas y consideraciones de estabilidad.",
+          "cta_line": "Trate la compatibilidad como objetivos de ejecución verificados, no como afirmaciones teóricas de tarjetas modelo."
         },
         "pt": {
           "title": "Modelos de 24GB VRAM que Realmente Rodam no Ollama",
-          "description": "Lista pr?tica de modelos que realmente rodam em 24GB VRAM, com expectativas realistas de fit e estabilidade.",
-          "cta_line": "Trate compatibilidade como execu??o verificada, n?o como promessa te?rica."
+          "description": "Uma lista prática de modelos que realmente rodam em 24 GB VRAM com expectativas de ajuste realistas e considerações de estabilidade.",
+          "cta_line": "Trate a compatibilidade como alvos de execução verificados e não como afirmações teóricas de cartões modelo."
         },
         "fr": {
-          "title": "Mod?les 24GB VRAM qui Tournent Vraiment dans Ollama",
-          "description": "S?lection pratique de mod?les qui tournent r?ellement sur 24GB VRAM, avec attentes r?alistes de fit et de stabilit?.",
-          "cta_line": "Consid?rez la compatibilit? comme des runs v?rifi?s, pas comme des promesses th?oriques."
+          "title": "24 Go VRAM Modèles qui fonctionnent réellement en Ollama",
+          "description": "Une liste restreinte pratique de modèles qui fonctionnent réellement sur 24 Go VRAM avec des attentes d'ajustement réalistes et des considérations de stabilité.",
+          "cta_line": "Traitez la compatibilité comme des objectifs d'exécution vérifiés, et non comme des affirmations théoriques provenant de cartes modèles."
         },
         "de": {
           "title": "24GB-VRAM-Modelle, die in Ollama wirklich laufen",
-          "description": "Praxisnahe Liste von Modellen, die auf 24GB VRAM tats?chlich laufen, mit realistischen Fit- und Stabilit?tserwartungen.",
-          "cta_line": "Kompatibilit?t als verifizierte Runs behandeln, nicht als theoretische Datenblatt-Behauptung."
+          "description": "Eine praktische Auswahlliste von Modellen, die tatsächlich mit 24 GB VRAM laufen, mit realistischen Passformerwartungen und Stabilitätsaspekten.",
+          "cta_line": "Behandeln Sie die Kompatibilität als verifizierte Laufziele und nicht als theoretische Behauptungen von Modellkarten."
         },
         "ru": {
-          "title": "?????? ??? 24GB VRAM, ??????? ??????? ???????? ? Ollama",
-          "description": "???????????? ?????? ???????, ??????? ??????????? ?? 24GB VRAM, ? ????????????? ?????????? ?? fit ? ????????????.",
-          "cta_line": "???????? ????????????? ?????????????? ????????, ? ?? ????????????? ??????????."
+          "title": "24 ГБ VRAM Модели, которые на самом деле работают в Ollama",
+          "description": "Практический список моделей, которые действительно работают на 24 ГБ VRAM с реалистичными ожиданиями и соображениями стабильности.",
+          "cta_line": "Относитесь к совместимости как к проверенным целевым показателям, а не как к теоретическим утверждениям на карточках моделей."
         },
         "ja": {
-          "title": "24GB VRAM??????Ollama?????",
-          "description": "24GB VRAM????????????????????????????????????????",
-          "cta_line": "??????????????????????????????????"
+          "title": "実際に Ollama で動作する 24GB VRAM モデル",
+          "description": "現実的なフィット感と安定性を考慮した、24GB VRAM で実際に動作するモデルの実用的な候補リスト。",
+          "cta_line": "互換性は、モデル カードからの理論上の主張ではなく、検証された実行ターゲットとして扱います。"
         },
         "ko": {
-          "title": "24GB VRAM?? ??? ???? Ollama ??",
-          "description": "24GB VRAM?? ??? ?? ??? ?? ?? ?????. ??? ???? ??? ??? ?????.",
-          "cta_line": "???? ???? ??? ??? ?? ???? ?????."
+          "title": "Ollama에서 실제로 실행되는 24GB VRAM 모델",
+          "description": "현실적인 기대치와 안정성을 고려하여 실제로 24GB VRAM에서 실행되는 실용적인 모델 목록입니다.",
+          "cta_line": "모델 카드의 이론적 주장이 아닌 검증된 실행 대상으로 호환성을 다루십시오."
         },
         "ar": {
-          "title": "????? 24GB VRAM ???? ???? ????? ??? Ollama",
-          "description": "????? ????? ??????? ???? ???? ????? ??? 24GB VRAM ?? ?????? ?????? ???????? ??????????.",
-          "cta_line": "????? ?? ??????? ?????? ????? ????? ?? ???????? ?????."
+          "title": "موديلات سعة 24 جيجابايت VRAM تعمل فعليًا في Ollama",
+          "description": "قائمة مختصرة عملية للنماذج التي تعمل فعليًا على 24 جيجابايت VRAM مع توقعات ملائمة واقعية واعتبارات الاستقرار.",
+          "cta_line": "تعامل مع التوافق كأهداف تشغيل تم التحقق منها، وليس ادعاءات نظرية من بطاقات النماذج."
         },
         "hi": {
           "title": "24GB VRAM Models That Actually Run in Ollama",
-          "description": "24GB VRAM ?? ?????? ??? ???? ???? ?????? ?? practical ????, ?????? realistic fit expectations ?? stability considerations ????? ????",
-          "cta_line": "compatibility ?? theoretical claims ????, verified run targets ????? ?????? ????"
+          "description": "मॉडलों की एक व्यावहारिक शॉर्टलिस्ट जो वास्तव में यथार्थवादी फिट अपेक्षाओं और स्थिरता विचारों के साथ 24GB VRAM पर चलती है।",
+          "cta_line": "अनुकूलता को सत्यापित रन लक्ष्य के रूप में मानें, न कि मॉडल कार्ड के सैद्धांतिक दावों के रूप में।"
         },
         "id": {
           "title": "Model 24GB VRAM yang Benar-benar Berjalan di Ollama",
@@ -1013,49 +1013,49 @@
       },
       "locales": {
         "es": {
-          "title": "Mejores Modelos RAG Locales Bajo 24GB VRAM: Gu?a Pr?ctica (2026)",
-          "description": "Gu?a pr?ctica para elegir modelos RAG locales bajo 24GB VRAM, enfocada en calidad de retrieval, estabilidad de latencia y l?mites de ajuste.",
-          "cta_line": "Prioriza calidad de retrieval y disciplina de chunking antes de subir a modelos m?s pesados."
+          "title": "Los mejores modelos RAG locales de menos de 24 GB VRAM: guía práctica (2026)",
+          "description": "Una guía práctica para seleccionar modelos RAG locales de menos de 24 GB VRAM, centrada en la calidad de recuperación, la estabilidad de la latencia y los límites de ajuste.",
+          "cta_line": "Priorice la calidad de recuperación y la disciplina de fragmentación antes de actualizar a niveles de modelo más pesados."
         },
         "pt": {
-          "title": "Melhores Modelos RAG Locais sob 24GB VRAM: Guia Pr?tico (2026)",
-          "description": "Guia pr?tico para selecionar modelos RAG locais sob 24GB VRAM, focado em qualidade de retrieval, estabilidade de lat?ncia e limites de fit.",
+          "title": "Melhores modelos RAG locais com menos de 24 GB VRAM: Guia prático (2026)",
+          "description": "Um guia prático para selecionar modelos RAG locais abaixo de 24 GB VRAM, focado na qualidade de recuperação, estabilidade de latência e limites de ajuste.",
           "cta_line": "Priorize qualidade de retrieval e disciplina de chunking antes de subir para modelos mais pesados."
         },
         "fr": {
-          "title": "Meilleurs Mod?les RAG Locaux sous 24GB VRAM : Guide Pratique (2026)",
-          "description": "Guide pratique pour choisir des mod?les RAG locaux sous 24GB VRAM, ax? sur qualit? retrieval, stabilit? de latence et limites de fit.",
-          "cta_line": "Priorisez la qualit? retrieval et la discipline de chunking avant de monter en taille de mod?le."
+          "title": "Meilleurs modèles RAG locaux de moins de 24 Go VRAM : Guide pratique (2026)",
+          "description": "Un guide pratique pour sélectionner des modèles RAG locaux de moins de 24 Go VRAM, axé sur la qualité de récupération, la stabilité de la latence et les limites d'ajustement.",
+          "cta_line": "Donnez la priorité à la qualité de la récupération et à la discipline de segmentation avant de passer à des niveaux de modèle plus lourds."
         },
         "de": {
           "title": "Beste lokale RAG-Modelle unter 24GB VRAM: Praxisleitfaden (2026)",
-          "description": "Praxisleitfaden zur Auswahl lokaler RAG-Modelle unter 24GB VRAM mit Fokus auf Retrieval-Qualit?t, Latenzstabilit?t und Fit-Grenzen.",
-          "cta_line": "Zuerst Retrieval-Qualit?t und Chunking-Disziplin optimieren, dann erst schwerere Modelle w?hlen."
+          "description": "Ein praktischer Leitfaden zur Auswahl lokaler RAG-Modelle unter 24 GB VRAM mit Schwerpunkt auf Abrufqualität, Latenzstabilität und Anpassungsgrenzen.",
+          "cta_line": "Priorisieren Sie die Abrufqualität und die Chunking-Disziplin, bevor Sie auf schwerere Modellstufen upgraden."
         },
         "ru": {
-          "title": "?????? ????????? RAG-?????? ?? 24GB VRAM: ???????????? ???? (2026)",
-          "description": "???????????? ??????????? ?? ?????? ????????? RAG-??????? ?? 24GB VRAM ? ???????? ?? retrieval-????????, ???????????? ???????? ? ??????? fit.",
-          "cta_line": "??????? ????????? retrieval ? chunking, ? ????? ?????????? ? ????? ??????? ??????? ???????."
+          "title": "Лучшие локальные модели RAG до 24 ГБ VRAM: Практическое руководство (2026 г.)",
+          "description": "Практическое руководство по выбору локальных моделей RAG объемом до 24 ГБ VRAM, ориентированное на качество извлечения, стабильность задержки и границы соответствия.",
+          "cta_line": "Прежде чем переходить на более тяжелые уровни моделей, уделите приоритетное внимание качеству извлечения и дисциплине фрагментирования."
         },
         "ja": {
-          "title": "24GB VRAM???????????RAG???: ??????2026?",
-          "description": "24GB VRAM????????RAG??????????????????????????????????",
-          "cta_line": "???????????retrieval???chunking???????????????"
+          "title": "24GB 未満のベストローカル RAG モデル VRAM: 実践ガイド (2026)",
+          "description": "24 GB VRAM 未満のローカル RAG モデルを選択するための実践的なガイド。取得品質、レイテンシの安定性、および適合境界に焦点を当てています。",
+          "cta_line": "より重いモデル層にアップグレードする前に、取得の品質とチャンク化の規律を優先してください。"
         },
         "ko": {
-          "title": "24GB VRAM ?? ??? ?? RAG ??: ?? ??? (2026)",
-          "description": "24GB VRAM ???? ?? RAG ??? ???? ?? ??????. ?? ??, ?? ???, ?? ??? ???? ????.",
-          "cta_line": "??? ??? ??? ?? retrieval ??? chunking ??? ?? ??????."
+          "title": "24GB 미만 최고의 로컬 RAG 모델 VRAM: 실용 가이드(2026)",
+          "description": "검색 품질, 대기 시간 안정성 및 적합 경계에 초점을 맞춘 24GB VRAM 미만의 로컬 RAG 모델 선택에 대한 실용적인 가이드입니다.",
+          "cta_line": "더 무거운 모델 계층으로 업그레이드하기 전에 검색 품질과 청크 규율에 우선순위를 두십시오."
         },
         "ar": {
-          "title": "???? ????? RAG ??????? ??? 24GB VRAM: ???? ???? (2026)",
-          "description": "???? ???? ??????? ????? RAG ????? ??? 24GB VRAM ?? ??????? ??? ???? ????????? ???????? ??? ????????? ????? ????????.",
-          "cta_line": "???? ???? retrieval ??????? chunking ????? ??? ???????? ??? ????? ????."
+          "title": "أفضل موديلات RAG المحلية بسعة أقل من 24 جيجابايت VRAM: دليل عملي (2026)",
+          "description": "دليل عملي لاختيار نماذج RAG المحلية بسعة أقل من 24 جيجابايت VRAM، يركز على جودة الاسترجاع واستقرار زمن الاستجابة وحدود الملاءمة.",
+          "cta_line": "قم بإعطاء الأولوية لجودة الاسترجاع ونظام التقطيع قبل الترقية إلى مستويات النموذج الأثقل."
         },
         "hi": {
           "title": "Best Local RAG Models Under 24GB VRAM: Practical Guide (2026)",
-          "description": "24GB VRAM ?? ???? ???? RAG ???? ????? ?? practical ????, ?????? retrieval quality, latency stability ?? fit boundaries ?? ???? ???",
-          "cta_line": "heavier model tiers ?? ???? ?? ???? retrieval quality ?? chunking discipline ?? ?????????? ????"
+          "description": "24 जीबी VRAM के तहत स्थानीय आरएजी मॉडल का चयन करने के लिए एक व्यावहारिक मार्गदर्शिका, पुनर्प्राप्ति गुणवत्ता, विलंबता स्थिरता और फिट सीमाओं पर केंद्रित है।",
+          "cta_line": "भारी मॉडल स्तरों में अपग्रेड करने से पहले पुनर्प्राप्ति गुणवत्ता और चंकिंग अनुशासन को प्राथमिकता दें।"
         },
         "id": {
           "title": "Model RAG Lokal Terbaik di Bawah 24GB VRAM: Panduan Praktis (2026)",
@@ -1072,49 +1072,49 @@
       },
       "locales": {
         "es": {
-          "title": "Mejor LLM Local para 16GB VRAM: Gu?a Pr?ctica (2026)",
-          "description": "Gu?a pr?ctica para elegir modelos en 16GB VRAM con l?mites de ajuste, tradeoffs esperados y disparadores de fallback cloud.",
+          "title": "Mejor local LLM para 16GB VRAM: Guía práctica (2026)",
+          "description": "Una guía práctica de selección de modelos VRAM de 16 GB con límites de ajuste, compensaciones esperadas y activadores de respaldo en la nube.",
           "cta_line": "Usa 16GB para modelos diarios eficientes y deriva contextos pesados a cloud burst cuando sea necesario."
         },
         "pt": {
-          "title": "Melhor LLM Local para 16GB VRAM: Guia Pr?tico (2026)",
-          "description": "Guia pr?tico de sele??o para 16GB VRAM com limites de fit, tradeoffs esperados e gatilhos de fallback cloud.",
-          "cta_line": "Use 16GB para modelos di?rios eficientes e envie contextos pesados para cloud burst quando necess?rio."
+          "title": "Melhor local LLM para 16 GB VRAM: Guia Prático (2026)",
+          "description": "Um prático guia de seleção de modelo VRAM de 16 GB com limites de ajuste, compensações esperadas e gatilhos de fallback na nuvem.",
+          "cta_line": "Use 16 GB para modelos diários eficientes e encaminhe cargas de trabalho de contexto maiores para cloud burst quando necessário."
         },
         "fr": {
           "title": "Meilleur LLM Local pour 16GB VRAM : Guide Pratique (2026)",
-          "description": "Guide pratique de s?lection sous 16GB VRAM avec limites de fit, compromis attendus et d?clencheurs de fallback cloud.",
-          "cta_line": "Utilisez 16GB pour les mod?les quotidiens efficaces et basculez les contextes lourds en cloud burst si n?cessaire."
+          "description": "Un guide pratique de sélection de modèles VRAM de 16 Go avec les limites d'ajustement, les compromis attendus et les déclencheurs de repli dans le cloud.",
+          "cta_line": "Utilisez 16 Go pour des modèles quotidiens efficaces et acheminez des charges de travail contextuelles plus importantes vers le cloud burst si nécessaire."
         },
         "de": {
-          "title": "Bestes lokales LLM f?r 16GB VRAM: Praxisleitfaden (2026)",
+          "title": "Bestes lokales LLM für 16 GB VRAM: Praktischer Leitfaden (2026)",
           "description": "Praxisleitfaden zur Modellauswahl auf 16GB VRAM mit Fit-Grenzen, erwarteten Trade-offs und Cloud-Fallback-Triggern.",
-          "cta_line": "Nutze 16GB f?r effiziente Tageslasten und leite schwere Kontexte bei Bedarf in Cloud-Burst."
+          "cta_line": "Nutzen Sie 16 GB für effiziente Tagesmodelle und leiten Sie größere Kontext-Workloads bei Bedarf an Cloud Burst weiter."
         },
         "ru": {
-          "title": "?????? ????????? LLM ??? 16GB VRAM: ???????????? ???? (2026)",
-          "description": "???????????? ??????????? ?? ?????? ??????? ??? 16GB VRAM: ??????? fit, ????????? ??????????? ? ???????? cloud fallback.",
-          "cta_line": "??????????? 16GB ??? ?????????? ????? ? ??????????? ??????? ????????? ? cloud burst ??? ?????????????."
+          "title": "Лучший локальный LLM для 16 ГБ VRAM: Практическое руководство (2026 г.)",
+          "description": "Практическое руководство по выбору модели размером 16 ГБ VRAM с границами соответствия, ожидаемыми компромиссами и триггерами перехода в облако.",
+          "cta_line": "Используйте 16 ГБ для эффективных ежедневных моделей и при необходимости перенаправляйте более крупные контекстные рабочие нагрузки в облако."
         },
         "ja": {
-          "title": "16GB VRAM????????LLM: ??????2026?",
-          "description": "16GB VRAM??????????????????????????????????????????",
-          "cta_line": "?????16GB???????????????????????????????????"
+          "title": "16GB VRAM のベストローカル LLM: 実践ガイド (2026)",
+          "description": "適合境界、予想されるトレードオフ、クラウド フォールバック トリガーを含む実用的な 16 GB VRAM モデル選択ガイド。",
+          "cta_line": "効率的な毎日のモデルには 16 GB を使用し、必要に応じてより大きなコンテキスト ワークロードをクラウド バーストにルーティングします。"
         },
         "ko": {
-          "title": "16GB VRAM? ??? ?? LLM: ?? ??? (2026)",
-          "description": "16GB VRAM ?? ?? ?? ??????. ?? ??, ?? ??????, ???? ?? ???? ?????.",
-          "cta_line": "?? ??? 16GB? ????, ??? ????? ?? ? ???? ???? ????."
+          "title": "16GB용 최고의 로컬 LLM VRAM: 실용 가이드(2026)",
+          "description": "적합한 경계, 예상되는 장단점 및 클라우드 대체 트리거가 포함된 실용적인 16GB VRAM 모델 선택 가이드입니다.",
+          "cta_line": "효율적인 일일 모델을 위해 16GB를 사용하고 필요할 때 더 큰 컨텍스트 워크로드를 클라우드 버스트로 라우팅하세요."
         },
         "ar": {
-          "title": "???? LLM ???? ?????? 16GB VRAM: ???? ???? (2026)",
-          "description": "???? ???? ??????? ??????? ??? 16GB VRAM ?? ???? ???????? ?????????? ???????? ??????? fallback ???????.",
-          "cta_line": "?????? 16GB ??????? ??????? ???????? ????? ???????? ??????? ??? cloud burst ??? ??????."
+          "title": "أفضل رقم محلي LLM لسعة 16 جيجابايت VRAM: الدليل العملي (2026)",
+          "description": "دليل عملي لاختيار الطراز بسعة 16 جيجابايت VRAM مع حدود ملائمة، والمفاضلات المتوقعة، ومشغلات التراجع السحابي.",
+          "cta_line": "استخدم 16 جيجابايت للنماذج اليومية الفعالة وقم بتوجيه أحمال عمل السياق الأكبر إلى السحابة عند الحاجة."
         },
         "hi": {
           "title": "Best Local LLM for 16GB VRAM: Practical Guide (2026)",
-          "description": "16GB VRAM ???? ??? ?? ??? practical ????, ?????? fit boundaries, expected tradeoffs ?? cloud fallback triggers ????? ????",
-          "cta_line": "16GB ?? daily efficient workloads ?? ??? ???? ?? heavy context ?? ????? ?? cloud burst ??? ??????"
+          "description": "फिट सीमाओं, अपेक्षित ट्रेडऑफ़ और क्लाउड फ़ॉलबैक ट्रिगर्स के साथ एक व्यावहारिक 16GB VRAM मॉडल-चयन मार्गदर्शिका।",
+          "cta_line": "कुशल दैनिक मॉडल के लिए 16GB का उपयोग करें और आवश्यकता पड़ने पर बड़े संदर्भ वर्कलोड को क्लाउड बर्स्ट पर रूट करें।"
         },
         "id": {
           "title": "LLM Lokal Terbaik untuk 16GB VRAM: Panduan Praktis (2026)",
@@ -1131,49 +1131,49 @@
       },
       "locales": {
         "es": {
-          "title": "Viabilidad de Inferencia Local Llama 4: Gu?a Pr?ctica (2026)",
-          "description": "Gu?a pr?ctica de viabilidad para inferencia local de llama 4, con l?mites de hardware, chequeos de riesgo y planificaci?n de fallback.",
+          "title": "Llama 4 Viabilidad de la inferencia local: guía práctica (2026)",
+          "description": "Una guía práctica de viabilidad para la inferencia local de Llama 4, que incluye límites de hardware, comprobaciones de riesgos y planificación alternativa.",
           "cta_line": "Ejecuta una puerta de viabilidad con prompts reales antes de comprometer presupuesto de hardware."
         },
         "pt": {
-          "title": "Viabilidade de Infer?ncia Local Llama 4: Guia Pr?tico (2026)",
-          "description": "Guia pr?tico de viabilidade para infer?ncia local de llama 4, com limites de hardware, checagens de risco e plano de fallback.",
-          "cta_line": "Execute um gate de viabilidade com prompts reais antes de comprometer or?amento de hardware."
+          "title": "Llama 4 Viabilidade de Inferência Local: Guia Prático (2026)",
+          "description": "Um guia prático de viabilidade para inferência local do lhama 4, incluindo limites de hardware, verificações de risco e planejamento alternativo.",
+          "cta_line": "Execute um portão de viabilidade com avisos reais antes de comprometer o orçamento de hardware."
         },
         "fr": {
-          "title": "Faisabilit? de l'Inf?rence Locale Llama 4 : Guide Pratique (2026)",
-          "description": "Guide pratique de faisabilit? pour l'inf?rence locale llama 4, avec limites hardware, contr?les de risque et plan de fallback.",
-          "cta_line": "Validez un gate de faisabilit? sur prompts r?els avant d'engager le budget mat?riel."
+          "title": "Llama 4 Faisabilité de l'inférence locale : Guide pratique (2026)",
+          "description": "Un guide de faisabilité pratique pour l'inférence locale de Llama 4, comprenant les limites matérielles, les contrôles des risques et la planification de secours.",
+          "cta_line": "Exécutez une analyse de faisabilité avec de véritables invites avant d’engager un budget matériel."
         },
         "de": {
           "title": "Llama 4 lokale Inferenz Machbarkeit: Praxisleitfaden (2026)",
           "description": "Praxisleitfaden zur Machbarkeit lokaler Llama-4-Inferenz mit Hardware-Grenzen, Risiko-Checks und Fallback-Planung.",
-          "cta_line": "F?hre vor Hardware-Investitionen einen Machbarkeits-Gate mit realen Prompts aus."
+          "cta_line": "Führen Sie einen Machbarkeitstest mit echten Eingabeaufforderungen durch, bevor Sie ein Hardwarebudget festlegen."
         },
         "ru": {
-          "title": "???????? ???????????? ????????? ?????????? Llama 4: ???????????? ???? (2026)",
-          "description": "???????????? ??????????? ?? ???????????? ????????? ?????????? llama 4: ??????? ??????, ???????? ?????? ? fallback-????.",
-          "cta_line": "????? ???????? ?? ?????? ????????? feasibility-gate ?? ???????? ????????."
+          "title": "Llama 4. Осуществимость локального вывода: Практическое руководство (2026 г.)",
+          "description": "Практическое технико-экономическое обоснование локального вывода ламы 4, включая границы оборудования, проверки рисков и планирование отступления.",
+          "cta_line": "Прежде чем выделять бюджет на оборудование, проведите технико-экономическое обоснование с реальными подсказками."
         },
         "ja": {
-          "title": "Llama 4 ??????????????: ??????2026?",
-          "description": "llama 4 ???????????????????????????????????????????????????",
-          "cta_line": "???????????????????? feasibility gate ??????????"
+          "title": "Llama 4 ローカル推論の実現可能性: 実践ガイド (2026)",
+          "description": "ハードウェア境界、リスク チェック、フォールバック計画を含む、llama 4 ローカル推論の実用的な実現可能性ガイド。",
+          "cta_line": "ハードウェア予算をコミットする前に、実際のプロンプトを使用して実現可能性ゲートを実行します。"
         },
         "ko": {
-          "title": "Llama 4 ?? ?? ?? ??? ??: ?? ??? (2026)",
-          "description": "llama 4 ?? ?? ?? ??? ??????. ???? ??, ??? ??, ?? ??? ?????.",
-          "cta_line": "???? ?? ?? ?? ?? ???? ?? feasibility gate? ?????."
+          "title": "Llama 4 국소 추론 타당성: 실용 가이드(2026)",
+          "description": "하드웨어 경계, 위험 검사 및 대체 계획을 포함하여 Lama 4 로컬 추론을 위한 실용적인 타당성 가이드입니다.",
+          "cta_line": "하드웨어 예산을 투입하기 전에 실제 프롬프트로 타당성 조사를 실행하세요."
         },
         "ar": {
-          "title": "???? ????????? ?????? ?? Llama 4: ???? ???? (2026)",
-          "description": "???? ???? ?????? ?? ???? ????????? ?????? ?? llama 4? ?? ???? ?????? ??????? ??????? ???? fallback.",
-          "cta_line": "???? feasibility gate ???????? ??????? ?????? ??? ?????? ??????? ??????."
+          "title": "Llama 4 جدوى الاستدلال المحلي: الدليل العملي (2026)",
+          "description": "دليل جدوى عملي للاستدلال المحلي لللاما 4، بما في ذلك حدود الأجهزة، وفحوصات المخاطر، والتخطيط الاحتياطي.",
+          "cta_line": "قم بتشغيل بوابة جدوى بمطالبات حقيقية قبل الالتزام بميزانية الأجهزة."
         },
         "hi": {
           "title": "Llama 4 Local Inference Feasibility: Practical Guide (2026)",
-          "description": "llama 4 ???? ??????? feasibility ?? ??? practical ????, ?????? hardware boundaries, risk checks ?? fallback planning ????? ???",
-          "cta_line": "hardware budget ????? ???? ?? ???? real prompts ?? feasibility gate ??????"
+          "description": "हार्डवेयर सीमाओं, जोखिम जांच और फ़ॉलबैक योजना सहित लामा 4 स्थानीय अनुमान के लिए एक व्यावहारिक व्यवहार्यता मार्गदर्शिका।",
+          "cta_line": "हार्डवेयर बजट निर्धारित करने से पहले वास्तविक संकेतों के साथ व्यवहार्यता गेट चलाएँ।"
         },
         "id": {
           "title": "Kelayakan Inferensi Lokal Llama 4: Panduan Praktis (2026)",
@@ -1190,49 +1190,49 @@
       },
       "locales": {
         "es": {
-          "title": "Gu?a de Self-Host Qwen2.5 Coder 32B: Gu?a Pr?ctica (2026)",
-          "description": "Gu?a pr?ctica de self-host para qwen2.5 coder 32b con ajuste de hardware, chequeos de estabilidad y guardrails de producci?n.",
-          "cta_line": "Empieza con defaults locales estables y agrega cloud fallback solo para picos de carga de c?digo."
+          "title": "Qwen2.5 Guía de autohospedaje del Coder 32B: Guía práctica (2026)",
+          "description": "Una guía práctica de autohospedaje para el codificador qwen2.5 32b, que cubre el ajuste del hardware, comprobaciones de estabilidad y barreras de seguridad de producción.",
+          "cta_line": "Comience con valores predeterminados locales estables y agregue respaldo en la nube solo para cargas de trabajo de codificación pico."
         },
         "pt": {
-          "title": "Guia Self-Host do Qwen2.5 Coder 32B: Guia Pr?tico (2026)",
-          "description": "Guia pr?tico de self-host para qwen2.5 coder 32b cobrindo fit de hardware, checagens de estabilidade e guardrails de produ??o.",
-          "cta_line": "Comece com defaults locais est?veis e adicione cloud fallback apenas para picos de workload de c?digo."
+          "title": "Qwen2.5 Guia de auto-hospedagem do Coder 32B: Guia prático (2026)",
+          "description": "Um guia prático de auto-hospedagem para o codificador qwen2.5 32b, cobrindo ajuste de hardware, verificações de estabilidade e proteções de produção.",
+          "cta_line": "Comece com padrões locais estáveis ​​e adicione fallback de nuvem apenas para cargas de trabalho de codificação de pico."
         },
         "fr": {
           "title": "Guide Self-Host Qwen2.5 Coder 32B : Guide Pratique (2026)",
-          "description": "Guide pratique de self-host pour qwen2.5 coder 32b avec fit hardware, contr?les de stabilit? et garde-fous de production.",
-          "cta_line": "D?marrez avec des param?tres locaux stables et ajoutez le fallback cloud seulement en pic de charge code."
+          "description": "Un guide pratique d'auto-hébergement pour le codeur qwen2.5 32b, couvrant l'ajustement du matériel, les contrôles de stabilité et les garde-corps de production.",
+          "cta_line": "Commencez avec des paramètres locaux par défaut stables et ajoutez une solution de secours cloud uniquement pour les charges de travail de codage les plus élevées."
         },
         "de": {
           "title": "Qwen2.5 Coder 32B Self-Host Guide: Praxisleitfaden (2026)",
-          "description": "Praxisleitfaden f?r Self-Hosting von qwen2.5 coder 32b mit Hardware-Fit, Stabilit?tschecks und Produktions-Guardrails.",
-          "cta_line": "Starte mit stabilen lokalen Defaults und erg?nze Cloud-Fallback nur f?r Coding-Spitzenlast."
+          "description": "Ein praktischer Self-Host-Leitfaden für qwen2.5 coder 32b, der Hardware-Passform, Stabilitätsprüfungen und Produktionsleitplanken behandelt.",
+          "cta_line": "Beginnen Sie mit stabilen lokalen Standardeinstellungen und fügen Sie Cloud-Fallback nur für Spitzenlasten bei der Codierung hinzu."
         },
         "ru": {
-          "title": "??????????? ?? self-host Qwen2.5 Coder 32B: ???????????? ???? (2026)",
-          "description": "???????????? ???? ?? self-host ??? qwen2.5 coder 32b: fit ??????, ???????? ???????????? ? guardrails ??? ??????????.",
-          "cta_line": "??????? ?? ?????????? ????????? ???????? ? ?????????? cloud fallback ?????? ??? ??????? coding-????????."
+          "title": "Qwen2.5 Руководство по самостоятельному хостингу Coder 32B: Практическое руководство (2026 г.)",
+          "description": "Практическое руководство по самостоятельному размещению кодера qwen2.5 32b, охватывающее установку оборудования, проверку стабильности и защитные ограждения.",
+          "cta_line": "Начните со стабильных локальных настроек по умолчанию и добавляйте резервный вариант облака только для пиковых рабочих нагрузок кодирования."
         },
         "ja": {
-          "title": "Qwen2.5 Coder 32B ?????????: ????2026?",
-          "description": "qwen2.5 coder 32b ????????????????????????????????????????????",
-          "cta_line": "????????????????????????????????????????????"
+          "title": "Qwen2.5 Coder 32B セルフホスト ガイド: 実践ガイド (2026)",
+          "description": "qwen2.5 コーダー 32b 用の実践的なセルフホスト ガイド。ハードウェアの適合性、安定性チェック、実稼働環境のガードレールをカバーしています。",
+          "cta_line": "安定したローカルのデフォルトから始めて、ピーク時のコーディング ワークロードにのみクラウド フォールバックを追加します。"
         },
         "ko": {
-          "title": "Qwen2.5 Coder 32B ????? ???: ??? (2026)",
-          "description": "qwen2.5 coder 32b ????? ?? ??????. ???? ???, ??? ??, ???? ????? ????.",
-          "cta_line": "?? ???? ?? ????? ????, ?? ?? ???? ???? ??? ?????."
+          "title": "Qwen2.5 Coder 32B 셀프 호스트 가이드: 실용 가이드(2026)",
+          "description": "하드웨어 적합성, 안정성 검사 및 생산 가드레일을 다루는 qwen2.5 코더 32b용 실용적인 셀프 호스트 가이드입니다.",
+          "cta_line": "안정적인 로컬 기본값으로 시작하고 최대 코딩 작업 부하에 대해서만 클라우드 대체를 추가하세요."
         },
         "ar": {
-          "title": "???? ????????? ??????? ?? Qwen2.5 Coder 32B: ???? ???? (2026)",
-          "description": "???? ???? ???????? qwen2.5 coder 32b ??????? ???? ?????? ?????? ??????? ????????? ?????? ???????.",
-          "cta_line": "???? ???????? ????? ?????? ???? fallback ????? ??? ??? ??? ????? ???????."
+          "title": "Qwen2.5 دليل المضيف الذاتي للمبرمج 32B: الدليل العملي (2026)",
+          "description": "دليل عملي للمضيف الذاتي للمبرمج qwen2.5 32b، يغطي ملاءمة الأجهزة، وفحوصات الاستقرار، وحواجز حماية الإنتاج.",
+          "cta_line": "ابدأ بالإعدادات الافتراضية المحلية المستقرة وأضف احتياطيًا سحابيًا لأحمال عمل الترميز القصوى فقط."
         },
         "hi": {
           "title": "Qwen2.5 Coder 32B Self-Host Guide: Practical Guide (2026)",
-          "description": "qwen2.5 coder 32b ?? ??? practical self-host ????, ?????? hardware fit, stability checks ?? production guardrails ????? ????",
-          "cta_line": "stable local defaults ?? ???? ???? ?? peak coding workloads ?? ?? cloud fallback ???????"
+          "description": "qwen2.5 कोडर 32बी के लिए एक व्यावहारिक सेल्फ-होस्ट गाइड, जो हार्डवेयर फिट, स्थिरता जांच और उत्पादन रेलिंग को कवर करता है।",
+          "cta_line": "स्थिर स्थानीय डिफ़ॉल्ट के साथ प्रारंभ करें और केवल चरम कोडिंग कार्यभार के लिए क्लाउड फ़ॉलबैक जोड़ें।"
         },
         "id": {
           "title": "Panduan Self-Host Qwen2.5 Coder 32B: Panduan Praktis (2026)",
@@ -1249,49 +1249,49 @@
       },
       "locales": {
         "es": {
-          "title": "Red de Cluster Local Ollama: Checklist Pr?ctico de Topolog?a",
-          "description": "Checklist pr?ctico para validar topolog?a de red multi-nodo Ollama local, estabilidad de latencia y consistencia de throughput sostenido.",
-          "cta_line": "Mide cola y latencia antes de a?adir nodos; escala solo cuando el baseline de un nodo sea estable."
+          "title": "Ollama Red de clúster local: lista de verificación de topología práctica",
+          "description": "Una lista de verificación práctica para validar la topología de red local de múltiples nodos Ollama, la estabilidad de la latencia y la coherencia del rendimiento sostenido.",
+          "cta_line": "Mida el comportamiento de la cola y la latencia antes de agregar nodos; escale solo después de que la línea base de un solo nodo sea estable."
         },
         "pt": {
-          "title": "Rede de Cluster Local Ollama: Checklist Pr?tico de Topologia",
-          "description": "Checklist pr?tico para validar topologia de rede multi-n? do Ollama local, estabilidade de lat?ncia e consist?ncia de throughput sustentado.",
-          "cta_line": "Me?a fila e lat?ncia antes de adicionar n?s; escale s? ap?s baseline de n? ?nico est?vel."
+          "title": "Ollama Rede de cluster local: lista de verificação prática de topologia",
+          "description": "Uma lista de verificação prática para validar topologia de rede local de vários nós Ollama, estabilidade de latência e consistência de taxa de transferência sustentada.",
+          "cta_line": "Meça o comportamento da fila e da latência antes de adicionar nós; escala somente depois que a linha de base de nó único estiver estável."
         },
         "fr": {
-          "title": "R?seau Cluster Local Ollama : Checklist Pratique de Topologie",
-          "description": "Checklist pratique pour valider une topologie r?seau Ollama multi-n?ud locale, stabilit? de latence et coh?rence du d?bit soutenu.",
-          "cta_line": "Mesurez file et latence avant d'ajouter des n?uds ; scalez seulement apr?s baseline mono-n?ud stable."
+          "title": "Ollama Réseau de clusters locaux : liste de contrôle pratique de la topologie",
+          "description": "Une liste de contrôle pratique pour valider la topologie du réseau local multi-nœuds Ollama, la stabilité de la latence et la cohérence soutenue du débit.",
+          "cta_line": "Mesurez le comportement de la file d'attente et de la latence avant d'ajouter des nœuds ; échelle uniquement une fois que la ligne de base d’un seul nœud est stable."
         },
         "de": {
           "title": "Ollama Local Cluster Netzwerk: Praktische Topologie-Checkliste",
-          "description": "Praktische Checkliste zur Validierung lokaler Multi-Node-Ollama-Topologie, Latenzstabilit?t und konsistentem Durchsatz unter Dauerlast.",
+          "description": "Eine praktische Checkliste zur Validierung der lokalen Netzwerktopologie mit mehreren Knoten, der Latenzstabilität und der dauerhaften Durchsatzkonsistenz.",
           "cta_line": "Queue- und Latenzverhalten vor Node-Ausbau messen; erst nach stabilem Single-Node-Baseline skalieren."
         },
         "ru": {
-          "title": "????????? ??????? Ollama: ???????????? ??????? ??????? ?????????",
-          "description": "???????????? ??????? ??? ???????? ????????? multi-node ????????? Ollama, ???????????? ???????? ? ??????????? throughput.",
-          "cta_line": "??????? ???????? ??????? ? ????????, ? ????????????? ?????? ????? ??????????? single-node baseline."
+          "title": "Ollama Локальная кластерная сеть: практический контрольный список топологии",
+          "description": "Практический контрольный список для проверки топологии локальной многоузловой сети Ollama, стабильности задержек и устойчивой согласованности пропускной способности.",
+          "cta_line": "Измерьте поведение очереди и задержки перед добавлением узлов; масштабируйте только после того, как базовая линия одного узла станет стабильной."
         },
         "ja": {
-          "title": "Ollama???????????????: ??????????????",
-          "description": "????????Ollama???????????????????????????????????????????????",
-          "cta_line": "????????????????????????????????????????????"
+          "title": "Ollama ローカル クラスター ネットワーク: 実用的なトポロジ チェックリスト",
+          "description": "ローカル マルチノード Ollama ネットワーク トポロジ、遅延の安定性、および持続的なスループットの一貫性を検証するための実用的なチェックリスト。",
+          "cta_line": "ノードを追加する前にキューとレイテンシの動作を測定します。単一ノードのベースラインが安定した後にのみスケールします。"
         },
         "ko": {
-          "title": "Ollama ?? ???? ????: ?? ???? ?????",
-          "description": "?? ???? Ollama ???? ????, ?? ???, ?? ??? ???? ???? ?? ????????.",
-          "cta_line": "?? ?? ? ?/?? ??? ????, ?? ?? ??? ??? ??? ?????."
+          "title": "Ollama 로컬 클러스터 네트워크: 실제 토폴로지 체크리스트",
+          "description": "로컬 다중 노드 Ollama 네트워크 토폴로지, 대기 시간 안정성 및 지속적인 처리량 일관성을 검증하기 위한 실용적인 체크리스트입니다.",
+          "cta_line": "노드를 추가하기 전에 대기열 및 대기 시간 동작을 측정합니다. 단일 노드 기준이 안정된 후에만 확장하세요."
         },
         "ar": {
-          "title": "???? Ollama ????????? ???????: ????? ???? ????? ???????????",
-          "description": "????? ???? ????? ?????? ?? ????????? ???? Ollama ?????? ????? ?????? ???????? ??? ????????? ?????? throughput ???????.",
-          "cta_line": "??? ???? ??????? ??????? ??? ????? ?????? ??? ????? ??? ??? ??????? ?? ?????? ????? ?????."
+          "title": "Ollama شبكة المجموعة المحلية: قائمة مرجعية للطوبولوجيا العملية",
+          "description": "قائمة مرجعية عملية للتحقق من صحة بنية الشبكة المحلية متعددة العقد Ollama، واستقرار زمن الاستجابة، واتساق الإنتاجية المستدام.",
+          "cta_line": "قياس سلوك قائمة الانتظار ووقت الاستجابة قبل إضافة العقد؛ يتم القياس فقط بعد استقرار خط الأساس للعقدة الواحدة."
         },
         "hi": {
           "title": "Ollama Local Cluster Network: Practical Topology Checklist",
-          "description": "???? multi-node Ollama ??????? ????????, latency stability ?? sustained throughput consistency ?? validate ???? ?? practical checklist?",
-          "cta_line": "nodes ?????? ?? ???? queue ?? latency behavior ?????; single-node baseline stable ???? ?? ?? scale ?????"
+          "description": "स्थानीय मल्टी-नोड Ollama नेटवर्क टोपोलॉजी, विलंबता स्थिरता और निरंतर थ्रूपुट स्थिरता को मान्य करने के लिए एक व्यावहारिक चेकलिस्ट।",
+          "cta_line": "नोड्स जोड़ने से पहले कतार और विलंबता व्यवहार को मापें; सिंगल-नोड बेसलाइन स्थिर होने के बाद ही स्केल करें।"
         },
         "id": {
           "title": "Jaringan Cluster Lokal Ollama: Checklist Topologi Praktis",
@@ -1308,49 +1308,49 @@
       },
       "locales": {
         "es": {
-          "title": "Calidad Q4 vs Q8 en Ollama: Gu?a Pr?ctica (2026)",
-          "description": "Gu?a pr?ctica de decisi?n para tradeoffs de calidad Q4 vs Q8 en Ollama, enfocada en prompts reales y riesgo de despliegue.",
-          "cta_line": "Haz pruebas ciegas con prompts de producci?n antes de fijar la cuantizaci?n por defecto."
+          "title": "Calidad Q4 vs Q8 en Ollama: Guía práctica (2026)",
+          "description": "Una guía de decisiones práctica para las compensaciones de calidad del cuarto trimestre frente al octavo trimestre en Ollama, centrada en el comportamiento rápido real y el riesgo de implementación.",
+          "cta_line": "Ejecute pruebas ciegas en sus indicaciones de producción antes de bloquear los valores predeterminados de cuantificación."
         },
         "pt": {
-          "title": "Qualidade Q4 vs Q8 no Ollama: Guia Pr?tico (2026)",
-          "description": "Guia pr?tico para decidir tradeoffs de qualidade Q4 vs Q8 no Ollama, focado em prompts reais e risco de deploy.",
-          "cta_line": "Execute testes cegos com prompts de produ??o antes de travar o padr?o de quantiza??o."
+          "title": "Qualidade Q4 vs Q8 em Ollama: Guia Prático (2026)",
+          "description": "Um guia prático de decisão para compensações de qualidade entre o 4º e o 8º trimestre em Ollama, focado no comportamento imediato real e no risco de implantação.",
+          "cta_line": "Execute testes cegos em seus prompts de produção antes de bloquear os padrões de quantização."
         },
         "fr": {
           "title": "Qualit? Q4 vs Q8 dans Ollama : Guide Pratique (2026)",
-          "description": "Guide pratique de d?cision sur les compromis qualit? Q4 vs Q8 dans Ollama, bas? sur prompts r?els et risque de d?ploiement.",
+          "description": "Un guide de décision pratique pour les compromis de qualité entre le quatrième et le huitième trimestre en Ollama, axé sur le comportement rapide réel et le risque de déploiement.",
           "cta_line": "Faites des tests aveugles sur vos prompts de production avant de figer la quantification."
         },
         "de": {
-          "title": "Q4 vs Q8 Qualit?t in Ollama: Praxisleitfaden (2026)",
-          "description": "Praktischer Entscheidungsleitfaden zu Q4-vs-Q8-Qualit?ts-Trade-offs in Ollama mit Fokus auf reale Prompts und Deploy-Risiko.",
-          "cta_line": "F?hre Blindtests mit Produktions-Prompts aus, bevor du Quantisierungs-Defaults festlegst."
+          "title": "Qualität Q4 vs. Q8 in Ollama: Praktischer Leitfaden (2026)",
+          "description": "Ein praktischer Entscheidungsleitfaden für Qualitätskompromisse zwischen Q4 und Q8 in Ollama, der sich auf echtes promptes Verhalten und Bereitstellungsrisiko konzentriert.",
+          "cta_line": "Führen Sie Blindtests an Ihren Produktionsansagen durch, bevor Sie die Quantisierungsvorgaben sperren."
         },
         "ru": {
-          "title": "???????? Q4 vs Q8 ? Ollama: ???????????? ???? (2026)",
-          "description": "???????????? ???? ?? ?????? ????? Q4 ? Q8 ? Ollama ? ??????? ?? ???????? ????????? ???????? ? ????? ??????.",
-          "cta_line": "????????? ?????? ????? ?? ???????? ???????? ?? ???????? ????????? ???????????."
+          "title": "Качество Q4 и Q8 в Ollama: Практическое руководство (2026 г.)",
+          "description": "Практическое руководство по выбору компромисса между качеством Q4 и Q8 в Ollama, ориентированное на реальное быстрое поведение и риск развертывания.",
+          "cta_line": "Запустите слепое тестирование ваших производственных подсказок, прежде чем блокировать настройки квантования по умолчанию."
         },
         "ja": {
-          "title": "Ollama?Q4 vs Q8????: ??????2026?",
-          "description": "Ollama??Q4/Q8??????????????????????????????????????",
-          "cta_line": "??????????????????????????????????????????"
+          "title": "Ollama における第 4 四半期と第 8 四半期の品質: 実践ガイド (2026)",
+          "description": "Ollama における第 4 四半期と第 8 四半期の品質トレードオフに関する実践的な意思決定ガイド。実際の迅速な動作と導入リスクに焦点を当てています。",
+          "cta_line": "量子化のデフォルトをロックする前に、本番プロンプトでブラインド テストを実行します。"
         },
         "ko": {
-          "title": "Ollama Q4 vs Q8 ?? ??: ?? ??? (2026)",
-          "description": "Ollama? Q4/Q8 ?? ??????? ?? ???? ??? ?? ??? ???? ???? ?? ??????.",
-          "cta_line": "??? ???? ???? ?? ?? ???? ???? ???? ?????."
+          "title": "Ollama의 Q4 및 Q8 품질: 실용 가이드(2026)",
+          "description": "Ollama의 Q4와 Q8 품질 균형에 대한 실용적인 의사 결정 가이드로, 실제 신속한 행동과 배포 위험에 중점을 둡니다.",
+          "cta_line": "양자화 기본값을 잠그기 전에 프로덕션 프롬프트에 대해 블라인드 테스트를 실행하세요."
         },
         "ar": {
-          "title": "???? Q4 ????? Q8 ?? Ollama: ???? ???? (2026)",
-          "description": "???? ???? ?????? ???? ???? Q4 ????? Q8 ?? Ollama ????????? ??? ???? ????????? ??????? ?????? ?????.",
-          "cta_line": "???? ???????? ????? ??? ??????? ??????? ??? ????? ??????? quantization ??????????."
+          "title": "جودة Q4 مقابل Q8 في Ollama: الدليل العملي (2026)",
+          "description": "دليل عملي للقرارات المتعلقة بمقايضات الجودة بين الربع الرابع والربع الثامن في Ollama، يركز على السلوك الفوري الحقيقي ومخاطر النشر.",
+          "cta_line": "قم بإجراء اختبارات عمياء على مطالبات الإنتاج الخاصة بك قبل قفل الإعدادات الافتراضية للتكميم."
         },
         "hi": {
           "title": "Q4 vs Q8 Quality in Ollama: Practical Guide (2026)",
-          "description": "Ollama ??? Q4 vs Q8 quality tradeoffs ?? ??? practical guide, ?? real prompts ?? deployment risk ?? ???????? ???",
-          "cta_line": "quantization defaults ??? ???? ?? ???? production prompts ?? blind tests ??????"
+          "description": "Ollama में Q4 बनाम Q8 गुणवत्ता ट्रेडऑफ़ के लिए एक व्यावहारिक निर्णय मार्गदर्शिका, वास्तविक त्वरित व्यवहार और तैनाती जोखिम पर केंद्रित है।",
+          "cta_line": "परिमाणीकरण डिफ़ॉल्ट को लॉक करने से पहले अपने उत्पादन संकेतों पर अंधा परीक्षण चलाएँ।"
         },
         "id": {
           "title": "Kualitas Q4 vs Q8 di Ollama: Panduan Praktis (2026)",
@@ -1368,48 +1368,48 @@
       "locales": {
         "es": {
           "title": "Arregla CUDA Out of Memory en Ollama en 5 Minutos",
-          "description": "Ruta r?pida, terminal-first, para fallos OOM de CUDA en Ollama con orden de reintento estable.",
-          "cta_line": "Reduce presi?n de cuantizaci?n, contexto y capas GPU en secuencia antes de cambiar hardware."
+          "description": "Una ruta de solución rápida primero en el terminal para fallas Ollama comunes de CUDA OOM con orden de reintento estable.",
+          "cta_line": "Reduzca la presión de cuantificación, el contexto y las capas GPU en secuencia antes de cambiar el hardware."
         },
         "pt": {
           "title": "Corrija CUDA Out of Memory no Ollama em 5 Minutos",
-          "description": "Caminho r?pido terminal-first para falhas OOM de CUDA no Ollama com ordem est?vel de tentativa.",
-          "cta_line": "Reduza press?o de quantiza??o, contexto e camadas GPU em sequ?ncia antes de trocar hardware."
+          "description": "Um caminho de correção rápida que prioriza o terminal para falhas Ollama CUDA OOM comuns com ordem de repetição estável.",
+          "cta_line": "Reduza a pressão de quantização, o contexto e as camadas GPU em sequência antes de alterar o hardware."
         },
         "fr": {
           "title": "Corriger CUDA Out of Memory dans Ollama en 5 Minutes",
           "description": "Parcours de correction rapide orient? terminal pour les erreurs CUDA OOM courantes dans Ollama.",
-          "cta_line": "R?duisez pression de quantification, contexte et couches GPU dans cet ordre avant de changer le mat?riel."
+          "cta_line": "Réduisez la pression de quantification, le contexte et les couches GPU en séquence avant de changer de matériel."
         },
         "de": {
           "title": "CUDA Out of Memory in Ollama in 5 Minuten beheben",
-          "description": "Terminal-first-Schnellpfad zur Behebung h?ufiger CUDA-OOM-Fehler in Ollama mit stabiler Retry-Reihenfolge.",
+          "description": "Ein Terminal-First-Schnellbehebungspfad für häufige Ollama CUDA OOM-Fehler mit stabiler Wiederholungsreihenfolge.",
           "cta_line": "Erst Quantisierungsdruck, Kontext und GPU-Layer nacheinander reduzieren, bevor Hardware gewechselt wird."
         },
         "ru": {
-          "title": "??? ????????? CUDA Out of Memory ? Ollama ?? 5 ?????",
-          "description": "??????? terminal-first ???? ??? ???????? CUDA OOM ?????? ? Ollama ? ?????????? ???????? ????????? ???????.",
-          "cta_line": "???????? ???????????, ???????? ? GPU-???? ?? ????? ?? ????? ??????."
+          "title": "Исправьте Ollama CUDA из памяти за 5 минут",
+          "description": "Путь быстрого исправления с помощью терминала для распространенных Ollama сбоев CUDA OOM со стабильным порядком повтора.",
+          "cta_line": "Перед заменой оборудования последовательно уменьшайте давление квантования, контекст и слои GPU."
         },
         "ja": {
-          "title": "Ollama?CUDA OOM?5??????",
-          "description": "Ollama?????CUDA OOM???????????????????????",
-          "cta_line": "??????????????????????GPU????????????????????"
+          "title": "Ollama CUDA のメモリ不足を 5 分で修正",
+          "description": "一般的な Ollama CUDA OOM エラーに対する、安定した再試行順序を備えたターミナルファーストのクイックフィックス パス。",
+          "cta_line": "ハードウェアを変更する前に、量子化圧力、コンテキスト、GPU レイヤーを順番に減らします。"
         },
         "ko": {
-          "title": "Ollama CUDA OOM 5? ?? ???",
-          "description": "Ollama CUDA OOM ??? ??? ???? ??? ???? ?? ?????.",
-          "cta_line": "???? ?? ?? ??? ??, ????, GPU ???? ???? ????."
+          "title": "5분 안에 Ollama CUDA 메모리 부족 문제 해결",
+          "description": "안정적인 재시도 순서를 사용하여 일반적인 Ollama CUDA OOM 오류에 대한 터미널 우선 빠른 수정 경로입니다.",
+          "cta_line": "하드웨어를 변경하기 전에 양자화 압력, 컨텍스트 및 GPU 레이어를 순차적으로 줄이세요."
         },
         "ar": {
-          "title": "????? CUDA Out of Memory ?? Ollama ???? 5 ?????",
-          "description": "???? ????? ???? ????? ??? ??????? ?????? CUDA OOM ??????? ?? Ollama.",
-          "cta_line": "???? ??? quantization ?? ?????? ?? ????? GPU ???????? ??? ????? ??????."
+          "title": "إصلاح Ollama CUDA نفاد الذاكرة في 5 دقائق",
+          "description": "مسار الإصلاح السريع للمحطة الأولى لفشل Ollama CUDA OOM الشائع مع ترتيب إعادة المحاولة المستقر.",
+          "cta_line": "قم بتقليل ضغط التكميم والسياق والطبقات GPU بالتسلسل قبل تغيير الأجهزة."
         },
         "hi": {
           "title": "Fix Ollama CUDA Out of Memory in 5 Minutes",
-          "description": "Ollama ?? common CUDA OOM failures ?? ??? terminal-first quick-fix path, stable retry order ?? ????",
-          "cta_line": "hardware ????? ?? ???? quantization pressure, context ?? GPU layers ?? ???? ??? ?? ?????"
+          "description": "स्थिर पुनः प्रयास क्रम के साथ सामान्य Ollama CUDA OOM विफलताओं के लिए एक टर्मिनल-प्रथम त्वरित-ठीक पथ।",
+          "cta_line": "हार्डवेयर बदलने से पहले परिमाणीकरण दबाव, संदर्भ और GPU परतों को क्रम से कम करें।"
         },
         "id": {
           "title": "Perbaiki CUDA Out of Memory Ollama dalam 5 Menit",
@@ -1426,49 +1426,49 @@
       },
       "locales": {
         "es": {
-          "title": "Stack RAG de Soporte al Cliente con LLM Local: Gu?a Pr?ctica (2026)",
-          "description": "Gu?a pr?ctica para construir un stack RAG local de soporte al cliente con guardrails de latencia, calidad y costo.",
-          "cta_line": "Estabiliza retrieval y plantillas de respuesta antes de escalar a modelos m?s grandes."
+          "title": "Pila RAG de atención al cliente local LLM: Guía práctica (2026)",
+          "description": "Una guía práctica para crear una pila RAG de atención al cliente local con barreras de latencia, calidad y costos.",
+          "cta_line": "Estabilice las plantillas de recuperación y respuesta antes de escalar a niveles de modelo más grandes."
         },
         "pt": {
-          "title": "Stack RAG de Suporte ao Cliente com LLM Local: Guia Pr?tico (2026)",
-          "description": "Guia pr?tico para construir um stack RAG local de suporte ao cliente com guardrails de lat?ncia, qualidade e custo.",
+          "title": "Pilha RAG de suporte ao cliente local LLM: Guia prático (2026)",
+          "description": "Um guia prático para construir uma pilha RAG de suporte ao cliente local com proteção de latência, qualidade e custos.",
           "cta_line": "Estabilize retrieval e templates de resposta antes de escalar para modelos maiores."
         },
         "fr": {
           "title": "Stack RAG Local pour Support Client avec LLM : Guide Pratique (2026)",
-          "description": "Guide pratique pour construire un stack RAG local de support client avec garde-fous de latence, qualit? et co?t.",
-          "cta_line": "Stabilisez retrieval et mod?les de r?ponse avant de monter en taille de mod?le."
+          "description": "Un guide pratique pour créer une pile RAG de support client local avec des garde-fous en matière de latence, de qualité et de coût.",
+          "cta_line": "Stabilisez les modèles de récupération et de réponse avant de passer à des niveaux de modèle plus grands."
         },
         "de": {
           "title": "Lokaler LLM Customer-Support RAG-Stack: Praxisleitfaden (2026)",
-          "description": "Praxisleitfaden zum Aufbau eines lokalen Customer-Support-RAG-Stacks mit Leitplanken f?r Latenz, Qualit?t und Kosten.",
+          "description": "Ein praktischer Leitfaden zum Aufbau eines lokalen RAG-Stacks für den Kundensupport mit Latenz-, Qualitäts- und Kostenleitplanken.",
           "cta_line": "Zuerst Retrieval und Antwort-Templates stabilisieren, dann auf gr??ere Modell-Tiers skalieren."
         },
         "ru": {
-          "title": "????????? RAG-???? LLM ??? ????????? ????????: ???????????? ???? (2026)",
-          "description": "???????????? ??????????? ?? ?????? ?????????? customer-support RAG-????? ? ?????????????? ?? ????????, ???????? ? ?????????.",
-          "cta_line": "??????? ?????????????? retrieval ? ??????? ???????, ????? ??????????????? ?? ????? ??????? ??????."
+          "title": "Локальная LLM служба поддержки клиентов RAG Stack: Практическое руководство (2026 г.)",
+          "description": "Практическое руководство по созданию стека RAG для локальной поддержки клиентов с ограничениями по задержке, качеству и стоимости.",
+          "cta_line": "Стабилизируйте шаблоны поиска и ответа перед масштабированием на более крупные уровни модели."
         },
         "ja": {
-          "title": "????LLM??????RAG????: ??????2026?",
-          "description": "??????????RAG?????????????????????????????????????????",
-          "cta_line": "??????????????retrieval ????????????????????"
+          "title": "ローカル LLM カスタマー サポート RAG スタック: 実践ガイド (2026)",
+          "description": "レイテンシー、品質、コストのガードレールを備えたローカル カスタマー サポート RAG スタックを構築するための実践的なガイド。",
+          "cta_line": "より大きなモデル層に拡張する前に、取得テンプレートと応答テンプレートを安定させます。"
         },
         "ko": {
-          "title": "?? LLM ???? RAG ??: ?? ??? (2026)",
-          "description": "?? ???? RAG ?? ?? ?? ??????. ??, ??, ?? ????? ?????.",
-          "cta_line": "?? ??? ???? ?? retrieval? ?? ???? ?? ??????."
+          "title": "로컬 LLM 고객 지원 RAG 스택: 실용 가이드(2026)",
+          "description": "대기 시간, 품질 및 비용 가드레일을 갖춘 로컬 고객 지원 RAG 스택 구축에 대한 실용적인 가이드입니다.",
+          "cta_line": "더 큰 모델 계층으로 확장하기 전에 검색 및 응답 템플릿을 안정화하세요."
         },
         "ar": {
-          "title": "???? RAG ????? ???? ??????? ???????? LLM: ???? ???? (2026)",
-          "description": "???? ???? ????? ???? RAG ????? ???? ??????? ?? ????? ?????? ??????? ????????.",
-          "cta_line": "???? retrieval ?????? ??????? ??? ?????? ??? ????? ????."
+          "title": "دعم العملاء المحلي LLM RAG Stack: الدليل العملي (2026)",
+          "description": "دليل عملي لبناء مكدس RAG لدعم العملاء المحليين مع حواجز حماية زمن الوصول والجودة والتكلفة.",
+          "cta_line": "قم بتثبيت قوالب الاسترجاع والاستجابة قبل التوسع في مستويات النموذج الأكبر."
         },
         "hi": {
           "title": "Local LLM Customer Support RAG Stack: Practical Guide (2026)",
-          "description": "???? customer-support RAG stack ????? ?? practical ????, ?????? latency, quality ?? cost guardrails ????? ????",
-          "cta_line": "???? model tiers ?? ???? ?? ???? retrieval ?? response templates ?? ????? ?????"
+          "description": "विलंबता, गुणवत्ता और लागत रेलिंग के साथ स्थानीय ग्राहक-सहायता आरएजी स्टैक बनाने के लिए एक व्यावहारिक मार्गदर्शिका।",
+          "cta_line": "बड़े मॉडल स्तरों पर स्केल करने से पहले पुनर्प्राप्ति और प्रतिक्रिया टेम्पलेट्स को स्थिर करें।"
         },
         "id": {
           "title": "Stack RAG Dukungan Pelanggan LLM Lokal: Panduan Praktis (2026)",
@@ -1486,48 +1486,48 @@
       "locales": {
         "es": {
           "title": "Sigue siendo el Rey del VRAM: Por qu? recomendamos RTX 3090 en 2026",
-          "description": "Por qu? la RTX 3090 sigue siendo la puerta de entrada 24GB m?s pr?ctica para cargas locales de clase 70B en 2026.",
+          "description": "Por qué RTX 3090 sigue siendo la puerta de enlace de 24 GB más práctica para cargas de trabajo locales de clase 70B en 2026.",
           "cta_line": "Prioriza estabilidad verificada por costo, no solo titulares de picos de benchmark."
         },
         "pt": {
           "title": "Ainda ? o Rei do VRAM: Por que recomendamos a RTX 3090 em 2026",
-          "description": "Por que a RTX 3090 continua sendo a porta de entrada 24GB mais pr?tica para workloads locais de classe 70B em 2026.",
-          "cta_line": "Priorize estabilidade verificada por custo, n?o s? manchetes de pico de benchmark."
+          "description": "Por que RTX 3090 continua sendo o gateway de 24 GB mais prático para cargas de trabalho locais de classe 70B em 2026.",
+          "cta_line": "Priorize a estabilidade verificada por dólar, e não apenas os títulos de referência de pico."
         },
         "fr": {
           "title": "Toujours le Roi du VRAM : pourquoi nous recommandons la RTX 3090 en 2026",
           "description": "Pourquoi la RTX 3090 reste la passerelle 24GB la plus pratique pour des charges locales classe 70B en 2026.",
-          "cta_line": "Priorisez la stabilit? v?rifi?e par co?t, pas seulement les pics de benchmark."
+          "cta_line": "Donnez la priorité à la stabilité vérifiée par dollar, et pas seulement aux gros titres de référence."
         },
         "de": {
-          "title": "Immer noch der VRAM-K?nig: Warum wir 2026 die RTX 3090 empfehlen",
-          "description": "Warum die RTX 3090 2026 weiterhin das praktischste 24GB-Gateway f?r lokale 70B-Klasse-Workloads ist.",
-          "cta_line": "Priorisiere verifizierte Stabilit?t pro Kostenpunkt statt Benchmark-Spitzen-Schlagzeilen."
+          "title": "Immer noch der VRAM-König: Warum wir den RTX 3090 für 2026 empfehlen",
+          "description": "Warum RTX 3090 auch im Jahr 2026 das praktischste 24-GB-Gateway für lokale Workloads der 70B-Klasse bleibt.",
+          "cta_line": "Priorisieren Sie die verifizierte Stabilität pro Dollar, nicht nur Spitzen-Benchmark-Schlagzeilen."
         },
         "ru": {
-          "title": "??-???????? ?????? VRAM: ?????? ?? ??????????? RTX 3090 ? 2026",
-          "description": "?????? RTX 3090 ???????? ????? ?????????? 24GB-?????? ??? ????????? ???????? ?????? 70B ? 2026 ????.",
-          "cta_line": "??????? ? ????????? ??????????? ???????????? ?? ??????, ? ?? ??????? ????????? ??????????."
+          "title": "Все еще король VRAM: почему мы рекомендуем RTX 3090 на 2026 год",
+          "description": "Почему RTX 3090 останется наиболее практичным шлюзом емкостью 24 ГБ для локальных рабочих нагрузок класса 70B в 2026 году.",
+          "cta_line": "Отдавайте предпочтение проверенной стабильности на доллар, а не только заголовкам о пиковых показателях."
         },
         "ja": {
-          "title": "??VRAM??: 2026??RTX 3090???????",
-          "description": "RTX 3090?2026???70B????????????24GB??????????????",
-          "cta_line": "?????????????????????????????????"
+          "title": "依然として VRAM キング: 2026 年に RTX 3090 を推奨する理由",
+          "description": "2026 年になっても RTX 3090 が 70B クラスのローカル ワークロードに最も実用的な 24 GB ゲートウェイであり続ける理由。",
+          "cta_line": "ピーク時のベンチマークのヘッドラインだけでなく、検証済みの 1 ドルあたりの安定性を優先します。"
         },
         "ko": {
-          "title": "??? VRAM? ?: 2026? RTX 3090? ???? ??",
-          "description": "RTX 3090? 2026??? 70B? ?? ????? ?? ???? 24GB ???? ??? ?????.",
-          "cta_line": "?? ?????? ?? ?? ??? ???? ?????."
+          "title": "여전히 VRAM 왕: 2026년에 RTX 3090을 추천하는 이유",
+          "description": "RTX 3090이 2026년에도 70B급 로컬 워크로드에 가장 실용적인 24GB 게이트웨이로 남아 있는 이유.",
+          "cta_line": "최고 벤치마크 헤드라인뿐만 아니라 달러당 검증된 안정성에 우선순위를 두십시오."
         },
         "ar": {
-          "title": "?? ???? ??? VRAM: ????? ???? ?? RTX 3090 ?? 2026",
-          "description": "????? ???? RTX 3090 ??????? ??????? ?????? ?????? ???? 24GB ?????? 70B ??????? ?? 2026.",
-          "cta_line": "???? ????????? ??????? ????? ??????? ??? ?????? Benchmark ??????."
+          "title": "لا يزال الملك VRAM: لماذا نوصي بـ RTX 3090 لعام 2026",
+          "description": "لماذا تظل RTX 3090 البوابة الأكثر عملية بسعة 24 جيجابايت لأحمال العمل المحلية من فئة 70B في عام 2026.",
+          "cta_line": "إعطاء الأولوية للاستقرار الذي تم التحقق منه لكل دولار، وليس فقط عناوين الذروة القياسية."
         },
         "hi": {
           "title": "Still the VRAM King: Why We Recommend the RTX 3090 for 2026",
-          "description": "RTX 3090 2026 ??? ?? 70B-????? ???? workloads ?? ??? ???? practical 24GB gateway ????? ??? ??? ???",
-          "cta_line": "peak benchmark headlines ?? ??????? verified stability per dollar ?? ?????????? ????"
+          "description": "2026 में 70बी-श्रेणी के स्थानीय कार्यभार के लिए RTX 3090 सबसे व्यावहारिक 24जीबी गेटवे क्यों बना हुआ है।",
+          "cta_line": "प्रति डॉलर सत्यापित स्थिरता को प्राथमिकता दें, न कि केवल शीर्ष बेंचमार्क सुर्खियों को।"
         },
         "id": {
           "title": "Masih Raja VRAM: Mengapa Kami Merekomendasikan RTX 3090 untuk 2026",
@@ -1546,47 +1546,47 @@
         "es": {
           "title": "Modelos Verificados Semanales: Snapshot 2026-02-24",
           "description": "Snapshot semanal de ejecuciones verificadas y cambios relevantes para decisiones de fit local.",
-          "cta_line": "Usa deltas semanales para refrescar p?ginas de decisi?n antes de publicar contenido amplio."
+          "cta_line": "Utilice deltas semanales para actualizar las páginas de decisiones antes de publicar actualizaciones de contenido amplias."
         },
         "pt": {
           "title": "Modelos Verificados da Semana: Snapshot 2026-02-24",
-          "description": "Snapshot semanal de execu??es verificadas e mudan?as relevantes para decis?es de fit local.",
-          "cta_line": "Use deltas semanais para atualizar p?ginas de decis?o antes de ampliar conte?do."
+          "description": "Um instantâneo semanal de execuções de modelos verificados e alterações relevantes para decisões no ajuste do modelo local.",
+          "cta_line": "Use deltas semanais para atualizar as páginas de decisão antes de publicar atualizações amplas de conteúdo."
         },
         "fr": {
-          "title": "Mod?les V?rifi?s Hebdomadaires : Snapshot 2026-02-24",
-          "description": "Snapshot hebdomadaire des runs v?rifi?s et des changements utiles pour les d?cisions de fit local.",
-          "cta_line": "Utilisez les deltas hebdomadaires pour rafra?chir les pages de d?cision avant les grandes publications."
+          "title": "Modèles vérifiés hebdomadairement : instantané du 2026-02-24",
+          "description": "Un instantané hebdomadaire des exécutions de modèles vérifiés et des changements pertinents pour la décision dans l'ajustement du modèle local.",
+          "cta_line": "Utilisez des deltas hebdomadaires pour actualiser les pages de décision avant de publier des mises à jour de contenu général."
         },
         "de": {
-          "title": "W?chentlich verifizierte Modelle: Snapshot 2026-02-24",
-          "description": "W?chentlicher Snapshot verifizierter Model-Runs und entscheidungsrelevanter ?nderungen beim lokalen Fit.",
-          "cta_line": "Nutze w?chentliche Deltas, um Entscheidungsseiten vor breiten Content-Updates zu aktualisieren."
+          "title": "Wöchentlich verifizierte Modelle: Schnappschuss vom 24.02.2026",
+          "description": "Eine wöchentliche Momentaufnahme verifizierter Modellläufe und entscheidungsrelevanter Änderungen der lokalen Modellanpassung.",
+          "cta_line": "Verwenden Sie wöchentliche Deltas, um Entscheidungsseiten zu aktualisieren, bevor Sie umfassende Inhaltsaktualisierungen veröffentlichen."
         },
         "ru": {
-          "title": "???????????? ???????????????? ??????: ???? 2026-02-24",
-          "description": "???????????? ???? ?????????????? ???????? ??????? ? ?????????, ?????? ??? ??????? ?? ?????????? fit.",
-          "cta_line": "??????????? ????????? ??????, ????? ????????? decision-???????? ????? ???????? ?????????."
+          "title": "Еженедельные проверенные модели: снимок от 24 февраля 2026 г.",
+          "description": "Еженедельный снимок проверенных запусков модели и изменений, важных для принятия решений, в соответствии с локальной моделью.",
+          "cta_line": "Используйте еженедельные дельты для обновления страниц с решениями перед публикацией обширных обновлений контента."
         },
         "ja": {
-          "title": "???????: 2026-02-24 ????????",
-          "description": "????????????????????????????????????????",
-          "cta_line": "???????????????????????????????????"
+          "title": "毎週の検証済みモデル: 2026-02-24 スナップショット",
+          "description": "検証されたモデルの実行と、ローカル モデルの適合における意思決定に関連した変更の毎週のスナップショット。",
+          "cta_line": "広範なコンテンツ更新を公開する前に、毎週の差分を使用して決定ページを更新します。"
         },
         "ko": {
-          "title": "?? ?? ??: 2026-02-24 ???",
-          "description": "??? ?? ??? ?? ??? ????? ??? ????? ?? ?? ??????.",
-          "cta_line": "??? ??? ?? ?, ?? ??? ???? ???? ?? ?????."
+          "title": "주간 검증 모델: 2026-02-24 스냅샷",
+          "description": "검증된 모델 실행 및 로컬 모델 적합성의 의사결정 관련 변경 사항에 대한 주간 스냅샷입니다.",
+          "cta_line": "광범위한 콘텐츠 업데이트를 게시하기 전에 주간 델타를 사용하여 결정 페이지를 새로 고칩니다."
         },
         "ar": {
-          "title": "??????? ???????? ????????: ???? 2026-02-24",
-          "description": "???? ??????? ???????? ??????? ???????? ?????????? ??????? ??? ?????? ???????? ???????.",
-          "cta_line": "?????? ?????? ??????? ?????? ????? ?????? ??? ??? ??????? ??????? ???????."
+          "title": "النماذج الأسبوعية التي تم التحقق منها: 2026-02-24 لقطة",
+          "description": "لقطة أسبوعية لعمليات تشغيل النماذج التي تم التحقق منها والتغييرات ذات الصلة بالقرار في ملاءمة النموذج المحلي.",
+          "cta_line": "استخدم دلتا أسبوعية لتحديث صفحات القرار قبل نشر تحديثات المحتوى واسعة النطاق."
         },
         "hi": {
           "title": "Weekly Verified Models: 2026-02-24 Snapshot",
-          "description": "???? model fit ???????? ?? ??? ?????? verified model runs ?? ??????? ?? ????????? snapshot?",
-          "cta_line": "???? content updates ?? ???? weekly deltas ?? decision pages ?? refresh ?????"
+          "description": "सत्यापित मॉडल रन का एक साप्ताहिक स्नैपशॉट और स्थानीय मॉडल फिट में निर्णय-प्रासंगिक परिवर्तन।",
+          "cta_line": "व्यापक सामग्री अपडेट प्रकाशित करने से पहले निर्णय पृष्ठों को ताज़ा करने के लिए साप्ताहिक डेल्टा का उपयोग करें।"
         },
         "id": {
           "title": "Model Terverifikasi Mingguan: Snapshot 2026-02-24",
