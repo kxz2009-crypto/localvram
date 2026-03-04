@@ -36,7 +36,7 @@ const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUppe
       <p>{text.hero_intro}</p>
       <div class="cta-row">
         <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
-        <a class="btn" href="/en/tools/vram-calculator/">{text.cta_open_english}</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{home.cta_start_vram}</a>
       </div>
     </section>
 

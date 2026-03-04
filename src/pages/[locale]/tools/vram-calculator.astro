@@ -1,0 +1,217 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import catalog from "../../../data/model-catalog.json";
+import links from "../../../data/affiliate-links.json";
+import benchmarkResults from "../../../data/benchmark-results.json";
+import vramUiCatalog from "../../../data/i18n-vram-calculator-ui.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import { withLocale } from "../../../lib/locale-paths";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
+
+export function getStaticPaths() {
+  return STANDARD_I18N_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: ComLocale };
+const localeUpper = locale.toUpperCase();
+const pagePath = withLocale(locale, "/en/tools/vram-calculator/");
+const home = resolvePageCopy("locale-home", locale, { localeUpper }).fields;
+const copy = resolvePageCopy("tools-detail", locale, {
+  localeUpper,
+  itemTitle: home.cta_start_vram || "VRAM Calculator",
+  itemDescription: home.hero_intro || "Estimate VRAM before deployment.",
+});
+const text = copy.fields;
+const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const uiCatalog = vramUiCatalog as Record<string, Record<string, string>>;
+const ui = uiCatalog[locale] || uiCatalog.en;
+
+const allModels = Array.isArray(catalog.items) ? catalog.items : [];
+const benchmarkMap = benchmarkResults.models || {};
+const priorityTag = "qwen3.5:35b";
+const sampleModels = [...allModels].sort((a, b) => {
+  const aTag = String(a?.ollama_tag || "");
+  const bTag = String(b?.ollama_tag || "");
+  const aPriority = aTag === priorityTag ? 0 : 1;
+  const bPriority = bTag === priorityTag ? 0 : 1;
+  if (aPriority !== bPriority) {
+    return aPriority - bPriority;
+  }
+
+  const aMeasured = aTag && benchmarkMap[aTag]?.status === "ok" ? 0 : 1;
+  const bMeasured = bTag && benchmarkMap[bTag]?.status === "ok" ? 0 : 1;
+  if (aMeasured !== bMeasured) {
+    return aMeasured - bMeasured;
+  }
+
+  const aUpdated = Date.parse(String(a?.updated_at || "")) || 0;
+  const bUpdated = Date.parse(String(b?.updated_at || "")) || 0;
+  if (aUpdated !== bUpdated) {
+    return bUpdated - aUpdated;
+  }
+
+  return String(a?.name || "").localeCompare(String(b?.name || ""));
+});
+const firstMeasuredModel = sampleModels.find((item) => {
+  if (!item.ollama_tag) {
+    return false;
+  }
+  const data = benchmarkMap[item.ollama_tag];
+  return data && data.status === "ok" && typeof data.tokens_per_second === "number";
+});
+const pinnedModelId =
+  sampleModels.find((item) => String(item?.ollama_tag || "") === priorityTag && String(item?.quantization || "") === "Q4")
+    ?.id || "";
+const defaultModelId = pinnedModelId || firstMeasuredModel?.id || sampleModels[0]?.id || "";
+const pageUrl = `https://localvram.com${pagePath}`;
+const affiliateLocalPath = withLocale(locale, "/en/affiliate/hardware-upgrade/");
+const affiliateCloudPath = withLocale(locale, "/en/affiliate/cloud-gpu/");
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "LocalVRAM VRAM Calculator",
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Web",
+  url: pageUrl,
+  inLanguage: locale,
+  description: text.rollout_intro,
+};
+---
+
+<BaseLayout
+  title={text.meta_title}
+  description={text.meta_description}
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={shouldNoindex}
+  structuredData={[softwareSchema]}
+>
+  <main class="container">
+    <h1>{home.cta_start_vram || "VRAM Calculator"}</h1>
+    <p>{text.rollout_intro}</p>
+
+    <section class="card">
+      <label for="model-select">{ui.model_profile}</label>
+      <select id="model-select" class="input">
+        {sampleModels.map((item) => (
+          <option value={item.id} selected={item.id === defaultModelId}>{item.name}</option>
+        ))}
+      </select>
+      <div id="calc-result" class="card" style="margin-top: 12px;" />
+      <div class="card" style="margin-top: 12px;">
+        <div class="card-head">
+          <h2>{ui.performance_curve}</h2>
+          <div class="cta-row card-head-actions">
+            <a id="calc-primary" class="btn btn-primary" href={affiliateLocalPath}>{ui.check_local_upgrade}</a>
+            <a id="calc-cloud-runpod" class="btn" href={links.runpod}>{ui.runpod_fallback}</a>
+            <a id="calc-cloud-vast" class="btn" href={links.vast}>{ui.vast_fallback}</a>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="calc-chart" aria-label={ui.hardware_chart_label}></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script
+    define:vars={{ items: sampleModels, benchmarkMap, defaultModelId, affiliateLocalPath, affiliateCloudPath, ui }}
+  >
+    const select = document.getElementById("model-select");
+    const result = document.getElementById("calc-result");
+    const chartCanvas = document.getElementById("calc-chart");
+    const primary = document.getElementById("calc-primary");
+    const runpod = document.getElementById("calc-cloud-runpod");
+    const vast = document.getElementById("calc-cloud-vast");
+    let chart = null;
+
+    const renderChart = (model, realData) => {
+      if (!chartCanvas || !window.Chart) {
+        return;
+      }
+      if (chart) {
+        chart.destroy();
+      }
+      const hasMeasured = realData && realData.status === "ok" && typeof realData.tokens_per_second === "number";
+      const datasets = [
+        {
+          label: `${model.name} baseline`,
+          data: [model.benchmarks.rtx3090_tok_s, model.benchmarks.rtx4090_tok_s, model.benchmarks.a100_tok_s],
+          borderColor: "#3b82f6",
+          backgroundColor: "rgba(59,130,246,0.15)",
+          borderWidth: 2,
+          tension: 0.2
+        }
+      ];
+      if (hasMeasured) {
+        datasets.push({
+          label: "Measured RTX 3090",
+          data: [realData.tokens_per_second, null, null],
+          borderColor: "#10b981",
+          backgroundColor: "rgba(16,185,129,0.2)",
+          borderWidth: 2,
+          pointRadius: 5,
+          spanGaps: true,
+          tension: 0
+        });
+      }
+      chart = new window.Chart(chartCanvas, {
+        type: "line",
+        data: {
+          labels: ["RTX 3090", "RTX 4090", "A100 80GB"],
+          datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              title: { display: true, text: "tokens/s" },
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    };
+
+    const renderView = () => {
+      const model = items.find((item) => item.id === select.value) || items[0];
+      const realData = model.ollama_tag ? benchmarkMap[model.ollama_tag] : null;
+      const isMeasured = realData && realData.status === "ok" && typeof realData.tokens_per_second === "number";
+      const realPerf = isMeasured ? `${realData.tokens_per_second.toFixed(1)} tok/s` : "N/A";
+      const realTestTime = isMeasured ? realData.test_time : "N/A";
+      const cloudFirst = model.vram_optimal_gb > 24;
+      result.innerHTML = [
+        `<h2 class="model-title">${model.name}${isMeasured ? ` <span class="verified-badge" title="${ui.verified_real}">${ui.verified_real}</span>` : ""}</h2>`,
+        `<p>${ui.minimum_vram}: <strong>${model.vram_min_gb}GB</strong> | ${ui.optimal_vram}: <strong>${model.vram_optimal_gb}GB</strong></p>`,
+        `<p>${ui.best_local}: ${model.best_local_gpu} | ${ui.cloud_fallback}: ${model.cloud_fallback}</p>`,
+        `<p>${ui.catalog_baseline}: 3090 ${model.benchmarks.rtx3090_tok_s} tok/s, 4090 ${model.benchmarks.rtx4090_tok_s} tok/s</p>`,
+        `<p>${ui.real_perf}: <strong>${realPerf}</strong> (${ui.test_time}: ${realTestTime})</p>`,
+        `<p>${ui.data_status}: <strong>${isMeasured ? ui.verified_real : ui.estimated}</strong></p>`
+      ].join("");
+
+      primary.textContent = cloudFirst ? ui.open_cloud_options : ui.check_local_upgrade;
+      primary.href = cloudFirst ? affiliateCloudPath : affiliateLocalPath;
+      runpod.style.display = cloudFirst ? "inline-block" : "none";
+      vast.style.display = cloudFirst ? "inline-block" : "none";
+      renderChart(model, realData);
+    };
+
+    if (select && defaultModelId && select.value !== defaultModelId) {
+      select.value = defaultModelId;
+    }
+
+    select.addEventListener("change", renderView);
+    if (document.readyState === "complete") {
+      renderView();
+    } else {
+      window.addEventListener("load", renderView, { once: true });
+    }
+  </script>
+</BaseLayout>

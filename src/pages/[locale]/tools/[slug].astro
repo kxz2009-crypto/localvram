@@ -9,7 +9,7 @@ import { localizeRouteItem } from "../../../lib/localize-route-item";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.flatMap((locale) =>
-    TOOL_ROUTE_ITEMS.map((item) => ({
+    TOOL_ROUTE_ITEMS.filter((item) => item.slug !== "vram-calculator").map((item) => ({
       params: { locale, slug: item.slug },
       props: { locale, item },
     })),
