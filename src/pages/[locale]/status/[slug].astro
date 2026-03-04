@@ -49,7 +49,6 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
       <p>{localizedItem.description}</p>
       <p>{text.rollout_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={item.enPath}>{text.cta_open_english}</a>
         <a class="btn" href={withLocale(locale, "/en/status/")}>{text.cta_back_hub}</a>
         <a class="btn" href={withLocale(locale, "/en/guides/")}>{text.cta_open_guides}</a>
       </div>

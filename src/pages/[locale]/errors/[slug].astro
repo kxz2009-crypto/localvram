@@ -54,7 +54,6 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
       <p>{localizedSymptom}</p>
       <p>{text.rollout_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={enPath}>{text.cta_open_english}</a>
         <a class="btn" href={withLocale(locale, "/en/errors/")}>{text.cta_back_hub}</a>
         <a class="btn" href={withLocale(locale, "/en/status/submission-review/")}>{text.cta_open_submission_review}</a>
       </div>

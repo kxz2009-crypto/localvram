@@ -36,7 +36,6 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
       <p>{text.hero_intro}</p>
       <div class="cta-row">
         <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
-        <a class="btn" href="/en/models/">{text.cta_open_english}</a>
       </div>
     </section>
 
@@ -69,7 +68,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
               <tr>
                 <td>{text.label_group}: {id}</td>
                 <td><a href={localizedPath}>{localizedPath}</a></td>
-                <td><a href={enPath}>{enPath}</a></td>
+                <td><code>{enPath}</code></td>
               </tr>
             );
           })}
@@ -81,7 +80,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
               <tr>
                 <td>{text.label_model}: {id}</td>
                 <td><a href={localizedPath}>{localizedPath}</a></td>
-                <td><a href={enPath}>{enPath}</a></td>
+                <td><code>{enPath}</code></td>
               </tr>
             );
           })}

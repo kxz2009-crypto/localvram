@@ -36,7 +36,6 @@ const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUppe
       <p>{text.hero_intro}</p>
       <div class="cta-row">
         <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
-        <a class="btn" href="/en/guides/best-coding-models/">{text.cta_open_english}</a>
       </div>
     </section>
 
@@ -54,7 +53,7 @@ const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUppe
             <tr>
               <td>{localizeRouteItem(item, home, text.hero_intro).title}</td>
               <td><a href={withLocale(locale, item.enPath)}>{withLocale(locale, item.enPath)}</a></td>
-              <td><a href={item.enPath}>{item.enPath}</a></td>
+              <td><code>{item.enPath}</code></td>
             </tr>
           ))}
         </tbody>

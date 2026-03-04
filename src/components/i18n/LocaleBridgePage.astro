@@ -8,12 +8,11 @@ import type { ComLocale } from "../../config/i18n";
 type Props = {
   locale: ComLocale;
   pagePath: string;
-  enPath: string;
   title: string;
   description: string;
 };
 
-const { locale, pagePath, enPath, title, description } = Astro.props as Props;
+const { locale, pagePath, title, description } = Astro.props as Props;
 const copy = resolvePageCopy("guides-detail", locale, {
   localeUpper: locale.toUpperCase(),
   itemTitle: title,
@@ -44,7 +43,6 @@ const shouldNoindex = shouldNoindexByFallback(
       <p>{description}</p>
       <p>{text.rollout_intro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={enPath}>{text.cta_open_english}</a>
         <a class="btn" href={withLocale(locale, "/en/")}>{hubText.cta_back_home}</a>
         <a class="btn" href={withLocale(locale, "/en/status/")}>{text.cta_open_status}</a>
       </div>
