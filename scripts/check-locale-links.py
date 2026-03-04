@@ -22,6 +22,7 @@ ALLOW_CLASS_MARKERS = (
     "lang-switcher",
     "language-switcher",
     "locale-switcher",
+    "locale-link",
 )
 
 ANCHOR_TAG_RE = re.compile(r"<a\b[^>]*>", re.IGNORECASE | re.DOTALL)
@@ -91,6 +92,13 @@ def check_href_tokens(
     for mode, payload in checks:
         if mode == "literal":
             href = payload
+            if page_locale in NON_EN_LOCALES and (
+                is_locale_path(href, "en") or href.startswith("https://localvram.com/en/")
+            ):
+                violations.append(
+                    f"{source_label}:{path}:{line}: /{page_locale} page links to /en outside switcher (href={href})"
+                )
+                continue
             if not href.startswith("/"):
                 continue
             if is_locale_path(href, "zh"):
@@ -107,6 +115,17 @@ def check_href_tokens(
                         break
         else:
             expr = payload
+            if page_locale in NON_EN_LOCALES:
+                if (
+                    '"/en' in expr
+                    or "'/en" in expr
+                    or '"https://localvram.com/en/' in expr
+                    or "'https://localvram.com/en/" in expr
+                ):
+                    violations.append(
+                        f"{source_label}:{path}:{line}: /{page_locale} page links to /en expression outside switcher"
+                    )
+                    continue
             if '"/zh' in expr or "'/zh" in expr:
                 violations.append(
                     f"{source_label}:{path}:{line}: forbidden /zh anchor expression outside switcher"
@@ -191,7 +210,7 @@ def main() -> None:
             LOGGER.error("- ... and %s more", len(violations) - 80)
         sys.exit(1)
 
-    LOGGER.info("locale link checks ok: no forbidden /zh anchors and no /en cross-locale leakage")
+    LOGGER.info("locale link checks ok: no forbidden /zh anchors and no non-switcher /en leakage")
 
 
 if __name__ == "__main__":
