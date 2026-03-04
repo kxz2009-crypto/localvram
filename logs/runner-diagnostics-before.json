@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-28T16:47:59Z",
+  "updated_at": "2026-03-04T09:01:36Z",
   "endpoint": "http://127.0.0.1:11434",
   "required_targets": [
     "qwen3",
@@ -9,7 +9,14 @@
     "qwen3.5",
     "llama3.3",
     "qwen2.5-coder",
-    "ministral-3"
+    "ministral-3",
+    "gpt-oss",
+    "mistral-small",
+    "gemma3",
+    "llama4",
+    "qwq",
+    "translategemma",
+    "glm-4.7-flash"
   ],
   "retry_delays_s": [
     5.0,
@@ -60,10 +67,10 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=171,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=170,fd=3))"
     ],
     "ps_ollama": [
-      "gao20        171       1  0 Feb28 ?        00:00:00 /usr/local/bin/ollama serve"
+      "gao20        170       1  3 16:53 ?        00:00:18 /usr/local/bin/ollama serve"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -78,7 +85,7 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Sat 2026-02-28 17:43:05 CST; 7h ago\n   Main PID: 171 (ollama)\n      Tasks: 14 (limit: 57695)\n     Memory: 35.4M (peak: 445.9M)\n        CPU: 1.221s\n     CGroup: /system.slice/ollama.service\n             └─171 /usr/local/bin/ollama serve\n\nMar 01 00:02:13 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:13 | 200 |   157.76581ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:02:14 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:14 | 200 |      24.026µs |       127.0.0.1 | GET      \"/api/version\"\nMar 01 00:02:14 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:14 | 200 |      26.334µs |       127.0.0.1 | GET      \"/api/version\"\nMar 01 00:02:14 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:14 | 200 |   164.34055ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:02:14 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:14 | 200 |  156.121624ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:02:15 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:15 | 200 |      22.282µs |       127.0.0.1 | GET      \"/api/version\"\nMar 01 00:02:15 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:15 | 200 |      23.092µs |       127.0.0.1 | GET      \"/api/version\"\nMar 01 00:02:15 Vernon ollama[171]: [GIN] 2026/03/01 - 00:02:15 | 200 |   158.15008ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:47:58 Vernon ollama[171]: [GIN] 2026/03/01 - 00:47:58 | 200 |  378.270603ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 01 00:47:59 Vernon ollama[171]: [GIN] 2026/03/01 - 00:47:59 | 200 |      22.257µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Wed 2026-03-04 16:53:06 CST; 8min ago\n   Main PID: 170 (ollama)\n      Tasks: 24 (limit: 57695)\n     Memory: 209.3M (peak: 445.2M)\n        CPU: 19.026s\n     CGroup: /system.slice/ollama.service\n             └─170 /usr/local/bin/ollama serve\n\nMar 04 16:59:02 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:02 | 200 |  200.748967ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 16:59:02 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:02 | 200 |      22.058µs |       127.0.0.1 | GET      \"/api/version\"\nMar 04 16:59:02 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:02 | 200 |      19.761µs |       127.0.0.1 | GET      \"/api/version\"\nMar 04 16:59:02 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:02 | 200 |  208.862832ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 16:59:03 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:03 | 200 |  195.169373ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 16:59:03 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:03 | 200 |      19.745µs |       127.0.0.1 | GET      \"/api/version\"\nMar 04 16:59:03 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:03 | 200 |      19.648µs |       127.0.0.1 | GET      \"/api/version\"\nMar 04 16:59:04 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:04 | 200 |  182.021629ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 17:01:36 Vernon ollama[170]: [GIN] 2026/03/04 - 17:01:36 | 200 |  143.805543ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 17:01:36 Vernon ollama[170]: [GIN] 2026/03/04 - 17:01:36 | 200 |      28.359µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
@@ -92,7 +99,7 @@
       "version": "0.17.1"
     },
     "tags": {
-      "model_count": 36,
+      "model_count": 37,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -118,9 +125,9 @@
     }
   },
   "summary": {
-    "model_count": 36,
-    "required_targets_count": 8,
-    "required_targets_runnable_count": 8,
+    "model_count": 37,
+    "required_targets_count": 15,
+    "required_targets_runnable_count": 15,
     "required_targets_runnable": [
       "qwen3",
       "deepseek-r1",
@@ -129,7 +136,14 @@
       "qwen3.5",
       "llama3.3",
       "qwen2.5-coder",
-      "ministral-3"
+      "ministral-3",
+      "gpt-oss",
+      "mistral-small",
+      "gemma3",
+      "llama4",
+      "qwq",
+      "translategemma",
+      "glm-4.7-flash"
     ],
     "failure_class": "none",
     "failure_detail": ""

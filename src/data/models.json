@@ -1,6 +1,6 @@
 {
   "version": "2026.02.24.ollama-popular",
-  "count": 553,
+  "count": 561,
   "models": [
     {
       "id": "llama31-8b-q4",
@@ -4395,6 +4395,38 @@
       "verified": false
     },
     {
+      "id": "glm-47-flash-7b-q4",
+      "name": "Glm 4.7 Flash 7B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": true
+    },
+    {
+      "id": "glm-47-flash-7b-q5",
+      "name": "Glm 4.7 Flash 7B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": true
+    },
+    {
+      "id": "glm-47-flash-7b-q8",
+      "name": "Glm 4.7 Flash 7B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": true
+    },
+    {
+      "id": "glm-47-flash-7b-fp16",
+      "name": "Glm 4.7 Flash 7B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": true
+    },
+    {
       "id": "ministral-3-14b-q4",
       "name": "Ministral 3 14B Q4",
       "quantizations": [
@@ -4421,6 +4453,38 @@
     {
       "id": "ministral-3-14b-fp16",
       "name": "Ministral 3 14B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": true
+    },
+    {
+      "id": "translategemma-27b-q4",
+      "name": "Translategemma 27B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": true
+    },
+    {
+      "id": "translategemma-27b-q5",
+      "name": "Translategemma 27B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": true
+    },
+    {
+      "id": "translategemma-27b-q8",
+      "name": "Translategemma 27B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": true
+    },
+    {
+      "id": "translategemma-27b-fp16",
+      "name": "Translategemma 27B FP16",
       "quantizations": [
         "FP16"
       ],
