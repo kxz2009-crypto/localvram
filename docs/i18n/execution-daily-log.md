@@ -197,3 +197,4 @@
    - Added signoff record file `docs/i18n/rtl-visual-signoff.json`.
    - Added gate script `scripts/check-rtl-visual-signoff.py` and npm command `i18n:check-rtl-signoff`.
    - Wired `Weekly i18n Acceptance` to enforce RTL signoff recency and publish `logs/i18n-rtl-signoff.log`.
+32. GitHub Actions `Weekly i18n Acceptance` manual run `22652826579`: passed with `rtl-visual-signoff: success` and all other acceptance gates green.
