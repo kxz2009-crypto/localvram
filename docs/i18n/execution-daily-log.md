@@ -192,3 +192,8 @@
    - Automatically closes tracker when `has_drift=false` on successful weekly runs.
    - Added `logs/weekly-i18n-parity-drift.log` artifact and summary outcome `sync-parity-drift-issue`.
 30. GitHub Actions `Weekly i18n Acceptance` manual run `22652502200`: passed; `sync-parity-drift-issue` executed successfully with no open drift tracker issue.
+31. Added RTL manual acceptance system:
+   - Added checklist doc `docs/i18n/rtl-visual-acceptance-checklist.md` (required URLs + visual checks + pass criteria).
+   - Added signoff record file `docs/i18n/rtl-visual-signoff.json`.
+   - Added gate script `scripts/check-rtl-visual-signoff.py` and npm command `i18n:check-rtl-signoff`.
+   - Wired `Weekly i18n Acceptance` to enforce RTL signoff recency and publish `logs/i18n-rtl-signoff.log`.

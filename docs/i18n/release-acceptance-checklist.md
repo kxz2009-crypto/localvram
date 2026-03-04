@@ -32,6 +32,9 @@ If release goes wrong, rollback to the tag above.
    - `npm run i18n:qa-copy`
    - review `dist/seo-audit/i18n-translation-qa.json` (`top_review_queue`, `manual_review_queue`)
 8. RTL validation (`ar`) is visually accepted.
+   - checklist: `docs/i18n/rtl-visual-acceptance-checklist.md`
+   - latest signoff: `docs/i18n/rtl-visual-signoff.json`
+   - recency gate: `npm run i18n:check-rtl-signoff`
 9. Non-rollout locales are forced `noindex` even when copy is prefilled.
 
 ## Phase 1: Cloudflare Rules (Simple + Stable)

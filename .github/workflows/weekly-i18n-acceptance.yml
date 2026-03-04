@@ -133,6 +133,10 @@ jobs:
           echo "[verify-production-i18n] exit_code=${status}" | tee -a logs/verify-production-i18n.log
           exit ${status}
 
+      - name: RTL visual signoff recency
+        id: rtl_visual_signoff
+        run: npm run i18n:check-rtl-signoff | tee logs/i18n-rtl-signoff.log
+
       - name: Create weekly rollback checkpoint tag
         id: rollback_checkpoint_tag
         if: ${{ success() }}
@@ -167,6 +171,7 @@ jobs:
           QUALITY_GATE: ${{ steps.quality_gate.outcome }}
           BUILD: ${{ steps.build.outcome }}
           VERIFY_PROD_I18N: ${{ steps.verify_production_i18n.outcome }}
+          RTL_SIGNOFF: ${{ steps.rtl_visual_signoff.outcome }}
           ROLLBACK_TAG: ${{ steps.rollback_checkpoint_tag.outcome }}
         run: |
           set -euo pipefail
@@ -194,6 +199,7 @@ jobs:
           - quality-gate: ${QUALITY_GATE}
           - build: ${BUILD}
           - verify-production-i18n: ${VERIFY_PROD_I18N}
+          - rtl-visual-signoff: ${RTL_SIGNOFF}
           - rollback-checkpoint-tag: ${ROLLBACK_TAG}
 
           Please inspect the workflow summary and uploaded artifacts from this run.
@@ -298,6 +304,7 @@ jobs:
             echo "- quality-gate: ${{ steps.quality_gate.outcome }}";
             echo "- build: ${{ steps.build.outcome }}";
             echo "- verify-production-i18n: ${{ steps.verify_production_i18n.outcome }}";
+            echo "- rtl-visual-signoff: ${{ steps.rtl_visual_signoff.outcome }}";
             echo "- rollback-checkpoint-tag: ${{ steps.rollback_checkpoint_tag.outcome }}";
             echo "- open-failure-issue: ${{ steps.open_failure_issue.outcome }}";
             echo "- resolve-failure-issue: ${{ steps.resolve_failure_issue.outcome }}";
@@ -328,6 +335,7 @@ jobs:
             logs/check-quality.log
             logs/build.log
             logs/verify-production-i18n.log
+            logs/i18n-rtl-signoff.log
             logs/rollback-checkpoint-tag.log
             logs/weekly-i18n-issue-sync.log
             logs/weekly-i18n-parity-drift.log
