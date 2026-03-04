@@ -1,7 +1,14 @@
 {
-  "updated_at": "2026-03-03T11:02:54.288080Z",
+  "updated_at": "2026-03-04T03:12:19.243188Z",
   "source": "cloudflare_kv_api_sync",
   "events": [
+    {
+      "ts": "2026-03-04T02:44:53.519000Z",
+      "provider": "runpod",
+      "route": "/go/runpod",
+      "destination": "https://runpod.io/?ref=kzc9gtvv&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-runpod",
+      "referer": "https://localvram.com/en/tools/vram-calculator/"
+    },
     {
       "ts": "2026-03-03T10:59:47.829000Z",
       "provider": "vast",

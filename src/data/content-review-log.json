@@ -1,56 +1,22 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-03T11:02:10.447448Z",
+  "updated_at": "2026-03-04T03:11:22.502071Z",
   "last_run": {
-    "run_at": "2026-03-03T11:02:10.447448Z",
-    "queue_date": "2026-03-03",
-    "reviewed_count": 6,
-    "auto_approved_count": 2,
-    "pending_manual_review_count": 1,
-    "rejected_manual_count": 3,
-    "high_risk_count": 3,
-    "risk_flag_counts": {
-      "existing_blog_slug": 2,
-      "near_duplicate_published": 3
-    },
+    "run_at": "2026-03-04T03:11:22.502071Z",
+    "queue_date": "2026-03-04",
+    "reviewed_count": 3,
+    "auto_approved_count": 3,
+    "pending_manual_review_count": 0,
+    "rejected_manual_count": 0,
+    "high_risk_count": 0,
+    "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-03-03/01-16gb-vram-model-selection-guide.md",
-        "slug": "16gb-vram-model-selection-guide",
-        "score": 576.0,
-        "status_before": "rejected_manual",
-        "status_after": "rejected_manual",
-        "word_count": 195,
-        "risk_flags": [
-          "existing_blog_slug",
-          "near_duplicate_published"
-        ],
-        "similarity": {
-          "score": 1.0,
-          "topic_score": 1.0,
-          "slug": "16gb-vram-model-selection-guide"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-03/01-local-llm-customer-support-rag-stack.md",
-        "slug": "local-llm-customer-support-rag-stack",
+        "draft": "content-queue/2026-03-04/01-apple-silicon-vs-rtx3090-local-llm.md",
+        "slug": "apple-silicon-vs-rtx3090-local-llm",
         "score": 576.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 195,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.9464,
-          "topic_score": 0.3077,
-          "slug": "16gb-vram-model-selection-guide"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-03/02-apple-silicon-vs-rtx3090-local-llm.md",
-        "slug": "apple-silicon-vs-rtx3090-local-llm",
-        "score": 576.0,
-        "status_before": "rejected_manual",
-        "status_after": "rejected_manual",
         "word_count": 196,
         "risk_flags": [],
         "similarity": {
@@ -60,55 +26,90 @@
         }
       },
       {
-        "draft": "content-queue/2026-03-03/02-ministral-3-14b-local-benchmark-guide.md",
-        "slug": "ministral-3-14b-local-benchmark-guide",
+        "draft": "content-queue/2026-03-04/02-qwen3-coder-30b-local-coding-stack.md",
+        "slug": "qwen3-coder-30b-local-coding-stack",
         "score": 576.0,
         "status_before": "draft",
-        "status_after": "pending_manual_review",
-        "word_count": 194,
-        "risk_flags": [
-          "near_duplicate_published"
-        ],
+        "status_after": "approved_auto",
+        "word_count": 195,
+        "risk_flags": [],
         "similarity": {
-          "score": 0.9813,
-          "topic_score": 0.6,
+          "score": 0.9633,
+          "topic_score": 0.1875,
           "slug": "model-ministral-3-14b-benchmark-refresh"
         }
       },
       {
-        "draft": "content-queue/2026-03-03/03-llama4-local-inference-feasibility-check.md",
-        "slug": "llama4-local-inference-feasibility-check",
-        "score": 576.0,
-        "status_before": "rejected_manual",
-        "status_after": "rejected_manual",
-        "word_count": 194,
-        "risk_flags": [
-          "existing_blog_slug",
-          "near_duplicate_published"
-        ],
-        "similarity": {
-          "score": 0.9908,
-          "topic_score": 1.0,
-          "slug": "llama4-local-inference-feasibility-check"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-03/03-qwen25-coder-32b-self-host-guide.md",
-        "slug": "qwen25-coder-32b-self-host-guide",
-        "score": 576.0,
+        "draft": "content-queue/2026-03-04/03-multi-gpu-local-llm-roi-calculator-guide.md",
+        "slug": "multi-gpu-local-llm-roi-calculator-guide",
+        "score": 560.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 196,
+        "word_count": 194,
         "risk_flags": [],
         "similarity": {
-          "score": 0.9464,
-          "topic_score": 0.2857,
-          "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu"
+          "score": 0.955,
+          "topic_score": 0.3077,
+          "slug": "16gb-vram-model-selection-guide"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-04T03:11:22.502071Z",
+      "queue_date": "2026-03-04",
+      "reviewed_count": 3,
+      "auto_approved_count": 3,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-03-04/01-apple-silicon-vs-rtx3090-local-llm.md",
+          "slug": "apple-silicon-vs-rtx3090-local-llm",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 196,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9464,
+            "topic_score": 0.2857,
+            "slug": "16gb-vram-model-selection-guide"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-04/02-qwen3-coder-30b-local-coding-stack.md",
+          "slug": "qwen3-coder-30b-local-coding-stack",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 195,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9633,
+            "topic_score": 0.1875,
+            "slug": "model-ministral-3-14b-benchmark-refresh"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-04/03-multi-gpu-local-llm-roi-calculator-guide.md",
+          "slug": "multi-gpu-local-llm-roi-calculator-guide",
+          "score": 560.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 194,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.955,
+            "topic_score": 0.3077,
+            "slug": "16gb-vram-model-selection-guide"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-03T11:02:10.447448Z",
       "queue_date": "2026-03-03",
