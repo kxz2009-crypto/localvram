@@ -82,7 +82,7 @@
       },
       "locales": {
         "es": {
-          "meta_title": "LocalVRAM ({localeUpper}) | GPU VRAM Calculadora y modelos de referencia",
+          "meta_title": "LocalVRAM ({localeUpper}) | Calculadora de VRAM GPU y benchmarks de modelos",
           "meta_description": "Utilice puntos de referencia locales verificados de LLM para elegir modelos para su GPU, estimar VRAM, comparar tiempos de ejecución y decidir cuándo ejecutar GPU locales o alquilarlas en la nube.",
           "hero_title": "Elige el modelo adecuado para tu GPU en 60 segundos",
           "hero_intro": "Compatibilidad con el mundo real, puntos de referencia de carga sostenida y decisiones directas de ejecución frente a alquiler.",
@@ -148,7 +148,7 @@
           "card_changelog_cta": "Ver registro de cambios"
         },
         "pt": {
-          "meta_title": "LocalVRAM ({localeUpper}) | GPU VRAM Calculadora e benchmarks de modelo",
+          "meta_title": "LocalVRAM ({localeUpper}) | Calculadora de VRAM GPU e benchmarks de modelos",
           "meta_description": "Use benchmarks LLM locais verificados para escolher modelos para sua GPU, estimar VRAM, comparar tempos de execução e decidir quando executar GPUs locais ou GPUs de nuvem alugadas.",
           "hero_title": "Escolha o modelo certo para sua GPU em 60 segundos",
           "hero_intro": "Compatibilidade com o mundo real, benchmarks de carga sustentada e decisões diretas de execução versus aluguel.",
@@ -214,7 +214,7 @@
           "card_changelog_cta": "Ver registro de alterações"
         },
         "fr": {
-          "meta_title": "LocalVRAM ({localeUpper}) | GPU VRAM Calculateur et références de modèles",
+          "meta_title": "LocalVRAM ({localeUpper}) | Calculateur de VRAM GPU et benchmarks de modeles",
           "meta_description": "Utilisez des benchmarks LLM locaux vérifiés pour choisir des modèles pour votre GPU, estimer VRAM, comparer les temps d'exécution et décider quand exécuter des GPU locaux ou louer des GPU cloud.",
           "hero_title": "Choisissez le bon modèle pour votre GPU en 60 secondes",
           "hero_intro": "Compatibilité avec le monde réel, références de charge soutenue et décisions directes d'exploitation ou de location.",
@@ -346,7 +346,7 @@
           "card_changelog_cta": "Änderungsprotokoll anzeigen"
         },
         "ru": {
-          "meta_title": "LocalVRAM ({localeUpper}) | Калькулятор графического процессора VRAM и тесты моделей",
+          "meta_title": "LocalVRAM ({localeUpper}) | GPU VRAM Калькулятор и тесты моделей",
           "meta_description": "Используйте проверенные местные тесты LLM, чтобы выбрать модели для вашего графического процессора, оценить VRAM, сравнить время выполнения и решить, когда использовать локальные или арендованные облачные графические процессоры.",
           "hero_title": "Выберите подходящую модель для вашего графического процессора за 60 секунд",
           "hero_intro": "Совместимость с реальными условиями, тесты при устойчивой нагрузке и выбор прямого использования или аренды.",
@@ -479,7 +479,7 @@
         },
         "ko": {
           "meta_title": "LocalVRAM({localeUpper}) | GPU VRAM 계산기 및 모델 벤치마크",
-          "meta_description": "검증된 로컬 LLM 벤치마크를 사용하여 GPU 모델을 선택하고, VRAM을 추정하고, 런타임을 비교하고, 로컬 GPU와 임대 클라우드 GPU를 실행할 시기를 결정합니다.",
+          "meta_description": "검증된 로컬 LLM 벤치마크를 사용하여 GPU에 대한 모델을 선택하고, VRAM을 추정하고, 런타임을 비교하고, 로컬 클라우드와 임대 클라우드 GPU를 실행할 시기를 결정합니다.",
           "hero_title": "60초 안에 GPU에 적합한 모델을 선택하세요",
           "hero_intro": "실제 호환성, 지속적인 로드 벤치마크, 직접 실행 및 임대 결정.",
           "nav_hubs_title": "네비게이션 허브",
@@ -611,7 +611,7 @@
         },
         "hi": {
           "meta_title": "LocalVRAM ({localeUpper}) | GPU VRAM कैलकुलेटर और मॉडल बेंचमार्क",
-          "meta_description": "अपने जीपीयू के लिए मॉडल चुनने के लिए सत्यापित स्थानीय एलएलएम बेंचमार्क का उपयोग करें, VRAM का अनुमान लगाएं, रनटाइम की तुलना करें, और तय करें कि स्थानीय बनाम किराये के क्लाउड जीपीयू को कब चलाना है।",
+          "meta_description": "अपने GPU के लिए मॉडल चुनने, VRAM का अनुमान लगाने, रनटाइम की तुलना करने और स्थानीय बनाम रेंट क्लाउड GPUs चलाने का निर्णय लेने के लिए सत्यापित स्थानीय LLM बेंचमार्क का उपयोग करें।",
           "hero_title": "60 सेकंड में अपने GPU के लिए सही मॉडल चुनें",
           "hero_intro": "वास्तविक-विश्व अनुकूलता, निरंतर-लोड बेंचमार्क और प्रत्यक्ष रन बनाम किराया निर्णय।",
           "nav_hubs_title": "नेविगेशन हब",
@@ -779,7 +779,7 @@
           "table_col_en_source": "Fonte em ingles"
         },
         "fr": {
-          "meta_title": "Guides locauxVRAM ({localeUpper})",
+          "meta_title": "LocalVRAM ({localeUpper})Guides",
           "meta_description": "Les guides localisés acheminent le squelette aligné sur les limaces de guidage anglaises.",
           "hero_title": "Centre de guides ({localeUpper})",
           "hero_intro": "La parité d'itinéraire de guidage est activée. Lors du déploiement, la copie des pages peut temporairement revenir à l'anglais.",
@@ -845,7 +845,7 @@
           "table_col_en_source": "مصدر انجليزي"
         },
         "hi": {
-          "meta_title": "स्थानीयVRAM ({localeUpper}) मार्गदर्शक",
+          "meta_title": "LocalVRAM ({localeUpper}) मार्गदर्शक",
           "meta_description": "स्थानीय गाइड मार्ग कंकाल अंग्रेजी गाइड स्लग से संरेखित है।",
           "hero_title": "गाइड्स हब ({localeUpper})",
           "hero_intro": "गाइड रूट समता सक्षम है. रोलआउट के दौरान, पेज कॉपी अस्थायी रूप से अंग्रेजी में वापस आ सकती है।",
@@ -1718,9 +1718,9 @@
       "locales": {
         "es": {
           "meta_title": "LocalVRAM ({localeUpper}) Catalogo de modelos",
-          "meta_description": "Estructura de rutas del catalogo localizado con paridad de slugs respecto a las paginas en ingles.",
-          "hero_title": "Catalogo de modelos ({localeUpper})",
-          "hero_intro": "Las rutas de modelos y grupos estan en fase para paridad de idioma. La metadata traducida completa se planifica para un despliegue posterior.",
+          "meta_description": "Esqueleto de ruta del catalogo de modelos localizado con paridad de slugs respecto a las paginas de modelos en ingles.",
+          "hero_title": "Catálogo de modelos ({localeUpper})",
+          "hero_intro": "Las rutas de modelos y de grupos estan preparadas para la paridad entre idiomas. Los metadatos completos traducidos del modelo se publicaran en una fase posterior.",
           "cta_back_home": "Volver al inicio del idioma",
           "cta_open_english": "Abrir catalogo de modelos en ingles",
           "kpi_models": "Modelos",
@@ -1822,7 +1822,7 @@
           "label_model": "모델"
         },
         "ar": {
-          "meta_title": "محلي VRAM ({localeUpper}) كتالوج النماذج",
+          "meta_title": "LocalVRAM ({localeUpper}) كتالوج النماذج",
           "meta_description": "الهيكل العظمي لمسار كتالوج النماذج المترجمة مع التكافؤ التقريبي مع صفحات النماذج الإنجليزية.",
           "hero_title": "كتالوج النموذج ({localeUpper})",
           "hero_intro": "يتم تنظيم المسارات النموذجية ومسارات المجموعة لتحقيق التكافؤ المحلي. ومن المقرر أن يتم طرح بيانات تعريف النموذج المترجمة بالكامل في وقت لاحق.",
@@ -1852,10 +1852,10 @@
           "label_model": "नमूना"
         },
         "id": {
-          "meta_title": "Katalog Model LokalVRAM ({localeUpper}).",
+          "meta_title": "Katalog model LocalVRAM ({localeUpper})",
           "meta_description": "Kerangka rute katalog model yang dilokalkan dengan paritas slug ke halaman model bahasa Inggris.",
           "hero_title": "Katalog Model ({localeUpper})",
-          "hero_intro": "Rute model dan rute grup dipentaskan untuk keseimbangan lokal. Metadata model yang diterjemahkan secara penuh direncanakan pada peluncuran selanjutnya.",
+          "hero_intro": "Rute model dan rute grup disiapkan untuk paritas antar-lokal. Metadata model terjemahan lengkap akan dirilis pada tahap berikutnya.",
           "cta_back_home": "Kembali ke Beranda Lokal",
           "cta_open_english": "Buka Katalog Model Bahasa Inggris",
           "kpi_models": "Model",
@@ -1881,7 +1881,7 @@
       },
       "locales": {
         "es": {
-          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM en Espanol",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "Estructura de ruta localizada para {modelName}. Linea base de VRAM: {minVram}GB minimo, {optimalVram}GB optimo.",
           "hero_intro": "Ruta por idioma en fase para paridad de detalle de modelo. El perfil traducido completo se habilitara tras QA de terminologia y datos.",
           "kpi_min_vram": "VRAM minima",
@@ -1891,7 +1891,7 @@
           "cta_open_vram": "Abrir calculadora de VRAM"
         },
         "pt": {
-          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM em Portugues",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "Estrutura de rota localizada para {modelName}. Base de VRAM: {minVram}GB minimo, {optimalVram}GB ideal.",
           "hero_intro": "Rota de idioma em fase para paridade de detalhes de modelo. O perfil traduzido completo sera ativado apos QA de terminologia e dados.",
           "kpi_min_vram": "VRAM minima",
@@ -1901,7 +1901,7 @@
           "cta_open_vram": "Abrir calculadora de VRAM"
         },
         "fr": {
-          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM en Francais",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "Squelette de route localisé pour {modelName}. Ligne de base VRAM : {minVram}GB min, {optimalVram}GB optimale.",
           "hero_intro": "Itinéraire local par étapes pour la parité des détails du modèle. Le profil de modèle entièrement traduit est activé après le contrôle qualité de la terminologie et des données.",
           "kpi_min_vram": "VRAM minimum",
@@ -1911,7 +1911,7 @@
           "cta_open_vram": "Ouvrir le calculateur VRAM"
         },
         "de": {
-          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM auf Deutsch",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "Lokalisiertes Routengerüst für {modelName}. VRAM-Basislinie: {minVram}GB min, {optimalVram}GB optimal.",
           "hero_intro": "Gestaffelte Locale-Route für Modelldetailparität. Das vollständig übersetzte Modellprofil wird nach der Terminologie- und Daten-QA aktiviert.",
           "kpi_min_vram": "Mindest-VRAM",
@@ -1921,7 +1921,7 @@
           "cta_open_vram": "Öffnen Sie den VRAM-Rechner"
         },
         "ru": {
-          "meta_title": "{modelName} ({localeUpper}) | ЛокальныйVRAM",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "Локализованный скелет маршрута для {modelName}. Базовый уровень VRAM: минимальный {minVram}GB, оптимальный {optimalVram}GB.",
           "hero_intro": "Поэтапный маршрут локали для проверки четности деталей модели. Полный переведенный профиль модели активируется после проверки терминологии и данных.",
           "kpi_min_vram": "Минимум VRAM",
@@ -1931,7 +1931,7 @@
           "cta_open_vram": "Открыть калькулятор VRAM"
         },
         "ja": {
-          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM in Japanese",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "{modelName} 向けのローカライズ済みルート骨格です。VRAM基準: 最小 {minVram}GB、推奨 {optimalVram}GB。",
           "hero_intro": "モデル詳細パリティ用のロケールルートはステージ中です。用語とデータQA後に完全翻訳プロフィールを有効化します。",
           "kpi_min_vram": "最小VRAM",
@@ -1941,7 +1941,7 @@
           "cta_open_vram": "VRAM計算機を開く"
         },
         "ko": {
-          "meta_title": "{modelName}({localeUpper}) | 로컬VRAM",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "{modelName}에 대한 현지화된 경로 뼈대입니다. VRAM 기준: {minVram}GB 최소, {optimalVram}GB 최적.",
           "hero_intro": "모델 세부 패리티를 위한 단계적 로케일 경로입니다. 용어 및 데이터 QA 후에 전체 번역된 모델 프로필이 활성화됩니다.",
           "kpi_min_vram": "최소 VRAM",
@@ -1951,7 +1951,7 @@
           "cta_open_vram": "VRAM 계산기 열기"
         },
         "ar": {
-          "meta_title": "{modelName} ({localeUpper}) | محليVRAM",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "هيكل المسار المترجم لـ {modelName}. VRAM خط الأساس: {minVram} جيجابايت دقيقة، {optimalVram} جيجابايت الأمثل.",
           "hero_intro": "المسار المحلي المرحلي لتكافؤ تفاصيل النموذج. يتم تمكين ملف تعريف النموذج المترجم بالكامل بعد ضمان جودة المصطلحات والبيانات.",
           "kpi_min_vram": "الحد الأدنى VRAM",
@@ -1961,7 +1961,7 @@
           "cta_open_vram": "افتح VRAM الآلة الحاسبة"
         },
         "hi": {
-          "meta_title": "{modelName} ({localeUpper}) | स्थानीयVRAM",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "{modelName} के लिए स्थानीयकृत मार्ग कंकाल। VRAM आधार रेखा: {minVram}जीबी मिनट, {optimalVram}जीबी इष्टतम।",
           "hero_intro": "मॉडल विवरण समता के लिए चरणबद्ध स्थानीय मार्ग। शब्दावली और डेटा क्यूए के बाद पूर्ण अनुवादित मॉडल प्रोफ़ाइल सक्षम है।",
           "kpi_min_vram": "न्यूनतम VRAM",
@@ -1971,7 +1971,7 @@
           "cta_open_vram": "VRAM कैलकुलेटर खोलें"
         },
         "id": {
-          "meta_title": "{modelName} ({localeUpper}) | LokalVRAM",
+          "meta_title": "{modelName} ({localeUpper}) | LocalVRAM",
           "meta_description": "Kerangka rute yang dilokalkan untuk {modelName}. VRAM garis dasar: {minVram}GB min, {optimalVram}GB optimal.",
           "hero_intro": "Rute lokal bertahap untuk paritas detail model. Profil model terjemahan lengkap diaktifkan setelah terminologi dan QA data.",
           "kpi_min_vram": "Minimal VRAM",
