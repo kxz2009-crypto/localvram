@@ -21,6 +21,10 @@ OUT_DIR = ROOT / "src" / "content" / "blog-i18n"
 GLOSSARY_PATH = ROOT / "src" / "data" / "i18n-glossary.json"
 STANDARD_I18N_LOCALES = ("es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id")
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
+INTERNAL_PATH_RE = re.compile(
+    r"(?<![A-Za-z0-9_])/(?:en|es|pt|fr|de|ru|ja|ko|ar|hi|id|go|recommends)"
+    r"(?:/[A-Za-z0-9._~!$&'()*+,;=:@%-]+)+/?"
+)
 LOGGER = configure_logging("auto-fill-i18n-blog-body")
 
 
@@ -43,6 +47,7 @@ def mask_text(text: str, protected_terms: list[str]) -> tuple[str, dict[str, str
         re.compile(r"`[^`]+`"),  # inline code
         re.compile(r"\[[^\]]+\]\([^)]+\)"),  # markdown links
         re.compile(r"https?://\S+"),  # urls
+        INTERNAL_PATH_RE,  # bare internal route paths
         PLACEHOLDER_RE,
     ]
 
@@ -125,6 +130,15 @@ def translate_markdown(markdown: str, translator: GoogleTranslator, protected_te
     return "\n".join(translated_lines).strip() + "\n", failures
 
 
+def split_frontmatter(markdown: str) -> tuple[str, str]:
+    if not markdown.startswith("---"):
+        return "", markdown
+    match = re.match(r"^---\s*\r?\n[\s\S]*?\r?\n---\s*(\r?\n)?", markdown)
+    if not match:
+        return "", markdown
+    return match.group(0), markdown[match.end() :]
+
+
 def build_header(slug: str, locale: str) -> str:
     return (
         "<!--\n"
@@ -180,7 +194,8 @@ def main() -> None:
                 continue
 
             source_markdown = blog_file.read_text(encoding="utf-8")
-            translated_markdown, failed_lines = translate_markdown(source_markdown, translator, protected_terms)
+            _frontmatter, source_body = split_frontmatter(source_markdown)
+            translated_markdown, failed_lines = translate_markdown(source_body, translator, protected_terms)
             total_failed_lines += failed_lines
 
             payload = build_header(slug, locale) + translated_markdown

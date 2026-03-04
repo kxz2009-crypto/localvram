@@ -29,6 +29,14 @@ const rewriteEnglishLinksToLocale = (html: string, locale: string): string => {
     .replace(
       />(\s*)https:\/\/localvram\.com\/en\/([^<]+)</g,
       (_match, leading: string, rest: string) => `>${leading}https://localvram.com${localPrefix}${rest}<`,
+    )
+    .replace(
+      /(^|[\s(>])\/en\/([A-Za-z0-9/_-]+)(?=[\s<),.;]|$)/g,
+      (_match, leading: string, rest: string) => `${leading}${localPrefix}${rest}`,
+    )
+    .replace(
+      /(^|[\s(>])https:\/\/localvram\.com\/en\/([A-Za-z0-9/_-]+)(?=[\s<),.;]|$)/g,
+      (_match, leading: string, rest: string) => `${leading}https://localvram.com${localPrefix}${rest}`,
     );
 };
 
