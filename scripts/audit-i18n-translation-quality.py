@@ -19,8 +19,9 @@ COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
 GLOSSARY_PATH = ROOT / "src" / "data" / "i18n-glossary.json"
 OUT_PATH = ROOT / "dist" / "seo-audit" / "i18n-translation-qa.json"
 GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
-GEMINI_MODEL_FALLBACK = "gemini-2.0-flash"
-GEMINI_MODEL_DEFAULT = (os.environ.get("GEMINI_MODEL", "") or "").strip() or GEMINI_MODEL_FALLBACK
+GEMINI_MODEL_PRIMARY_FALLBACK = "gemini-2.5-flash"
+GEMINI_MODEL_SECONDARY_FALLBACK = "gemini-2.0-flash"
+GEMINI_MODEL_DEFAULT = (os.environ.get("GEMINI_MODEL", "") or "").strip() or GEMINI_MODEL_PRIMARY_FALLBACK
 
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
 PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
@@ -242,6 +243,16 @@ def compute_retry_delay_seconds(exc: urllib.error.HTTPError, attempt: int, base_
     return min(base + jitter, 120)
 
 
+def build_model_fallback_chain(primary_model: str) -> list[str]:
+    ordered = [primary_model, GEMINI_MODEL_PRIMARY_FALLBACK, GEMINI_MODEL_SECONDARY_FALLBACK]
+    chain: list[str] = []
+    for item in ordered:
+        model = str(item or "").strip()
+        if model and model not in chain:
+            chain.append(model)
+    return chain
+
+
 def call_gemini_batch(items: list[dict], api_key: str, model: str, timeout_s: int) -> list[dict]:
     compact_items = [
         {
@@ -334,6 +345,7 @@ def run_ai_review_queue(
     seen: set[tuple[str, str, str, str]] = set()
     effective_batch_size = max(batch_size, 1)
     consecutive_rate_limited_batches = 0
+    model_chain = build_model_fallback_chain(model)
 
     for start in range(0, len(selected), effective_batch_size):
         batch = selected[start : start + effective_batch_size]
@@ -342,37 +354,34 @@ def run_ai_review_queue(
         attempts = max(retries, 1)
         last_error: Exception | None = None
         for attempt in range(1, attempts + 1):
-            try:
-                reviews = call_gemini_batch(batch, api_key=api_key, model=model, timeout_s=timeout_s)
-                last_error = None
-                break
-            except urllib.error.HTTPError as exc:
-                if exc.code == 404 and model != GEMINI_MODEL_FALLBACK:
-                    try:
-                        reviews = call_gemini_batch(
-                            batch,
-                            api_key=api_key,
-                            model=GEMINI_MODEL_FALLBACK,
-                            timeout_s=timeout_s,
-                        )
-                        metadata["effective_model"] = GEMINI_MODEL_FALLBACK
+            for idx, candidate_model in enumerate(model_chain):
+                try:
+                    reviews = call_gemini_batch(batch, api_key=api_key, model=candidate_model, timeout_s=timeout_s)
+                    if candidate_model != metadata.get("effective_model"):
                         LOGGER.warning(
-                            "gemini model '%s' not found; fallback to '%s' succeeded",
-                            model,
-                            GEMINI_MODEL_FALLBACK,
+                            "gemini model '%s' succeeded after fallback from '%s'",
+                            candidate_model,
+                            metadata.get("effective_model"),
                         )
-                        last_error = None
-                        break
-                    except (RuntimeError, urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as fallback_exc:
-                        last_error = fallback_exc
-                else:
+                    metadata["effective_model"] = candidate_model
+                    last_error = None
+                    break
+                except urllib.error.HTTPError as exc:
                     last_error = exc
-                if attempt < attempts:
-                    delay = compute_retry_delay_seconds(exc, attempt=attempt, base_backoff_s=retry_backoff_s)
+                    should_try_next_model = exc.code in {404, 403, 429} and idx < (len(model_chain) - 1)
+                    if should_try_next_model:
+                        continue
+                    break
+                except (RuntimeError, urllib.error.URLError, TimeoutError) as exc:
+                    last_error = exc
+                    break
+            if last_error is None:
+                break
+            if attempt < attempts:
+                if isinstance(last_error, urllib.error.HTTPError):
+                    delay = compute_retry_delay_seconds(last_error, attempt=attempt, base_backoff_s=retry_backoff_s)
                     time.sleep(delay)
-            except (RuntimeError, urllib.error.URLError, TimeoutError) as exc:
-                last_error = exc
-                if attempt < attempts:
+                else:
                     time.sleep(max(retry_backoff_s, 1) * attempt)
         if last_error is not None:
             metadata["errors"] += 1
@@ -547,7 +556,7 @@ def main() -> None:
         help="Fail when any Gemini batch still fails after retries.",
     )
     args = parser.parse_args()
-    ai_model = (str(args.ai_model or "").strip()) or GEMINI_MODEL_FALLBACK
+    ai_model = (str(args.ai_model or "").strip()) or GEMINI_MODEL_PRIMARY_FALLBACK
 
     copy_data = json.loads(COPY_PATH.read_text(encoding="utf-8"))
     glossary_data = json.loads(GLOSSARY_PATH.read_text(encoding="utf-8"))
