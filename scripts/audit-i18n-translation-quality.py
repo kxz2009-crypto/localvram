@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import os
 import re
 import sys
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -13,6 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
 GLOSSARY_PATH = ROOT / "src" / "data" / "i18n-glossary.json"
 OUT_PATH = ROOT / "dist" / "seo-audit" / "i18n-translation-qa.json"
+GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+GEMINI_MODEL_DEFAULT = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
 
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
 PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
@@ -175,6 +180,172 @@ def detect_issues(
     return issues
 
 
+def extract_json_payload(text: str) -> dict | None:
+    raw = str(text or "").strip()
+    if not raw:
+        return None
+    if raw.startswith("```"):
+        raw = re.sub(r"^```(?:json)?\s*", "", raw, flags=re.IGNORECASE).strip()
+        raw = re.sub(r"\s*```$", "", raw).strip()
+    try:
+        parsed = json.loads(raw)
+        return parsed if isinstance(parsed, dict) else None
+    except json.JSONDecodeError:
+        pass
+    match = re.search(r"\{.*\}", raw, re.S)
+    if not match:
+        return None
+    try:
+        parsed = json.loads(match.group(0))
+        return parsed if isinstance(parsed, dict) else None
+    except json.JSONDecodeError:
+        return None
+
+
+def call_gemini_batch(items: list[dict], api_key: str, model: str, timeout_s: int) -> list[dict]:
+    compact_items = [
+        {
+            "index": idx,
+            "locale": item.get("locale"),
+            "page_id": item.get("page_id"),
+            "field": item.get("field"),
+            "en": item.get("en", ""),
+            "translation": item.get("translation", ""),
+        }
+        for idx, item in enumerate(items)
+    ]
+    prompt = (
+        "You are a strict i18n QA reviewer.\n"
+        "For each item, evaluate whether translation quality is acceptable for production.\n"
+        "Focus on semantic correctness, fluency, and preserving technical meaning.\n"
+        "Do not require literal translation. Placeholders must remain unchanged if present.\n"
+        "Return ONLY JSON object with key `results`.\n"
+        "Each result item must include: index (int), severity (none|medium|high|critical), code, message, confidence (0..1).\n"
+        "Use severity=none if acceptable.\n\n"
+        f"Items:\n{json.dumps(compact_items, ensure_ascii=False)}"
+    )
+
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "temperature": 0.1,
+            "responseMimeType": "application/json",
+        },
+    }
+    req = urllib.request.Request(
+        GEMINI_API_ENDPOINT.format(model=model, api_key=api_key),
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=timeout_s) as response:
+        data = json.loads(response.read().decode("utf-8"))
+
+    raw_text = ""
+    for candidate in data.get("candidates", []):
+        content = candidate.get("content", {})
+        for part in content.get("parts", []):
+            text = part.get("text")
+            if isinstance(text, str) and text.strip():
+                raw_text = text.strip()
+                break
+        if raw_text:
+            break
+
+    parsed = extract_json_payload(raw_text)
+    if not parsed or not isinstance(parsed.get("results"), list):
+        raise RuntimeError("gemini response does not contain valid JSON results")
+    return parsed["results"]
+
+
+def run_ai_review_queue(
+    queue: list[dict],
+    api_key: str,
+    model: str,
+    max_items: int,
+    batch_size: int,
+    timeout_s: int,
+) -> tuple[list[dict], dict]:
+    metadata = {
+        "enabled": True,
+        "model": model,
+        "max_items": max_items,
+        "batch_size": batch_size,
+        "items_selected": 0,
+        "batches": 0,
+        "flagged": 0,
+        "errors": 0,
+    }
+    selected = queue[: max(max_items, 0)]
+    metadata["items_selected"] = len(selected)
+    if not selected:
+        metadata["status"] = "skipped_no_items"
+        return [], metadata
+
+    ai_issues: list[dict] = []
+    seen: set[tuple[str, str, str, str]] = set()
+    effective_batch_size = max(batch_size, 1)
+
+    for start in range(0, len(selected), effective_batch_size):
+        batch = selected[start : start + effective_batch_size]
+        metadata["batches"] += 1
+        try:
+            reviews = call_gemini_batch(batch, api_key=api_key, model=model, timeout_s=timeout_s)
+        except (RuntimeError, urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as exc:
+            metadata["errors"] += 1
+            LOGGER.warning("gemini review batch failed: %s", exc)
+            continue
+
+        for review in reviews:
+            try:
+                idx = int(review.get("index"))
+            except (TypeError, ValueError):
+                continue
+            if idx < 0 or idx >= len(batch):
+                continue
+            severity = str(review.get("severity", "none")).lower().strip()
+            if severity not in {"none", "medium", "high", "critical"}:
+                severity = "none"
+            if severity == "none":
+                continue
+
+            item = batch[idx]
+            key = (
+                str(item.get("locale", "")),
+                str(item.get("page_id", "")),
+                str(item.get("field", "")),
+                str(review.get("code", "ai_quality_issue")),
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            confidence_raw = review.get("confidence", 0.0)
+            try:
+                confidence = float(confidence_raw)
+            except (TypeError, ValueError):
+                confidence = 0.0
+
+            metadata["flagged"] += 1
+            ai_issues.append(
+                {
+                    "locale": item.get("locale"),
+                    "page_id": item.get("page_id"),
+                    "field": item.get("field"),
+                    "severity": severity,
+                    "code": str(review.get("code", "ai_quality_issue")),
+                    "message": str(review.get("message", "AI reviewer flagged translation quality risk.")),
+                    "priority": int(item.get("priority", 50)) + SEVERITY_WEIGHT.get(severity, 0),
+                    "en": str(item.get("en", "")),
+                    "translation": str(item.get("translation", "")),
+                    "source": "gemini",
+                    "confidence": confidence,
+                }
+            )
+
+    metadata["status"] = "completed"
+    return ai_issues, metadata
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Audit i18n translation quality and build a manual review queue.")
     parser.add_argument("--out", default=str(OUT_PATH), help="Output report path.")
@@ -188,6 +359,39 @@ def main() -> None:
         "--strict",
         action="store_true",
         help="Fail when any critical/high issue is found.",
+    )
+    parser.add_argument(
+        "--ai-review",
+        action="store_true",
+        help="Enable Gemini-based semantic QA on the manual review queue.",
+    )
+    parser.add_argument(
+        "--ai-required",
+        action="store_true",
+        help="Fail if --ai-review is enabled but GEMINI_API_KEY is missing.",
+    )
+    parser.add_argument(
+        "--ai-model",
+        default=GEMINI_MODEL_DEFAULT,
+        help=f"Gemini model name. Default: {GEMINI_MODEL_DEFAULT}",
+    )
+    parser.add_argument(
+        "--ai-max-items",
+        type=int,
+        default=300,
+        help="Maximum queue items sent to AI review.",
+    )
+    parser.add_argument(
+        "--ai-batch-size",
+        type=int,
+        default=25,
+        help="How many items to include per Gemini request.",
+    )
+    parser.add_argument(
+        "--ai-timeout-s",
+        type=int,
+        default=45,
+        help="HTTP timeout in seconds for each Gemini request.",
     )
     args = parser.parse_args()
 
@@ -271,6 +475,50 @@ def main() -> None:
                 )
     manual_review_queue.sort(key=lambda x: (-x["priority"], x["locale"], x["page_id"], x["field"]))
 
+    ai_summary: dict = {
+        "enabled": bool(args.ai_review),
+        "status": "disabled",
+        "model": args.ai_model,
+        "max_items": args.ai_max_items,
+        "batch_size": args.ai_batch_size,
+        "items_selected": 0,
+        "batches": 0,
+        "flagged": 0,
+        "errors": 0,
+    }
+    if args.ai_review:
+        gemini_api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+        if not gemini_api_key:
+            ai_summary["status"] = "missing_api_key"
+            message = "GEMINI_API_KEY is missing; skipped AI review."
+            if args.ai_required:
+                LOGGER.error("i18n translation qa failed: %s", message)
+                sys.exit(1)
+            LOGGER.warning("%s", message)
+        else:
+            ai_issues, ai_summary = run_ai_review_queue(
+                queue=manual_review_queue,
+                api_key=gemini_api_key,
+                model=args.ai_model,
+                max_items=args.ai_max_items,
+                batch_size=args.ai_batch_size,
+                timeout_s=args.ai_timeout_s,
+            )
+            for item in ai_issues:
+                locale = str(item.get("locale", ""))
+                if not locale:
+                    continue
+                summary = locale_summary.setdefault(
+                    locale,
+                    {"critical": 0, "high": 0, "medium": 0, "issues": 0, "fields_checked": 0},
+                )
+                severity = str(item.get("severity", "medium"))
+                if severity in {"critical", "high", "medium"}:
+                    summary[severity] += 1
+                summary["issues"] += 1
+                issues.append(item)
+            issues.sort(key=lambda x: (-x["priority"], x["locale"], x["page_id"], x["field"], x["code"]))
+
     report = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "summary": {
@@ -280,6 +528,7 @@ def main() -> None:
             "high": sum(x.get("high", 0) for x in locale_summary.values()),
             "medium": sum(x.get("medium", 0) for x in locale_summary.values()),
         },
+        "ai_review": ai_summary,
         "top_review_queue": issues[:200],
         "manual_review_queue": manual_review_queue[:300],
         "issues": issues,
@@ -295,6 +544,8 @@ def main() -> None:
         f"critical={report['summary']['critical']} "
         f"high={report['summary']['high']} "
         f"medium={report['summary']['medium']} "
+        f"ai_status={report['ai_review']['status']} "
+        f"ai_flagged={report['ai_review']['flagged']} "
         f"manual_queue={len(report['manual_review_queue'])} "
         f"report={out_file}"
     )

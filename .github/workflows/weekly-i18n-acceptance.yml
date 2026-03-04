@@ -50,7 +50,10 @@ jobs:
 
       - name: i18n translation QA
         id: qa_copy
-        run: npm run i18n:qa-copy | tee logs/i18n-qa-copy.log
+        run: npm run i18n:qa-copy -- --ai-review | tee logs/i18n-qa-copy.log
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
 
       - name: i18n sitemap parity report
         id: sitemap_report
