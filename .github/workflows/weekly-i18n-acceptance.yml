@@ -70,7 +70,7 @@ jobs:
           npm run i18n:qa-copy -- "${qa_args[@]}" | tee logs/i18n-qa-copy.log
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+          GEMINI_MODEL: gemini-2.5-flash
           I18N_AI_STRICT: ${{ vars.I18N_AI_STRICT }}
 
       - name: i18n sitemap parity report
