@@ -18,7 +18,7 @@ COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
 GLOSSARY_PATH = ROOT / "src" / "data" / "i18n-glossary.json"
 OUT_PATH = ROOT / "dist" / "seo-audit" / "i18n-translation-qa.json"
 GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
-GEMINI_MODEL_DEFAULT = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+GEMINI_MODEL_DEFAULT = (os.environ.get("GEMINI_MODEL", "") or "").strip() or "gemini-2.0-flash"
 
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
 PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
@@ -450,6 +450,7 @@ def main() -> None:
         help="Fail when any Gemini batch still fails after retries.",
     )
     args = parser.parse_args()
+    ai_model = (str(args.ai_model or "").strip()) or "gemini-2.0-flash"
 
     copy_data = json.loads(COPY_PATH.read_text(encoding="utf-8"))
     glossary_data = json.loads(GLOSSARY_PATH.read_text(encoding="utf-8"))
@@ -534,7 +535,7 @@ def main() -> None:
     ai_summary: dict = {
         "enabled": bool(args.ai_review),
         "status": "disabled",
-        "model": args.ai_model,
+        "model": ai_model,
         "max_items": args.ai_max_items,
         "batch_size": args.ai_batch_size,
         "items_selected": 0,
@@ -558,7 +559,7 @@ def main() -> None:
             ai_issues, ai_summary = run_ai_review_queue(
                 queue=manual_review_queue,
                 api_key=gemini_api_key,
-                model=args.ai_model,
+                model=ai_model,
                 max_items=args.ai_max_items,
                 batch_size=args.ai_batch_size,
                 timeout_s=args.ai_timeout_s,
