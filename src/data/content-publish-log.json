@@ -1,40 +1,73 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-04T03:11:22.586808Z",
+  "updated_at": "2026-03-05T03:14:41.445505Z",
   "last_run": {
-    "run_at": "2026-03-04T03:11:22.586808Z",
-    "queue_date": "2026-03-04",
+    "run_at": "2026-03-05T03:14:41.445505Z",
+    "queue_date": "2026-03-05",
     "candidate_count": 3,
     "published_count": 2,
     "skipped_count": 1,
     "published": [
       {
-        "slug": "apple-silicon-vs-rtx3090-local-llm",
-        "title": "Apple Silicon Vs Rtx 3090 Local Llm: Practical Guide (2026)",
-        "topic_key": "apple-silicon-vs-rtx-3090-local-llm",
-        "score": 576.0,
-        "source_draft": "content-queue/2026-03-04/01-apple-silicon-vs-rtx3090-local-llm.md",
-        "out_file": "src/content/blog/apple-silicon-vs-rtx3090-local-llm.md",
-        "intent": "hardware"
+        "slug": "weekly-local-llm-benchmark-roundup-template",
+        "title": "Weekly Local Llm Benchmark Roundup: Practical Guide (2026)",
+        "topic_key": "weekly-local-llm-benchmark-roundup",
+        "score": 560.0,
+        "source_draft": "content-queue/2026-03-05/01-weekly-local-llm-benchmark-roundup-template.md",
+        "out_file": "src/content/blog/weekly-local-llm-benchmark-roundup-template.md",
+        "intent": "benchmark"
       },
       {
-        "slug": "qwen3-coder-30b-local-coding-stack",
-        "title": "Qwen3 Coder 30B Local Coding Setup: Practical Guide (2026)",
-        "topic_key": "qwen3-coder-30b-local-coding-setup",
-        "score": 576.0,
-        "source_draft": "content-queue/2026-03-04/02-qwen3-coder-30b-local-coding-stack.md",
-        "out_file": "src/content/blog/qwen3-coder-30b-local-coding-stack.md",
-        "intent": "guide"
+        "slug": "en-affiliate-cloud-gpu",
+        "title": "Runpod A100 Ollama: Practical Guide (2026)",
+        "topic_key": "runpod-a100-ollama",
+        "score": 280.0,
+        "source_draft": "content-queue/2026-03-05/02-en-affiliate-cloud-gpu.md",
+        "out_file": "src/content/blog/en-affiliate-cloud-gpu.md",
+        "intent": "cost"
       }
     ],
     "skipped": [
       {
-        "draft": "content-queue/2026-03-04/03-multi-gpu-local-llm-roi-calculator-guide.md",
+        "draft": "content-queue/2026-03-05/03-model-llama3-3-70b-benchmark-refresh.md",
         "reason": "max_publish_reached"
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-05T03:14:41.445505Z",
+      "queue_date": "2026-03-05",
+      "candidate_count": 3,
+      "published_count": 2,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "weekly-local-llm-benchmark-roundup-template",
+          "title": "Weekly Local Llm Benchmark Roundup: Practical Guide (2026)",
+          "topic_key": "weekly-local-llm-benchmark-roundup",
+          "score": 560.0,
+          "source_draft": "content-queue/2026-03-05/01-weekly-local-llm-benchmark-roundup-template.md",
+          "out_file": "src/content/blog/weekly-local-llm-benchmark-roundup-template.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "en-affiliate-cloud-gpu",
+          "title": "Runpod A100 Ollama: Practical Guide (2026)",
+          "topic_key": "runpod-a100-ollama",
+          "score": 280.0,
+          "source_draft": "content-queue/2026-03-05/02-en-affiliate-cloud-gpu.md",
+          "out_file": "src/content/blog/en-affiliate-cloud-gpu.md",
+          "intent": "cost"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-03-05/03-model-llama3-3-70b-benchmark-refresh.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-03-04T03:11:22.586808Z",
       "queue_date": "2026-03-04",
