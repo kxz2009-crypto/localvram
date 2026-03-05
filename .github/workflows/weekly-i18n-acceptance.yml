@@ -4,6 +4,15 @@ on:
   schedule:
     - cron: "0 10 * * 1"
   workflow_dispatch:
+    inputs:
+      gemini_model:
+        description: "Gemini model for i18n QA (e.g. gemini-2.5-flash, gemini-3-flash)"
+        required: false
+        default: "gemini-2.5-flash"
+      ai_strict:
+        description: "Enable strict AI gate (1=yes, 0=no)"
+        required: false
+        default: "1"
 
 permissions:
   actions: read
@@ -56,22 +65,29 @@ jobs:
         id: qa_copy
         run: |
           set -o pipefail
+          effective_model="${INPUT_GEMINI_MODEL:-${GEMINI_MODEL:-gemini-2.5-flash}}"
+          effective_strict="${INPUT_AI_STRICT:-${I18N_AI_STRICT:-1}}"
           qa_args=(
             --ai-review
+            --ai-model "${effective_model}"
             --ai-max-items 60
             --ai-batch-size 6
             --ai-retries 4
             --ai-retry-backoff-s 4
             --ai-batch-pause-s 2
           )
-          if [ "${I18N_AI_STRICT:-0}" = "1" ]; then
+          if [ "${effective_strict}" = "1" ]; then
             qa_args+=(--ai-required --ai-min-coverage 0.95 --ai-fail-on-errors)
           fi
-          npm run i18n:qa-copy -- "${qa_args[@]}" | tee logs/i18n-qa-copy.log
+          echo "qa_model=${effective_model}" | tee logs/i18n-qa-copy.log
+          echo "qa_strict=${effective_strict}" | tee -a logs/i18n-qa-copy.log
+          npm run i18n:qa-copy -- "${qa_args[@]}" | tee -a logs/i18n-qa-copy.log
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: gemini-2.5-flash
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
           I18N_AI_STRICT: ${{ vars.I18N_AI_STRICT }}
+          INPUT_GEMINI_MODEL: ${{ github.event.inputs.gemini_model }}
+          INPUT_AI_STRICT: ${{ github.event.inputs.ai_strict }}
 
       - name: i18n sitemap parity report
         id: sitemap_report

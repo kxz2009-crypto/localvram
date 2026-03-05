@@ -237,6 +237,16 @@ def main() -> None:
         log_line("quality gate failed: locale link checks failed")
         sys.exit(locale_link_result.returncode)
 
+    translation_qa_checker = ROOT / "scripts" / "audit-i18n-translation-quality.py"
+    if not translation_qa_checker.exists():
+        log_line("quality gate failed: missing scripts/audit-i18n-translation-quality.py")
+        sys.exit(1)
+    translation_qa_cmd = [sys.executable, str(translation_qa_checker), "--strict", "--limit", "0"]
+    translation_qa_result = subprocess.run(translation_qa_cmd, cwd=ROOT)
+    if translation_qa_result.returncode != 0:
+        log_line("quality gate failed: i18n translation qa strict check failed")
+        sys.exit(translation_qa_result.returncode)
+
     pack_validator = ROOT / "scripts" / "validate-i18n-packs.py"
     if not pack_validator.exists():
         log_line("quality gate failed: missing scripts/validate-i18n-packs.py")

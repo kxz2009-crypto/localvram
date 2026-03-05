@@ -16,6 +16,7 @@ from logging_utils import configure_logging
 
 ROOT = Path(__file__).resolve().parents[1]
 COPY_PATH = ROOT / "src" / "data" / "i18n-copy.json"
+BLOG_COPY_PATH = ROOT / "src" / "data" / "i18n-blog-copy.json"
 GLOSSARY_PATH = ROOT / "src" / "data" / "i18n-glossary.json"
 OUT_PATH = ROOT / "dist" / "seo-audit" / "i18n-translation-qa.json"
 GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
@@ -26,8 +27,26 @@ GEMINI_MODEL_DEFAULT = (os.environ.get("GEMINI_MODEL", "") or "").strip() or GEM
 PLACEHOLDER_RE = re.compile(r"\{[a-zA-Z0-9_]+\}")
 PLACEHOLDER_ONLY_RE = re.compile(r"^\{[a-zA-Z0-9_]+\}$")
 TOKEN_ARTIFACT_RE = re.compile(r"(LVPH|LVPT|@@\d+@@|##\d+##|TOKEN)", re.IGNORECASE)
+QUESTION_GARBLE_RE = re.compile(r"\?{4,}")
 ASCII_ALPHA_RE = re.compile(r"[A-Za-z]")
 NON_ASCII_LETTER_RE = re.compile(r"[^\x00-\x7F]")
+MOJIBAKE_SNIPPETS = (
+    "\u00c3\u00a9",
+    "\u00c3\u00a8",
+    "\u00c3\u00a0",
+    "\u00c3\u00a1",
+    "\u00c3\u00a3",
+    "\u00c3\u00aa",
+    "\u00c3\u00b3",
+    "\u00c3\u00ba",
+    "\u00e2\u20ac\u2122",
+    "\u00e2\u20ac\u201c",
+    "\u00e2\u20ac\u009d",
+    "\u00e2\u20ac\u2014",
+    "\u00e2\u20ac\u2013",
+    "\u00c2\u00a0",
+)
+BLOG_COPY_FIELDS = ("title", "description", "cta_line")
 
 LOCALE_SCRIPT_HINTS = {
     "ru": re.compile(r"[\u0400-\u04FF]"),
@@ -50,6 +69,7 @@ PAGE_PRIORITY = {
     "status-detail": 76,
     "errors-index": 70,
     "errors-detail": 68,
+    "blog-copy": 66,
 }
 
 SEVERITY_WEIGHT = {"critical": 60, "high": 35, "medium": 15}
@@ -113,6 +133,9 @@ def detect_issues(
     en_text: str,
     localized_text: str,
     protected_terms: list[str],
+    check_strong_fallback: bool = True,
+    check_protected_terms: bool = True,
+    check_locale_script: bool = True,
 ) -> list[dict]:
     issues: list[dict] = []
     value = localized_text.strip()
@@ -126,6 +149,36 @@ def detect_issues(
             }
         )
         return issues
+
+    if "\ufffd" in value:
+        issues.append(
+            {
+                "severity": "critical",
+                "code": "replacement_char",
+                "message": "Found Unicode replacement character (possible encoding corruption).",
+            }
+        )
+
+    if QUESTION_GARBLE_RE.search(value) and not QUESTION_GARBLE_RE.search(en_text):
+        issues.append(
+            {
+                "severity": "high",
+                "code": "question_mark_garble",
+                "message": "Found suspicious repeated question marks not present in source text.",
+            }
+        )
+
+    for snippet in MOJIBAKE_SNIPPETS:
+        if snippet in value and snippet not in en_text:
+            snippet_hint = snippet.encode("unicode_escape").decode("ascii")
+            issues.append(
+                {
+                    "severity": "high",
+                    "code": "mojibake_sequence",
+                    "message": f"Found suspicious mojibake sequence ({snippet_hint}).",
+                }
+            )
+            break
 
     if TOKEN_ARTIFACT_RE.search(value):
         issues.append(
@@ -147,7 +200,7 @@ def detect_issues(
             }
         )
 
-    if likely_strong_fallback(en_text, value):
+    if check_strong_fallback and likely_strong_fallback(en_text, value):
         issues.append(
             {
                 "severity": "high",
@@ -156,18 +209,19 @@ def detect_issues(
             }
         )
 
-    for term in protected_terms:
-        if term in en_text and term not in value:
-            issues.append(
-                {
-                    "severity": "high",
-                    "code": "protected_term_missing",
-                    "message": f"Protected term missing: '{term}'",
-                }
-            )
-            break
+    if check_protected_terms:
+        for term in protected_terms:
+            if term in en_text and term not in value:
+                issues.append(
+                    {
+                        "severity": "high",
+                        "code": "protected_term_missing",
+                        "message": f"Protected term missing: '{term}'",
+                    }
+                )
+                break
 
-    if locale in LOCALE_SCRIPT_HINTS:
+    if check_locale_script and locale in LOCALE_SCRIPT_HINTS:
         en_len = len(en_text.strip())
         literal_source = PLACEHOLDER_RE.sub(" ", en_text)
         literal_words = re.findall(r"[A-Za-z]{2,}", literal_source)
@@ -559,6 +613,7 @@ def main() -> None:
     ai_model = (str(args.ai_model or "").strip()) or GEMINI_MODEL_PRIMARY_FALLBACK
 
     copy_data = json.loads(COPY_PATH.read_text(encoding="utf-8"))
+    blog_copy_data = json.loads(BLOG_COPY_PATH.read_text(encoding="utf-8"))
     glossary_data = json.loads(GLOSSARY_PATH.read_text(encoding="utf-8"))
     protected_terms = [str(x).strip() for x in glossary_data.get("protected_terms", []) if str(x).strip()]
     pages = copy_data.get("pages", {})
@@ -610,6 +665,58 @@ def main() -> None:
                             "translation": localized_text,
                         }
                     )
+
+    blog_copy_slugs = blog_copy_data.get("slugs", {})
+    if isinstance(blog_copy_slugs, dict):
+        for slug, slug_entry in blog_copy_slugs.items():
+            if not isinstance(slug_entry, dict):
+                continue
+            en_fields = slug_entry.get("en", {})
+            locale_fields = slug_entry.get("locales", {})
+            if not isinstance(en_fields, dict) or not isinstance(locale_fields, dict):
+                continue
+            for locale, translated_map in locale_fields.items():
+                if not isinstance(translated_map, dict):
+                    continue
+                summary = locale_summary.setdefault(
+                    locale,
+                    {"critical": 0, "high": 0, "medium": 0, "issues": 0, "fields_checked": 0},
+                )
+                for field_name in BLOG_COPY_FIELDS:
+                    if field_name not in en_fields:
+                        continue
+                    en_text = str(en_fields.get(field_name, ""))
+                    localized_text = str(translated_map.get(field_name, ""))
+                    summary["fields_checked"] += 1
+                    field_issues = detect_issues(
+                        page_id=f"blog-copy:{slug}",
+                        field_name=field_name,
+                        locale=locale,
+                        en_text=en_text,
+                        localized_text=localized_text,
+                        protected_terms=protected_terms,
+                        check_strong_fallback=False,
+                        check_protected_terms=False,
+                        check_locale_script=False,
+                    )
+                    for item in field_issues:
+                        severity = item["severity"]
+                        summary[severity] += 1
+                        summary["issues"] += 1
+                        priority = PAGE_PRIORITY.get("blog-copy", 50) + SEVERITY_WEIGHT.get(severity, 0)
+                        issues.append(
+                            {
+                                "locale": locale,
+                                "page_id": f"blog-copy:{slug}",
+                                "field": field_name,
+                                "severity": severity,
+                                "code": item["code"],
+                                "message": item["message"],
+                                "priority": priority,
+                                "en": en_text,
+                                "translation": localized_text,
+                            }
+                        )
 
     issues.sort(key=lambda x: (-x["priority"], x["locale"], x["page_id"], x["field"], x["code"]))
 
