@@ -1,37 +1,52 @@
 {
-  "updated_at": "2026-02-27T17:32:58.120629Z",
+  "updated_at": "2026-03-06T03:55:21.236934Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-03-06T00:00:00Z",
+    "next_refresh_at": "2026-03-13T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-02-27T17:32:58.120629Z",
+    "last_refresh_at": "2026-03-06T03:55:21.236934Z",
     "last_refresh_summary": {
-      "incoming_count": 4,
-      "removed_count": 4,
+      "incoming_count": 8,
+      "removed_count": 8,
       "incoming_topic_keys": [
-        "best-local-rag-model",
-        "llama3-3-70b-local-inference-benchmark-update",
-        "qwen3-5-122b-local-inference-benchmark-update",
-        "runpod-a100-ollama"
+        "gemma3-27b-local-inference-benchmark-update",
+        "gpt-oss-20b-local-inference-benchmark-update",
+        "llama-70b-on-3090",
+        "mistral-small-22b-local-inference-benchmark-update",
+        "qwen2-5-coder-32b-local-inference-benchmark-update",
+        "qwen3-5-35b-local-inference-benchmark-update",
+        "qwq-32b-local-inference-benchmark-update",
+        "translategemma-27b-local-inference-benchmark-update"
       ],
       "removed_topic_keys": [
-        "cloud-burst-strategy-for-local-llm-teams",
-        "llama-70b-on-3090",
-        "qwen2-5-coder-32b-local-inference-benchmark-update",
-        "qwen3-5-35b-local-inference-benchmark-update"
+        "apple-silicon-vs-rtx-3090-local-llm",
+        "best-local-llm-for-16gb-vram",
+        "llama-4-local-inference-feasibility",
+        "local-llm-customer-support-rag-stack",
+        "qwen2-5-coder-32b-self-host-guide",
+        "qwen3-coder-30b-local-coding-setup",
+        "runpod-a100-ollama",
+        "weekly-local-llm-benchmark-roundup"
       ],
-      "blocked_recent_topic_count": 6
+      "blocked_recent_topic_count": 39
     }
   },
   "items": [
+    {
+      "slug": "model-gpt-oss-20b-benchmark-refresh",
+      "keyword": "gpt-oss:20b local inference benchmark update",
+      "search_intent_score": 10,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 10
+    },
     {
       "slug": "model-qwen3-8b-benchmark-refresh",
       "keyword": "qwen3:8b local inference benchmark update",
@@ -145,34 +160,6 @@
       "freshness_gap_score": 8
     },
     {
-      "slug": "16gb-vram-model-selection-guide",
-      "keyword": "best local llm for 16gb vram",
-      "search_intent_score": 9,
-      "commercial_intent_score": 8,
-      "freshness_gap_score": 8
-    },
-    {
-      "slug": "apple-silicon-vs-rtx3090-local-llm",
-      "keyword": "apple silicon vs rtx 3090 local llm",
-      "search_intent_score": 8,
-      "commercial_intent_score": 9,
-      "freshness_gap_score": 8
-    },
-    {
-      "slug": "llama4-local-inference-feasibility-check",
-      "keyword": "llama 4 local inference feasibility",
-      "search_intent_score": 8,
-      "commercial_intent_score": 9,
-      "freshness_gap_score": 8
-    },
-    {
-      "slug": "local-llm-customer-support-rag-stack",
-      "keyword": "local llm customer support rag stack",
-      "search_intent_score": 8,
-      "commercial_intent_score": 9,
-      "freshness_gap_score": 8
-    },
-    {
       "slug": "ministral-3-14b-local-benchmark-guide",
       "keyword": "ministral 3 14b local benchmark",
       "search_intent_score": 8,
@@ -187,20 +174,6 @@
       "freshness_gap_score": 8
     },
     {
-      "slug": "qwen25-coder-32b-self-host-guide",
-      "keyword": "qwen2.5 coder 32b self host guide",
-      "search_intent_score": 8,
-      "commercial_intent_score": 9,
-      "freshness_gap_score": 8
-    },
-    {
-      "slug": "qwen3-coder-30b-local-coding-stack",
-      "keyword": "qwen3 coder 30b local coding setup",
-      "search_intent_score": 8,
-      "commercial_intent_score": 9,
-      "freshness_gap_score": 8
-    },
-    {
       "slug": "multi-gpu-local-llm-roi-calculator-guide",
       "keyword": "multi gpu local llm roi",
       "search_intent_score": 7,
@@ -208,18 +181,53 @@
       "freshness_gap_score": 8
     },
     {
-      "slug": "weekly-local-llm-benchmark-roundup-template",
-      "keyword": "weekly local llm benchmark roundup",
+      "slug": "model-mistral-small-22b-benchmark-refresh",
+      "keyword": "mistral-small:22b local inference benchmark update",
       "search_intent_score": 7,
-      "commercial_intent_score": 8,
+      "commercial_intent_score": 7,
       "freshness_gap_score": 10
     },
     {
-      "slug": "en-affiliate-cloud-gpu",
-      "keyword": "runpod a100 ollama",
-      "search_intent_score": 5,
-      "commercial_intent_score": 7,
-      "freshness_gap_score": 8
+      "slug": "model-gemma3-27b-benchmark-refresh",
+      "keyword": "gemma3:27b local inference benchmark update",
+      "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
+      "slug": "model-qwen2-5-coder-32b-benchmark-refresh",
+      "keyword": "qwen2.5-coder:32b local inference benchmark update",
+      "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
+      "slug": "model-qwen3-5-35b-benchmark-refresh",
+      "keyword": "qwen3.5:35b local inference benchmark update",
+      "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
+      "slug": "model-qwq-32b-benchmark-refresh",
+      "keyword": "qwq:32b local inference benchmark update",
+      "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
+      "slug": "model-translategemma-27b-benchmark-refresh",
+      "keyword": "translategemma:27b local inference benchmark update",
+      "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
+      "slug": "en-models-llama-70b-q4",
+      "keyword": "llama 70b on 3090",
+      "search_intent_score": 3,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 10
     },
     {
       "slug": "model-llama3-3-70b-benchmark-refresh",
