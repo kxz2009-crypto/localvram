@@ -1,7 +1,8 @@
 import importlib.util
+import shutil
 import sys
-import tempfile
 import unittest
+import uuid
 from pathlib import Path
 from unittest.mock import patch
 
@@ -57,8 +58,12 @@ class ResolveWeeklyTargetsTests(unittest.TestCase):
             self.assertEqual(self.mod.resolve_default_endpoint(), "http://10.0.0.2:11434")
 
     def test_load_retired_policy(self):
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            path = Path(tmp_dir) / "retired.json"
+        base_tmp = ROOT / ".tmp" / "unit-tests"
+        base_tmp.mkdir(parents=True, exist_ok=True)
+        tmp_dir = base_tmp / f"resolve-weekly-targets-{uuid.uuid4().hex}"
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            path = tmp_dir / "retired.json"
             path.write_text(
                 (
                     '{"retired_families":["Qwen3","qwen3"],'
@@ -70,6 +75,8 @@ class ResolveWeeklyTargetsTests(unittest.TestCase):
             self.assertEqual(retired_families, {"qwen3"})
             self.assertEqual(retired_tags, {"qwen3:8b", "qwen3:14b"})
             self.assertEqual(loaded_path, str(path))
+        finally:
+            shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":
