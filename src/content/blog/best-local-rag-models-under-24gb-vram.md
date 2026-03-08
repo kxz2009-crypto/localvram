@@ -1,6 +1,6 @@
 ---
-title: "Best Local Rag Models Under 24Gb Vram: Practical Guide (2026)"
-description: "Users searching for \"best local rag models under 24gb vram\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expa"
+title: "Best Local RAG Models Under 24GB VRAM: Practical Guide (2026)"
+description: "Users searching for \"best local rag models under 24gb vram\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-02-28
 updatedDate: 2026-02-28
 tags: ["ollama", "best", "rag", "models", "under"]

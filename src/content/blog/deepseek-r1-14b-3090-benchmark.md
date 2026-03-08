@@ -1,6 +1,6 @@
 ---
-title: "Deepseek R1 14B Rtx 3090 Benchmark: Practical Guide (2026)"
-description: "Users searching for \"deepseek r1 14b rtx 3090 benchmark\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansi"
+title: "DeepSeek R1 14B on RTX 3090: Benchmark Practical Guide (2026)"
+description: "Users searching for \"deepseek r1 14b rtx 3090 benchmark\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-02-28
 updatedDate: 2026-02-28
 tags: ["ollama", "deepseek", "r1", "14b", "rtx"]

@@ -1,6 +1,6 @@
 ---
 title: "Qwen3 Coder 30B Local Coding Setup: Practical Guide (2026)"
-description: "Users searching for \"qwen3 coder 30b local coding setup\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansi"
+description: "Users searching for \"qwen3 coder 30b local coding setup\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-03-04
 updatedDate: 2026-03-04
 tags: ["ollama", "qwen3", "coder", "30b", "coding"]

@@ -1,6 +1,6 @@
 ---
-title: "Qwen2.5 Coder 32B Self Host Guide: Practical Guide (2026)"
-description: "Users searching for \"qwen2.5 coder 32b self host guide\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansio"
+title: "Qwen2.5 Coder 32B Self-Host Guide: Practical Guide (2026)"
+description: "Users searching for \"qwen2.5 coder 32b self host guide\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-03-03
 updatedDate: 2026-03-03
 tags: ["ollama", "qwen2", "coder", "32b", "self"]

@@ -1,6 +1,6 @@
 ---
-title: "Apple Silicon Vs Rtx 3090 Local Llm: Practical Guide (2026)"
-description: "Users searching for \"apple silicon vs rtx 3090 local llm\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expans"
+title: "Apple Silicon vs RTX 3090 Local LLM: Practical Guide (2026)"
+description: "Users searching for \"apple silicon vs rtx 3090 local llm\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-03-04
 updatedDate: 2026-03-04
 tags: ["ollama", "apple", "silicon", "rtx", "3090"]

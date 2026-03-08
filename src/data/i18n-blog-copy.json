@@ -286,7 +286,7 @@
           "cta_line": "استخدم Qwen3:8B كخط أساس، ثم قارن مع نموذج أكبر قبل شراء العتاد."
         },
         "hi": {
-          "title": "Qwen3:8B Local Inference Benchmark: Practical Guide (2026)",
+          "title": "Qwen3:8B लोकल इन्फरेंस बेंचमार्क: प्रैक्टिकल गाइड (2026)",
           "description": "Qwen3:8B लोकल इंफरेंस के लिए व्यावहारिक benchmark गाइड, जिसमें अपेक्षित throughput, deployment सीमाएँ और अगले मॉडल की तुलना शामिल है।",
           "cta_line": "Qwen3:8B को baseline मानें और hardware खरीदने से पहले एक बड़ा मॉडल तुलना करें।"
         },
@@ -345,7 +345,7 @@
           "cta_line": "استخدم qwen3-coder:30b للمهام البرمجية وحدد مسبقاً عتبة التحويل إلى السحابة عند الذروة."
         },
         "hi": {
-          "title": "Qwen3-Coder:30B Local Inference Benchmark: Practical Guide (2026)",
+          "title": "Qwen3-Coder:30B लोकल इन्फरेंस बेंचमार्क: प्रैक्टिकल गाइड (2026)",
           "description": "qwen3-coder:30b लोकल इंफरेंस benchmark के लिए व्यावहारिक गाइड, जिसमें अपेक्षित throughput, local limits और cloud fallback सीमाएँ शामिल हैं।",
           "cta_line": "कोडिंग-भारी tasks के लिए qwen3-coder:30b चुनें और peak load के लिए cloud fallback threshold पहले तय करें।"
         },
@@ -522,7 +522,7 @@
           "cta_line": "تحقق من صحة VRAM أولاً، ثم حدد سياسة احتياطية سحابية للسياق الطويل أو جلسات الذروة."
         },
         "hi": {
-          "title": "Qwen3.5 35B VRAM Requirements: Practical Guide (2026)",
+          "title": "Qwen3.5 35B VRAM आवश्यकताएँ: प्रैक्टिकल गाइड (2026)",
           "description": "स्थानीय व्यवहार्यता सीमाओं, स्थिरता जोखिमों और क्लाउड फ़ॉलबैक ट्रिगर्स के साथ qwen3.5 35b VRAM आवश्यकताओं के लिए एक व्यावहारिक मार्गदर्शिका।",
           "cta_line": "पहले VRAM हेडरूम को सत्यापित करें, फिर लंबे-संदर्भ या चरम सत्रों के लिए क्लाउड फ़ॉलबैक नीति परिभाषित करें।"
         },
@@ -581,7 +581,7 @@
           "cta_line": "استخدم 3090 نتيجة تم قياسها كخط أساس وقارن خيارًا احتياطيًا واحدًا قبل القياس."
         },
         "hi": {
-          "title": "DeepSeek R1 14B on RTX 3090: Benchmark Practical Guide (2026)",
+          "title": "RTX 3090 पर DeepSeek R1 14B: बेंचमार्क प्रैक्टिकल गाइड (2026)",
           "description": "RTX 3090 पर डीपसीक आर1 14बी के लिए एक व्यावहारिक बेंचमार्क गाइड, जिसमें अपेक्षित थ्रूपुट, विलंबता ट्रेडऑफ़ और परिनियोजन सीमाएँ शामिल हैं।",
           "cta_line": "मापे गए 3090 परिणामों को अपनी आधार रेखा के रूप में उपयोग करें और स्केलिंग से पहले एक फ़ॉलबैक विकल्प की तुलना करें।"
         },
@@ -699,7 +699,7 @@
           "cta_line": "استخدم أحدث دلتا معيارية لتحديد ما إذا كان الضبط أو تبديل النموذج أو انفجار السحابة هو الخطوة التالية الصحيحة."
         },
         "hi": {
-          "title": "Qwen2.5:14B Local Inference Benchmark Update: Practical Guide (2026)",
+          "title": "Qwen2.5:14B लोकल इन्फरेंस बेंचमार्क अपडेट: प्रैक्टिकल गाइड (2026)",
           "description": "ताज़ा थ्रूपुट संदर्भ, स्थिरता जांच और परिनियोजन मार्गदर्शन के साथ qwen2.5:14b स्थानीय अनुमान के लिए एक व्यावहारिक बेंचमार्क अपडेट।",
           "cta_line": "यह तय करने के लिए नवीनतम बेंचमार्क डेल्टा का उपयोग करें कि ट्यूनिंग, मॉडल स्वैप, या क्लाउड बर्स्ट सही अगला कदम है या नहीं।"
         },
@@ -758,7 +758,7 @@
           "cta_line": "استخدم الأدلة المعيارية المحدثة للاختيار بين الضبط الفوري، أو تغيير طبقة النموذج، أو الاندفاع السحابي المؤقت."
         },
         "hi": {
-          "title": "Ministral-3:14B Local Inference Benchmark Update: Practical Guide (2026)",
+          "title": "Ministral-3:14B लोकल इन्फरेंस बेंचमार्क अपडेट: प्रैक्टिकल गाइड (2026)",
           "description": "मिनिस्ट्रल-3:14बी स्थानीय अनुमान के लिए एक व्यावहारिक बेंचमार्क अपडेट, जिसमें ताजा प्रदर्शन संकेत, स्थिरता सीमाएं और रोलआउट क्रियाएं शामिल हैं।",
           "cta_line": "त्वरित ट्यूनिंग, मॉडल टियर शिफ्ट, या अस्थायी क्लाउड बर्स्ट के बीच चयन करने के लिए ताज़ा बेंचमार्क साक्ष्य का उपयोग करें।"
         },
@@ -817,7 +817,7 @@
           "cta_line": "تعامل مع 3090 كخط أساس محلي عالي القيمة، ثم حدد الاحتياطي السحابي لجلسات الذروة ذات السياق الطويل."
         },
         "hi": {
-          "title": "DeepSeek-R1 on RTX 3090: What Actually Works",
+          "title": "RTX 3090 पर DeepSeek-R1: वास्तव में क्या काम करता है",
           "description": "RTX 3090 पर DeepSeek-आर1 वर्ग मॉडल के लिए व्यावहारिक अपेक्षाएं, जिसमें फिट सीमाएं, स्थिरता जोखिम और निरंतर चलने वाली जांच शामिल हैं।",
           "cta_line": "3090 को उच्च-मूल्य वाली स्थानीय आधार रेखा के रूप में मानें, फिर लंबे-संदर्भ शिखर सत्रों के लिए क्लाउड फ़ॉलबैक को परिभाषित करें।"
         },
@@ -876,7 +876,7 @@
           "cta_line": "اختر حسب الاستخدام الشهري وكثافة الذروة، وليس من خلال لقطات شاشة معيارية واحدة."
         },
         "hi": {
-          "title": "Qwen3.5 122B Cloud vs Local Cost: Practical Guide (2026)",
+          "title": "Qwen3.5 122B क्लाउड बनाम लोकल लागत: प्रैक्टिकल गाइड (2026)",
           "description": "वास्तविक उपयोग प्रोफाइल के तहत क्लाउड रेंटल और स्थानीय स्वामित्व की तुलना करते हुए qwen3.5 122b के लिए एक व्यावहारिक लागत ढांचा।",
           "cta_line": "मासिक उपयोग और चरम तीव्रता के आधार पर चुनें, एकल बेंचमार्क स्क्रीनशॉट के आधार पर नहीं।"
         },
@@ -895,18 +895,18 @@
       },
       "locales": {
         "es": {
-          "title": "Pérdida de calidad del cuarto trimestre frente al octavo trimestre en Ollama: guía práctica de decisiones",
-          "description": "Una guía práctica sobre cuándo la pérdida de calidad del cuarto trimestre es aceptable y cuándo vale la pena el VRAM adicional del Q8 en Ollama cargas de trabajo.",
+          "title": "Pérdida de calidad Q4 vs Q8 en Ollama: guía práctica de decisión",
+          "description": "Una guía práctica sobre cuándo la pérdida de calidad de Q4 es aceptable y cuándo Q8 justifica la VRAM adicional en cargas de trabajo de Ollama.",
           "cta_line": "El valor predeterminado es Q4 para ajuste y velocidad, luego ejecute comprobaciones ciegas antes de pasar a producción."
         },
         "pt": {
-          "title": "Perda de qualidade do 4º trimestre vs 8º trimestre em Ollama: Guia prático de decisão",
-          "description": "Um guia prático sobre quando a perda de qualidade do 4º trimestre é aceitável e quando o 8º trimestre vale o VRAM extra em Ollama cargas de trabalho.",
+          "title": "Perda de qualidade Q4 vs Q8 em Ollama: Guia prático de decisão",
+          "description": "Um guia prático sobre quando a perda de qualidade de Q4 é aceitável e quando Q8 vale a VRAM extra em cargas de trabalho do Ollama.",
           "cta_line": "O padrão é Q4 para ajuste e velocidade e, em seguida, execute verificações cegas antes de promover para produção."
         },
         "fr": {
           "title": "Perte de qualité Q4 vs Q8 en Ollama : Guide de décision pratique",
-          "description": "Un guide pratique indiquant quand la perte de qualité au quatrième trimestre est acceptable et quand le quatrième trimestre vaut le VRAM supplémentaire dans les charges de travail Ollama.",
+          "description": "Un guide pratique indiquant quand la perte de qualité de Q4 est acceptable et quand Q8 vaut la VRAM supplémentaire pour les charges de travail Ollama.",
           "cta_line": "Par défaut, Q4 pour l'ajustement et la vitesse, puis effectuez des vérifications aveugles avant de passer en production."
         },
         "de": {
@@ -915,13 +915,13 @@
           "cta_line": "Gehen Sie für Eignung und Geschwindigkeit standardmäßig auf Q4 und führen Sie dann blinde Eingabeaufforderungsprüfungen durch, bevor Sie zur Produktion übergehen."
         },
         "ru": {
-          "title": "Потеря качества в четвертом квартале и восьмом квартале в Ollama: практическое руководство по принятию решений",
-          "description": "Практическое руководство о том, когда потеря качества в четвертом квартале допустима, а в каких случаях Q8 стоит дополнительных VRAM в рабочих нагрузках Ollama.",
+          "title": "Потеря качества Q4 vs Q8 в Ollama: практическое руководство по принятию решений",
+          "description": "Практическое руководство о том, когда потеря качества Q4 допустима, а в каких случаях Q8 стоит дополнительной VRAM в рабочих нагрузках Ollama.",
           "cta_line": "По умолчанию используется Q4 для соответствия и скорости, затем перед запуском в производство выполните слепую проверку подсказок."
         },
         "ja": {
-          "title": "Ollama における第 4 四半期と第 8 四半期の品質低下: 実践的な意思決定ガイド",
-          "description": "第 4 四半期の品質低下が許容される時期と、第 8 四半期に Ollama ワークロードの VRAM を追加する価値がある場合についての実践的なガイド。",
+          "title": "Ollama における Q4 と Q8 の品質低下: 実践的な意思決定ガイド",
+          "description": "Q4 の品質低下が許容できる場面と、Ollama ワークロードで Q8 が追加 VRAM に見合う場面を判断するための実践ガイド。",
           "cta_line": "適合性と速度をデフォルトで Q4 に設定し、本番環境に昇格する前にブラインド プロンプト チェックを実行します。"
         },
         "ko": {
@@ -931,12 +931,12 @@
         },
         "ar": {
           "title": "Q4 مقابل Q8 فقدان الجودة في Ollama: دليل القرار العملي",
-          "description": "دليل عملي لمعرفة متى يكون فقدان الجودة في الربع الرابع مقبولًا ومتى يستحق الربع الثامن VRAM الإضافي في أعباء العمل Ollama.",
+          "description": "دليل عملي يوضح متى يكون فقدان الجودة في Q4 مقبولًا ومتى يكون Q8 مستحقًا لـ VRAM إضافية في أعباء عمل Ollama.",
           "cta_line": "افتراضيًا على Q4 من أجل الملاءمة والسرعة، ثم قم بإجراء فحوصات سريعة عمياء قبل الترقية إلى الإنتاج."
         },
         "hi": {
           "title": "Ollama में Q4 बनाम Q8 गुणवत्ता हानि: व्यावहारिक निर्णय मार्गदर्शिका",
-          "description": "कब Q4 गुणवत्ता हानि स्वीकार्य है और कब Q8 ##0# कार्यभार में अतिरिक्त VRAM के लायक है, इसके लिए एक व्यावहारिक मार्गदर्शिका।",
+          "description": "यह एक व्यावहारिक मार्गदर्शिका है कि कब Q4 की गुणवत्ता हानि स्वीकार्य है और कब Ollama वर्कलोड में Q8 अतिरिक्त VRAM के लायक होता है।",
           "cta_line": "फिट और गति के लिए Q4 को डिफ़ॉल्ट करें, फिर उत्पादन को बढ़ावा देने से पहले अंधाधुंध जांच करें।"
         },
         "id": {
@@ -994,7 +994,7 @@
           "cta_line": "تعامل مع التوافق كأهداف تشغيل تم التحقق منها، وليس ادعاءات نظرية من بطاقات النماذج."
         },
         "hi": {
-          "title": "24GB VRAM Models That Actually Run in Ollama",
+          "title": "Ollama में वास्तव में चलने वाले 24GB VRAM मॉडल",
           "description": "मॉडलों की एक व्यावहारिक शॉर्टलिस्ट जो वास्तव में यथार्थवादी फिट अपेक्षाओं और स्थिरता विचारों के साथ 24GB VRAM पर चलती है।",
           "cta_line": "अनुकूलता को सत्यापित रन लक्ष्य के रूप में मानें, न कि मॉडल कार्ड के सैद्धांतिक दावों के रूप में।"
         },
@@ -1053,7 +1053,7 @@
           "cta_line": "قم بإعطاء الأولوية لجودة الاسترجاع ونظام التقطيع قبل الترقية إلى مستويات النموذج الأثقل."
         },
         "hi": {
-          "title": "Best Local RAG Models Under 24GB VRAM: Practical Guide (2026)",
+          "title": "24GB VRAM के भीतर सर्वश्रेष्ठ लोकल RAG मॉडल: प्रैक्टिकल गाइड (2026)",
           "description": "24 जीबी VRAM के तहत स्थानीय आरएजी मॉडल का चयन करने के लिए एक व्यावहारिक मार्गदर्शिका, पुनर्प्राप्ति गुणवत्ता, विलंबता स्थिरता और फिट सीमाओं पर केंद्रित है।",
           "cta_line": "भारी मॉडल स्तरों में अपग्रेड करने से पहले पुनर्प्राप्ति गुणवत्ता और चंकिंग अनुशासन को प्राथमिकता दें।"
         },
@@ -1107,12 +1107,12 @@
           "cta_line": "효율적인 일일 모델을 위해 16GB를 사용하고 필요할 때 더 큰 컨텍스트 워크로드를 클라우드 버스트로 라우팅하세요."
         },
         "ar": {
-          "title": "أفضل رقم محلي LLM لسعة 16 جيجابايت VRAM: الدليل العملي (2026)",
+          "title": "أفضل نموذج LLM محلي لذاكرة VRAM بسعة 16 جيجابايت: الدليل العملي (2026)",
           "description": "دليل عملي لاختيار الطراز بسعة 16 جيجابايت VRAM مع حدود ملائمة، والمفاضلات المتوقعة، ومشغلات التراجع السحابي.",
           "cta_line": "استخدم 16 جيجابايت للنماذج اليومية الفعالة وقم بتوجيه أحمال عمل السياق الأكبر إلى السحابة عند الحاجة."
         },
         "hi": {
-          "title": "Best Local LLM for 16GB VRAM: Practical Guide (2026)",
+          "title": "16GB VRAM के लिए सर्वश्रेष्ठ लोकल LLM: प्रैक्टिकल गाइड (2026)",
           "description": "फिट सीमाओं, अपेक्षित ट्रेडऑफ़ और क्लाउड फ़ॉलबैक ट्रिगर्स के साथ एक व्यावहारिक 16GB VRAM मॉडल-चयन मार्गदर्शिका।",
           "cta_line": "कुशल दैनिक मॉडल के लिए 16GB का उपयोग करें और आवश्यकता पड़ने पर बड़े संदर्भ वर्कलोड को क्लाउड बर्स्ट पर रूट करें।"
         },
@@ -1137,7 +1137,7 @@
         },
         "pt": {
           "title": "Llama 4 Viabilidade de Inferência Local: Guia Prático (2026)",
-          "description": "Um guia prático de viabilidade para inferência local do lhama 4, incluindo limites de hardware, verificações de risco e planejamento alternativo.",
+          "description": "Um guia prático de viabilidade para inferência local do llama 4, incluindo limites de hardware, verificações de risco e planejamento alternativo.",
           "cta_line": "Execute um portão de viabilidade com avisos reais antes de comprometer o orçamento de hardware."
         },
         "fr": {
@@ -1171,7 +1171,7 @@
           "cta_line": "قم بتشغيل بوابة جدوى بمطالبات حقيقية قبل الالتزام بميزانية الأجهزة."
         },
         "hi": {
-          "title": "Llama 4 Local Inference Feasibility: Practical Guide (2026)",
+          "title": "Llama 4 लोकल इन्फरेंस व्यवहार्यता: प्रैक्टिकल गाइड (2026)",
           "description": "हार्डवेयर सीमाओं, जोखिम जांच और फ़ॉलबैक योजना सहित लामा 4 स्थानीय अनुमान के लिए एक व्यावहारिक व्यवहार्यता मार्गदर्शिका।",
           "cta_line": "हार्डवेयर बजट निर्धारित करने से पहले वास्तविक संकेतों के साथ व्यवहार्यता गेट चलाएँ।"
         },
@@ -1230,7 +1230,7 @@
           "cta_line": "ابدأ بالإعدادات الافتراضية المحلية المستقرة وأضف احتياطيًا سحابيًا لأحمال عمل الترميز القصوى فقط."
         },
         "hi": {
-          "title": "Qwen2.5 Coder 32B Self-Host Guide: Practical Guide (2026)",
+          "title": "Qwen2.5 Coder 32B सेल्फ-होस्ट गाइड: प्रैक्टिकल गाइड (2026)",
           "description": "qwen2.5 कोडर 32बी के लिए एक व्यावहारिक सेल्फ-होस्ट गाइड, जो हार्डवेयर फिट, स्थिरता जांच और उत्पादन रेलिंग को कवर करता है।",
           "cta_line": "स्थिर स्थानीय डिफ़ॉल्ट के साथ प्रारंभ करें और केवल चरम कोडिंग कार्यभार के लिए क्लाउड फ़ॉलबैक जोड़ें।"
         },
@@ -1289,7 +1289,7 @@
           "cta_line": "قياس سلوك قائمة الانتظار ووقت الاستجابة قبل إضافة العقد؛ يتم القياس فقط بعد استقرار خط الأساس للعقدة الواحدة."
         },
         "hi": {
-          "title": "Ollama Local Cluster Network: Practical Topology Checklist",
+          "title": "Ollama लोकल क्लस्टर नेटवर्क: प्रैक्टिकल टोपोलॉजी चेकलिस्ट",
           "description": "स्थानीय मल्टी-नोड Ollama नेटवर्क टोपोलॉजी, विलंबता स्थिरता और निरंतर थ्रूपुट स्थिरता को मान्य करने के लिए एक व्यावहारिक चेकलिस्ट।",
           "cta_line": "नोड्स जोड़ने से पहले कतार और विलंबता व्यवहार को मापें; सिंगल-नोड बेसलाइन स्थिर होने के बाद ही स्केल करें।"
         },
@@ -1309,17 +1309,17 @@
       "locales": {
         "es": {
           "title": "Calidad Q4 vs Q8 en Ollama: Guía práctica (2026)",
-          "description": "Una guía de decisiones práctica para las compensaciones de calidad del cuarto trimestre frente al octavo trimestre en Ollama, centrada en el comportamiento rápido real y el riesgo de implementación.",
+          "description": "Una guía práctica de decisión sobre las compensaciones de calidad entre Q4 y Q8 en Ollama, centrada en el comportamiento real de los prompts y el riesgo de despliegue.",
           "cta_line": "Ejecute pruebas ciegas en sus indicaciones de producción antes de bloquear los valores predeterminados de cuantificación."
         },
         "pt": {
           "title": "Qualidade Q4 vs Q8 em Ollama: Guia Prático (2026)",
-          "description": "Um guia prático de decisão para compensações de qualidade entre o 4º e o 8º trimestre em Ollama, focado no comportamento imediato real e no risco de implantação.",
+          "description": "Um guia prático de decisão sobre os trade-offs de qualidade entre Q4 e Q8 no Ollama, focado no comportamento real dos prompts e no risco de implantação.",
           "cta_line": "Execute testes cegos em seus prompts de produção antes de bloquear os padrões de quantização."
         },
         "fr": {
           "title": "Qualité Q4 vs Q8 dans Ollama : Guide Pratique (2026)",
-          "description": "Un guide de décision pratique pour les compromis de qualité entre le quatrième et le huitième trimestre en Ollama, axé sur le comportement rapide réel et le risque de déploiement.",
+          "description": "Un guide pratique de décision sur les compromis de qualité entre Q4 et Q8 dans Ollama, axé sur le comportement réel des prompts et le risque de déploiement.",
           "cta_line": "Faites des tests aveugles sur vos prompts de production avant de figer la quantification."
         },
         "de": {
@@ -1333,8 +1333,8 @@
           "cta_line": "Запустите слепое тестирование ваших производственных подсказок, прежде чем блокировать настройки квантования по умолчанию."
         },
         "ja": {
-          "title": "Ollama における第 4 四半期と第 8 四半期の品質: 実践ガイド (2026)",
-          "description": "Ollama における第 4 四半期と第 8 四半期の品質トレードオフに関する実践的な意思決定ガイド。実際の迅速な動作と導入リスクに焦点を当てています。",
+          "title": "Ollama における Q4 と Q8 の品質: 実践ガイド (2026)",
+          "description": "Ollama における Q4 と Q8 の品質トレードオフに関する実践的な意思決定ガイド。実際のプロンプト挙動と導入リスクに焦点を当てています。",
           "cta_line": "量子化のデフォルトをロックする前に、本番プロンプトでブラインド テストを実行します。"
         },
         "ko": {
@@ -1344,11 +1344,11 @@
         },
         "ar": {
           "title": "جودة Q4 مقابل Q8 في Ollama: الدليل العملي (2026)",
-          "description": "دليل عملي للقرارات المتعلقة بمقايضات الجودة بين الربع الرابع والربع الثامن في Ollama، يركز على السلوك الفوري الحقيقي ومخاطر النشر.",
+          "description": "دليل عملي لاتخاذ القرار بشأن مفاضلات الجودة بين Q4 وQ8 في Ollama، مع التركيز على سلوك المطالبات الفعلي ومخاطر النشر.",
           "cta_line": "قم بإجراء اختبارات عمياء على مطالبات الإنتاج الخاصة بك قبل قفل الإعدادات الافتراضية للتكميم."
         },
         "hi": {
-          "title": "Q4 vs Q8 Quality in Ollama: Practical Guide (2026)",
+          "title": "Ollama में Q4 बनाम Q8 गुणवत्ता: प्रैक्टिकल गाइड (2026)",
           "description": "Ollama में Q4 बनाम Q8 गुणवत्ता ट्रेडऑफ़ के लिए एक व्यावहारिक निर्णय मार्गदर्शिका, वास्तविक त्वरित व्यवहार और तैनाती जोखिम पर केंद्रित है।",
           "cta_line": "परिमाणीकरण डिफ़ॉल्ट को लॉक करने से पहले अपने उत्पादन संकेतों पर अंधा परीक्षण चलाएँ।"
         },
@@ -1407,7 +1407,7 @@
           "cta_line": "قم بتقليل ضغط التكميم والسياق والطبقات GPU بالتسلسل قبل تغيير الأجهزة."
         },
         "hi": {
-          "title": "Fix Ollama CUDA Out of Memory in 5 Minutes",
+          "title": "5 मिनट में Ollama का CUDA Out of Memory ठीक करें",
           "description": "स्थिर पुनः प्रयास क्रम के साथ सामान्य Ollama CUDA OOM विफलताओं के लिए एक टर्मिनल-प्रथम त्वरित-ठीक पथ।",
           "cta_line": "हार्डवेयर बदलने से पहले परिमाणीकरण दबाव, संदर्भ और GPU परतों को क्रम से कम करें।"
         },
@@ -1466,7 +1466,7 @@
           "cta_line": "قم بتثبيت قوالب الاسترجاع والاستجابة قبل التوسع في مستويات النموذج الأكبر."
         },
         "hi": {
-          "title": "Local LLM Customer Support RAG Stack: Practical Guide (2026)",
+          "title": "लोकल LLM कस्टमर सपोर्ट RAG स्टैक: प्रैक्टिकल गाइड (2026)",
           "description": "विलंबता, गुणवत्ता और लागत रेलिंग के साथ स्थानीय ग्राहक-सहायता आरएजी स्टैक बनाने के लिए एक व्यावहारिक मार्गदर्शिका।",
           "cta_line": "बड़े मॉडल स्तरों पर स्केल करने से पहले पुनर्प्राप्ति और प्रतिक्रिया टेम्पलेट्स को स्थिर करें।"
         },
@@ -1525,7 +1525,7 @@
           "cta_line": "إعطاء الأولوية للاستقرار الذي تم التحقق منه لكل دولار، وليس فقط عناوين الذروة القياسية."
         },
         "hi": {
-          "title": "Still the VRAM King: Why We Recommend the RTX 3090 for 2026",
+          "title": "अब भी VRAM का किंग: 2026 के लिए हम RTX 3090 क्यों सुझाते हैं",
           "description": "2026 में 70बी-श्रेणी के स्थानीय कार्यभार के लिए RTX 3090 सबसे व्यावहारिक 24जीबी गेटवे क्यों बना हुआ है।",
           "cta_line": "प्रति डॉलर सत्यापित स्थिरता को प्राथमिकता दें, न कि केवल शीर्ष बेंचमार्क सुर्खियों को।"
         },
@@ -1584,7 +1584,7 @@
           "cta_line": "استخدم دلتا أسبوعية لتحديث صفحات القرار قبل نشر تحديثات المحتوى واسعة النطاق."
         },
         "hi": {
-          "title": "Weekly Verified Models: 2026-02-24 Snapshot",
+          "title": "साप्ताहिक सत्यापित मॉडल: 2026-02-24 स्नैपशॉट",
           "description": "सत्यापित मॉडल रन का एक साप्ताहिक स्नैपशॉट और स्थानीय मॉडल फिट में निर्णय-प्रासंगिक परिवर्तन।",
           "cta_line": "व्यापक सामग्री अपडेट प्रकाशित करने से पहले निर्णय पृष्ठों को ताज़ा करने के लिए साप्ताहिक डेल्टा का उपयोग करें।"
         },
@@ -1597,49 +1597,49 @@
     },
     "apple-silicon-vs-rtx3090-local-llm": {
       "en": {
-        "title": "Apple Silicon Vs Rtx 3090 Local Llm: Practical Guide (2026)",
-        "description": "Users searching for \\\"apple silicon vs rtx 3090 local llm\\\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expans",
+        "title": "Apple Silicon vs RTX 3090 Local LLM: Practical Guide (2026)",
+        "description": "Users searching for \"apple silicon vs rtx 3090 local llm\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.",
         "cta_line": "Use measured local benchmarks to decide between Apple Silicon and RTX 3090, then define cloud fallback thresholds for peak load."
       },
       "locales": {
         "es": {
-          "title": "Apple Silicon Vs Rtx 3090 Local Llm: Guía práctica (2026)",
-          "description": "Los usuarios que buscan \\\"apple silicio vs rtx 3090 local llm\\\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y ampliación de hechos.",
+          "title": "Apple Silicon vs RTX 3090 Local LLM: Guía práctica (2026)",
+          "description": "Los usuarios que buscan \"apple silicio vs rtx 3090 local llm\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y ampliación de hechos.",
           "cta_line": "Utilice puntos de referencia locales medidos para decidir entre Apple Silicon y RTX 3090, luego defina los umbrales de respaldo de la nube para la carga máxima."
         },
         "pt": {
-          "title": "Apple Silicon Vs Rtx 3090 Local Llm: Guia Prático (2026)",
+          "title": "Apple Silicon vs RTX 3090 Local LLM: Guia Prático (2026)",
           "description": "Os usuários que pesquisam “apple silício vs rtx 3090 local llm” geralmente estão decidindo se desejam executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e expansão factual",
           "cta_line": "Use benchmarks locais medidos para decidir entre Apple Silicon e RTX 3090 e, em seguida, defina limites de fallback na nuvem para pico de carga."
         },
         "fr": {
-          "title": "Apple Silicon Vs Rtx 3090 Local Llm : Guide pratique (2026)",
+          "title": "Apple Silicon vs RTX 3090 Local LLM : Guide pratique (2026)",
           "description": "Les utilisateurs recherchant « Apple Silicon vs RTX 3090 Local LLM » décident généralement s'ils souhaitent exécuter localement ou migrer vers le cloud. Ce brouillon est généré pour la révision par l'éditeur et les développements factuels",
           "cta_line": "Utilisez des références locales mesurées pour choisir entre Apple Silicon et RTX 3090, puis définissez des seuils de repli dans le cloud pour les pics de charge."
         },
         "de": {
-          "title": "Apple Silicon Vs Rtx 3090 Local Llm: Praktischer Leitfaden (2026)",
+          "title": "Apple Silicon vs RTX 3090 Local LLM: Praktischer Leitfaden (2026)",
           "description": "Benutzer, die nach „Apple Silicon vs. RTX 3090 Local LLM“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud wechseln möchten. Dieser Entwurf wird zur redaktionellen Überprüfung und sachlichen Erläuterung erstellt",
           "cta_line": "Verwenden Sie gemessene lokale Benchmarks, um zwischen Apple Silicon und RTX 3090 zu entscheiden, und definieren Sie dann Cloud-Fallback-Schwellenwerte für Spitzenlast."
         },
         "ru": {
-          "title": "Apple Silicon против Rtx 3090 Local Llm: Практическое руководство (2026 г.)",
+          "title": "Apple Silicon против RTX 3090 Local LLM: Практическое руководство (2026 г.)",
           "description": "Пользователи, которые ищут «apple Silicon vs rtx 3090 local llm», обычно решают, запускать ли их локально или перейти в облако. Этот черновик создан для проверки редактором и расширения фактов.",
           "cta_line": "Используйте измеренные локальные тесты, чтобы выбрать между Apple Silicon и RTX 3090, а затем определите пороговые значения перехода в облако для пиковой нагрузки."
         },
         "ja": {
-          "title": "Apple Silicon vs Rtx 3090 Local Llm: 実践ガイド (2026)",
+          "title": "Apple Silicon vs RTX 3090 Local LLM: 実践ガイド (2026)",
           "description": "「Apple Silicon vs rtx 3090 local llm」を検索しているユーザーは通常、ローカルで実行するかクラウドに移行するかを決めています。この草稿は編集者のレビューと事実の展開のために作成されています",
           "cta_line": "測定されたローカル ベンチマークを使用して Apple Silicon と RTX 3090 のどちらを選択するかを決定し、ピーク負荷に対するクラウド フォールバックしきい値を定義します。"
         },
         "ko": {
-          "title": "Apple Silicon 대 Rtx 3090 로컬 Llm: 실용 가이드(2026)",
-          "description": "\\\"apple Silicon vs rtx 3090 local llm\\\"을 검색하는 사용자는 일반적으로 로컬로 실행할지 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실 설명을 위해 생성되었습니다.",
+          "title": "Apple Silicon 대 RTX 3090 로컬 LLM: 실용 가이드(2026)",
+          "description": "\"apple Silicon vs rtx 3090 local llm\"을 검색하는 사용자는 일반적으로 로컬로 실행할지 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실 설명을 위해 생성되었습니다.",
           "cta_line": "측정된 로컬 벤치마크를 사용하여 Apple Silicon과 RTX 3090 중에서 결정한 다음, 최대 로드에 대한 클라우드 대체 임계값을 정의합니다."
         },
         "ar": {
-          "title": "Apple Silicon Vs Rtx 3090 Local Llm: الدليل العملي (2026)",
-          "description": "عادةً ما يقرر المستخدمون الذين يبحثون عن \\\"apple silicon vs rtx 3090 local llm\\\" ما إذا كانوا يريدون التشغيل محليًا أو الانتقال إلى السحابة. تم إنشاء هذه المسودة لمراجعة المحرر والتوسعات الواقعية",
+          "title": "Apple Silicon vs RTX 3090 Local LLM: الدليل العملي (2026)",
+          "description": "عادةً ما يقرر المستخدمون الذين يبحثون عن \"apple silicon vs rtx 3090 local llm\" ما إذا كانوا يريدون التشغيل محليًا أو الانتقال إلى السحابة. تم إنشاء هذه المسودة لمراجعة المحرر والتوسعات الواقعية",
           "cta_line": "استخدم المعايير المحلية المُقاسة للاختيار بين Apple Silicon وRTX 3090، ثم حدد الحدود الاحتياطية السحابية لذروة الحمل."
         },
         "hi": {
@@ -1648,8 +1648,8 @@
           "cta_line": "Apple सिलिकॉन और RTX 3090 के बीच निर्णय लेने के लिए मापे गए स्थानीय बेंचमार्क का उपयोग करें, फिर पीक लोड के लिए क्लाउड फ़ॉलबैक थ्रेशोल्ड को परिभाषित करें।"
         },
         "id": {
-          "title": "Apple Silicon Vs Rtx 3090 Local Llm: Panduan Praktis (2026)",
-          "description": "Pengguna yang menelusuri \\\"apel silikon vs rtx 3090 lokal llm\\\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual",
+          "title": "Apple Silicon vs RTX 3090 Local LLM: Panduan Praktis (2026)",
+          "description": "Pengguna yang menelusuri \"apel silikon vs rtx 3090 lokal llm\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual",
           "cta_line": "Gunakan tolok ukur lokal terukur untuk memutuskan antara Apple Silicon dan RTX 3090, lalu tentukan ambang batas cloud fallback untuk beban puncak."
         }
       }
@@ -1657,13 +1657,13 @@
     "qwen3-coder-30b-local-coding-stack": {
       "en": {
         "title": "Qwen3 Coder 30B Local Coding Setup: Practical Guide (2026)",
-        "description": "Users searching for \\\"qwen3 coder 30b local coding setup\\\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansi",
+        "description": "Users searching for \"qwen3 coder 30b local coding setup\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.",
         "cta_line": "Start with a local qwen3-coder:30b coding setup, then define explicit cloud fallback thresholds for peak workloads."
       },
       "locales": {
         "es": {
           "title": "Configuración de codificación local Qwen3 Coder 30B: Guía práctica (2026)",
-          "description": "Los usuarios que buscan \\\"configuración de codificación local qwen3 coder 30b\\\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual.",
+          "description": "Los usuarios que buscan \"configuración de codificación local qwen3 coder 30b\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual.",
           "cta_line": "Comience con una configuración de codificación qwen3-coder:30b local y luego defina umbrales de respaldo explícitos en la nube para cargas de trabajo máximas."
         },
         "pt": {
@@ -1693,12 +1693,12 @@
         },
         "ko": {
           "title": "Qwen3 Coder 30B 로컬 코딩 설정: 실용 가이드(2026)",
-          "description": "\\\"qwen3 coder 30b local Coding setup\\\"을 검색하는 사용자는 일반적으로 로컬로 실행할지 아니면 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실적 확장을 위해 생성되었습니다.",
+          "description": "\"qwen3 coder 30b local Coding setup\"을 검색하는 사용자는 일반적으로 로컬로 실행할지 아니면 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실적 확장을 위해 생성되었습니다.",
           "cta_line": "로컬 qwen3-coder:30b 코딩 설정으로 시작한 다음 최대 워크로드에 대한 명시적인 클라우드 대체 임계값을 정의합니다."
         },
         "ar": {
           "title": "إعداد الترميز المحلي Qwen3 Coder 30B: الدليل العملي (2026)",
-          "description": "عادةً ما يقرر المستخدمون الذين يبحثون عن \\\"qwen3 coder 30b local coding setup\\\" ما إذا كانوا يريدون التشغيل محليًا أو الانتقال إلى السحابة. تم إنشاء هذه المسودة لمراجعة المحرر والتوسع في الحقائق",
+          "description": "عادةً ما يقرر المستخدمون الذين يبحثون عن \"qwen3 coder 30b local coding setup\" ما إذا كانوا يريدون التشغيل محليًا أو الانتقال إلى السحابة. تم إنشاء هذه المسودة لمراجعة المحرر والتوسع في الحقائق",
           "cta_line": "ابدأ بإعداد ترميز qwen3-coder:30b محلي، ثم حدد حدودًا احتياطية سحابية صريحة لأحمال العمل القصوى."
         },
         "hi": {
@@ -1708,7 +1708,7 @@
         },
         "id": {
           "title": "Pengaturan Pengkodean Lokal Qwen3 Coder 30B: Panduan Praktis (2026)",
-          "description": "Pengguna yang menelusuri \\\"penyiapan pengkodean lokal qwen3 coder 30b\\\" biasanya memutuskan apakah akan menjalankannya secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual",
+          "description": "Pengguna yang menelusuri \"penyiapan pengkodean lokal qwen3 coder 30b\" biasanya memutuskan apakah akan menjalankannya secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual",
           "cta_line": "Mulailah dengan penyiapan pengkodean qwen3-coder:30b lokal, lalu tentukan ambang batas fallback cloud yang eksplisit untuk beban kerja puncak."
         }
       }

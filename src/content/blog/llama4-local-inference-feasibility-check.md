@@ -1,6 +1,6 @@
 ---
 title: "Llama 4 Local Inference Feasibility: Practical Guide (2026)"
-description: "Users searching for \"llama 4 local inference feasibility\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expans"
+description: "Users searching for \"llama 4 local inference feasibility\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-03-03
 updatedDate: 2026-03-03
 tags: ["ollama", "llama", "inference", "feasibility", "llama4"]

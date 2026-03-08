@@ -1,6 +1,6 @@
 ---
 title: "Qwen3:8B Local Inference Benchmark: Practical Guide (2026)"
-description: "Users searching for \"qwen3:8b local inference benchmark\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansi"
+description: "Users searching for \"qwen3:8b local inference benchmark\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-02-27
 updatedDate: 2026-02-27
 tags: ["ollama", "qwen3", "8b", "inference", "benchmark"]

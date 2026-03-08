@@ -1,6 +1,6 @@
 ---
-title: "Qwen3.5 122B Cloud Vs Local Cost: Practical Guide (2026)"
-description: "Users searching for \"qwen3.5 122b cloud vs local cost\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion"
+title: "Qwen3.5 122B Cloud vs Local Cost: Practical Guide (2026)"
+description: "Users searching for \"qwen3.5 122b cloud vs local cost\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-02-28
 updatedDate: 2026-02-28
 tags: ["ollama", "qwen3", "122b", "cloud", "cost"]

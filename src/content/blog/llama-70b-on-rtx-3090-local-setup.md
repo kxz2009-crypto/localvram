@@ -1,6 +1,6 @@
 ---
-title: "Llama 70B On Rtx 3090 Local Setup: Practical Guide (2026)"
-description: "Users searching for \"llama 70b on rtx 3090 local setup\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansio"
+title: "Llama 70B on RTX 3090: Local Setup Practical Guide (2026)"
+description: "Users searching for \"llama 70b on rtx 3090 local setup\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-02-28
 updatedDate: 2026-02-28
 tags: ["ollama", "llama", "70b", "rtx", "3090"]

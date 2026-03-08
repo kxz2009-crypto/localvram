@@ -5,18 +5,18 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Los mejores modelos de trapos locales con menos de 24 Gb de Vram: guía práctica (2026)"
-descripción: "Los usuarios que buscan \"los mejores modelos de trap local con menos de 24 GB de vram\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y explicación factual".
-fecha de publicación: 2026-02-28
-actualizadoFecha: 2026-02-28
-etiquetas: ["ollama", "mejor", "trapo", "modelos", "debajo"]
-idioma: en
-intención: hardware
+título: 'Los mejores modelos RAG locales de menos de 24 GB VRAM: guía práctica (2026)'
+descripción: 'Una guía práctica para seleccionar modelos RAG locales de menos de 24 GB VRAM, centrada en la calidad de recuperación, la estabilidad de la latencia y los límites de ajuste.'
+fecha de publicación: '2026-02-28'
+actualizadoFecha: '2026-02-28'
+etiquetas: '["ollama", "mejor", "rag", "modelos", "debajo"]'
+idioma: 'es'
+intención: 'hardware'
 ---
 
 ## ¿Por qué este tema ahora?
 
-Los usuarios que buscan "los mejores modelos de trap locales con menos de 24 GB de vram" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y ampliación de los hechos.
+Los usuarios que buscan "los mejores modelos RAG locales con menos de 24 GB de VRAM" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y ampliación de los hechos.
 
 ## Ancla de referencia verificada
 

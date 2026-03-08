@@ -1,6 +1,6 @@
 ---
 title: "Qwen3-Coder:30B Local Inference Benchmark: Practical Guide (2026)"
-description: "Users searching for \"qwen3-coder:30b local inference benchmark\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual "
+description: "Users searching for \"qwen3-coder:30b local inference benchmark\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion."
 pubDate: 2026-02-27
 updatedDate: 2026-02-27
 tags: ["ollama", "qwen3", "coder", "30b", "inference"]

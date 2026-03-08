@@ -5,18 +5,18 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Pila de trapos de atención al cliente de Local Llm: guía práctica (2026)"
-descripción: "Los usuarios que buscan \"pila de soporte al cliente de llm local\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual"
+título: 'Pila RAG de atención al cliente local LLM: Guía práctica (2026)'
+descripción: 'Una guía práctica para crear una pila RAG de atención al cliente local con barreras de latencia, calidad y costos.'
 fecha de publicación: 2026-03-03
 actualizadoFecha: 2026-03-03
-etiquetas: ["ollama", "llm", "cliente", "soporte", "trapo"]
-idioma: en
+etiquetas: ["ollama", "llm", "cliente", "soporte", "rag"]
+idioma: es
 intención: guía
 ---
 
 ## ¿Por qué este tema ahora?
 
-Los usuarios que buscan "montaje de soporte al cliente local de llm" generalmente están decidiendo si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y ampliación de los hechos.
+Los usuarios que buscan "stack RAG de soporte al cliente local con LLM" generalmente están decidiendo si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y ampliación de los hechos.
 
 ## Ancla de referencia verificada
 

@@ -5,18 +5,18 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Tumpukan Rag Dukungan Pelanggan Llm Lokal: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"tumpukan kain dukungan pelanggan llm lokal\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual"
+title: 'Stack RAG Dukungan Pelanggan LLM Lokal: Panduan Praktis (2026)'
+deskripsi: 'Panduan praktis membangun stack RAG dukungan pelanggan lokal dengan guardrail latensi, kualitas, dan biaya.'
 tanggal terbit: 03-03-2026
 tanggal diperbarui: 03-03-2026
-tag: ["ollama", "llm", "pelanggan", "dukungan", "kain"]
-bahasa: en
+tag: ["ollama", "llm", "pelanggan", "dukungan", "rag"]
+bahasa: id
 maksud: panduan
 ---
 
 ## Mengapa topik ini sekarang
 
-Pengguna yang mencari "tumpukan kain dukungan pelanggan llm lokal" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual.
+Pengguna yang mencari "stack RAG dukungan pelanggan LLM lokal" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual.
 
 ## Jangkar benchmark terverifikasi
 
