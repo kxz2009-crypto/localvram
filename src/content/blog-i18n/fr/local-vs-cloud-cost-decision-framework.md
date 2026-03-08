@@ -4,14 +4,14 @@ target-locale: fr
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title : « Coût local par rapport au cloud pour Ollama : cadre de décision »
-description : "Quand rester local, quand passer au cloud et comment éviter de payer trop cher."
-Date de publication : 2026-02-24
-Date de mise à jour : 2026-02-24
-balises : ["coût", "roi", "cloud-gpu"]
-langue : fr
-intention : coût
+---
+title : 'Coût Local vs Cloud pour Ollama : Cadre de Décision'
+description : 'Cadre pratique pour décider quand rester en local, quand basculer en cloud et comment réduire la variance mensuelle des coûts.'
+Date de publication : '2026-02-24'
+Date de mise à jour : '2026-02-24'
+balises : '["coût", "roi", "cloud-gpu"]'
+langue : 'fr'
+intention : 'coût'
 ---
 
 Les décisions en matière de coûts échouent lorsque les utilisateurs comparent l’achat de matériel à la tarification horaire du cloud sans profil d’utilisation.

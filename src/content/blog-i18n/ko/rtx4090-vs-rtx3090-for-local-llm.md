@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "로컬 LLM(2026)의 RTX 4090 대 RTX 3090: 어느 것이 가치가 있나요?"
-Description: "처리량 예상, 비용 경계 및 클라우드 대체 규칙을 포함하여 로컬 LLM 워크로드의 RTX 4090 및 RTX 3090에 대한 실용적인 2026년 의사 결정 가이드입니다."
+title: 'RTX 4090 vs RTX 3090 (2026): 로컬 LLM에는 무엇이 더 합리적인가'
+Description: '로컬 LLM 워크로드에서 RTX 4090과 RTX 3090을 비교하는 2026 실전 가이드입니다. 처리량, 비용 경계, 클라우드 폴백 규칙을 포함합니다.'
 출판일: 2026-03-03
 업데이트 날짜: 2026-03-03
 태그: ["ollama", "rtx", "4090", "3090", "llm", "비용"]

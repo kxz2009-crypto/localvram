@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Atualização de benchmark de inferência local Ministral-3:14B: Guia prático (2026)"
-description: "Os usuários que procuram por \"ministral-3:14b atualização de benchmark de inferência local\" geralmente estão decidindo se devem executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e f"
+título: 'Atualização do benchmark de inferência local Ministral-3:14B: Guia prático (2026)'
+description: 'Uma atualização prática de benchmark para inferência local ministerial-3:14b, cobrindo novos sinais de desempenho, limites de estabilidade e ações de implementação.'
 data de publicação: 02/03/2026
 Data atualizada: 02/03/2026
 tags: ["ollama", "ministral", "14b", "inferência", "benchmark"]

@@ -4,13 +4,13 @@ target-locale: de
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-Titel: „24 GB VRAM Modelle, die tatsächlich in Ollama laufen“
-Beschreibung: „Eine praktische Modellauswahlliste für 24-GB-Karten mit realistischen Passformerwartungen.“
+---
+Titel: '24GB-VRAM-Modelle, die in Ollama wirklich laufen'
+Beschreibung: 'Eine praktische Auswahlliste von Modellen, die tatsächlich mit 24 GB VRAM laufen, mit realistischen Passformerwartungen und Stabilitätsaspekten.'
 Veröffentlichungsdatum: 24.02.2026
 Aktualisierungsdatum: 24.02.2026
 Tags: ["24gb-vram", "hardware", "ollama"]
-lang: en
+lang: de
 Absicht: Hardware
 ---
 

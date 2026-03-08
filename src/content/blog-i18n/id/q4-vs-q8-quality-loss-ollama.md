@@ -4,13 +4,13 @@ target-locale: id
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Q4 vs Q8 Penurunan Kualitas di Ollama: Panduan Keputusan Praktis"
-deskripsi: "Kapan Q4 kehilangan kualitas menjadi penting, dan kapan hal ini merupakan trade-off yang tepat untuk inferensi lokal?"
+---
+title: 'Kehilangan Kualitas Q4 vs Q8 di Ollama: Panduan Keputusan Praktis'
+deskripsi: 'Panduan praktis kapan penurunan kualitas Q4 masih dapat diterima dan kapan Q8 layak dengan VRAM tambahan.'
 tanggal terbit: 24-02-2026
 tanggal diperbarui: 24-02-2026
 tag: ["kuantisasi", "q4", "q8", "ollama"]
-bahasa: en
+bahasa: id
 maksud: panduan
 ---
 

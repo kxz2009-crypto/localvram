@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Pembaruan Tolok Ukur Inferensi Lokal Ministral-3:14B: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang mencari \"pembaruan tolok ukur inferensi lokal ministral-3:14b\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan f"
+title: 'Pembaruan Benchmark Inferensi Lokal Ministral-3:14B: Panduan Praktis (2026)'
+deskripsi: 'Pembaruan benchmark praktis untuk inferensi lokal ministral-3:14b, mencakup sinyal performa terbaru, batas stabilitas, dan aksi rollout.'
 tanggal terbit: 02-03-2026
 tanggal diperbarui: 02-03-2026
 tag: ["ollama", "ministral", "14b", "inferensi", "patokan"]
-bahasa: en
+bahasa: id
 maksud: tolok ukur
 ---
 

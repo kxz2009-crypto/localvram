@@ -5,11 +5,11 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Local Llm Customer Support Rag Stack: Guia Prático (2026)"
-description: "Os usuários que procuram por \"pilha de suporte ao cliente llm local\" geralmente estão decidindo se devem executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e expansão factual"
+título: 'Pilha RAG de suporte ao cliente local LLM: Guia prático (2026)'
+description: 'Um guia prático para construir uma pilha RAG de suporte ao cliente local com proteção de latência, qualidade e custos.'
 data de publicação: 03/03/2026
 Data atualizada: 03/03/2026
-tags: ["ollama", "llm", "cliente", "suporte", "pano"]
+tags: ["ollama", "llm", "cliente", "suporte", "rag"]
 idioma: pt
 intenção: guia
 ---

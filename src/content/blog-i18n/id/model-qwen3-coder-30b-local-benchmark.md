@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen3-Coder:30B Tolok Ukur Inferensi Lokal: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"qwen3-coder:30b tolok ukur inferensi lokal\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan faktual "
+title: 'Benchmark Inferensi Lokal Qwen3-Coder:30B: Panduan Praktis (2026)'
+deskripsi: 'Panduan praktis benchmark lokal untuk qwen3-coder:30b, berfokus pada throughput yang diharapkan, batas lokal, dan ambang fallback cloud.'
 tanggal terbit: 27-02-2026
 tanggal diperbarui: 27-02-2026
 tag: ["ollama", "qwen3", "coder", "30b", "inferensi"]
-bahasa: en
+bahasa: id
 maksud: tolok ukur
 ---
 

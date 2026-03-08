@@ -4,12 +4,12 @@ target-locale: ko
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "2026년 Ollama을 위한 최고의 지역 RAG 모델"
-Description: "로컬 하드웨어 제약 하에서 RAG 모델 선택."
+---
+title: '2026년 Ollama용 최고의 로컬 RAG 모델'
+Description: '2026년 로컬 RAG 모델 실전 추천 목록입니다. 검색 품질, 지연 안정성, 제한된 컨텍스트 성능을 중점으로 다룹니다.'
 출판일: 2026-02-24
 업데이트 날짜: 2026-02-24
-태그: ["걸레", "모델", "올라마"]
+태그: ["rag", "모델", "ollama"]
 언어: ko
 의도: 가이드
 ---

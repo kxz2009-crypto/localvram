@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Apple Silicon Vs Rtx 3090 Local Llm: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „Apple Silicon vs. RTX 3090 Local LLM“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud wechseln möchten. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erläuterung erstellt.“
-Veröffentlichungsdatum: 04.03.2026
-Aktualisiertes Datum: 04.03.2026
-Tags: ["ollama", "apple", "silicon", "rtx", "3090"]
-lang: en
-Absicht: Hardware
+Titel: 'Apple Silicon vs RTX 3090 Local LLM: Praktischer Leitfaden (2026)'
+Beschreibung: 'Benutzer, die nach „Apple Silicon vs. RTX 3090 Local LLM“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud wechseln möchten. Dieser Entwurf wird zur redaktionellen Überprüfung und sachlichen Erläuterung erstellt'
+Veröffentlichungsdatum: '04.03.2026'
+Aktualisiertes Datum: '04.03.2026'
+Tags: '["ollama", "apple", "silicon", "rtx", "3090"]'
+lang: 'de'
+Absicht: 'Hardware'
 ---
 
 ## Warum gerade jetzt dieses Thema

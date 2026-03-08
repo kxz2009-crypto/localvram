@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "RTX 4090 vs RTX 3090 para LLM local (2026): qual vale a pena?"
-description: "Um guia prático de decisão para 2026 para RTX 4090 vs RTX 3090 em cargas de trabalho locais de LLM, incluindo expectativas de rendimento, limites de custo e regras de fallback na nuvem."
+title: 'RTX 4090 vs RTX 3090 para LLM Local (2026): Qual Vale Mais a Pena?'
+description: 'Guia prático de 2026 para escolher entre RTX 4090 e RTX 3090 em workloads locais de LLM, com expectativa de throughput, limites de custo e fallback em nuvem.'
 data de publicação: 03/03/2026
 Data atualizada: 03/03/2026
 tags: ["ollama", "rtx", "4090", "3090", "llm", "custo"]

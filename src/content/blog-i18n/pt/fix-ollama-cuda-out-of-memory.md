@@ -4,9 +4,9 @@ target-locale: pt
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Corrigir Ollama CUDA Falta de memória em 5 minutos"
-description: "Caminho de correção rápida do primeiro terminal para a falha de tempo de execução Ollama mais comum."
+---
+title: 'Corrija CUDA Out of Memory no Ollama em 5 Minutos'
+description: 'Um caminho de correção rápida que prioriza o terminal para falhas Ollama CUDA OOM comuns com ordem de repetição estável.'
 data de publicação: 24/02/2026
 Data atualizada: 24/02/2026
 tags: ["erro-kb", "cuda", "oom"]

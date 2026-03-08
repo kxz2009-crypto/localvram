@@ -4,13 +4,13 @@ target-locale: id
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Model Terverifikasi Mingguan: Cuplikan 24-02-2026"
-deskripsi: "Apa yang diverifikasi minggu ini dan apa yang berubah dalam keputusan kesesuaian model lokal."
+---
+title: 'Model Terverifikasi Mingguan: Snapshot 2026-02-24'
+deskripsi: 'Snapshot mingguan run model terverifikasi dan perubahan yang relevan untuk keputusan fit lokal.'
 tanggal terbit: 24-02-2026
 tanggal diperbarui: 24-02-2026
 tag: ["mingguan", "terverifikasi", "tolok ukur"]
-bahasa: en
+bahasa: id
 maksud: tolok ukur
 ---
 

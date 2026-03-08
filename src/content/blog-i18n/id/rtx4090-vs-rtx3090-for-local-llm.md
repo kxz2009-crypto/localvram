@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "RTX 4090 vs RTX 3090 untuk LLM Lokal (2026): Mana yang Layak?"
-deskripsi: "Panduan keputusan praktis tahun 2026 untuk RTX 4090 vs RTX 3090 dalam beban kerja LLM lokal, termasuk ekspektasi throughput, batasan biaya, dan aturan fallback cloud."
+title: 'RTX 4090 vs RTX 3090 untuk LLM Lokal (2026): Mana yang Lebih Layak?'
+deskripsi: 'Panduan praktis 2026 untuk memilih RTX 4090 vs RTX 3090 pada workload LLM lokal, termasuk ekspektasi throughput, batas biaya, dan aturan fallback cloud.'
 tanggal terbit: 03-03-2026
 tanggal diperbarui: 03-03-2026
 tag: ["ollama", "rtx", "4090", "3090", "llm", "biaya"]
-bahasa: en
+bahasa: id
 maksud: perangkat keras
 ---
 

@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Q4 Vs Q8 Calidad Ollama: Guía práctica (2026)"
-descripción: "Los usuarios que buscan \"ollama de calidad q4 vs q8\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual".
-fecha de publicación: 2026-02-26
-actualizadoFecha: 2026-02-26
-etiquetas: ["q4", "q8", "calidad", "ollama", "es"]
-idioma: en
-intención: guía
+título: 'Calidad Q4 vs Q8 en Ollama: Guía práctica (2026)'
+descripción: 'Una guía práctica de decisión sobre las compensaciones de calidad entre Q4 y Q8 en Ollama, centrada en el comportamiento real de los prompts y el riesgo de despliegue.'
+fecha de publicación: '2026-02-26'
+actualizadoFecha: '2026-02-26'
+etiquetas: '["q4", "q8", "calidad", "ollama", "es"]'
+idioma: 'es'
+intención: 'guía'
 ---
 
 ## ¿Por qué este tema ahora?

@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Actualización del punto de referencia de inferencia local Ministral-3:14B: Guía práctica (2026)"
-descripción: "Los usuarios que buscan \"actualización de referencia de inferencia local ministral-3:14b\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y f"
+título: 'Actualización del punto de referencia de inferencia local Ministral-3:14B: Guía práctica (2026)'
+descripción: 'Una actualización práctica de referencia para la inferencia local ministral-3:14b, que cubre nuevas señales de rendimiento, límites de estabilidad y acciones de implementación.'
 fecha de publicación: 2026-03-02
 actualizadoFecha: 2026-03-02
 etiquetas: ["ollama", "ministral", "14b", "inferencia", "benchmark"]
-idioma: en
+idioma: es
 intención: punto de referencia
 ---
 

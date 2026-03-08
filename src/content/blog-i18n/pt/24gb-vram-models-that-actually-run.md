@@ -4,9 +4,9 @@ target-locale: pt
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Modelos VRAM de 24 GB que realmente rodam em Ollama"
-description: "Uma lista prática de modelos para cartões de 24 GB com expectativas de ajuste realistas."
+---
+title: 'Modelos de 24GB VRAM que Realmente Rodam no Ollama'
+description: 'Uma lista prática de modelos que realmente rodam em 24 GB VRAM com expectativas de ajuste realistas e considerações de estabilidade.'
 data de publicação: 24/02/2026
 Data atualizada: 24/02/2026
 tags: ["24gb-vram", "hardware", "ollama"]

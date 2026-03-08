@@ -4,14 +4,14 @@ target-locale: es
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-título: "Costo local versus costo de la nube para Ollama: marco de decisión"
-descripción: "Cuándo permanecer local, cuándo pasar a la nube y cómo evitar pagar de más".
-fecha de publicación: 2026-02-24
-actualizadoFecha: 2026-02-24
-etiquetas: ["costo", "roi", "nube-gpu"]
-idioma: en
-intención: costo
+---
+título: 'Costo Local vs Cloud para Ollama: Marco de Decisión'
+descripción: 'Marco práctico para decidir cuándo mantener carga local, cuándo escalar a la nube y cómo reducir la variación mensual de costos.'
+fecha de publicación: '2026-02-24'
+actualizadoFecha: '2026-02-24'
+etiquetas: '["costo", "roi", "nube-gpu"]'
+idioma: 'es'
+intención: 'costo'
 ---
 
 Las decisiones sobre costos fallan cuando los usuarios comparan la compra de hardware con los precios por hora de la nube sin un perfil de uso.

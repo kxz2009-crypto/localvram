@@ -4,14 +4,14 @@ target-locale: fr
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Réparer Ollama CUDA Mémoire insuffisante en 5 minutes"
-description: "Chemin de correction rapide du terminal en premier pour l'échec d'exécution Ollama le plus courant."
-Date de publication : 2026-02-24
-Date de mise à jour : 2026-02-24
-balises : ["erreur-kb", "cuda", "oom"]
-langue : fr
-intention : dépannage
+---
+title: 'Corriger CUDA Out of Memory dans Ollama en 5 Minutes'
+description: 'Parcours de correction rapide orienté terminal pour les erreurs CUDA OOM courantes dans Ollama.'
+Date de publication : '2026-02-24'
+Date de mise à jour : '2026-02-24'
+balises : '["erreur-kb", "cuda", "oom"]'
+langue : 'fr'
+intention : 'dépannage'
 ---
 
 `CUDA out of memory` n'est généralement pas un seul problème. Il s'agit d'une inadéquation budgétaire entre la taille du modèle, la fenêtre contextuelle et la surcharge d'exécution.

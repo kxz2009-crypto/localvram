@@ -4,13 +4,13 @@ target-locale: id
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Ollama Jaringan Cluster Lokal: Daftar Periksa Topologi Praktis"
-deskripsi: "Cara menguji dan memvalidasi pengaturan jaringan multi-node Ollama lokal."
+---
+title: 'Jaringan Cluster Lokal Ollama: Checklist Topologi Praktis'
+deskripsi: 'Checklist praktis untuk memvalidasi topologi jaringan Ollama multi-node lokal, stabilitas latensi, dan konsistensi throughput berkelanjutan.'
 tanggal terbit: 24-02-2026
 tanggal diperbarui: 24-02-2026
 tag: ["cluster", "jaringan", "ollama"]
-bahasa: en
+bahasa: id
 maksud: panduan
 ---
 

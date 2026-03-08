@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Q4 Vs Q8 Qualität Ollama: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „Q4 vs. Q8 Quality Ollama“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud migriert werden sollen. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 26.02.2026
-Aktualisiertes Datum: 26.02.2026
-Tags: ["q4", "q8", "quality", "ollama", "en"]
-lang: en
-Absicht: Leitfaden
+Titel: 'Qualität Q4 vs. Q8 in Ollama: Praktischer Leitfaden (2026)'
+Beschreibung: 'Ein praktischer Entscheidungsleitfaden für Qualitätskompromisse zwischen Q4 und Q8 in Ollama, der sich auf echtes promptes Verhalten und Bereitstellungsrisiko konzentriert.'
+Veröffentlichungsdatum: '26.02.2026'
+Aktualisiertes Datum: '26.02.2026'
+Tags: '["q4", "q8", "quality", "ollama", "en"]'
+lang: 'de'
+Absicht: 'Leitfaden'
 ---
 
 ## Warum gerade jetzt dieses Thema

@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Llama 70B On Rtx 3090 Local Setup: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „llama 70b on rtx 3090 local setup“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 28.02.2026
-Aktualisierungsdatum: 28.02.2026
-Tags: ["ollama", "llama", "70b", "rtx", "3090"]
-lang: en
-Absicht: Hardware
+Titel: 'Llama 70B auf RTX 3090: Praxis-Setup-Guide für lokal (2026)'
+Beschreibung: 'Praktischer Leitfaden für Llama-70B-Workloads auf RTX 3090 mit realistischen Grenzen, Stabilitätschecks und Regeln für Cloud-Spillover.'
+Veröffentlichungsdatum: '28.02.2026'
+Aktualisierungsdatum: '28.02.2026'
+Tags: '["ollama", "llama", "70b", "rtx", "3090"]'
+lang: 'de'
+Absicht: 'Hardware'
 ---
 
 ## Warum gerade jetzt dieses Thema

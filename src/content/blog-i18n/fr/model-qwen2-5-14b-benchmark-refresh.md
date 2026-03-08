@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-titre : "Qwen2.5:14B Mise à jour du benchmark d'inférence locale : Guide pratique (2026)"
-description : "Les utilisateurs recherchant \"qwen2.5:14b mise à jour du benchmark d'inférence locale\" décident généralement s'ils doivent s'exécuter localement ou migrer vers le cloud. Ce brouillon est généré pour examen et factu par l'éditeur"
-Date de publication : 2026-03-02
-Date de mise à jour : 2026-03-02
-balises : ["ollama", "qwen2", "14b", "inference", "benchmark"]
-langue : fr
-intention : référence
+titre : 'Qwen2.5:14B Mise à jour du benchmark d''inférence locale : Guide pratique (2026)'
+description : 'Une mise à jour de référence pratique pour l''inférence locale qwen2.5:14b, avec un nouveau contexte de débit, des contrôles de stabilité et des conseils de déploiement.'
+Date de publication : '2026-03-02'
+Date de mise à jour : '2026-03-02'
+balises : '["ollama", "qwen2", "14b", "inference", "benchmark"]'
+langue : 'fr'
+intention : 'référence'
 ---
 
 ## Pourquoi ce sujet maintenant

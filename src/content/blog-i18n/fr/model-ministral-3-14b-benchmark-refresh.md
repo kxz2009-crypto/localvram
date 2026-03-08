@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-titre : « Mise à jour du benchmark d'inférence locale Ministral-3:14B : Guide pratique (2026) »
-description : "Les utilisateurs recherchant \"mise à jour du benchmark d'inférence locale ministral-3:14b\" décident généralement s'ils doivent s'exécuter localement ou migrer vers le cloud. Ce brouillon est généré pour examen par l'éditeur et f"
-Date de publication : 2026-03-02
-Date de mise à jour : 2026-03-02
-tags : ["ollama", "ministral", "14b", "inference", "benchmark"]
-langue : fr
-intention : référence
+titre : 'Mise à jour du benchmark d''inférence locale Ministral-3:14B : Guide pratique (2026)'
+description : 'Une mise à jour pratique de référence pour l''inférence locale ministral-3:14b, couvrant de nouveaux signaux de performance, les limites de stabilité et les actions de déploiement.'
+Date de publication : '2026-03-02'
+Date de mise à jour : '2026-03-02'
+tags : '["ollama", "ministral", "14b", "inference", "benchmark"]'
+langue : 'fr'
+intention : 'référence'
 ---
 
 ## Pourquoi ce sujet maintenant

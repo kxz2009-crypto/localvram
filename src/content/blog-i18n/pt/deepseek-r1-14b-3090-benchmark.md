@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Deepseek R1 14B Rtx 3090 Benchmark: Guia Prático (2026)"
-description: "Os usuários que procuram por \"deepseek r1 14b rtx 3090 benchmark\" geralmente estão decidindo se devem executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e expansão factual"
+título: 'DeepSeek R1 14B em RTX 3090: Guia Prático de Benchmark (2026)'
+description: 'Um guia prático de benchmark para deepseek r1 14b em RTX 3090, incluindo taxa de transferência esperada, compensações de latência e limites de implantação.'
 data de publicação: 28/02/2026
 Data atualizada: 28/02/2026
 tags: ["ollama", "deepseek", "r1", "14b", "rtx"]

@@ -4,14 +4,14 @@ target-locale: fr
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title : "DeepSeek-R1 sur RTX 3090 : ce qui fonctionne réellement"
-description: "Attentes réalistes pour les modèles de classe DeepSeek-R1 sur du matériel VRAM de 24 Go."
-Date de publication : 2026-02-24
-Date de mise à jour : 2026-02-24
-balises : ["deepseek-r1", "rtx-3090", "benchmark"]
-langue : fr
-intention : référence
+---
+title : 'DeepSeek-R1 sur RTX 3090 : Ce qui Fonctionne Vraiment'
+description: 'Attentes pratiques pour les modèles de classe DeepSeek-R1 sur RTX 3090, y compris les limites d''ajustement, les risques de stabilité et les vérifications d''exécution soutenue.'
+Date de publication : '2026-02-24'
+Date de mise à jour : '2026-02-24'
+balises : '["deepseek-r1", "rtx-3090", "benchmark"]'
+langue : 'fr'
+intention : 'référence'
 ---
 
 RTX 3090 reste l'une des cartes les plus avantageuses pour les travaux locaux de LLM en 2026, mais le succès dépend de la quantification et de la discipline contextuelle.

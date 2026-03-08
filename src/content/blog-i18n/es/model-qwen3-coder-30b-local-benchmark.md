@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Qwen3-Coder:30B Punto de referencia de inferencia local: Guía práctica (2026)"
-descripción: "Los usuarios que buscan \"qwen3-coder:30b local inference benchmark\" normalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y factual "
+título: 'Benchmark de Inferencia Local de Qwen3-Coder:30B: Guía Práctica (2026)'
+descripción: 'Guía práctica para benchmark local de qwen3-coder:30b, centrada en throughput esperado, límites locales y umbrales de fallback a la nube.'
 fecha de publicación: 2026-02-27
 actualizadoFecha: 2026-02-27
 etiquetas: ["ollama", "qwen3", "codificador", "30b", "inferencia"]
-idioma: en
+idioma: es
 intención: punto de referencia
 ---
 

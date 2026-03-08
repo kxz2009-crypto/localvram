@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "로컬 Llm 고객 지원 Rag Stack: 실용 가이드(2026)"
-Description: "\"로컬 LLM 고객 지원 래그 스택\"을 검색하는 사용자는 일반적으로 로컬에서 실행할지 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실 설명을 위해 생성됩니다."
+title: '로컬 LLM 고객 지원 RAG 스택: 실용 가이드(2026)'
+Description: '대기 시간, 품질 및 비용 가드레일을 갖춘 로컬 고객 지원 RAG 스택 구축에 대한 실용적인 가이드입니다.'
 출판일: 2026-03-03
 업데이트 날짜: 2026-03-03
 태그: ["ollama", "llm", "고객", "지원", "rag"]

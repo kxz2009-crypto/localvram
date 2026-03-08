@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Qwen2.5 Coder 32B Self Host Guide: Guia Prático (2026)"
-description: "Os usuários que procuram por \"qwen2.5 coder 32b self host guide\" geralmente estão decidindo se devem executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e expansão factual"
+título: 'Qwen2.5 Guia de auto-hospedagem do Coder 32B: Guia prático (2026)'
+description: 'Um guia prático de auto-hospedagem para o codificador qwen2.5 32b, cobrindo ajuste de hardware, verificações de estabilidade e proteções de produção.'
 data de publicação: 03/03/2026
 Data atualizada: 03/03/2026
 tags: ["ollama", "qwen2", "codificador", "32b", "self"]

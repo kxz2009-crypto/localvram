@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Deepseek R1 32B Sewa Cloud Gpu Atau Lokal: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"deepseek r1 32b rent cloud gpu atau lokal\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan contoh faktual"
+title: 'DeepSeek R1 32B: Kapan Sewa GPU Cloud vs Tetap Lokal (2026)'
+deskripsi: 'Panduan keputusan praktis untuk deepseek r1 32b: kapan lokal cukup, kapan sewa GPU cloud layak, dan cara membatasi biaya.'
 tanggal terbit: 01-03-2026
 diperbaruiTanggal: 01-03-2026
 tag: ["ollama", "deepseek", "r1", "32b", "sewa"]
-bahasa: en
+bahasa: id
 maksud: biaya
 ---
 

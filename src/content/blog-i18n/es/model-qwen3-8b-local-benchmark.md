@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Qwen3:8B Punto de referencia de inferencia local: guía práctica (2026)"
-descripción: "Los usuarios que buscan \"qwen3:8b local inference benchmark\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual"
+título: 'Benchmark de Inferencia Local de Qwen3:8B: Guía Práctica (2026)'
+descripción: 'Guía práctica de benchmark para inferencia local con Qwen3:8B, con throughput esperado, límites de despliegue y comparación de siguiente modelo.'
 fecha de publicación: 2026-02-27
 actualizadoFecha: 2026-02-27
 Etiquetas: ["ollama", "qwen3", "8b", "inferencia", "benchmark"]
-idioma: en
+idioma: es
 intención: punto de referencia
 ---
 

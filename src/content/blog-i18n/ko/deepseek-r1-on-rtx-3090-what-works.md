@@ -4,9 +4,9 @@ target-locale: ko
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "DeepSeek-R1 on RTX 3090: 실제로 작동하는 것"
-Description: "24GB VRAM 하드웨어에서 DeepSeek-R1 클래스 모델에 대한 현실적인 기대입니다."
+---
+title: 'RTX 3090의 DeepSeek-R1: 실제로 작동하는 것'
+Description: '적합 경계, 안정성 위험 및 지속 실행 점검을 포함하여 RTX 3090의 DeepSeek-R1 클래스 모델에 대한 실제 기대치입니다.'
 출판일: 2026-02-24
 업데이트 날짜: 2026-02-24
 태그: ["deepseek-r1", "rtx-3090", "벤치마크"]

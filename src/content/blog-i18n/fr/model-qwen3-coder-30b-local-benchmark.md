@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-titre : "Qwen3-Coder:30B Local Inference Benchmark : Guide pratique (2026)"
-description : "Les utilisateurs recherchant \"qwen3-coder:30b local inference benchmark\" décident généralement s'ils doivent s'exécuter localement ou migrer vers le cloud. Ce brouillon est généré pour examen par l'éditeur et "
+titre : 'Benchmark d''Inférence Locale Qwen3-Coder:30B : Guide Pratique (2026)'
+description : 'Guide pratique de benchmark local pour qwen3-coder:30b, axé sur le débit attendu, les limites locales et les seuils de repli cloud.'
 Date de publication : 2026-02-27
 Date de mise à jour : 2026-02-27
 balises : ["ollama", "qwen3", "coder", "30b", "inference"]

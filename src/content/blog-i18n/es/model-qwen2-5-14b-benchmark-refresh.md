@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Qwen2.5:14B Actualización del punto de referencia de inferencia local: guía práctica (2026)"
-descripción: "Los usuarios que buscan \"actualización de referencia de inferencia local qwen2.5:14b\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión y factu del editor"
+título: 'Qwen2.5:14B Actualización del punto de referencia de inferencia local: guía práctica (2026)'
+descripción: 'Una práctica actualización de referencia para la inferencia local qwen2.5:14b, con un nuevo contexto de rendimiento, comprobaciones de estabilidad y orientación de implementación.'
 fecha de publicación: 2026-03-02
 actualizadoFecha: 2026-03-02
 Etiquetas: ["ollama", "qwen2", "14b", "inferencia", "benchmark"]
-idioma: en
+idioma: es
 intención: punto de referencia
 ---
 

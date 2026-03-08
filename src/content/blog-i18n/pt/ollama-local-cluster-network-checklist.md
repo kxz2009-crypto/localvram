@@ -4,9 +4,9 @@ target-locale: pt
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Ollama Rede de cluster local: lista de verificação prática de topologia"
-description: "Como testar e validar uma configuração de rede local de vários nós Ollama."
+---
+title: 'Ollama Rede de cluster local: lista de verificação prática de topologia'
+description: 'Uma lista de verificação prática para validar topologia de rede local de vários nós Ollama, estabilidade de latência e consistência de taxa de transferência sustentada.'
 data de publicação: 24/02/2026
 Data atualizada: 24/02/2026
 tags: ["cluster", "rede", "ollama"]

@@ -4,14 +4,14 @@ target-locale: fr
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title : « Modèles VRAM de 24 Go qui fonctionnent réellement en Ollama »
-description : "Une liste de modèles pratiques pour les cartes de 24 Go avec des attentes d'ajustement réalistes."
-Date de publication : 2026-02-24
-Date de mise à jour : 2026-02-24
-balises : ["24 Go-vram", "matériel", "ollama"]
-langue : fr
-intention : matériel
+---
+title : '24 Go VRAM Modèles qui fonctionnent réellement en Ollama'
+description : 'Une liste restreinte pratique de modèles qui fonctionnent réellement sur 24 Go VRAM avec des attentes d''ajustement réalistes et des considérations de stabilité.'
+Date de publication : '2026-02-24'
+Date de mise à jour : '2026-02-24'
+balises : '["24 Go-vram", "matériel", "ollama"]'
+langue : 'fr'
+intention : 'matériel'
 ---
 
 24 Go est le niveau local le plus utile pour les utilisateurs qui souhaitent aller au-delà des petits modèles de chat sans tout déplacer vers le cloud.

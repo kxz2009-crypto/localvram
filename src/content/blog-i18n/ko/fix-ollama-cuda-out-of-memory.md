@@ -4,9 +4,9 @@ target-locale: ko
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "5분 안에 Ollama CUDA 메모리 부족 수정"
-Description: "가장 일반적인 Ollama 런타임 오류에 대한 터미널 우선 빠른 수정 경로입니다."
+---
+title: '5분 안에 Ollama CUDA 메모리 부족 문제 해결'
+Description: '안정적인 재시도 순서를 사용하여 일반적인 Ollama CUDA OOM 오류에 대한 터미널 우선 빠른 수정 경로입니다.'
 출판일: 2026-02-24
 업데이트 날짜: 2026-02-24
 태그: ["error-kb", "cuda", "oom"]

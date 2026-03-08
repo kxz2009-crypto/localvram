@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: «Локальная настройка Llama 70B на Rtx 3090: Практическое руководство (2026 г.)»
-description: "Users searching for \"llama 70b on rtx 3090 local setup\" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansio"
-Дата публикации: 28 февраля 2026 г.
-обновленоДата: 2026-02-28
-теги: ["оллама", "лама", "70b", "rtx", "3090"]
-язык: ru
-намерение: аппаратное обеспечение
+title: 'Llama 70B на RTX 3090: Практическое руководство по локальному запуску (2026)'
+description: 'Практическое руководство по запуску моделей класса Llama 70B на RTX 3090: реалистичные ограничения, проверки стабильности и правила cloud spillover.'
+Дата публикации: '28 февраля 2026 г.'
+обновленоДата: '2026-02-28'
+теги: '["оллама", "лама", "70b", "rtx", "3090"]'
+язык: 'ru'
+намерение: 'аппаратное обеспечение'
 ---
 
 ## Почему эта тема сейчас

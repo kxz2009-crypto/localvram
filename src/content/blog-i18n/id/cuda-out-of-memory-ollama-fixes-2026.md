@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Cuda Kehabisan Memori Ollama Perbaikan: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang mencari \"cuda out of memory ollama fix\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual."
+title: 'CUDA Out of Memory di Ollama: Panduan Perbaikan Praktis (2026)'
+deskripsi: 'Panduan praktis untuk memperbaiki error CUDA out-of-memory di Ollama dengan pendekatan local-first dan trigger fallback cloud yang jelas.'
 tanggal terbit: 28-02-2026
 diperbaruiTanggal: 28-02-2026
 tag: ["cuda", "keluar", "memori", "ollama", "memperbaiki"]
-bahasa: en
+bahasa: id
 maksud: pemecahan masalah
 ---
 

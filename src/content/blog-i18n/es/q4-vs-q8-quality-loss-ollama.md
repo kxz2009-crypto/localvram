@@ -4,13 +4,13 @@ target-locale: es
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-título: "Q4 vs Q8 Pérdida de calidad en Ollama: Guía práctica de decisiones"
-descripción: "¿Cuándo importa Q4 la pérdida de calidad y cuándo es la compensación adecuada para la inferencia local?"
+---
+título: 'Pérdida de calidad Q4 vs Q8 en Ollama: guía práctica de decisión'
+descripción: 'Una guía práctica sobre cuándo la pérdida de calidad de Q4 es aceptable y cuándo Q8 justifica la VRAM adicional en cargas de trabajo de Ollama.'
 fecha de publicación: 2026-02-24
 actualizadoFecha: 2026-02-24
 etiquetas: ["cuantización", "q4", "q8", "ollama"]
-idioma: en
+idioma: es
 intención: guía
 ---
 

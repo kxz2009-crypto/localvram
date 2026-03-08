@@ -4,13 +4,13 @@ target-locale: id
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Perbaiki Ollama CUDA Kehabisan Memori dalam 5 Menit"
-deskripsi: "Jalur perbaikan cepat terminal-pertama untuk kegagalan runtime Ollama yang paling umum."
+---
+title: 'Perbaiki CUDA Out of Memory Ollama dalam 5 Menit'
+deskripsi: 'Jalur perbaikan cepat berbasis terminal untuk kegagalan CUDA OOM umum di Ollama dengan urutan retry yang stabil.'
 tanggal terbit: 24-02-2026
 tanggal diperbarui: 24-02-2026
 tag: ["kesalahan-kb", "cuda", "oom"]
-bahasa: en
+bahasa: id
 maksud: pemecahan masalah
 ---
 

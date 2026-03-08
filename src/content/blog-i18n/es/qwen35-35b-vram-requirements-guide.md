@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Qwen3.5 Requisitos de Vram 35B: Guía práctica (2026)"
-descripción: "Los usuarios que buscan \"requisitos de vram qwen3.5 35b\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual".
-fecha de publicación: 2026-02-28
-actualizadoFecha: 2026-02-28
-etiquetas: ["ollama", "qwen3", "35b", "vram", "requisitos"]
-idioma: en
-intención: hardware
+título: 'Qwen3.5 35B VRAM Requisitos: Guía Práctica (2026)'
+descripción: 'Una guía práctica para los requisitos de qwen3.5 35b VRAM, con límites de viabilidad locales, riesgos de estabilidad y activadores de respaldo de la nube.'
+fecha de publicación: '2026-02-28'
+actualizadoFecha: '2026-02-28'
+etiquetas: '["ollama", "qwen3", "35b", "vram", "requisitos"]'
+idioma: 'es'
+intención: 'hardware'
 ---
 
 ## ¿Por qué este tema ahora?

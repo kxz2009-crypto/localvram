@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-judul: "Kelayakan Inferensi Lokal Llama 4: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"kelayakan inferensi lokal llama 4\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual"
+judul: 'Kelayakan Inferensi Lokal Llama 4: Panduan Praktis (2026)'
+deskripsi: 'Panduan praktis kelayakan inferensi lokal llama 4, termasuk batas hardware, pemeriksaan risiko, dan perencanaan fallback.'
 tanggal terbit: 03-03-2026
 tanggal diperbarui: 03-03-2026
 tag: ["ollama", "llama", "inferensi", "kelayakan", "llama4"]
-bahasa: en
+bahasa: id
 maksud: panduan
 ---
 

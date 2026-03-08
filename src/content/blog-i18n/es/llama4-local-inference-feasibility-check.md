@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Viabilidad de la inferencia local de Llama 4: Guía práctica (2026)"
-descripción: "Los usuarios que buscan \"viabilidad de inferencia local de llama 4\" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual"
+título: 'Llama 4 Viabilidad de la inferencia local: guía práctica (2026)'
+descripción: 'Una guía práctica de viabilidad para la inferencia local de Llama 4, que incluye límites de hardware, comprobaciones de riesgos y planificación alternativa.'
 fecha de publicación: 2026-03-03
 actualizadoFecha: 2026-03-03
 etiquetas: ["ollama", "llama", "inferencia", "viabilidad", "llama4"]
-idioma: en
+idioma: es
 intención: guía
 ---
 

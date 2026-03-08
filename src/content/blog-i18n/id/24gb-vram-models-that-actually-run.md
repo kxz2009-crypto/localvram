@@ -4,13 +4,13 @@ target-locale: id
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Model 24GB VRAM yang Sebenarnya Berjalan di Ollama"
-deskripsi: "Daftar pilihan model praktis untuk kartu 24GB dengan ekspektasi kesesuaian yang realistis."
+---
+title: 'Model 24GB VRAM yang Benar-benar Berjalan di Ollama'
+deskripsi: 'Daftar praktis model yang benar-benar berjalan di 24GB VRAM dengan ekspektasi fit dan stabilitas yang realistis.'
 tanggal terbit: 24-02-2026
 tanggal diperbarui: 24-02-2026
 tag: ["24gb-vram", "perangkat keras", "ollama"]
-bahasa: en
+bahasa: id
 maksud: perangkat keras
 ---
 

@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Qwen3 Configuración de codificación local Coder 30B: Guía práctica (2026)"
-descripción: "Los usuarios que buscan \"configuración de codificación local qwen3 coder 30b\" normalmente deciden si ejecutar la ejecución localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual"
+título: 'Configuración de codificación local Qwen3 Coder 30B: Guía práctica (2026)'
+descripción: 'Los usuarios que buscan "configuración de codificación local qwen3 coder 30b" generalmente deciden si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual.'
 fecha de publicación: 2026-03-04
 actualizadoFecha: 2026-03-04
 etiquetas: ["ollama", "qwen3", "codificador", "30b", "codificación"]
-idioma: en
+idioma: es
 intención: guía
 ---
 

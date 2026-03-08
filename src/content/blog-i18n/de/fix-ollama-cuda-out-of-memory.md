@@ -4,13 +4,13 @@ target-locale: de
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-Titel: „Ollama CUDA wegen Speichermangel in 5 Minuten beheben“
-Beschreibung: „Terminal-First-Schnellkorrekturpfad für den häufigsten Ollama-Laufzeitfehler.“
+---
+Titel: 'CUDA Out of Memory in Ollama in 5 Minuten beheben'
+Beschreibung: 'Ein Terminal-First-Schnellbehebungspfad für häufige Ollama CUDA OOM-Fehler mit stabiler Wiederholungsreihenfolge.'
 Veröffentlichungsdatum: 24.02.2026
 Aktualisierungsdatum: 24.02.2026
 Tags: ["error-kb", "cuda", "oom"]
-lang: en
+lang: de
 Absicht: Fehlerbehebung
 ---
 

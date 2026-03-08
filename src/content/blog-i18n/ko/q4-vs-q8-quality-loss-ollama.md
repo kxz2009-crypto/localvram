@@ -4,9 +4,9 @@ target-locale: ko
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Ollama의 품질 손실 대 Q4 및 Q8: 실제 결정 가이드"
-Description: "Q4 품질 손실이 언제 중요하며, 로컬 추론에 대한 올바른 절충은 언제입니까?"
+---
+title: 'Ollama의 Q4 및 Q8 품질 손실: 실제 결정 가이드'
+Description: 'Q4 품질 손실이 허용되는 시기와 Q8이 Ollama 워크로드에서 추가 VRAM 가치가 있는 경우에 대한 실용적인 가이드입니다.'
 출판일: 2026-02-24
 업데이트 날짜: 2026-02-24
 태그: ["양자화", "q4", "q8", "ollama"]

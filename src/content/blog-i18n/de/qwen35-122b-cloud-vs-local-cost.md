@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Qwen3.5 122B Cloud vs. lokale Kosten: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „qwen3.5 122b Cloud vs. lokale Kosten“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud wechseln möchten. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 28.02.2026
-Aktualisierungsdatum: 28.02.2026
-Tags: ["ollama", "qwen3", "122b", "cloud", "cost"]
-lang: en
-Absicht: Kosten
+Titel: 'Qwen3.5 122B Cloud vs Lokal Kosten: Praxisleitfaden (2026)'
+Beschreibung: 'Ein praktischer Kostenrahmen für qwen3.5 122b, der Cloud-Miete und lokales Eigentum unter realen Nutzungsprofilen vergleicht.'
+Veröffentlichungsdatum: '28.02.2026'
+Aktualisierungsdatum: '28.02.2026'
+Tags: '["ollama", "qwen3", "122b", "cloud", "cost"]'
+lang: 'de'
+Absicht: 'Kosten'
 ---
 
 ## Warum gerade jetzt dieses Thema

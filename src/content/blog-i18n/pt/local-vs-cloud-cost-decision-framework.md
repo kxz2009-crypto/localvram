@@ -4,9 +4,9 @@ target-locale: pt
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Custo local vs nuvem para Ollama: estrutura de decisão"
-description: "Quando permanecer localmente, quando ir para a nuvem e como evitar pagar a mais."
+---
+title: 'Custo Local vs Cloud para Ollama: Framework de Decisão'
+description: 'Framework prático para decidir quando ficar local, quando usar burst em nuvem e como reduzir a variação mensal de custos.'
 data de publicação: 24/02/2026
 Data atualizada: 24/02/2026
 tags: ["custo", "roi", "cloud-gpu"]

@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen2.5 Coder 32B 셀프 호스트 가이드: 실용 가이드(2026)"
-Description: "\"qwen2.5 coder 32b 자체 호스트 가이드\"를 검색하는 사용자는 일반적으로 로컬에서 실행할지 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실 확장을 위해 생성됩니다."
+title: 'Qwen2.5 Coder 32B 셀프 호스트 가이드: 실용 가이드(2026)'
+Description: '하드웨어 적합성, 안정성 검사 및 생산 가드레일을 다루는 qwen2.5 코더 32b용 실용적인 셀프 호스트 가이드입니다.'
 출판일: 2026-03-03
 업데이트 날짜: 2026-03-03
 태그: ["ollama", "qwen2", "coder", "32b", "self"]

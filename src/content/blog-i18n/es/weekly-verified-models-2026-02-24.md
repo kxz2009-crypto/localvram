@@ -4,13 +4,13 @@ target-locale: es
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-título: "Modelos verificados semanalmente: instantánea del 24 de febrero de 2026"
-descripción: "Lo que se verificó esta semana y lo que cambió en las decisiones de ajuste del modelo local."
+---
+título: 'Modelos Verificados Semanales: Snapshot 2026-02-24'
+descripción: 'Snapshot semanal de ejecuciones verificadas y cambios relevantes para decisiones de fit local.'
 fecha de publicación: 2026-02-24
 actualizadoFecha: 2026-02-24
 etiquetas: ["semanal", "verificado", "puntos de referencia"]
-idioma: en
+idioma: es
 intención: punto de referencia
 ---
 

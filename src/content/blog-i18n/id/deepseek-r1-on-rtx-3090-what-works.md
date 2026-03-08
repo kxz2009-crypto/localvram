@@ -4,13 +4,13 @@ target-locale: id
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "DeepSeek-R1 pada RTX 3090: Apa yang Sebenarnya Berhasil"
-deskripsi: "Harapan realistis untuk model kelas DeepSeek-R1 pada perangkat keras 24GB VRAM."
+---
+title: 'DeepSeek-R1 di RTX 3090: Yang Benar-benar Berjalan'
+deskripsi: 'Ekspektasi praktis untuk model kelas DeepSeek-R1 di RTX 3090, termasuk batas kecocokan, risiko stabilitas, dan pemeriksaan beban berkelanjutan.'
 tanggal terbit: 24-02-2026
 tanggal diperbarui: 24-02-2026
 tag: ["deepseek-r1", "rtx-3090", "benchmark"]
-bahasa: en
+bahasa: id
 maksud: tolok ukur
 ---
 

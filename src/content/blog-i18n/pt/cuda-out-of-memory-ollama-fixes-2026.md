@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Cuda Out Of Memory Ollama Correção: Guia Prático (2026)"
-description: "Os usuários que procuram por \"cuda out of memory ollama fix\" geralmente estão decidindo se devem executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e expansão factual."
+título: 'CUDA Out of Memory no Ollama: Guia Prático de Correção (2026)'
+description: 'Guia prático para corrigir erros de CUDA out-of-memory no Ollama, com playbook local-first e gatilhos claros para fallback em nuvem.'
 data de publicação: 28/02/2026
 Data atualizada: 28/02/2026
 tags: ["cuda", "out", "memória", "ollama", "consertar"]

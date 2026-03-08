@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Qwen2.5 Coder 32B Self Host Guide: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „Qwen2.5 Coder 32b Self Host Guide“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 03.03.2026
-Aktualisierungsdatum: 03.03.2026
-Tags: ["ollama", "qwen2", "coder", "32b", "self"]
-lang: en
-Absicht: Leitfaden
+Titel: 'Qwen2.5 Coder 32B Self-Host Guide: Praxisleitfaden (2026)'
+Beschreibung: 'Ein praktischer Self-Host-Leitfaden für qwen2.5 coder 32b, der Hardware-Passform, Stabilitätsprüfungen und Produktionsleitplanken behandelt.'
+Veröffentlichungsdatum: '03.03.2026'
+Aktualisierungsdatum: '03.03.2026'
+Tags: '["ollama", "qwen2", "coder", "32b", "self"]'
+lang: 'de'
+Absicht: 'Leitfaden'
 ---
 
 ## Warum gerade jetzt dieses Thema

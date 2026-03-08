@@ -4,12 +4,12 @@ target-locale: pt
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-título: "Melhores modelos RAG locais para Ollama em 2026"
-description: "Seleção de modelo RAG sob restrições de hardware local."
+---
+título: 'Melhores Modelos RAG Locais para Ollama em 2026'
+description: 'Lista prática de modelos RAG locais para 2026, com foco em qualidade de recuperação, estabilidade de latência e desempenho com contexto limitado.'
 data de publicação: 24/02/2026
 Data atualizada: 24/02/2026
-tags: ["pano", "modelos", "ollama"]
+tags: ["rag", "modelos", "ollama"]
 idioma: pt
 intenção: guia
 ---

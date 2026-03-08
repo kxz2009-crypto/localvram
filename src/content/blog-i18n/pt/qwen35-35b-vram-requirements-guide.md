@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Qwen3.5 Requisitos VRAM 35B: Guia Prático (2026)"
-description: "Os usuários que procuram por \"qwen3.5 35b vram requirements\" geralmente estão decidindo se devem executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e expansão factual."
+título: 'Qwen3.5 35B VRAM Requisitos: Guia Prático (2026)'
+description: 'Um guia prático para requisitos qwen3.5 35b VRAM, com limites de viabilidade locais, riscos de estabilidade e gatilhos de fallback na nuvem.'
 data de publicação: 28/02/2026
 Data atualizada: 28/02/2026
 tags: ["ollama", "qwen3", "35b", "vram", "requisitos"]

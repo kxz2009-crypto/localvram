@@ -4,14 +4,14 @@ target-locale: de
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-Titel: „DeepSeek-R1 zu RTX 3090: Was tatsächlich funktioniert“
-Beschreibung: „Realistische Erwartungen für Modelle der Klasse DeepSeek-R1 auf 24 GB VRAM Hardware.“
-Veröffentlichungsdatum: 24.02.2026
-Aktualisierungsdatum: 24.02.2026
-Tags: ["deepseek-r1", "rtx-3090", "benchmark"]
-lang: en
-Absicht: Benchmark
+---
+Titel: 'DeepSeek-R1 auf RTX 3090: Was wirklich funktioniert'
+Beschreibung: 'Praktische Erwartungen für DeepSeek-R1-Klassenmodelle auf RTX 3090, einschließlich Anpassungsgrenzen, Stabilitätsrisiken und Dauerprüfungen.'
+Veröffentlichungsdatum: '24.02.2026'
+Aktualisierungsdatum: '24.02.2026'
+Tags: '["deepseek-r1", "rtx-3090", "benchmark"]'
+lang: 'de'
+Absicht: 'Benchmark'
 ---
 
 RTX 3090 bleibt auch im Jahr 2026 eine der preiswertesten Karten für die lokale LLM-Arbeit, aber der Erfolg hängt von Quantisierung und Kontextdisziplin ab.

@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Beste lokale Rag-Modelle unter 24 GB VRAM: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach den „besten lokalen Rag-Modellen unter 24 GB VRAM“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud migriert werden sollen. Dieser Entwurf wird zur Überprüfung durch den Redakteur und zur sachlichen Erläuterung erstellt.“
-Veröffentlichungsdatum: 28.02.2026
-Aktualisierungsdatum: 28.02.2026
-Tags: ["ollama", "best", "rag", "models", "under"]
-lang: en
-Absicht: Hardware
+Titel: 'Beste lokale RAG-Modelle unter 24GB VRAM: Praxisleitfaden (2026)'
+Beschreibung: 'Ein praktischer Leitfaden zur Auswahl lokaler RAG-Modelle unter 24 GB VRAM mit Schwerpunkt auf Abrufqualität, Latenzstabilität und Anpassungsgrenzen.'
+Veröffentlichungsdatum: '28.02.2026'
+Aktualisierungsdatum: '28.02.2026'
+Tags: '["ollama", "best", "rag", "models", "under"]'
+lang: 'de'
+Absicht: 'Hardware'
 ---
 
 ## Warum gerade jetzt dieses Thema

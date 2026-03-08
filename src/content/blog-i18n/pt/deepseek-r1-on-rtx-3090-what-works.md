@@ -4,9 +4,9 @@ target-locale: pt
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "DeepSeek-R1 em RTX 3090: O que realmente funciona"
-description: "Expectativas realistas para modelos de classe DeepSeek-R1 em hardware VRAM de 24 GB."
+---
+title: 'DeepSeek-R1 na RTX 3090: O que Realmente Funciona'
+description: 'Expectativas práticas para modelos de classe DeepSeek-R1 em RTX 3090, incluindo limites de ajuste, riscos de estabilidade e verificações de execução sustentada.'
 data de publicação: 24/02/2026
 Data atualizada: 24/02/2026
 tags: ["deepseek-r1", "rtx-3090", "benchmark"]

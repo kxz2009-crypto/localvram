@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Qwen3.5 35B Vram-Anforderungen: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „Qwen3.5 35b VRAM-Anforderungen“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud migriert werden sollen. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 28.02.2026
-Aktualisierungsdatum: 28.02.2026
-Tags: ["ollama", "qwen3", "35b", "vram", "requirements"]
-lang: en
-Absicht: Hardware
+Titel: 'Qwen3.5 35B VRAM-Anforderungen: Praxisleitfaden (2026)'
+Beschreibung: 'Ein praktischer Leitfaden zu den Anforderungen von qwen3.5 35b VRAM mit lokalen Machbarkeitsgrenzen, Stabilitätsrisiken und Cloud-Fallback-Auslösern.'
+Veröffentlichungsdatum: '28.02.2026'
+Aktualisierungsdatum: '28.02.2026'
+Tags: '["ollama", "qwen3", "35b", "vram", "requirements"]'
+lang: 'de'
+Absicht: 'Hardware'
 ---
 
 ## Warum gerade jetzt dieses Thema

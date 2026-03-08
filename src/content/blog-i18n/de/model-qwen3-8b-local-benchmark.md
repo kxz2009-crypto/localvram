@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Qwen3:8B Local Inference Benchmark: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „qwen3:8b Local Inference Benchmark“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 27.02.2026
-Aktualisierungsdatum: 27.02.2026
-Tags: ["ollama", "qwen3", "8b", "inference", "benchmark"]
-lang: en
-Absicht: Benchmark
+Titel: 'Qwen3:8B Local-Inference-Benchmark: Praxisleitfaden (2026)'
+Beschreibung: 'Praktischer Benchmark-Leitfaden für lokale Qwen3:8B-Inferenz mit erwartetem Durchsatz, Deploy-Grenzen und Vergleich mit einem größeren Modell.'
+Veröffentlichungsdatum: '27.02.2026'
+Aktualisierungsdatum: '27.02.2026'
+Tags: '["ollama", "qwen3", "8b", "inference", "benchmark"]'
+lang: 'de'
+Absicht: 'Benchmark'
 ---
 
 ## Warum gerade jetzt dieses Thema

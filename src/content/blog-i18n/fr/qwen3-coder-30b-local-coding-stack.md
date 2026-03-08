@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-titre : "Qwen3 Configuration du codage local du Coder 30B : Guide pratique (2026)"
-description : "Les utilisateurs recherchant \"configuration de codage local qwen3 coder 30b\" décident généralement s'ils doivent s'exécuter localement ou migrer vers le cloud. Ce brouillon est généré pour examen par l'éditeur et explication factuelle"
-Date de publication : 2026-03-04
-Date de mise à jour : 2026-03-04
-balises : ["ollama", "qwen3", "coder", "30b", "coding"]
-langue : fr
-intention : guide
+titre : 'Configuration du codage local Qwen3 Coder 30B : guide pratique (2026)'
+description : 'Les utilisateurs recherchant « configuration de codage local qwen3 coder 30b » décident généralement s''ils doivent s''exécuter localement ou migrer vers le cloud. Ce brouillon est généré pour l''examen par l''éditeur et l''explication factuelle.'
+Date de publication : '2026-03-04'
+Date de mise à jour : '2026-03-04'
+balises : '["ollama", "qwen3", "coder", "30b", "coding"]'
+langue : 'fr'
+intention : 'guide'
 ---
 
 ## Pourquoi ce sujet maintenant

@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-judul: "Pengaturan Lokal Llama 70B Pada Rtx 3090: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"llama 70b pada pengaturan lokal rtx 3090\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual"
+judul: 'Llama 70B di RTX 3090: Panduan Setup Lokal Praktis (2026)'
+deskripsi: 'Panduan praktis menjalankan workload kelas Llama 70B di RTX 3090 dengan batas realistis, pemeriksaan stabilitas, dan aturan spillover ke cloud.'
 tanggal terbit: 28-02-2026
 diperbaruiTanggal: 28-02-2026
 tag: ["ollama", "lama", "70b", "rtx", "3090"]
-bahasa: en
+bahasa: id
 maksud: perangkat keras
 ---
 

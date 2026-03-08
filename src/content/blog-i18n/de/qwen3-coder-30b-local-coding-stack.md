@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Qwen3 Coder 30B Local Coding Setup: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „Qwen3 Coder 30b Local Coding Setup“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 04.03.2026
-Aktualisiertes Datum: 04.03.2026
-Tags: ["ollama", "qwen3", "coder", "30b", "coding"]
-lang: en
-Absicht: Leitfaden
+Titel: 'Qwen3 Coder 30B Local Coding Setup: Praktischer Leitfaden (2026)'
+Beschreibung: 'Benutzer, die nach „Qwen3 Coder 30b Local Coding Setup“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud migriert werden sollen. Dieser Entwurf wird zur redaktionellen Überprüfung und sachlichen Erläuterung erstellt'
+Veröffentlichungsdatum: '04.03.2026'
+Aktualisiertes Datum: '04.03.2026'
+Tags: '["ollama", "qwen3", "coder", "30b", "coding"]'
+lang: 'de'
+Absicht: 'Leitfaden'
 ---
 
 ## Warum gerade jetzt dieses Thema

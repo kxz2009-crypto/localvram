@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Ministral-3:14B 로컬 추론 벤치마크 업데이트: 실용 가이드(2026)"
-Description: "\"ministral-3:14b 로컬 추론 벤치마크 업데이트\"를 검색하는 사용자는 일반적으로 로컬에서 실행할지 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 f를 위해 생성됩니다."
+title: 'Ministral-3:14B 국소 추론 벤치마크 업데이트: 실용 가이드(2026)'
+Description: '새로운 성능 신호, 안정성 경계 및 출시 조치를 다루는 ministral-3:14b 로컬 추론을 위한 실용적인 벤치마크 업데이트입니다.'
 출판일: 2026-03-02
 업데이트 날짜: 2026-03-02
 태그: ["ollama", "ministral", "14b", "추론", "벤치마크"]

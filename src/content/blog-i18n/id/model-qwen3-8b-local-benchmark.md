@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen3:8B Tolok Ukur Inferensi Lokal: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"qwen3:8b tolok ukur inferensi lokal\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual"
+title: 'Benchmark Inferensi Lokal Qwen3:8B: Panduan Praktis (2026)'
+deskripsi: 'Panduan benchmark praktis untuk inferensi lokal Qwen3:8B, termasuk throughput yang diharapkan, batas deployment, dan perbandingan model berikutnya.'
 tanggal terbit: 27-02-2026
 tanggal diperbarui: 27-02-2026
 tag: ["ollama", "qwen3", "8b", "inferensi", "tolok ukur"]
-bahasa: en
+bahasa: id
 maksud: tolok ukur
 ---
 

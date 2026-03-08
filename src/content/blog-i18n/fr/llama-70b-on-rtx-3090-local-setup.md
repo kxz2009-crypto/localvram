@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-titre : « Llama 70B sur Rtx 3090 Configuration locale : Guide pratique (2026) »
-description : "Les utilisateurs recherchant \"llama 70b sur la configuration locale du RTX 3090\" décident généralement s'ils doivent exécuter localement ou migrer vers le cloud. Ce brouillon est généré pour examen par l'éditeur et explication factuelle"
-Date de publication : 2026-02-28
-Date de mise à jour : 2026-02-28
-balises : ["ollama", "llama", "70b", "rtx", "3090"]
-langue : fr
-intention : matériel
+titre : 'Llama 70B sur RTX 3090 : Guide Pratique de Setup Local (2026)'
+description : 'Guide pratique pour exécuter des charges Llama 70B sur RTX 3090, avec contraintes réalistes, vérifications de stabilité et règles de débordement cloud.'
+Date de publication : '2026-02-28'
+Date de mise à jour : '2026-02-28'
+balises : '["ollama", "llama", "70b", "rtx", "3090"]'
+langue : 'fr'
+intention : 'matériel'
 ---
 
 ## Pourquoi ce sujet maintenant

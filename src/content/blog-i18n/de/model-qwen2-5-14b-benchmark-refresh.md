@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Qwen2.5:14B Local Inference Benchmark Update: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „qwen2.5:14b Local Inference Benchmark Update“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung und Fakturierung durch den Herausgeber erstellt.“
-Veröffentlichungsdatum: 02.03.2026
-Aktualisiertes Datum: 02.03.2026
-Tags: ["ollama", "qwen2", "14b", "inference", "benchmark"]
-lang: en
-Absicht: Benchmark
+Titel: 'Qwen2.5:14B Local-Inference Benchmark Update: Praxisleitfaden (2026)'
+Beschreibung: 'Ein praktisches Benchmark-Update für die lokale Inferenz qwen2.5:14b mit neuem Durchsatzkontext, Stabilitätsprüfungen und Bereitstellungsanleitungen.'
+Veröffentlichungsdatum: '02.03.2026'
+Aktualisiertes Datum: '02.03.2026'
+Tags: '["ollama", "qwen2", "14b", "inference", "benchmark"]'
+lang: 'de'
+Absicht: 'Benchmark'
 ---
 
 ## Warum gerade jetzt dieses Thema

@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen3.5 Persyaratan Vram 35B: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"persyaratan qwen3.5 35b vram\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual."
+title: 'Kebutuhan VRAM Qwen3.5 35B: Panduan Praktis (2026)'
+deskripsi: 'Panduan praktis kebutuhan VRAM qwen3.5 35b, termasuk batas kelayakan lokal, risiko stabilitas, dan pemicu fallback cloud.'
 tanggal terbit: 28-02-2026
 diperbaruiTanggal: 28-02-2026
 tag: ["ollama", "qwen3", "35b", "vram", "persyaratan"]
-bahasa: en
+bahasa: id
 maksud: perangkat keras
 ---
 

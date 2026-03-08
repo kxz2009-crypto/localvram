@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Qwen3-Coder:30B Local Inference Benchmark: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „qwen3-coder:30b lokaler Inferenz-Benchmark“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung durch den Redakteur und zur sachlichen Überprüfung erstellt.“
-Veröffentlichungsdatum: 27.02.2026
-Aktualisierungsdatum: 27.02.2026
-Tags: ["ollama", "qwen3", "coder", "30b", "inference"]
-lang: en
-Absicht: Benchmark
+Titel: 'Qwen3-Coder:30B Local-Inference-Benchmark: Praxisleitfaden (2026)'
+Beschreibung: 'Praxisleitfaden für lokale Benchmarks mit qwen3-coder:30b, mit Fokus auf erwarteten Durchsatz, lokale Grenzen und Cloud-Fallback-Schwellen.'
+Veröffentlichungsdatum: '27.02.2026'
+Aktualisierungsdatum: '27.02.2026'
+Tags: '["ollama", "qwen3", "coder", "30b", "inference"]'
+lang: 'de'
+Absicht: 'Benchmark'
 ---
 
 ## Warum gerade jetzt dieses Thema

@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Cuda Out Of Memory Ollama 수정: 실용 가이드(2026)"
-Description: "\"cuda out of memory ollama fix\"를 검색하는 사용자는 일반적으로 로컬에서 실행할지 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실 확장을 위해 생성됩니다."
+title: 'Ollama CUDA Out of Memory 해결 가이드 (2026)'
+Description: 'Ollama의 CUDA out-of-memory 오류를 해결하는 실전 가이드입니다. 로컬 우선 절차와 클라우드 폴백 전환 기준을 제공합니다.'
 출판일: 2026-02-28
 업데이트 날짜: 2026-02-28
 태그: ["cuda", "out", "memory", "ollama", "fix"]

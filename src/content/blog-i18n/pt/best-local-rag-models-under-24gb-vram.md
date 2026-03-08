@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Melhores modelos locais Rag com VRAM de 24 Gb: Guia prático (2026)"
-description: "Os usuários que procuram os "melhores modelos rag locais com vram de 24 GB" geralmente estão decidindo se devem executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e exposição factual"
-data de publicação: 28/02/2026
-Data atualizada: 28/02/2026
-tags: ["ollama", "melhor", "rag", "modelos", "under"]
-idioma: pt
-intenção: hardware
+título: 'Melhores modelos RAG locais com menos de 24 GB VRAM: Guia prático (2026)'
+description: 'Um guia prático para selecionar modelos RAG locais abaixo de 24 GB VRAM, focado na qualidade de recuperação, estabilidade de latência e limites de ajuste.'
+data de publicação: '28/02/2026'
+Data atualizada: '28/02/2026'
+tags: '["ollama", "melhor", "rag", "modelos", "under"]'
+idioma: 'pt'
+intenção: 'hardware'
 ---
 
 ## Por que este tópico agora

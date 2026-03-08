@@ -4,13 +4,13 @@ target-locale: id
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Biaya Lokal vs Cloud untuk Ollama: Kerangka Keputusan"
-deskripsi: "Kapan harus tetap lokal, kapan harus melakukan burst ke cloud, dan bagaimana menghindari membayar lebih."
+---
+title: 'Biaya Lokal vs Cloud untuk Ollama: Kerangka Keputusan'
+deskripsi: 'Kerangka praktis untuk menentukan kapan tetap lokal, kapan burst ke cloud, dan cara menurunkan variansi biaya bulanan.'
 tanggal terbit: 24-02-2026
 tanggal diperbarui: 24-02-2026
 tag: ["biaya", "roi", "cloud-gpu"]
-bahasa: en
+bahasa: id
 maksud: biaya
 ---
 

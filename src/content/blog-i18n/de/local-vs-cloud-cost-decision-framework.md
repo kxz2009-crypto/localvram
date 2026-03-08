@@ -4,14 +4,14 @@ target-locale: de
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-Titel: „Lokale vs. Cloud-Kosten für Ollama: Entscheidungsrahmen“
-Beschreibung: „Wann sollte man vor Ort bleiben, wann man in die Cloud gehen und wie man Überzahlungen vermeidet.“
-Veröffentlichungsdatum: 24.02.2026
-Aktualisierungsdatum: 24.02.2026
-Tags: ["Kosten", "ROI", "Cloud-GPU"]
-lang: en
-Absicht: Kosten
+---
+Titel: 'Local vs Cloud Kosten für Ollama: Entscheidungsrahmen'
+Beschreibung: 'Praxisnaher Entscheidungsrahmen, wann lokal sinnvoll ist, wann Cloud-Burst nötig wird und wie monatliche Kostenschwankung sinkt.'
+Veröffentlichungsdatum: '24.02.2026'
+Aktualisierungsdatum: '24.02.2026'
+Tags: '["Kosten", "ROI", "Cloud-GPU"]'
+lang: 'de'
+Absicht: 'Kosten'
 ---
 
 Kostenentscheidungen scheitern, wenn Benutzer den Hardwarekauf mit Cloud-Stundenpreisen ohne Nutzungsprofil vergleichen.

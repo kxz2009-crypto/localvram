@@ -4,9 +4,9 @@ target-locale: ko
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Ollama 로컬 클러스터 네트워크: 실제 토폴로지 체크리스트"
-Description: "로컬 다중 노드 Ollama 네트워크 설정을 테스트하고 검증하는 방법."
+---
+title: 'Ollama 로컬 클러스터 네트워크: 실제 토폴로지 체크리스트'
+Description: '로컬 다중 노드 Ollama 네트워크 토폴로지, 대기 시간 안정성 및 지속적인 처리량 일관성을 검증하기 위한 실용적인 체크리스트입니다.'
 출판일: 2026-02-24
 업데이트 날짜: 2026-02-24
 태그: ["클러스터", "네트워크", "올라마"]

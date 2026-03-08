@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Q4 Vs Q8 Kualitas Ollama: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"ollama kualitas q4 vs q8\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual."
+title: 'Kualitas Q4 vs Q8 di Ollama: Panduan Praktis (2026)'
+deskripsi: 'Panduan keputusan praktis tradeoff kualitas Q4 vs Q8 di Ollama, berfokus pada perilaku prompt nyata dan risiko deployment.'
 tanggal terbit: 26-02-2026
 diperbaruiTanggal: 26-02-2026
 tag: ["q4", "q8", "kualitas", "ollama", "en"]
-bahasa: en
+bahasa: id
 maksud: panduan
 ---
 

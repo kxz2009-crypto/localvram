@@ -4,9 +4,9 @@ target-locale: ko
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Ollama에서 실제로 실행되는 24GB VRAM 모델"
-Description: "현실적인 적합성을 기대하는 24GB 카드에 대한 실용적인 모델 후보 목록입니다."
+---
+title: 'Ollama에서 실제로 실행되는 24GB VRAM 모델'
+Description: '현실적인 기대치와 안정성을 고려하여 실제로 24GB VRAM에서 실행되는 실용적인 모델 목록입니다.'
 출판일: 2026-02-24
 업데이트 날짜: 2026-02-24
 태그: ["24gb-vram", "하드웨어", "ollama"]

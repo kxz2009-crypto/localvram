@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Viabilidade de inferência local do Llama 4: Guia prático (2026)"
-description: "Os usuários que procuram por \"viabilidade de inferência local do llama 4\" geralmente estão decidindo se devem executar localmente ou migrar para a nuvem. Este rascunho é gerado para revisão do editor e expansão factual"
+título: 'Llama 4 Viabilidade de Inferência Local: Guia Prático (2026)'
+description: 'Um guia prático de viabilidade para inferência local do llama 4, incluindo limites de hardware, verificações de risco e planejamento alternativo.'
 data de publicação: 03/03/2026
 Data atualizada: 03/03/2026
 tags: ["ollama", "llama", "inferência", "viabilidade", "llama4"]

@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „RTX 4090 vs. RTX 3090 für Local LLM (2026): Welches ist es wert?“
-Beschreibung: „Ein praktischer Entscheidungsleitfaden für 2026 für RTX 4090 vs. RTX 3090 in lokalen LLM-Workloads, einschließlich Durchsatzerwartungen, Kostengrenzen und Cloud-Fallback-Regeln.“
-Veröffentlichungsdatum: 03.03.2026
-Aktualisierungsdatum: 03.03.2026
-Tags: ["ollama", "rtx", "4090", "3090", "llm", "cost"]
-lang: en
-Absicht: Hardware
+Titel: 'RTX 4090 vs RTX 3090 für lokale LLMs (2026): Welche lohnt sich?'
+Beschreibung: 'Praxisleitfaden 2026 für die Wahl zwischen RTX 4090 und RTX 3090 bei lokalen LLM-Workloads inklusive Durchsatz, Kostenrahmen und Cloud-Fallback-Regeln.'
+Veröffentlichungsdatum: '03.03.2026'
+Aktualisierungsdatum: '03.03.2026'
+Tags: '["ollama", "rtx", "4090", "3090", "llm", "cost"]'
+lang: 'de'
+Absicht: 'Hardware'
 ---
 
 Wenn Sie nur eine Antwort benötigen: **RTX 3090 ist immer noch die Karte mit dem höchsten Preis-Leistungs-Verhältnis für lokale 24-GB-LLM-Setups, während RTX 4090 bei Leistung und Effizienz gewinnt, wenn Ihre Arbeitslast täglich und latenzempfindlich ist.**

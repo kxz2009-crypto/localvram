@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Ministral-3:14B Local Inference Benchmark Update: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „ministral-3:14b Local Inference Benchmark Update“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud migriert werden sollen. Dieser Entwurf wird zur Überprüfung durch den Editor erstellt und f“
-Veröffentlichungsdatum: 02.03.2026
-Aktualisiertes Datum: 02.03.2026
-Tags: ["ollama", "ministral", "14b", "inference", "benchmark"]
-lang: en
-Absicht: Benchmark
+Titel: 'Ministral-3:14B Local-Inference Benchmark Update: Praxisleitfaden (2026)'
+Beschreibung: 'Ein praktisches Benchmark-Update für die lokale Inferenz von ministral-3:14b, das neue Leistungssignale, Stabilitätsgrenzen und Rollout-Aktionen abdeckt.'
+Veröffentlichungsdatum: '02.03.2026'
+Aktualisiertes Datum: '02.03.2026'
+Tags: '["ollama", "ministral", "14b", "inference", "benchmark"]'
+lang: 'de'
+Absicht: 'Benchmark'
 ---
 
 ## Warum gerade jetzt dieses Thema

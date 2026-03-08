@@ -4,14 +4,14 @@ target-locale: es
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-título: "Los mejores modelos RAG locales para Ollama en 2026"
-descripción: "Selección del modelo RAG bajo restricciones de hardware locales".
-fecha de publicación: 2026-02-24
-actualizadoFecha: 2026-02-24
-etiquetas: ["trapo", "modelos", "ollama"]
-idioma: en
-intención: guía
+---
+título: 'Mejores Modelos RAG Locales para Ollama en 2026'
+descripción: 'Lista práctica de modelos RAG locales para 2026, enfocada en calidad de recuperación, estabilidad de latencia y rendimiento con contexto limitado.'
+fecha de publicación: '2026-02-24'
+actualizadoFecha: '2026-02-24'
+etiquetas: '["rag", "modelos", "ollama"]'
+idioma: 'es'
+intención: 'guía'
 ---
 
 La calidad de RAG no es sólo la solidez del modelo. La calidad de la recuperación y la disciplina del contexto dominan los resultados.

@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-judul: "Apple Silicon Vs Rtx 3090 Local Llm: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"apel silikon vs rtx 3090 lokal llm\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual"
+judul: 'Apple Silicon vs RTX 3090 Local LLM: Panduan Praktis (2026)'
+deskripsi: 'Pengguna yang menelusuri "apel silikon vs rtx 3090 lokal llm" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual'
 tanggal terbit: 04-03-2026
 tanggal diperbarui: 04-03-2026
 tag: ["ollama", "apel", "silikon", "rtx", "3090"]
-bahasa: en
+bahasa: id
 maksud: perangkat keras
 ---
 

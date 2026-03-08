@@ -4,14 +4,14 @@ target-locale: fr
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title : "Q4 vs Q8 Perte de qualité dans Ollama : Guide de décision pratique"
-description : "Quand la perte de qualité Q4 est-elle importante et quand est-ce le bon compromis pour l'inférence locale ?"
-Date de publication : 2026-02-24
-Date de mise à jour : 2026-02-24
-balises : ["quantisation", "q4", "q8", "ollama"]
-langue : fr
-intention : guide
+---
+title : 'Perte de qualité Q4 vs Q8 en Ollama : Guide de décision pratique'
+description : 'Un guide pratique indiquant quand la perte de qualité de Q4 est acceptable et quand Q8 vaut la VRAM supplémentaire pour les charges de travail Ollama.'
+Date de publication : '2026-02-24'
+Date de mise à jour : '2026-02-24'
+balises : '["quantisation", "q4", "q8", "ollama"]'
+langue : 'fr'
+intention : 'guide'
 ---
 
 La plupart des utilisateurs qui posent des questions sur Q4 vs Q8 ne posent pas de question de recherche. Ils prennent une décision de déploiement sous des contraintes VRAM.

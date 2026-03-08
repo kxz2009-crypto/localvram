@@ -4,13 +4,13 @@ target-locale: es
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-título: "Ollama Red de clúster local: lista de verificación de topología práctica"
-descripción: "Cómo probar y validar una configuración de red local multinodo Ollama."
+---
+título: 'Ollama Red de clúster local: lista de verificación de topología práctica'
+descripción: 'Una lista de verificación práctica para validar la topología de red local de múltiples nodos Ollama, la estabilidad de la latencia y la coherencia del rendimiento sostenido.'
 fecha de publicación: 2026-02-24
 actualizadoFecha: 2026-02-24
 etiquetas: ["clúster", "red", "ollama"]
-idioma: en
+idioma: es
 intención: guía
 ---
 

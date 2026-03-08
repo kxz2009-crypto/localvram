@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Deepseek R1 14B Rtx 3090 벤치마크: 실용 가이드(2026)"
-설명: "\"deepseek r1 14b rtx 3090 벤치마크\"를 검색하는 사용자는 일반적으로 로컬에서 실행할지 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실 확장을 위해 생성됩니다."
+title: 'RTX 3090의 DeepSeek R1 14B: 벤치마크 실용 가이드(2026)'
+설명: '예상 처리량, 대기 시간 상쇄 및 배포 경계를 포함하여 RTX 3090의 deepseek r1 14b에 대한 실제 벤치마크 가이드입니다.'
 출판일: 2026-02-28
 업데이트 날짜: 2026-02-28
 태그: ["ollama", "deepseek", "r1", "14b", "rtx"]

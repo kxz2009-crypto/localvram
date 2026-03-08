@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Local Llm Customer Support Rag Stack: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „Local LLM Customer Support Rag Stack“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud migriert werden sollen. Dieser Entwurf wird zur Überprüfung durch den Redakteur und zur sachlichen Erläuterung erstellt.“
-Veröffentlichungsdatum: 03.03.2026
-Aktualisierungsdatum: 03.03.2026
-Tags: ["ollama", "llm", "customer", "support", "rag"]
-lang: en
-Absicht: Leitfaden
+Titel: 'Lokaler LLM Customer-Support RAG-Stack: Praxisleitfaden (2026)'
+Beschreibung: 'Ein praktischer Leitfaden zum Aufbau eines lokalen RAG-Stacks für den Kundensupport mit Latenz-, Qualitäts- und Kostenleitplanken.'
+Veröffentlichungsdatum: '03.03.2026'
+Aktualisierungsdatum: '03.03.2026'
+Tags: '["ollama", "llm", "customer", "support", "rag"]'
+lang: 'de'
+Absicht: 'Leitfaden'
 ---
 
 ## Warum gerade jetzt dieses Thema

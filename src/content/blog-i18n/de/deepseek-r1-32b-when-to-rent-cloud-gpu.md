@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Deepseek R1 32B Rent Cloud Gpu Or Local: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „Deepseek R1 32B Rent Cloud GPU or Local“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung durch den Redakteur und zur sachlichen Prüfung erstellt.“
-Veröffentlichungsdatum: 01.03.2026
-Aktualisierungsdatum: 01.03.2026
-Tags: ["ollama", "deepseek", "r1", "32b", "rent"]
-lang: en
-Absicht: Kosten
+Titel: 'DeepSeek R1 32B: Wann Cloud-GPU mieten und wann lokal bleiben (2026)'
+Beschreibung: 'Ein praktischer Entscheidungsleitfaden für DeepSeek R1 32B: Wann lokal ausreicht, wann Cloud-Miete gerechtfertigt ist und wie man die Kosten begrenzen kann.'
+Veröffentlichungsdatum: '01.03.2026'
+Aktualisierungsdatum: '01.03.2026'
+Tags: '["ollama", "deepseek", "r1", "32b", "rent"]'
+lang: 'de'
+Absicht: 'Kosten'
 ---
 
 ## Warum gerade jetzt dieses Thema

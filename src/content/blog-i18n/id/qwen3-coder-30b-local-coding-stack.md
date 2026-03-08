@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen3 Penyiapan Pengkodean Lokal Coder 30B: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"penyiapan pengkodean lokal qwen3 coder 30b\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual"
+title: 'Pengaturan Pengkodean Lokal Qwen3 Coder 30B: Panduan Praktis (2026)'
+deskripsi: 'Pengguna yang menelusuri "penyiapan pengkodean lokal qwen3 coder 30b" biasanya memutuskan apakah akan menjalankannya secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual'
 tanggal terbit: 04-03-2026
 tanggal diperbarui: 04-03-2026
 tag: ["ollama", "qwen3", "coder", "30b", "coding"]
-bahasa: en
+bahasa: id
 maksud: panduan
 ---
 

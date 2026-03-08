@@ -4,13 +4,13 @@ target-locale: id
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "Model RAG Lokal Terbaik untuk Ollama pada tahun 2026"
-deskripsi: "Pemilihan model RAG berdasarkan batasan perangkat keras lokal."
+---
+title: 'Model RAG Lokal Terbaik untuk Ollama di 2026'
+deskripsi: 'Daftar praktis model RAG lokal untuk 2026 dengan fokus pada kualitas retrieval, stabilitas latensi, dan performa pada konteks terbatas.'
 tanggal terbit: 24-02-2026
 tanggal diperbarui: 24-02-2026
-tag: ["kain", "model", "ollama"]
-bahasa: en
+tag: ["rag", "model", "ollama"]
+bahasa: id
 maksud: panduan
 ---
 

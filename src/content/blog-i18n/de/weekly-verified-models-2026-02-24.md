@@ -4,14 +4,14 @@ target-locale: de
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-Titel: „Wöchentlich verifizierte Modelle: Schnappschuss vom 24.02.2026“
-Beschreibung: „Was diese Woche überprüft wurde und was sich an den Entscheidungen zur lokalen Modellanpassung geändert hat.“
-Veröffentlichungsdatum: 24.02.2026
-Aktualisierungsdatum: 24.02.2026
-Tags: ["wöchentlich", "verifiziert", "Benchmarks"]
-lang: en
-Absicht: Benchmark
+---
+Titel: 'Wöchentlich verifizierte Modelle: Schnappschuss vom 24.02.2026'
+Beschreibung: 'Eine wöchentliche Momentaufnahme verifizierter Modellläufe und entscheidungsrelevanter Änderungen der lokalen Modellanpassung.'
+Veröffentlichungsdatum: '24.02.2026'
+Aktualisierungsdatum: '24.02.2026'
+Tags: '["wöchentlich", "verifiziert", "Benchmarks"]'
+lang: 'de'
+Absicht: 'Benchmark'
 ---
 
 Dieser wöchentliche Snapshot verfolgt verifizierte Modellläufe und entscheidungsrelevante Änderungen.

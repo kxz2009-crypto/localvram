@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-título: "Configuración local de Llama 70B en Rtx 3090: Guía práctica (2026)"
-descripción: "Los usuarios que buscan \"llama 70b en configuración local rtx 3090\" normalmente están decidiendo si ejecutar localmente o pasar a la nube. Este borrador se genera para revisión del editor y expansión factual"
+título: 'Llama 70B en RTX 3090: Guía Práctica de Setup Local (2026)'
+descripción: 'Guía práctica para ejecutar cargas tipo Llama 70B en RTX 3090, con límites realistas, chequeos de estabilidad y reglas de desborde a la nube.'
 fecha de publicación: 2026-02-28
 actualizadoFecha: 2026-02-28
 etiquetas: ["ollama", "llama", "70b", "rtx", "3090"]
-idioma: en
+idioma: es
 intención: hardware
 ---
 

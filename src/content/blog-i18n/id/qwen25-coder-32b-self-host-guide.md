@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen2.5 Panduan Host Mandiri Coder 32B: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang mencari \"panduan host mandiri qwen2.5 coder 32b\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual"
+title: 'Panduan Self-Host Qwen2.5 Coder 32B: Panduan Praktis (2026)'
+deskripsi: 'Panduan self-host praktis untuk qwen2.5 coder 32b, mencakup kecocokan hardware, pemeriksaan stabilitas, dan guardrail produksi.'
 tanggal terbit: 03-03-2026
 tanggal diperbarui: 03-03-2026
 tag: ["ollama", "qwen2", "coder", "32b", "self"]
-bahasa: en
+bahasa: id
 maksud: panduan
 ---
 

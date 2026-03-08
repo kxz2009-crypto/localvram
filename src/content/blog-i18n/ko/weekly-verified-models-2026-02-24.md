@@ -4,9 +4,9 @@ target-locale: ko
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-title: "주간 인증 모델: 2026-02-24 스냅샷"
-Description: "이번 주에 확인된 내용과 로컬 모델 적합 결정에서 변경된 내용입니다."
+---
+title: '주간 검증 모델: 2026-02-24 스냅샷'
+Description: '검증된 모델 실행 및 로컬 모델 적합성의 의사결정 관련 변경 사항에 대한 주간 스냅샷입니다.'
 출판일: 2026-02-24
 업데이트 날짜: 2026-02-24
 태그: ["주간", "검증된", "벤치마크"]

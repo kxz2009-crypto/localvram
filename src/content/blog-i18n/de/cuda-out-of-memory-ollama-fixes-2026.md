@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Cuda Out Of Memory Ollama Fix: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach „Cuda Out of Memory Ollama Fix“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung durch den Editor und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 28.02.2026
-Aktualisierungsdatum: 28.02.2026
-Tags: ["cuda", "out", "memory", "ollama", "fix"]
-lang: en
-Absicht: Fehlerbehebung
+Titel: 'CUDA Out of Memory in Ollama: Praktischer Fix-Guide (2026)'
+Beschreibung: 'Praktischer Leitfaden zur Behebung von CUDA-Out-of-Memory-Fehlern in Ollama mit Local-First-Vorgehen und klaren Cloud-Fallback-Triggern.'
+Veröffentlichungsdatum: '28.02.2026'
+Aktualisierungsdatum: '28.02.2026'
+Tags: '["cuda", "out", "memory", "ollama", "fix"]'
+lang: 'de'
+Absicht: 'Fehlerbehebung'
 ---
 
 ## Warum gerade jetzt dieses Thema

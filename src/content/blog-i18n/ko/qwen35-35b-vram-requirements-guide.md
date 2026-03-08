@@ -5,8 +5,8 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen3.5 35B Vram 요구사항: 실용 가이드(2026)"
-Description: "\"qwen3.5 35b vram 요구 사항\"을 검색하는 사용자는 일반적으로 로컬에서 실행할지 클라우드로 이동할지 결정합니다. 이 초안은 편집자 검토 및 사실 확장을 위해 생성됩니다."
+title: 'Qwen3.5 35B VRAM 요구사항: 실용 가이드(2026)'
+Description: '로컬 타당성 경계, 안정성 위험 및 클라우드 대체 트리거가 포함된 qwen3.5 35b VRAM 요구 사항에 대한 실용적인 가이드입니다.'
 출판일: 2026-02-28
 업데이트 날짜: 2026-02-28
 태그: ["ollama", "qwen3", "35b", "vram", "요구 사항"]

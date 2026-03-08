@@ -5,13 +5,13 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-Titel: „Llama 4 Local Inference Machbarkeit: Praktischer Leitfaden (2026)“
-Beschreibung: „Benutzer, die nach der „Machbarkeit lokaler Inferenz von Lama 4“ suchen, entscheiden normalerweise, ob sie lokal ausgeführt oder in die Cloud verschoben werden sollen. Dieser Entwurf wird zur Überprüfung durch den Herausgeber und zur sachlichen Erweiterung erstellt.“
-Veröffentlichungsdatum: 03.03.2026
-Aktualisierungsdatum: 03.03.2026
-Tags: ["ollama", "llama", "inference", "feasibility", "llama4"]
-lang: en
-Absicht: Leitfaden
+Titel: 'Llama 4 lokale Inferenz Machbarkeit: Praxisleitfaden (2026)'
+Beschreibung: 'Praxisleitfaden zur Machbarkeit lokaler Llama-4-Inferenz mit Hardware-Grenzen, Risiko-Checks und Fallback-Planung.'
+Veröffentlichungsdatum: '03.03.2026'
+Aktualisierungsdatum: '03.03.2026'
+Tags: '["ollama", "llama", "inference", "feasibility", "llama4"]'
+lang: 'de'
+Absicht: 'Leitfaden'
 ---
 
 ## Warum gerade jetzt dieses Thema

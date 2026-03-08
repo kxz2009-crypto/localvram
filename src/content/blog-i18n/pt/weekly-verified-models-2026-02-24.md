@@ -4,9 +4,9 @@ target-locale: pt
 status: machine-translated (human review recommended)
 -->
 
-﻿---
-título: "Modelos verificados semanalmente: instantâneo de 24/02/2026"
-description: "O que foi verificado esta semana e o que mudou nas decisões de ajuste do modelo local."
+---
+título: 'Modelos Verificados da Semana: Snapshot 2026-02-24'
+description: 'Um instantâneo semanal de execuções de modelos verificados e alterações relevantes para decisões no ajuste do modelo local.'
 data de publicação: 24/02/2026
 Data atualizada: 24/02/2026
 tags: ["semanalmente", "verificado", "benchmarks"]

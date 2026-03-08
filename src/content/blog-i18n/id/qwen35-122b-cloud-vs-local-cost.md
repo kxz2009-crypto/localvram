@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen3.5 122M Cloud Vs Biaya Lokal: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"qwen3.5 122b cloud vs biaya lokal\" biasanya memutuskan apakah akan menjalankan secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan perluasan faktual"
+title: 'Qwen3.5 122B Cloud vs Biaya Lokal: Panduan Praktis (2026)'
+deskripsi: 'Kerangka biaya praktis untuk qwen3.5 122b yang membandingkan sewa cloud dan kepemilikan lokal berdasarkan profil penggunaan nyata.'
 tanggal terbit: 28-02-2026
 diperbaruiTanggal: 28-02-2026
 tag: ["ollama", "qwen3", "122b", "cloud", "biaya"]
-bahasa: en
+bahasa: id
 maksud: biaya
 ---
 

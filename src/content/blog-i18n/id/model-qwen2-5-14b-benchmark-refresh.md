@@ -5,12 +5,12 @@ status: machine-translated (human review recommended)
 -->
 
 ---
-title: "Qwen2.5:14B Pembaruan Tolok Ukur Inferensi Lokal: Panduan Praktis (2026)"
-deskripsi: "Pengguna yang menelusuri \"qwen2.5:14b pembaruan tolok ukur inferensi lokal\" biasanya memutuskan apakah akan menjalankannya secara lokal atau pindah ke cloud. Draf ini dibuat untuk tinjauan editor dan fakta"
+title: 'Pembaruan Benchmark Inferensi Lokal Qwen2.5:14B: Panduan Praktis (2026)'
+deskripsi: 'Pembaruan benchmark praktis untuk inferensi lokal qwen2.5:14b, dengan konteks throughput terbaru, pemeriksaan stabilitas, dan panduan deployment.'
 tanggal terbit: 02-03-2026
 tanggal diperbarui: 02-03-2026
 tag: ["ollama", "qwen2", "14b", "inferensi", "tolok ukur"]
-bahasa: en
+bahasa: id
 maksud: tolok ukur
 ---
 
