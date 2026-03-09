@@ -1712,6 +1712,124 @@
           "cta_line": "Mulailah dengan penyiapan pengkodean qwen3-coder:30b lokal, lalu tentukan ambang batas fallback cloud yang eksplisit untuk beban kerja puncak."
         }
       }
+    },
+    "en-affiliate-cloud-gpu": {
+      "en": {
+        "title": "Runpod A100 Ollama: Practical Guide (2026)",
+        "description": "A practical guide for running Ollama on Runpod A100 cloud GPUs, with cost comparisons, performance benchmarks, and local vs cloud decision criteria.",
+        "cta_line": "Start with local benchmarks, then use cloud GPU rental only for peak loads or large model inference."
+      },
+      "locales": {
+        "es": {
+          "title": "Runpod A100 Ollama: Guía Práctica (2026)",
+          "description": "Guía práctica para ejecutar Ollama en GPUs en la nube Runpod A100, con comparaciones de costos, benchmarks de rendimiento y criterios de decisión local vs nube.",
+          "cta_line": "Comience con benchmarks locales, luego use alquiler de GPU en la nube solo para cargas pico o inferencia de modelos grandes."
+        },
+        "pt": {
+          "title": "Runpod A100 Ollama: Guia Prático (2026)",
+          "description": "Guia prático para executar Ollama em GPUs em nuvem Runpod A100, com comparações de custos, benchmarks de desempenho e critérios de decisão local vs nuvem.",
+          "cta_line": "Comece com benchmarks locais, depois use aluguel de GPU em nuvem apenas para cargas de pico ou inferência de modelos grandes."
+        },
+        "fr": {
+          "title": "Runpod A100 Ollama : Guide Pratique (2026)",
+          "description": "Guide pratique pour exécuter Ollama sur des GPU cloud Runpod A100, avec des comparaisons de coûts, des benchmarks de performance et des critères de décision local vs cloud.",
+          "cta_line": "Commencez par des benchmarks locaux, puis utilisez la location de GPU cloud uniquement pour les charges de pointe ou l'inférence de grands modèles."
+        },
+        "de": {
+          "title": "Runpod A100 Ollama: Praktischer Leitfaden (2026)",
+          "description": "Praktischer Leitfaden für den Betrieb von Ollama auf Runpod A100 Cloud-GPUs, mit Kostenvergleichen, Leistungsbenchmarks und lokalen vs. Cloud-Entscheidungskriterien.",
+          "cta_line": "Beginnen Sie mit lokalen Benchmarks und nutzen Sie Cloud-GPU-Mieten nur für Spitzenlasten oder große Modellinferenz."
+        },
+        "ru": {
+          "title": "Runpod A100 Ollama: Практическое руководство (2026)",
+          "description": "Практическое руководство по запуску Ollama на облачных GPU Runpod A100, со сравнением затрат, тестами производительности и критериями выбора между локальным и облачным запуском.",
+          "cta_line": "Начните с локальных бенчмарков, затем используйте аренду облачных GPU только для пиковых нагрузок или инференса больших моделей."
+        },
+        "ja": {
+          "title": "Runpod A100 Ollama: 実践ガイド (2026)",
+          "description": "Runpod A100クラウドGPUでOllamaを実行するための実践ガイド。コスト比較、パフォーマンスベンチマーク、ローカルvsクラウドの判断基準を含みます。",
+          "cta_line": "まずローカルベンチマークから始め、ピーク負荷や大規模モデル推論時のみクラウドGPUレンタルを使用してください。"
+        },
+        "ko": {
+          "title": "Runpod A100 Ollama: 실전 가이드 (2026)",
+          "description": "Runpod A100 클라우드 GPU에서 Ollama를 실행하는 실전 가이드입니다. 비용 비교, 성능 벤치마크, 로컬 vs 클라우드 결정 기준을 포함합니다.",
+          "cta_line": "먼저 로컬 벤치마크로 시작하고, 피크 부하나 대형 모델 추론 시에만 클라우드 GPU 렌탈을 사용하세요."
+        },
+        "ar": {
+          "title": "Runpod A100 Ollama: الدليل العملي (2026)",
+          "description": "دليل عملي لتشغيل Ollama على وحدات معالجة الرسومات السحابية Runpod A100، مع مقارنات التكلفة ومعايير الأداء ومعايير اتخاذ القرار بين المحلي والسحابة.",
+          "cta_line": "ابدأ بالمعايير المحلية، ثم استخدم تأجير GPU السحابي فقط للأحمال القصوى أو استنتاج النماذج الكبيرة."
+        },
+        "hi": {
+          "title": "Runpod A100 Ollama: प्रैक्टिकल गाइड (2026)",
+          "description": "Runpod A100 क्लाउड GPU पर Ollama चलाने के लिए व्यावहारिक गाइड, जिसमें लागत तुलना, प्रदर्शन बेंचमार्क और लोकल बनाम क्लाउड निर्णय मानदंड शामिल हैं।",
+          "cta_line": "पहले लोकल बेंचमार्क से शुरू करें, फिर केवल पीक लोड या बड़े मॉडल इंफरेंस के लिए क्लाउड GPU रेंटल का उपयोग करें।"
+        },
+        "id": {
+          "title": "Runpod A100 Ollama: Panduan Praktis (2026)",
+          "description": "Panduan praktis untuk menjalankan Ollama pada GPU cloud Runpod A100, dengan perbandingan biaya, benchmark kinerja, dan kriteria keputusan lokal vs cloud.",
+          "cta_line": "Mulailah dengan benchmark lokal, lalu gunakan sewa GPU cloud hanya untuk beban puncak atau inferensi model besar."
+        }
+      }
+    },
+    "weekly-local-llm-benchmark-roundup-template": {
+      "en": {
+        "title": "Weekly Local LLM Benchmark Roundup (2026)",
+        "description": "A weekly roundup of local LLM benchmarks, comparing throughput, latency, and VRAM requirements across popular models for informed deployment decisions.",
+        "cta_line": "Review weekly benchmarks before hardware upgrades, then validate with your own workload before scaling."
+      },
+      "locales": {
+        "es": {
+          "title": "Resumen Semanal de Benchmarks LLM Locales (2026)",
+          "description": "Un resumen semanal de benchmarks de LLM locales, comparando rendimiento, latencia y requisitos de VRAM entre modelos populares para decisiones de despliegue informadas.",
+          "cta_line": "Revise los benchmarks semanales antes de actualizar hardware, luego valide con su propia carga de trabajo antes de escalar."
+        },
+        "pt": {
+          "title": "Resumo Semanal de Benchmarks LLM Locais (2026)",
+          "description": "Um resumo semanal de benchmarks de LLM locais, comparando throughput, latência e requisitos de VRAM entre modelos populares para decisões de implantação informadas.",
+          "cta_line": "Revise os benchmarks semanais antes de atualizar hardware, depois valide com sua própria carga de trabalho antes de escalar."
+        },
+        "fr": {
+          "title": "Résumé Hebdomadaire des Benchmarks LLM Locaux (2026)",
+          "description": "Un résumé hebdomadaire des benchmarks LLM locaux, comparant le débit, la latence et les exigences VRAM entre les modèles populaires pour des décisions de déploiement éclairées.",
+          "cta_line": "Passez en revue les benchmarks hebdomadaires avant les mises à niveau matérielles, puis validez avec votre propre charge de travail avant de mettre à l'échelle."
+        },
+        "de": {
+          "title": "Wöchentlicher Lokaler LLM-Benchmark-Rückblick (2026)",
+          "description": "Ein wöchentlicher Rückblick lokaler LLM-Benchmarks, der Durchsatz, Latenz und VRAM-Anforderungen beliebter Modelle für fundierte Bereitstellungsentscheidungen vergleicht.",
+          "cta_line": "Überprüfen Sie wöchentliche Benchmarks vor Hardware-Upgrades und validieren Sie dann mit Ihrer eigenen Arbeitslast vor der Skalierung."
+        },
+        "ru": {
+          "title": "Еженедельный обзор локальных бенчмарков LLM (2026)",
+          "description": "Еженедельный обзор локальных бенчмарков LLM, сравнивающий пропускную способность, задержку и требования VRAM для популярных моделей для принятия обоснованных решений о развертывании.",
+          "cta_line": "Изучите еженедельные бенчмарки перед обновлением оборудования, затем проверьте на своей рабочей нагрузке перед масштабированием."
+        },
+        "ja": {
+          "title": "週刊ローカルLLMベンチマークまとめ (2026)",
+          "description": "ローカルLLMベンチマークの週刊まとめ。人気モデルのスループット、レイテンシ、VRAM要件を比較し、デプロイ判断をサポートします。",
+          "cta_line": "ハードウェアアップグレード前に週間ベンチマークを確認し、スケーリング前に自分のワークロードで検証してください。"
+        },
+        "ko": {
+          "title": "주간 로컬 LLM 벤치마크 정리 (2026)",
+          "description": "로컬 LLM 벤치마크 주간 정리입니다. 인기 모델의 처리량, 지연 시간, VRAM 요구사항을 비교하여 배포 결정을 지원합니다.",
+          "cta_line": "하드웨어 업그레이드 전에 주간 벤치마크를 검토하고, 스케일링 전에 자신의 워크로드로 검증하세요."
+        },
+        "ar": {
+          "title": "ملخص أسبوعي لمعايير LLM المحلية (2026)",
+          "description": "ملخص أسبوعي لمعايير LLM المحلية، يقارن الإنتاجية وزمن الاستجابة ومتطلبات VRAM بين النماذج الشائعة لاتخاذ قرارات نشر مستنيرة.",
+          "cta_line": "راجع المعايير الأسبوعية قبل ترقية الأجهزة، ثم تحقق مع حمل العمل الخاص بك قبل التوسع."
+        },
+        "hi": {
+          "title": "साप्ताहिक लोकल LLM बेंचमार्क राउंडअप (2026)",
+          "description": "लोकल LLM बेंचमार्क का साप्ताहिक राउंडअप, लोकप्रिय मॉडल्स में throughput, latency और VRAM आवश्यकताओं की तुलना करता है।",
+          "cta_line": "हार्डवेयर अपग्रेड से पहले साप्ताहिक बेंचमार्क देखें, फिर स्केलिंग से पहले अपने वर्कलोड से मान्य करें।"
+        },
+        "id": {
+          "title": "Ringkasan Mingguan Benchmark LLM Lokal (2026)",
+          "description": "Ringkasan mingguan benchmark LLM lokal, membandingkan throughput, latensi, dan kebutuhan VRAM di berbagai model populer untuk keputusan penerapan yang tepat.",
+          "cta_line": "Tinjau benchmark mingguan sebelum upgrade perangkat keras, lalu validasi dengan beban kerja Anda sendiri sebelum melakukan scaling."
+        }
+      }
     }
   }
 }
