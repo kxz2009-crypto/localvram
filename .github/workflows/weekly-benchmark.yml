@@ -34,7 +34,7 @@ env:
 
 jobs:
   benchmark-on-3090:
-    runs-on: [self-hosted, Linux, X64, gpu, 3090]
+    runs-on: [self-hosted, Linux, X64, 3090, local-ai]
     steps:
       - name: Checkout
         id: checkout
