@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-05T03:14:41.360127Z",
+  "updated_at": "2026-03-10T03:12:00.235397Z",
   "last_run": {
-    "run_at": "2026-03-05T03:14:41.360127Z",
-    "queue_date": "2026-03-05",
+    "run_at": "2026-03-10T03:12:00.235397Z",
+    "queue_date": "2026-03-10",
     "reviewed_count": 3,
     "auto_approved_count": 3,
     "pending_manual_review_count": 0,
@@ -12,50 +12,104 @@
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-03-05/01-weekly-local-llm-benchmark-roundup-template.md",
-        "slug": "weekly-local-llm-benchmark-roundup-template",
-        "score": 560.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 194,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.7966,
-          "topic_score": 0.2308,
-          "slug": "qwen35-122b-cloud-vs-local-cost"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-05/02-en-affiliate-cloud-gpu.md",
-        "slug": "en-affiliate-cloud-gpu",
-        "score": 280.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 192,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.8034,
-          "topic_score": 0.3077,
-          "slug": "qwen35-122b-cloud-vs-local-cost"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-05/03-model-llama3-3-70b-benchmark-refresh.md",
-        "slug": "model-llama3-3-70b-benchmark-refresh",
-        "score": 200.0,
+        "draft": "content-queue/2026-03-10/01-model-gpt-oss-20b-benchmark-refresh.md",
+        "slug": "model-gpt-oss-20b-benchmark-refresh",
+        "score": 1000.0,
         "status_before": "draft",
         "status_after": "approved_auto",
         "word_count": 196,
         "risk_flags": [],
         "similarity": {
-          "score": 0.8051,
-          "topic_score": 0.4615,
-          "slug": "model-qwen3-coder-30b-local-benchmark"
+          "score": 0.9633,
+          "topic_score": 0.1765,
+          "slug": "en-affiliate-cloud-gpu"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-10/02-model-mistral-small-22b-benchmark-refresh.md",
+        "slug": "model-mistral-small-22b-benchmark-refresh",
+        "score": 490.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 196,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9375,
+          "topic_score": 0.1765,
+          "slug": "en-affiliate-cloud-gpu"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-10/03-model-gemma3-27b-benchmark-refresh.md",
+        "slug": "model-gemma3-27b-benchmark-refresh",
+        "score": 360.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 195,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9459,
+          "topic_score": 0.1875,
+          "slug": "en-affiliate-cloud-gpu"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-10T03:12:00.235397Z",
+      "queue_date": "2026-03-10",
+      "reviewed_count": 3,
+      "auto_approved_count": 3,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-03-10/01-model-gpt-oss-20b-benchmark-refresh.md",
+          "slug": "model-gpt-oss-20b-benchmark-refresh",
+          "score": 1000.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 196,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9633,
+            "topic_score": 0.1765,
+            "slug": "en-affiliate-cloud-gpu"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-10/02-model-mistral-small-22b-benchmark-refresh.md",
+          "slug": "model-mistral-small-22b-benchmark-refresh",
+          "score": 490.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 196,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9375,
+            "topic_score": 0.1765,
+            "slug": "en-affiliate-cloud-gpu"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-10/03-model-gemma3-27b-benchmark-refresh.md",
+          "slug": "model-gemma3-27b-benchmark-refresh",
+          "score": 360.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 195,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9459,
+            "topic_score": 0.1875,
+            "slug": "en-affiliate-cloud-gpu"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-05T03:14:41.360127Z",
       "queue_date": "2026-03-05",
