@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-04T09:01:36Z",
+  "updated_at": "2026-03-10T08:00:29Z",
   "endpoint": "http://127.0.0.1:11434",
   "required_targets": [
     "qwen3",
@@ -16,7 +16,7 @@
     "llama4",
     "qwq",
     "translategemma",
-    "glm-4.7-flash"
+    "nemotron-3-nano"
   ],
   "retry_delays_s": [
     5.0,
@@ -25,7 +25,7 @@
   ],
   "port": 11434,
   "env": {
-    "runner_name": "3090-WSL2",
+    "runner_name": "Vernon",
     "runner_os": "Linux",
     "runner_arch": "X64",
     "hostname": "",
@@ -61,16 +61,16 @@
     },
     "OLLAMA_VERSION": {
       "exit": 0,
-      "stdout": "ollama version is 0.17.1",
+      "stdout": "ollama version is 0.17.7",
       "stderr": ""
     }
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=170,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=177,fd=3))"
     ],
     "ps_ollama": [
-      "gao20        170       1  3 16:53 ?        00:00:18 /usr/local/bin/ollama serve"
+      "gao20        177       1  0 12:14 ?        00:00:01 /usr/local/bin/ollama serve"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -85,21 +85,21 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Wed 2026-03-04 16:53:06 CST; 8min ago\n   Main PID: 170 (ollama)\n      Tasks: 24 (limit: 57695)\n     Memory: 209.3M (peak: 445.2M)\n        CPU: 19.026s\n     CGroup: /system.slice/ollama.service\n             └─170 /usr/local/bin/ollama serve\n\nMar 04 16:59:02 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:02 | 200 |  200.748967ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 16:59:02 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:02 | 200 |      22.058µs |       127.0.0.1 | GET      \"/api/version\"\nMar 04 16:59:02 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:02 | 200 |      19.761µs |       127.0.0.1 | GET      \"/api/version\"\nMar 04 16:59:02 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:02 | 200 |  208.862832ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 16:59:03 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:03 | 200 |  195.169373ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 16:59:03 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:03 | 200 |      19.745µs |       127.0.0.1 | GET      \"/api/version\"\nMar 04 16:59:03 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:03 | 200 |      19.648µs |       127.0.0.1 | GET      \"/api/version\"\nMar 04 16:59:04 Vernon ollama[170]: [GIN] 2026/03/04 - 16:59:04 | 200 |  182.021629ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 17:01:36 Vernon ollama[170]: [GIN] 2026/03/04 - 17:01:36 | 200 |  143.805543ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 04 17:01:36 Vernon ollama[170]: [GIN] 2026/03/04 - 17:01:36 | 200 |      28.359µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Tue 2026-03-10 12:08:18 CST; 3h 52min ago\n   Main PID: 177 (ollama)\n      Tasks: 22 (limit: 57695)\n     Memory: 41.1M (peak: 4.1G)\n        CPU: 1min 40.142s\n     CGroup: /system.slice/ollama.service\n             └─177 /usr/local/bin/ollama serve\n\nMar 10 15:54:18 Vernon ollama[177]: [GIN] 2026/03/10 - 15:54:18 | 200 |  342.427988ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 10 15:54:18 Vernon ollama[177]: [GIN] 2026/03/10 - 15:54:18 | 200 |       26.59µs |       127.0.0.1 | GET      \"/api/version\"\nMar 10 15:54:18 Vernon ollama[177]: [GIN] 2026/03/10 - 15:54:18 | 200 |      24.662µs |       127.0.0.1 | GET      \"/api/version\"\nMar 10 15:54:18 Vernon ollama[177]: [GIN] 2026/03/10 - 15:54:18 | 200 |  185.289982ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 10 15:54:19 Vernon ollama[177]: [GIN] 2026/03/10 - 15:54:19 | 200 |   181.24059ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 10 15:54:19 Vernon ollama[177]: [GIN] 2026/03/10 - 15:54:19 | 200 |      23.265µs |       127.0.0.1 | GET      \"/api/version\"\nMar 10 15:54:19 Vernon ollama[177]: [GIN] 2026/03/10 - 15:54:19 | 200 |      31.297µs |       127.0.0.1 | GET      \"/api/version\"\nMar 10 15:54:19 Vernon ollama[177]: [GIN] 2026/03/10 - 15:54:19 | 200 |  182.423992ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 10 16:00:28 Vernon ollama[177]: [GIN] 2026/03/10 - 16:00:28 | 200 |  193.059245ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 10 16:00:29 Vernon ollama[177]: [GIN] 2026/03/10 - 16:00:29 | 200 |      23.839µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
-      "stdout": "UNIT                                                      LOAD   ACTIVE SUB     DESCRIPTION\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service loaded active running GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n1 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
+      "stdout": "UNIT                                                   LOAD   ACTIVE SUB     DESCRIPTION\n  actions.runner.kxz2009-crypto-localvram.Vernon.service loaded active running GitHub Actions Runner (kxz2009-crypto-localvram.Vernon)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n1 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
       "stderr": ""
     }
   },
   "api": {
     "version": {
-      "version": "0.17.1"
+      "version": "0.17.7"
     },
     "tags": {
-      "model_count": 37,
+      "model_count": 43,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -118,14 +118,14 @@
         "minimax-m2.5:cloud",
         "ministral-3:14b",
         "mistral-small:22b",
-        "qwen2.5-coder:32b",
-        "qwen2.5:14b",
-        "qwen2.5:32b"
+        "nemotron-3-nano:30b",
+        "olmo-3.1:32b-instruct",
+        "olmo-3.1:32b-think"
       ]
     }
   },
   "summary": {
-    "model_count": 37,
+    "model_count": 43,
     "required_targets_count": 15,
     "required_targets_runnable_count": 15,
     "required_targets_runnable": [
@@ -143,7 +143,7 @@
       "llama4",
       "qwq",
       "translategemma",
-      "glm-4.7-flash"
+      "nemotron-3-nano"
     ],
     "failure_class": "none",
     "failure_detail": ""

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-04T09:20:38Z",
+  "updated_at": "2026-03-10T08:14:57Z",
   "endpoint": "http://127.0.0.1:11434",
   "required_targets": [
     "qwen3",
@@ -16,7 +16,7 @@
     "llama4",
     "qwq",
     "translategemma",
-    "glm-4.7-flash"
+    "nemotron-3-nano"
   ],
   "retry_delays_s": [
     5.0,
@@ -25,7 +25,7 @@
   ],
   "port": 11434,
   "env": {
-    "runner_name": "3090-WSL2",
+    "runner_name": "Vernon",
     "runner_os": "Linux",
     "runner_arch": "X64",
     "hostname": "",
@@ -61,17 +61,17 @@
     },
     "OLLAMA_VERSION": {
       "exit": 0,
-      "stdout": "ollama version is 0.17.1",
+      "stdout": "ollama version is 0.17.7",
       "stderr": ""
     }
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=170,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=177,fd=3))"
     ],
     "ps_ollama": [
-      "gao20        170       1 10 16:55 ?        00:02:38 /usr/local/bin/ollama serve",
-      "gao20      10954     170 99 17:19 ?        00:05:26 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-2087816c631256b43c000812d9bbbe7f1e34d1cccd2f28e310704fdd9905bf6b --port 37071"
+      "gao20        177       1  0 12:14 ?        00:00:13 /usr/local/bin/ollama serve",
+      "gao20      19300     177 99 16:14 ?        00:00:44 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 44913"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -86,21 +86,21 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Wed 2026-03-04 16:53:06 CST; 27min ago\n   Main PID: 170 (ollama)\n      Tasks: 79 (limit: 57695)\n     Memory: 37.2G (peak: 45.5G swap: 207.3M swap peak: 318.3M)\n        CPU: 28min 37.737s\n     CGroup: /system.slice/ollama.service\n             ├─  170 /usr/local/bin/ollama serve\n             └─10954 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-2087816c631256b43c000812d9bbbe7f1e34d1cccd2f28e310704fdd9905bf6b --port 37071\n\nMar 04 17:18:57 Vernon ollama[170]: time=2026-03-04T17:18:57.560+08:00 level=INFO source=device.go:267 msg=\"compute graph\" device=CPU size=\"4.0 MiB\"\nMar 04 17:18:57 Vernon ollama[170]: time=2026-03-04T17:18:57.560+08:00 level=INFO source=device.go:272 msg=\"total memory\" size=\"56.8 GiB\"\nMar 04 17:18:57 Vernon ollama[170]: time=2026-03-04T17:18:57.560+08:00 level=INFO source=sched.go:566 msg=\"loaded runners\" count=1\nMar 04 17:18:57 Vernon ollama[170]: time=2026-03-04T17:18:57.560+08:00 level=INFO source=server.go:1350 msg=\"waiting for llama runner to start responding\"\nMar 04 17:18:57 Vernon ollama[170]: time=2026-03-04T17:18:57.560+08:00 level=INFO source=server.go:1384 msg=\"waiting for server to become available\" status=\"llm server loading model\"\nMar 04 17:20:12 Vernon ollama[170]: time=2026-03-04T17:20:12.335+08:00 level=INFO source=server.go:1388 msg=\"llama runner started in 70.97 seconds\"\nMar 04 17:20:19 Vernon ollama[170]: [GIN] 2026/03/04 - 17:20:19 | 200 |         1m15s |       127.0.0.1 | POST     \"/api/generate\"\nMar 04 17:20:28 Vernon ollama[170]: [GIN] 2026/03/04 - 17:20:28 | 200 |  9.109495976s |       127.0.0.1 | POST     \"/api/generate\"\nMar 04 17:20:37 Vernon ollama[170]: [GIN] 2026/03/04 - 17:20:37 | 200 |  9.473649351s |       127.0.0.1 | POST     \"/api/generate\"\nMar 04 17:20:38 Vernon ollama[170]: [GIN] 2026/03/04 - 17:20:38 | 200 |      24.032µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Tue 2026-03-10 12:08:18 CST; 4h 6min ago\n   Main PID: 177 (ollama)\n      Tasks: 69 (limit: 57695)\n     Memory: 4.7G (peak: 45.5G swap: 200.4M swap peak: 200.6M)\n        CPU: 20min 9.301s\n     CGroup: /system.slice/ollama.service\n             ├─  177 /usr/local/bin/ollama serve\n             └─19300 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 44913\n\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=ggml.go:482 msg=\"offloading 45 repeating layers to GPU\"\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=ggml.go:486 msg=\"offloading output layer to CPU\"\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=ggml.go:494 msg=\"offloaded 45/53 layers to GPU\"\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=server.go:1350 msg=\"waiting for llama runner to start responding\"\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=server.go:1384 msg=\"waiting for server to become available\" status=\"llm server loading model\"\nMar 10 16:14:50 Vernon ollama[177]: time=2026-03-10T16:14:50.194+08:00 level=INFO source=server.go:1388 msg=\"llama runner started in 30.34 seconds\"\nMar 10 16:14:50 Vernon ollama[177]: [GIN] 2026/03/10 - 16:14:50 | 200 | 31.707546308s |       127.0.0.1 | POST     \"/api/generate\"\nMar 10 16:14:54 Vernon ollama[177]: [GIN] 2026/03/10 - 16:14:54 | 200 |  2.362678887s |       127.0.0.1 | POST     \"/api/generate\"\nMar 10 16:14:56 Vernon ollama[177]: [GIN] 2026/03/10 - 16:14:56 | 200 |  2.350631604s |       127.0.0.1 | POST     \"/api/generate\"\nMar 10 16:14:57 Vernon ollama[177]: [GIN] 2026/03/10 - 16:14:57 | 200 |      43.851µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
-      "stdout": "UNIT                                                      LOAD   ACTIVE SUB     DESCRIPTION\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service loaded active running GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n1 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
+      "stdout": "UNIT                                                   LOAD   ACTIVE SUB     DESCRIPTION\n  actions.runner.kxz2009-crypto-localvram.Vernon.service loaded active running GitHub Actions Runner (kxz2009-crypto-localvram.Vernon)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n1 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
       "stderr": ""
     }
   },
   "api": {
     "version": {
-      "version": "0.17.1"
+      "version": "0.17.7"
     },
     "tags": {
-      "model_count": 37,
+      "model_count": 43,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -119,14 +119,14 @@
         "minimax-m2.5:cloud",
         "ministral-3:14b",
         "mistral-small:22b",
-        "qwen2.5-coder:32b",
-        "qwen2.5:14b",
-        "qwen2.5:32b"
+        "nemotron-3-nano:30b",
+        "olmo-3.1:32b-instruct",
+        "olmo-3.1:32b-think"
       ]
     }
   },
   "summary": {
-    "model_count": 37,
+    "model_count": 43,
     "required_targets_count": 15,
     "required_targets_runnable_count": 15,
     "required_targets_runnable": [
@@ -144,7 +144,7 @@
       "llama4",
       "qwq",
       "translategemma",
-      "glm-4.7-flash"
+      "nemotron-3-nano"
     ],
     "failure_class": "none",
     "failure_detail": ""

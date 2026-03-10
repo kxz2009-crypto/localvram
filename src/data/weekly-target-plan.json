@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-03-04T09:01:36Z",
+  "generated_at": "2026-03-10T08:00:28Z",
   "endpoint": "http://127.0.0.1:11434",
   "base_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "base_targets_raw_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
-  "resolved_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96,translategemma=96,glm-4.7-flash=96",
-  "local_model_count": 37,
+  "resolved_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96,translategemma=96,nemotron-3-nano=96",
+  "local_model_count": 43,
   "local_models_sample": [
     "bge-m3:latest",
     "deepseek-ocr:3b-bf16",
@@ -23,21 +23,21 @@
     "minimax-m2.5:cloud",
     "ministral-3:14b",
     "mistral-small:22b",
+    "nemotron-3-nano:30b",
+    "olmo-3.1:32b-instruct",
+    "olmo-3.1:32b-think",
     "qwen2.5-coder:32b",
     "qwen2.5:14b",
     "qwen2.5:32b",
     "qwen2.5:72b",
+    "qwen3-coder-next:latest",
     "qwen3-coder:30b",
     "qwen3-vl:30b",
     "qwen3-vl:32b",
     "qwen3-vl:32b-instruct-q8_0",
-    "qwen3-vl:32b-thinking-bf16",
-    "qwen3.5:122b",
-    "qwen3.5:27b",
-    "qwen3.5:35b",
-    "qwen3.5:397b-cloud"
+    "qwen3-vl:32b-thinking-bf16"
   ],
-  "local_family_count": 22,
+  "local_family_count": 25,
   "local_families": [
     "bge-m3",
     "deepseek-ocr",
@@ -52,10 +52,13 @@
     "minimax-m2.5",
     "ministral-3",
     "mistral-small",
+    "nemotron-3-nano",
+    "olmo-3.1",
     "qwen2.5",
     "qwen2.5-coder",
     "qwen3",
     "qwen3-coder",
+    "qwen3-coder-next",
     "qwen3-vl",
     "qwen3.5",
     "qwq",
@@ -73,9 +76,12 @@
   "retired_local_model_count": 0,
   "candidate_families": [
     "translategemma",
+    "nemotron-3-nano",
+    "olmo-3.1",
     "glm-4.7-flash",
     "glm-5",
     "minimax-m2.5",
+    "qwen3-coder-next",
     "s10350330/openbiollm-llama3-70b.i1-q4_k_m.gguf"
   ],
   "added_targets": [
@@ -84,19 +90,19 @@
       "num_predict": 96
     },
     {
+      "model": "nemotron-3-nano",
+      "num_predict": 96
+    },
+    {
+      "model": "olmo-3.1",
+      "num_predict": 96
+    },
+    {
       "model": "glm-4.7-flash",
       "num_predict": 96
     },
     {
       "model": "glm-5",
-      "num_predict": 96
-    },
-    {
-      "model": "minimax-m2.5",
-      "num_predict": 96
-    },
-    {
-      "model": "s10350330/openbiollm-llama3-70b.i1-q4_k_m.gguf",
       "num_predict": 96
     }
   ],
