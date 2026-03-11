@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-10T08:14:57Z",
+  "updated_at": "2026-03-11T04:32:24Z",
   "endpoint": "http://127.0.0.1:11434",
   "required_targets": [
     "qwen3",
@@ -67,11 +67,11 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=177,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=175,fd=3))"
     ],
     "ps_ollama": [
-      "gao20        177       1  0 12:14 ?        00:00:13 /usr/local/bin/ollama serve",
-      "gao20      19300     177 99 16:14 ?        00:00:44 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 44913"
+      "gao20        175       1 99 11:34 ?        01:18:54 /usr/local/bin/ollama serve",
+      "gao20      33373     175 99 12:31 ?        00:00:44 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 35717"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -86,7 +86,7 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Tue 2026-03-10 12:08:18 CST; 4h 6min ago\n   Main PID: 177 (ollama)\n      Tasks: 69 (limit: 57695)\n     Memory: 4.7G (peak: 45.5G swap: 200.4M swap peak: 200.6M)\n        CPU: 20min 9.301s\n     CGroup: /system.slice/ollama.service\n             ├─  177 /usr/local/bin/ollama serve\n             └─19300 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 44913\n\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=ggml.go:482 msg=\"offloading 45 repeating layers to GPU\"\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=ggml.go:486 msg=\"offloading output layer to CPU\"\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=ggml.go:494 msg=\"offloaded 45/53 layers to GPU\"\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=server.go:1350 msg=\"waiting for llama runner to start responding\"\nMar 10 16:14:21 Vernon ollama[177]: time=2026-03-10T16:14:21.876+08:00 level=INFO source=server.go:1384 msg=\"waiting for server to become available\" status=\"llm server loading model\"\nMar 10 16:14:50 Vernon ollama[177]: time=2026-03-10T16:14:50.194+08:00 level=INFO source=server.go:1388 msg=\"llama runner started in 30.34 seconds\"\nMar 10 16:14:50 Vernon ollama[177]: [GIN] 2026/03/10 - 16:14:50 | 200 | 31.707546308s |       127.0.0.1 | POST     \"/api/generate\"\nMar 10 16:14:54 Vernon ollama[177]: [GIN] 2026/03/10 - 16:14:54 | 200 |  2.362678887s |       127.0.0.1 | POST     \"/api/generate\"\nMar 10 16:14:56 Vernon ollama[177]: [GIN] 2026/03/10 - 16:14:56 | 200 |  2.350631604s |       127.0.0.1 | POST     \"/api/generate\"\nMar 10 16:14:57 Vernon ollama[177]: [GIN] 2026/03/10 - 16:14:57 | 200 |      43.851µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Wed 2026-03-11 11:30:02 CST; 1h 2min ago\n   Main PID: 175 (ollama)\n      Tasks: 78 (limit: 57695)\n     Memory: 4.7G (peak: 45.3G swap: 202.7M swap peak: 565.7M)\n        CPU: 1h 45min 49.452s\n     CGroup: /system.slice/ollama.service\n             ├─  175 /usr/local/bin/ollama serve\n             └─33373 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 35717\n\nMar 11 12:31:48 Vernon ollama[175]: time=2026-03-11T12:31:48.727+08:00 level=INFO source=device.go:267 msg=\"compute graph\" device=CPU size=\"22.1 MiB\"\nMar 11 12:31:48 Vernon ollama[175]: time=2026-03-11T12:31:48.727+08:00 level=INFO source=device.go:272 msg=\"total memory\" size=\"24.6 GiB\"\nMar 11 12:31:48 Vernon ollama[175]: time=2026-03-11T12:31:48.727+08:00 level=INFO source=sched.go:565 msg=\"loaded runners\" count=1\nMar 11 12:31:48 Vernon ollama[175]: time=2026-03-11T12:31:48.727+08:00 level=INFO source=server.go:1350 msg=\"waiting for llama runner to start responding\"\nMar 11 12:31:48 Vernon ollama[175]: time=2026-03-11T12:31:48.727+08:00 level=INFO source=server.go:1384 msg=\"waiting for server to become available\" status=\"llm server loading model\"\nMar 11 12:32:18 Vernon ollama[175]: time=2026-03-11T12:32:18.268+08:00 level=INFO source=server.go:1388 msg=\"llama runner started in 28.70 seconds\"\nMar 11 12:32:18 Vernon ollama[175]: [GIN] 2026/03/11 - 12:32:18 | 200 | 30.013076266s |       127.0.0.1 | POST     \"/api/generate\"\nMar 11 12:32:21 Vernon ollama[175]: [GIN] 2026/03/11 - 12:32:21 | 200 |  2.301548162s |       127.0.0.1 | POST     \"/api/generate\"\nMar 11 12:32:23 Vernon ollama[175]: [GIN] 2026/03/11 - 12:32:23 | 200 |  2.261152249s |       127.0.0.1 | POST     \"/api/generate\"\nMar 11 12:32:24 Vernon ollama[175]: [GIN] 2026/03/11 - 12:32:24 | 200 |      25.916µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
@@ -100,7 +100,7 @@
       "version": "0.17.7"
     },
     "tags": {
-      "model_count": 43,
+      "model_count": 42,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -126,7 +126,7 @@
     }
   },
   "summary": {
-    "model_count": 43,
+    "model_count": 42,
     "required_targets_count": 15,
     "required_targets_runnable_count": 15,
     "required_targets_runnable": [

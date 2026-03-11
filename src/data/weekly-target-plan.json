@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-03-10T08:00:28Z",
+  "generated_at": "2026-03-11T04:17:50Z",
   "endpoint": "http://127.0.0.1:11434",
   "base_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "base_targets_raw_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "resolved_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96,translategemma=96,nemotron-3-nano=96",
-  "local_model_count": 43,
+  "local_model_count": 42,
   "local_models_sample": [
     "bge-m3:latest",
     "deepseek-ocr:3b-bf16",
