@@ -1,42 +1,32 @@
 {
-  "updated_at": "2026-03-06T03:55:21.236934Z",
+  "updated_at": "2026-03-13T03:57:19.928465Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-03-13T00:00:00Z",
+    "next_refresh_at": "2026-03-20T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-03-06T03:55:21.236934Z",
+    "last_refresh_at": "2026-03-13T03:57:19.928465Z",
     "last_refresh_summary": {
-      "incoming_count": 8,
-      "removed_count": 8,
+      "incoming_count": 3,
+      "removed_count": 3,
       "incoming_topic_keys": [
-        "gemma3-27b-local-inference-benchmark-update",
-        "gpt-oss-20b-local-inference-benchmark-update",
-        "llama-70b-on-3090",
-        "mistral-small-22b-local-inference-benchmark-update",
-        "qwen2-5-coder-32b-local-inference-benchmark-update",
-        "qwen3-5-35b-local-inference-benchmark-update",
-        "qwq-32b-local-inference-benchmark-update",
-        "translategemma-27b-local-inference-benchmark-update"
+        "glm-4-7-flash-bf16-local-inference-benchmark-update",
+        "llama4-16x17b-local-inference-benchmark-update",
+        "nemotron-3-nano-30b-local-inference-benchmark-update"
       ],
       "removed_topic_keys": [
-        "apple-silicon-vs-rtx-3090-local-llm",
-        "best-local-llm-for-16gb-vram",
-        "llama-4-local-inference-feasibility",
-        "local-llm-customer-support-rag-stack",
-        "qwen2-5-coder-32b-self-host-guide",
-        "qwen3-coder-30b-local-coding-setup",
-        "runpod-a100-ollama",
-        "weekly-local-llm-benchmark-roundup"
+        "cuda-out-of-memory-ollama-fix",
+        "deepseek-r1-32b-rent-cloud-gpu-or-local",
+        "mistral-small-22b-local-inference-benchmark-update"
       ],
-      "blocked_recent_topic_count": 39
+      "blocked_recent_topic_count": 43
     }
   },
   "items": [
@@ -118,20 +108,6 @@
       "freshness_gap_score": 8
     },
     {
-      "slug": "cuda-out-of-memory-ollama-fixes-2026",
-      "keyword": "cuda out of memory ollama fix",
-      "search_intent_score": 10,
-      "commercial_intent_score": 8,
-      "freshness_gap_score": 8
-    },
-    {
-      "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu",
-      "keyword": "deepseek r1 32b rent cloud gpu or local",
-      "search_intent_score": 8,
-      "commercial_intent_score": 10,
-      "freshness_gap_score": 8
-    },
-    {
       "slug": "model-deepseek-r1-14b-benchmark-refresh",
       "keyword": "deepseek-r1:14b local inference benchmark update",
       "search_intent_score": 8,
@@ -181,8 +157,8 @@
       "freshness_gap_score": 8
     },
     {
-      "slug": "model-mistral-small-22b-benchmark-refresh",
-      "keyword": "mistral-small:22b local inference benchmark update",
+      "slug": "model-nemotron-3-nano-30b-benchmark-refresh",
+      "keyword": "nemotron-3-nano:30b local inference benchmark update",
       "search_intent_score": 7,
       "commercial_intent_score": 7,
       "freshness_gap_score": 10
@@ -237,6 +213,13 @@
       "freshness_gap_score": 10
     },
     {
+      "slug": "model-llama4-16x17b-benchmark-refresh",
+      "keyword": "llama4:16x17b local inference benchmark update",
+      "search_intent_score": 4,
+      "commercial_intent_score": 5,
+      "freshness_gap_score": 10
+    },
+    {
       "slug": "model-qwen3-5-122b-benchmark-refresh",
       "keyword": "qwen3.5:122b local inference benchmark update",
       "search_intent_score": 4,
@@ -249,6 +232,13 @@
       "search_intent_score": 3,
       "commercial_intent_score": 8,
       "freshness_gap_score": 8
+    },
+    {
+      "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+      "keyword": "glm-4.7-flash:bf16 local inference benchmark update",
+      "search_intent_score": 4,
+      "commercial_intent_score": 5,
+      "freshness_gap_score": 7
     }
   ]
 }
