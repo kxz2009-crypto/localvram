@@ -1,0 +1,98 @@
+name: Emergency Restore COM Site
+
+on:
+  workflow_dispatch:
+    inputs:
+      pages_project_name:
+        description: "Cloudflare Pages project name for .com production"
+        required: false
+        default: "localvram"
+        type: string
+      pages_branch:
+        description: "Cloudflare Pages branch target"
+        required: false
+        default: "main"
+        type: string
+      com_domain:
+        description: "COM production origin for post-deploy verification"
+        required: false
+        default: "https://localvram.com"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  restore-com-site:
+    runs-on: ubuntu-latest
+    env:
+      PAGES_PROJECT_NAME: ${{ github.event.inputs.pages_project_name || 'localvram' }}
+      PAGES_BRANCH: ${{ github.event.inputs.pages_branch || 'main' }}
+      COM_DOMAIN: ${{ github.event.inputs.com_domain || 'https://localvram.com' }}
+      ASTRO_TELEMETRY_DISABLED: "1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build COM artifact
+        run: npm run build
+
+      - name: Validate deployment settings
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          if [ -z "${CF_API_TOKEN}" ]; then
+            echo "::error::missing required secret CF_API_TOKEN"
+            exit 1
+          fi
+          if [ -z "${CF_ACCOUNT_ID}" ]; then
+            echo "::error::missing required secret CF_ACCOUNT_ID"
+            exit 1
+          fi
+          if [ -z "${PAGES_PROJECT_NAME}" ]; then
+            echo "::error::pages_project_name cannot be empty"
+            exit 1
+          fi
+          if [ -z "${PAGES_BRANCH}" ]; then
+            echo "::error::pages_branch cannot be empty"
+            exit 1
+          fi
+
+      - name: Deploy dist to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          npx wrangler@3 pages deploy dist \
+            --project-name "${PAGES_PROJECT_NAME}" \
+            --branch "${PAGES_BRANCH}"
+
+      - name: Verify COM production domain
+        run: |
+          set -euo pipefail
+          curl -sS -L "${COM_DOMAIN}/" > /tmp/com-home.html
+          curl -sS -L "${COM_DOMAIN}/en/" > /tmp/com-en.html
+          if ! grep -q 'href="https://localvram.com/en/"' /tmp/com-home.html; then
+            echo "::error::COM homepage canonical/hreflang sanity check failed"
+            exit 1
+          fi
+          if ! grep -q '<html lang="en"' /tmp/com-en.html; then
+            echo "::error::/en page did not render expected English locale"
+            exit 1
+          fi
+
