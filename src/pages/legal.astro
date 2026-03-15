@@ -1,49 +1,87 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const isCnBuild = import.meta.env.BUILD_TARGET === "cn";
+const siteLabel = isCnBuild ? "localVRAM.cn" : "localVRAM.com";
+const pageTitle = isCnBuild ? "法律与隐私 | localVRAM.cn" : "Legal | localVRAM.com";
+const pageDescription = isCnBuild
+  ? "localVRAM.cn 的联盟披露、免责声明与隐私政策。"
+  : "Affiliate disclosure, disclaimer, and privacy policy for localVRAM.com.";
+const pageLocale = isCnBuild ? "zh" : "en";
 ---
 
 <BaseLayout
-  title="Legal | localVRAM.com"
-  description="Affiliate disclosure, disclaimer, and privacy policy for localVRAM.com."
-  locale="en"
+  title={pageTitle}
+  description={pageDescription}
+  locale={pageLocale}
 >
   <main class="container">
     <article class="post-page">
       <header class="post-header">
-        <h1>Legal Information</h1>
+        <h1>{isCnBuild ? "法律信息" : "Legal Information"}</h1>
       </header>
 
       <section class="prose">
-        <h2>Affiliate Disclosure</h2>
-        <p>
-          localVRAM.com is a participant in the Amazon Services LLC Associates Program,
-          RunPod Affiliate Program, and Vast.ai Referral Program. This site contains
-          affiliate links, meaning we may earn a commission if you click through and
-          make a purchase or sign up, at no additional cost to you. These commissions
-          help support our server costs and RTX 3090 hardware maintenance. We only
-          recommend hardware and services we have personally tested or verified.
-        </p>
+        {
+          isCnBuild ? (
+            <>
+              <h2>联盟披露</h2>
+              <p>
+                localVRAM.cn 参与了 Amazon Services LLC Associates、RunPod Affiliate
+                Program 与 Vast.ai Referral Program。本站包含联盟链接；当你通过这些链接购买或注册时，
+                我们可能获得佣金，且不会增加你的额外成本。相关收益将用于服务器成本与 RTX 3090
+                硬件维护。我们仅推荐已实际测试或验证过的硬件与服务。
+              </p>
 
-        <h2>Disclaimer</h2>
-        <p>
-          All content provided on localVRAM.com, including GPU benchmarks,
-          configuration scripts, and hardware advice, is for informational purposes
-          only. The information is provided "as is" without warranty of any kind. We
-          are not responsible for any hardware damage, data loss, or financial loss
-          resulting from the use of information on this site. Handle your hardware and
-          software configurations at your own risk.
-        </p>
+              <h2>免责声明</h2>
+              <p>
+                localVRAM.cn 提供的全部内容（包括 GPU 基准、配置脚本与硬件建议）仅供参考。
+                信息按“现状”提供，不附带任何形式的担保。对于因使用本站信息导致的硬件损坏、数据丢失或财务损失，
+                我们不承担责任。请自行评估风险并谨慎操作。
+              </p>
 
-        <h2>Privacy Policy</h2>
-        <p>
-          We do not directly collect or store personal user data. However, we use
-          third-party tools (such as Cloudflare and Affiliate Tags) that may use
-          cookies to analyze web traffic and track referral conversions for commission
-          purposes. By using this site, you agree to our use of cookies in accordance
-          with these third-party services.
-        </p>
+              <h2>隐私政策</h2>
+              <p>
+                我们不会直接收集或存储个人身份信息。为统计流量与联盟转化，站点可能使用第三方工具
+                （如 Cloudflare 与联盟追踪参数），这些服务可能使用 Cookie。继续使用本站即表示你同意
+                按上述第三方服务方式处理相关访问数据。
+              </p>
+            </>
+          ) : (
+            <>
+              <h2>Affiliate Disclosure</h2>
+              <p>
+                localVRAM.com is a participant in the Amazon Services LLC Associates Program,
+                RunPod Affiliate Program, and Vast.ai Referral Program. This site contains
+                affiliate links, meaning we may earn a commission if you click through and
+                make a purchase or sign up, at no additional cost to you. These commissions
+                help support our server costs and RTX 3090 hardware maintenance. We only
+                recommend hardware and services we have personally tested or verified.
+              </p>
 
-        <p><strong>© 2026 localVRAM.com | All Rights Reserved.</strong></p>
+              <h2>Disclaimer</h2>
+              <p>
+                All content provided on localVRAM.com, including GPU benchmarks,
+                configuration scripts, and hardware advice, is for informational purposes
+                only. The information is provided "as is" without warranty of any kind. We
+                are not responsible for any hardware damage, data loss, or financial loss
+                resulting from the use of information on this site. Handle your hardware and
+                software configurations at your own risk.
+              </p>
+
+              <h2>Privacy Policy</h2>
+              <p>
+                We do not directly collect or store personal user data. However, we use
+                third-party tools (such as Cloudflare and Affiliate Tags) that may use
+                cookies to analyze web traffic and track referral conversions for commission
+                purposes. By using this site, you agree to our use of cookies in accordance
+                with these third-party services.
+              </p>
+            </>
+          )
+        }
+
+        <p><strong>© 2026 {siteLabel} | {isCnBuild ? "保留所有权利。" : "All Rights Reserved."}</strong></p>
       </section>
     </article>
   </main>

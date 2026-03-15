@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { buildCnAlternates } from "../../data/root-alternates";
+import { CN_BRIDGE_ROUTES, type CnBridgeRoute } from "../../data/cn-bridge-routes";
+
+export function getStaticPaths() {
+  return CN_BRIDGE_ROUTES.map((route) => ({
+    params: {
+      slug: String(route.path || "/")
+        .split("/")
+        .map((part) => part.trim())
+        .filter(Boolean)
+        .join("/"),
+    },
+    props: { route },
+  }));
+}
+
+const { route } = Astro.props as { route: CnBridgeRoute };
+const canonicalPath = route.path;
+const enUrl = `https://localvram.com${route.enPath}`;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: `${route.title} | LocalVRAM 中文站`,
+  url: `https://localvram.cn${canonicalPath}`,
+  inLanguage: "zh-CN",
+  description: route.description,
+};
+---
+
+<BaseLayout
+  title={`${route.title} | LocalVRAM 中文站`}
+  description={route.description}
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{route.title}</h1>
+      <p>{route.description}</p>
+      <div class="card" style="margin-top: 16px;">
+        <h2>中文版本说明</h2>
+        <p>
+          该页面正在进行中文内容校对和术语统一。当前可先查看英文完整版获取完整参数、图表和示例。
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={enUrl} target="_blank" rel="noopener noreferrer">查看英文完整版</a>
+          <a class="btn" href="/">返回中文首页</a>
+          <a class="btn" href="/blog/">查看中文博客</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
