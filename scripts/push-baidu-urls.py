@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timedelta, timezone
 import os
 import sys
 import time
@@ -87,6 +88,16 @@ def parse_csv_list(raw: str) -> list[str]:
         if item:
             values.append(item)
     return values
+
+
+def rotate_and_take(items: list[str], limit: int, *, day_key: int) -> list[str]:
+    if limit <= 0 or not items:
+        return []
+    if len(items) <= limit:
+        return items[:limit]
+    start = day_key % len(items)
+    rotated = items[start:] + items[:start]
+    return rotated[:limit]
 
 
 def is_path_excluded(path: str, excluded_prefixes: list[str]) -> bool:
@@ -176,6 +187,18 @@ def main() -> int:
         action="store_true",
         help="Include blog URLs whose zh files are still stub placeholders.",
     )
+    parser.add_argument(
+        "--rotate-by-day",
+        action="store_true",
+        default=True,
+        help="Rotate selected URLs by Beijing day to spread coverage under low quota.",
+    )
+    parser.add_argument(
+        "--no-rotate-by-day",
+        dest="rotate_by_day",
+        action="store_false",
+        help="Disable daily URL rotation.",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Print candidate URLs only, do not push.")
     args = parser.parse_args()
 
@@ -213,7 +236,15 @@ def main() -> int:
             continue
         seen.add(url)
         filtered.append(url)
-    filtered = filtered[: max(0, args.limit)]
+    limit = max(0, args.limit)
+    if args.rotate_by_day and filtered and limit > 0:
+        beijing_now = datetime.now(timezone.utc) + timedelta(hours=8)
+        day_key = int(beijing_now.strftime("%Y%m%d"))
+        offset = day_key % len(filtered)
+        filtered = rotate_and_take(filtered, limit, day_key=day_key)
+        emit(f"selection_mode=rotate_by_day date={beijing_now.date().isoformat()} offset={offset}")
+    else:
+        filtered = filtered[:limit]
 
     emit(f"site_host={site_host}")
     emit(f"excluded_prefixes={excluded_prefixes}")
