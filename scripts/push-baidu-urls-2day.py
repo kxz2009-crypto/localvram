@@ -103,6 +103,13 @@ def chunked(items: list[str], size: int) -> list[list[str]]:
     return [items[i : i + size] for i in range(0, len(items), size)]
 
 
+def is_over_quota_error(status_code: int, body: str) -> bool:
+    if status_code != 400:
+        return False
+    normalized = (body or "").lower()
+    return "over quota" in normalized
+
+
 def post_with_retry(endpoint: str, payload_lines: list[str], retry_delays: list[int], timeout: int) -> str:
     data = ("\n".join(payload_lines) + "\n").encode("utf-8")
     req = urllib.request.Request(endpoint, data=data, method="POST", headers={"Content-Type": "text/plain"})
@@ -119,6 +126,9 @@ def post_with_retry(endpoint: str, payload_lines: list[str], retry_delays: list[
             except Exception:  # noqa: BLE001
                 body = ""
             last_error = f"HTTP {exc.code} {exc.reason} {body}".strip()
+            if is_over_quota_error(exc.code, body):
+                emit(f"over_quota=true error={last_error}", level="warning")
+                raise RuntimeError(last_error) from exc
             if i < len(retry_delays):
                 emit(
                     f"retry_http_error attempt={i + 1}/{attempts} delay_s={retry_delays[i]} error={last_error}",

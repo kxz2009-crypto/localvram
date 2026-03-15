@@ -66,9 +66,9 @@ on:
         default: "https://localvram.cn/sitemap-cn.xml"
         type: string
       baidu_push_limit:
-        description: "Maximum URLs submitted to Baidu in one run"
+        description: "Maximum URLs submitted to Baidu in one run (safe default: 100)"
         required: false
-        default: "5000"
+        default: "100"
         type: string
 
 concurrency:
@@ -102,7 +102,7 @@ jobs:
       BAIDU_PUSH_REQUIRED: ${{ github.event.inputs.baidu_push_required || 'false' }}
       BAIDU_SITE: ${{ github.event.inputs.baidu_site || 'https://localvram.cn' }}
       BAIDU_SITEMAP_URL: ${{ github.event.inputs.baidu_sitemap_url || 'https://localvram.cn/sitemap-cn.xml' }}
-      BAIDU_PUSH_LIMIT: ${{ github.event.inputs.baidu_push_limit || '5000' }}
+      BAIDU_PUSH_LIMIT: ${{ github.event.inputs.baidu_push_limit || '100' }}
       CN_ICP_NUMBER: ${{ vars.CN_ICP_NUMBER || '京ICP备2026009936号' }}
       CN_ICP_URL: ${{ vars.CN_ICP_URL || 'https://beian.miit.gov.cn/' }}
       CN_PUBLIC_SECURITY_RECORD: ${{ vars.CN_PUBLIC_SECURITY_RECORD || '公安备案办理中' }}
