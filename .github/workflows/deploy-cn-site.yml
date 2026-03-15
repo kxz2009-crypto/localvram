@@ -65,6 +65,11 @@ on:
         required: false
         default: "https://localvram.cn/sitemap-cn.xml"
         type: string
+      baidu_only_changed_urls:
+        description: "Push only newly added/updated CN URLs (recommended for low API quota)"
+        required: false
+        default: true
+        type: boolean
       baidu_push_limit:
         description: "Maximum URLs submitted to Baidu in one run (ordinary site safe default: 10/day)"
         required: false
@@ -102,6 +107,7 @@ jobs:
       BAIDU_PUSH_REQUIRED: ${{ github.event.inputs.baidu_push_required || 'false' }}
       BAIDU_SITE: ${{ github.event.inputs.baidu_site || 'https://localvram.cn' }}
       BAIDU_SITEMAP_URL: ${{ github.event.inputs.baidu_sitemap_url || 'https://localvram.cn/sitemap-cn.xml' }}
+      BAIDU_ONLY_CHANGED_URLS: ${{ github.event.inputs.baidu_only_changed_urls || 'true' }}
       BAIDU_PUSH_LIMIT: ${{ github.event.inputs.baidu_push_limit || '10' }}
       CN_ICP_NUMBER: ${{ vars.CN_ICP_NUMBER || '京ICP备2026009936号' }}
       CN_ICP_URL: ${{ vars.CN_ICP_URL || 'https://beian.miit.gov.cn/' }}
@@ -226,6 +232,60 @@ jobs:
 
           rm -f cn_origin_deploy.key dist-cn.tar.gz
 
+      - name: Build changed CN URL candidates for Baidu
+        id: build_baidu_candidates
+        if: ${{ steps.validate_deploy_settings.outputs.mode == 'deploy-origin' }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+          baseline_manifest="logs/cn-url-manifest-baseline.json"
+          current_manifest="logs/cn-url-manifest-current.json"
+          changed_urls_file="logs/baidu-changed-urls.txt"
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${ORIGIN_SSH_PRIVATE_KEY}" > cn_origin_deploy.key
+          chmod 600 cn_origin_deploy.key
+          ssh-keyscan -p "${ORIGIN_PORT}" -H "${ORIGIN_HOST}" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+          set +e
+          scp -i cn_origin_deploy.key -P "${ORIGIN_PORT}" -o BatchMode=yes -o StrictHostKeyChecking=yes \
+            "${ORIGIN_USER}@${ORIGIN_HOST}:${ORIGIN_SITE_ROOT}/.deploy-url-manifest.json" \
+            "${baseline_manifest}" 2>/dev/null
+          scp_status=$?
+          set -e
+
+          if [ "${scp_status}" -ne 0 ]; then
+            echo "{}" > "${baseline_manifest}"
+            echo "baseline_manifest=missing" | tee logs/build-cn-url-diff.log
+          else
+            echo "baseline_manifest=fetched" | tee logs/build-cn-url-diff.log
+          fi
+
+          set -o pipefail
+          set +e
+          python scripts/build-cn-changed-urls.py \
+            --dist-dir dist-cn \
+            --site "${BAIDU_SITE}" \
+            --baseline-manifest "${baseline_manifest}" \
+            --output-manifest "${current_manifest}" \
+            --output-urls "${changed_urls_file}" \
+            --exclude-prefixes "/en,/zh,/api" | tee -a logs/build-cn-url-diff.log
+          diff_status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "${diff_status}" -ne 0 ]; then
+            echo "::warning::failed to build changed CN URL candidates; fallback to empty changed URL set"
+            : > "${changed_urls_file}"
+          fi
+          echo "build_changed_candidates_status=${diff_status}" | tee -a logs/build-cn-url-diff.log
+
+          changed_count=$(grep -cve '^[[:space:]]*$' "${changed_urls_file}" || true)
+          echo "changed_count=${changed_count}" | tee -a logs/build-cn-url-diff.log
+          echo "changed_count=${changed_count}" >> "${GITHUB_OUTPUT}"
+
+          rm -f cn_origin_deploy.key
+
       - name: Mark deploy step result
         id: deploy_cn
         if: ${{ steps.validate_deploy_settings.outputs.mode != 'dry-run' }}
@@ -291,6 +351,7 @@ jobs:
 
           if [ "${PUSH_BAIDU_URLS}" != "true" ]; then
             echo "push_baidu=skipped_by_input" | tee logs/push-baidu-urls.log
+            echo "result=skipped_by_input" >> "${GITHUB_OUTPUT}"
             exit 0
           fi
 
@@ -301,7 +362,29 @@ jobs:
             fi
             echo "::warning::BAIDU_PUSH_TOKEN missing, skip Baidu URL push"
             echo "push_baidu=skipped_missing_token" | tee logs/push-baidu-urls.log
+            echo "result=skipped_missing_token" >> "${GITHUB_OUTPUT}"
             exit 0
+          fi
+
+          url_input_args=()
+          if [ "${BAIDU_ONLY_CHANGED_URLS}" = "true" ]; then
+            changed_urls_file="logs/baidu-changed-urls.txt"
+            if [ ! -f "${changed_urls_file}" ]; then
+              echo "::warning::changed URL list file missing (${changed_urls_file}), skip Baidu push"
+              echo "push_baidu=skipped_missing_changed_urls_file" | tee logs/push-baidu-urls.log
+              echo "result=skipped_missing_changed_urls_file" >> "${GITHUB_OUTPUT}"
+              exit 0
+            fi
+            changed_count=$(grep -cve '^[[:space:]]*$' "${changed_urls_file}" || true)
+            echo "changed_url_candidates=${changed_count}" | tee logs/push-baidu-urls.log
+            if [ "${changed_count}" -le 0 ]; then
+              echo "nothing_to_push=true reason=no_changed_urls" | tee -a logs/push-baidu-urls.log
+              echo "result=no_changed_urls" >> "${GITHUB_OUTPUT}"
+              exit 0
+            fi
+            url_input_args+=(--urls-file "${changed_urls_file}" --no-rotate-by-day)
+          else
+            echo "selection_mode=full_sitemap" | tee logs/push-baidu-urls.log
           fi
 
           set +e
@@ -311,7 +394,8 @@ jobs:
             --limit "${BAIDU_PUSH_LIMIT}" \
             --batch-size 500 \
             --retry-delays-s "5,10,20" \
-            --timeout-s 30 | tee logs/push-baidu-urls.log
+            --timeout-s 30 \
+            "${url_input_args[@]}" | tee -a logs/push-baidu-urls.log
           status=${PIPESTATUS[0]}
           set -e
 
@@ -322,8 +406,42 @@ jobs:
             fi
             echo "::warning::Baidu URL push failed but baidu_push_required=false; continue deployment"
             echo "push_baidu=non_blocking_failure status=${status}" | tee -a logs/push-baidu-urls.log
+            echo "result=non_blocking_failure" >> "${GITHUB_OUTPUT}"
             exit 0
           fi
+
+          echo "result=success" >> "${GITHUB_OUTPUT}"
+
+      - name: Persist CN URL manifest on origin
+        id: persist_cn_manifest
+        if: ${{ steps.validate_deploy_settings.outputs.mode == 'deploy-origin' && steps.deploy_cn.outcome == 'success' && (steps.push_baidu.outputs.result == 'success' || steps.push_baidu.outputs.result == 'no_changed_urls' || steps.push_baidu.outputs.result == 'skipped_by_input') }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+
+          if [ ! -s "logs/cn-url-manifest-current.json" ]; then
+            echo "::warning::current CN URL manifest missing, skip persist"
+            echo "persist_manifest=skipped_missing_current_manifest" | tee logs/persist-cn-url-manifest.log
+            exit 0
+          fi
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${ORIGIN_SSH_PRIVATE_KEY}" > cn_origin_deploy.key
+          chmod 600 cn_origin_deploy.key
+          ssh-keyscan -p "${ORIGIN_PORT}" -H "${ORIGIN_HOST}" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+          remote_manifest_tmp="/tmp/cn-url-manifest-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+          scp -i cn_origin_deploy.key -P "${ORIGIN_PORT}" -o BatchMode=yes -o StrictHostKeyChecking=yes \
+            logs/cn-url-manifest-current.json "${ORIGIN_USER}@${ORIGIN_HOST}:${remote_manifest_tmp}"
+
+          ssh -i cn_origin_deploy.key -p "${ORIGIN_PORT}" -o BatchMode=yes -o StrictHostKeyChecking=yes \
+            "${ORIGIN_USER}@${ORIGIN_HOST}" \
+            "set -euo pipefail; \
+              mv -f \"${remote_manifest_tmp}\" \"${ORIGIN_SITE_ROOT}/.deploy-url-manifest.json\"; \
+              chown \"${ORIGIN_OWNER}\" \"${ORIGIN_SITE_ROOT}/.deploy-url-manifest.json\";" | tee logs/persist-cn-url-manifest.log
+
+          rm -f cn_origin_deploy.key
 
       - name: Alert issue (deploy cn failed)
         id: alert_issue
@@ -428,7 +546,9 @@ jobs:
             echo "- build-cn: ${{ steps.build_cn.outcome }}";
             echo "- validate-deploy-settings: ${{ steps.validate_deploy_settings.outcome }}";
             echo "- deploy-cn-origin: ${{ steps.deploy_cn_origin.outcome }}";
+            echo "- build-baidu-candidates: ${{ steps.build_baidu_candidates.outcome }}";
             echo "- deploy-cn: ${{ steps.deploy_cn.outcome }}";
+            echo "- persist-cn-manifest: ${{ steps.persist_cn_manifest.outcome }}";
             echo "- verify-cn-domain: ${{ steps.verify_cn_domain.outcome }}";
             echo "- push-baidu-urls: ${{ steps.push_baidu.outcome }}";
             echo "- alert-issue: ${{ steps.alert_issue.outcome }}";
@@ -442,7 +562,10 @@ jobs:
             echo "- baidu_push_required: ${BAIDU_PUSH_REQUIRED}";
             echo "- baidu_site: ${BAIDU_SITE}";
             echo "- baidu_sitemap_url: ${BAIDU_SITEMAP_URL}";
+            echo "- baidu_only_changed_urls: ${BAIDU_ONLY_CHANGED_URLS}";
             echo "- baidu_push_limit: ${BAIDU_PUSH_LIMIT}";
+            echo "- baidu_push_result: ${{ steps.push_baidu.outputs.result || 'n/a' }}";
+            echo "- baidu_changed_candidates: ${{ steps.build_baidu_candidates.outputs.changed_count || 'n/a' }}";
             echo "- cn_icp_number: ${CN_ICP_NUMBER}";
             echo "- cn_icp_url: ${CN_ICP_URL}";
             echo "- cn_public_security_record: ${CN_PUBLIC_SECURITY_RECORD}";
@@ -460,6 +583,11 @@ jobs:
             logs/check-quality.log
             logs/build-cn.log
             logs/deploy-cn-origin.log
+            logs/build-cn-url-diff.log
+            logs/cn-url-manifest-baseline.json
+            logs/cn-url-manifest-current.json
+            logs/baidu-changed-urls.txt
+            logs/persist-cn-url-manifest.log
             logs/verify-cn-domain.log
             logs/verify-cn-domain-attempt-*.log
             logs/push-baidu-urls.log
