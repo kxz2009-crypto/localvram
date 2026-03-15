@@ -304,7 +304,7 @@ jobs:
             exit 0
           fi
 
-          set -o pipefail
+          set +e
           python scripts/push-baidu-urls.py \
             --site "${BAIDU_SITE}" \
             --sitemap-url "${BAIDU_SITEMAP_URL}" \
@@ -312,6 +312,18 @@ jobs:
             --batch-size 500 \
             --retry-delays-s "5,10,20" \
             --timeout-s 30 | tee logs/push-baidu-urls.log
+          status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "${status}" -ne 0 ]; then
+            if [ "${BAIDU_PUSH_REQUIRED}" = "true" ]; then
+              echo "::error::Baidu URL push failed and baidu_push_required=true"
+              exit "${status}"
+            fi
+            echo "::warning::Baidu URL push failed but baidu_push_required=false; continue deployment"
+            echo "push_baidu=non_blocking_failure status=${status}" | tee -a logs/push-baidu-urls.log
+            exit 0
+          fi
 
       - name: Alert issue (deploy cn failed)
         id: alert_issue
