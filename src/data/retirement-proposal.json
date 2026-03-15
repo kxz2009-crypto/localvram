@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-11T04:32:52Z",
+  "generated_at": "2026-03-15T12:32:38Z",
   "candidates_file": "/home/runner/work/localvram/localvram/src/data/retirement-candidates.json",
   "policy_file": "/home/runner/work/localvram/localvram/src/data/retired-models.json",
   "rules": {
@@ -7,11 +7,23 @@
     "max_seen_ok_count": 2,
     "max_auto_approve": 20
   },
-  "source_candidate_count": 0,
+  "source_candidate_count": 1,
   "already_retired_count": 0,
   "already_retired_sample": [],
-  "auto_approved_count": 0,
-  "auto_approved": [],
+  "auto_approved_count": 1,
+  "auto_approved": [
+    {
+      "model": "glm-4.7-flash:bf16",
+      "family": "glm-4.7-flash",
+      "last_seen_run_index": 3,
+      "seen_ok_count": 1,
+      "reasons": [
+        "absent_in_recent_runs>=3",
+        "not_in_current_weekly_plan",
+        "not_in_latest_targets_or_results"
+      ]
+    }
+  ],
   "manual_review_count": 0,
   "manual_review": []
 }
