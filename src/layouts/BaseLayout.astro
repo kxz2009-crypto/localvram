@@ -1,15 +1,15 @@
 ---
 import "../styles/global.css";
-import { ROOT_ALTERNATES, buildLocaleAlternates } from "../data/root-alternates";
+import { ROOT_ALTERNATES, buildCnAlternates, buildLocaleAlternates } from "../data/root-alternates";
 import {
   COM_LOCALES,
   DEFAULT_LOCALE,
   OG_LOCALE_BY_LANG,
   buildLocalePath,
   isLocalizedComPath,
-  isRtlLocale,
   stripLocalePrefix,
 } from "../config/i18n";
+import type { ComLocale } from "../config/i18n";
 
 type AlternateLink = {
   hrefLang: string;
@@ -19,7 +19,7 @@ type AlternateLink = {
 interface Props {
   title?: string;
   description?: string;
-  locale?: keyof typeof OG_LOCALE_BY_LANG;
+  locale?: ComLocale | "zh";
   canonicalPath?: string;
   canonicalOrigin?: string;
   alternates?: AlternateLink[];
@@ -48,16 +48,38 @@ const {
 
 const EN_SITE_URL = "https://localvram.com";
 const ZH_SITE_URL = "https://localvram.cn";
-const siteUrl = (canonicalOrigin || EN_SITE_URL).replace(/\/$/, "");
-const path = canonicalPath || Astro.url.pathname || "/";
+const buildTarget = String(process.env.BUILD_TARGET || "").trim().toLowerCase();
+const isCnBuild = buildTarget === "cn";
+const defaultSiteUrl = String(process.env.SITE_URL || (isCnBuild ? ZH_SITE_URL : EN_SITE_URL)).trim().replace(/\/$/, "");
+const siteUrl = (canonicalOrigin || defaultSiteUrl || EN_SITE_URL).replace(/\/$/, "");
+const rawPath = canonicalPath || Astro.url.pathname || "/";
+function toCnCanonicalPath(inputPath: string): string {
+  const cleaned = String(inputPath || "/").trim() || "/";
+  if (cleaned === "/en" || cleaned === "/en/") {
+    return "/";
+  }
+  if (cleaned.startsWith("/en/")) {
+    return cleaned.slice(3);
+  }
+  return cleaned;
+}
+const path = isCnBuild ? toCnCanonicalPath(rawPath) : rawPath;
 const canonicalUrl = new URL(path, siteUrl).toString();
-const normalizedAlternates = alternates === ROOT_ALTERNATES ? buildLocaleAlternates(path) : alternates;
-const shouldAutoAlternates = normalizedAlternates === undefined && !noindex && isLocalizedComPath(path);
-const resolvedAlternates = shouldAutoAlternates ? buildLocaleAlternates(path) : (normalizedAlternates || []);
+const normalizedAlternates =
+  alternates === ROOT_ALTERNATES
+    ? (isCnBuild ? buildCnAlternates(path) : buildLocaleAlternates(path))
+    : alternates;
+const shouldAutoAlternates = normalizedAlternates === undefined && !noindex && (isCnBuild || isLocalizedComPath(path));
+const resolvedAlternates = shouldAutoAlternates
+  ? (isCnBuild ? buildCnAlternates(path) : buildLocaleAlternates(path))
+  : (normalizedAlternates || []);
 const ogImageUrl = new URL(ogImage, siteUrl).toString();
 const robotsContent = noindex ? "noindex, nofollow" : "index, follow";
-const ogLocale = OG_LOCALE_BY_LANG[locale] || OG_LOCALE_BY_LANG[DEFAULT_LOCALE];
-const htmlDir = isRtlLocale(locale) ? "rtl" : "ltr";
+const ogLocale =
+  locale === "zh"
+    ? "zh_CN"
+    : OG_LOCALE_BY_LANG[locale as keyof typeof OG_LOCALE_BY_LANG] || OG_LOCALE_BY_LANG[DEFAULT_LOCALE];
+const htmlDir = locale === "ar" ? "rtl" : "ltr";
 const localeTail = stripLocalePrefix(path);
 const shouldShowLocaleSwitcher = isLocalizedComPath(path);
 const localeLabelByCode: Record<string, string> = {
@@ -80,13 +102,53 @@ const localeSwitchLinks = shouldShowLocaleSwitcher
       href: new URL(buildLocalePath(code, path), EN_SITE_URL).toString(),
     }))
   : [];
-const zhSwitchPath = localeTail === "/" ? "/zh/" : `/zh${localeTail}`;
+const zhSwitchPath = localeTail === "/" ? "/" : localeTail;
 const zhSwitchHref = new URL(zhSwitchPath, ZH_SITE_URL).toString();
+const cnIcpNumber = String(process.env.CN_ICP_NUMBER || "京ICP备2026009936号").trim();
+const cnIcpUrl = String(process.env.CN_ICP_URL || "https://beian.miit.gov.cn/").trim();
+const shouldShowCnIcp = isCnBuild && cnIcpNumber.length > 0;
+const cnPublicSecurityStatus = String(process.env.CN_PUBLIC_SECURITY_STATUS || "pending").trim().toLowerCase();
+const cnPublicSecurityRecordRaw = String(process.env.CN_PUBLIC_SECURITY_RECORD || "").trim();
+const cnPublicSecurityRecord =
+  cnPublicSecurityRecordRaw ||
+  (cnPublicSecurityStatus === "active" ? "公安备案号待配置" : "公安备案办理中");
+const cnPublicSecurityUrl = String(process.env.CN_PUBLIC_SECURITY_URL || "").trim();
+const shouldShowCnPublicSecurity = isCnBuild && cnPublicSecurityRecord.length > 0;
+const copyrightHost = isCnBuild ? "localvram.cn" : "localvram.com";
 const jsonLdList = Array.isArray(structuredData)
   ? structuredData
   : structuredData
     ? [structuredData]
     : [];
+function normalizeCnSchemaUrl(input: string): string {
+  const value = String(input || "").trim();
+  if (!value.startsWith(EN_SITE_URL)) {
+    return input;
+  }
+  const rewritten = `${ZH_SITE_URL}${value.slice(EN_SITE_URL.length)}`;
+  if (rewritten === `${ZH_SITE_URL}/en` || rewritten === `${ZH_SITE_URL}/en/`) {
+    return `${ZH_SITE_URL}/`;
+  }
+  if (rewritten.startsWith(`${ZH_SITE_URL}/en/`)) {
+    return `${ZH_SITE_URL}${rewritten.slice(`${ZH_SITE_URL}/en`.length)}`;
+  }
+  return rewritten;
+}
+function normalizeCnStructuredData<T>(input: T): T {
+  if (Array.isArray(input)) {
+    return input.map((item) => normalizeCnStructuredData(item)) as T;
+  }
+  if (input && typeof input === "object") {
+    const source = input as Record<string, unknown>;
+    const entries = Object.entries(source).map(([key, value]) => [key, normalizeCnStructuredData(value)]);
+    return Object.fromEntries(entries) as T;
+  }
+  if (typeof input === "string") {
+    return normalizeCnSchemaUrl(input) as T;
+  }
+  return input;
+}
+const resolvedJsonLdList = isCnBuild ? jsonLdList.map((item) => normalizeCnStructuredData(item)) : jsonLdList;
 const footerCopyByLocale: Record<string, { legalText: string; rightsText: string }> = {
   en: {
     legalText: "Affiliate Disclosure & Privacy Policy",
@@ -131,6 +193,10 @@ const footerCopyByLocale: Record<string, { legalText: string; rightsText: string
   id: {
     legalText: "Pengungkapan afiliasi & kebijakan privasi",
     rightsText: "Hak cipta dilindungi."
+  },
+  zh: {
+    legalText: "联盟披露与隐私政策",
+    rightsText: "保留所有权利。"
   }
 };
 const footerCopy = footerCopyByLocale[locale] || footerCopyByLocale.en;
@@ -163,7 +229,7 @@ const footerCopy = footerCopyByLocale[locale] || footerCopyByLocale.en;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-    {jsonLdList.map((item) => (
+    {resolvedJsonLdList.map((item) => (
       <script type="application/ld+json" set:html={JSON.stringify(item)} />
     ))}
   </head>
@@ -181,7 +247,20 @@ const footerCopy = footerCopyByLocale[locale] || footerCopyByLocale.en;
         </nav>
       )}
       <a class="legal-mini-link" href="/legal/">{footerCopy.legalText}</a>
-      <p class="legal-copyright">© 2026 localVRAM.com | {footerCopy.rightsText}</p>
+      {shouldShowCnIcp && (
+        <a class="legal-mini-link" href={cnIcpUrl} target="_blank" rel="noopener noreferrer">
+          {cnIcpNumber}
+        </a>
+      )}
+      {shouldShowCnPublicSecurity &&
+        (cnPublicSecurityUrl ? (
+          <a class="legal-mini-link" href={cnPublicSecurityUrl} target="_blank" rel="noopener noreferrer">
+            {cnPublicSecurityRecord}
+          </a>
+        ) : (
+          <span class="legal-mini-link">{cnPublicSecurityRecord}</span>
+        ))}
+      <p class="legal-copyright">© 2026 {copyrightHost} | {footerCopy.rightsText}</p>
     </footer>
   </body>
 </html>

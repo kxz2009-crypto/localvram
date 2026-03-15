@@ -13,6 +13,14 @@ on:
         description: "Enable strict AI gate (1=yes, 0=no)"
         required: false
         default: "1"
+      zh_hreflang_expectation:
+        description: "zh-CN hreflang expectation for production verify (absent|present|skip)"
+        required: false
+        default: "present"
+      skip_content_checks:
+        description: "Skip production hreflang/content checks and only verify route status/redirects"
+        required: false
+        default: "false"
 
 permissions:
   actions: read
@@ -206,10 +214,23 @@ jobs:
 
       - name: Verify production i18n routes
         id: verify_production_i18n
+        env:
+          INPUT_ZH_HREFLANG_EXPECTATION: ${{ github.event.inputs.zh_hreflang_expectation }}
+          INPUT_SKIP_CONTENT_CHECKS: ${{ github.event.inputs.skip_content_checks }}
+          ZH_HREFLANG_EXPECTATION: ${{ vars.ZH_HREFLANG_EXPECTATION }}
+          SKIP_CONTENT_CHECKS: ${{ vars.PROD_VERIFY_SKIP_CONTENT_CHECKS }}
         run: |
           set -o pipefail
+          zh_expectation="${INPUT_ZH_HREFLANG_EXPECTATION:-${ZH_HREFLANG_EXPECTATION:-present}}"
+          skip_content="${INPUT_SKIP_CONTENT_CHECKS:-${SKIP_CONTENT_CHECKS:-false}}"
+          extra_args=()
+          if [ "${skip_content}" = "true" ]; then
+            extra_args+=("-SkipContentChecks")
+          fi
           echo "[verify-production-i18n] start $(date -u +"%Y-%m-%dT%H:%M:%SZ")" | tee logs/verify-production-i18n.log
-          pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn" 2>&1 | tee -a logs/verify-production-i18n.log
+          echo "[verify-production-i18n] zh_hreflang_expectation=${zh_expectation}" | tee -a logs/verify-production-i18n.log
+          echo "[verify-production-i18n] skip_content_checks=${skip_content}" | tee -a logs/verify-production-i18n.log
+          pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn" -ZhHreflangExpectation "${zh_expectation}" "${extra_args[@]}" 2>&1 | tee -a logs/verify-production-i18n.log
           status=${PIPESTATUS[0]}
           echo "[verify-production-i18n] exit_code=${status}" | tee -a logs/verify-production-i18n.log
           exit ${status}

@@ -10,11 +10,16 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
+import re
 
 from logging_utils import configure_logging
 
 
 LOGGER = configure_logging("push-baidu-urls")
+ROOT = Path(__file__).resolve().parents[1]
+ZH_BLOG_DIR = ROOT / "src" / "content" / "blog-i18n" / "zh"
+ZH_STUB_MARKER = "status: zh-stub (pending full translation)"
+BLOG_PATH_RE = re.compile(r"^/blog/(?P<slug>[a-z0-9-]+)/?$")
 
 
 def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
@@ -68,6 +73,48 @@ def chunked(items: list[str], size: int) -> list[list[str]]:
     return [items[i : i + size] for i in range(0, len(items), size)]
 
 
+def parse_csv_list(raw: str) -> list[str]:
+    values: list[str] = []
+    for piece in str(raw or "").split(","):
+        item = piece.strip()
+        if item:
+            values.append(item)
+    return values
+
+
+def is_path_excluded(path: str, excluded_prefixes: list[str]) -> bool:
+    normalized = str(path or "").strip()
+    if not normalized.startswith("/"):
+        normalized = f"/{normalized}"
+    for prefix in excluded_prefixes:
+        px = str(prefix or "").strip()
+        if not px:
+            continue
+        if not px.startswith("/"):
+            px = f"/{px}"
+        # Match both exact path and nested path under this prefix.
+        if normalized == px.rstrip("/"):
+            return True
+        if normalized.startswith(px.rstrip("/") + "/"):
+            return True
+    return False
+
+
+def is_stub_blog_url(path: str) -> bool:
+    match = BLOG_PATH_RE.match(path)
+    if not match:
+        return False
+    slug = match.group("slug")
+    zh_file = ZH_BLOG_DIR / f"{slug}.md"
+    if not zh_file.exists():
+        return True
+    try:
+        content = zh_file.read_text(encoding="utf-8")
+    except Exception:  # noqa: BLE001
+        return True
+    return ZH_STUB_MARKER in content
+
+
 def post_with_retry(endpoint: str, payload_lines: list[str], retry_delays: list[int], timeout: int) -> str:
     data = ("\n".join(payload_lines) + "\n").encode("utf-8")
     req = urllib.request.Request(endpoint, data=data, method="POST", headers={"Content-Type": "text/plain"})
@@ -109,6 +156,16 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int, default=500, help="URLs per POST request.")
     parser.add_argument("--retry-delays-s", default="5,10,20")
     parser.add_argument("--timeout-s", type=int, default=30)
+    parser.add_argument(
+        "--exclude-prefixes",
+        default="/en,/zh,/api",
+        help="Comma-separated URL path prefixes to exclude before pushing.",
+    )
+    parser.add_argument(
+        "--include-blog-stub",
+        action="store_true",
+        help="Include blog URLs whose zh files are still stub placeholders.",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Print candidate URLs only, do not push.")
     args = parser.parse_args()
 
@@ -125,11 +182,22 @@ def main() -> int:
         xml_text = fetch_text(args.sitemap_url, timeout=max(5, args.timeout_s))
         urls = parse_sitemap(xml_text)
 
+    excluded_prefixes = parse_csv_list(args.exclude_prefixes)
     filtered: list[str] = []
     seen: set[str] = set()
+    skipped_by_prefix = 0
+    skipped_by_stub = 0
     for url in urls:
-        host = urllib.parse.urlsplit(url).netloc
+        parsed = urllib.parse.urlsplit(url)
+        host = parsed.netloc
         if host != site_host:
+            continue
+        path = parsed.path or "/"
+        if is_path_excluded(path, excluded_prefixes):
+            skipped_by_prefix += 1
+            continue
+        if not args.include_blog_stub and is_stub_blog_url(path):
+            skipped_by_stub += 1
             continue
         if url in seen:
             continue
@@ -138,6 +206,9 @@ def main() -> int:
     filtered = filtered[: max(0, args.limit)]
 
     emit(f"site_host={site_host}")
+    emit(f"excluded_prefixes={excluded_prefixes}")
+    emit(f"skipped_by_prefix={skipped_by_prefix}")
+    emit(f"skipped_by_stub={skipped_by_stub}")
     emit(f"candidate_urls={len(filtered)}")
     if filtered:
         emit(f"first_url={filtered[0]}")

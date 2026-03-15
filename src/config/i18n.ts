@@ -2,7 +2,7 @@ import rolloutConfig from "../data/i18n-rollout.json";
 
 export const DEFAULT_LOCALE = "en" as const;
 
-export const STANDARD_I18N_LOCALES = [
+const ALL_STANDARD_I18N_LOCALES = [
   "es",
   "pt",
   "fr",
@@ -15,8 +15,17 @@ export const STANDARD_I18N_LOCALES = [
   "id"
 ] as const;
 
-export const COM_LOCALES = [DEFAULT_LOCALE, ...STANDARD_I18N_LOCALES] as const;
-export type ComLocale = (typeof COM_LOCALES)[number];
+export type StandardLocale = (typeof ALL_STANDARD_I18N_LOCALES)[number];
+export type ComLocale = typeof DEFAULT_LOCALE | StandardLocale;
+
+const buildTarget = String(process.env.BUILD_TARGET || "").trim().toLowerCase();
+const isCnBuild = buildTarget === "cn";
+
+export const STANDARD_I18N_LOCALES: readonly StandardLocale[] = isCnBuild
+  ? []
+  : [...ALL_STANDARD_I18N_LOCALES];
+
+export const COM_LOCALES: readonly ComLocale[] = [DEFAULT_LOCALE, ...STANDARD_I18N_LOCALES];
 
 const COM_LOCALE_SET = new Set<string>(COM_LOCALES);
 const RTL_LOCALE_SET = new Set<string>(["ar"]);

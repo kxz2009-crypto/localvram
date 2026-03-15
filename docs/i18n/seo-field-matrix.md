@@ -3,15 +3,16 @@
 ## Purpose
 Define mandatory SEO fields per page for:
 - `.com`: `en + 10 locales` (`es, pt, fr, de, ru, ja, ko, ar, hi, id`)
-- `.cn`: independent `zh` operation (not part of `.com` hreflang cluster)
+- `.cn`: `zh-CN` primary operation, and part of cross-domain hreflang mapping
 
 ## Hard SEO Rules
 1. Canonical must be self-referential per locale page.
 2. All `.com` locale variants of the same `page_id` must share one hreflang cluster.
 3. `.com` hreflang cluster must include:
    - `en, es, pt, fr, de, ru, ja, ko, ar, hi, id`
+   - `zh-CN` -> mapped `https://localvram.cn/*` URL
    - `x-default` -> English equivalent path
-4. `.com` must not publish `zh-CN` hreflang entries.
+4. `.com` must publish cross-domain `zh-CN` hreflang entries pointing to `.cn`.
 5. `/zh*` on `.com` must always return redirect response, never HTML content.
 6. Trailing slash policy must be consistent in canonical and hreflang links.
 
@@ -28,7 +29,7 @@ Track this for each `page_id` and locale.
 | `og:description` | yes | aligned with description |
 | `og:url` | yes | equals canonical URL |
 | `og:locale` | yes | valid locale mapping |
-| `hreflang_set` | yes | exact 11-language `.com` set + `x-default` |
+| `hreflang_set` | yes | exact `11 .com locales + zh-CN + x-default` |
 | `structured_data_lang` | yes | locale-consistent schema language |
 | `internal_links_locale` | yes | no accidental cross-locale links except language switcher |
 
@@ -65,7 +66,7 @@ Field-level fallback to English is allowed when translation fails, but:
 1. Canonical points to different locale path.
 2. Missing any required hreflang variant in the cluster.
 3. `x-default` points to non-English URL.
-4. Any `.com` page emits `zh-CN` hreflang.
+4. Any `.com` page misses `zh-CN` hreflang or points it to non-`.cn` URL.
 5. Any `.com` page under `/zh*` renders HTML.
 6. Broken trailing slash normalization causes duplicate canonical URLs.
 
@@ -73,4 +74,3 @@ Field-level fallback to English is allowed when translation fails, but:
 1. `dist/seo-audit/pages.csv` (page-level SEO fields)
 2. `dist/seo-audit/hreflang-clusters.csv` (cluster parity)
 3. `dist/seo-audit/fallback-ratio.csv` (fallback gating)
-

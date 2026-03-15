@@ -1,0 +1,403 @@
+name: Deploy CN Site
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run_only:
+        description: "Build + verify artifact only (skip Cloudflare deploy and live domain checks)"
+        required: false
+        default: false
+        type: boolean
+      pages_project_name:
+        description: "Cloudflare Pages project name for CN site"
+        required: false
+        default: "localvram-cn"
+        type: string
+      pages_branch:
+        description: "Cloudflare Pages branch target"
+        required: false
+        default: "main"
+        type: string
+      cn_domain:
+        description: "CN production origin for post-deploy verification"
+        required: false
+        default: "https://localvram.cn"
+        type: string
+      expected_sitemap_url:
+        description: "Expected sitemap URL in robots.txt"
+        required: false
+        default: "https://localvram.cn/sitemap-cn.xml"
+        type: string
+      skip_legacy_zh_redirect_checks:
+        description: "Skip /zh legacy redirect checks on CN domain verification"
+        required: false
+        default: false
+        type: boolean
+      skip_content_checks:
+        description: "Skip canonical/hreflang/footer/robots content checks in CN verification (status+redirect checks only)"
+        required: false
+        default: false
+        type: boolean
+      push_baidu_urls:
+        description: "Push CN sitemap URLs to Baidu after successful deploy"
+        required: false
+        default: true
+        type: boolean
+      baidu_push_required:
+        description: "Fail workflow when Baidu push token is missing or push fails"
+        required: false
+        default: false
+        type: boolean
+      baidu_site:
+        description: "Baidu push site host origin"
+        required: false
+        default: "https://localvram.cn"
+        type: string
+      baidu_sitemap_url:
+        description: "Baidu push sitemap URL"
+        required: false
+        default: "https://localvram.cn/sitemap-cn.xml"
+        type: string
+      baidu_push_limit:
+        description: "Maximum URLs submitted to Baidu in one run"
+        required: false
+        default: "5000"
+        type: string
+
+concurrency:
+  group: deploy-cn-site-${{ github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  deploy-cn-site:
+    runs-on: ubuntu-latest
+    env:
+      ASTRO_TELEMETRY_DISABLED: "1"
+      DRY_RUN_ONLY: ${{ github.event.inputs.dry_run_only || 'false' }}
+      PAGES_PROJECT_NAME: ${{ github.event.inputs.pages_project_name || 'localvram-cn' }}
+      PAGES_BRANCH: ${{ github.event.inputs.pages_branch || 'main' }}
+      CN_DOMAIN: ${{ github.event.inputs.cn_domain || 'https://localvram.cn' }}
+      EXPECTED_SITEMAP_URL: ${{ github.event.inputs.expected_sitemap_url || 'https://localvram.cn/sitemap-cn.xml' }}
+      SKIP_LEGACY_ZH_REDIRECT_CHECKS: ${{ github.event.inputs.skip_legacy_zh_redirect_checks || 'false' }}
+      SKIP_CONTENT_CHECKS: ${{ github.event.inputs.skip_content_checks || 'false' }}
+      PUSH_BAIDU_URLS: ${{ github.event.inputs.push_baidu_urls || 'true' }}
+      BAIDU_PUSH_REQUIRED: ${{ github.event.inputs.baidu_push_required || 'false' }}
+      BAIDU_SITE: ${{ github.event.inputs.baidu_site || 'https://localvram.cn' }}
+      BAIDU_SITEMAP_URL: ${{ github.event.inputs.baidu_sitemap_url || 'https://localvram.cn/sitemap-cn.xml' }}
+      BAIDU_PUSH_LIMIT: ${{ github.event.inputs.baidu_push_limit || '5000' }}
+      CN_ICP_NUMBER: ${{ vars.CN_ICP_NUMBER || '京ICP备2026009936号' }}
+      CN_ICP_URL: ${{ vars.CN_ICP_URL || 'https://beian.miit.gov.cn/' }}
+      CN_PUBLIC_SECURITY_RECORD: ${{ vars.CN_PUBLIC_SECURITY_RECORD || '公安备案办理中' }}
+      CN_PUBLIC_SECURITY_STATUS: ${{ vars.CN_PUBLIC_SECURITY_STATUS || 'pending' }}
+      CN_PUBLIC_SECURITY_URL: ${{ vars.CN_PUBLIC_SECURITY_URL || '' }}
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        id: setup_node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Python
+        id: setup_python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        id: install_dependencies
+        run: npm install
+
+      - name: Install Python dependencies
+        id: install_python_dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Prepare logs
+        id: prepare_logs
+        run: mkdir -p logs
+
+      - name: Quality gate
+        id: quality_gate
+        run: |
+          set -o pipefail
+          python scripts/quality-gate.py | tee logs/check-quality.log
+
+      - name: Build CN artifact
+        id: build_cn
+        run: |
+          set -o pipefail
+          npm run build:cn | tee logs/build-cn.log
+
+      - name: Validate Cloudflare deployment settings
+        id: validate_cf_settings
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          if [ "${DRY_RUN_ONLY}" = "true" ]; then
+            echo "mode=dry-run" >> "${GITHUB_OUTPUT}"
+            echo "dry_run=true"
+            exit 0
+          fi
+
+          if [ -z "${CF_API_TOKEN}" ]; then
+            echo "::error::missing required secret CF_API_TOKEN"
+            exit 1
+          fi
+          if [ -z "${CF_ACCOUNT_ID}" ]; then
+            echo "::error::missing required secret CF_ACCOUNT_ID"
+            exit 1
+          fi
+
+          if [ -z "${PAGES_PROJECT_NAME}" ]; then
+            echo "::error::pages_project_name cannot be empty"
+            exit 1
+          fi
+          if [ -z "${CN_ICP_NUMBER}" ]; then
+            echo "::error::CN_ICP_NUMBER is empty; set repository variable CN_ICP_NUMBER or provide fallback"
+            exit 1
+          fi
+          if [ "${CN_PUBLIC_SECURITY_STATUS}" != "pending" ] && [ "${CN_PUBLIC_SECURITY_STATUS}" != "active" ]; then
+            echo "::error::CN_PUBLIC_SECURITY_STATUS must be 'pending' or 'active'"
+            exit 1
+          fi
+
+          echo "mode=deploy" >> "${GITHUB_OUTPUT}"
+          echo "dry_run=false"
+
+      - name: Deploy dist-cn to Cloudflare Pages
+        id: deploy_cn
+        if: ${{ steps.validate_cf_settings.outputs.mode == 'deploy' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          set -o pipefail
+          npx wrangler@3 pages deploy dist-cn \
+            --project-name "${PAGES_PROJECT_NAME}" \
+            --branch "${PAGES_BRANCH}" | tee logs/deploy-cn-pages.log
+
+      - name: Verify CN production domain
+        id: verify_cn_domain
+        if: ${{ steps.validate_cf_settings.outputs.mode == 'deploy' }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+          extra_args=()
+          if [ "${SKIP_LEGACY_ZH_REDIRECT_CHECKS}" = "true" ]; then
+            extra_args+=("-SkipLegacyZhRedirectChecks")
+          fi
+          if [ "${SKIP_CONTENT_CHECKS}" = "true" ]; then
+            extra_args+=("-SkipContentChecks")
+          fi
+
+          attempts=6
+          sleep_seconds=20
+          for attempt in $(seq 1 ${attempts}); do
+            echo "verify_attempt=${attempt}/${attempts}" | tee "logs/verify-cn-domain-attempt-${attempt}.log"
+            set +e
+            pwsh -File scripts/verify-cn-domain.ps1 \
+              -CnDomain "${CN_DOMAIN}" \
+              -ExpectedSitemapUrl "${EXPECTED_SITEMAP_URL}" \
+              -ComDomain "https://localvram.com" \
+              -RequiredIcpNumber "${CN_ICP_NUMBER}" \
+              -RequiredPublicSecurityRecord "${CN_PUBLIC_SECURITY_RECORD}" \
+              -RequiredPublicSecurityStatus "${CN_PUBLIC_SECURITY_STATUS}" \
+              "${extra_args[@]}" 2>&1 | tee -a "logs/verify-cn-domain-attempt-${attempt}.log"
+            status=${PIPESTATUS[0]}
+            set -e
+            if [ "${status}" -eq 0 ]; then
+              cp "logs/verify-cn-domain-attempt-${attempt}.log" logs/verify-cn-domain.log
+              echo "verification_success_attempt=${attempt}" | tee -a logs/verify-cn-domain.log
+              exit 0
+            fi
+            if [ "${attempt}" -lt "${attempts}" ]; then
+              sleep "${sleep_seconds}"
+            fi
+          done
+
+          cp "logs/verify-cn-domain-attempt-${attempts}.log" logs/verify-cn-domain.log
+          echo "::error::CN domain verification failed after ${attempts} attempts"
+          exit 1
+
+      - name: Push CN URLs to Baidu
+        id: push_baidu
+        if: ${{ steps.validate_cf_settings.outputs.mode == 'deploy' }}
+        env:
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+
+          if [ "${PUSH_BAIDU_URLS}" != "true" ]; then
+            echo "push_baidu=skipped_by_input" | tee logs/push-baidu-urls.log
+            exit 0
+          fi
+
+          if [ -z "${BAIDU_PUSH_TOKEN:-}" ]; then
+            if [ "${BAIDU_PUSH_REQUIRED}" = "true" ]; then
+              echo "::error::missing required secret BAIDU_PUSH_TOKEN"
+              exit 1
+            fi
+            echo "::warning::BAIDU_PUSH_TOKEN missing, skip Baidu URL push"
+            echo "push_baidu=skipped_missing_token" | tee logs/push-baidu-urls.log
+            exit 0
+          fi
+
+          set -o pipefail
+          python scripts/push-baidu-urls.py \
+            --site "${BAIDU_SITE}" \
+            --sitemap-url "${BAIDU_SITEMAP_URL}" \
+            --limit "${BAIDU_PUSH_LIMIT}" \
+            --batch-size 500 \
+            --retry-delays-s "5,10,20" \
+            --timeout-s 30 | tee logs/push-baidu-urls.log
+
+      - name: Alert issue (deploy cn failed)
+        id: alert_issue
+        if: always() && failure()
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Deploy CN Site
+          ALERT_FAILURE_CLASS: deploy_cn_failed
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const failureClass = process.env.ALERT_FAILURE_CLASS || "deploy_cn_failed";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const title = `[OPS-ALERT] ${workflow}: ${failureClass}`;
+            const marker = `<!-- ops-alert:${workflow}:${failureClass} -->`;
+            const now = new Date().toISOString();
+            const body = `${marker}
+
+            - Triggered at: ${now}
+            - Workflow: ${workflow}
+            - Failure class: \`${failureClass}\`
+            - Detail: cn build/deploy/verify workflow failed
+            - Run: ${runUrl}`;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) => issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body
+              });
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body
+              });
+            }
+
+      - name: Resolve alert issues on recovery (deploy cn)
+        id: resolve_issue
+        if: always() && success()
+        uses: actions/github-script@v7
+        env:
+          ALERT_WORKFLOW: Deploy CN Site
+          ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow = process.env.ALERT_WORKFLOW || "Workflow";
+            const runUrl = process.env.ALERT_RUN_URL || "";
+            const prefix = `[OPS-ALERT] ${workflow}:`;
+            const now = new Date().toISOString();
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+
+            const targets = issues.filter((issue) => issue.title.startsWith(prefix));
+            for (const issue of targets) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: `Recovered at ${now}. Latest successful run: ${runUrl}`
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                state: "closed"
+              });
+            }
+
+      - name: Publish workflow summary
+        if: ${{ always() }}
+        run: |
+          {
+            echo "## Deploy CN Site";
+            echo "";
+            echo "- checkout: ${{ steps.checkout.outcome }}";
+            echo "- setup-node: ${{ steps.setup_node.outcome }}";
+            echo "- setup-python: ${{ steps.setup_python.outcome }}";
+            echo "- install-dependencies: ${{ steps.install_dependencies.outcome }}";
+            echo "- install-python-dependencies: ${{ steps.install_python_dependencies.outcome }}";
+            echo "- quality-gate: ${{ steps.quality_gate.outcome }}";
+            echo "- build-cn: ${{ steps.build_cn.outcome }}";
+            echo "- validate-cf-settings: ${{ steps.validate_cf_settings.outcome }}";
+            echo "- deploy-cn: ${{ steps.deploy_cn.outcome }}";
+            echo "- verify-cn-domain: ${{ steps.verify_cn_domain.outcome }}";
+            echo "- push-baidu-urls: ${{ steps.push_baidu.outcome }}";
+            echo "- alert-issue: ${{ steps.alert_issue.outcome }}";
+            echo "- resolve-issue: ${{ steps.resolve_issue.outcome }}";
+            echo "- mode: ${DRY_RUN_ONLY}";
+            echo "- cn-domain: ${CN_DOMAIN}";
+            echo "- expected-sitemap-url: ${EXPECTED_SITEMAP_URL}";
+            echo "- skip_content_checks: ${SKIP_CONTENT_CHECKS}";
+            echo "- push_baidu_urls: ${PUSH_BAIDU_URLS}";
+            echo "- baidu_push_required: ${BAIDU_PUSH_REQUIRED}";
+            echo "- baidu_site: ${BAIDU_SITE}";
+            echo "- baidu_sitemap_url: ${BAIDU_SITEMAP_URL}";
+            echo "- baidu_push_limit: ${BAIDU_PUSH_LIMIT}";
+            echo "- cn_icp_number: ${CN_ICP_NUMBER}";
+            echo "- cn_icp_url: ${CN_ICP_URL}";
+            echo "- cn_public_security_record: ${CN_PUBLIC_SECURITY_RECORD}";
+            echo "- cn_public_security_status: ${CN_PUBLIC_SECURITY_STATUS}";
+            echo "- cn_public_security_url: ${CN_PUBLIC_SECURITY_URL:-'(empty)'}";
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload CN deploy artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-cn-site
+          if-no-files-found: warn
+          path: |
+            logs/check-quality.log
+            logs/build-cn.log
+            logs/deploy-cn-pages.log
+            logs/verify-cn-domain.log
+            logs/verify-cn-domain-attempt-*.log
+            logs/push-baidu-urls.log
+            dist-cn

@@ -6,9 +6,13 @@ export type BlogBodyResolution = {
   markdown: string;
   isLocalized: boolean;
   sourcePath: string | null;
+  fallbackReason?: "missing_file" | "empty_content" | "stub_content";
+  isStub?: boolean;
 };
 
-function resolveLocalizedBodyPath(locale: Exclude<ComLocale, typeof DEFAULT_LOCALE>, slug: string): string {
+export type BlogBodyLocale = ComLocale | "zh";
+
+function resolveLocalizedBodyPath(locale: Exclude<BlogBodyLocale, typeof DEFAULT_LOCALE>, slug: string): string {
   return path.join(process.cwd(), "src", "content", "blog-i18n", locale, `${slug}.md`);
 }
 
@@ -57,9 +61,22 @@ function sanitizeLocalizedMarkdown(markdown: string): string {
   return normalizeKnownRouteTokens(withoutFrontmatter).trim();
 }
 
+const STUB_MARKERS = [
+  "status: zh-stub",
+  "pending full translation",
+  "（中文整理中）",
+  "## 英文摘要（原文引用）",
+  "## 中文速览（待人工校对）",
+];
+
+function isStubMarkdown(markdown: string): boolean {
+  const head = String(markdown || "").slice(0, 2400);
+  return STUB_MARKERS.some((marker) => head.includes(marker));
+}
+
 export function resolveBlogBody(
   slug: string,
-  locale: ComLocale,
+  locale: BlogBodyLocale,
   fallbackMarkdown: string,
 ): BlogBodyResolution {
   if (locale === DEFAULT_LOCALE) {
@@ -70,22 +87,36 @@ export function resolveBlogBody(
     };
   }
 
-  const localizedPath = resolveLocalizedBodyPath(locale, slug);
+  const localizedPath = resolveLocalizedBodyPath(locale as Exclude<BlogBodyLocale, typeof DEFAULT_LOCALE>, slug);
   if (!existsSync(localizedPath)) {
     return {
       markdown: fallbackMarkdown,
       isLocalized: false,
       sourcePath: null,
+      fallbackReason: "missing_file",
+      isStub: false,
     };
   }
 
   const localizedMarkdown = readFileSync(localizedPath, "utf-8");
+  if (isStubMarkdown(localizedMarkdown)) {
+    return {
+      markdown: fallbackMarkdown,
+      isLocalized: false,
+      sourcePath: localizedPath,
+      fallbackReason: "stub_content",
+      isStub: true,
+    };
+  }
+
   const sanitizedMarkdown = sanitizeLocalizedMarkdown(localizedMarkdown);
   if (!sanitizedMarkdown) {
     return {
       markdown: fallbackMarkdown,
       isLocalized: false,
       sourcePath: localizedPath,
+      fallbackReason: "empty_content",
+      isStub: false,
     };
   }
 
@@ -93,5 +124,6 @@ export function resolveBlogBody(
     markdown: `${sanitizedMarkdown}\n`,
     isLocalized: true,
     sourcePath: localizedPath,
+    isStub: false,
   };
 }

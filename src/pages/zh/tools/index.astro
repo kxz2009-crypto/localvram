@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { TOOL_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
+import { buildCnAlternates } from "../../../data/root-alternates";
+
+type ToolCopy = {
+  title: string;
+  description: string;
+  cta: string;
+};
+
+const TOOL_COPY_BY_SLUG: Record<string, ToolCopy> = {
+  "vram-calculator": {
+    title: "显存计算器",
+    description: "按模型规模与运行方式估算可用显存，快速判断是否本地可跑。",
+    cta: "开始估算",
+  },
+  "quantization-blind-test": {
+    title: "量化盲测工具",
+    description: "对比不同量化配置的输出质量，避免只看速度不看效果。",
+    cta: "开始盲测",
+  },
+  "roi-calculator": {
+    title: "ROI 成本计算器",
+    description: "对比“本地部署 vs 云端租用”的综合成本，给出决策参考。",
+    cta: "开始计算",
+  },
+};
+
+function toCnPath(enPath: string): string {
+  const normalized = String(enPath || "").trim();
+  if (normalized === "/en" || normalized === "/en/") {
+    return "/";
+  }
+  if (normalized.startsWith("/en/")) {
+    return normalized.slice(3);
+  }
+  return normalized || "/";
+}
+
+const tools = TOOL_ROUTE_ITEMS.map((item) => {
+  const localized = TOOL_COPY_BY_SLUG[item.slug] || {
+    title: item.title,
+    description: item.description,
+    cta: "查看工具",
+  };
+  return {
+    ...item,
+    localizedPath: toCnPath(item.enPath),
+    ...localized,
+  };
+});
+
+const canonicalPath = "/tools/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "LocalVRAM 中文工具中心",
+  url: "https://localvram.cn/tools/",
+  inLanguage: "zh-CN",
+  description: "用于本地 LLM 部署决策的核心工具入口：显存估算、量化盲测与成本计算。"
+};
+---
+
+<BaseLayout
+  title="中文工具中心 | 显存估算、量化盲测、ROI 成本计算"
+  description="用于本地 LLM 部署决策的核心工具入口：显存估算、量化盲测与成本计算。"
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>中文工具中心</h1>
+      <p>三步完成本地 LLM 决策：先算显存，再做量化验证，最后核算本地与云端成本。</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/tools/vram-calculator/">开始显存计算</a>
+        <a class="btn" href="/tools/quantization-blind-test/">打开量化盲测</a>
+        <a class="btn" href="/tools/roi-calculator/">打开 ROI 计算</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      {tools.map((tool) => (
+        <article class="card">
+          <h2>{tool.title}</h2>
+          <p>{tool.description}</p>
+          <a class="btn" href={tool.localizedPath}>{tool.cta}</a>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>

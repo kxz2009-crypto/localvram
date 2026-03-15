@@ -3,7 +3,7 @@
 ## Scope
 This checklist is for releasing:
 - `.com`: `en + es, pt, fr, de, ru, ja, ko, ar, hi, id`
-- `.cn`: independent `zh` operation
+- `.cn`: `zh-CN` operation with cross-domain hreflang linkage to `.com`
 - `.com /zh*`: redirect only
 - Daily execution tracking: `docs/i18n/execution-daily-log.md`
 
@@ -39,8 +39,8 @@ If release goes wrong, rollback to the tag above.
 
 ## Phase 1: Cloudflare Rules (Simple + Stable)
 Keep only durable rules:
-1. `/zh` -> `https://localvram.cn/zh/` (`301`)
-2. `/zh/*` -> `https://localvram.cn/zh/:splat` (`301`, preserve query)
+1. `/zh` -> `https://localvram.cn/` (`301`)
+2. `/zh/*` -> `https://localvram.cn/:splat` (`301`, preserve query)
 3. Root `/` -> `/en/` (canonical root redirect)
 
 Do not rely on temporary emergency rules long-term.
@@ -63,10 +63,19 @@ Optional custom domains:
 powershell -ExecutionPolicy Bypass -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn"
 ```
 
+CN filing/cross-domain check（推荐同时执行）:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/verify-cn-domain.ps1 -CnDomain "https://localvram.cn" -ComDomain "https://localvram.com"
+```
+
 Expected:
 1. 11 locale roots on `.com` behave as planned (normally 200).
-2. `/zh/` and `/zh/*` always 301 to `https://localvram.cn/zh/*` with query preserved.
-3. `/en/` hreflang cluster includes `en + 10 locales + x-default` and excludes `zh-CN`.
+2. `/zh` and `/zh/*` always 301 to `https://localvram.cn/*` with query preserved.
+3. `/en/` hreflang cluster matches rollout policy（默认 `zh-CN=present`，可通过 `-ZhHreflangExpectation` 覆盖）。
+4. `.cn` Footer 备案文案可见且状态一致：
+   - ICP：`京ICP备2026009936号`
+   - 公安备案：`pending` 显示 `公安备案办理中`；`active` 显示正式备案号（不得仍为 `公安备案办理中`）
 
 ## Phase 4: 1:1 Transition Schedule (6 weeks)
 Target: complete English-to-10-locale `1:1` route parity by **2026-04-13**.

@@ -63,6 +63,39 @@ jobs:
             exit 1
           fi
 
+      - name: Sync i18n blog copy coverage
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/sync-i18n-blog-copy.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'sync-i18n-blog-copy.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - sync-i18n-blog-copy.py failed"
+            exit 1
+          fi
+
+      - name: Auto-fill CN zh blog body for newly published posts
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          published_slugs="$(python -c "import json, pathlib; p=pathlib.Path('src/data/content-publish-log.json'); d=json.loads(p.read_text(encoding='utf-8-sig')) if p.exists() else {}; r=d.get('last_run',{}) if isinstance(d,dict) else {}; print(','.join([str(i.get('slug','')).strip() for i in r.get('published',[]) if isinstance(i,dict) and str(i.get('slug','')).strip()]))" 2>/dev/null || true)"
+          if [ -z "${published_slugs}" ]; then
+            echo "no newly published slugs in this run, skip zh auto-fill"
+            exit 0
+          fi
+          echo "published_slugs=${published_slugs}"
+          if ! python scripts/auto-fill-i18n-blog-body.py --locales zh --slugs "${published_slugs}" --overwrite; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'auto-fill-i18n-blog-body.py --locales zh failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - auto-fill-i18n-blog-body.py --locales zh failed"
+            exit 1
+          fi
+
+      - name: Enforce CN blog zh sync
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/check-cn-blog-sync.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'check-cn-blog-sync.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - check-cn-blog-sync.py failed"
+            exit 1
+          fi
+
       - name: Build model catalog
         if: steps.checkout.conclusion == 'success'
         run: |
@@ -144,7 +177,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/data/affiliate-click-events.json src/content/blog public/sitemap.xml public/sitemap-*.xml content-queue
+          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/data/affiliate-click-events.json src/content/blog src/content/blog-i18n/zh public/sitemap.xml public/sitemap-*.xml content-queue
 
           if git diff --cached --quiet; then
             echo "daily_publish_result=no_changes"

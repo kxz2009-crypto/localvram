@@ -35,11 +35,51 @@ Operations runbooks:
 - Root directory: `/`
 - Environment variable: `NODE_VERSION=20`
 
+CN deploy workflow (`Deploy CN Site`):
+
+- Manual trigger: GitHub Actions `Deploy CN Site`
+- Default CN build command: `npm run build:cn`
+- CN artifact behavior: materialize `/en/*` pages to root `/*`, and emit `/en* -> /*` 301 rules in `dist-cn/_redirects`
+- Required GitHub secrets for real deploy:
+  - `CF_API_TOKEN`
+  - `CF_ACCOUNT_ID`
+  - `BAIDU_PUSH_TOKEN` (optional; required only when `baidu_push_required=true`)
+- Recommended GitHub repository variables:
+  - `CN_ICP_NUMBER` (for example `京ICP备2026009936号`)
+  - `CN_ICP_URL` (default `https://beian.miit.gov.cn/`)
+  - `CN_PUBLIC_SECURITY_STATUS` (`pending` or `active`, default `pending`)
+  - `CN_PUBLIC_SECURITY_RECORD` (default `公安备案办理中`; set formal record number when status is `active`)
+  - `CN_PUBLIC_SECURITY_URL` (optional, set when official public security record URL is available)
+- CN footer filing fallback behavior:
+  - `CN_ICP_NUMBER` is code-fallback to `京ICP备2026009936号` for CN builds to avoid empty filing text.
+  - `CN_PUBLIC_SECURITY_STATUS=pending` shows `公安备案办理中` as reserved placeholder.
+  - switching to `CN_PUBLIC_SECURITY_STATUS=active` requires replacing `CN_PUBLIC_SECURITY_RECORD` with the official number in the same release.
+- Optional workflow inputs:
+  - `pages_project_name` (default `localvram-cn`)
+  - `pages_branch` (default `main`)
+  - `cn_domain` (default `https://localvram.cn`)
+  - `expected_sitemap_url` (default `https://localvram.cn/sitemap-cn.xml`)
+  - `skip_legacy_zh_redirect_checks` (default `false`; skip `/zh*` checks only)
+  - `skip_content_checks` (default `false`; skip canonical/hreflang/footer/robots content checks, keep status/redirect checks)
+  - `push_baidu_urls` (default `true`)
+  - `baidu_push_required` (default `false`)
+  - `baidu_site` (default `https://localvram.cn`)
+  - `baidu_sitemap_url` (default `https://localvram.cn/sitemap-cn.xml`)
+  - `baidu_push_limit` (default `5000`)
+- Post-deploy verification always checks `/en* -> /*` single-hop redirects (query preserved).
+- Post-deploy verification (`scripts/verify-cn-domain.ps1`) also checks:
+  - key pages canonical + cross-domain hreflang (`zh-CN` -> `.cn`, `en/x-default` -> `.com/en`)
+  - CN footer filing text (`CN_ICP_NUMBER`, `CN_PUBLIC_SECURITY_RECORD`, `CN_PUBLIC_SECURITY_STATUS`)
+- `Deploy CN Site` workflow passes these verify parameters explicitly to avoid environment-default drift.
+- For constrained network/TLS environments, you can run verification with `-SkipContentChecks` (or workflow input `skip_content_checks=true`) to keep availability/redirect checks only.
+
 ## Multilingual SEO Operations
 
 - `.com` locales (`/en/`, `/es/`, `/pt/`, `/fr/`, `/de/`, `/ru/`, `/ja/`, `/ko/`, `/ar/`, `/hi/`, `/id/`) are operated per-locale with separate keyword and content plans.
 - `.cn` is the Chinese primary operation track with independent indexing and distribution.
 - Root-page `hreflang` cluster now includes `en`, `es`, `pt`, `fr`, `de`, `ru`, `ja`, `ko`, `ar`, `hi`, `id`, `zh-CN`, and `x-default`.
+- Production routing guards (`Production Routing Guard`, `Weekly i18n Acceptance`) default to `zh-CN hreflang expectation = present` and can be overridden with workflow input or `ZH_HREFLANG_EXPECTATION`.
+- Both production guard workflows also support `skip_content_checks=true` (or repository variable `PROD_VERIFY_SKIP_CONTENT_CHECKS=true`) for temporary route-only verification.
 
 ## Affiliate Redirects (Cloudflare Workers on Pages Functions)
 

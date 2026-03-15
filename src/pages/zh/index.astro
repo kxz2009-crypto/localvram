@@ -1,0 +1,186 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import runnerStatus from "../../data/runner-status.json";
+import statusReport from "../../data/status.json";
+import { buildCnAlternates } from "../../data/root-alternates";
+
+const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
+const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
+const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
+
+function formatGpuTemperature(value: number): string {
+  if (!Number.isFinite(value) || value <= 0) {
+    return "未知";
+  }
+  return `${Math.round(value)}°C`;
+}
+
+function formatUtcDisplay(value: string): string {
+  const text = String(value || "").trim();
+  if (!text || text === "unknown") {
+    return "未知";
+  }
+  const date = new Date(text);
+  if (Number.isNaN(date.getTime())) {
+    return text;
+  }
+  return date.toISOString().replace(".000Z", "Z");
+}
+
+const lastSyncUtc = formatUtcDisplay(rawLastSync);
+const gpuTemperature = formatGpuTemperature(rawGpuTemperature);
+const homeStructuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "LocalVRAM",
+    url: "https://localvram.cn/",
+    inLanguage: "zh-CN",
+    description: "60 秒完成本地模型与显卡匹配，快速判断本地跑还是云端租。"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "LocalVRAM",
+    url: "https://localvram.cn/",
+    logo: "https://localvram.cn/branding/logo.svg"
+  }
+];
+---
+
+<BaseLayout
+  title="LocalVRAM 中文站 | GPU 显存计算与本地模型基准"
+  description="基于已验证的本地 LLM 基准数据，快速完成显存估算、模型筛选、运行方案对比，并判断何时本地部署、何时租用云 GPU。"
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath="/"
+  alternates={buildCnAlternates("/")}
+  structuredData={homeStructuredData}
+>
+  <header class="top-nav">
+    <a class="brand" href="/">
+      <img src="/branding/logo.svg" alt="LocalVRAM 中文站" />
+    </a>
+    <div class="ticker">
+      RTX 3090: 稳定 @{gpuTemperature} | DeepSeek-R1: 已验证 | Ollama: {ollamaVersion} | 最后同步:
+      <span id="last-sync-local">本地时间加载中...</span> (UTC {lastSyncUtc})
+    </div>
+    <a class="mode-btn" href="/status/data-freshness/">数据状态</a>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <img
+        class="verified-pill"
+        src="/branding/ollama-verified-pill.svg"
+        alt="Ollama 已验证"
+      />
+      <h1>60 秒选对适合你显卡的本地模型</h1>
+      <p>
+        真实可跑兼容性、持续负载基准和本地/云端决策，一页完成。
+      </p>
+      <h2>核心导航</h2>
+      <h3>工具、模型目录、硬件分层与运行状态监控</h3>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/tools/vram-calculator/">开始显存计算</a>
+        <a class="btn" href="/models/">模型目录（200+）</a>
+        <a class="btn" href="/tools/quantization-blind-test/">量化盲测工具</a>
+        <a class="btn" href="/guides/ollama-vs-vllm-vram/">运行时对比指南</a>
+        <a class="btn" href="/guides/best-coding-models/">编程模型推荐</a>
+        <a class="btn" href="/guides/best-rag-models/">RAG 模型推荐</a>
+        <a class="btn" href="/benchmarks/changelog/">基准变更日志</a>
+        <a class="btn" href="/status/data-freshness/">数据新鲜度</a>
+        <a class="btn" href="/status/runner-health/">采集器健康</a>
+        <a class="btn" href="/status/pipeline-status/">流水线状态</a>
+        <a class="btn" href="/status/conversion-funnel/">转化漏斗</a>
+        <a class="btn" href="/status/submission-review/">提交审核</a>
+        <a class="btn" href="/status/content-publish/">内容发布</a>
+        <a class="btn" href="/matrix/">兼容矩阵</a>
+        <a class="btn" href="/multimodal/">多模态专题</a>
+        <a class="btn" href="/errors/">错误知识库</a>
+        <a class="btn" href="/blog/">每日博客</a>
+        <a class="btn" href="/about/methodology/">方法说明</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>RTX 3090 实测验证</h2>
+        <p>覆盖温度衰减与 1 小时持续负载验证。</p>
+        <a class="btn" href="/hardware/verified-3090/">查看验证页</a>
+      </article>
+      <article class="card">
+        <h2>错误知识库</h2>
+        <p>终端优先排障文档，直接给可执行修复路径。</p>
+        <a class="btn" href="/errors/cuda-out-of-memory/">高频问题修复</a>
+      </article>
+      <article class="card">
+        <h2>本地跑还是租云</h2>
+        <p>结合 ROI 计算器与云回退链路做实际决策。</p>
+        <a class="btn" href="/affiliate/cloud-gpu/">对比云 GPU</a>
+      </article>
+      <article class="card">
+        <h2>集群网络方案</h2>
+        <p>面向本地集群规划的高意图实操指南。</p>
+        <a class="btn" href="/guides/ollama-local-cluster-network/">打开指南</a>
+      </article>
+      <article class="card">
+        <h2>后端对比</h2>
+        <p>Ollama vs vLLM 的显存规划与运维取舍。</p>
+        <a class="btn" href="/guides/ollama-vs-vllm-vram/">查看对比</a>
+      </article>
+      <article class="card">
+        <h2>模型对比页</h2>
+        <p>高意图模型选择场景的头对头比较。</p>
+        <a class="btn" href="/compare/qwen35-35b-q4-vs-llama31-70b-q4/">打开示例对比</a>
+      </article>
+      <article class="card">
+        <h2>Apple Silicon 专题</h2>
+        <p>M 系列统一内存下的本地 LLM 规划指南。</p>
+        <a class="btn" href="/hardware/apple-silicon-llm-guide/">查看指南</a>
+      </article>
+      <article class="card">
+        <h2>每日更新</h2>
+        <p>今天更新了什么，一眼看清数据与内容变化。</p>
+        <a class="btn" href="/updates/">查看更新流</a>
+      </article>
+      <article class="card">
+        <h2>模型规模导航</h2>
+        <p>按许可、参数规模和场景组织的 200+ 模型页。</p>
+        <a class="btn" href="/models/">打开模型目录</a>
+      </article>
+      <article class="card">
+        <h2>基准变更日志</h2>
+        <p>按日期记录性能变化、环境快照与贡献流水线。</p>
+        <a class="btn" href="/benchmarks/changelog/">查看日志</a>
+      </article>
+    </section>
+  </main>
+  <script define:vars={{ rawLastSync }}>
+    const localSyncNode = document.getElementById("last-sync-local");
+    if (localSyncNode) {
+      const raw = String(rawLastSync || "").trim();
+      if (!raw || raw === "unknown") {
+        localSyncNode.textContent = "未知";
+      } else {
+        const date = new Date(raw);
+        if (Number.isNaN(date.getTime())) {
+          localSyncNode.textContent = raw;
+        } else {
+          const parts = new Intl.DateTimeFormat(undefined, {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+            timeZoneName: "short"
+          }).formatToParts(date);
+          const part = (type) => parts.find((item) => item.type === type)?.value || "";
+          localSyncNode.textContent = `${part("year")}-${part("month")}-${part("day")} ${part("hour")}:${part("minute")}:${part("second")} ${part("timeZoneName") || "本地"}`;
+        }
+      }
+    }
+  </script>
+</BaseLayout>

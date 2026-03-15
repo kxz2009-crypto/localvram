@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { buildCnAlternates } from "../../../data/root-alternates";
+import { resolveBlogBody } from "../../../lib/i18n-blog-body";
+import { extractFirstHeading, extractFirstParagraph, getZhIntentLabel } from "../../../lib/zh-blog-meta";
+
+const posts = (await getCollection("blog", ({ data }) => data.lang === "en")).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+const mappedPosts = posts.map((post) => {
+  const bodyResolution = resolveBlogBody(post.slug, "zh", post.body || "");
+  const localizedTitle = bodyResolution.isLocalized
+    ? extractFirstHeading(bodyResolution.markdown) || post.data.title
+    : post.data.title;
+  const localizedDescription = bodyResolution.isLocalized
+    ? extractFirstParagraph(bodyResolution.markdown) || post.data.description
+    : "该文章中文翻译尚未完成校对，当前建议先阅读英文原文。";
+  return {
+    post,
+    bodyResolution,
+    localizedTitle,
+    localizedDescription,
+    localizedIntent: getZhIntentLabel(post.data.intent),
+  };
+});
+const localizedPosts = mappedPosts.filter((item) => item.bodyResolution.isLocalized);
+const pendingPosts = mappedPosts.filter((item) => !item.bodyResolution.isLocalized);
+const canonicalPath = "/blog/";
+const blogIndexSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "LocalVRAM 中文博客",
+  url: "https://localvram.cn/blog/",
+  inLanguage: "zh-CN",
+  description: "面向本地 LLM 部署的每日更新：基准、排障与硬件决策。"
+};
+---
+
+<BaseLayout
+  title="LocalVRAM 中文博客"
+  description="面向本地 LLM 部署的每日更新：基准、排障与硬件决策。"
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={blogIndexSchema}
+>
+  <main class="container">
+    <h1>LocalVRAM 中文博客</h1>
+    <p>
+      每日同步英文站的重要更新，并提供可落地的中文实操内容。已完成中文稿 {localizedPosts.length} 篇，待翻译
+      {pendingPosts.length} 篇。
+    </p>
+
+    <section class="post-list">
+      <h2>已完成中文翻译</h2>
+      {localizedPosts.length === 0 && <p>当前暂无已完成校对的中文文章。</p>}
+      {localizedPosts.map(({ post, localizedTitle, localizedDescription, localizedIntent }) => (
+        <article class="post-card">
+          <h2><a href={`/blog/${post.slug}/`}>{localizedTitle}</a></h2>
+          <p>{localizedDescription}</p>
+          <div class="meta-row">
+            <span>{post.data.pubDate.toISOString().slice(0, 10)}</span>
+            <span>{localizedIntent}</span>
+            <span>{post.data.tags.join(", ")}</span>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    {pendingPosts.length > 0 && (
+      <section class="post-list" style="margin-top: 16px;">
+        <h2>待翻译（先读英文）</h2>
+        {pendingPosts.map(({ post, localizedTitle, localizedIntent }) => (
+          <article class="post-card">
+            <h3>{localizedTitle}</h3>
+            <p>该文章中文稿仍在术语校对中，建议先查看英文原文。</p>
+            <div class="meta-row">
+              <span>{post.data.pubDate.toISOString().slice(0, 10)}</span>
+              <span>{localizedIntent}</span>
+              <span>{post.data.tags.join(", ")}</span>
+            </div>
+            <div class="cta-row">
+              <a class="btn" href={`https://localvram.com/en/blog/${post.slug}/`}>阅读英文原文</a>
+            </div>
+          </article>
+        ))}
+      </section>
+    )}
+  </main>
+</BaseLayout>

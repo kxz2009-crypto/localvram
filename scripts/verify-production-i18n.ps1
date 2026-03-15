@@ -1,7 +1,10 @@
 param(
   [string]$ComDomain = "https://localvram.com",
   [string]$CnDomain = "https://localvram.cn",
-  [string[]]$ExpectedHreflangLocales = @()
+  [string[]]$ExpectedHreflangLocales = @(),
+  [ValidateSet("absent", "present", "skip")]
+  [string]$ZhHreflangExpectation = "present",
+  [switch]$SkipContentChecks
 )
 
 $ErrorActionPreference = "Stop"
@@ -14,14 +17,21 @@ function Get-CurlExecutable {
       return $cmd.Source
     }
   }
-  throw "curl executable not found. Install curl or ensure it is in PATH."
+  return $null
 }
 
 $script:CurlExecutable = Get-CurlExecutable
 
 function Get-HeadMeta {
   param([string]$Url)
-  $raw = & $script:CurlExecutable -s -I $Url
+  $raw = @()
+  if ($script:CurlExecutable) {
+    try {
+      $raw = & $script:CurlExecutable -s -I $Url 2>$null
+    } catch {
+      $raw = @()
+    }
+  }
   $statusLine = ($raw | Select-String -Pattern '^HTTP/' | Select-Object -Last 1).Line
   $locationLine = ($raw | Select-String -Pattern '^Location:' | Select-Object -First 1).Line
   $statusCode = ""
@@ -32,12 +42,73 @@ function Get-HeadMeta {
   if ($locationLine) {
     $location = ($locationLine -replace '^Location:\s*', '').Trim()
   }
+  if ([string]::IsNullOrWhiteSpace($statusCode)) {
+    try {
+      $resp = Invoke-WebRequest -Uri $Url -Method Head -MaximumRedirection 0 -ErrorAction Stop
+      $statusCode = [string]$resp.StatusCode
+      $statusLine = "HTTP/$($resp.BaseResponse.ProtocolVersion) $statusCode"
+      $location = [string]$resp.Headers["Location"]
+    } catch {
+      $response = $_.Exception.Response
+      if ($response) {
+        try {
+          $statusCode = [string][int]$response.StatusCode
+          $statusLine = "HTTP/$($response.ProtocolVersion) $statusCode"
+          $location = [string]$response.Headers["Location"]
+        } catch {
+          # keep empty values if response parsing fails
+        }
+      }
+    }
+  }
   return [pscustomobject]@{
     url = $Url
     status = $statusCode
     location = $location
     status_line = $statusLine
   }
+}
+
+function Get-Body {
+  param([string]$Url)
+  $body = ""
+  if ($script:CurlExecutable) {
+    try {
+      $body = (& $script:CurlExecutable -s $Url 2>$null)
+    } catch {
+      $body = ""
+    }
+  }
+  if (-not [string]::IsNullOrWhiteSpace([string]$body)) {
+    return [string]$body
+  }
+  try {
+    $resp = Invoke-WebRequest -Uri $Url -Method Get -ErrorAction Stop
+    return [string]$resp.Content
+  } catch {
+    return ""
+  }
+}
+
+function Get-HreflangHref {
+  param(
+    [string]$Html,
+    [string]$HrefLang
+  )
+  if ([string]::IsNullOrWhiteSpace($Html) -or [string]::IsNullOrWhiteSpace($HrefLang)) {
+    return ""
+  }
+  $escapedLang = [regex]::Escape($HrefLang)
+  $pattern = "<link\b(?=[^>]*rel=[""']alternate[""'])(?=[^>]*hrefLang=[""']$escapedLang[""'])[^>]*href=[""'](?<href>[^""'>]+)[""']"
+  $match = [regex]::Match(
+    $Html,
+    $pattern,
+    [System.Text.RegularExpressions.RegexOptions]::IgnoreCase
+  )
+  if ($match.Success) {
+    return $match.Groups["href"].Value.Trim()
+  }
+  return ""
 }
 
 function Normalize-AbsoluteLocation {
@@ -55,6 +126,11 @@ function Normalize-AbsoluteLocation {
     return "$BaseDomain$Location"
   }
   return "$BaseDomain/$Location"
+}
+
+function Is-RedirectStatus {
+  param([string]$StatusCode)
+  return @("301", "302", "307", "308") -contains ([string]$StatusCode).Trim()
 }
 
 $locales = @("en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id")
@@ -83,26 +159,29 @@ foreach ($locale in $locales) {
 }
 
 $zhChecks = @(
-  @{ from = "/zh"; to = "$CnDomain/zh/" },
-  @{ from = "/zh/"; to = "$CnDomain/zh/" },
-  @{ from = "/zh/tools/vram-calculator/"; to = "$CnDomain/zh/tools/vram-calculator/" },
-  @{ from = "/zh/guides/best-coding-models/?ref=qa"; to = "$CnDomain/zh/guides/best-coding-models/?ref=qa" }
+  @{ from = "/zh"; to = "$CnDomain/" },
+  @{ from = "/zh/"; to = "$CnDomain/" },
+  @{ from = "/zh/tools/vram-calculator/"; to = "$CnDomain/tools/vram-calculator/" },
+  @{ from = "/zh/guides/best-coding-models/?ref=qa"; to = "$CnDomain/guides/best-coding-models/?ref=qa" }
 )
 
 foreach ($row in $zhChecks) {
   $url = "$ComDomain$($row.from)"
   $head = Get-HeadMeta -Url $url
   $actual = Normalize-AbsoluteLocation -BaseDomain $ComDomain -Location $head.location
-  $ok = ($head.status -eq "301") -and ($actual -eq $row.to)
+  $targetHead = if ($actual) { Get-HeadMeta -Url $actual } else { [pscustomobject]@{ status = ""; location = "" } }
+  $singleHop = -not (Is-RedirectStatus -StatusCode $targetHead.status)
+  $ok = ($head.status -eq "301") -and ($actual -eq $row.to) -and $singleHop
   $results += [pscustomobject]@{
     check = $row.from
-    status = $head.status
+    status = "$($head.status)->$($targetHead.status)"
     location = $actual
     ok = if ($ok) { "OK" } else { "FAIL" }
   }
 }
 
-$enHtml = & $script:CurlExecutable -s "$ComDomain/en/"
+$contentChecksEnabled = -not $SkipContentChecks
+$enHtml = if ($contentChecksEnabled) { Get-Body -Url "$ComDomain/en/" } else { "" }
 $rolloutConfigPath = Join-Path $PSScriptRoot "..\src\data\i18n-rollout.json"
 if ($ExpectedHreflangLocales.Count -eq 0 -and (Test-Path $rolloutConfigPath)) {
   $rawConfig = Get-Content $rolloutConfigPath -Raw | ConvertFrom-Json
@@ -122,37 +201,56 @@ foreach ($item in $ExpectedHreflangLocales) {
 }
 [void]$expectedSet.Add("en")
 
-foreach ($tag in $locales) {
-  $pattern = "hrefLang=""$tag"""
-  $present = $enHtml -match [regex]::Escape($pattern)
-  $shouldPresent = $expectedSet.Contains($tag)
-  $ok = ($present -and $shouldPresent) -or ((-not $present) -and (-not $shouldPresent))
-  $results += [pscustomobject]@{
-    check = "hreflang:$tag"
-    status = if ($present) { "present" } else { "missing" }
-    location = ""
-    ok = if ($ok) { "OK" } else { "FAIL" }
+if ($contentChecksEnabled) {
+  foreach ($tag in $locales) {
+    $href = Get-HreflangHref -Html $enHtml -HrefLang $tag
+    $present = -not [string]::IsNullOrWhiteSpace($href)
+    $shouldPresent = $expectedSet.Contains($tag)
+    $ok = ($present -and $shouldPresent) -or ((-not $present) -and (-not $shouldPresent))
+    $results += [pscustomobject]@{
+      check = "hreflang:$tag"
+      status = if ($present) { "present" } else { "missing" }
+      location = $href
+      ok = if ($ok) { "OK" } else { "FAIL" }
+    }
   }
-}
 
-$xDefaultPresent = $enHtml -match [regex]::Escape('hrefLang="x-default"')
-$results += [pscustomobject]@{
-  check = "hreflang:x-default"
-  status = if ($xDefaultPresent) { "present" } else { "missing" }
-  location = ""
-  ok = if ($xDefaultPresent) { "OK" } else { "FAIL" }
-}
+  $xDefaultHref = Get-HreflangHref -Html $enHtml -HrefLang "x-default"
+  $xDefaultPresent = -not [string]::IsNullOrWhiteSpace($xDefaultHref)
+  $results += [pscustomobject]@{
+    check = "hreflang:x-default"
+    status = if ($xDefaultPresent) { "present" } else { "missing" }
+    location = $xDefaultHref
+    ok = if ($xDefaultPresent) { "OK" } else { "FAIL" }
+  }
 
-$zhHreflangPresent = $enHtml -match "hrefLang=""zh-CN"""
-$results += [pscustomobject]@{
-  check = "hreflang:zh-CN"
-  status = if ($zhHreflangPresent) { "present" } else { "absent" }
-  location = ""
-  ok = if (-not $zhHreflangPresent) { "OK" } else { "FAIL" }
+  $zhHreflangHref = Get-HreflangHref -Html $enHtml -HrefLang "zh-CN"
+  $zhHreflangPresent = -not [string]::IsNullOrWhiteSpace($zhHreflangHref)
+  $zhExpect = $ZhHreflangExpectation.Trim().ToLowerInvariant()
+  $zhHreflangOk = $true
+  if ($zhExpect -eq "present") {
+    $zhHreflangOk = $zhHreflangPresent -and $zhHreflangHref.StartsWith("$CnDomain/")
+  } elseif ($zhExpect -eq "absent") {
+    $zhHreflangOk = -not $zhHreflangPresent
+  }
+  $results += [pscustomobject]@{
+    check = "hreflang:zh-CN"
+    status = if ($zhHreflangPresent) { "present" } else { "absent" }
+    location = "expect=$zhExpect href=$zhHreflangHref"
+    ok = if ($zhHreflangOk) { "OK" } else { "FAIL" }
+  }
+} else {
+  $results += [pscustomobject]@{
+    check = "hreflang:content-checks"
+    status = "skipped"
+    location = ""
+    ok = "OK"
+  }
 }
 
 Write-Host "i18n production verification"
 Write-Host "com=$ComDomain cn=$CnDomain"
+Write-Host "content_checks=$contentChecksEnabled"
 Write-Host ""
 $results | Format-Table -AutoSize
 

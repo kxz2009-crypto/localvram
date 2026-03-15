@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { GUIDE_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
+import { buildCnAlternates } from "../../../data/root-alternates";
+
+type GuideCopy = {
+  title: string;
+  description: string;
+  cta: string;
+};
+
+const GUIDE_COPY_BY_SLUG: Record<string, GuideCopy> = {
+  "best-coding-models": {
+    title: "编程模型推荐",
+    description: "面向代码生成、重构与调试场景，快速选择本地可用模型。",
+    cta: "查看推荐",
+  },
+  "best-rag-models": {
+    title: "RAG 模型推荐",
+    description: "在检索质量、响应延迟和显存效率之间找到实用平衡。",
+    cta: "查看方案",
+  },
+  "local-llm-cost-vs-cloud": {
+    title: "本地成本 vs 云端成本",
+    description: "用统一口径比较本地部署与云推理总成本，避免拍脑袋决策。",
+    cta: "开始对比",
+  },
+  "ollama-local-cluster-network": {
+    title: "本地集群网络指南",
+    description: "从单机到多机的网络与稳定性检查清单，适合运维落地。",
+    cta: "打开清单",
+  },
+  "ollama-vs-vllm-vram": {
+    title: "Ollama vs vLLM 显存对比",
+    description: "对比两种后端在显存占用与运行策略上的关键差异。",
+    cta: "查看对比",
+  },
+};
+
+function toCnPath(enPath: string): string {
+  const normalized = String(enPath || "").trim();
+  if (normalized === "/en" || normalized === "/en/") {
+    return "/";
+  }
+  if (normalized.startsWith("/en/")) {
+    return normalized.slice(3);
+  }
+  return normalized || "/";
+}
+
+const guides = GUIDE_ROUTE_ITEMS.map((item) => {
+  const localized = GUIDE_COPY_BY_SLUG[item.slug] || {
+    title: item.title,
+    description: item.description,
+    cta: "查看指南",
+  };
+  return {
+    ...item,
+    localizedPath: toCnPath(item.enPath),
+    ...localized,
+  };
+});
+
+const canonicalPath = "/guides/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "LocalVRAM 中文指南中心",
+  url: "https://localvram.cn/guides/",
+  inLanguage: "zh-CN",
+  description: "本地 LLM 部署实操指南入口：模型选择、RAG、成本决策、集群网络与后端对比。"
+};
+---
+
+<BaseLayout
+  title="中文指南中心 | 本地 LLM 实操与决策指南"
+  description="本地 LLM 部署实操指南入口：模型选择、RAG、成本决策、集群网络与后端对比。"
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>中文指南中心</h1>
+      <p>围绕真实部署场景整理的核心指南，优先解决“能否跑、值不值、怎么稳”的问题。</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/guides/best-coding-models/">编程模型推荐</a>
+        <a class="btn" href="/guides/best-rag-models/">RAG 模型推荐</a>
+        <a class="btn" href="/guides/local-llm-cost-vs-cloud/">成本对比指南</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      {guides.map((guide) => (
+        <article class="card">
+          <h2>{guide.title}</h2>
+          <p>{guide.description}</p>
+          <a class="btn" href={guide.localizedPath}>{guide.cta}</a>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>

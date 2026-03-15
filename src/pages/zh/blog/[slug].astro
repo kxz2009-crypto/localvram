@@ -1,0 +1,149 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import { buildCnAlternates } from "../../../data/root-alternates";
+import { resolveBlogBody } from "../../../lib/i18n-blog-body";
+import { extractFirstHeading, extractFirstParagraph, getZhIntentLabel } from "../../../lib/zh-blog-meta";
+
+const markdownProcessorPromise = createMarkdownProcessor({ syntaxHighlight: false });
+
+const rewriteEnLinksToCnRoot = (html: string): string => {
+  return html
+    .replace(/(href|src)=(["'])\/en\/([^"']*)\2/g, (_m, attr: string, q: string, rest: string) => {
+      return `${attr}=${q}/${rest}${q}`;
+    })
+    .replace(/(href|src)=(["'])\/en(?=(["'#?]))/g, (_m, attr: string, q: string) => `${attr}=${q}/${q}`)
+    .replace(
+      /(href|src)=(["'])https:\/\/localvram\.com\/en\/([^"']*)\2/g,
+      (_m, attr: string, q: string, rest: string) => `${attr}=${q}https://localvram.cn/${rest}${q}`,
+    )
+    .replace(
+      /(href|src)=(["'])https:\/\/localvram\.com\/en(?=(["'#?]))/g,
+      (_m, attr: string, q: string) => `${attr}=${q}https://localvram.cn/${q}`,
+    );
+};
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => data.lang === "en");
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props as { post: any };
+const bodyResolution = resolveBlogBody(post.slug, "zh", post.body || "");
+const markdownProcessor = await markdownProcessorPromise;
+const rendered = await markdownProcessor.render(bodyResolution.markdown);
+const localizedHtml = rewriteEnLinksToCnRoot(rendered.code);
+const localizedTitle = bodyResolution.isLocalized
+  ? extractFirstHeading(bodyResolution.markdown) || post.data.title
+  : `${post.data.title}（英文原文）`;
+const localizedDescription = bodyResolution.isLocalized
+  ? extractFirstParagraph(bodyResolution.markdown) || post.data.description
+  : "该文章中文翻译尚未完成校对，当前展示英文原文，请以英文内容为准。";
+const localizedIntent = getZhIntentLabel(post.data.intent);
+const postPath = `/blog/${post.slug}/`;
+const postUrl = `https://localvram.cn${postPath}`;
+const publishedIso = post.data.pubDate.toISOString();
+const modifiedIso = (post.data.updatedDate || post.data.pubDate).toISOString();
+const fallbackReasonLabel =
+  bodyResolution.fallbackReason === "stub_content"
+    ? "检测到占位稿，暂不展示未校对中文内容。"
+    : "未找到已完成校对的中文正文。";
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: localizedTitle,
+  description: localizedDescription,
+  datePublished: publishedIso,
+  dateModified: modifiedIso,
+  inLanguage: bodyResolution.isLocalized ? "zh-CN" : "en",
+  author: {
+    "@type": "Organization",
+    name: "LocalVRAM"
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "LocalVRAM",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://localvram.cn/branding/logo.svg"
+    }
+  },
+  mainEntityOfPage: postUrl,
+  url: postUrl,
+  keywords: post.data.tags
+};
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "首页",
+      item: "https://localvram.cn/"
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "博客",
+      item: "https://localvram.cn/blog/"
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: localizedTitle,
+      item: postUrl
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title={`${localizedTitle} | LocalVRAM`}
+  description={localizedDescription}
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={postPath}
+  alternates={buildCnAlternates(postPath)}
+  ogType="article"
+  publishedTime={publishedIso}
+  modifiedTime={modifiedIso}
+  structuredData={[articleSchema, breadcrumbSchema]}
+  noindex={!bodyResolution.isLocalized}
+>
+  <main class="container">
+    <article class="post-page">
+      <header class="post-header">
+        <h1>{localizedTitle}</h1>
+        <p>{localizedDescription}</p>
+        {!bodyResolution.isLocalized && (
+          <div class="card" style="margin: 12px 0; border-color: rgba(245, 158, 11, 0.45);">
+            <p>当前为英文原文模式。{fallbackReasonLabel}</p>
+            <p>
+              推荐先阅读英文页：
+              <a href={`https://localvram.com/en/blog/${post.slug}/`}>
+                https://localvram.com/en/blog/{post.slug}/
+              </a>
+            </p>
+          </div>
+        )}
+        <div class="meta-row">
+          <span>发布时间: {post.data.pubDate.toISOString().slice(0, 10)}</span>
+          {post.data.updatedDate && <span>更新时间: {post.data.updatedDate.toISOString().slice(0, 10)}</span>}
+          <span>类型: {localizedIntent}</span>
+        </div>
+      </header>
+
+      <section class="prose">
+        <div set:html={localizedHtml} />
+      </section>
+
+      <section class="cta-row">
+        <a class="btn" href="/tools/vram-calculator/">模型适配计算</a>
+        <a class="btn" href="/errors/">错误排查知识库</a>
+        <a class="btn btn-primary" href="/status/data-freshness/">查看最新数据状态</a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>

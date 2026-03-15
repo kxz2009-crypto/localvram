@@ -81,6 +81,7 @@ REQUIRED_PAGES = [
 ]
 EXPECTED_COM_LOCALES = {"en", "es", "pt", "fr", "de", "ru", "ja", "ko", "ar", "hi", "id"}
 EXPECTED_STANDARD_LOCALES = EXPECTED_COM_LOCALES - {"en"}
+ALLOWED_EXTRA_LOCALE_DIRS = {"zh"}
 REQUIRED_I18N_COPY_PAGES = {
     "locale-home",
     "guides-index",
@@ -148,7 +149,7 @@ def main() -> None:
     unexpected_locale_dirs = sorted(
         x
         for x in page_dirs
-        if len(x) == 2 and x.isalpha() and x not in EXPECTED_COM_LOCALES
+        if len(x) == 2 and x.isalpha() and x not in EXPECTED_COM_LOCALES and x not in ALLOWED_EXTRA_LOCALE_DIRS
     )
     if unexpected_locale_dirs:
         log_line("quality gate failed: unexpected locale directories found")
@@ -194,13 +195,29 @@ def main() -> None:
         rollout_locale_sets[key] = set(values)
 
     base_layout = (ROOT / "src" / "layouts" / "BaseLayout.astro").read_text(encoding="utf-8")
-    if "OG_LOCALE_BY_LANG" not in base_layout or "isRtlLocale" not in base_layout:
+    has_og_locale = "OG_LOCALE_BY_LANG" in base_layout
+    # Accept either legacy helper usage or the newer explicit htmlDir locale mapping.
+    has_rtl_mapping = (
+        "isRtlLocale" in base_layout
+        or 'locale === "ar"' in base_layout
+        or "const htmlDir" in base_layout
+    )
+    if not has_og_locale or not has_rtl_mapping:
         log_line("quality gate failed: BaseLayout missing i18n locale metadata support")
         sys.exit(1)
     if 'dir={htmlDir}' not in base_layout:
         log_line("quality gate failed: BaseLayout missing rtl/ltr html direction binding")
         sys.exit(1)
-    for token in ["ZH_SITE_URL", "zhSwitchHref", "locale-switcher"]:
+    for token in [
+        "ZH_SITE_URL",
+        "zhSwitchHref",
+        "locale-switcher",
+        "CN_ICP_NUMBER",
+        "CN_ICP_URL",
+        "CN_PUBLIC_SECURITY_RECORD",
+        "CN_PUBLIC_SECURITY_STATUS",
+        "CN_PUBLIC_SECURITY_URL",
+    ]:
         if token not in base_layout:
             log_line(f"quality gate failed: BaseLayout missing locale switch token {token}")
             sys.exit(1)
@@ -218,8 +235,9 @@ def main() -> None:
     redirects_text = redirects_file.read_text(encoding="utf-8")
     required_redirect_lines = [
         "/ /en/ 301",
-        "/zh https://localvram.cn/zh/ 301",
-        "/zh/* https://localvram.cn/zh/:splat 301",
+        "/zh https://localvram.cn/ 301",
+        "/zh/ https://localvram.cn/ 301",
+        "/zh/* https://localvram.cn/:splat 301",
     ]
     for line in required_redirect_lines:
         if line not in redirects_text:
@@ -481,6 +499,18 @@ def main() -> None:
         log_line(f"quality gate failed: expected >=6 blog posts, found {post_count}")
         sys.exit(1)
     log_line(f"blog post count ok: {post_count}")
+
+    cn_blog_sync_checker = ROOT / "scripts" / "check-cn-blog-sync.py"
+    if not cn_blog_sync_checker.exists():
+        log_line("quality gate failed: missing scripts/check-cn-blog-sync.py")
+        sys.exit(1)
+    cn_blog_sync_cmd = [sys.executable, str(cn_blog_sync_checker)]
+    cn_blog_sync_result = subprocess.run(cn_blog_sync_cmd, cwd=ROOT)
+    if cn_blog_sync_result.returncode != 0:
+        log_line("quality gate failed: cn blog sync check failed")
+        sys.exit(cn_blog_sync_result.returncode)
+    log_line("cn blog sync checks ok")
+
     blog_slugs = {p.stem for p in blog_dir.glob("*.md")}
 
     i18n_blog_copy = json.loads((ROOT / "src" / "data" / "i18n-blog-copy.json").read_text(encoding="utf-8"))
