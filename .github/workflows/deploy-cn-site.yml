@@ -9,20 +9,19 @@ on:
         default: false
         type: boolean
       deploy_target:
-        description: "Deployment target: origin_ssh (recommended) or cloudflare"
+        description: "Deployment target for CN release (origin_ssh only)"
         required: false
         default: "origin_ssh"
         type: choice
         options:
           - origin_ssh
-          - cloudflare
       pages_project_name:
-        description: "Cloudflare Pages project name for CN site (only used when deploy_target=cloudflare)"
+        description: "Deprecated (CN deploy does not use Cloudflare target)"
         required: false
         default: "localvram-cn"
         type: string
       pages_branch:
-        description: "Cloudflare Pages branch target (only used when deploy_target=cloudflare)"
+        description: "Deprecated (CN deploy does not use Cloudflare target)"
         required: false
         default: "main"
         type: string
@@ -87,8 +86,6 @@ jobs:
       ASTRO_TELEMETRY_DISABLED: "1"
       DRY_RUN_ONLY: ${{ github.event.inputs.dry_run_only || 'false' }}
       DEPLOY_TARGET: ${{ github.event.inputs.deploy_target || 'origin_ssh' }}
-      PAGES_PROJECT_NAME: ${{ github.event.inputs.pages_project_name || 'localvram-cn' }}
-      PAGES_BRANCH: ${{ github.event.inputs.pages_branch || 'main' }}
       ORIGIN_HOST: ${{ secrets.CN_ORIGIN_HOST || '' }}
       ORIGIN_USER: ${{ secrets.CN_ORIGIN_USER || 'root' }}
       ORIGIN_PORT: ${{ secrets.CN_ORIGIN_PORT || '22' }}
@@ -158,9 +155,6 @@ jobs:
 
       - name: Validate deployment settings
         id: validate_deploy_settings
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
           if [ "${DRY_RUN_ONLY}" = "true" ]; then
             echo "mode=dry-run" >> "${GITHUB_OUTPUT}"
@@ -192,24 +186,11 @@ jobs:
           fi
 
           if [ "${DEPLOY_TARGET}" = "cloudflare" ]; then
-            if [ -z "${CF_API_TOKEN}" ]; then
-              echo "::error::missing required secret CF_API_TOKEN"
-              exit 1
-            fi
-            if [ -z "${CF_ACCOUNT_ID}" ]; then
-              echo "::error::missing required secret CF_ACCOUNT_ID"
-              exit 1
-            fi
-            if [ -z "${PAGES_PROJECT_NAME}" ]; then
-              echo "::error::pages_project_name cannot be empty when deploy_target=cloudflare"
-              exit 1
-            fi
-            echo "mode=deploy-cloudflare" >> "${GITHUB_OUTPUT}"
-            echo "dry_run=false"
-            exit 0
+            echo "::error::deploy_target=cloudflare is disabled for CN. localvram.cn must deploy to Tencent origin via SSH."
+            exit 1
           fi
 
-          echo "::error::unsupported deploy_target='${DEPLOY_TARGET}' (expected: origin_ssh|cloudflare)"
+          echo "::error::unsupported deploy_target='${DEPLOY_TARGET}' (expected: origin_ssh)"
           exit 1
 
       - name: Deploy dist-cn to origin server (SSH)
@@ -245,26 +226,14 @@ jobs:
 
           rm -f cn_origin_deploy.key dist-cn.tar.gz
 
-      - name: Deploy dist-cn to Cloudflare Pages
-        id: deploy_cn_cloudflare
-        if: ${{ steps.validate_deploy_settings.outputs.mode == 'deploy-cloudflare' }}
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-        run: |
-          set -o pipefail
-          npx wrangler@3 pages deploy dist-cn \
-            --project-name "${PAGES_PROJECT_NAME}" \
-            --branch "${PAGES_BRANCH}" | tee logs/deploy-cn-pages.log
-
       - name: Mark deploy step result
         id: deploy_cn
         if: ${{ steps.validate_deploy_settings.outputs.mode != 'dry-run' }}
         run: |
-          if [ "${{ steps.deploy_cn_origin.outcome }}" = "success" ] || [ "${{ steps.deploy_cn_cloudflare.outcome }}" = "success" ]; then
+          if [ "${{ steps.deploy_cn_origin.outcome }}" = "success" ]; then
             echo "result=success" >> "${GITHUB_OUTPUT}"
           else
-            echo "::error::no deploy step succeeded"
+            echo "::error::origin deploy step failed"
             exit 1
           fi
 
@@ -447,7 +416,6 @@ jobs:
             echo "- build-cn: ${{ steps.build_cn.outcome }}";
             echo "- validate-deploy-settings: ${{ steps.validate_deploy_settings.outcome }}";
             echo "- deploy-cn-origin: ${{ steps.deploy_cn_origin.outcome }}";
-            echo "- deploy-cn-cloudflare: ${{ steps.deploy_cn_cloudflare.outcome }}";
             echo "- deploy-cn: ${{ steps.deploy_cn.outcome }}";
             echo "- verify-cn-domain: ${{ steps.verify_cn_domain.outcome }}";
             echo "- push-baidu-urls: ${{ steps.push_baidu.outcome }}";
@@ -480,7 +448,6 @@ jobs:
             logs/check-quality.log
             logs/build-cn.log
             logs/deploy-cn-origin.log
-            logs/deploy-cn-pages.log
             logs/verify-cn-domain.log
             logs/verify-cn-domain-attempt-*.log
             logs/push-baidu-urls.log
