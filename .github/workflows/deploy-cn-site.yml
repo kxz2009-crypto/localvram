@@ -4,17 +4,25 @@ on:
   workflow_dispatch:
     inputs:
       dry_run_only:
-        description: "Build + verify artifact only (skip Cloudflare deploy and live domain checks)"
+        description: "Build + verify artifact only (skip deploy and live domain checks)"
         required: false
         default: false
         type: boolean
+      deploy_target:
+        description: "Deployment target: origin_ssh (recommended) or cloudflare"
+        required: false
+        default: "origin_ssh"
+        type: choice
+        options:
+          - origin_ssh
+          - cloudflare
       pages_project_name:
-        description: "Cloudflare Pages project name for CN site"
+        description: "Cloudflare Pages project name for CN site (only used when deploy_target=cloudflare)"
         required: false
         default: "localvram-cn"
         type: string
       pages_branch:
-        description: "Cloudflare Pages branch target"
+        description: "Cloudflare Pages branch target (only used when deploy_target=cloudflare)"
         required: false
         default: "main"
         type: string
@@ -78,8 +86,17 @@ jobs:
     env:
       ASTRO_TELEMETRY_DISABLED: "1"
       DRY_RUN_ONLY: ${{ github.event.inputs.dry_run_only || 'false' }}
+      DEPLOY_TARGET: ${{ github.event.inputs.deploy_target || 'origin_ssh' }}
       PAGES_PROJECT_NAME: ${{ github.event.inputs.pages_project_name || 'localvram-cn' }}
       PAGES_BRANCH: ${{ github.event.inputs.pages_branch || 'main' }}
+      ORIGIN_HOST: ${{ secrets.CN_ORIGIN_HOST || '' }}
+      ORIGIN_USER: ${{ secrets.CN_ORIGIN_USER || 'root' }}
+      ORIGIN_PORT: ${{ secrets.CN_ORIGIN_PORT || '22' }}
+      ORIGIN_SSH_PRIVATE_KEY: ${{ secrets.CN_ORIGIN_SSH_KEY || '' }}
+      ORIGIN_SITE_ROOT: ${{ vars.CN_ORIGIN_SITE_ROOT || '/var/www/localvram-cn' }}
+      ORIGIN_RELEASES_DIR: ${{ vars.CN_ORIGIN_RELEASES_DIR || '/var/www/localvram-cn/releases' }}
+      ORIGIN_CURRENT_LINK: ${{ vars.CN_ORIGIN_CURRENT_LINK || '/var/www/localvram-cn/current' }}
+      ORIGIN_OWNER: ${{ vars.CN_ORIGIN_OWNER || 'nginx:nginx' }}
       CN_DOMAIN: ${{ github.event.inputs.cn_domain || 'https://localvram.cn' }}
       EXPECTED_SITEMAP_URL: ${{ github.event.inputs.expected_sitemap_url || 'https://localvram.cn/sitemap-cn.xml' }}
       SKIP_LEGACY_ZH_REDIRECT_CHECKS: ${{ github.event.inputs.skip_legacy_zh_redirect_checks || 'false' }}
@@ -139,8 +156,8 @@ jobs:
           set -o pipefail
           npm run build:cn | tee logs/build-cn.log
 
-      - name: Validate Cloudflare deployment settings
-        id: validate_cf_settings
+      - name: Validate deployment settings
+        id: validate_deploy_settings
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
@@ -151,19 +168,6 @@ jobs:
             exit 0
           fi
 
-          if [ -z "${CF_API_TOKEN}" ]; then
-            echo "::error::missing required secret CF_API_TOKEN"
-            exit 1
-          fi
-          if [ -z "${CF_ACCOUNT_ID}" ]; then
-            echo "::error::missing required secret CF_ACCOUNT_ID"
-            exit 1
-          fi
-
-          if [ -z "${PAGES_PROJECT_NAME}" ]; then
-            echo "::error::pages_project_name cannot be empty"
-            exit 1
-          fi
           if [ -z "${CN_ICP_NUMBER}" ]; then
             echo "::error::CN_ICP_NUMBER is empty; set repository variable CN_ICP_NUMBER or provide fallback"
             exit 1
@@ -173,12 +177,77 @@ jobs:
             exit 1
           fi
 
-          echo "mode=deploy" >> "${GITHUB_OUTPUT}"
-          echo "dry_run=false"
+          if [ "${DEPLOY_TARGET}" = "origin_ssh" ]; then
+            if [ -z "${ORIGIN_HOST}" ]; then
+              echo "::error::missing required secret CN_ORIGIN_HOST for origin_ssh deploy"
+              exit 1
+            fi
+            if [ -z "${ORIGIN_SSH_PRIVATE_KEY}" ]; then
+              echo "::error::missing required secret CN_ORIGIN_SSH_KEY for origin_ssh deploy"
+              exit 1
+            fi
+            echo "mode=deploy-origin" >> "${GITHUB_OUTPUT}"
+            echo "dry_run=false"
+            exit 0
+          fi
+
+          if [ "${DEPLOY_TARGET}" = "cloudflare" ]; then
+            if [ -z "${CF_API_TOKEN}" ]; then
+              echo "::error::missing required secret CF_API_TOKEN"
+              exit 1
+            fi
+            if [ -z "${CF_ACCOUNT_ID}" ]; then
+              echo "::error::missing required secret CF_ACCOUNT_ID"
+              exit 1
+            fi
+            if [ -z "${PAGES_PROJECT_NAME}" ]; then
+              echo "::error::pages_project_name cannot be empty when deploy_target=cloudflare"
+              exit 1
+            fi
+            echo "mode=deploy-cloudflare" >> "${GITHUB_OUTPUT}"
+            echo "dry_run=false"
+            exit 0
+          fi
+
+          echo "::error::unsupported deploy_target='${DEPLOY_TARGET}' (expected: origin_ssh|cloudflare)"
+          exit 1
+
+      - name: Deploy dist-cn to origin server (SSH)
+        id: deploy_cn_origin
+        if: ${{ steps.validate_deploy_settings.outputs.mode == 'deploy-origin' }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${ORIGIN_SSH_PRIVATE_KEY}" > cn_origin_deploy.key
+          chmod 600 cn_origin_deploy.key
+          ssh-keyscan -p "${ORIGIN_PORT}" -H "${ORIGIN_HOST}" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+          tar -czf dist-cn.tar.gz -C . dist-cn
+
+          remote_tmp="/tmp/dist-cn-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.tar.gz"
+          scp -i cn_origin_deploy.key -P "${ORIGIN_PORT}" -o BatchMode=yes -o StrictHostKeyChecking=yes \
+            dist-cn.tar.gz "${ORIGIN_USER}@${ORIGIN_HOST}:${remote_tmp}"
+
+          ssh -i cn_origin_deploy.key -p "${ORIGIN_PORT}" -o BatchMode=yes -o StrictHostKeyChecking=yes \
+            "${ORIGIN_USER}@${ORIGIN_HOST}" \
+            "set -euo pipefail; \
+              TS=\$(date +%Y%m%d%H%M%S); \
+              REL=\"${ORIGIN_RELEASES_DIR}/\$TS\"; \
+              mkdir -p \"\$REL\"; \
+              tar -xzf \"${remote_tmp}\" -C \"\$REL\" --strip-components=1; \
+              ln -sfn \"\$REL\" \"${ORIGIN_CURRENT_LINK}\"; \
+              chown -R \"${ORIGIN_OWNER}\" \"${ORIGIN_SITE_ROOT}\"; \
+              rm -f \"${remote_tmp}\"; \
+              nginx -t; \
+              systemctl reload nginx;" | tee logs/deploy-cn-origin.log
+
+          rm -f cn_origin_deploy.key dist-cn.tar.gz
 
       - name: Deploy dist-cn to Cloudflare Pages
-        id: deploy_cn
-        if: ${{ steps.validate_cf_settings.outputs.mode == 'deploy' }}
+        id: deploy_cn_cloudflare
+        if: ${{ steps.validate_deploy_settings.outputs.mode == 'deploy-cloudflare' }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
@@ -188,9 +257,20 @@ jobs:
             --project-name "${PAGES_PROJECT_NAME}" \
             --branch "${PAGES_BRANCH}" | tee logs/deploy-cn-pages.log
 
+      - name: Mark deploy step result
+        id: deploy_cn
+        if: ${{ steps.validate_deploy_settings.outputs.mode != 'dry-run' }}
+        run: |
+          if [ "${{ steps.deploy_cn_origin.outcome }}" = "success" ] || [ "${{ steps.deploy_cn_cloudflare.outcome }}" = "success" ]; then
+            echo "result=success" >> "${GITHUB_OUTPUT}"
+          else
+            echo "::error::no deploy step succeeded"
+            exit 1
+          fi
+
       - name: Verify CN production domain
         id: verify_cn_domain
-        if: ${{ steps.validate_cf_settings.outputs.mode == 'deploy' }}
+        if: ${{ steps.validate_deploy_settings.outputs.mode != 'dry-run' }}
         run: |
           set -euo pipefail
           mkdir -p logs
@@ -233,7 +313,7 @@ jobs:
 
       - name: Push CN URLs to Baidu
         id: push_baidu
-        if: ${{ steps.validate_cf_settings.outputs.mode == 'deploy' }}
+        if: ${{ steps.validate_deploy_settings.outputs.mode != 'dry-run' }}
         env:
           BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
         run: |
@@ -365,13 +445,16 @@ jobs:
             echo "- install-python-dependencies: ${{ steps.install_python_dependencies.outcome }}";
             echo "- quality-gate: ${{ steps.quality_gate.outcome }}";
             echo "- build-cn: ${{ steps.build_cn.outcome }}";
-            echo "- validate-cf-settings: ${{ steps.validate_cf_settings.outcome }}";
+            echo "- validate-deploy-settings: ${{ steps.validate_deploy_settings.outcome }}";
+            echo "- deploy-cn-origin: ${{ steps.deploy_cn_origin.outcome }}";
+            echo "- deploy-cn-cloudflare: ${{ steps.deploy_cn_cloudflare.outcome }}";
             echo "- deploy-cn: ${{ steps.deploy_cn.outcome }}";
             echo "- verify-cn-domain: ${{ steps.verify_cn_domain.outcome }}";
             echo "- push-baidu-urls: ${{ steps.push_baidu.outcome }}";
             echo "- alert-issue: ${{ steps.alert_issue.outcome }}";
             echo "- resolve-issue: ${{ steps.resolve_issue.outcome }}";
             echo "- mode: ${DRY_RUN_ONLY}";
+            echo "- deploy_target: ${DEPLOY_TARGET}";
             echo "- cn-domain: ${CN_DOMAIN}";
             echo "- expected-sitemap-url: ${EXPECTED_SITEMAP_URL}";
             echo "- skip_content_checks: ${SKIP_CONTENT_CHECKS}";
@@ -396,6 +479,7 @@ jobs:
           path: |
             logs/check-quality.log
             logs/build-cn.log
+            logs/deploy-cn-origin.log
             logs/deploy-cn-pages.log
             logs/verify-cn-domain.log
             logs/verify-cn-domain-attempt-*.log
