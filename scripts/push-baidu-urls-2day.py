@@ -162,7 +162,7 @@ def main() -> int:
     parser.add_argument("--sitemap-url", default="https://localvram.cn/sitemap-cn.xml")
     parser.add_argument("--day", type=int, choices=[1, 2], required=True, help="Day batch index (1 or 2).")
     parser.add_argument("--total-days", type=int, default=2, help="Total split day count. Default: 2.")
-    parser.add_argument("--limit", type=int, default=5000, help="Maximum URLs to consider before splitting.")
+    parser.add_argument("--limit", type=int, default=10, help="Maximum URLs to consider before splitting.")
     parser.add_argument("--batch-size", type=int, default=200, help="URLs per POST request.")
     parser.add_argument("--retry-delays-s", default="5,10,20")
     parser.add_argument("--timeout-s", type=int, default=30)

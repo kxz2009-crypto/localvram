@@ -162,7 +162,7 @@ def main() -> int:
     parser.add_argument("--token", default="", help="Baidu push token. Can also be set by BAIDU_PUSH_TOKEN.")
     parser.add_argument("--sitemap-url", default="https://localvram.cn/sitemap-cn.xml")
     parser.add_argument("--urls-file", default="", help="Optional plain text URL list, one URL per line.")
-    parser.add_argument("--limit", type=int, default=5000, help="Maximum URLs to push in this run.")
+    parser.add_argument("--limit", type=int, default=10, help="Maximum URLs to push in this run.")
     parser.add_argument("--batch-size", type=int, default=500, help="URLs per POST request.")
     parser.add_argument("--retry-delays-s", default="5,10,20")
     parser.add_argument("--timeout-s", type=int, default=30)
