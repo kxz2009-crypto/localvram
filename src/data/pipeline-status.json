@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-16T09:30:14Z",
+  "updated_at": "2026-03-16T20:38:04Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -30,18 +30,31 @@
     "daily_content": {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
-      "run_id": "23136811590",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/23136811590",
+      "run_id": "23164773320",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/23164773320",
       "status": "completed",
-      "conclusion": "success",
+      "conclusion": "failure",
       "event": "workflow_dispatch",
-      "head_sha": "f1e9523ff3e463e836d2860120f45861405c8895",
-      "failure_class": "none",
-      "failure_detail": "",
-      "updated_at": "2026-03-16T09:30:14Z"
+      "head_sha": "affd5a52f6fd6337d70a335797e6656902663fd9",
+      "failure_class": "daily_content_failed",
+      "failure_detail": "quality-gate.py failed",
+      "updated_at": "2026-03-16T20:38:04Z"
     }
   },
   "history": [
+    {
+      "workflow_key": "daily_content",
+      "workflow_name": "Daily Content Agent",
+      "run_id": "23164773320",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/23164773320",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "workflow_dispatch",
+      "head_sha": "affd5a52f6fd6337d70a335797e6656902663fd9",
+      "failure_class": "daily_content_failed",
+      "failure_detail": "quality-gate.py failed",
+      "updated_at": "2026-03-16T20:38:04Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
