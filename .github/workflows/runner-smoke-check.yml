@@ -41,7 +41,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         continue-on-error: true
 
       - name: Classify checkout failure
@@ -54,7 +54,7 @@ jobs:
 
       - name: Setup Python
         if: steps.checkout.conclusion == 'success'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -139,7 +139,7 @@ jobs:
 
       - name: Upload smoke diagnostics
         if: always() && steps.checkout.conclusion == 'success'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: runner-smoke-diagnostics
           if-no-files-found: warn

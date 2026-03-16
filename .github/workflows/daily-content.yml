@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         continue-on-error: true
 
       - name: Classify checkout failure
@@ -28,7 +28,7 @@ jobs:
 
       - name: Setup Python
         if: steps.checkout.conclusion == 'success'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -360,7 +360,7 @@ jobs:
 
       - name: Upload daily diagnostics
         if: always() && steps.checkout.conclusion == 'success'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: daily-content-diagnostics
           if-no-files-found: warn
@@ -375,7 +375,7 @@ jobs:
 
       - name: Alert issue (daily checkout failure)
         if: always() && steps.checkout.conclusion == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           ALERT_WORKFLOW: Daily Content Agent
           ALERT_FAILURE_CLASS: checkout_network_failure
@@ -425,7 +425,7 @@ jobs:
 
       - name: Alert issue (daily failure)
         if: always() && failure() && steps.checkout.conclusion == 'success'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           ALERT_WORKFLOW: Daily Content Agent
           ALERT_FAILURE_CLASS: ${{ steps.pipeline_status_daily.outputs.failure_class }}
@@ -478,7 +478,7 @@ jobs:
 
       - name: Alert issue (daily zero publish)
         if: always() && steps.checkout.conclusion == 'success' && steps.publish_guard.outputs.zero_publish == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           ALERT_WORKFLOW: Daily Content Agent
           ALERT_FAILURE_CLASS: daily_content_zero_publish
@@ -534,7 +534,7 @@ jobs:
 
       - name: Resolve alert issues on recovery (daily)
         if: always() && success() && steps.checkout.conclusion == 'success' && steps.publish_guard.outputs.zero_publish != 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           ALERT_WORKFLOW: Daily Content Agent
           ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

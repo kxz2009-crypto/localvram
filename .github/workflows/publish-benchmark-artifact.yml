@@ -53,10 +53,10 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -579,7 +579,7 @@ jobs:
 
       - name: Upload publish diagnostics
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: publish-benchmark-diagnostics
           if-no-files-found: warn
@@ -590,7 +590,7 @@ jobs:
 
       - name: Alert issue (publish checkout failure)
         if: always() && steps.checkout.conclusion == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           ALERT_WORKFLOW: Publish Benchmark Artifact
           ALERT_FAILURE_CLASS: publish_checkout_failure
@@ -642,7 +642,7 @@ jobs:
 
       - name: Alert issue (publish failure)
         if: always() && failure() && steps.checkout.conclusion == 'success'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           ALERT_WORKFLOW: Publish Benchmark Artifact
           ALERT_FAILURE_CLASS: ${{ steps.pipeline_status_publish.outputs.failure_class }}
@@ -697,7 +697,7 @@ jobs:
 
       - name: Resolve alert issues on recovery (publish)
         if: always() && success() && steps.checkout.conclusion == 'success'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           ALERT_WORKFLOW: Publish Benchmark Artifact
           ALERT_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
