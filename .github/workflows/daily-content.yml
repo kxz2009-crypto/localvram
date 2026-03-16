@@ -82,6 +82,9 @@ jobs:
 
       - name: Auto-fill CN zh blog body for newly published posts
         if: steps.checkout.conclusion == 'success'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          I18N_ZH_PROVIDER: auto
         run: |
           published_slugs="$(python -c "import json, pathlib; p=pathlib.Path('src/data/content-publish-log.json'); d=json.loads(p.read_text(encoding='utf-8-sig')) if p.exists() else {}; r=d.get('last_run',{}) if isinstance(d,dict) else {}; print(','.join([str(i.get('slug','')).strip() for i in r.get('published',[]) if isinstance(i,dict) and str(i.get('slug','')).strip()]))" 2>/dev/null || true)"
           if [ -z "${published_slugs}" ]; then
@@ -89,7 +92,7 @@ jobs:
             exit 0
           fi
           echo "published_slugs=${published_slugs}"
-          if ! python scripts/auto-fill-i18n-blog-body.py --locales zh --slugs "${published_slugs}" --overwrite; then
+          if ! python scripts/auto-fill-i18n-blog-body.py --locales zh --slugs "${published_slugs}" --overwrite --zh-provider "${I18N_ZH_PROVIDER}"; then
             python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'auto-fill-i18n-blog-body.py --locales zh failed'}, ensure_ascii=False), encoding='utf-8')"
             echo "::error title=FailureClass::daily_content_failed - auto-fill-i18n-blog-body.py --locales zh failed"
             exit 1

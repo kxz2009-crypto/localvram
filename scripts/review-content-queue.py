@@ -22,6 +22,16 @@ DISCLOSURE_PATTERN = re.compile(
     r"(affiliate disclosure|affiliate link|may earn a commission|commission at no extra cost)",
     re.IGNORECASE,
 )
+LOW_VALUE_TITLE_PATTERN = re.compile(r":\s*practical guide\s*\(\d{4}\)", re.IGNORECASE)
+LOW_VALUE_TITLE_FRAGMENTS = (
+    "local inference benchmark update",
+    "practical guide",
+)
+LOW_VALUE_BODY_MARKERS = (
+    "users searching for",
+    "this draft is generated for editor review",
+    "## suggested article structure",
+)
 TOPIC_STOPWORDS = {
     "a",
     "an",
@@ -283,6 +293,17 @@ def main() -> None:
             flags.append("missing_affiliate_disclosure")
         if quote_ratio(body) > float(args.max_quote_ratio):
             flags.append("high_quote_ratio")
+
+        normalized_title = title.strip().lower()
+        if LOW_VALUE_TITLE_PATTERN.search(title):
+            flags.append("low_value_template_title")
+        elif all(fragment in normalized_title for fragment in LOW_VALUE_TITLE_FRAGMENTS):
+            flags.append("low_value_template_title")
+
+        lower_body = body.lower()
+        marker_hits = sum(1 for marker in LOW_VALUE_BODY_MARKERS if marker in lower_body)
+        if marker_hits >= 2:
+            flags.append("low_value_template_body")
 
         urls = URL_PATTERN.findall(body)
         for url in urls:

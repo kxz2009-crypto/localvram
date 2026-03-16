@@ -303,13 +303,96 @@ def build_benchmark_fallback_candidates(max_count: int = 120) -> list[dict[str, 
     return candidates[:max_count]
 
 
+def infer_content_intent(keyword: str, slug: str = "") -> str:
+    text = f"{keyword} {slug}".lower()
+    if any(token in text for token in ("error", "fix", "oom", "cuda", "failed", "timeout")):
+        return "troubleshooting"
+    if any(token in text for token in ("cost", "price", "roi", "rent", "cloud", "billing")):
+        return "cost"
+    if any(token in text for token in ("gpu", "vram", "rtx", "hardware", "memory")):
+        return "hardware"
+    if any(token in text for token in ("benchmark", "tok/s", "latency", "throughput")):
+        return "benchmark"
+    return "guide"
+
+
+def normalize_title_topic(keyword: str) -> str:
+    text = str(keyword or "").strip().rstrip("?")
+    if not text:
+        return "local llm deployment"
+    text = re.sub(
+        r"\blocal inference benchmark(?:\s+update)?\b",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
+    text = re.sub(r"\bpractical guide\b", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"\s+", " ", text).strip(" -:")
+    return text or str(keyword or "").strip()
+
+
+def humanize_topic(topic: str) -> str:
+    text = re.sub(r"[_/]+", " ", str(topic or "").strip())
+    text = re.sub(r"\s+", " ", text).strip()
+    if not text:
+        return "Local LLM Deployment"
+
+    words: list[str] = []
+    for token in text.split(" "):
+        if any(ch.isdigit() for ch in token):
+            token = re.sub(r"(\d+)b\b", r"\1B", token, flags=re.IGNORECASE)
+            words.append(token)
+            continue
+        words.append(token.capitalize() if token.islower() else token)
+    return " ".join(words)
+
+
+def stable_template_index(seed: str, size: int) -> int:
+    if size <= 1:
+        return 0
+    total = sum(ord(ch) for ch in str(seed or ""))
+    return total % size
+
+
 def build_title(keyword: str, date_iso: str) -> str:
     if keyword:
         base = keyword.strip().rstrip("?")
     else:
         base = "local llm deployment"
     year = date_iso.split("-")[0]
-    return f"{base.title()}: Practical Guide ({year})"
+    intent = infer_content_intent(base)
+    topic = humanize_topic(normalize_title_topic(base))
+
+    templates: dict[str, list[str]] = {
+        "benchmark": [
+            "{topic} Local Benchmark: Tokens/s, Latency, and VRAM ({year})",
+            "{topic} Benchmark Results: Local GPU Throughput Breakdown ({year})",
+            "{topic}: Local Inference Performance Report ({year})",
+        ],
+        "hardware": [
+            "{topic}: GPU and VRAM Sizing Guide ({year})",
+            "{topic}: Hardware Decision Matrix for Local LLM ({year})",
+            "{topic}: Practical GPU Selection for Stable Local Inference ({year})",
+        ],
+        "cost": [
+            "{topic}: Local vs Cloud Cost Breakdown ({year})",
+            "{topic}: Cloud Rental vs Self-Host Decision Model ({year})",
+            "{topic}: Cost, Throughput, and ROI Analysis ({year})",
+        ],
+        "troubleshooting": [
+            "{topic}: Root Cause Checklist and Reliable Fixes ({year})",
+            "{topic}: Fast Triage Playbook for Local LLM Failures ({year})",
+            "{topic}: Error-to-Fix Handbook ({year})",
+        ],
+        "guide": [
+            "{topic}: Step-by-Step Deployment Workflow ({year})",
+            "{topic}: Setup, Validation, and Scaling Playbook ({year})",
+            "{topic}: Practical Local LLM Implementation Guide ({year})",
+        ],
+    }
+    pool = templates.get(intent, templates["guide"])
+    idx = stable_template_index(f"{base}:{date_iso}", len(pool))
+    return pool[idx].format(topic=topic, year=year)
 
 
 def draft_markdown(
@@ -335,6 +418,15 @@ def draft_markdown(
     hardware = "/en/affiliate/hardware-upgrade/"
     tool = "/en/tools/vram-calculator/"
     landing_ref = landing if landing else "/en/models/"
+    intent = infer_content_intent(keyword)
+    intent_actions = {
+        "benchmark": "Report measured throughput/latency first, then explain the hardware bottleneck.",
+        "hardware": "Map VRAM tiers to realistic model choices and upgrade paths.",
+        "cost": "Quantify local-vs-cloud break-even points with explicit assumptions.",
+        "troubleshooting": "Prioritize reproducible failure symptoms, root causes, and exact fixes.",
+        "guide": "Provide a reproducible setup path with validation checkpoints.",
+    }
+    primary_action = intent_actions.get(intent, intent_actions["guide"])
 
     return f"""---
 title: "{title}"
@@ -345,20 +437,27 @@ source: {source}
 status: draft
 ---
 
-## Why this topic now
+## Decision context
 
-Users searching for "{keyword}" are usually deciding whether to run locally or move to cloud. This draft is generated for editor review and factual expansion.
+This draft targets the query "{keyword}" and should help readers make a concrete deploy-or-scale decision today.
 
-## Verified benchmark anchor
+## Measured anchor data
 
 {measured_block}
 
-## Suggested article structure
+## What this post must answer
 
-1. Define the hardware requirement and failure boundary.
-2. Show measured local performance and explain bottlenecks.
-3. Compare local cost vs cloud fallback.
-4. Give a clear action path based on VRAM and model size.
+- {primary_action}
+- Define failure boundaries (VRAM limit, latency target, or stability threshold).
+- Include one validated local path and one cloud fallback path.
+- End with an actionable recommendation by workload size.
+
+## Editor outline (draft)
+
+1. Problem framing and target workload.
+2. Benchmark evidence and interpretation.
+3. Cost/risk comparison across local and cloud options.
+4. Final recommendation with next-step checklist.
 
 ## Internal links to include
 
