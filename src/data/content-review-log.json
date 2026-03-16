@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-15T11:56:10.293362Z",
+  "updated_at": "2026-03-16T09:30:00.980165Z",
   "last_run": {
-    "run_at": "2026-03-15T11:56:10.293362Z",
-    "queue_date": "2026-03-15",
+    "run_at": "2026-03-16T09:30:00.980165Z",
+    "queue_date": "2026-03-16",
     "reviewed_count": 3,
     "auto_approved_count": 3,
     "pending_manual_review_count": 0,
@@ -12,50 +12,104 @@
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-03-15/01-model-nemotron-3-nano-30b-benchmark-refresh.md",
-        "slug": "model-nemotron-3-nano-30b-benchmark-refresh",
-        "score": 490.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 197,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.839,
-          "topic_score": 0.5714,
-          "slug": "model-gpt-oss-20b-benchmark-refresh"
-        }
-      },
-      {
-        "draft": "content-queue/2026-03-15/02-model-qwen2-5-coder-32b-benchmark-refresh.md",
-        "slug": "model-qwen2-5-coder-32b-benchmark-refresh",
+        "draft": "content-queue/2026-03-16/01-model-qwq-32b-benchmark-refresh.md",
+        "slug": "model-qwq-32b-benchmark-refresh",
         "score": 360.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 197,
+        "word_count": 195,
         "risk_flags": [],
         "similarity": {
-          "score": 0.839,
-          "topic_score": 0.5714,
-          "slug": "model-gpt-oss-20b-benchmark-refresh"
+          "score": 0.8966,
+          "topic_score": 0.75,
+          "slug": "model-qwen2-5-coder-32b-benchmark-refresh"
         }
       },
       {
-        "draft": "content-queue/2026-03-15/03-model-qwen3-5-35b-benchmark-refresh.md",
-        "slug": "model-qwen3-5-35b-benchmark-refresh",
+        "draft": "content-queue/2026-03-16/02-model-translategemma-27b-benchmark-refresh.md",
+        "slug": "model-translategemma-27b-benchmark-refresh",
         "score": 360.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 196,
+        "word_count": 195,
         "risk_flags": [],
         "similarity": {
-          "score": 0.8462,
+          "score": 0.8803,
           "topic_score": 0.6154,
-          "slug": "model-gpt-oss-20b-benchmark-refresh"
+          "slug": "model-qwen2-5-coder-32b-benchmark-refresh"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-16/03-en-models-llama-70b-q4.md",
+        "slug": "en-models-llama-70b-q4",
+        "score": 300.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 193,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.8559,
+          "topic_score": 0.2,
+          "slug": "model-qwen2-5-coder-32b-benchmark-refresh"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-16T09:30:00.980165Z",
+      "queue_date": "2026-03-16",
+      "reviewed_count": 3,
+      "auto_approved_count": 3,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-03-16/01-model-qwq-32b-benchmark-refresh.md",
+          "slug": "model-qwq-32b-benchmark-refresh",
+          "score": 360.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 195,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8966,
+            "topic_score": 0.75,
+            "slug": "model-qwen2-5-coder-32b-benchmark-refresh"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-16/02-model-translategemma-27b-benchmark-refresh.md",
+          "slug": "model-translategemma-27b-benchmark-refresh",
+          "score": 360.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 195,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8803,
+            "topic_score": 0.6154,
+            "slug": "model-qwen2-5-coder-32b-benchmark-refresh"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-16/03-en-models-llama-70b-q4.md",
+          "slug": "en-models-llama-70b-q4",
+          "score": 300.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 193,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8559,
+            "topic_score": 0.2,
+            "slug": "model-qwen2-5-coder-32b-benchmark-refresh"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-15T11:56:10.293362Z",
       "queue_date": "2026-03-15",

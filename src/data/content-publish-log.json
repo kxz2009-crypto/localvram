@@ -1,40 +1,73 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-15T11:56:10.372936Z",
+  "updated_at": "2026-03-16T09:30:01.058127Z",
   "last_run": {
-    "run_at": "2026-03-15T11:56:10.372936Z",
-    "queue_date": "2026-03-15",
+    "run_at": "2026-03-16T09:30:01.058127Z",
+    "queue_date": "2026-03-16",
     "candidate_count": 3,
     "published_count": 2,
     "skipped_count": 1,
     "published": [
       {
-        "slug": "model-nemotron-3-nano-30b-benchmark-refresh",
-        "title": "Nemotron-3-Nano:30B Local Inference Benchmark Update: Practical Guide (2026)",
-        "topic_key": "nemotron-3-nano-30b-local-inference-benchmark-update",
-        "score": 490.0,
-        "source_draft": "content-queue/2026-03-15/01-model-nemotron-3-nano-30b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-nemotron-3-nano-30b-benchmark-refresh.md",
+        "slug": "model-qwq-32b-benchmark-refresh",
+        "title": "Qwq:32B Local Inference Benchmark Update: Practical Guide (2026)",
+        "topic_key": "qwq-32b-local-inference-benchmark-update",
+        "score": 360.0,
+        "source_draft": "content-queue/2026-03-16/01-model-qwq-32b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-qwq-32b-benchmark-refresh.md",
         "intent": "benchmark"
       },
       {
-        "slug": "model-qwen2-5-coder-32b-benchmark-refresh",
-        "title": "Qwen2.5-Coder:32B Local Inference Benchmark Update: Practical Guide (2026)",
-        "topic_key": "qwen2-5-coder-32b-local-inference-benchmark-update",
+        "slug": "model-translategemma-27b-benchmark-refresh",
+        "title": "Translategemma:27B Local Inference Benchmark Update: Practical Guide (2026)",
+        "topic_key": "translategemma-27b-local-inference-benchmark-update",
         "score": 360.0,
-        "source_draft": "content-queue/2026-03-15/02-model-qwen2-5-coder-32b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-qwen2-5-coder-32b-benchmark-refresh.md",
+        "source_draft": "content-queue/2026-03-16/02-model-translategemma-27b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-translategemma-27b-benchmark-refresh.md",
         "intent": "benchmark"
       }
     ],
     "skipped": [
       {
-        "draft": "content-queue/2026-03-15/03-model-qwen3-5-35b-benchmark-refresh.md",
+        "draft": "content-queue/2026-03-16/03-en-models-llama-70b-q4.md",
         "reason": "max_publish_reached"
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-16T09:30:01.058127Z",
+      "queue_date": "2026-03-16",
+      "candidate_count": 3,
+      "published_count": 2,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "model-qwq-32b-benchmark-refresh",
+          "title": "Qwq:32B Local Inference Benchmark Update: Practical Guide (2026)",
+          "topic_key": "qwq-32b-local-inference-benchmark-update",
+          "score": 360.0,
+          "source_draft": "content-queue/2026-03-16/01-model-qwq-32b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-qwq-32b-benchmark-refresh.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "model-translategemma-27b-benchmark-refresh",
+          "title": "Translategemma:27B Local Inference Benchmark Update: Practical Guide (2026)",
+          "topic_key": "translategemma-27b-local-inference-benchmark-update",
+          "score": 360.0,
+          "source_draft": "content-queue/2026-03-16/02-model-translategemma-27b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-translategemma-27b-benchmark-refresh.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-03-16/03-en-models-llama-70b-q4.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-03-15T11:56:10.372936Z",
       "queue_date": "2026-03-15",
