@@ -238,7 +238,7 @@ jobs:
           fi
           status=${PIPESTATUS[0]}
           echo "[verify-production-i18n] exit_code=${status}" | tee -a logs/verify-production-i18n.log
-          exit ${status}
+          exit "${status}"
 
       - name: RTL visual signoff recency
         id: rtl_visual_signoff
