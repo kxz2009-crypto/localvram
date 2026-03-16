@@ -16,6 +16,7 @@ QUEUE_ROOT = ROOT / "content-queue"
 BLOG_DIR = ROOT / "src" / "content" / "blog"
 LOG_FILE = ROOT / "src" / "data" / "content-publish-log.json"
 UPDATES_FILE = ROOT / "src" / "data" / "daily-updates.json"
+BENCHMARK_FILE = ROOT / "src" / "data" / "benchmark-results.json"
 
 DATE_DIR_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 STOPWORDS = {
@@ -177,6 +178,86 @@ def write_blog_post(path: Path, *, title: str, description: str, pub_date: str, 
     path.write_text(content, encoding="utf-8")
 
 
+def pick_measured_highlights(max_count: int = 5) -> list[dict[str, Any]]:
+    payload = load_json(BENCHMARK_FILE, {"models": {}})
+    rows = payload.get("models", {})
+    if not isinstance(rows, dict):
+        return []
+    measured: list[dict[str, Any]] = []
+    for tag, row in rows.items():
+        if not isinstance(row, dict):
+            continue
+        if str(row.get("status", "")).strip().lower() != "ok":
+            continue
+        tps = row.get("tokens_per_second")
+        if not isinstance(tps, (int, float)):
+            continue
+        measured.append(
+            {
+                "tag": str(tag),
+                "tokens_per_second": float(tps),
+                "latency_ms": float(row.get("latency_ms", 0)),
+                "test_time": str(row.get("test_time", "")),
+            }
+        )
+    measured.sort(key=lambda x: x["tokens_per_second"], reverse=True)
+    return measured[:max_count]
+
+
+def unique_slug(base_slug: str, existing_slugs: set[str]) -> str:
+    if base_slug not in existing_slugs:
+        return base_slug
+    idx = 2
+    while True:
+        candidate = f"{base_slug}-{idx}"
+        if candidate not in existing_slugs:
+            return candidate
+        idx += 1
+
+
+def build_daily_fallback_content(queue_date: str, measured: list[dict[str, Any]]) -> dict[str, Any]:
+    year = queue_date[:4] if len(queue_date) >= 4 else "2026"
+    title = f"Daily Local LLM Benchmark Snapshot: Decisions You Can Use ({year})"
+    keyword = "daily local llm benchmark snapshot"
+    summary = (
+        "Daily field report for local inference decisions: verified throughput anchors, "
+        "VRAM boundary guidance, and local-vs-cloud fallback triggers."
+    )
+    lines = []
+    for row in measured:
+        lines.append(
+            f"- `{row['tag']}`: {row['tokens_per_second']:.1f} tok/s | latency {row['latency_ms']:.0f} ms | test {row['test_time']}"
+        )
+    measured_block = "\n".join(lines) if lines else "- Latest benchmark feed is temporarily unavailable."
+    body = (
+        "## What changed today\n\n"
+        "This update consolidates the latest verified local inference measurements and turns them into practical deployment decisions.\n\n"
+        "## Verified benchmark anchors\n\n"
+        f"{measured_block}\n\n"
+        "## Decision guide\n\n"
+        "1. If your target model fits VRAM with headroom, prioritize local for predictable latency and lower long-run cost.\n"
+        "2. If p95 latency or throughput misses production target, keep local as baseline and burst to cloud only for peak windows.\n"
+        "3. If failure rate rises (OOM/retry spikes), step down quantization or reduce concurrent load before scaling out.\n\n"
+        "## Operational checklist\n\n"
+        "- Validate tokens/s and latency under representative prompt length.\n"
+        "- Track OOM and retry counts by model and quantization level.\n"
+        "- Recalculate break-even weekly for local hardware vs cloud rental.\n\n"
+        "## Next actions\n\n"
+        "- Estimate fit: /en/tools/vram-calculator/\n"
+        "- Hardware path: /en/affiliate/hardware-upgrade/\n"
+        "- Cloud fallback: /go/runpod and /go/vast\n\n"
+        "Affiliate Disclosure: This post may include affiliate links. LocalVRAM may earn a commission at no extra cost.\n"
+    )
+    return {
+        "title": title,
+        "keyword": keyword,
+        "description": summary,
+        "intent": "benchmark",
+        "tags": ["ollama", "benchmark", "vram", "latency", "throughput"],
+        "body": body,
+    }
+
+
 def normalize_topic_key(keyword: str, slug: str) -> str:
     return slugify(keyword) or slugify(slug)
 
@@ -243,6 +324,12 @@ def main() -> None:
     )
     parser.add_argument("--queue-date", default="")
     parser.add_argument("--max-publish", type=int, default=int(os.getenv("LV_CONTENT_AUTO_PUBLISH_MAX", "2")))
+    parser.add_argument(
+        "--min-publish",
+        type=int,
+        default=int(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_DAILY", "1")),
+        help="Minimum posts to publish per day. If normal candidates are insufficient, fallback post(s) are generated.",
+    )
     parser.add_argument("--min-score", type=float, default=float(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_SCORE", "120")))
     parser.add_argument("--history-limit", type=int, default=60)
     args = parser.parse_args()
@@ -253,6 +340,8 @@ def main() -> None:
         raise SystemExit(f"queue date folder not found: {queue_dir}")
 
     max_publish = max(0, int(args.max_publish))
+    min_publish = max(0, int(args.min_publish))
+    effective_max_publish = max(max_publish, min_publish)
     min_score = float(args.min_score)
     history_limit = max(10, int(args.history_limit))
 
@@ -285,7 +374,7 @@ def main() -> None:
     published: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
     for cand in candidates:
-        if len(published) >= max_publish:
+        if len(published) >= effective_max_publish:
             skipped.append({"draft": str(cand.path.relative_to(ROOT)).replace("\\", "/"), "reason": "max_publish_reached"})
             continue
 
@@ -324,12 +413,49 @@ def main() -> None:
         existing_slugs.add(cand.candidate_slug)
         published_topics.add(cand.topic_key)
 
+    fallback_generated = 0
+    if len(published) < min_publish:
+        needed = min_publish - len(published)
+        measured = pick_measured_highlights(max_count=5)
+        for _ in range(needed):
+            fallback = build_daily_fallback_content(queue_date, measured)
+            base_slug = slugify(f"daily-local-llm-benchmark-snapshot-{queue_date}")
+            slug = unique_slug(base_slug, existing_slugs)
+            topic_key = slugify(f"daily-benchmark-fallback-{queue_date}-{slug}")
+            out_file = BLOG_DIR / f"{slug}.md"
+            write_blog_post(
+                out_file,
+                title=fallback["title"],
+                description=fallback["description"],
+                pub_date=queue_date,
+                tags=list(fallback["tags"]),
+                intent=str(fallback["intent"]),
+                body=str(fallback["body"]),
+            )
+            published.append(
+                {
+                    "slug": slug,
+                    "title": fallback["title"],
+                    "topic_key": topic_key,
+                    "score": min_score,
+                    "source_draft": "system:fallback-daily-generator",
+                    "out_file": str(out_file.relative_to(ROOT)).replace("\\", "/"),
+                    "intent": fallback["intent"],
+                }
+            )
+            existing_slugs.add(slug)
+            published_topics.add(topic_key)
+            fallback_generated += 1
+
     run_at = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     run_summary = {
         "run_at": run_at,
         "queue_date": queue_date,
         "candidate_count": len(candidates),
+        "min_publish": min_publish,
+        "max_publish": max_publish,
         "published_count": len(published),
+        "fallback_generated_count": fallback_generated,
         "skipped_count": len(skipped),
         "published": published,
         "skipped": skipped[:80],
