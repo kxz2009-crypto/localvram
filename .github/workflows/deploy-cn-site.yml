@@ -400,6 +400,11 @@ jobs:
           set -e
 
           if [ "${status}" -ne 0 ]; then
+            if [ "${status}" -eq 2 ]; then
+              echo "push_baidu=skipped_over_quota" | tee -a logs/push-baidu-urls.log
+              echo "result=skipped_over_quota" >> "${GITHUB_OUTPUT}"
+              exit 0
+            fi
             if [ "${BAIDU_PUSH_REQUIRED}" = "true" ]; then
               echo "::error::Baidu URL push failed and baidu_push_required=true"
               exit "${status}"

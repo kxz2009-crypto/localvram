@@ -23,6 +23,10 @@ ZH_STUB_MARKER = "status: zh-stub (pending full translation)"
 BLOG_PATH_RE = re.compile(r"^/blog/(?P<slug>[a-z0-9-]+)/?$")
 
 
+class OverQuotaError(RuntimeError):
+    """Raised when Baidu ordinary push API returns over-quota."""
+
+
 def emit(message: str, *, level: str = "info", stderr: bool = False) -> None:
     if level == "error":
         LOGGER.error("%s", message)
@@ -151,7 +155,7 @@ def post_with_retry(endpoint: str, payload_lines: list[str], retry_delays: list[
             last_error = f"HTTP {exc.code} {exc.reason} {body}".strip()
             if is_over_quota_error(exc.code, body):
                 emit(f"over_quota=true error={last_error}", level="warning")
-                raise RuntimeError(last_error) from exc
+                raise OverQuotaError(last_error) from exc
             if i < len(retry_delays):
                 emit(f"retry_http_error attempt={i + 1}/{attempts} delay_s={retry_delays[i]} error={last_error}", level="warning")
                 time.sleep(retry_delays[i])
@@ -270,10 +274,15 @@ def main() -> int:
     batches = chunked(filtered, max(1, args.batch_size))
     emit(f"batch_count={len(batches)}")
     ok = 0
-    for idx, batch in enumerate(batches, start=1):
-        body = post_with_retry(endpoint, batch, retry_delays=retry_delays, timeout=max(5, args.timeout_s))
-        ok += len(batch)
-        emit(f"batch={idx}/{len(batches)} pushed={len(batch)} response={body}")
+    try:
+        for idx, batch in enumerate(batches, start=1):
+            body = post_with_retry(endpoint, batch, retry_delays=retry_delays, timeout=max(5, args.timeout_s))
+            ok += len(batch)
+            emit(f"batch={idx}/{len(batches)} pushed={len(batch)} response={body}")
+    except OverQuotaError:
+        emit("result=over_quota")
+        return 2
+
     emit(f"pushed_total={ok}")
     return 0
 
