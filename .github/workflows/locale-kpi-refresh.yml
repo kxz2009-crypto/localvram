@@ -124,7 +124,20 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/seo-ops/locale-kpi-tracker.csv src/data/search-console-keywords.json
+
+          FILES=()
+          if [ -f "docs/seo-ops/locale-kpi-tracker.csv" ]; then
+            FILES+=("docs/seo-ops/locale-kpi-tracker.csv")
+          fi
+          if [ -f "src/data/search-console-keywords.json" ]; then
+            FILES+=("src/data/search-console-keywords.json")
+          fi
+          if [ "${#FILES[@]}" -eq 0 ]; then
+            echo "locale_kpi_refresh=no_candidate_files"
+            exit 0
+          fi
+
+          git add "${FILES[@]}"
 
           if git diff --cached --quiet; then
             echo "locale_kpi_refresh=no_changes"
