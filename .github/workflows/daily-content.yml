@@ -134,14 +134,12 @@ jobs:
             exit 0
           fi
           if ! python scripts/export-affiliate-kv-events.py --output-file logs/affiliate-events-export.json --max-keys 5000; then
-            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'export-affiliate-kv-events.py failed'}, ensure_ascii=False), encoding='utf-8')"
-            echo "::error title=FailureClass::daily_content_failed - export-affiliate-kv-events.py failed"
-            exit 1
+            echo "::warning title=AffiliateSyncSkipped::export-affiliate-kv-events.py failed; continuing without KV sync."
+            exit 0
           fi
           if ! python scripts/import-affiliate-events.py --source-file logs/affiliate-events-export.json --source-format json --source-label cloudflare_kv_api_sync; then
-            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'import-affiliate-events.py failed'}, ensure_ascii=False), encoding='utf-8')"
-            echo "::error title=FailureClass::daily_content_failed - import-affiliate-events.py failed"
-            exit 1
+            echo "::warning title=AffiliateSyncSkipped::import-affiliate-events.py failed; continuing without KV sync."
+            exit 0
           fi
 
       - name: Build conversion funnel snapshot

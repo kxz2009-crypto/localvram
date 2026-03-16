@@ -42,6 +42,7 @@ jobs:
         run: mkdir -p logs
 
       - name: Sync Search Console keywords snapshot
+        id: sync_search_console
         env:
           INPUT_LOCALES: ${{ github.event.inputs.locales }}
           GSC_SITE_URL: ${{ vars.GSC_SITE_URL }}
@@ -49,9 +50,12 @@ jobs:
         run: |
           if [ -z "${GSC_SITE_URL}" ] || [ -z "${GSC_SERVICE_ACCOUNT_JSON}" ]; then
             echo "skip_search_console_sync=true (missing GSC_SITE_URL or GSC_SERVICE_ACCOUNT_JSON)"
+            echo "gsc_sync_ready=false" >> "${GITHUB_OUTPUT}"
+            echo "::warning title=SearchConsoleSyncSkipped::missing GSC_SITE_URL or GSC_SERVICE_ACCOUNT_JSON; skip KPI refresh."
             exit 0
           fi
 
+          echo "gsc_sync_ready=true" >> "${GITHUB_OUTPUT}"
           python -m pip install --disable-pip-version-check --quiet google-api-python-client google-auth
 
           LOCALES="${INPUT_LOCALES}"
@@ -68,6 +72,7 @@ jobs:
             --output "src/data/search-console-keywords.json"
 
       - name: Validate Search Console coverage
+        if: steps.sync_search_console.outputs.gsc_sync_ready == 'true'
         env:
           INPUT_LOCALES: ${{ github.event.inputs.locales }}
           INPUT_ALLOW_STUB: ${{ github.event.inputs.allow_stub_data }}
@@ -98,6 +103,7 @@ jobs:
           fi
 
       - name: Refresh locale KPI rows
+        if: steps.sync_search_console.outputs.gsc_sync_ready == 'true'
         env:
           INPUT_LOCALES: ${{ github.event.inputs.locales }}
           INPUT_DATE: ${{ github.event.inputs.date }}
