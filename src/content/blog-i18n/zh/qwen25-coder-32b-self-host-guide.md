@@ -4,7 +4,7 @@ target-locale: zh
 status: machine-translated (human review recommended)
 -->
 
-## 为什么现在这个话题
+## Qwen2.5 Coder 32B Self Host Guide: Practical Guide (2026)???????
 
 搜索“qwen2.5 coder 32b 自托管指南”的用户通常会决定是在本地运行还是迁移到云端。该草稿是为了编辑审查和事实扩展而生成的。
 

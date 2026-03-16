@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { buildCnAlternates } from "../../../data/root-alternates";
 import { resolveBlogBody } from "../../../lib/i18n-blog-body";
-import { extractFirstHeading, extractFirstParagraph, getZhIntentLabel } from "../../../lib/zh-blog-meta";
+import { extractFirstParagraph, getZhIntentLabel, resolveZhBlogTitle } from "../../../lib/zh-blog-meta";
 
 const markdownProcessorPromise = createMarkdownProcessor({ syntaxHighlight: false });
 
@@ -35,7 +35,7 @@ const markdownProcessor = await markdownProcessorPromise;
 const rendered = await markdownProcessor.render(bodyResolution.markdown);
 const localizedHtml = rewriteEnLinksToCnRoot(rendered.code);
 const localizedTitle = bodyResolution.isLocalized
-  ? extractFirstHeading(bodyResolution.markdown) || post.data.title
+  ? resolveZhBlogTitle(bodyResolution.markdown, post.data.title)
   : `${post.data.title}（英文原文）`;
 const localizedDescription = bodyResolution.isLocalized
   ? extractFirstParagraph(bodyResolution.markdown) || post.data.description

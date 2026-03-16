@@ -11,6 +11,8 @@ const ZH_INTENT_LABELS: Record<string, string> = {
   affiliate: "方案推荐",
 };
 
+const GENERIC_ZH_PLACEHOLDER_HEADINGS = new Set(["为什么现在这个话题"]);
+
 export function getZhIntentLabel(intent: string): string {
   const key = String(intent || "").trim().toLowerCase();
   return ZH_INTENT_LABELS[key] || (intent ? String(intent) : "通用");
@@ -19,6 +21,26 @@ export function getZhIntentLabel(intent: string): string {
 export function extractFirstHeading(markdown: string): string | null {
   const match = String(markdown || "").match(/^\s*#{1,6}\s+(.+)$/m);
   return match?.[1]?.trim() || null;
+}
+
+export function resolveZhBlogTitle(markdown: string, fallbackTitle: string): string {
+  const heading = extractFirstHeading(markdown);
+  const safeFallback = String(fallbackTitle || "").trim();
+  if (!heading) {
+    return safeFallback;
+  }
+
+  if (!GENERIC_ZH_PLACEHOLDER_HEADINGS.has(heading)) {
+    return heading;
+  }
+
+  if (!safeFallback) {
+    return heading;
+  }
+  if (safeFallback.includes("中文整理中")) {
+    return safeFallback;
+  }
+  return `${safeFallback}（中文整理中）`;
 }
 
 export function extractFirstParagraph(markdown: string): string | null {

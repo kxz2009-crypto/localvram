@@ -3,7 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { buildCnAlternates } from "../../../data/root-alternates";
 import { resolveBlogBody } from "../../../lib/i18n-blog-body";
-import { extractFirstHeading, extractFirstParagraph, getZhIntentLabel } from "../../../lib/zh-blog-meta";
+import { extractFirstParagraph, getZhIntentLabel, resolveZhBlogTitle } from "../../../lib/zh-blog-meta";
 
 const posts = (await getCollection("blog", ({ data }) => data.lang === "en")).sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
@@ -11,7 +11,7 @@ const posts = (await getCollection("blog", ({ data }) => data.lang === "en")).so
 const mappedPosts = posts.map((post) => {
   const bodyResolution = resolveBlogBody(post.slug, "zh", post.body || "");
   const localizedTitle = bodyResolution.isLocalized
-    ? extractFirstHeading(bodyResolution.markdown) || post.data.title
+    ? resolveZhBlogTitle(bodyResolution.markdown, post.data.title)
     : post.data.title;
   const localizedDescription = bodyResolution.isLocalized
     ? extractFirstParagraph(bodyResolution.markdown) || post.data.description
