@@ -223,14 +223,19 @@ jobs:
           set -o pipefail
           zh_expectation="${INPUT_ZH_HREFLANG_EXPECTATION:-${ZH_HREFLANG_EXPECTATION:-present}}"
           skip_content="${INPUT_SKIP_CONTENT_CHECKS:-${SKIP_CONTENT_CHECKS:-false}}"
-          extra_args=()
           if [ "${skip_content}" = "true" ]; then
-            extra_args+=("-SkipContentChecks")
+            skip_flag="-SkipContentChecks"
+          else
+            skip_flag=""
           fi
           echo "[verify-production-i18n] start $(date -u +"%Y-%m-%dT%H:%M:%SZ")" | tee logs/verify-production-i18n.log
           echo "[verify-production-i18n] zh_hreflang_expectation=${zh_expectation}" | tee -a logs/verify-production-i18n.log
           echo "[verify-production-i18n] skip_content_checks=${skip_content}" | tee -a logs/verify-production-i18n.log
-          pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn" -ZhHreflangExpectation "${zh_expectation}" "${extra_args[@]}" 2>&1 | tee -a logs/verify-production-i18n.log
+          if [ -n "${skip_flag}" ]; then
+            pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn" -ZhHreflangExpectation "${zh_expectation}" -SkipContentChecks 2>&1 | tee -a logs/verify-production-i18n.log
+          else
+            pwsh -File scripts/verify-production-i18n.ps1 -ComDomain "https://localvram.com" -CnDomain "https://localvram.cn" -ZhHreflangExpectation "${zh_expectation}" 2>&1 | tee -a logs/verify-production-i18n.log
+          fi
           status=${PIPESTATUS[0]}
           echo "[verify-production-i18n] exit_code=${status}" | tee -a logs/verify-production-i18n.log
           exit ${status}

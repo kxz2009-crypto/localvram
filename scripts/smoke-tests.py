@@ -36,7 +36,8 @@ def fail(message: str) -> None:
 def main() -> None:
     build_sitemap = load_build_sitemap_module()
     rollout_locales = build_sitemap.load_rollout_locales()
-    en_urls = build_sitemap.build_en_urls()
+    en_site_origin = build_sitemap.resolve_site_origin("com")
+    en_urls = build_sitemap.build_en_urls(en_site_origin)
     localizable_en_urls = [u for u in en_urls if build_sitemap.is_localizable_en_url(u)]
 
     if not rollout_locales:
