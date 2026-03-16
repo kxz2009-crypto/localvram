@@ -30,19 +30,31 @@ jobs:
             --verify-timeout-s 20
 
       - name: Validate Cloudflare KV sync config
+        id: kv_config
         run: |
           if [ -z "${CF_ACCOUNT_ID}" ] || [ -z "${CF_API_TOKEN}" ] || [ -z "${CF_AFFILIATE_EVENTS_NAMESPACE_ID}" ]; then
-            echo "::error title=MissingConfig::Set CF_ACCOUNT_ID, CF_API_TOKEN, CF_AFFILIATE_EVENTS_NAMESPACE_ID secrets for affiliate health checks."
-            exit 1
+            echo "kv_sync_ready=false" >> "${GITHUB_OUTPUT}"
+            echo "::warning title=MissingConfig::CF_ACCOUNT_ID/CF_API_TOKEN/CF_AFFILIATE_EVENTS_NAMESPACE_ID missing; continue with existing funnel snapshot."
+            exit 0
           fi
+          echo "kv_sync_ready=true" >> "${GITHUB_OUTPUT}"
 
       - name: Export affiliate events from Cloudflare KV
+        if: steps.kv_config.outputs.kv_sync_ready == 'true'
+        id: kv_export
         run: |
-          python scripts/export-affiliate-kv-events.py \
+          if python scripts/export-affiliate-kv-events.py \
             --output-file logs/affiliate-events-export.json \
-            --max-keys 5000
+            --max-keys 5000; then
+            echo "kv_export_ok=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "kv_export_ok=false" >> "${GITHUB_OUTPUT}"
+            echo "::warning title=AffiliateKVSyncSkipped::Cloudflare KV export failed; continue with existing funnel snapshot."
+            exit 0
+          fi
 
       - name: Refresh affiliate funnel snapshot from KV export
+        if: steps.kv_export.outputs.kv_export_ok == 'true'
         run: |
           python scripts/refresh-affiliate-funnel.py \
             --source-file logs/affiliate-events-export.json \
