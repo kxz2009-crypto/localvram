@@ -1,40 +1,79 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-16T09:30:01.058127Z",
+  "updated_at": "2026-03-17T03:18:53.718849Z",
   "last_run": {
-    "run_at": "2026-03-16T09:30:01.058127Z",
-    "queue_date": "2026-03-16",
+    "run_at": "2026-03-17T03:18:53.718849Z",
+    "queue_date": "2026-03-17",
     "candidate_count": 3,
+    "min_publish": 1,
+    "max_publish": 2,
     "published_count": 2,
+    "fallback_generated_count": 0,
     "skipped_count": 1,
     "published": [
       {
-        "slug": "model-qwq-32b-benchmark-refresh",
-        "title": "Qwq:32B Local Inference Benchmark Update: Practical Guide (2026)",
-        "topic_key": "qwq-32b-local-inference-benchmark-update",
-        "score": 360.0,
-        "source_draft": "content-queue/2026-03-16/01-model-qwq-32b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-qwq-32b-benchmark-refresh.md",
+        "slug": "model-llama4-16x17b-benchmark-refresh",
+        "title": "llama4:16x17B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+        "topic_key": "llama4-16x17b-local-inference-benchmark-update",
+        "score": 200.0,
+        "source_draft": "content-queue/2026-03-17/01-model-llama4-16x17b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-llama4-16x17b-benchmark-refresh.md",
         "intent": "benchmark"
       },
       {
-        "slug": "model-translategemma-27b-benchmark-refresh",
-        "title": "Translategemma:27B Local Inference Benchmark Update: Practical Guide (2026)",
-        "topic_key": "translategemma-27b-local-inference-benchmark-update",
-        "score": 360.0,
-        "source_draft": "content-queue/2026-03-16/02-model-translategemma-27b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-translategemma-27b-benchmark-refresh.md",
+        "slug": "model-qwen3-5-122b-benchmark-refresh",
+        "title": "qwen3.5:122B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+        "topic_key": "qwen3-5-122b-local-inference-benchmark-update",
+        "score": 200.0,
+        "source_draft": "content-queue/2026-03-17/02-model-qwen3-5-122b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-qwen3-5-122b-benchmark-refresh.md",
         "intent": "benchmark"
       }
     ],
     "skipped": [
       {
-        "draft": "content-queue/2026-03-16/03-en-models-llama-70b-q4.md",
+        "draft": "content-queue/2026-03-17/03-en-blog-best-local-rag-models-2026.md",
         "reason": "max_publish_reached"
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-17T03:18:53.718849Z",
+      "queue_date": "2026-03-17",
+      "candidate_count": 3,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "model-llama4-16x17b-benchmark-refresh",
+          "title": "llama4:16x17B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "topic_key": "llama4-16x17b-local-inference-benchmark-update",
+          "score": 200.0,
+          "source_draft": "content-queue/2026-03-17/01-model-llama4-16x17b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-llama4-16x17b-benchmark-refresh.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "model-qwen3-5-122b-benchmark-refresh",
+          "title": "qwen3.5:122B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "topic_key": "qwen3-5-122b-local-inference-benchmark-update",
+          "score": 200.0,
+          "source_draft": "content-queue/2026-03-17/02-model-qwen3-5-122b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-qwen3-5-122b-benchmark-refresh.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-03-17/03-en-blog-best-local-rag-models-2026.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-03-16T09:30:01.058127Z",
       "queue_date": "2026-03-16",
