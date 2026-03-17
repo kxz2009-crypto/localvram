@@ -1,61 +1,217 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-17T03:18:53.642563Z",
+  "updated_at": "2026-03-17T09:56:42.226808Z",
   "last_run": {
-    "run_at": "2026-03-17T03:18:53.642563Z",
+    "run_at": "2026-03-17T09:56:42.226808Z",
     "queue_date": "2026-03-17",
-    "reviewed_count": 3,
+    "reviewed_count": 6,
     "auto_approved_count": 3,
     "pending_manual_review_count": 0,
-    "rejected_manual_count": 0,
-    "high_risk_count": 0,
-    "risk_flag_counts": {},
+    "rejected_manual_count": 3,
+    "high_risk_count": 2,
+    "risk_flag_counts": {
+      "existing_blog_slug": 2,
+      "near_duplicate_published": 2
+    },
     "items": [
+      {
+        "draft": "content-queue/2026-03-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
+        "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+        "score": 140.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 224,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9685,
+          "topic_score": 0.5333,
+          "slug": "model-qwen3-5-122b-benchmark-refresh"
+        }
+      },
       {
         "draft": "content-queue/2026-03-17/01-model-llama4-16x17b-benchmark-refresh.md",
         "slug": "model-llama4-16x17b-benchmark-refresh",
         "score": 200.0,
+        "status_before": "rejected_manual",
+        "status_after": "rejected_manual",
+        "word_count": 221,
+        "risk_flags": [
+          "existing_blog_slug",
+          "near_duplicate_published"
+        ],
+        "similarity": {
+          "score": 1.0,
+          "topic_score": 0.8333,
+          "slug": "model-llama4-16x17b-benchmark-refresh"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-17/02-model-gpt-oss-20b-local-benchmark.md",
+        "slug": "model-gpt-oss-20b-local-benchmark",
+        "score": 900.0,
         "status_before": "draft",
         "status_after": "approved_auto",
         "word_count": 221,
         "risk_flags": [],
         "similarity": {
-          "score": 0.475,
-          "topic_score": 0.375,
-          "slug": "model-translategemma-27b-benchmark-refresh"
+          "score": 0.952,
+          "topic_score": 0.1875,
+          "slug": "model-qwen3-5-122b-benchmark-refresh"
         }
       },
       {
         "draft": "content-queue/2026-03-17/02-model-qwen3-5-122b-benchmark-refresh.md",
         "slug": "model-qwen3-5-122b-benchmark-refresh",
         "score": 200.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
+        "status_before": "rejected_manual",
+        "status_after": "rejected_manual",
         "word_count": 222,
-        "risk_flags": [],
+        "risk_flags": [
+          "existing_blog_slug",
+          "near_duplicate_published"
+        ],
         "similarity": {
-          "score": 0.478,
-          "topic_score": 0.375,
-          "slug": "model-translategemma-27b-benchmark-refresh"
+          "score": 1.0,
+          "topic_score": 0.8333,
+          "slug": "model-qwen3-5-122b-benchmark-refresh"
         }
       },
       {
         "draft": "content-queue/2026-03-17/03-en-blog-best-local-rag-models-2026.md",
         "slug": "en-blog-best-local-rag-models-2026",
         "score": 192.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
+        "status_before": "rejected_manual",
+        "status_after": "rejected_manual",
         "word_count": 217,
         "risk_flags": [],
         "similarity": {
-          "score": 0.4654,
+          "score": 0.8358,
           "topic_score": 0.1176,
-          "slug": "model-translategemma-27b-benchmark-refresh"
+          "slug": "model-qwen3-5-122b-benchmark-refresh"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-17/03-model-deepseek-r1-14b-local-benchmark.md",
+        "slug": "model-deepseek-r1-14b-local-benchmark",
+        "score": 576.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 221,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9683,
+          "topic_score": 0.5385,
+          "slug": "model-qwen3-5-122b-benchmark-refresh"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-17T09:56:42.226808Z",
+      "queue_date": "2026-03-17",
+      "reviewed_count": 6,
+      "auto_approved_count": 3,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 3,
+      "high_risk_count": 2,
+      "risk_flag_counts": {
+        "existing_blog_slug": 2,
+        "near_duplicate_published": 2
+      },
+      "items": [
+        {
+          "draft": "content-queue/2026-03-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
+          "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+          "score": 140.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 224,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9685,
+            "topic_score": 0.5333,
+            "slug": "model-qwen3-5-122b-benchmark-refresh"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-17/01-model-llama4-16x17b-benchmark-refresh.md",
+          "slug": "model-llama4-16x17b-benchmark-refresh",
+          "score": 200.0,
+          "status_before": "rejected_manual",
+          "status_after": "rejected_manual",
+          "word_count": 221,
+          "risk_flags": [
+            "existing_blog_slug",
+            "near_duplicate_published"
+          ],
+          "similarity": {
+            "score": 1.0,
+            "topic_score": 0.8333,
+            "slug": "model-llama4-16x17b-benchmark-refresh"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-17/02-model-gpt-oss-20b-local-benchmark.md",
+          "slug": "model-gpt-oss-20b-local-benchmark",
+          "score": 900.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 221,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.952,
+            "topic_score": 0.1875,
+            "slug": "model-qwen3-5-122b-benchmark-refresh"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-17/02-model-qwen3-5-122b-benchmark-refresh.md",
+          "slug": "model-qwen3-5-122b-benchmark-refresh",
+          "score": 200.0,
+          "status_before": "rejected_manual",
+          "status_after": "rejected_manual",
+          "word_count": 222,
+          "risk_flags": [
+            "existing_blog_slug",
+            "near_duplicate_published"
+          ],
+          "similarity": {
+            "score": 1.0,
+            "topic_score": 0.8333,
+            "slug": "model-qwen3-5-122b-benchmark-refresh"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-17/03-en-blog-best-local-rag-models-2026.md",
+          "slug": "en-blog-best-local-rag-models-2026",
+          "score": 192.0,
+          "status_before": "rejected_manual",
+          "status_after": "rejected_manual",
+          "word_count": 217,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8358,
+            "topic_score": 0.1176,
+            "slug": "model-qwen3-5-122b-benchmark-refresh"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-17/03-model-deepseek-r1-14b-local-benchmark.md",
+          "slug": "model-deepseek-r1-14b-local-benchmark",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 221,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9683,
+            "topic_score": 0.5385,
+            "slug": "model-qwen3-5-122b-benchmark-refresh"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-17T03:18:53.642563Z",
       "queue_date": "2026-03-17",

@@ -1,17 +1,17 @@
 ---
-title: "qwen3.5:122B Benchmark Results: Local GPU Throughput Breakdown (2026)"
+title: "glm-4.7-flash:bf16 Benchmark Results: Local GPU Throughput Breakdown (2026)"
 date: 2026-03-17
-keyword: "qwen3.5:122b local inference benchmark update"
-score: 200
+keyword: "glm-4.7-flash:bf16 local inference benchmark update"
+score: 140
 source: opportunity
-status: rejected_manual
+status: approved_auto
 reviewed_at: "2026-03-17T09:56:42.226808Z"
-risk_flags: existing_blog_slug,near_duplicate_published
+risk_flags: ""
 ---
 
 ## Decision context
 
-This draft targets the query "qwen3.5:122b local inference benchmark update" and should help readers make a concrete deploy-or-scale decision today.
+This draft targets the query "glm-4.7-flash:bf16 local inference benchmark update" and should help readers make a concrete deploy-or-scale decision today.
 
 ## Measured anchor data
 

@@ -1,17 +1,17 @@
 ---
-title: "qwen3.5:122B Benchmark Results: Local GPU Throughput Breakdown (2026)"
+title: "gpt-oss:20B: Local Inference Performance Report (2026)"
 date: 2026-03-17
-keyword: "qwen3.5:122b local inference benchmark update"
-score: 200
-source: opportunity
-status: rejected_manual
+keyword: "gpt-oss:20b local inference benchmark"
+score: 900
+source: benchmark_fallback
+status: approved_auto
 reviewed_at: "2026-03-17T09:56:42.226808Z"
-risk_flags: existing_blog_slug,near_duplicate_published
+risk_flags: ""
 ---
 
 ## Decision context
 
-This draft targets the query "qwen3.5:122b local inference benchmark update" and should help readers make a concrete deploy-or-scale decision today.
+This draft targets the query "gpt-oss:20b local inference benchmark" and should help readers make a concrete deploy-or-scale decision today.
 
 ## Measured anchor data
 

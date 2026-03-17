@@ -1,8 +1,8 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-17T03:18:53.718849Z",
+  "updated_at": "2026-03-17T09:56:42.305477Z",
   "last_run": {
-    "run_at": "2026-03-17T03:18:53.718849Z",
+    "run_at": "2026-03-17T09:56:42.305477Z",
     "queue_date": "2026-03-17",
     "candidate_count": 3,
     "min_publish": 1,
@@ -12,32 +12,68 @@
     "skipped_count": 1,
     "published": [
       {
-        "slug": "model-llama4-16x17b-benchmark-refresh",
-        "title": "llama4:16x17B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-        "topic_key": "llama4-16x17b-local-inference-benchmark-update",
-        "score": 200.0,
-        "source_draft": "content-queue/2026-03-17/01-model-llama4-16x17b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-llama4-16x17b-benchmark-refresh.md",
+        "slug": "model-gpt-oss-20b-local-benchmark",
+        "title": "gpt-oss:20B: Local Inference Performance Report (2026)",
+        "topic_key": "gpt-oss-20b-local-inference-benchmark",
+        "score": 900.0,
+        "source_draft": "content-queue/2026-03-17/02-model-gpt-oss-20b-local-benchmark.md",
+        "out_file": "src/content/blog/model-gpt-oss-20b-local-benchmark.md",
         "intent": "benchmark"
       },
       {
-        "slug": "model-qwen3-5-122b-benchmark-refresh",
-        "title": "qwen3.5:122B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-        "topic_key": "qwen3-5-122b-local-inference-benchmark-update",
-        "score": 200.0,
-        "source_draft": "content-queue/2026-03-17/02-model-qwen3-5-122b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-qwen3-5-122b-benchmark-refresh.md",
+        "slug": "model-deepseek-r1-14b-local-benchmark",
+        "title": "deepseek-r1:14B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+        "topic_key": "deepseek-r1-14b-local-inference-benchmark",
+        "score": 576.0,
+        "source_draft": "content-queue/2026-03-17/03-model-deepseek-r1-14b-local-benchmark.md",
+        "out_file": "src/content/blog/model-deepseek-r1-14b-local-benchmark.md",
         "intent": "benchmark"
       }
     ],
     "skipped": [
       {
-        "draft": "content-queue/2026-03-17/03-en-blog-best-local-rag-models-2026.md",
+        "draft": "content-queue/2026-03-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
         "reason": "max_publish_reached"
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-17T09:56:42.305477Z",
+      "queue_date": "2026-03-17",
+      "candidate_count": 3,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "model-gpt-oss-20b-local-benchmark",
+          "title": "gpt-oss:20B: Local Inference Performance Report (2026)",
+          "topic_key": "gpt-oss-20b-local-inference-benchmark",
+          "score": 900.0,
+          "source_draft": "content-queue/2026-03-17/02-model-gpt-oss-20b-local-benchmark.md",
+          "out_file": "src/content/blog/model-gpt-oss-20b-local-benchmark.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "model-deepseek-r1-14b-local-benchmark",
+          "title": "deepseek-r1:14B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "topic_key": "deepseek-r1-14b-local-inference-benchmark",
+          "score": 576.0,
+          "source_draft": "content-queue/2026-03-17/03-model-deepseek-r1-14b-local-benchmark.md",
+          "out_file": "src/content/blog/model-deepseek-r1-14b-local-benchmark.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-03-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-03-17T03:18:53.718849Z",
       "queue_date": "2026-03-17",

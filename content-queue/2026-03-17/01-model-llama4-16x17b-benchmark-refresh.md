@@ -4,9 +4,9 @@ date: 2026-03-17
 keyword: "llama4:16x17b local inference benchmark update"
 score: 200
 source: opportunity
-status: approved_auto
-reviewed_at: "2026-03-17T03:18:53.642563Z"
-risk_flags: ""
+status: rejected_manual
+reviewed_at: "2026-03-17T09:56:42.226808Z"
+risk_flags: existing_blog_slug,near_duplicate_published
 ---
 
 ## Decision context

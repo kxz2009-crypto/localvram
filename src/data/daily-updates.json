@@ -6,47 +6,47 @@
       "candidates": [
         {
           "date": "2026-03-17",
-          "slug": "model-llama4-16x17b-benchmark-refresh",
-          "title": "llama4:16x17B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "llama4:16x17b local inference benchmark update",
-          "score": 200,
+          "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+          "title": "glm-4.7-flash:bf16 Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "keyword": "glm-4.7-flash:bf16 local inference benchmark update",
+          "score": 140,
           "source": "opportunity",
           "landing": "",
-          "draft_path": "content-queue/2026-03-17/01-model-llama4-16x17b-benchmark-refresh.md"
+          "draft_path": "content-queue/2026-03-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md"
         },
         {
           "date": "2026-03-17",
-          "slug": "model-qwen3-5-122b-benchmark-refresh",
-          "title": "qwen3.5:122B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "qwen3.5:122b local inference benchmark update",
-          "score": 200,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-17/02-model-qwen3-5-122b-benchmark-refresh.md"
+          "slug": "model-gpt-oss-20b-local-benchmark",
+          "title": "gpt-oss:20B: Local Inference Performance Report (2026)",
+          "keyword": "gpt-oss:20b local inference benchmark",
+          "score": 900,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-03-17/02-model-gpt-oss-20b-local-benchmark.md"
         },
         {
           "date": "2026-03-17",
-          "slug": "en-blog-best-local-rag-models-2026",
-          "title": "Best Local Rag Model: Step-by-Step Deployment Workflow (2026)",
-          "keyword": "best local rag model",
-          "score": 192,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-17/03-en-blog-best-local-rag-models-2026.md"
+          "slug": "model-deepseek-r1-14b-local-benchmark",
+          "title": "deepseek-r1:14B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "keyword": "deepseek-r1:14b local inference benchmark",
+          "score": 576,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-03-17/03-model-deepseek-r1-14b-local-benchmark.md"
         }
       ],
       "published_posts": [
         {
-          "slug": "model-llama4-16x17b-benchmark-refresh",
-          "title": "llama4:16x17B Benchmark Results: Local GPU Throughput Breakdown (2026)"
+          "slug": "model-gpt-oss-20b-local-benchmark",
+          "title": "gpt-oss:20B: Local Inference Performance Report (2026)"
         },
         {
-          "slug": "model-qwen3-5-122b-benchmark-refresh",
-          "title": "qwen3.5:122B Benchmark Results: Local GPU Throughput Breakdown (2026)"
+          "slug": "model-deepseek-r1-14b-local-benchmark",
+          "title": "deepseek-r1:14B Benchmark Results: Local GPU Throughput Breakdown (2026)"
         }
       ],
       "published_count": 2,
-      "publish_run_at": "2026-03-17T03:18:53.718849Z"
+      "publish_run_at": "2026-03-17T09:56:42.305477Z"
     },
     {
       "date": "2026-03-16",

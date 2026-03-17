@@ -4,8 +4,8 @@ date: 2026-03-17
 keyword: "best local rag model"
 score: 192
 source: opportunity
-status: approved_auto
-reviewed_at: "2026-03-17T03:18:53.642563Z"
+status: rejected_manual
+reviewed_at: "2026-03-17T09:56:42.226808Z"
 risk_flags: ""
 ---
 
