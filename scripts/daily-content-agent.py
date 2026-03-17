@@ -365,7 +365,7 @@ def build_title(keyword: str, date_iso: str) -> str:
 
     templates: dict[str, list[str]] = {
         "benchmark": [
-            "{topic} Local Benchmark: Tokens/s, Latency, and VRAM ({year})",
+            "{topic} Local Benchmark: Throughput, Latency, and VRAM ({year})",
             "{topic} Benchmark Results: Local GPU Throughput Breakdown ({year})",
             "{topic}: Local Inference Performance Report ({year})",
         ],
