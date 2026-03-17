@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import updatesData from "../../../data/daily-updates.json";
+import { buildCnAlternates } from "../../../data/root-alternates";
+
+type UpdateRow = {
+  date?: string;
+  summary?: string;
+  published_count?: number;
+  published_posts?: Array<{ slug?: string; title?: string }>;
+};
+
+const rows = Array.isArray((updatesData as { items?: UpdateRow[] }).items)
+  ? ((updatesData as { items?: UpdateRow[] }).items || []).slice(0, 14)
+  : [];
+const canonicalPath = "/updates/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "LocalVRAM 中文每日更新",
+  url: "https://localvram.cn/updates/",
+  inLanguage: "zh-CN",
+  description: "按天查看数据刷新、内容发布与运营动作摘要。",
+};
+---
+
+<BaseLayout
+  title="中文每日更新 | LocalVRAM"
+  description="按天查看数据刷新、内容发布与运营动作摘要。"
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>中文每日更新</h1>
+      <p>按日期追踪“更新了什么、发布了什么、今天是否稳定运行”。</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/status/content-publish/">内容发布状态</a>
+        <a class="btn" href="/status/pipeline-status/">流水线状态</a>
+        <a class="btn" href="/blog/">中文博客</a>
+      </div>
+    </section>
+
+    <section class="post-list">
+      {rows.length === 0 && <p>暂无可展示的更新记录。</p>}
+      {rows.map((row) => (
+        <article class="post-card">
+          <h2>{row.date || "未知日期"}</h2>
+          <p>{row.summary || "暂无摘要。"}</p>
+          <div class="meta-row">
+            <span>发布数量: {Number(row.published_count || 0)}</span>
+          </div>
+          {Array.isArray(row.published_posts) && row.published_posts.length > 0 && (
+            <ul>
+              {row.published_posts.slice(0, 6).map((post) => (
+                <li>
+                  <a href={`/blog/${String(post.slug || "").trim()}/`}>
+                    {String(post.title || post.slug || "未命名文章")}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>

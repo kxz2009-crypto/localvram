@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { TOOL_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
+import { buildCnAlternates } from "../../../data/root-alternates";
+
+type ToolDetailCopy = {
+  title: string;
+  description: string;
+  checklist: string[];
+  primaryCta: string;
+};
+
+const TOOL_DETAIL_COPY: Record<string, ToolDetailCopy> = {
+  "vram-calculator": {
+    title: "显存计算器",
+    description: "根据模型规模、量化等级和并发目标，快速估算本地显存可行性。",
+    checklist: [
+      "输入模型规模和量化类型，先看是否可跑。",
+      "结合并发与上下文长度估算安全余量。",
+      "若超出预算，再决定降配还是云端回退。",
+    ],
+    primaryCta: "打开工具",
+  },
+  "quantization-blind-test": {
+    title: "量化盲测工具",
+    description: "对比 Q4/Q5/Q8 等量化结果，避免只看速度忽视输出质量。",
+    checklist: [
+      "准备代表性任务样本与评分标准。",
+      "对齐采样参数后进行盲测比较。",
+      "在质量达标前提下再追求吞吐最优。",
+    ],
+    primaryCta: "开始盲测",
+  },
+  "roi-calculator": {
+    title: "ROI 成本计算器",
+    description: "比较本地硬件投入与云端租用成本，计算不同负载下的回本区间。",
+    checklist: [
+      "分离固定成本与可变成本，避免口径混乱。",
+      "设置峰值负载，评估本地 + 云端混合方案。",
+      "结合业务增长预期做 3/6/12 个月决策。",
+    ],
+    primaryCta: "打开计算器",
+  },
+};
+
+export function getStaticPaths() {
+  return TOOL_ROUTE_ITEMS.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props as { item: (typeof TOOL_ROUTE_ITEMS)[number] };
+const copy = TOOL_DETAIL_COPY[item.slug] || {
+  title: item.title,
+  description: "该工具中文说明正在完善中，先提供使用要点。",
+  checklist: [
+    "先确认输入参数口径是否一致。",
+    "对比不同配置下的输出结果。",
+    "结合业务目标决定最终方案。",
+  ],
+  primaryCta: "打开工具",
+};
+const canonicalPath = `/tools/${item.slug}/`;
+const enUrl = `https://localvram.com${item.enPath}`;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: `${copy.title} | LocalVRAM 中文站`,
+  url: `https://localvram.cn${canonicalPath}`,
+  inLanguage: "zh-CN",
+  description: copy.description,
+};
+---
+
+<BaseLayout
+  title={`${copy.title} | LocalVRAM 中文站`}
+  description={copy.description}
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{copy.title}</h1>
+      <p>{copy.description}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#checklist">{copy.primaryCta}</a>
+        <a class="btn" href={enUrl} target="_blank" rel="noopener noreferrer">英文详细说明</a>
+        <a class="btn" href="/tools/">返回中文工具中心</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card" id="checklist">
+        <h2>使用前检查</h2>
+        <ul>
+          {copy.checklist.map((itemText) => <li>{itemText}</li>)}
+        </ul>
+      </article>
+      <article class="card">
+        <h2>联动建议</h2>
+        <p>先用显存工具确认可跑边界，再用指南页确定最终部署策略。</p>
+        <div class="cta-row">
+          <a class="btn" href="/guides/local-llm-cost-vs-cloud/">成本决策指南</a>
+          <a class="btn" href="/status/data-freshness/">查看数据新鲜度</a>
+        </div>
+      </article>
+    </section>
+  </main>
+</BaseLayout>

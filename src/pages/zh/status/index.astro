@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { STATUS_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
+import { buildCnAlternates } from "../../../data/root-alternates";
+
+type StatusCardCopy = {
+  title: string;
+  description: string;
+  cta: string;
+};
+
+const STATUS_COPY_BY_SLUG: Record<string, StatusCardCopy> = {
+  "content-publish": {
+    title: "内容发布状态",
+    description: "查看每日发布节奏、候选队列和最近一次发布结果。",
+    cta: "查看发布状态",
+  },
+  "conversion-funnel": {
+    title: "转化漏斗",
+    description: "追踪高意图入口到点击转化的关键链路表现。",
+    cta: "查看漏斗",
+  },
+  "data-freshness": {
+    title: "数据新鲜度",
+    description: "确认模型基准、目录与站点数据是否按计划更新。",
+    cta: "查看新鲜度",
+  },
+  "pipeline-status": {
+    title: "流水线状态",
+    description: "汇总自动化任务运行结果、失败告警和恢复情况。",
+    cta: "查看流水线",
+  },
+  "runner-health": {
+    title: "Runner 健康",
+    description: "跟踪执行节点可用性、负载和稳定性。",
+    cta: "查看健康状态",
+  },
+  "submission-review": {
+    title: "提交审核",
+    description: "查看提交质量、审核队列和处理进度。",
+    cta: "查看审核状态",
+  },
+};
+
+const statusCards = STATUS_ROUTE_ITEMS.map((item) => {
+  const localized = STATUS_COPY_BY_SLUG[item.slug] || {
+    title: item.title,
+    description: item.description,
+    cta: "查看详情",
+  };
+  return {
+    ...item,
+    localizedPath: `/status/${item.slug}/`,
+    ...localized,
+  };
+});
+const canonicalPath = "/status/";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "LocalVRAM 中文状态中心",
+  url: "https://localvram.cn/status/",
+  inLanguage: "zh-CN",
+  description: "集中查看数据新鲜度、流水线健康、发布状态与转化链路。",
+};
+---
+
+<BaseLayout
+  title="中文状态中心 | 数据新鲜度、发布与流水线健康"
+  description="集中查看数据新鲜度、流水线健康、发布状态与转化链路。"
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>中文状态中心</h1>
+      <p>用于快速判断“今天的数据是否可信、流程是否稳定、内容是否已发布”。</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/status/data-freshness/">数据新鲜度</a>
+        <a class="btn" href="/status/pipeline-status/">流水线状态</a>
+        <a class="btn" href="/status/content-publish/">内容发布状态</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      {statusCards.map((card) => (
+        <article class="card">
+          <h2>{card.title}</h2>
+          <p>{card.description}</p>
+          <a class="btn" href={card.localizedPath}>{card.cta}</a>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>

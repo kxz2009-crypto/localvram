@@ -1,0 +1,132 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { GUIDE_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
+import { buildCnAlternates } from "../../../data/root-alternates";
+
+type GuideDetailCopy = {
+  title: string;
+  description: string;
+  highlights: string[];
+  primaryCta: string;
+};
+
+const GUIDE_DETAIL_COPY: Record<string, GuideDetailCopy> = {
+  "best-coding-models": {
+    title: "编程模型推荐",
+    description: "面向代码生成、重构与调试场景，给出可直接落地的本地模型选择路径。",
+    highlights: [
+      "按显存档位快速筛选可跑模型，避免盲目尝试。",
+      "结合代码任务类型选择更稳定的推理参数。",
+      "给出本地优先与云端回退的清晰阈值。",
+    ],
+    primaryCta: "打开英文完整版",
+  },
+  "best-rag-models": {
+    title: "RAG 模型推荐",
+    description: "聚焦检索增强场景，平衡召回质量、响应延迟与显存效率。",
+    highlights: [
+      "按知识库规模匹配模型与上下文窗口。",
+      "对比量化策略对回答质量的影响。",
+      "给出高并发时的缓存与回退建议。",
+    ],
+    primaryCta: "查看英文完整方案",
+  },
+  "local-llm-cost-vs-cloud": {
+    title: "本地成本 vs 云端成本",
+    description: "用统一口径计算本地部署与云推理总成本，支持真实业务决策。",
+    highlights: [
+      "拆分硬件、功耗、运维与云租用成本。",
+      "按负载波动场景测算盈亏平衡点。",
+      "提供本地基线 + 云端峰值的组合策略。",
+    ],
+    primaryCta: "查看英文完整框架",
+  },
+  "ollama-local-cluster-network": {
+    title: "本地集群网络指南",
+    description: "从单机到多机的网络规划、稳定性检查和故障演练清单。",
+    highlights: [
+      "标准化网络拓扑与端口策略。",
+      "给出节点健康检查与告警建议。",
+      "覆盖常见抖动、超时与重试问题排查。",
+    ],
+    primaryCta: "查看英文完整清单",
+  },
+  "ollama-vs-vllm-vram": {
+    title: "Ollama vs vLLM 显存对比",
+    description: "对比两类后端在显存占用、吞吐与运维复杂度上的关键差异。",
+    highlights: [
+      "按工作负载选择更合适的后端。",
+      "结合显存预算评估吞吐上限。",
+      "明确本地部署和云端扩容触发条件。",
+    ],
+    primaryCta: "查看英文完整对比",
+  },
+};
+
+export function getStaticPaths() {
+  return GUIDE_ROUTE_ITEMS.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props as { item: (typeof GUIDE_ROUTE_ITEMS)[number] };
+const copy = GUIDE_DETAIL_COPY[item.slug] || {
+  title: item.title,
+  description: "该指南的中文完整版正在校对中，先提供关键决策要点。",
+  highlights: [
+    "先明确模型目标与显存预算。",
+    "优先验证本地可跑性和稳定性。",
+    "再决定是否启用云端补充。",
+  ],
+  primaryCta: "查看英文完整版",
+};
+const canonicalPath = `/guides/${item.slug}/`;
+const enUrl = `https://localvram.com${item.enPath}`;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: `${copy.title} | LocalVRAM 中文站`,
+  url: `https://localvram.cn${canonicalPath}`,
+  inLanguage: "zh-CN",
+  description: copy.description,
+};
+---
+
+<BaseLayout
+  title={`${copy.title} | LocalVRAM 中文站`}
+  description={copy.description}
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{copy.title}</h1>
+      <p>{copy.description}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={enUrl} target="_blank" rel="noopener noreferrer">{copy.primaryCta}</a>
+        <a class="btn" href="/guides/">返回中文指南中心</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>本页要点</h2>
+        <ul>
+          {copy.highlights.map((point) => <li>{point}</li>)}
+        </ul>
+      </article>
+      <article class="card">
+        <h2>建议下一步</h2>
+        <p>先用工具做容量与成本估算，再回到该指南完成最终部署决策。</p>
+        <div class="cta-row">
+          <a class="btn" href="/tools/vram-calculator/">显存计算器</a>
+          <a class="btn" href="/tools/roi-calculator/">ROI 计算器</a>
+        </div>
+      </article>
+    </section>
+  </main>
+</BaseLayout>

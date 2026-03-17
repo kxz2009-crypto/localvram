@@ -1,0 +1,139 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { STATUS_ROUTE_ITEMS } from "../../../data/i18n-route-manifest";
+import { buildCnAlternates } from "../../../data/root-alternates";
+
+type StatusDetailCopy = {
+  title: string;
+  description: string;
+  checks: string[];
+  enPath: string;
+};
+
+const STATUS_DETAIL_COPY: Record<string, StatusDetailCopy> = {
+  "content-publish": {
+    title: "内容发布状态",
+    description: "确认当天内容生成、审核、发布是否按预期完成。",
+    checks: [
+      "查看 published_count 与 candidate_count。",
+      "确认低质量稿是否被拦截。",
+      "确认当日是否触发最小发布兜底。",
+    ],
+    enPath: "/en/status/content-publish/",
+  },
+  "conversion-funnel": {
+    title: "转化漏斗",
+    description: "追踪从高意图页面到转化点击的关键变化。",
+    checks: [
+      "关注决策页到 CTA 的转化率变化。",
+      "对比本地方案与云方案点击占比。",
+      "定位明显掉量的入口页面。",
+    ],
+    enPath: "/en/status/conversion-funnel/",
+  },
+  "data-freshness": {
+    title: "数据新鲜度",
+    description: "检查模型基准、目录和站点数据的更新时间是否超阈值。",
+    checks: [
+      "核对基准数据最后更新时间。",
+      "确认模型目录与站点页面同步。",
+      "发现超时未更新时触发补跑。",
+    ],
+    enPath: "/en/status/data-freshness/",
+  },
+  "pipeline-status": {
+    title: "流水线状态",
+    description: "汇总关键工作流的成功率、失败类型与恢复动作。",
+    checks: [
+      "检查失败分类是否新增。",
+      "确认告警是否已创建与关闭。",
+      "验证修复后是否恢复绿色。",
+    ],
+    enPath: "/en/status/pipeline-status/",
+  },
+  "runner-health": {
+    title: "Runner 健康",
+    description: "跟踪节点可用性、负载变化和超时风险。",
+    checks: [
+      "确认节点在线与可调度状态。",
+      "监控 GPU 温度与任务稳定性。",
+      "发现异常时及时切换回退节点。",
+    ],
+    enPath: "/en/status/runner-health/",
+  },
+  "submission-review": {
+    title: "提交审核",
+    description: "查看用户提交的质量分布、风险标记和处理进度。",
+    checks: [
+      "关注 high_risk 与 stale_pending 数量。",
+      "识别重复/低质量提交模式。",
+      "同步审核结论到发布流程。",
+    ],
+    enPath: "/en/status/submission-review/",
+  },
+};
+
+export function getStaticPaths() {
+  return STATUS_ROUTE_ITEMS.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props as { item: (typeof STATUS_ROUTE_ITEMS)[number] };
+const copy = STATUS_DETAIL_COPY[item.slug] || {
+  title: item.title,
+  description: item.description,
+  checks: ["查看状态页核心指标并记录异常项。"],
+  enPath: item.enPath,
+};
+const canonicalPath = `/status/${item.slug}/`;
+const enUrl = `https://localvram.com${copy.enPath}`;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: `${copy.title} | LocalVRAM 中文站`,
+  url: `https://localvram.cn${canonicalPath}`,
+  inLanguage: "zh-CN",
+  description: copy.description,
+};
+---
+
+<BaseLayout
+  title={`${copy.title} | LocalVRAM 中文站`}
+  description={copy.description}
+  locale="zh"
+  canonicalOrigin="https://localvram.cn"
+  canonicalPath={canonicalPath}
+  alternates={buildCnAlternates(canonicalPath)}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{copy.title}</h1>
+      <p>{copy.description}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href={canonicalPath}>查看本页状态解读</a>
+        <a class="btn" href={enUrl} target="_blank" rel="noopener noreferrer">英文原始数据页</a>
+        <a class="btn" href="/status/">返回状态中心</a>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>排查清单</h2>
+        <ul>
+          {copy.checks.map((line) => <li>{line}</li>)}
+        </ul>
+      </article>
+      <article class="card">
+        <h2>运营建议</h2>
+        <p>中文页负责快速判读与动作建议，详细原始数据以英文页与工作流日志为准。</p>
+        <div class="cta-row">
+          <a class="btn" href="/status/data-freshness/">数据新鲜度</a>
+          <a class="btn" href="/status/pipeline-status/">流水线状态</a>
+        </div>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
