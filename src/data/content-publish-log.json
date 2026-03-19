@@ -1,34 +1,79 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-18T03:25:59.409152Z",
+  "updated_at": "2026-03-19T03:26:39.884165Z",
   "last_run": {
-    "run_at": "2026-03-18T03:25:59.409152Z",
-    "queue_date": "2026-03-18",
-    "candidate_count": 2,
+    "run_at": "2026-03-19T03:26:39.884165Z",
+    "queue_date": "2026-03-19",
+    "candidate_count": 3,
     "min_publish": 1,
     "max_publish": 2,
-    "published_count": 1,
+    "published_count": 2,
     "fallback_generated_count": 0,
     "skipped_count": 1,
     "published": [
       {
-        "slug": "model-mistral-small-22b-local-benchmark",
-        "title": "mistral-small:22B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-        "topic_key": "mistral-small-22b-local-inference-benchmark",
-        "score": 392.0,
-        "source_draft": "content-queue/2026-03-18/03-model-mistral-small-22b-local-benchmark.md",
-        "out_file": "src/content/blog/model-mistral-small-22b-local-benchmark.md",
+        "slug": "model-nemotron-3-nano-30b-local-benchmark",
+        "title": "nemotron-3-nano:30B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+        "topic_key": "nemotron-3-nano-30b-local-inference-benchmark",
+        "score": 343.0,
+        "source_draft": "content-queue/2026-03-19/01-model-nemotron-3-nano-30b-local-benchmark.md",
+        "out_file": "src/content/blog/model-nemotron-3-nano-30b-local-benchmark.md",
+        "intent": "benchmark"
+      },
+      {
+        "slug": "model-qwen2-5-coder-32b-local-benchmark",
+        "title": "qwen2.5-coder:32B: Local Inference Performance Report (2026)",
+        "topic_key": "qwen2-5-coder-32b-local-inference-benchmark",
+        "score": 210.0,
+        "source_draft": "content-queue/2026-03-19/02-model-qwen2-5-coder-32b-local-benchmark.md",
+        "out_file": "src/content/blog/model-qwen2-5-coder-32b-local-benchmark.md",
         "intent": "benchmark"
       }
     ],
     "skipped": [
       {
-        "draft": "content-queue/2026-03-18/01-en-blog-best-local-rag-models-2026.md",
-        "reason": "similar_slug:best-local-rag-models-2026"
+        "draft": "content-queue/2026-03-19/03-model-qwen2-5-14b-local-benchmark.md",
+        "reason": "max_publish_reached"
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-19T03:26:39.884165Z",
+      "queue_date": "2026-03-19",
+      "candidate_count": 3,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "model-nemotron-3-nano-30b-local-benchmark",
+          "title": "nemotron-3-nano:30B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "topic_key": "nemotron-3-nano-30b-local-inference-benchmark",
+          "score": 343.0,
+          "source_draft": "content-queue/2026-03-19/01-model-nemotron-3-nano-30b-local-benchmark.md",
+          "out_file": "src/content/blog/model-nemotron-3-nano-30b-local-benchmark.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "model-qwen2-5-coder-32b-local-benchmark",
+          "title": "qwen2.5-coder:32B: Local Inference Performance Report (2026)",
+          "topic_key": "qwen2-5-coder-32b-local-inference-benchmark",
+          "score": 210.0,
+          "source_draft": "content-queue/2026-03-19/02-model-qwen2-5-coder-32b-local-benchmark.md",
+          "out_file": "src/content/blog/model-qwen2-5-coder-32b-local-benchmark.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-03-19/03-model-qwen2-5-14b-local-benchmark.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-03-18T03:25:59.409152Z",
       "queue_date": "2026-03-18",
