@@ -1,37 +1,29 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-20T03:16:12.895110Z",
+  "updated_at": "2026-03-21T03:07:30.522288Z",
   "last_run": {
-    "run_at": "2026-03-20T03:16:12.895110Z",
-    "queue_date": "2026-03-20",
-    "reviewed_count": 1,
+    "run_at": "2026-03-21T03:07:30.522288Z",
+    "queue_date": "2026-03-21",
+    "reviewed_count": 0,
     "auto_approved_count": 0,
-    "pending_manual_review_count": 1,
+    "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
-    "high_risk_count": 1,
-    "risk_flag_counts": {
-      "near_duplicate_published": 1
-    },
-    "items": [
-      {
-        "draft": "content-queue/2026-03-20/01-model-qwen3-5-35b-local-benchmark.md",
-        "slug": "model-qwen3-5-35b-local-benchmark",
-        "score": 150.0,
-        "status_before": "draft",
-        "status_after": "pending_manual_review",
-        "word_count": 221,
-        "risk_flags": [
-          "near_duplicate_published"
-        ],
-        "similarity": {
-          "score": 0.976,
-          "topic_score": 0.5833,
-          "slug": "model-deepseek-r1-14b-local-benchmark"
-        }
-      }
-    ]
+    "high_risk_count": 0,
+    "risk_flag_counts": {},
+    "items": []
   },
   "history": [
+    {
+      "run_at": "2026-03-21T03:07:30.522288Z",
+      "queue_date": "2026-03-21",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-03-20T03:16:12.895110Z",
       "queue_date": "2026-03-20",
