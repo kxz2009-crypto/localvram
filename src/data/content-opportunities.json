@@ -1,24 +1,24 @@
 {
-  "updated_at": "2026-03-20T03:58:46.475615Z",
+  "updated_at": "2026-03-27T04:18:58.626238Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-03-27T00:00:00Z",
+    "next_refresh_at": "2026-04-03T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-03-20T03:58:46.475615Z",
+    "last_refresh_at": "2026-03-27T04:18:58.626238Z",
     "last_refresh_summary": {
       "incoming_count": 0,
       "removed_count": 0,
       "incoming_topic_keys": [],
       "removed_topic_keys": [],
-      "blocked_recent_topic_count": 67
+      "blocked_recent_topic_count": 81
     }
   },
   "items": [
