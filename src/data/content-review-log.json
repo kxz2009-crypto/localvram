@@ -1,18 +1,59 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-28T03:22:06.576765Z",
+  "updated_at": "2026-03-29T03:44:20.047625Z",
   "last_run": {
-    "run_at": "2026-03-28T03:22:06.576765Z",
-    "queue_date": "2026-03-28",
-    "reviewed_count": 0,
-    "auto_approved_count": 0,
+    "run_at": "2026-03-29T03:44:20.047625Z",
+    "queue_date": "2026-03-29",
+    "reviewed_count": 1,
+    "auto_approved_count": 1,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": []
+    "items": [
+      {
+        "draft": "content-queue/2026-03-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
+        "slug": "q4-vs-q8-quality-loss-ollama-guide",
+        "score": 576.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 219,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.8615,
+          "topic_score": 0.0588,
+          "slug": "model-gpt-oss-20b-local-benchmark"
+        }
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-03-29T03:44:20.047625Z",
+      "queue_date": "2026-03-29",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-03-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
+          "slug": "q4-vs-q8-quality-loss-ollama-guide",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 219,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8615,
+            "topic_score": 0.0588,
+            "slug": "model-gpt-oss-20b-local-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-28T03:22:06.576765Z",
       "queue_date": "2026-03-28",
