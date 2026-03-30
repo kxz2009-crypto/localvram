@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-29T03:44:39Z",
+  "updated_at": "2026-03-30T03:48:38Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -30,18 +30,31 @@
     "daily_content": {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
-      "run_id": "23700698172",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/23700698172",
+      "run_id": "23727056049",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/23727056049",
       "status": "completed",
       "conclusion": "success",
       "event": "schedule",
-      "head_sha": "76ab3ce636f7363fc1bee6981204e723b88e4378",
+      "head_sha": "025211388698ba949a3712a37302b84c9df7103f",
       "failure_class": "none",
       "failure_detail": "",
-      "updated_at": "2026-03-29T03:44:39Z"
+      "updated_at": "2026-03-30T03:48:38Z"
     }
   },
   "history": [
+    {
+      "workflow_key": "daily_content",
+      "workflow_name": "Daily Content Agent",
+      "run_id": "23727056049",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/23727056049",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "schedule",
+      "head_sha": "025211388698ba949a3712a37302b84c9df7103f",
+      "failure_class": "none",
+      "failure_detail": "",
+      "updated_at": "2026-03-30T03:48:38Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
@@ -808,19 +821,6 @@
       "failure_class": "none",
       "failure_detail": "",
       "updated_at": "2026-02-26T06:59:21Z"
-    },
-    {
-      "workflow_key": "publish_benchmark_artifact",
-      "workflow_name": "Publish Benchmark Artifact",
-      "run_id": "22431353898",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/22431353898",
-      "status": "completed",
-      "conclusion": "failure",
-      "event": "workflow_dispatch",
-      "head_sha": "4787433c82d4c8b8f3ebdc7e529cfe4cc752e76c",
-      "failure_class": "artifact_download_failure",
-      "failure_detail": "missing source run id",
-      "updated_at": "2026-02-26T06:56:06Z"
     }
   ]
 }
