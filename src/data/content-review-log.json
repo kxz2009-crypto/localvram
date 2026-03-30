@@ -1,33 +1,87 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-29T03:44:20.047625Z",
+  "updated_at": "2026-03-30T03:48:07.578739Z",
   "last_run": {
-    "run_at": "2026-03-29T03:44:20.047625Z",
-    "queue_date": "2026-03-29",
-    "reviewed_count": 1,
-    "auto_approved_count": 1,
+    "run_at": "2026-03-30T03:48:07.578739Z",
+    "queue_date": "2026-03-30",
+    "reviewed_count": 2,
+    "auto_approved_count": 2,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-03-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
-        "slug": "q4-vs-q8-quality-loss-ollama-guide",
-        "score": 576.0,
+        "draft": "content-queue/2026-03-30/01-model-qwen3-8b-benchmark-refresh.md",
+        "slug": "model-qwen3-8b-benchmark-refresh",
+        "score": 1000.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 219,
+        "word_count": 221,
         "risk_flags": [],
         "similarity": {
-          "score": 0.8615,
-          "topic_score": 0.0588,
+          "score": 0.9917,
+          "topic_score": 0.5,
+          "slug": "model-gpt-oss-20b-local-benchmark"
+        }
+      },
+      {
+        "draft": "content-queue/2026-03-30/02-model-qwen3-coder-30b-benchmark-refresh.md",
+        "slug": "model-qwen3-coder-30b-benchmark-refresh",
+        "score": 1000.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 222,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9835,
+          "topic_score": 0.2353,
           "slug": "model-gpt-oss-20b-local-benchmark"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-03-30T03:48:07.578739Z",
+      "queue_date": "2026-03-30",
+      "reviewed_count": 2,
+      "auto_approved_count": 2,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-03-30/01-model-qwen3-8b-benchmark-refresh.md",
+          "slug": "model-qwen3-8b-benchmark-refresh",
+          "score": 1000.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 221,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9917,
+            "topic_score": 0.5,
+            "slug": "model-gpt-oss-20b-local-benchmark"
+          }
+        },
+        {
+          "draft": "content-queue/2026-03-30/02-model-qwen3-coder-30b-benchmark-refresh.md",
+          "slug": "model-qwen3-coder-30b-benchmark-refresh",
+          "score": 1000.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 222,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9835,
+            "topic_score": 0.2353,
+            "slug": "model-gpt-oss-20b-local-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-29T03:44:20.047625Z",
       "queue_date": "2026-03-29",

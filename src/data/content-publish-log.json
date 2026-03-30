@@ -1,34 +1,69 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-29T03:44:20.115088Z",
+  "updated_at": "2026-03-30T03:48:07.649435Z",
   "last_run": {
-    "run_at": "2026-03-29T03:44:20.115088Z",
-    "queue_date": "2026-03-29",
-    "candidate_count": 1,
+    "run_at": "2026-03-30T03:48:07.649435Z",
+    "queue_date": "2026-03-30",
+    "candidate_count": 2,
     "min_publish": 1,
     "max_publish": 2,
-    "published_count": 1,
-    "fallback_generated_count": 1,
-    "skipped_count": 1,
+    "published_count": 2,
+    "fallback_generated_count": 0,
+    "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-03-29",
-        "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-03-29-daily-local-llm-benchmark-snapshot-2026-03-29",
-        "score": 120.0,
-        "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-03-29.md",
+        "slug": "model-qwen3-8b-benchmark-refresh",
+        "title": "qwen3:8B: Local Inference Performance Report (2026)",
+        "topic_key": "qwen3-8b-local-inference-benchmark-update",
+        "score": 1000.0,
+        "source_draft": "content-queue/2026-03-30/01-model-qwen3-8b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-qwen3-8b-benchmark-refresh.md",
+        "intent": "benchmark"
+      },
+      {
+        "slug": "model-qwen3-coder-30b-benchmark-refresh",
+        "title": "qwen3-coder:30B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+        "topic_key": "qwen3-coder-30b-local-inference-benchmark-update",
+        "score": 1000.0,
+        "source_draft": "content-queue/2026-03-30/02-model-qwen3-coder-30b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-qwen3-coder-30b-benchmark-refresh.md",
         "intent": "benchmark"
       }
     ],
-    "skipped": [
-      {
-        "draft": "content-queue/2026-03-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
-        "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
-      }
-    ]
+    "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-03-30T03:48:07.649435Z",
+      "queue_date": "2026-03-30",
+      "candidate_count": 2,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "model-qwen3-8b-benchmark-refresh",
+          "title": "qwen3:8B: Local Inference Performance Report (2026)",
+          "topic_key": "qwen3-8b-local-inference-benchmark-update",
+          "score": 1000.0,
+          "source_draft": "content-queue/2026-03-30/01-model-qwen3-8b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-qwen3-8b-benchmark-refresh.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "model-qwen3-coder-30b-benchmark-refresh",
+          "title": "qwen3-coder:30B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "topic_key": "qwen3-coder-30b-local-inference-benchmark-update",
+          "score": 1000.0,
+          "source_draft": "content-queue/2026-03-30/02-model-qwen3-coder-30b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-qwen3-coder-30b-benchmark-refresh.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-03-29T03:44:20.115088Z",
       "queue_date": "2026-03-29",
