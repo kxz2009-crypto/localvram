@@ -1,38 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-30T03:48:07.649435Z",
+  "updated_at": "2026-03-31T03:38:52.580852Z",
   "last_run": {
-    "run_at": "2026-03-30T03:48:07.649435Z",
-    "queue_date": "2026-03-30",
-    "candidate_count": 2,
+    "run_at": "2026-03-31T03:38:52.580852Z",
+    "queue_date": "2026-03-31",
+    "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
-    "published_count": 2,
+    "published_count": 1,
     "fallback_generated_count": 0,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "model-qwen3-8b-benchmark-refresh",
-        "title": "qwen3:8B: Local Inference Performance Report (2026)",
-        "topic_key": "qwen3-8b-local-inference-benchmark-update",
-        "score": 1000.0,
-        "source_draft": "content-queue/2026-03-30/01-model-qwen3-8b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-qwen3-8b-benchmark-refresh.md",
-        "intent": "benchmark"
-      },
-      {
-        "slug": "model-qwen3-coder-30b-benchmark-refresh",
-        "title": "qwen3-coder:30B Local Benchmark: Throughput, Latency, and VRAM (2026)",
-        "topic_key": "qwen3-coder-30b-local-inference-benchmark-update",
-        "score": 1000.0,
-        "source_draft": "content-queue/2026-03-30/02-model-qwen3-coder-30b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-qwen3-coder-30b-benchmark-refresh.md",
+        "slug": "ollama-vs-vllm-throughput-comparison-2026",
+        "title": "Ollama Vs Vllm Throughput Comparison Benchmark Results: Local GPU Throughput Breakdown (2026)",
+        "topic_key": "ollama-vs-vllm-throughput-comparison",
+        "score": 648.0,
+        "source_draft": "content-queue/2026-03-31/01-ollama-vs-vllm-throughput-comparison-2026.md",
+        "out_file": "src/content/blog/ollama-vs-vllm-throughput-comparison-2026.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-03-31T03:38:52.580852Z",
+      "queue_date": "2026-03-31",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "ollama-vs-vllm-throughput-comparison-2026",
+          "title": "Ollama Vs Vllm Throughput Comparison Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "topic_key": "ollama-vs-vllm-throughput-comparison",
+          "score": 648.0,
+          "source_draft": "content-queue/2026-03-31/01-ollama-vs-vllm-throughput-comparison-2026.md",
+          "out_file": "src/content/blog/ollama-vs-vllm-throughput-comparison-2026.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-03-30T03:48:07.649435Z",
       "queue_date": "2026-03-30",
