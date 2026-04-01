@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-03-15T12:32:04Z",
-  "endpoint": "http://127.0.0.1:11434",
+  "updated_at": "2026-04-01T12:11:37Z",
+  "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
     "deepseek-r1",
@@ -23,20 +23,20 @@
     10.0,
     20.0
   ],
-  "port": 11434,
+  "port": 11435,
   "env": {
     "runner_name": "3090-WSL2-V2",
     "runner_os": "Linux",
     "runner_arch": "X64",
     "hostname": "",
     "user": "gao20",
-    "OLLAMA_HOST": "http://127.0.0.1:11434",
-    "LV_OLLAMA_ENDPOINT": "http://127.0.0.1:11434",
+    "OLLAMA_HOST": "http://127.0.0.1:11435",
+    "LV_OLLAMA_ENDPOINT": "http://127.0.0.1:11435",
     "OLLAMA_MODELS": "/mnt/d/Ollama",
-    "HTTP_PROXY": "",
-    "HTTPS_PROXY": "",
+    "HTTP_PROXY": "http://127.0.0.1:7897",
+    "HTTPS_PROXY": "http://127.0.0.1:7897",
     "ALL_PROXY": "",
-    "NO_PROXY": ""
+    "NO_PROXY": "172.31.*,172.30.*,172.29.*,172.28.*,172.27.*,172.26.*,172.25.*,172.24.*,172.23.*,172.22.*,172.21.*,172.20.*,172.19.*,172.18.*,172.17.*,172.16.*,10.*,192.168.*,127.*,localhost,<local>"
   },
   "commands": {
     "WHOAMI": {
@@ -67,11 +67,11 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=177,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=51225,fd=3))"
     ],
     "ps_ollama": [
-      "gao20        177       1  1 20:09 ?        00:00:16 /usr/local/bin/ollama serve",
-      "gao20      10826     177 99 20:31 ?        00:00:38 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 45639"
+      "gao20      51225   50465  0 19:45 pts/2    00:00:13 ollama serve",
+      "gao20      86956   51225 99 20:11 pts/2    00:00:48 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 45641"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -80,18 +80,18 @@
       "failure_detail": ""
     },
     "SYSTEMD_OLLAMA_IS_ACTIVE": {
-      "exit": 0,
-      "stdout": "active",
+      "exit": 3,
+      "stdout": "activating",
       "stderr": ""
     },
     "SYSTEMD_OLLAMA_STATUS": {
-      "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Sun 2026-03-15 20:08:14 CST; 23min ago\n   Main PID: 177 (ollama)\n      Tasks: 73 (limit: 57695)\n     Memory: 3.8G (peak: 44.4G)\n        CPU: 18min 10.717s\n     CGroup: /system.slice/ollama.service\n             ├─  177 /usr/local/bin/ollama serve\n             └─10826 /usr/local/bin/ollama runner --ollama-engine --model /mnt/d/Ollama/blobs/sha256-a70437c41b3b0b768c48737e15f8160c90f13dc963f5226aabb3a160f708d1ce --port 45639\n\nMar 15 20:31:32 Vernon ollama[177]: time=2026-03-15T20:31:32.105+08:00 level=INFO source=device.go:267 msg=\"compute graph\" device=CPU size=\"22.1 MiB\"\nMar 15 20:31:32 Vernon ollama[177]: time=2026-03-15T20:31:32.105+08:00 level=INFO source=device.go:272 msg=\"total memory\" size=\"24.6 GiB\"\nMar 15 20:31:32 Vernon ollama[177]: time=2026-03-15T20:31:32.105+08:00 level=INFO source=sched.go:565 msg=\"loaded runners\" count=1\nMar 15 20:31:32 Vernon ollama[177]: time=2026-03-15T20:31:32.105+08:00 level=INFO source=server.go:1350 msg=\"waiting for llama runner to start responding\"\nMar 15 20:31:32 Vernon ollama[177]: time=2026-03-15T20:31:32.105+08:00 level=INFO source=server.go:1384 msg=\"waiting for server to become available\" status=\"llm server loading model\"\nMar 15 20:31:59 Vernon ollama[177]: time=2026-03-15T20:31:59.174+08:00 level=INFO source=server.go:1388 msg=\"llama runner started in 28.68 seconds\"\nMar 15 20:31:59 Vernon ollama[177]: [GIN] 2026/03/15 - 20:31:59 | 200 | 29.897904269s |       127.0.0.1 | POST     \"/api/generate\"\nMar 15 20:32:01 Vernon ollama[177]: [GIN] 2026/03/15 - 20:32:01 | 200 |  2.071044434s |       127.0.0.1 | POST     \"/api/generate\"\nMar 15 20:32:03 Vernon ollama[177]: [GIN] 2026/03/15 - 20:32:03 | 200 |  2.044028744s |       127.0.0.1 | POST     \"/api/generate\"\nMar 15 20:32:04 Vernon ollama[177]: [GIN] 2026/03/15 - 20:32:04 | 200 |      38.516µs |       127.0.0.1 | GET      \"/api/version\"",
+      "exit": 3,
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: activating (auto-restart) (Result: exit-code) since Wed 2026-04-01 20:11:36 CST; 595ms ago\n    Process: 92959 ExecStart=/usr/local/bin/ollama serve (code=exited, status=1/FAILURE)\n   Main PID: 92959 (code=exited, status=1/FAILURE)\n        CPU: 21ms",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
-      "stdout": "UNIT                                                         LOAD   ACTIVE   SUB     DESCRIPTION\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2-V2.service loaded active   running GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2-V2)\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service    loaded inactive dead    GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n  actions.runner.kxz2009-crypto-localvram.Vernon.service       loaded inactive dead    GitHub Actions Runner (kxz2009-crypto-localvram.Vernon)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n3 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
+      "stdout": "UNIT                                                         LOAD   ACTIVE   SUB    DESCRIPTION\n● actions.runner.kxz2009-crypto-localvram.3090-WSL2-V2.service loaded failed   failed GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2-V2)\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service    loaded inactive dead   GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n  actions.runner.kxz2009-crypto-localvram.Vernon.service       loaded inactive dead   GitHub Actions Runner (kxz2009-crypto-localvram.Vernon)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n3 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
       "stderr": ""
     }
   },

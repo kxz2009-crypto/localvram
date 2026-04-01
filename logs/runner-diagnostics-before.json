@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-03-15T12:17:38Z",
-  "endpoint": "http://127.0.0.1:11434",
+  "updated_at": "2026-04-01T11:53:49Z",
+  "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
     "deepseek-r1",
@@ -23,20 +23,20 @@
     10.0,
     20.0
   ],
-  "port": 11434,
+  "port": 11435,
   "env": {
     "runner_name": "3090-WSL2-V2",
     "runner_os": "Linux",
     "runner_arch": "X64",
     "hostname": "",
     "user": "gao20",
-    "OLLAMA_HOST": "http://127.0.0.1:11434",
-    "LV_OLLAMA_ENDPOINT": "http://127.0.0.1:11434",
+    "OLLAMA_HOST": "http://127.0.0.1:11435",
+    "LV_OLLAMA_ENDPOINT": "http://127.0.0.1:11435",
     "OLLAMA_MODELS": "/mnt/d/Ollama",
-    "HTTP_PROXY": "",
-    "HTTPS_PROXY": "",
+    "HTTP_PROXY": "http://127.0.0.1:7897",
+    "HTTPS_PROXY": "http://127.0.0.1:7897",
     "ALL_PROXY": "",
-    "NO_PROXY": ""
+    "NO_PROXY": "172.31.*,172.30.*,172.29.*,172.28.*,172.27.*,172.26.*,172.25.*,172.24.*,172.23.*,172.22.*,172.21.*,172.20.*,172.19.*,172.18.*,172.17.*,172.16.*,10.*,192.168.*,127.*,localhost,<local>"
   },
   "commands": {
     "WHOAMI": {
@@ -67,10 +67,10 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*    users:((\"ollama\",pid=177,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=51225,fd=3))"
     ],
     "ps_ollama": [
-      "gao20        177       1  0 20:08 ?        00:00:04 /usr/local/bin/ollama serve"
+      "gao20      51225   50465  0 19:44 pts/2    00:00:00 ollama serve"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -79,18 +79,18 @@
       "failure_detail": ""
     },
     "SYSTEMD_OLLAMA_IS_ACTIVE": {
-      "exit": 0,
-      "stdout": "active",
+      "exit": 3,
+      "stdout": "activating",
       "stderr": ""
     },
     "SYSTEMD_OLLAMA_STATUS": {
-      "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: active (running) since Sun 2026-03-15 20:08:14 CST; 9min ago\n   Main PID: 177 (ollama)\n      Tasks: 28 (limit: 57695)\n     Memory: 200.7M (peak: 445.2M)\n        CPU: 5.348s\n     CGroup: /system.slice/ollama.service\n             └─177 /usr/local/bin/ollama serve\n\nMar 15 20:11:51 Vernon ollama[177]: [GIN] 2026/03/15 - 20:11:51 | 200 |   193.22171ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 15 20:11:52 Vernon ollama[177]: [GIN] 2026/03/15 - 20:11:52 | 200 |      31.166µs |       127.0.0.1 | GET      \"/api/version\"\nMar 15 20:11:52 Vernon ollama[177]: [GIN] 2026/03/15 - 20:11:52 | 200 |      24.046µs |       127.0.0.1 | GET      \"/api/version\"\nMar 15 20:11:52 Vernon ollama[177]: [GIN] 2026/03/15 - 20:11:52 | 200 |  188.231644ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 15 20:11:53 Vernon ollama[177]: [GIN] 2026/03/15 - 20:11:53 | 200 |  188.725404ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 15 20:11:53 Vernon ollama[177]: [GIN] 2026/03/15 - 20:11:53 | 200 |      32.161µs |       127.0.0.1 | GET      \"/api/version\"\nMar 15 20:11:53 Vernon ollama[177]: [GIN] 2026/03/15 - 20:11:53 | 200 |      22.995µs |       127.0.0.1 | GET      \"/api/version\"\nMar 15 20:11:53 Vernon ollama[177]: [GIN] 2026/03/15 - 20:11:53 | 200 |  188.964056ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 15 20:17:38 Vernon ollama[177]: [GIN] 2026/03/15 - 20:17:38 | 200 |  441.020782ms |       127.0.0.1 | GET      \"/api/tags\"\nMar 15 20:17:38 Vernon ollama[177]: [GIN] 2026/03/15 - 20:17:38 | 200 |      22.418µs |       127.0.0.1 | GET      \"/api/version\"",
+      "exit": 3,
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: activating (auto-restart) (Result: exit-code) since Wed 2026-04-01 19:53:48 CST; 708ms ago\n    Process: 53192 ExecStart=/usr/local/bin/ollama serve (code=exited, status=1/FAILURE)\n   Main PID: 53192 (code=exited, status=1/FAILURE)\n        CPU: 13ms",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
-      "stdout": "UNIT                                                         LOAD   ACTIVE   SUB     DESCRIPTION\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2-V2.service loaded active   running GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2-V2)\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service    loaded inactive dead    GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n  actions.runner.kxz2009-crypto-localvram.Vernon.service       loaded inactive dead    GitHub Actions Runner (kxz2009-crypto-localvram.Vernon)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n3 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
+      "stdout": "UNIT                                                         LOAD   ACTIVE   SUB    DESCRIPTION\n● actions.runner.kxz2009-crypto-localvram.3090-WSL2-V2.service loaded failed   failed GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2-V2)\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service    loaded inactive dead   GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n  actions.runner.kxz2009-crypto-localvram.Vernon.service       loaded inactive dead   GitHub Actions Runner (kxz2009-crypto-localvram.Vernon)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n3 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
       "stderr": ""
     }
   },
