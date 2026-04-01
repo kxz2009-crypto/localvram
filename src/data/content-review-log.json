@@ -1,33 +1,67 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-31T03:38:52.504834Z",
+  "updated_at": "2026-04-01T03:50:12.737957Z",
   "last_run": {
-    "run_at": "2026-03-31T03:38:52.504834Z",
-    "queue_date": "2026-03-31",
+    "run_at": "2026-04-01T03:50:12.737957Z",
+    "queue_date": "2026-04-01",
     "reviewed_count": 1,
-    "auto_approved_count": 1,
-    "pending_manual_review_count": 0,
+    "auto_approved_count": 0,
+    "pending_manual_review_count": 1,
     "rejected_manual_count": 0,
-    "high_risk_count": 0,
-    "risk_flag_counts": {},
+    "high_risk_count": 1,
+    "risk_flag_counts": {
+      "near_duplicate_published": 1
+    },
     "items": [
       {
-        "draft": "content-queue/2026-03-31/01-ollama-vs-vllm-throughput-comparison-2026.md",
-        "slug": "ollama-vs-vllm-throughput-comparison-2026",
-        "score": 648.0,
+        "draft": "content-queue/2026-04-01/01-model-deepseek-r1-14b-benchmark-refresh.md",
+        "slug": "model-deepseek-r1-14b-benchmark-refresh",
+        "score": 640.0,
         "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 220,
-        "risk_flags": [],
+        "status_after": "pending_manual_review",
+        "word_count": 222,
+        "risk_flags": [
+          "near_duplicate_published"
+        ],
         "similarity": {
-          "score": 0.9603,
-          "topic_score": 0.4615,
-          "slug": "model-qwen3-5-122b-benchmark-refresh"
+          "score": 0.992,
+          "topic_score": 0.75,
+          "slug": "model-deepseek-r1-14b-local-benchmark"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-04-01T03:50:12.737957Z",
+      "queue_date": "2026-04-01",
+      "reviewed_count": 1,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 1,
+      "rejected_manual_count": 0,
+      "high_risk_count": 1,
+      "risk_flag_counts": {
+        "near_duplicate_published": 1
+      },
+      "items": [
+        {
+          "draft": "content-queue/2026-04-01/01-model-deepseek-r1-14b-benchmark-refresh.md",
+          "slug": "model-deepseek-r1-14b-benchmark-refresh",
+          "score": 640.0,
+          "status_before": "draft",
+          "status_after": "pending_manual_review",
+          "word_count": 222,
+          "risk_flags": [
+            "near_duplicate_published"
+          ],
+          "similarity": {
+            "score": 0.992,
+            "topic_score": 0.75,
+            "slug": "model-deepseek-r1-14b-local-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-03-31T03:38:52.504834Z",
       "queue_date": "2026-03-31",

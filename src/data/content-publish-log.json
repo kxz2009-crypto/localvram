@@ -1,29 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-03-31T03:38:52.580852Z",
+  "updated_at": "2026-04-01T03:50:12.814061Z",
   "last_run": {
-    "run_at": "2026-03-31T03:38:52.580852Z",
-    "queue_date": "2026-03-31",
-    "candidate_count": 1,
+    "run_at": "2026-04-01T03:50:12.814061Z",
+    "queue_date": "2026-04-01",
+    "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 0,
+    "fallback_generated_count": 1,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "ollama-vs-vllm-throughput-comparison-2026",
-        "title": "Ollama Vs Vllm Throughput Comparison Benchmark Results: Local GPU Throughput Breakdown (2026)",
-        "topic_key": "ollama-vs-vllm-throughput-comparison",
-        "score": 648.0,
-        "source_draft": "content-queue/2026-03-31/01-ollama-vs-vllm-throughput-comparison-2026.md",
-        "out_file": "src/content/blog/ollama-vs-vllm-throughput-comparison-2026.md",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-04-01",
+        "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-04-01-daily-local-llm-benchmark-snapshot-2026-04-01",
+        "score": 120.0,
+        "source_draft": "system:fallback-daily-generator",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-01.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-04-01T03:50:12.814061Z",
+      "queue_date": "2026-04-01",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-04-01",
+          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-04-01-daily-local-llm-benchmark-snapshot-2026-04-01",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-01.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-03-31T03:38:52.580852Z",
       "queue_date": "2026-03-31",
