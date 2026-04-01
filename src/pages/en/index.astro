@@ -62,7 +62,7 @@ const homeStructuredData = [
     </a>
     <div class="ticker">
       RTX 3090: Stable @ {gpuTemperature} | DeepSeek-R1: Verified | Ollama: {ollamaVersion} | Last
-      Sync: <span id="last-sync-local">local time loading...</span> (UTC {lastSyncUtc})
+      Sync: <span id="last-sync-local">local time loading...</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href="/en/status/data-freshness/">Data Status</a>
   </header>
@@ -158,14 +158,22 @@ const homeStructuredData = [
   </main>
   <script define:vars={{ rawLastSync }}>
     const localSyncNode = document.getElementById("last-sync-local");
+    const freshnessBadgeNode = document.getElementById("ticker-freshness-badge");
+    const staleThresholdHours = 192;
     if (localSyncNode) {
       const raw = String(rawLastSync || "").trim();
       if (!raw || raw === "unknown") {
         localSyncNode.textContent = "unknown";
+        if (freshnessBadgeNode) {
+          freshnessBadgeNode.textContent = "";
+        }
       } else {
         const date = new Date(raw);
         if (Number.isNaN(date.getTime())) {
           localSyncNode.textContent = raw;
+          if (freshnessBadgeNode) {
+            freshnessBadgeNode.textContent = "";
+          }
         } else {
           const parts = new Intl.DateTimeFormat(undefined, {
             year: "numeric",
@@ -179,6 +187,17 @@ const homeStructuredData = [
           }).formatToParts(date);
           const part = (type) => parts.find((item) => item.type === type)?.value || "";
           localSyncNode.textContent = `${part("year")}-${part("month")}-${part("day")} ${part("hour")}:${part("minute")}:${part("second")} ${part("timeZoneName") || "local"}`;
+          if (freshnessBadgeNode) {
+            const ageHours = (Date.now() - date.getTime()) / 36e5;
+            if (Number.isFinite(ageHours) && ageHours > staleThresholdHours) {
+              const ageDays = Math.floor(ageHours / 24);
+              freshnessBadgeNode.textContent = `| STALE ${ageDays}d`;
+              freshnessBadgeNode.setAttribute("title", "Hardware sync is older than 8 days.");
+            } else {
+              freshnessBadgeNode.textContent = "";
+              freshnessBadgeNode.removeAttribute("title");
+            }
+          }
         }
       }
     }

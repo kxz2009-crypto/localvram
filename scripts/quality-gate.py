@@ -1,4 +1,5 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
+import argparse
 import json
 import re
 import subprocess
@@ -130,7 +131,18 @@ def is_effective_fallback(en_value: object, localized_value: object) -> bool:
     return not bool(PLACEHOLDER_ONLY_RE.fullmatch(en_text))
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--skip-i18n-blog-copy-coverage-threshold",
+        action="store_true",
+        help="Keep structural i18n blog copy validation, but do not fail on the overall coverage ratio threshold.",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     missing = [str(p) for p in REQUIRED_FILES if not p.exists()]
     if missing:
         log_line("quality gate failed: missing required files")
@@ -565,13 +577,22 @@ def main() -> None:
     coverage_ratio = len(localized_slugs) / len(blog_slugs) if blog_slugs else 1.0
     if coverage_ratio < MIN_I18N_BLOG_COPY_COVERAGE_RATIO:
         missing_blog_copy = sorted(blog_slugs - set(blog_copy_slugs.keys()))
-        log_line(
+        message = (
             "quality gate failed: i18n blog copy coverage below threshold "
             f"({coverage_ratio:.3f} < {MIN_I18N_BLOG_COPY_COVERAGE_RATIO:.3f})"
         )
-        for slug in missing_blog_copy[:20]:
-            log_line(f"- missing blog copy slug: {slug}")
-        sys.exit(1)
+        if args.skip_i18n_blog_copy_coverage_threshold:
+            LOGGER.warning(
+                "%s; bypassed because --skip-i18n-blog-copy-coverage-threshold is set",
+                message,
+            )
+            for slug in missing_blog_copy[:20]:
+                LOGGER.warning("missing blog copy slug: %s", slug)
+        else:
+            log_line(message)
+            for slug in missing_blog_copy[:20]:
+                log_line(f"- missing blog copy slug: {slug}")
+            sys.exit(1)
     log_line(
         "i18n blog copy checks ok: "
         f"localized={len(localized_slugs)}/{len(blog_slugs)} coverage={coverage_ratio:.3f}"

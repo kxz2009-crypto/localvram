@@ -39,7 +39,7 @@ python scripts/run-weekly-publish-pipeline.py `
 - `--retirement-min-stale-runs <n>` / `--retirement-max-seen-ok-count <n>`: forwarded to publish stage.
 - `--run-smoke-on-weekly-failure true|false`: when weekly fails, auto-dispatch `Runner Smoke Check` (default `true`).
 - `--smoke-workflow runner-smoke-check.yml`: smoke workflow id/name for dispatch.
-- `--smoke-endpoint http://127.0.0.1:11434`: smoke check endpoint input.
+- `--smoke-endpoint http://127.0.0.1:11435`: smoke check endpoint input for the WSL2 3090 runner. Use `11435` so the workflow hits the WSL-managed Ollama instance instead of any Windows-side localhost forward on `11434`.
 - `--smoke-required-targets "<csv>"`: optional smoke required target override.
 - `--smoke-restart-if-empty true|false`: forwarded to smoke input (default `true`).
 - `--smoke-retry-delays-s "5,10,20"`: smoke input retry CSV (defaults to `--retry-delays-s` when empty).

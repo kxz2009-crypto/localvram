@@ -1,5 +1,12 @@
 # Ollama Upgrade Runbook (WSL)
 
+## Benchmark runner port note
+
+For the `3090-WSL2-V2` self-hosted GitHub Actions runner, keep the WSL-managed Ollama instance on:
+
+- `http://127.0.0.1:11435`
+
+Do not point weekly benchmark or smoke-check workflows at `11434` on that machine. In this environment, `11434` may be occupied by a Windows-side Ollama/localhost forward that is reachable from WSL but does not appear as a local `ollama serve` process, causing workflow preflight to fail with `ollama_instance_unmanaged`.
 This runbook is for the failure pattern:
 
 - `ollama run qwen3.5:35b` -> `500 ... unable to load model ... sha256-...`
