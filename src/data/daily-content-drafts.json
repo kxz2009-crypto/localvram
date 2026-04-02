@@ -1,6 +1,36 @@
 {
-  "updated_at": "2026-04-01T00:00:00Z",
+  "updated_at": "2026-04-02T00:00:00Z",
   "items": [
+    {
+      "date": "2026-04-02",
+      "slug": "runpod-vs-vast-for-local-llm-fallback",
+      "title": "Runpod Vs Vast For Local Llm: Setup, Validation, and Scaling Playbook (2026)",
+      "keyword": "runpod vs vast for local llm",
+      "score": 640,
+      "source": "opportunity",
+      "landing": "",
+      "draft_path": "content-queue/2026-04-02/01-runpod-vs-vast-for-local-llm-fallback.md"
+    },
+    {
+      "date": "2026-04-02",
+      "slug": "model-translategemma-27b-local-benchmark",
+      "title": "translategemma:27B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+      "keyword": "translategemma:27b local inference benchmark",
+      "score": 300,
+      "source": "benchmark_fallback",
+      "landing": "/en/models/",
+      "draft_path": "content-queue/2026-04-02/02-model-translategemma-27b-local-benchmark.md"
+    },
+    {
+      "date": "2026-04-02",
+      "slug": "model-gemma3-27b-local-benchmark",
+      "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+      "keyword": "gemma3:27b local inference benchmark",
+      "score": 160,
+      "source": "benchmark_fallback",
+      "landing": "/en/models/",
+      "draft_path": "content-queue/2026-04-02/03-model-gemma3-27b-local-benchmark.md"
+    },
     {
       "date": "2026-04-01",
       "slug": "model-deepseek-r1-14b-benchmark-refresh",

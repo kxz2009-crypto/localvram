@@ -1,29 +1,79 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-01T03:50:12.814061Z",
+  "updated_at": "2026-04-02T03:32:31.257263Z",
   "last_run": {
-    "run_at": "2026-04-01T03:50:12.814061Z",
-    "queue_date": "2026-04-01",
-    "candidate_count": 0,
+    "run_at": "2026-04-02T03:32:31.257263Z",
+    "queue_date": "2026-04-02",
+    "candidate_count": 3,
     "min_publish": 1,
     "max_publish": 2,
-    "published_count": 1,
-    "fallback_generated_count": 1,
-    "skipped_count": 0,
+    "published_count": 2,
+    "fallback_generated_count": 0,
+    "skipped_count": 1,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-04-01",
-        "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-04-01-daily-local-llm-benchmark-snapshot-2026-04-01",
-        "score": 120.0,
-        "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-01.md",
+        "slug": "runpod-vs-vast-for-local-llm-fallback",
+        "title": "Runpod Vs Vast For Local Llm: Setup, Validation, and Scaling Playbook (2026)",
+        "topic_key": "runpod-vs-vast-for-local-llm",
+        "score": 640.0,
+        "source_draft": "content-queue/2026-04-02/01-runpod-vs-vast-for-local-llm-fallback.md",
+        "out_file": "src/content/blog/runpod-vs-vast-for-local-llm-fallback.md",
+        "intent": "guide"
+      },
+      {
+        "slug": "model-translategemma-27b-local-benchmark",
+        "title": "translategemma:27B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+        "topic_key": "translategemma-27b-local-inference-benchmark",
+        "score": 300.0,
+        "source_draft": "content-queue/2026-04-02/02-model-translategemma-27b-local-benchmark.md",
+        "out_file": "src/content/blog/model-translategemma-27b-local-benchmark.md",
         "intent": "benchmark"
       }
     ],
-    "skipped": []
+    "skipped": [
+      {
+        "draft": "content-queue/2026-04-02/03-model-gemma3-27b-local-benchmark.md",
+        "reason": "max_publish_reached"
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-04-02T03:32:31.257263Z",
+      "queue_date": "2026-04-02",
+      "candidate_count": 3,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "runpod-vs-vast-for-local-llm-fallback",
+          "title": "Runpod Vs Vast For Local Llm: Setup, Validation, and Scaling Playbook (2026)",
+          "topic_key": "runpod-vs-vast-for-local-llm",
+          "score": 640.0,
+          "source_draft": "content-queue/2026-04-02/01-runpod-vs-vast-for-local-llm-fallback.md",
+          "out_file": "src/content/blog/runpod-vs-vast-for-local-llm-fallback.md",
+          "intent": "guide"
+        },
+        {
+          "slug": "model-translategemma-27b-local-benchmark",
+          "title": "translategemma:27B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "topic_key": "translategemma-27b-local-inference-benchmark",
+          "score": 300.0,
+          "source_draft": "content-queue/2026-04-02/02-model-translategemma-27b-local-benchmark.md",
+          "out_file": "src/content/blog/model-translategemma-27b-local-benchmark.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-04-02/03-model-gemma3-27b-local-benchmark.md",
+          "reason": "max_publish_reached"
+        }
+      ]
+    },
     {
       "run_at": "2026-04-01T03:50:12.814061Z",
       "queue_date": "2026-04-01",

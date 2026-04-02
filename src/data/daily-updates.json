@@ -1,6 +1,54 @@
 {
   "items": [
     {
+      "date": "2026-04-02",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-04-02",
+          "slug": "runpod-vs-vast-for-local-llm-fallback",
+          "title": "Runpod Vs Vast For Local Llm: Setup, Validation, and Scaling Playbook (2026)",
+          "keyword": "runpod vs vast for local llm",
+          "score": 640,
+          "source": "opportunity",
+          "landing": "",
+          "draft_path": "content-queue/2026-04-02/01-runpod-vs-vast-for-local-llm-fallback.md"
+        },
+        {
+          "date": "2026-04-02",
+          "slug": "model-translategemma-27b-local-benchmark",
+          "title": "translategemma:27B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "keyword": "translategemma:27b local inference benchmark",
+          "score": 300,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-04-02/02-model-translategemma-27b-local-benchmark.md"
+        },
+        {
+          "date": "2026-04-02",
+          "slug": "model-gemma3-27b-local-benchmark",
+          "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "keyword": "gemma3:27b local inference benchmark",
+          "score": 160,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-04-02/03-model-gemma3-27b-local-benchmark.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "runpod-vs-vast-for-local-llm-fallback",
+          "title": "Runpod Vs Vast For Local Llm: Setup, Validation, and Scaling Playbook (2026)"
+        },
+        {
+          "slug": "model-translategemma-27b-local-benchmark",
+          "title": "translategemma:27B Local Benchmark: Throughput, Latency, and VRAM (2026)"
+        }
+      ],
+      "published_count": 2,
+      "publish_run_at": "2026-04-02T03:32:31.257263Z"
+    },
+    {
       "date": "2026-04-01",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -963,22 +1011,6 @@
           "source": "search_console",
           "landing": "/en/tools/quantization-blind-test/",
           "draft_path": "content-queue/2026-02-24/03-en-tools-quantization-blind-test.md"
-        }
-      ]
-    },
-    {
-      "date": "2026-02-23",
-      "summary": "Agent-ranked SEO and content candidates generated.",
-      "candidates": [
-        {
-          "slug": "q4-vs-q8-quality-loss",
-          "keyword": "q4 vs q8 quality loss ollama",
-          "score": 360
-        },
-        {
-          "slug": "ollama-local-cluster-network",
-          "keyword": "ollama local cluster network",
-          "score": 336
         }
       ]
     }
