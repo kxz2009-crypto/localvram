@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-02T03:33:12.396971Z",
+  "generated_at": "2026-04-03T03:34:37.464685Z",
   "window_days": 30,
-  "window_start": "2026-03-03T03:33:12.396971Z",
-  "window_end": "2026-04-02T03:33:12.396971Z",
+  "window_start": "2026-03-04T03:34:37.464685Z",
+  "window_end": "2026-04-03T03:34:37.464685Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -11,71 +11,71 @@
   "funnel": {
     "organic_search_clicks": 84,
     "decision_page_clicks": 67,
-    "affiliate_redirect_clicks": 121,
-    "cloud_redirect_clicks": 43,
-    "hardware_redirect_clicks": 78,
-    "search_to_affiliate_pct": 144.05,
-    "search_to_cloud_pct": 51.19,
-    "affiliate_to_cloud_pct": 35.54
+    "affiliate_redirect_clicks": 96,
+    "cloud_redirect_clicks": 33,
+    "hardware_redirect_clicks": 63,
+    "search_to_affiliate_pct": 114.29,
+    "search_to_cloud_pct": 39.29,
+    "affiliate_to_cloud_pct": 34.38
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 78,
-        "share_pct": 64.46
+        "clicks": 63,
+        "share_pct": 65.62
       },
       {
         "provider": "runpod",
-        "clicks": 24,
-        "share_pct": 19.83
+        "clicks": 17,
+        "share_pct": 17.71
       },
       {
         "provider": "vast",
-        "clicks": 19,
-        "share_pct": 15.7
+        "clicks": 16,
+        "share_pct": 16.67
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 32,
-        "share_pct": 26.45
+        "clicks": 26,
+        "share_pct": 27.08
       },
       {
         "route": "/go/runpod",
-        "clicks": 24,
-        "share_pct": 19.83
+        "clicks": 17,
+        "share_pct": 17.71
       },
       {
         "route": "/go/vast",
-        "clicks": 19,
-        "share_pct": 15.7
+        "clicks": 16,
+        "share_pct": 16.67
       },
       {
         "route": "/recommends/rtx-4090-24gb",
-        "clicks": 17,
-        "share_pct": 14.05
+        "clicks": 14,
+        "share_pct": 14.58
       },
       {
         "route": "/recommends/high-airflow-case",
-        "clicks": 15,
-        "share_pct": 12.4
+        "clicks": 12,
+        "share_pct": 12.5
       },
       {
         "route": "/recommends/atx3-1000w-psu",
-        "clicks": 14,
-        "share_pct": 11.57
+        "clicks": 11,
+        "share_pct": 11.46
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 114
+        "clicks": 90
       },
       {
         "page": "/en/tools/vram-calculator/",
-        "clicks": 5
+        "clicks": 4
       },
       {
         "page": "/en/affiliate/hardware-upgrade/",
@@ -112,7 +112,7 @@
   "data_quality": {
     "search_console_items": 4,
     "affiliate_event_items_total": 141,
-    "affiliate_event_items_in_window": 121,
+    "affiliate_event_items_in_window": 96,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }

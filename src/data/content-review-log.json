@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-02T03:32:31.185575Z",
+  "updated_at": "2026-04-03T03:34:07.070867Z",
   "last_run": {
-    "run_at": "2026-04-02T03:32:31.185575Z",
-    "queue_date": "2026-04-02",
+    "run_at": "2026-04-03T03:34:07.070867Z",
+    "queue_date": "2026-04-03",
     "reviewed_count": 3,
     "auto_approved_count": 3,
     "pending_manual_review_count": 0,
@@ -12,50 +12,104 @@
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-04-02/01-runpod-vs-vast-for-local-llm-fallback.md",
-        "slug": "runpod-vs-vast-for-local-llm-fallback",
-        "score": 640.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 219,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.7174,
-          "topic_score": 0.0556,
-          "slug": "model-qwen3-coder-30b-benchmark-refresh"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-02/02-model-translategemma-27b-local-benchmark.md",
-        "slug": "model-translategemma-27b-local-benchmark",
-        "score": 300.0,
+        "draft": "content-queue/2026-04-03/01-ministral-3-14b-local-benchmark-guide.md",
+        "slug": "ministral-3-14b-local-benchmark-guide",
+        "score": 576.0,
         "status_before": "draft",
         "status_after": "approved_auto",
         "word_count": 220,
         "risk_flags": [],
         "similarity": {
-          "score": 0.8092,
-          "topic_score": 0.4615,
-          "slug": "model-qwen3-coder-30b-benchmark-refresh"
+          "score": 0.9746,
+          "topic_score": 0.1429,
+          "slug": "model-translategemma-27b-local-benchmark"
         }
       },
       {
-        "draft": "content-queue/2026-04-02/03-model-gemma3-27b-local-benchmark.md",
-        "slug": "model-gemma3-27b-local-benchmark",
-        "score": 160.0,
+        "draft": "content-queue/2026-04-03/02-model-llama4-16x17b-local-benchmark.md",
+        "slug": "model-llama4-16x17b-local-benchmark",
+        "score": 144.0,
         "status_before": "draft",
         "status_after": "approved_auto",
         "word_count": 220,
         "risk_flags": [],
         "similarity": {
-          "score": 0.8209,
-          "topic_score": 0.5833,
-          "slug": "model-deepseek-r1-14b-local-benchmark"
+          "score": 0.9664,
+          "topic_score": 0.5455,
+          "slug": "model-translategemma-27b-local-benchmark"
+        }
+      },
+      {
+        "draft": "content-queue/2026-04-03/03-model-qwq-32b-local-benchmark.md",
+        "slug": "model-qwq-32b-local-benchmark",
+        "score": 144.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 220,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9426,
+          "topic_score": 0.2857,
+          "slug": "model-translategemma-27b-local-benchmark"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-04-03T03:34:07.070867Z",
+      "queue_date": "2026-04-03",
+      "reviewed_count": 3,
+      "auto_approved_count": 3,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-04-03/01-ministral-3-14b-local-benchmark-guide.md",
+          "slug": "ministral-3-14b-local-benchmark-guide",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 220,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9746,
+            "topic_score": 0.1429,
+            "slug": "model-translategemma-27b-local-benchmark"
+          }
+        },
+        {
+          "draft": "content-queue/2026-04-03/02-model-llama4-16x17b-local-benchmark.md",
+          "slug": "model-llama4-16x17b-local-benchmark",
+          "score": 144.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 220,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9664,
+            "topic_score": 0.5455,
+            "slug": "model-translategemma-27b-local-benchmark"
+          }
+        },
+        {
+          "draft": "content-queue/2026-04-03/03-model-qwq-32b-local-benchmark.md",
+          "slug": "model-qwq-32b-local-benchmark",
+          "score": 144.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 220,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9426,
+            "topic_score": 0.2857,
+            "slug": "model-translategemma-27b-local-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-04-02T03:32:31.185575Z",
       "queue_date": "2026-04-02",

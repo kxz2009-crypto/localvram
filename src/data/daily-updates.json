@@ -1,6 +1,54 @@
 {
   "items": [
     {
+      "date": "2026-04-03",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-04-03",
+          "slug": "ministral-3-14b-local-benchmark-guide",
+          "title": "Ministral 3 14B Local Benchmark: Local Inference Performance Report (2026)",
+          "keyword": "ministral 3 14b local benchmark",
+          "score": 576,
+          "source": "opportunity",
+          "landing": "",
+          "draft_path": "content-queue/2026-04-03/01-ministral-3-14b-local-benchmark-guide.md"
+        },
+        {
+          "date": "2026-04-03",
+          "slug": "model-llama4-16x17b-local-benchmark",
+          "title": "llama4:16x17B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "keyword": "llama4:16x17b local inference benchmark",
+          "score": 144,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-04-03/02-model-llama4-16x17b-local-benchmark.md"
+        },
+        {
+          "date": "2026-04-03",
+          "slug": "model-qwq-32b-local-benchmark",
+          "title": "qwq:32B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "keyword": "qwq:32b local inference benchmark",
+          "score": 144,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-04-03/03-model-qwq-32b-local-benchmark.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "ministral-3-14b-local-benchmark-guide",
+          "title": "Ministral 3 14B Local Benchmark: Local Inference Performance Report (2026)"
+        },
+        {
+          "slug": "model-llama4-16x17b-local-benchmark",
+          "title": "llama4:16x17B Local Benchmark: Throughput, Latency, and VRAM (2026)"
+        }
+      ],
+      "published_count": 2,
+      "publish_run_at": "2026-04-03T03:34:07.148695Z"
+    },
+    {
       "date": "2026-04-02",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -975,42 +1023,6 @@
           "slug": "en-affiliate-cloud-gpu",
           "keyword": "runpod a100 ollama",
           "score": 40
-        }
-      ]
-    },
-    {
-      "date": "2026-02-24",
-      "summary": "Agent ranked SEO opportunities and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-02-24",
-          "slug": "q4-vs-q8-quality-loss",
-          "title": "Q4 Vs Q8 Quality Loss Ollama: Practical Guide (2026)",
-          "keyword": "q4 vs q8 quality loss ollama",
-          "score": 360,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-02-24/01-q4-vs-q8-quality-loss.md"
-        },
-        {
-          "date": "2026-02-24",
-          "slug": "ollama-local-cluster-network",
-          "title": "Ollama Local Cluster Network: Practical Guide (2026)",
-          "keyword": "ollama local cluster network",
-          "score": 336,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-02-24/02-ollama-local-cluster-network.md"
-        },
-        {
-          "date": "2026-02-24",
-          "slug": "en-tools-quantization-blind-test",
-          "title": "Q4 Vs Q8 Quality Ollama: Practical Guide (2026)",
-          "keyword": "q4 vs q8 quality ollama",
-          "score": 137,
-          "source": "search_console",
-          "landing": "/en/tools/quantization-blind-test/",
-          "draft_path": "content-queue/2026-02-24/03-en-tools-quantization-blind-test.md"
         }
       ]
     }

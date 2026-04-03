@@ -1,6 +1,36 @@
 {
-  "updated_at": "2026-04-02T00:00:00Z",
+  "updated_at": "2026-04-03T00:00:00Z",
   "items": [
+    {
+      "date": "2026-04-03",
+      "slug": "ministral-3-14b-local-benchmark-guide",
+      "title": "Ministral 3 14B Local Benchmark: Local Inference Performance Report (2026)",
+      "keyword": "ministral 3 14b local benchmark",
+      "score": 576,
+      "source": "opportunity",
+      "landing": "",
+      "draft_path": "content-queue/2026-04-03/01-ministral-3-14b-local-benchmark-guide.md"
+    },
+    {
+      "date": "2026-04-03",
+      "slug": "model-llama4-16x17b-local-benchmark",
+      "title": "llama4:16x17B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+      "keyword": "llama4:16x17b local inference benchmark",
+      "score": 144,
+      "source": "benchmark_fallback",
+      "landing": "/en/models/",
+      "draft_path": "content-queue/2026-04-03/02-model-llama4-16x17b-local-benchmark.md"
+    },
+    {
+      "date": "2026-04-03",
+      "slug": "model-qwq-32b-local-benchmark",
+      "title": "qwq:32B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+      "keyword": "qwq:32b local inference benchmark",
+      "score": 144,
+      "source": "benchmark_fallback",
+      "landing": "/en/models/",
+      "draft_path": "content-queue/2026-04-03/03-model-qwq-32b-local-benchmark.md"
+    },
     {
       "date": "2026-04-02",
       "slug": "runpod-vs-vast-for-local-llm-fallback",
