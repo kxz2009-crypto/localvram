@@ -1,24 +1,28 @@
 {
-  "updated_at": "2026-03-27T04:18:58.626238Z",
+  "updated_at": "2026-04-03T04:14:35.498392Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-04-03T00:00:00Z",
+    "next_refresh_at": "2026-04-10T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-03-27T04:18:58.626238Z",
+    "last_refresh_at": "2026-04-03T04:14:35.498392Z",
     "last_refresh_summary": {
-      "incoming_count": 0,
-      "removed_count": 0,
-      "incoming_topic_keys": [],
-      "removed_topic_keys": [],
-      "blocked_recent_topic_count": 81
+      "incoming_count": 1,
+      "removed_count": 1,
+      "incoming_topic_keys": [
+        "q4-vs-q8-quality-ollama"
+      ],
+      "removed_topic_keys": [
+        "llama4-16x17b-local-inference-benchmark-update"
+      ],
+      "blocked_recent_topic_count": 66
     }
   },
   "items": [
@@ -198,15 +202,15 @@
       "freshness_gap_score": 10
     },
     {
-      "slug": "model-llama3-3-70b-benchmark-refresh",
-      "keyword": "llama3.3:70b local inference benchmark update",
-      "search_intent_score": 4,
-      "commercial_intent_score": 5,
-      "freshness_gap_score": 10
+      "slug": "en-tools-quantization-blind-test",
+      "keyword": "q4 vs q8 quality ollama",
+      "search_intent_score": 3,
+      "commercial_intent_score": 10,
+      "freshness_gap_score": 8
     },
     {
-      "slug": "model-llama4-16x17b-benchmark-refresh",
-      "keyword": "llama4:16x17b local inference benchmark update",
+      "slug": "model-llama3-3-70b-benchmark-refresh",
+      "keyword": "llama3.3:70b local inference benchmark update",
       "search_intent_score": 4,
       "commercial_intent_score": 5,
       "freshness_gap_score": 10
