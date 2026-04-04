@@ -1,43 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-03T03:34:07.148695Z",
+  "updated_at": "2026-04-04T03:21:50.434269Z",
   "last_run": {
-    "run_at": "2026-04-03T03:34:07.148695Z",
-    "queue_date": "2026-04-03",
-    "candidate_count": 3,
+    "run_at": "2026-04-04T03:21:50.434269Z",
+    "queue_date": "2026-04-04",
+    "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
-    "published_count": 2,
+    "published_count": 1,
     "fallback_generated_count": 0,
-    "skipped_count": 1,
+    "skipped_count": 0,
     "published": [
       {
-        "slug": "ministral-3-14b-local-benchmark-guide",
-        "title": "Ministral 3 14B Local Benchmark: Local Inference Performance Report (2026)",
-        "topic_key": "ministral-3-14b-local-benchmark",
-        "score": 576.0,
-        "source_draft": "content-queue/2026-04-03/01-ministral-3-14b-local-benchmark-guide.md",
-        "out_file": "src/content/blog/ministral-3-14b-local-benchmark-guide.md",
-        "intent": "benchmark"
-      },
-      {
-        "slug": "model-llama4-16x17b-local-benchmark",
-        "title": "llama4:16x17B Local Benchmark: Throughput, Latency, and VRAM (2026)",
-        "topic_key": "llama4-16x17b-local-inference-benchmark",
-        "score": 144.0,
-        "source_draft": "content-queue/2026-04-03/02-model-llama4-16x17b-local-benchmark.md",
-        "out_file": "src/content/blog/model-llama4-16x17b-local-benchmark.md",
-        "intent": "benchmark"
+        "slug": "multi-gpu-local-llm-roi-calculator-guide",
+        "title": "Multi Gpu Local Llm Roi: Cloud Rental vs Self-Host Decision Model (2026)",
+        "topic_key": "multi-gpu-local-llm-roi",
+        "score": 560.0,
+        "source_draft": "content-queue/2026-04-04/01-multi-gpu-local-llm-roi-calculator-guide.md",
+        "out_file": "src/content/blog/multi-gpu-local-llm-roi-calculator-guide.md",
+        "intent": "cost"
       }
     ],
-    "skipped": [
-      {
-        "draft": "content-queue/2026-04-03/03-model-qwq-32b-local-benchmark.md",
-        "reason": "max_publish_reached"
-      }
-    ]
+    "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-04-04T03:21:50.434269Z",
+      "queue_date": "2026-04-04",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "multi-gpu-local-llm-roi-calculator-guide",
+          "title": "Multi Gpu Local Llm Roi: Cloud Rental vs Self-Host Decision Model (2026)",
+          "topic_key": "multi-gpu-local-llm-roi",
+          "score": 560.0,
+          "source_draft": "content-queue/2026-04-04/01-multi-gpu-local-llm-roi-calculator-guide.md",
+          "out_file": "src/content/blog/multi-gpu-local-llm-roi-calculator-guide.md",
+          "intent": "cost"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-04-03T03:34:07.148695Z",
       "queue_date": "2026-04-03",

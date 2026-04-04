@@ -1,61 +1,59 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-03T03:34:07.070867Z",
+  "updated_at": "2026-04-04T03:21:50.362632Z",
   "last_run": {
-    "run_at": "2026-04-03T03:34:07.070867Z",
-    "queue_date": "2026-04-03",
-    "reviewed_count": 3,
-    "auto_approved_count": 3,
+    "run_at": "2026-04-04T03:21:50.362632Z",
+    "queue_date": "2026-04-04",
+    "reviewed_count": 1,
+    "auto_approved_count": 1,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-04-03/01-ministral-3-14b-local-benchmark-guide.md",
-        "slug": "ministral-3-14b-local-benchmark-guide",
-        "score": 576.0,
+        "draft": "content-queue/2026-04-04/01-multi-gpu-local-llm-roi-calculator-guide.md",
+        "slug": "multi-gpu-local-llm-roi-calculator-guide",
+        "score": 560.0,
         "status_before": "draft",
         "status_after": "approved_auto",
         "word_count": 220,
         "risk_flags": [],
         "similarity": {
-          "score": 0.9746,
-          "topic_score": 0.1429,
-          "slug": "model-translategemma-27b-local-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-03/02-model-llama4-16x17b-local-benchmark.md",
-        "slug": "model-llama4-16x17b-local-benchmark",
-        "score": 144.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 220,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.9664,
-          "topic_score": 0.5455,
-          "slug": "model-translategemma-27b-local-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-03/03-model-qwq-32b-local-benchmark.md",
-        "slug": "model-qwq-32b-local-benchmark",
-        "score": 144.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 220,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.9426,
-          "topic_score": 0.2857,
-          "slug": "model-translategemma-27b-local-benchmark"
+          "score": 0.845,
+          "topic_score": 0.1,
+          "slug": "runpod-vs-vast-for-local-llm-fallback"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-04-04T03:21:50.362632Z",
+      "queue_date": "2026-04-04",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-04-04/01-multi-gpu-local-llm-roi-calculator-guide.md",
+          "slug": "multi-gpu-local-llm-roi-calculator-guide",
+          "score": 560.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 220,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.845,
+            "topic_score": 0.1,
+            "slug": "runpod-vs-vast-for-local-llm-fallback"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-04-03T03:34:07.070867Z",
       "queue_date": "2026-04-03",
