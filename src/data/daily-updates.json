@@ -1,6 +1,30 @@
 {
   "items": [
     {
+      "date": "2026-04-05",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-04-05",
+          "slug": "model-llama3-3-70b-benchmark-refresh",
+          "title": "llama3.3:70B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "keyword": "llama3.3:70b local inference benchmark update",
+          "score": 200,
+          "source": "opportunity",
+          "landing": "",
+          "draft_path": "content-queue/2026-04-05/01-model-llama3-3-70b-benchmark-refresh.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-llama3-3-70b-benchmark-refresh",
+          "title": "llama3.3:70B Local Benchmark: Throughput, Latency, and VRAM (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-04-05T03:43:36.445952Z"
+    },
+    {
       "date": "2026-04-04",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -978,51 +1002,6 @@
       "published_count": 2,
       "publish_run_at": "2026-02-27T17:17:33.669763Z",
       "publish_noop_run_at": "2026-02-27T17:41:45.886690Z"
-    },
-    {
-      "date": "2026-02-26",
-      "summary": "Agent ranked SEO opportunities and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-02-26",
-          "slug": "q4-vs-q8-quality-loss",
-          "title": "Q4 Vs Q8 Quality Loss Ollama: Practical Guide (2026)",
-          "keyword": "q4 vs q8 quality loss ollama",
-          "score": 360,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-02-26/01-q4-vs-q8-quality-loss.md"
-        },
-        {
-          "date": "2026-02-26",
-          "slug": "ollama-local-cluster-network",
-          "title": "Ollama Local Cluster Network: Practical Guide (2026)",
-          "keyword": "ollama local cluster network",
-          "score": 336,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-02-26/02-ollama-local-cluster-network.md"
-        },
-        {
-          "date": "2026-02-26",
-          "slug": "en-tools-quantization-blind-test",
-          "title": "Q4 Vs Q8 Quality Ollama: Practical Guide (2026)",
-          "keyword": "q4 vs q8 quality ollama",
-          "score": 137,
-          "source": "search_console",
-          "landing": "/en/tools/quantization-blind-test/",
-          "draft_path": "content-queue/2026-02-26/03-en-tools-quantization-blind-test.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "en-tools-quantization-blind-test",
-          "title": "Q4 Vs Q8 Quality Ollama: Practical Guide (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-02-26T07:16:43.382694Z",
-      "publish_noop_run_at": "2026-02-26T08:17:17.529430Z"
     }
   ]
 }
