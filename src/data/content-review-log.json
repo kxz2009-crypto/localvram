@@ -1,18 +1,59 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-09T03:35:29.664097Z",
+  "updated_at": "2026-04-11T03:25:03.760782Z",
   "last_run": {
-    "run_at": "2026-04-09T03:35:29.664097Z",
-    "queue_date": "2026-04-09",
-    "reviewed_count": 0,
-    "auto_approved_count": 0,
+    "run_at": "2026-04-11T03:25:03.760782Z",
+    "queue_date": "2026-04-11",
+    "reviewed_count": 1,
+    "auto_approved_count": 1,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": []
+    "items": [
+      {
+        "draft": "content-queue/2026-04-11/01-model-gemma3-27b-benchmark-refresh.md",
+        "slug": "model-gemma3-27b-benchmark-refresh",
+        "score": 360.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 221,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9508,
+          "topic_score": 0.3333,
+          "slug": "model-translategemma-27b-local-benchmark"
+        }
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-04-11T03:25:03.760782Z",
+      "queue_date": "2026-04-11",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-04-11/01-model-gemma3-27b-benchmark-refresh.md",
+          "slug": "model-gemma3-27b-benchmark-refresh",
+          "score": 360.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 221,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9508,
+            "topic_score": 0.3333,
+            "slug": "model-translategemma-27b-local-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-04-09T03:35:29.664097Z",
       "queue_date": "2026-04-09",

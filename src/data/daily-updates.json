@@ -1,6 +1,30 @@
 {
   "items": [
     {
+      "date": "2026-04-11",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-04-11",
+          "slug": "model-gemma3-27b-benchmark-refresh",
+          "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "keyword": "gemma3:27b local inference benchmark update",
+          "score": 360,
+          "source": "opportunity",
+          "landing": "",
+          "draft_path": "content-queue/2026-04-11/01-model-gemma3-27b-benchmark-refresh.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-gemma3-27b-benchmark-refresh",
+          "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-04-11T03:25:03.836615Z"
+    },
+    {
       "date": "2026-04-09",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -813,54 +837,6 @@
       ],
       "published_count": 2,
       "publish_run_at": "2026-03-04T03:11:22.586808Z"
-    },
-    {
-      "date": "2026-03-03",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-03-03",
-          "slug": "local-llm-customer-support-rag-stack",
-          "title": "Local Llm Customer Support Rag Stack: Practical Guide (2026)",
-          "keyword": "local llm customer support rag stack",
-          "score": 576,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-03/01-local-llm-customer-support-rag-stack.md"
-        },
-        {
-          "date": "2026-03-03",
-          "slug": "ministral-3-14b-local-benchmark-guide",
-          "title": "Ministral 3 14B Local Benchmark: Practical Guide (2026)",
-          "keyword": "ministral 3 14b local benchmark",
-          "score": 576,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-03/02-ministral-3-14b-local-benchmark-guide.md"
-        },
-        {
-          "date": "2026-03-03",
-          "slug": "qwen25-coder-32b-self-host-guide",
-          "title": "Qwen2.5 Coder 32B Self Host Guide: Practical Guide (2026)",
-          "keyword": "qwen2.5 coder 32b self host guide",
-          "score": 576,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-03/03-qwen25-coder-32b-self-host-guide.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "local-llm-customer-support-rag-stack",
-          "title": "Local Llm Customer Support Rag Stack: Practical Guide (2026)"
-        },
-        {
-          "slug": "qwen25-coder-32b-self-host-guide",
-          "title": "Qwen2.5 Coder 32B Self Host Guide: Practical Guide (2026)"
-        }
-      ],
-      "published_count": 2,
-      "publish_run_at": "2026-03-03T11:02:10.531188Z"
     }
   ]
 }

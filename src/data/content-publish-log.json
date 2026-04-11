@@ -1,29 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-09T03:35:29.736198Z",
+  "updated_at": "2026-04-11T03:25:03.836615Z",
   "last_run": {
-    "run_at": "2026-04-09T03:35:29.736198Z",
-    "queue_date": "2026-04-09",
-    "candidate_count": 0,
+    "run_at": "2026-04-11T03:25:03.836615Z",
+    "queue_date": "2026-04-11",
+    "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 1,
+    "fallback_generated_count": 0,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-04-09",
-        "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-04-09-daily-local-llm-benchmark-snapshot-2026-04-09",
-        "score": 120.0,
-        "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-09.md",
+        "slug": "model-gemma3-27b-benchmark-refresh",
+        "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+        "topic_key": "gemma3-27b-local-inference-benchmark-update",
+        "score": 360.0,
+        "source_draft": "content-queue/2026-04-11/01-model-gemma3-27b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-gemma3-27b-benchmark-refresh.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-04-11T03:25:03.836615Z",
+      "queue_date": "2026-04-11",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "model-gemma3-27b-benchmark-refresh",
+          "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "topic_key": "gemma3-27b-local-inference-benchmark-update",
+          "score": 360.0,
+          "source_draft": "content-queue/2026-04-11/01-model-gemma3-27b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-gemma3-27b-benchmark-refresh.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-04-09T03:35:29.736198Z",
       "queue_date": "2026-04-09",
