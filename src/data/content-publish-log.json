@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-15T03:48:41.710931Z",
+  "updated_at": "2026-04-16T03:55:15.219843Z",
   "last_run": {
-    "run_at": "2026-04-15T03:48:41.710931Z",
-    "queue_date": "2026-04-15",
+    "run_at": "2026-04-16T03:55:15.219843Z",
+    "queue_date": "2026-04-16",
     "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "model-qwen3-5-35b-benchmark-refresh",
-        "title": "qwen3.5:35B Local Benchmark: Throughput, Latency, and VRAM (2026)",
-        "topic_key": "qwen3-5-35b-local-inference-benchmark-update",
-        "score": 360.0,
-        "source_draft": "content-queue/2026-04-15/01-model-qwen3-5-35b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-qwen3-5-35b-benchmark-refresh.md",
-        "intent": "benchmark"
+        "slug": "en-models-llama-70b-q4",
+        "title": "Llama 70B On 3090: Step-by-Step Deployment Workflow (2026)",
+        "topic_key": "llama-70b-on-3090",
+        "score": 300.0,
+        "source_draft": "content-queue/2026-04-16/01-en-models-llama-70b-q4.md",
+        "out_file": "src/content/blog/en-models-llama-70b-q4.md",
+        "intent": "guide"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-04-16T03:55:15.219843Z",
+      "queue_date": "2026-04-16",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "en-models-llama-70b-q4",
+          "title": "Llama 70B On 3090: Step-by-Step Deployment Workflow (2026)",
+          "topic_key": "llama-70b-on-3090",
+          "score": 300.0,
+          "source_draft": "content-queue/2026-04-16/01-en-models-llama-70b-q4.md",
+          "out_file": "src/content/blog/en-models-llama-70b-q4.md",
+          "intent": "guide"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-04-15T03:48:41.710931Z",
       "queue_date": "2026-04-15",
