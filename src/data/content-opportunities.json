@@ -1,30 +1,30 @@
 {
-  "updated_at": "2026-04-10T04:32:52.762152Z",
+  "updated_at": "2026-04-17T04:35:49.112845Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-04-17T00:00:00Z",
+    "next_refresh_at": "2026-04-24T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-04-10T04:32:52.762152Z",
+    "last_refresh_at": "2026-04-17T04:35:49.112845Z",
     "last_refresh_summary": {
       "incoming_count": 2,
       "removed_count": 2,
       "incoming_topic_keys": [
-        "mistral-small-22b-local-inference-benchmark-update",
-        "runpod-a100-ollama"
-      ],
-      "removed_topic_keys": [
-        "llama3-3-70b-local-inference-benchmark-update",
+        "llama4-16x17b-local-inference-benchmark-update",
         "qwen3-5-122b-local-inference-benchmark-update"
       ],
-      "blocked_recent_topic_count": 70
+      "removed_topic_keys": [
+        "glm-4-7-flash-bf16-local-inference-benchmark-update",
+        "llama-70b-on-3090"
+      ],
+      "blocked_recent_topic_count": 66
     }
   },
   "items": [
@@ -197,13 +197,6 @@
       "freshness_gap_score": 10
     },
     {
-      "slug": "en-models-llama-70b-q4",
-      "keyword": "llama 70b on 3090",
-      "search_intent_score": 3,
-      "commercial_intent_score": 10,
-      "freshness_gap_score": 10
-    },
-    {
       "slug": "en-affiliate-cloud-gpu",
       "keyword": "runpod a100 ollama",
       "search_intent_score": 5,
@@ -225,18 +218,25 @@
       "freshness_gap_score": 8
     },
     {
-      "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
-      "keyword": "glm-4.7-flash:bf16 local inference benchmark update",
-      "search_intent_score": 4,
-      "commercial_intent_score": 5,
-      "freshness_gap_score": 7
-    },
-    {
       "slug": "model-mistral-small-22b-benchmark-refresh",
       "keyword": "mistral-small:22b local inference benchmark update",
       "search_intent_score": 4,
       "commercial_intent_score": 5,
       "freshness_gap_score": 7
+    },
+    {
+      "slug": "model-llama4-16x17b-benchmark-refresh",
+      "keyword": "llama4:16x17b local inference benchmark update",
+      "search_intent_score": 4,
+      "commercial_intent_score": 5,
+      "freshness_gap_score": 6
+    },
+    {
+      "slug": "model-qwen3-5-122b-benchmark-refresh",
+      "keyword": "qwen3.5:122b local inference benchmark update",
+      "search_intent_score": 4,
+      "commercial_intent_score": 5,
+      "freshness_gap_score": 5
     }
   ]
 }
