@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-16T03:55:15.149634Z",
+  "updated_at": "2026-04-17T03:52:22.144589Z",
   "last_run": {
-    "run_at": "2026-04-16T03:55:15.149634Z",
-    "queue_date": "2026-04-16",
+    "run_at": "2026-04-17T03:52:22.144589Z",
+    "queue_date": "2026-04-17",
     "reviewed_count": 1,
     "auto_approved_count": 1,
     "pending_manual_review_count": 0,
@@ -12,22 +12,48 @@
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-04-16/01-en-models-llama-70b-q4.md",
-        "slug": "en-models-llama-70b-q4",
-        "score": 300.0,
+        "draft": "content-queue/2026-04-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
+        "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+        "score": 140.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 217,
+        "word_count": 224,
         "risk_flags": [],
         "similarity": {
-          "score": 0.9262,
-          "topic_score": 0.0625,
-          "slug": "runpod-vs-vast-for-local-llm-fallback"
+          "score": 0.9667,
+          "topic_score": 0.3571,
+          "slug": "ministral-3-14b-local-benchmark-guide"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-04-17T03:52:22.144589Z",
+      "queue_date": "2026-04-17",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-04-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
+          "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+          "score": 140.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 224,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9667,
+            "topic_score": 0.3571,
+            "slug": "ministral-3-14b-local-benchmark-guide"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-04-16T03:55:15.149634Z",
       "queue_date": "2026-04-16",

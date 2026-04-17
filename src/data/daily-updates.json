@@ -1,6 +1,30 @@
 {
   "items": [
     {
+      "date": "2026-04-17",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-04-17",
+          "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+          "title": "glm-4.7-flash:bf16: Local Inference Performance Report (2026)",
+          "keyword": "glm-4.7-flash:bf16 local inference benchmark update",
+          "score": 140,
+          "source": "opportunity",
+          "landing": "",
+          "draft_path": "content-queue/2026-04-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+          "title": "glm-4.7-flash:bf16: Local Inference Performance Report (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-04-17T03:52:22.207000Z"
+    },
+    {
       "date": "2026-04-16",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -636,54 +660,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-03-18T03:25:59.409152Z"
-    },
-    {
-      "date": "2026-03-17",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-03-17",
-          "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
-          "title": "glm-4.7-flash:bf16 Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "glm-4.7-flash:bf16 local inference benchmark update",
-          "score": 140,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md"
-        },
-        {
-          "date": "2026-03-17",
-          "slug": "model-gpt-oss-20b-local-benchmark",
-          "title": "gpt-oss:20B: Local Inference Performance Report (2026)",
-          "keyword": "gpt-oss:20b local inference benchmark",
-          "score": 900,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "draft_path": "content-queue/2026-03-17/02-model-gpt-oss-20b-local-benchmark.md"
-        },
-        {
-          "date": "2026-03-17",
-          "slug": "model-deepseek-r1-14b-local-benchmark",
-          "title": "deepseek-r1:14B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "deepseek-r1:14b local inference benchmark",
-          "score": 576,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "draft_path": "content-queue/2026-03-17/03-model-deepseek-r1-14b-local-benchmark.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "model-gpt-oss-20b-local-benchmark",
-          "title": "gpt-oss:20B: Local Inference Performance Report (2026)"
-        },
-        {
-          "slug": "model-deepseek-r1-14b-local-benchmark",
-          "title": "deepseek-r1:14B Benchmark Results: Local GPU Throughput Breakdown (2026)"
-        }
-      ],
-      "published_count": 2,
-      "publish_run_at": "2026-03-17T09:56:42.305477Z"
     }
   ]
 }
