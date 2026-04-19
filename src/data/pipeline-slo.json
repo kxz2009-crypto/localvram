@@ -1,8 +1,8 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-18T03:36:52Z",
+  "updated_at": "2026-04-19T03:56:13Z",
   "target_success_rate": 95.0,
-  "reference_time": "2026-04-18T03:36:52Z",
+  "reference_time": "2026-04-19T03:56:13Z",
   "pipeline_slo_met": false,
   "workflow_keys": [
     "weekly_benchmark",
@@ -17,14 +17,14 @@
       "latest_updated_at": "2026-04-01T12:12:03Z",
       "latest_run_id": "23847036045",
       "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/23847036045",
-      "current_success_streak": 6,
+      "current_success_streak": 5,
       "last_success_at": "2026-04-01T12:12:03Z",
       "last_failure_at": "",
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-04-11T03:36:52Z",
-          "window_end": "2026-04-18T03:36:52Z",
+          "window_start": "2026-04-12T03:56:13Z",
+          "window_end": "2026-04-19T03:56:13Z",
           "total_runs": 0,
           "success_runs": 0,
           "failure_runs": 0,
@@ -42,8 +42,8 @@
         },
         "28": {
           "window_days": 28,
-          "window_start": "2026-03-21T03:36:52Z",
-          "window_end": "2026-04-18T03:36:52Z",
+          "window_start": "2026-03-22T03:56:13Z",
+          "window_end": "2026-04-19T03:56:13Z",
           "total_runs": 1,
           "success_runs": 1,
           "failure_runs": 0,
@@ -64,18 +64,18 @@
     "daily_content": {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
-      "latest_conclusion": "failure",
-      "latest_updated_at": "2026-04-18T03:36:52Z",
-      "latest_run_id": "24596042412",
-      "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/24596042412",
-      "current_success_streak": 0,
-      "last_success_at": "2026-04-17T03:52:40Z",
+      "latest_conclusion": "success",
+      "latest_updated_at": "2026-04-19T03:56:13Z",
+      "latest_run_id": "24620441790",
+      "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/24620441790",
+      "current_success_streak": 1,
+      "last_success_at": "2026-04-19T03:56:13Z",
       "last_failure_at": "2026-04-18T03:36:52Z",
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-04-11T03:36:52Z",
-          "window_end": "2026-04-18T03:36:52Z",
+          "window_start": "2026-04-12T03:56:13Z",
+          "window_end": "2026-04-19T03:56:13Z",
           "total_runs": 7,
           "success_runs": 6,
           "failure_runs": 1,
@@ -101,8 +101,8 @@
         },
         "28": {
           "window_days": 28,
-          "window_start": "2026-03-21T03:36:52Z",
-          "window_end": "2026-04-18T03:36:52Z",
+          "window_start": "2026-03-22T03:56:13Z",
+          "window_end": "2026-04-19T03:56:13Z",
           "total_runs": 28,
           "success_runs": 26,
           "failure_runs": 2,
@@ -141,8 +141,8 @@
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-04-11T03:36:52Z",
-          "window_end": "2026-04-18T03:36:52Z",
+          "window_start": "2026-04-12T03:56:13Z",
+          "window_end": "2026-04-19T03:56:13Z",
           "total_runs": 0,
           "success_runs": 0,
           "failure_runs": 0,
@@ -160,8 +160,8 @@
         },
         "28": {
           "window_days": 28,
-          "window_start": "2026-03-21T03:36:52Z",
-          "window_end": "2026-04-18T03:36:52Z",
+          "window_start": "2026-03-22T03:56:13Z",
+          "window_end": "2026-04-19T03:56:13Z",
           "total_runs": 1,
           "success_runs": 1,
           "failure_runs": 0,
@@ -182,8 +182,8 @@
   },
   "weekly_report": {
     "window_days": 7,
-    "window_start": "2026-04-11T03:36:52Z",
-    "window_end": "2026-04-18T03:36:52Z",
+    "window_start": "2026-04-12T03:56:13Z",
+    "window_end": "2026-04-19T03:56:13Z",
     "summary_lines": [
       "Weekly Benchmark: 0/0 (0.0%), top failure=none",
       "Daily Content Agent: 6/7 (85.71%), top failure=daily_content_failed",
@@ -192,8 +192,8 @@
   },
   "failure_recommendations": {
     "window_days": 28,
-    "window_start": "2026-03-21T03:36:52Z",
-    "window_end": "2026-04-18T03:36:52Z",
+    "window_start": "2026-03-22T03:56:13Z",
+    "window_end": "2026-04-19T03:56:13Z",
     "global_top_failures": [
       {
         "failure_class": "daily_content_failed",
