@@ -1,33 +1,115 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-17T03:52:22.144589Z",
+  "updated_at": "2026-04-19T03:55:42.759867Z",
   "last_run": {
-    "run_at": "2026-04-17T03:52:22.144589Z",
-    "queue_date": "2026-04-17",
-    "reviewed_count": 1,
-    "auto_approved_count": 1,
+    "run_at": "2026-04-19T03:55:42.759867Z",
+    "queue_date": "2026-04-19",
+    "reviewed_count": 3,
+    "auto_approved_count": 3,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-04-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
-        "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
-        "score": 140.0,
+        "draft": "content-queue/2026-04-19/01-en-blog-best-local-rag-models-2026.md",
+        "slug": "en-blog-best-local-rag-models-2026",
+        "score": 192.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 224,
+        "word_count": 217,
         "risk_flags": [],
         "similarity": {
-          "score": 0.9667,
-          "topic_score": 0.3571,
+          "score": 0.9504,
+          "topic_score": 0.4167,
+          "slug": "en-models-llama-70b-q4"
+        }
+      },
+      {
+        "draft": "content-queue/2026-04-19/02-model-ministral-3-14b-local-benchmark.md",
+        "slug": "model-ministral-3-14b-local-benchmark",
+        "score": 192.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 221,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9914,
+          "topic_score": 0.4167,
+          "slug": "ministral-3-14b-local-benchmark-guide"
+        }
+      },
+      {
+        "draft": "content-queue/2026-04-19/03-model-qwen2-5-14b-local-benchmark.md",
+        "slug": "model-qwen2-5-14b-local-benchmark",
+        "score": 168.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 221,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9829,
+          "topic_score": 0.3077,
           "slug": "ministral-3-14b-local-benchmark-guide"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-04-19T03:55:42.759867Z",
+      "queue_date": "2026-04-19",
+      "reviewed_count": 3,
+      "auto_approved_count": 3,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-04-19/01-en-blog-best-local-rag-models-2026.md",
+          "slug": "en-blog-best-local-rag-models-2026",
+          "score": 192.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 217,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9504,
+            "topic_score": 0.4167,
+            "slug": "en-models-llama-70b-q4"
+          }
+        },
+        {
+          "draft": "content-queue/2026-04-19/02-model-ministral-3-14b-local-benchmark.md",
+          "slug": "model-ministral-3-14b-local-benchmark",
+          "score": 192.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 221,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9914,
+            "topic_score": 0.4167,
+            "slug": "ministral-3-14b-local-benchmark-guide"
+          }
+        },
+        {
+          "draft": "content-queue/2026-04-19/03-model-qwen2-5-14b-local-benchmark.md",
+          "slug": "model-qwen2-5-14b-local-benchmark",
+          "score": 168.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 221,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9829,
+            "topic_score": 0.3077,
+            "slug": "ministral-3-14b-local-benchmark-guide"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-04-17T03:52:22.144589Z",
       "queue_date": "2026-04-17",

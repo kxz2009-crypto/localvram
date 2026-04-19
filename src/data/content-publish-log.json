@@ -1,29 +1,79 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-17T03:52:22.207000Z",
+  "updated_at": "2026-04-19T03:55:42.829701Z",
   "last_run": {
-    "run_at": "2026-04-17T03:52:22.207000Z",
-    "queue_date": "2026-04-17",
-    "candidate_count": 1,
+    "run_at": "2026-04-19T03:55:42.829701Z",
+    "queue_date": "2026-04-19",
+    "candidate_count": 3,
     "min_publish": 1,
     "max_publish": 2,
-    "published_count": 1,
+    "published_count": 2,
     "fallback_generated_count": 0,
-    "skipped_count": 0,
+    "skipped_count": 1,
     "published": [
       {
-        "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
-        "title": "glm-4.7-flash:bf16: Local Inference Performance Report (2026)",
-        "topic_key": "glm-4-7-flash-bf16-local-inference-benchmark-update",
-        "score": 140.0,
-        "source_draft": "content-queue/2026-04-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-glm-4-7-flash-bf16-benchmark-refresh.md",
+        "slug": "model-ministral-3-14b-local-benchmark",
+        "title": "ministral-3:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+        "topic_key": "ministral-3-14b-local-inference-benchmark",
+        "score": 192.0,
+        "source_draft": "content-queue/2026-04-19/02-model-ministral-3-14b-local-benchmark.md",
+        "out_file": "src/content/blog/model-ministral-3-14b-local-benchmark.md",
+        "intent": "benchmark"
+      },
+      {
+        "slug": "model-qwen2-5-14b-local-benchmark",
+        "title": "qwen2.5:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+        "topic_key": "qwen2-5-14b-local-inference-benchmark",
+        "score": 168.0,
+        "source_draft": "content-queue/2026-04-19/03-model-qwen2-5-14b-local-benchmark.md",
+        "out_file": "src/content/blog/model-qwen2-5-14b-local-benchmark.md",
         "intent": "benchmark"
       }
     ],
-    "skipped": []
+    "skipped": [
+      {
+        "draft": "content-queue/2026-04-19/01-en-blog-best-local-rag-models-2026.md",
+        "reason": "similar_slug:best-local-rag-models-2026"
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-04-19T03:55:42.829701Z",
+      "queue_date": "2026-04-19",
+      "candidate_count": 3,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "model-ministral-3-14b-local-benchmark",
+          "title": "ministral-3:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "topic_key": "ministral-3-14b-local-inference-benchmark",
+          "score": 192.0,
+          "source_draft": "content-queue/2026-04-19/02-model-ministral-3-14b-local-benchmark.md",
+          "out_file": "src/content/blog/model-ministral-3-14b-local-benchmark.md",
+          "intent": "benchmark"
+        },
+        {
+          "slug": "model-qwen2-5-14b-local-benchmark",
+          "title": "qwen2.5:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "topic_key": "qwen2-5-14b-local-inference-benchmark",
+          "score": 168.0,
+          "source_draft": "content-queue/2026-04-19/03-model-qwen2-5-14b-local-benchmark.md",
+          "out_file": "src/content/blog/model-qwen2-5-14b-local-benchmark.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-04-19/01-en-blog-best-local-rag-models-2026.md",
+          "reason": "similar_slug:best-local-rag-models-2026"
+        }
+      ]
+    },
     {
       "run_at": "2026-04-17T03:52:22.207000Z",
       "queue_date": "2026-04-17",
