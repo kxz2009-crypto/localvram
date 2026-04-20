@@ -1,6 +1,19 @@
 {
   "items": [
     {
+      "date": "2026-04-20",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [],
+      "published_posts": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-04-20",
+          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-04-20T03:58:31.416357Z"
+    },
+    {
       "date": "2026-04-19",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -616,54 +629,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-03-20T03:16:12.971915Z"
-    },
-    {
-      "date": "2026-03-19",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-03-19",
-          "slug": "model-nemotron-3-nano-30b-local-benchmark",
-          "title": "nemotron-3-nano:30B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "nemotron-3-nano:30b local inference benchmark",
-          "score": 343,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "draft_path": "content-queue/2026-03-19/01-model-nemotron-3-nano-30b-local-benchmark.md"
-        },
-        {
-          "date": "2026-03-19",
-          "slug": "model-qwen2-5-coder-32b-local-benchmark",
-          "title": "qwen2.5-coder:32B: Local Inference Performance Report (2026)",
-          "keyword": "qwen2.5-coder:32b local inference benchmark",
-          "score": 210,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "draft_path": "content-queue/2026-03-19/02-model-qwen2-5-coder-32b-local-benchmark.md"
-        },
-        {
-          "date": "2026-03-19",
-          "slug": "model-qwen2-5-14b-local-benchmark",
-          "title": "qwen2.5:14B: Local Inference Performance Report (2026)",
-          "keyword": "qwen2.5:14b local inference benchmark",
-          "score": 192,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "draft_path": "content-queue/2026-03-19/03-model-qwen2-5-14b-local-benchmark.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "model-nemotron-3-nano-30b-local-benchmark",
-          "title": "nemotron-3-nano:30B Benchmark Results: Local GPU Throughput Breakdown (2026)"
-        },
-        {
-          "slug": "model-qwen2-5-coder-32b-local-benchmark",
-          "title": "qwen2.5-coder:32B: Local Inference Performance Report (2026)"
-        }
-      ],
-      "published_count": 2,
-      "publish_run_at": "2026-03-19T03:26:39.884165Z"
     }
   ]
 }
