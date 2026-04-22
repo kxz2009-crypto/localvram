@@ -1,6 +1,19 @@
 {
   "items": [
     {
+      "date": "2026-04-22",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [],
+      "published_posts": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-04-22",
+          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-04-22T03:48:13.999596Z"
+    },
+    {
       "date": "2026-04-20",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -605,30 +618,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-03-21T03:07:30.596400Z"
-    },
-    {
-      "date": "2026-03-20",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-03-20",
-          "slug": "model-qwen3-5-35b-local-benchmark",
-          "title": "qwen3.5:35B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "qwen3.5:35b local inference benchmark",
-          "score": 150,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "draft_path": "content-queue/2026-03-20/01-model-qwen3-5-35b-local-benchmark.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-03-20",
-          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-03-20T03:16:12.971915Z"
     }
   ]
 }
