@@ -16,13 +16,14 @@ from logging_utils import configure_logging
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_TARGETS = (
     "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,"
+    "qwen3.6=96,"
     "llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,"
-    "gemma3=96,llama4=64,qwq=96"
+    "gemma3=96,gemma4=96,llama4=64,qwq=96"
 )
 DEFAULT_RETRY_DELAYS = "5,10,20"
 DEFAULT_PRIORITY_FAMILIES = (
-    "qwen3.5,qwen3,deepseek-r1,qwen2.5,qwen3-coder,llama3.3,qwen2.5-coder,"
-    "ministral-3,gpt-oss,mistral-small,gemma3,llama4,qwq"
+    "qwen3.6,qwen3.5,qwen3,deepseek-r1,qwen2.5,qwen3-coder,llama3.3,qwen2.5-coder,"
+    "ministral-3,gpt-oss,mistral-small,gemma3,gemma4,llama4,qwq"
 )
 DEFAULT_RETIRED_POLICY_FILE = "src/data/retired-models.json"
 DEFAULT_EXCLUDE_FAMILIES = (
