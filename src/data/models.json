@@ -1,6 +1,6 @@
 {
   "version": "2026.02.24.ollama-popular",
-  "count": 565,
+  "count": 569,
   "models": [
     {
       "id": "llama31-8b-q4",
@@ -4485,6 +4485,38 @@
     {
       "id": "nemotron-3-nano-30b-fp16",
       "name": "Nemotron 3 Nano 30B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": true
+    },
+    {
+      "id": "qwen36-35b-q4",
+      "name": "Qwen3.6 35B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": true
+    },
+    {
+      "id": "qwen36-35b-q5",
+      "name": "Qwen3.6 35B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": true
+    },
+    {
+      "id": "qwen36-35b-q8",
+      "name": "Qwen3.6 35B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": true
+    },
+    {
+      "id": "qwen36-35b-fp16",
+      "name": "Qwen3.6 35B FP16",
       "quantizations": [
         "FP16"
       ],

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-01T11:53:49Z",
+  "updated_at": "2026-04-24T05:40:00Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -7,6 +7,7 @@
     "qwen2.5",
     "qwen3-coder",
     "qwen3.5",
+    "qwen3.6",
     "llama3.3",
     "qwen2.5-coder",
     "ministral-3",
@@ -14,9 +15,7 @@
     "mistral-small",
     "gemma3",
     "llama4",
-    "qwq",
-    "translategemma",
-    "nemotron-3-nano"
+    "qwq"
   ],
   "retry_delays_s": [
     5.0,
@@ -25,7 +24,7 @@
   ],
   "port": 11435,
   "env": {
-    "runner_name": "3090-WSL2-V2",
+    "runner_name": "localvram-wsl-d01",
     "runner_os": "Linux",
     "runner_arch": "X64",
     "hostname": "",
@@ -33,10 +32,10 @@
     "OLLAMA_HOST": "http://127.0.0.1:11435",
     "LV_OLLAMA_ENDPOINT": "http://127.0.0.1:11435",
     "OLLAMA_MODELS": "/mnt/d/Ollama",
-    "HTTP_PROXY": "http://127.0.0.1:7897",
-    "HTTPS_PROXY": "http://127.0.0.1:7897",
+    "HTTP_PROXY": "",
+    "HTTPS_PROXY": "",
     "ALL_PROXY": "",
-    "NO_PROXY": "172.31.*,172.30.*,172.29.*,172.28.*,172.27.*,172.26.*,172.25.*,172.24.*,172.23.*,172.22.*,172.21.*,172.20.*,172.19.*,172.18.*,172.17.*,172.16.*,10.*,192.168.*,127.*,localhost,<local>"
+    "NO_PROXY": ""
   },
   "commands": {
     "WHOAMI": {
@@ -60,92 +59,46 @@
       "stderr": ""
     },
     "OLLAMA_VERSION": {
-      "exit": 0,
-      "stdout": "ollama version is 0.17.7",
-      "stderr": ""
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Command '['ollama', '--version']' timed out after 12 seconds"
     }
   },
   "checks": {
-    "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=51225,fd=3))"
-    ],
-    "ps_ollama": [
-      "gao20      51225   50465  0 19:44 pts/2    00:00:00 ollama serve"
-    ],
+    "port_listeners": [],
+    "ps_ollama": [],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
-      "ollama_serve_process_count": 1,
-      "failure_class": "none",
-      "failure_detail": ""
+      "ollama_serve_process_count": 0,
+      "failure_class": "ollama_instance_unmanaged",
+      "failure_detail": "no local 'ollama serve' process detected for loopback endpoint"
     },
     "SYSTEMD_OLLAMA_IS_ACTIVE": {
       "exit": 3,
-      "stdout": "activating",
+      "stdout": "inactive",
       "stderr": ""
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 3,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: activating (auto-restart) (Result: exit-code) since Wed 2026-04-01 19:53:48 CST; 708ms ago\n    Process: 53192 ExecStart=/usr/local/bin/ollama serve (code=exited, status=1/FAILURE)\n   Main PID: 53192 (code=exited, status=1/FAILURE)\n        CPU: 13ms",
-      "stderr": ""
+      "stdout": "○ ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; disabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: inactive (dead)",
+      "stderr": "Warning: The unit file, source configuration file or drop-ins of ollama.service changed on disk. Run 'systemctl daemon-reload' to reload units."
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
-      "stdout": "UNIT                                                         LOAD   ACTIVE   SUB    DESCRIPTION\n● actions.runner.kxz2009-crypto-localvram.3090-WSL2-V2.service loaded failed   failed GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2-V2)\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service    loaded inactive dead   GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n  actions.runner.kxz2009-crypto-localvram.Vernon.service       loaded inactive dead   GitHub Actions Runner (kxz2009-crypto-localvram.Vernon)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n3 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
+      "stdout": "UNIT                                                              LOAD   ACTIVE   SUB     DESCRIPTION\n● actions.runner.kxz2009-crypto-localvram.3090-WSL2-V2.service      loaded failed   failed  GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2-V2)\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service         loaded inactive dead    GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n  actions.runner.kxz2009-crypto-localvram.localvram-wsl-d01.service loaded active   running GitHub Actions Runner (kxz2009-crypto-localvram.localvram-wsl-d01)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n3 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
       "stderr": ""
     }
   },
   "api": {
-    "version": {
-      "version": "0.17.7"
-    },
-    "tags": {
-      "model_count": 43,
-      "sample": [
-        "bge-m3:latest",
-        "deepseek-ocr:3b-bf16",
-        "deepseek-r1:14b",
-        "deepseek-r1:32b",
-        "deepseek-r1:70b",
-        "gemma3:27b",
-        "glm-4.7-flash:bf16",
-        "glm-4.7-flash:q8_0",
-        "glm-5:cloud",
-        "gpt-oss:20b",
-        "llama3.2-vision:11b",
-        "llama3.3:70b-instruct-q4_k_m",
-        "llama3.3:latest",
-        "llama4:latest",
-        "minimax-m2.5:cloud",
-        "ministral-3:14b",
-        "mistral-small:22b",
-        "nemotron-3-nano:30b",
-        "olmo-3.1:32b-instruct",
-        "olmo-3.1:32b-think"
-      ]
-    }
+    "version_error": "<urlopen error timed out>",
+    "tags_error": "<urlopen error timed out>"
   },
   "summary": {
-    "model_count": 43,
-    "required_targets_count": 15,
-    "required_targets_runnable_count": 15,
-    "required_targets_runnable": [
-      "qwen3",
-      "deepseek-r1",
-      "qwen2.5",
-      "qwen3-coder",
-      "qwen3.5",
-      "llama3.3",
-      "qwen2.5-coder",
-      "ministral-3",
-      "gpt-oss",
-      "mistral-small",
-      "gemma3",
-      "llama4",
-      "qwq",
-      "translategemma",
-      "nemotron-3-nano"
-    ],
-    "failure_class": "none",
-    "failure_detail": ""
+    "model_count": 0,
+    "required_targets_count": 14,
+    "required_targets_runnable_count": 0,
+    "required_targets_runnable": [],
+    "failure_class": "ollama_instance_unmanaged",
+    "failure_detail": "no local 'ollama serve' process detected for loopback endpoint"
   }
 }
