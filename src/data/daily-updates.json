@@ -1,6 +1,54 @@
 {
   "items": [
     {
+      "date": "2026-04-25",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-04-25",
+          "slug": "model-qwen3-6-35b-local-benchmark",
+          "title": "qwen3.6:35B: Local Inference Performance Report (2026)",
+          "keyword": "qwen3.6:35b local inference benchmark",
+          "score": 250,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-04-25/01-model-qwen3-6-35b-local-benchmark.md"
+        },
+        {
+          "date": "2026-04-25",
+          "slug": "model-qwen3-5-35b-local-benchmark",
+          "title": "qwen3.5:35B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "keyword": "qwen3.5:35b local inference benchmark",
+          "score": 200,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-04-25/02-model-qwen3-5-35b-local-benchmark.md"
+        },
+        {
+          "date": "2026-04-25",
+          "slug": "model-llama3-3-70b-local-benchmark",
+          "title": "llama3.3:70B: Local Inference Performance Report (2026)",
+          "keyword": "llama3.3:70b local inference benchmark",
+          "score": 160,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "draft_path": "content-queue/2026-04-25/03-model-llama3-3-70b-local-benchmark.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-qwen3-6-35b-local-benchmark",
+          "title": "qwen3.6:35B: Local Inference Performance Report (2026)"
+        },
+        {
+          "slug": "model-qwen3-5-35b-local-benchmark",
+          "title": "qwen3.5:35B Benchmark Results: Local GPU Throughput Breakdown (2026)"
+        }
+      ],
+      "published_count": 2,
+      "publish_run_at": "2026-04-25T03:40:40.162812Z"
+    },
+    {
       "date": "2026-04-24",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -605,19 +653,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-03-24T03:19:37.954839Z"
-    },
-    {
-      "date": "2026-03-23",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-03-23",
-          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-03-23T03:31:28.329209Z"
     }
   ]
 }
