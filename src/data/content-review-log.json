@@ -1,61 +1,29 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-25T03:40:40.092768Z",
+  "updated_at": "2026-04-26T04:03:11.012116Z",
   "last_run": {
-    "run_at": "2026-04-25T03:40:40.092768Z",
-    "queue_date": "2026-04-25",
-    "reviewed_count": 3,
-    "auto_approved_count": 3,
+    "run_at": "2026-04-26T04:03:11.012116Z",
+    "queue_date": "2026-04-26",
+    "reviewed_count": 0,
+    "auto_approved_count": 0,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": [
-      {
-        "draft": "content-queue/2026-04-25/01-model-qwen3-6-35b-local-benchmark.md",
-        "slug": "model-qwen3-6-35b-local-benchmark",
-        "score": 250.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 221,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.8672,
-          "topic_score": 0.5455,
-          "slug": "model-gpt-oss-20b-local-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-25/02-model-qwen3-5-35b-local-benchmark.md",
-        "slug": "model-qwen3-5-35b-local-benchmark",
-        "score": 200.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 221,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.8561,
-          "topic_score": 0.6667,
-          "slug": "model-qwen3-5-122b-benchmark-refresh"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-25/03-model-llama3-3-70b-local-benchmark.md",
-        "slug": "model-llama3-3-70b-local-benchmark",
-        "score": 160.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 221,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.8605,
-          "topic_score": 0.5455,
-          "slug": "model-gpt-oss-20b-local-benchmark"
-        }
-      }
-    ]
+    "items": []
   },
   "history": [
+    {
+      "run_at": "2026-04-26T04:03:11.012116Z",
+      "queue_date": "2026-04-26",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-04-25T03:40:40.092768Z",
       "queue_date": "2026-04-25",
