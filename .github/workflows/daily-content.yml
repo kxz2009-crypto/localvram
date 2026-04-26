@@ -186,7 +186,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/data/affiliate-click-events.json src/content/blog src/content/blog-i18n/zh public/sitemap.xml public/sitemap-*.xml content-queue
+          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/data/affiliate-click-events.json src/data/i18n-blog-copy.json src/content/blog src/content/blog-i18n/zh public/sitemap.xml public/sitemap-*.xml content-queue
 
           if git diff --cached --quiet; then
             echo "daily_publish_result=no_changes"
