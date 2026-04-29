@@ -44,6 +44,15 @@ jobs:
         if: always() && steps.checkout.conclusion == 'success'
         run: mkdir -p logs
 
+      - name: Build new model content watchlist
+        if: steps.checkout.conclusion == 'success'
+        run: |
+          if ! python scripts/build-new-model-watchlist.py; then
+            python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'build-new-model-watchlist.py failed'}, ensure_ascii=False), encoding='utf-8')"
+            echo "::error title=FailureClass::daily_content_failed - build-new-model-watchlist.py failed"
+            exit 1
+          fi
+
       - name: Run content agent
         if: steps.checkout.conclusion == 'success'
         run: |
@@ -186,7 +195,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/data/affiliate-click-events.json src/data/i18n-blog-copy.json src/content/blog src/content/blog-i18n/zh public/sitemap.xml public/sitemap-*.xml content-queue
+          git add src/data/daily-updates.json src/data/daily-content-drafts.json src/data/new-model-watchlist.json src/data/content-publish-log.json src/data/content-review-log.json src/data/pipeline-slo.json src/data/pipeline-status.json src/data/models.json src/data/model-catalog.json src/data/conversion-funnel.json src/data/submission-review.json src/data/affiliate-click-events.json src/data/i18n-blog-copy.json src/content/blog src/content/blog-i18n/zh public/sitemap.xml public/sitemap-*.xml content-queue
 
           if git diff --cached --quiet; then
             echo "daily_publish_result=no_changes"

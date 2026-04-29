@@ -73,6 +73,23 @@ class ContentStrategyTests(unittest.TestCase):
         self.assertIn("RTX 3090 decision matrix", body)
         self.assertIn("Who should skip it", body)
 
+    def test_watchlist_item_becomes_high_score_daily_candidate(self):
+        agent = load_script("daily-content-agent")
+        candidate = agent.candidate_from_new_model_watchlist(
+            {
+                "tag": "gpt-oss:20b",
+                "keyword": "gpt-oss:20b rtx 3090 ollama benchmark",
+                "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
+                "landing": "/en/models/gpt-oss-20b/",
+                "priority_score": 96,
+            }
+        )
+
+        self.assertEqual(candidate["source"], "new_model_watchlist")
+        self.assertEqual(candidate["landing"], "/en/models/gpt-oss-20b/")
+        self.assertEqual(candidate["tag"], "gpt-oss:20b")
+        self.assertGreaterEqual(agent.score_with_boost(candidate), 900)
+
 
 if __name__ == "__main__":
     unittest.main()

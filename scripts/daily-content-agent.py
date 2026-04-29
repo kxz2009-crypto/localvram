@@ -15,6 +15,7 @@ SC_FILE = ROOT / "src" / "data" / "search-console-keywords.json"
 UPDATES_FILE = ROOT / "src" / "data" / "daily-updates.json"
 DRAFT_INDEX_FILE = ROOT / "src" / "data" / "daily-content-drafts.json"
 BENCHMARK_FILE = ROOT / "src" / "data" / "benchmark-results.json"
+NEW_MODEL_WATCHLIST_FILE = ROOT / "src" / "data" / "new-model-watchlist.json"
 AFFILIATE_LINKS_FILE = ROOT / "src" / "data" / "affiliate-links.json"
 PUBLISH_LOG_FILE = ROOT / "src" / "data" / "content-publish-log.json"
 BLOG_DIR = ROOT / "src" / "content" / "blog"
@@ -190,6 +191,29 @@ def candidate_from_sc(item: dict[str, Any]) -> dict[str, Any]:
         "clicks": int(item.get("clicks", 0)),
         "ctr": float(item.get("ctr", 0)),
         "source": "search_console",
+    }
+
+
+def candidate_from_new_model_watchlist(item: dict[str, Any]) -> dict[str, Any]:
+    tag = str(item.get("tag", "")).strip()
+    keyword = str(item.get("keyword", "")).strip() or f"{tag} rtx 3090 ollama benchmark"
+    try:
+        raw_priority = int(item.get("priority_score", 70))
+    except (TypeError, ValueError):
+        raw_priority = 70
+    priority = min(10, max(7, raw_priority // 10))
+    return {
+        "slug": str(item.get("slug", "")).strip() or f"model-{slugify(tag.replace(':', '-'))}-rtx-3090-ollama-benchmark",
+        "keyword": keyword,
+        "landing": str(item.get("landing", "/en/models/")).strip() or "/en/models/",
+        "search_intent_score": priority,
+        "commercial_intent_score": min(10, priority + 1),
+        "freshness_gap_score": 10,
+        "clicks": 0,
+        "ctr": 0.0,
+        "source": "new_model_watchlist",
+        "tag": tag,
+        "watchlist_priority_score": raw_priority,
     }
 
 
@@ -523,8 +547,16 @@ def main() -> None:
     sc_rows = [candidate_from_sc(item) for item in sc_payload.get("items", [])]
     sc_ranked = sorted(sc_rows, key=score_with_boost, reverse=True)
 
+    watchlist_payload = load_json(NEW_MODEL_WATCHLIST_FILE, {"items": []})
+    watchlist_rows = [
+        candidate_from_new_model_watchlist(item)
+        for item in watchlist_payload.get("items", [])
+        if isinstance(item, dict) and str(item.get("tag", "")).strip()
+    ]
+    watchlist_ranked = sorted(watchlist_rows, key=score_with_boost, reverse=True)
+
     primary = filter_fresh_candidates(
-        seeded + sc_ranked,
+        watchlist_ranked + seeded + sc_ranked,
         blocked_slugs=blocked_slugs,
         blocked_topics=blocked_topics,
         min_score=min_candidate_score,
