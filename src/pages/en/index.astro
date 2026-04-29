@@ -2,11 +2,14 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import runnerStatus from "../../data/runner-status.json";
 import statusReport from "../../data/status.json";
+import dailyUpdates from "../../data/daily-updates.json";
 import { ROOT_ALTERNATES } from "../../data/root-alternates";
 
 const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
 const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
 const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
+const latestDailyUpdate = dailyUpdates.items?.[0];
+const latestDailyUpdateDate = String(latestDailyUpdate?.date || "unknown");
 
 function formatGpuTemperature(value: number): string {
   if (!Number.isFinite(value) || value <= 0) {
@@ -61,8 +64,9 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      RTX 3090: Stable @ {gpuTemperature} | DeepSeek-R1: Verified | Ollama: {ollamaVersion} | Last
-      Sync: <span id="last-sync-local">local time loading...</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
+      Daily Update: {latestDailyUpdateDate} | RTX 3090: Stable @ {gpuTemperature} | DeepSeek-R1:
+      Verified | Ollama: {ollamaVersion} | Hardware Sync:
+      <span id="last-sync-local">local time loading...</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href="/en/status/data-freshness/">Data Status</a>
   </header>
