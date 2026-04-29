@@ -204,6 +204,26 @@ def pick_measured_highlights(max_count: int = 5) -> list[dict[str, Any]]:
     return measured[:max_count]
 
 
+def pick_today_model(measured: list[dict[str, Any]]) -> dict[str, Any] | None:
+    if not measured:
+        return None
+    def utility(row: dict[str, Any]) -> tuple[int, float]:
+        tag = str(row.get("tag", "")).lower()
+        tps = float(row.get("tokens_per_second", 0) or 0)
+        score = 0
+        if any(token in tag for token in ("coder", "qwen", "deepseek", "mistral", "gemma")):
+            score += 3
+        if any(token in tag for token in ("30b", "32b", "35b", "27b", "24b", "20b", "14b")):
+            score += 2
+        if tps >= 20:
+            score += 2
+        if tps >= 60:
+            score += 1
+        return (score, tps)
+
+    return sorted(measured, key=utility, reverse=True)[0]
+
+
 def unique_slug(base_slug: str, existing_slugs: set[str]) -> str:
     if base_slug not in existing_slugs:
         return base_slug
@@ -217,11 +237,17 @@ def unique_slug(base_slug: str, existing_slugs: set[str]) -> str:
 
 def build_daily_fallback_content(queue_date: str, measured: list[dict[str, Any]]) -> dict[str, Any]:
     year = queue_date[:4] if len(queue_date) >= 4 else "2026"
-    title = f"Daily Local LLM Benchmark Snapshot: Decisions You Can Use ({year})"
-    keyword = "daily local llm benchmark snapshot"
+    pick = pick_today_model(measured)
+    pick_tag = str(pick.get("tag", "local LLM")).strip() if pick else "local LLM"
+    pick_slug = slugify(pick_tag.replace(":", "-")) if pick else "local-llm"
+    pick_tps = float(pick.get("tokens_per_second", 0) or 0) if pick else 0.0
+    pick_latency = float(pick.get("latency_ms", 0) or 0) if pick else 0.0
+    pick_test_time = str(pick.get("test_time", "")).strip() if pick else ""
+    title = f"Today's Local LLM Pick: {pick_tag} on RTX 3090 ({year})"
+    keyword = f"{pick_tag} rtx 3090 ollama benchmark" if pick else "best local llm rtx 3090 today"
     summary = (
-        "Daily field report for local inference decisions: verified throughput anchors, "
-        "VRAM boundary guidance, and local-vs-cloud fallback triggers."
+        f"Daily 3090 recommendation for {pick_tag}: verified speed, VRAM decision guidance, "
+        "Ollama setup path, and local-vs-cloud fallback triggers."
     )
     lines = []
     for row in measured:
@@ -229,21 +255,50 @@ def build_daily_fallback_content(queue_date: str, measured: list[dict[str, Any]]
             f"- `{row['tag']}`: {row['tokens_per_second']:.1f} tok/s | latency {row['latency_ms']:.0f} ms | test {row['test_time']}"
         )
     measured_block = "\n".join(lines) if lines else "- Latest benchmark feed is temporarily unavailable."
+    if pick_tps >= 60:
+        verdict = f"Download `{pick_tag}` first if you want a fast local baseline on a 24GB RTX 3090."
+    elif pick_tps >= 20:
+        verdict = f"`{pick_tag}` is worth testing locally, but watch context length and sustained latency."
+    elif pick:
+        verdict = f"`{pick_tag}` is a specialist or heavy model on 24GB; test locally before relying on it for production."
+    else:
+        verdict = "No verified model changed enough today to justify a full SEO article; use this as a feed update."
     body = (
-        "## What changed today\n\n"
-        "This update consolidates the latest verified local inference measurements and turns them into practical deployment decisions.\n\n"
+        "## Fast verdict\n\n"
+        f"{verdict}\n\n"
+        "The daily goal is simple: help a 3090 owner decide what to download tonight, what to skip, and when a cloud fallback is the better use of time. This page is not a generic changelog; it is a practical decision note built from the latest verified LocalVRAM benchmark feed.\n\n"
+        "## Today's pick\n\n"
+        f"- Model: `{pick_tag}`\n"
+        f"- RTX 3090 speed: {pick_tps:.1f} tok/s\n"
+        f"- Latency: {pick_latency:.0f} ms\n"
+        f"- Test time: {pick_test_time or 'pending'}\n"
+        "- Baseline command:\n\n"
+        "```bash\n"
+        f"ollama run {pick_tag if ':' in pick_tag else '<model-tag>'}\n"
+        "```\n\n"
+        "## Who should try it\n\n"
+        f"- Developers and local AI users who want a fresh 24GB RTX 3090 baseline for `{pick_tag}`.\n"
+        "- Readers comparing local speed against RunPod/Vast before spending cloud credits.\n"
+        "- Anyone deciding whether a new Ollama model is worth downloading in the first 24-48 hour traffic window.\n\n"
+        "## Who should skip it\n\n"
+        "- Users who need long-context production stability before a sustained run has been verified.\n"
+        "- Teams whose workload requires predictable p95 latency under concurrency; validate locally first, then burst to cloud.\n"
+        "- 8GB/12GB GPU owners unless the model has a smaller quantization or distilled variant.\n\n"
         "## Verified benchmark anchors\n\n"
         f"{measured_block}\n\n"
-        "## Decision guide\n\n"
-        "1. If your target model fits VRAM with headroom, prioritize local for predictable latency and lower long-run cost.\n"
-        "2. If p95 latency or throughput misses production target, keep local as baseline and burst to cloud only for peak windows.\n"
-        "3. If failure rate rises (OOM/retry spikes), step down quantization or reduce concurrent load before scaling out.\n\n"
-        "## Operational checklist\n\n"
-        "- Validate tokens/s and latency under representative prompt length.\n"
-        "- Track OOM and retry counts by model and quantization level.\n"
-        "- Recalculate break-even weekly for local hardware vs cloud rental.\n\n"
+        "## 3090 decision guide\n\n"
+        "1. If the model fits VRAM with headroom and response time is acceptable, run it locally first.\n"
+        "2. If it fits but misses p95 latency, keep the local machine for validation and burst to cloud for peak windows.\n"
+        "3. If it OOMs, reduce context or quantization before buying hardware.\n"
+        "4. If a new Ollama release is trending, publish the estimated page early and update it with verified 3090 data within 24-48 hours.\n\n"
+        "## Comparison prompts to run next\n\n"
+        f"- `{pick_tag}` vs the current coding baseline.\n"
+        f"- `{pick_tag}` vs the best 14B/20B fast local model.\n"
+        f"- `{pick_tag}` local power cost vs A100 rental for the same workload.\n\n"
         "## Next actions\n\n"
         "- Estimate fit: /en/tools/vram-calculator/\n"
+        f"- Model page: /en/models/{pick_slug}-q4/\n"
+        "- Benchmark changelog: /en/benchmarks/changelog/\n"
         "- Hardware path: /en/affiliate/hardware-upgrade/\n"
         "- Cloud fallback: /go/runpod and /go/vast\n\n"
         "Affiliate Disclosure: This post may include affiliate links. LocalVRAM may earn a commission at no extra cost.\n"

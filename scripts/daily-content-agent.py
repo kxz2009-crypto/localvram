@@ -420,13 +420,24 @@ def draft_markdown(
     landing_ref = landing if landing else "/en/models/"
     intent = infer_content_intent(keyword)
     intent_actions = {
-        "benchmark": "Report measured throughput/latency first, then explain the hardware bottleneck.",
-        "hardware": "Map VRAM tiers to realistic model choices and upgrade paths.",
-        "cost": "Quantify local-vs-cloud break-even points with explicit assumptions.",
-        "troubleshooting": "Prioritize reproducible failure symptoms, root causes, and exact fixes.",
-        "guide": "Provide a reproducible setup path with validation checkpoints.",
+        "benchmark": "The key evidence is throughput, latency, and whether the result is measured or still estimated.",
+        "hardware": "The key decision is whether your VRAM tier has enough headroom for the model and context window.",
+        "cost": "The key decision is whether local power and hardware time beat cloud rental for your weekly usage.",
+        "troubleshooting": "The key decision is which failure symptom to fix first before changing hardware.",
+        "guide": "The key decision is whether the setup path is reproducible enough for daily use.",
     }
     primary_action = intent_actions.get(intent, intent_actions["guide"])
+    topic = humanize_topic(normalize_title_topic(keyword))
+    model_tag = ""
+    model_match = re.search(r"([a-z0-9][a-z0-9.\-_]*:[a-z0-9][a-z0-9.\-_]*)", keyword, flags=re.IGNORECASE)
+    if model_match:
+        model_tag = model_match.group(1)
+    run_command = f"ollama run {model_tag}" if model_tag else "ollama run <model-tag>"
+    model_line = (
+        f"The model tag to validate first is `{model_tag}`."
+        if model_tag
+        else "Start from the exact Ollama tag named in the query or model page before testing variants."
+    )
 
     return f"""---
 title: "{title}"
@@ -437,41 +448,63 @@ source: {source}
 status: draft
 ---
 
-## Decision context
+## Fast verdict
 
-This draft targets the query "{keyword}" and should help readers make a concrete deploy-or-scale decision today.
+This page targets "{keyword}" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether {topic} is worth testing on a 24GB RTX 3090, what failure boundary to watch, and what to do if the model misses the target.
+
+For the first pass, treat the RTX 3090 as the practical baseline. If the model is stable at the required context length with enough VRAM headroom, keep it local. If throughput or p95 latency misses the workload target, use local as the validation baseline and burst to cloud for peak jobs.
 
 ## Measured anchor data
 
 {measured_block}
 
-## What this post must answer
+## Ollama setup path
 
-- {primary_action}
-- Define failure boundaries (VRAM limit, latency target, or stability threshold).
-- Include one validated local path and one cloud fallback path.
-- End with an actionable recommendation by workload size.
+{model_line}
 
-## Editor outline (draft)
+```bash
+{run_command}
+```
 
-1. Problem framing and target workload.
-2. Benchmark evidence and interpretation.
-3. Cost/risk comparison across local and cloud options.
-4. Final recommendation with next-step checklist.
+After the first run, capture three facts before changing hardware: tokens per second, first-response latency, and whether the model stays inside VRAM at the intended context length. A fast short prompt is not enough; use a representative prompt from the real workload.
 
-## Internal links to include
+## RTX 3090 decision matrix
 
-- VRAM calculator: {tool}
+| Result on 24GB RTX 3090 | Recommendation |
+| --- | --- |
+| Fits VRAM with headroom and meets latency target | Run local first; use cloud only for bursts. |
+| Fits but latency is too high | Keep local for testing, batch/offload heavy jobs to cloud. |
+| OOM, retry spikes, or unstable context | Step down quantization, reduce context, or move to larger VRAM. |
+| Cloud-only model size | Publish the page as a cloud fallback guide, not a local promise. |
+
+## How to interpret the result
+
+{primary_action} A model is a good local candidate only when it fits VRAM with headroom, stays stable at the intended context length, and meets the latency target for the workload. If any of those fail, the right answer is usually to reduce context, step down quantization, or use cloud capacity for the heavy path.
+
+## Who should try it
+
+- RTX 3090 owners deciding whether to download this model tonight.
+- Developers comparing a fresh Ollama model against their current coding or RAG baseline.
+- Operators who want a local validation run before spending RunPod or Vast credits.
+
+## Who should skip it
+
+- 8GB and 12GB GPU users unless a smaller quantized variant exists.
+- Teams that need production p95 latency before a sustained benchmark has been verified.
+- Anyone running long-context or concurrent workloads without checking VRAM headroom first.
+
+## New-model timing
+
+The traffic window is strongest in the first 24-48 hours after an Ollama model appears or becomes popular. If benchmark data is still pending, treat this as an estimated setup page and come back after the RTX 3090 runner verifies throughput and latency.
+
+## Next actions
+
+- Estimate VRAM fit: {tool}
 - Related landing: {landing_ref}
 - Local hardware path: {hardware}
 - Cloud fallback: {runpod} and {vast}
 
-## Monetization placement (compliant)
-
-- Affiliate Disclosure: This draft may include affiliate links. LocalVRAM may earn a commission at no extra cost.
-- Keep disclosure line near CTA modules.
-- Use one local recommendation CTA and one cloud fallback CTA.
-- Keep wording factual: measured vs estimated must stay explicit.
+Affiliate Disclosure: This post may include affiliate links. LocalVRAM may earn a commission at no extra cost.
 """
 
 
