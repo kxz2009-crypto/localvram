@@ -1,18 +1,59 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-28T04:23:02.082221Z",
+  "updated_at": "2026-04-29T04:09:12.828702Z",
   "last_run": {
-    "run_at": "2026-04-28T04:23:02.082221Z",
-    "queue_date": "2026-04-28",
-    "reviewed_count": 0,
-    "auto_approved_count": 0,
+    "run_at": "2026-04-29T04:09:12.828702Z",
+    "queue_date": "2026-04-29",
+    "reviewed_count": 1,
+    "auto_approved_count": 1,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": []
+    "items": [
+      {
+        "draft": "content-queue/2026-04-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
+        "slug": "q4-vs-q8-quality-loss-ollama-guide",
+        "score": 576.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 219,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.8397,
+          "topic_score": 0.0667,
+          "slug": "model-qwen3-6-35b-local-benchmark"
+        }
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-04-29T04:09:12.828702Z",
+      "queue_date": "2026-04-29",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-04-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
+          "slug": "q4-vs-q8-quality-loss-ollama-guide",
+          "score": 576.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 219,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8397,
+            "topic_score": 0.0667,
+            "slug": "model-qwen3-6-35b-local-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-04-28T04:23:02.082221Z",
       "queue_date": "2026-04-28",
@@ -2420,74 +2461,6 @@
           "risk_flags": [],
           "similarity": {
             "score": 0.1574,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-26/03-en-tools-quantization-blind-test.md",
-          "slug": "en-tools-quantization-blind-test",
-          "score": 137.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 180,
-          "risk_flags": [
-            "missing_affiliate_disclosure",
-            "existing_blog_slug",
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 1.0,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-02-26T08:11:09.025157Z",
-      "queue_date": "2026-02-26",
-      "reviewed_count": 3,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 2,
-      "rejected_manual_count": 1,
-      "high_risk_count": 3,
-      "risk_flag_counts": {
-        "existing_blog_slug": 1,
-        "low_content_words": 2,
-        "missing_affiliate_disclosure": 3,
-        "near_duplicate_published": 3
-      },
-      "items": [
-        {
-          "draft": "content-queue/2026-02-26/01-q4-vs-q8-quality-loss.md",
-          "slug": "q4-vs-q8-quality-loss",
-          "score": 360.0,
-          "status_before": "pending_manual_review",
-          "status_after": "pending_manual_review",
-          "word_count": 178,
-          "risk_flags": [
-            "low_content_words",
-            "missing_affiliate_disclosure",
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.9612,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-26/02-ollama-local-cluster-network.md",
-          "slug": "ollama-local-cluster-network",
-          "score": 336.0,
-          "status_before": "pending_manual_review",
-          "status_after": "pending_manual_review",
-          "word_count": 176,
-          "risk_flags": [
-            "low_content_words",
-            "missing_affiliate_disclosure",
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.9423,
             "slug": "en-tools-quantization-blind-test"
           }
         },

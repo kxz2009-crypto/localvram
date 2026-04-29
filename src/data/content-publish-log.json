@@ -1,29 +1,61 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-28T04:23:02.168910Z",
+  "updated_at": "2026-04-29T04:09:12.906618Z",
   "last_run": {
-    "run_at": "2026-04-28T04:23:02.168910Z",
-    "queue_date": "2026-04-28",
-    "candidate_count": 0,
+    "run_at": "2026-04-29T04:09:12.906618Z",
+    "queue_date": "2026-04-29",
+    "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
     "fallback_generated_count": 1,
-    "skipped_count": 0,
+    "skipped_count": 1,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-04-28",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-04-29",
         "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-04-28-daily-local-llm-benchmark-snapshot-2026-04-28",
+        "topic_key": "daily-benchmark-fallback-2026-04-29-daily-local-llm-benchmark-snapshot-2026-04-29",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-28.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-29.md",
         "intent": "benchmark"
       }
     ],
-    "skipped": []
+    "skipped": [
+      {
+        "draft": "content-queue/2026-04-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
+        "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-04-29T04:09:12.906618Z",
+      "queue_date": "2026-04-29",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-04-29",
+          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-04-29-daily-local-llm-benchmark-snapshot-2026-04-29",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-29.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-04-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
+          "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
+        }
+      ]
+    },
     {
       "run_at": "2026-04-28T04:23:02.168910Z",
       "queue_date": "2026-04-28",
@@ -1501,24 +1533,6 @@
       "skipped_count": 0,
       "published": [],
       "skipped": []
-    },
-    {
-      "run_at": "2026-02-26T08:16:15.037718Z",
-      "queue_date": "2026-02-26",
-      "candidate_count": 2,
-      "published_count": 0,
-      "skipped_count": 2,
-      "published": [],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-02-26/01-q4-vs-q8-quality-loss.md",
-          "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
-        },
-        {
-          "draft": "content-queue/2026-02-26/02-ollama-local-cluster-network.md",
-          "reason": "similar_slug:ollama-local-cluster-network-checklist"
-        }
-      ]
     }
   ]
 }
