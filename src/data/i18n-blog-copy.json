@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-29T16:13:19Z",
+  "updated_at": "2026-04-29T22:13:09Z",
   "wave": "blog-copy-wave1-top5",
   "slugs": {
     "best-24gb-vram-models-2026": {
@@ -5190,6 +5190,124 @@
         "id": {
           "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
           "description": "Daily field report for local inference decisions: verified throughput anchors, VRAM boundary guidance, and local-vs-cloud fallback triggers.",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "model-deepseek-r1-14b-rtx-3090-ollama-benchmark": {
+      "en": {
+        "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+        "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
+          "description": "This page targets \\\"deepseek-r1:14b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "model-gemma3-27b-rtx-3090-ollama-benchmark": {
+      "en": {
+        "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+        "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"gemma3:27b rtx 3090 ollama benchmark\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gem",
           "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
         }
       }
