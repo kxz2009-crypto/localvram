@@ -1,5 +1,5 @@
 ---
-title: "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)"
+title: "deepseek-r1:14B RTX 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)"
 description: "This page targets \"deepseek-r1:14b rtx 3090 ollama benchmark\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whethe"
 pubDate: 2026-04-29
 updatedDate: 2026-04-29
@@ -10,7 +10,7 @@ intent: hardware
 
 ## Fast verdict
 
-This page targets "deepseek-r1:14b rtx 3090 ollama benchmark" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether deepseek-r1:14B Rtx 3090 Ollama Benchmark is worth testing on a 24GB RTX 3090, what failure boundary to watch, and what to do if the model misses the target.
+This page targets "deepseek-r1:14b rtx 3090 ollama benchmark" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether deepseek-r1:14B RTX 3090 Ollama Benchmark is worth testing on a 24GB RTX 3090, what failure boundary to watch, and what to do if the model misses the target.
 
 For the first pass, treat the RTX 3090 as the practical baseline. If the model is stable at the required context length with enough VRAM headroom, keep it local. If throughput or p95 latency misses the workload target, use local as the validation baseline and burst to cloud for peak jobs.
 

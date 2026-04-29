@@ -363,6 +363,23 @@ def humanize_topic(topic: str) -> str:
 
     words: list[str] = []
     for token in text.split(" "):
+        normalized = token.lower().strip(":,")
+        acronym_map = {
+            "rtx": "RTX",
+            "gpu": "GPU",
+            "vram": "VRAM",
+            "llm": "LLM",
+            "rag": "RAG",
+            "cuda": "CUDA",
+            "oom": "OOM",
+            "q4": "Q4",
+            "q5": "Q5",
+            "q8": "Q8",
+            "vllm": "vLLM",
+        }
+        if normalized in acronym_map:
+            words.append(acronym_map[normalized])
+            continue
         if any(ch.isdigit() for ch in token):
             token = re.sub(r"(\d+)b\b", r"\1B", token, flags=re.IGNORECASE)
             words.append(token)

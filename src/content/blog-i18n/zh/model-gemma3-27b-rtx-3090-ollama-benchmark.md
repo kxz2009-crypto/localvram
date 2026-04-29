@@ -6,7 +6,7 @@ status: machine-translated via gemini (human review recommended)
 
 ## 快速结论
 
-本页面面向需要具体本地与云端决策的读者，而非通用的模型发布公告，旨在探讨“gemma3:27b rtx 3090 ollama benchmark”。有用的答案是，gemma3:27B Rtx 3090 Ollama Benchmark 是否值得在 24GB RTX 3090 上进行测试，需要关注哪些失败边界，以及如果模型未达目标应如何处理。
+本页面面向需要具体本地与云端决策的读者，而非通用的模型发布公告，旨在探讨“gemma3:27b rtx 3090 ollama benchmark”。有用的答案是，gemma3:27B RTX 3090 Ollama Benchmark 是否值得在 24GB RTX 3090 上进行测试，需要关注哪些失败边界，以及如果模型未达目标应如何处理。
 
 首次尝试时，将 RTX 3090 视为实际基准。如果模型在所需的上下文长度下稳定运行，且 VRAM 余量充足，则将其保留在本地。如果吞吐量或 p95 延迟未达到工作负载目标，则将本地作为验证基准，并突发至云端以处理峰值任务。
 

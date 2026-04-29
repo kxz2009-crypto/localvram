@@ -90,6 +90,16 @@ class ContentStrategyTests(unittest.TestCase):
         self.assertEqual(candidate["tag"], "gpt-oss:20b")
         self.assertGreaterEqual(agent.score_with_boost(candidate), 900)
 
+    def test_title_humanizer_preserves_local_llm_acronyms(self):
+        agent = load_script("daily-content-agent")
+
+        title = agent.build_title("qwen3:14b rtx 3090 ollama vram benchmark", "2026-04-29")
+
+        self.assertIn("RTX 3090", title)
+        self.assertIn("VRAM", title)
+        self.assertNotIn("Rtx", title)
+        self.assertNotIn("Vram", title)
+
 
 if __name__ == "__main__":
     unittest.main()
