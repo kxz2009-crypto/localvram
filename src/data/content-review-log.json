@@ -1,13 +1,13 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-29T04:09:12.828702Z",
+  "updated_at": "2026-04-29T16:13:19.352484Z",
   "last_run": {
-    "run_at": "2026-04-29T04:09:12.828702Z",
+    "run_at": "2026-04-29T16:13:19.352484Z",
     "queue_date": "2026-04-29",
     "reviewed_count": 1,
-    "auto_approved_count": 1,
+    "auto_approved_count": 0,
     "pending_manual_review_count": 0,
-    "rejected_manual_count": 0,
+    "rejected_manual_count": 1,
     "high_risk_count": 0,
     "risk_flag_counts": {},
     "items": [
@@ -15,8 +15,8 @@
         "draft": "content-queue/2026-04-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
         "slug": "q4-vs-q8-quality-loss-ollama-guide",
         "score": 576.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
+        "status_before": "rejected_manual",
+        "status_after": "rejected_manual",
         "word_count": 219,
         "risk_flags": [],
         "similarity": {
@@ -28,6 +28,32 @@
     ]
   },
   "history": [
+    {
+      "run_at": "2026-04-29T16:13:19.352484Z",
+      "queue_date": "2026-04-29",
+      "reviewed_count": 1,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 1,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-04-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
+          "slug": "q4-vs-q8-quality-loss-ollama-guide",
+          "score": 576.0,
+          "status_before": "rejected_manual",
+          "status_after": "rejected_manual",
+          "word_count": 219,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8397,
+            "topic_score": 0.0667,
+            "slug": "model-qwen3-6-35b-local-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-04-29T04:09:12.828702Z",
       "queue_date": "2026-04-29",
@@ -2398,65 +2424,6 @@
           "score": 336.0,
           "status_before": "rejected_manual",
           "status_after": "rejected_manual",
-          "word_count": 439,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.1574,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-26/03-en-tools-quantization-blind-test.md",
-          "slug": "en-tools-quantization-blind-test",
-          "score": 137.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 180,
-          "risk_flags": [
-            "missing_affiliate_disclosure",
-            "existing_blog_slug",
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 1.0,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-02-26T08:16:01.112640Z",
-      "queue_date": "2026-02-26",
-      "reviewed_count": 3,
-      "auto_approved_count": 2,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 1,
-      "high_risk_count": 1,
-      "risk_flag_counts": {
-        "existing_blog_slug": 1,
-        "missing_affiliate_disclosure": 1,
-        "near_duplicate_published": 1
-      },
-      "items": [
-        {
-          "draft": "content-queue/2026-02-26/01-q4-vs-q8-quality-loss.md",
-          "slug": "q4-vs-q8-quality-loss",
-          "score": 360.0,
-          "status_before": "pending_manual_review",
-          "status_after": "approved_auto",
-          "word_count": 471,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.1925,
-            "slug": "q4-vs-q8-quality-loss-ollama"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-26/02-ollama-local-cluster-network.md",
-          "slug": "ollama-local-cluster-network",
-          "score": 336.0,
-          "status_before": "pending_manual_review",
-          "status_after": "approved_auto",
           "word_count": 439,
           "risk_flags": [],
           "similarity": {
