@@ -1,18 +1,18 @@
 {
-  "updated_at": "2026-04-29T04:09:32Z",
+  "updated_at": "2026-04-29T05:58:01Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
       "workflow_name": "Weekly Benchmark",
-      "run_id": "24874114930",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/24874114930",
+      "run_id": "25092649211",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/25092649211",
       "status": "completed",
       "conclusion": "success",
-      "event": "workflow_dispatch",
-      "head_sha": "002e57366ffffcabfee86248a42cc486143cdf67",
+      "event": "schedule",
+      "head_sha": "db6f246c1a4d512dd591fc5a8b26024c5fd42291",
       "failure_class": "none",
       "failure_detail": "",
-      "updated_at": "2026-04-24T06:02:16Z"
+      "updated_at": "2026-04-29T05:57:51Z"
     },
     "publish_benchmark_artifact": {
       "workflow_key": "publish_benchmark_artifact",
@@ -42,6 +42,19 @@
     }
   },
   "history": [
+    {
+      "workflow_key": "weekly_benchmark",
+      "workflow_name": "Weekly Benchmark",
+      "run_id": "25092649211",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/25092649211",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "schedule",
+      "head_sha": "db6f246c1a4d512dd591fc5a8b26024c5fd42291",
+      "failure_class": "none",
+      "failure_detail": "",
+      "updated_at": "2026-04-29T05:57:51Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
@@ -808,19 +821,6 @@
       "failure_class": "daily_content_failed",
       "failure_detail": "quality-gate.py failed",
       "updated_at": "2026-03-13T03:17:05Z"
-    },
-    {
-      "workflow_key": "daily_content",
-      "workflow_name": "Daily Content Agent",
-      "run_id": "22984997014",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/22984997014",
-      "status": "completed",
-      "conclusion": "failure",
-      "event": "schedule",
-      "head_sha": "c6692c42b76fc46625baa7990b9b4808b8261009",
-      "failure_class": "daily_content_failed",
-      "failure_detail": "quality-gate.py failed",
-      "updated_at": "2026-03-12T03:20:23Z"
     }
   ]
 }

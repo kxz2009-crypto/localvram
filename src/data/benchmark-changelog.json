@@ -1,6 +1,27 @@
 {
-  "updated_at": "2026-04-24T05:43:44Z",
+  "updated_at": "2026-04-29T05:39:58Z",
   "items": [
+    {
+      "date": "2026-04-29",
+      "title": "Weekly benchmark run (14 successful model(s))",
+      "environment": "NVIDIA GeForce RTX 3090 | driver 591.86 | Ollama 0.20.2",
+      "changes": [
+        "qwen3:8b avg 135.294 tok/s, avg latency 1.27s (2 run(s))",
+        "deepseek-r1:14b avg 83.861 tok/s, avg latency 1.874s (2 run(s))",
+        "qwen2.5:14b avg 83.952 tok/s, avg latency 0.946s (2 run(s))",
+        "qwen3-coder:30b avg 160.0 tok/s, avg latency 0.835s (2 run(s))",
+        "qwen3.5:27b avg 26.957 tok/s, avg latency 4.123s (2 run(s))",
+        "qwen3.6:35b avg 39.564 tok/s, avg latency 3.002s (2 run(s))",
+        "llama3.3:70b-instruct-q4_k_m avg 3.526 tok/s, avg latency 15.676s (2 run(s))",
+        "qwen2.5-coder:32b avg 29.641 tok/s, avg latency 2.166s (2 run(s))",
+        "ministral-3:14b avg 87.276 tok/s, avg latency 2.253s (2 run(s))",
+        "gpt-oss:20b avg 156.076 tok/s, avg latency 1.524s (2 run(s))",
+        "mistral-small:22b avg 61.605 tok/s, avg latency 1.937s (2 run(s))",
+        "gemma3:27b avg 43.343 tok/s, avg latency 3.434s (2 run(s))",
+        "llama4:latest avg 8.066 tok/s, avg latency 9.217s (2 run(s))",
+        "qwq:32b avg 40.425 tok/s, avg latency 2.743s (2 run(s))"
+      ]
+    },
     {
       "date": "2026-04-24",
       "title": "Weekly benchmark run (14 successful model(s))",

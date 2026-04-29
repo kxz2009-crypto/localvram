@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-24T05:40:00Z",
+  "updated_at": "2026-04-29T05:36:08Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -81,7 +81,7 @@
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 3,
       "stdout": "○ ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; disabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: inactive (dead)",
-      "stderr": "Warning: The unit file, source configuration file or drop-ins of ollama.service changed on disk. Run 'systemctl daemon-reload' to reload units."
+      "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
