@@ -1,17 +1,17 @@
 ---
-title: "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)"
+title: "qwen3.6:35B RTX 3090 Ollama Benchmark: Practical GPU Selection for Stable Local Inference (2026)"
 date: 2026-04-29
-keyword: "gemma3:27b rtx 3090 ollama benchmark"
+keyword: "qwen3.6:35b rtx 3090 ollama benchmark"
 score: 1000
 source: new_model_watchlist
-status: rejected_manual
+status: approved_auto
 reviewed_at: "2026-04-29T22:32:39.962863Z"
-risk_flags: existing_blog_slug,near_duplicate_published
+risk_flags: ""
 ---
 
 ## Fast verdict
 
-This page targets "gemma3:27b rtx 3090 ollama benchmark" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether gemma3:27B Rtx 3090 Ollama Benchmark is worth testing on a 24GB RTX 3090, what failure boundary to watch, and what to do if the model misses the target.
+This page targets "qwen3.6:35b rtx 3090 ollama benchmark" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3.6:35B RTX 3090 Ollama Benchmark is worth testing on a 24GB RTX 3090, what failure boundary to watch, and what to do if the model misses the target.
 
 For the first pass, treat the RTX 3090 as the practical baseline. If the model is stable at the required context length with enough VRAM headroom, keep it local. If throughput or p95 latency misses the workload target, use local as the validation baseline and burst to cloud for peak jobs.
 
@@ -23,10 +23,10 @@ For the first pass, treat the RTX 3090 as the practical baseline. If the model i
 
 ## Ollama setup path
 
-The model tag to validate first is `gemma3:27b`.
+The model tag to validate first is `qwen3.6:35b`.
 
 ```bash
-ollama run gemma3:27b
+ollama run qwen3.6:35b
 ```
 
 After the first run, capture three facts before changing hardware: tokens per second, first-response latency, and whether the model stays inside VRAM at the intended context length. A fast short prompt is not enough; use a representative prompt from the real workload.
@@ -63,7 +63,7 @@ The traffic window is strongest in the first 24-48 hours after an Ollama model a
 ## Next actions
 
 - Estimate VRAM fit: /en/tools/vram-calculator/
-- Related landing: /en/models/gemma3-27b/
+- Related landing: /en/models/qwen3-6-35b/
 - Local hardware path: /en/affiliate/hardware-upgrade/
 - Cloud fallback: /go/runpod and /go/vast
 

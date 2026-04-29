@@ -4,9 +4,9 @@ date: 2026-04-29
 keyword: "deepseek-r1:14b rtx 3090 ollama benchmark"
 score: 1000
 source: new_model_watchlist
-status: approved_auto
-reviewed_at: "2026-04-29T22:13:09.599648Z"
-risk_flags: ""
+status: rejected_manual
+reviewed_at: "2026-04-29T22:32:39.962863Z"
+risk_flags: existing_blog_slug,near_duplicate_published
 ---
 
 ## Fast verdict
