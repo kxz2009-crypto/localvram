@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import runnerStatus from "../../data/runner-status.json";
 import statusReport from "../../data/status.json";
 import dailyUpdates from "../../data/daily-updates.json";
+import newModelWatchlist from "../../data/new-model-watchlist.json";
 import { ROOT_ALTERNATES } from "../../data/root-alternates";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../config/i18n";
 import { withLocale } from "../../lib/locale-paths";
@@ -30,6 +31,11 @@ const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_
 const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || unknownLabel);
+const latestNewModel = newModelWatchlist.items?.[0];
+const latestNewModelTag = String(latestNewModel?.tag || unknownLabel);
+const latestLocalStatus = String(latestNewModel?.local_inventory_status?.status || "unknown");
+const latestBenchmarkStatus = String(latestNewModel?.benchmark_status?.status || latestNewModel?.status || "unknown");
+const latestOllamaUpdated = String(latestNewModel?.ollama_updated_label || "");
 
 function formatGpuTemperature(value: number, fallback: string): string {
   if (!Number.isFinite(value) || value <= 0) {
@@ -56,6 +62,16 @@ function localHref(enPath: string): string {
 
 const lastSyncUtc = formatUtcDisplay(rawLastSync, unknownLabel);
 const gpuTemperature = formatGpuTemperature(rawGpuTemperature, unknownLabel);
+const localModelLabel =
+  latestLocalStatus === "downloaded"
+    ? "downloaded"
+    : latestLocalStatus === "family_available"
+      ? "family available"
+      : latestLocalStatus === "measured_recently"
+        ? "measured locally"
+        : "not local yet";
+const benchmarkModelLabel = latestBenchmarkStatus === "measured" ? "measured" : "pending";
+const newModelFreshnessLabel = latestOllamaUpdated ? ` (${latestOllamaUpdated})` : "";
 
 const homeStructuredData = [
   {
@@ -90,7 +106,7 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      {text.ticker_daily_update_label || "Daily Update"}: {latestDailyUpdateDate} | {text.ticker_gpu_label || "RTX 3090"}: {text.ticker_stable_label || "Stable @"} {gpuTemperature} | {text.ticker_model_label || "DeepSeek-R1"}: {text.ticker_verified_label || "Verified"} | {text.ticker_ollama_label || "Ollama"}: {ollamaVersion} | {text.ticker_hardware_sync_label || "Hardware Sync"}: <span id="last-sync-local">{localLoadingLabel}</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
+      {text.ticker_daily_update_label || "Daily Update"}: {latestDailyUpdateDate} | New on Ollama: {latestNewModelTag}{newModelFreshnessLabel} | Local: {localModelLabel} | {text.ticker_gpu_label || "RTX 3090"}: {benchmarkModelLabel} @ {gpuTemperature} | {text.ticker_ollama_label || "Ollama"}: {ollamaVersion} | {text.ticker_hardware_sync_label || "Hardware Sync"}: <span id="last-sync-local">{localLoadingLabel}</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href={localHref("/en/status/data-freshness/")}>{text.nav_data_status}</a>
   </header>

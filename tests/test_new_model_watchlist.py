@@ -70,6 +70,7 @@ class NewModelWatchlistTests(unittest.TestCase):
         items = radar.benchmark_candidates(
             benchmark,
             radar.catalog_by_tag(catalog),
+            local_inventory={"families": {"qwen3.6"}, "tags": {"qwen3.6:35b"}, "model_count": 44},
             now=now,
             window_hours=48,
         )
@@ -80,6 +81,10 @@ class NewModelWatchlistTests(unittest.TestCase):
         self.assertGreaterEqual(items[0]["priority_score"], 90)
         self.assertIn("rtx 3090 ollama benchmark", items[0]["keyword"])
         self.assertEqual(items[0]["ollama_command"], "ollama run qwen3.6:35b")
+        self.assertEqual(items[0]["local_inventory_status"]["status"], "downloaded")
+        self.assertEqual(items[0]["benchmark_status"]["status"], "measured")
+        self.assertEqual(items[0]["ollama_library_freshness"]["status"], "inferred")
+        self.assertEqual(items[0]["traffic_priority"], "publish_now")
 
     def test_stale_ollama_library_age_blocks_priority_family(self):
         radar = load_script("build-new-model-watchlist")
@@ -99,6 +104,7 @@ class NewModelWatchlistTests(unittest.TestCase):
             benchmark,
             {},
             {"qwen3.6": {"updated_label": "3 months ago", "updated_days": 90, "tag_ages": {}}},
+            {},
             now=now,
             window_hours=48,
             max_library_age_days=14,
@@ -138,6 +144,7 @@ class NewModelWatchlistTests(unittest.TestCase):
             benchmark,
             catalog_index,
             {"gpt-oss": {"updated_label": "2 days ago", "updated_days": 2, "tag_ages": {}}, "deepseek-r1": {"updated_label": "10 months ago", "updated_days": 300, "tag_ages": {}}},
+            {"families": {"gpt-oss", "qwen3.6"}, "tags": {"gpt-oss:20b", "qwen3.6:35b"}, "model_count": 44},
             now=now,
             window_hours=48,
         )
@@ -148,6 +155,7 @@ class NewModelWatchlistTests(unittest.TestCase):
                 catalog_family_index,
                 benchmark,
                 {"qwen3.6": {"updated_label": "1 week ago", "updated_days": 7, "tag_ages": {}}, "deepseek-r1": {"updated_label": "10 months ago", "updated_days": 300, "tag_ages": {}}},
+                {"families": {"gpt-oss", "qwen3.6"}, "tags": {"gpt-oss:20b", "qwen3.6:35b"}, "model_count": 44},
                 now=now,
             )
         )
@@ -158,6 +166,30 @@ class NewModelWatchlistTests(unittest.TestCase):
         self.assertIn("qwen3.6:35b", tags)
         self.assertNotIn("deepseek-r1:14b", tags)
         self.assertIn(ranked[0]["tag"], {"gpt-oss:20b", "qwen3.6:35b"})
+
+    def test_local_inventory_index_reads_runner_status_and_weekly_plan(self):
+        radar = load_script("build-new-model-watchlist")
+
+        inventory = radar.build_local_inventory_index(
+            {"local_models_sample": ["qwen3.6:35b"], "local_families": ["gemma4"], "local_model_count": 2},
+            {
+                "api": {"tags": {"model_count": 44, "sample": ["gpt-oss:20b"]}},
+                "summary": {"required_targets_runnable": ["ministral-3"]},
+            },
+        )
+
+        self.assertIn("qwen3.6:35b", inventory["tags"])
+        self.assertIn("gpt-oss:20b", inventory["tags"])
+        self.assertIn("gemma4", inventory["families"])
+        self.assertIn("ministral-3", inventory["families"])
+        self.assertEqual(inventory["model_count"], 44)
+
+    def test_ollama_freshness_status_marks_unknown_as_inferred(self):
+        radar = load_script("build-new-model-watchlist")
+
+        self.assertEqual(radar.ollama_freshness_status({}, 14), "inferred")
+        self.assertEqual(radar.ollama_freshness_status({"updated_days": 7}, 14), "fresh")
+        self.assertEqual(radar.ollama_freshness_status({"updated_days": 90}, 14), "stale")
 
 
 if __name__ == "__main__":

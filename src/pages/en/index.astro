@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import runnerStatus from "../../data/runner-status.json";
 import statusReport from "../../data/status.json";
 import dailyUpdates from "../../data/daily-updates.json";
+import newModelWatchlist from "../../data/new-model-watchlist.json";
 import { ROOT_ALTERNATES } from "../../data/root-alternates";
 
 const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
@@ -10,6 +11,11 @@ const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_
 const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || "unknown");
+const latestNewModel = newModelWatchlist.items?.[0];
+const latestNewModelTag = String(latestNewModel?.tag || "unknown");
+const latestLocalStatus = String(latestNewModel?.local_inventory_status?.status || "unknown");
+const latestBenchmarkStatus = String(latestNewModel?.benchmark_status?.status || latestNewModel?.status || "unknown");
+const latestOllamaUpdated = String(latestNewModel?.ollama_updated_label || "");
 
 function formatGpuTemperature(value: number): string {
   if (!Number.isFinite(value) || value <= 0) {
@@ -32,6 +38,16 @@ function formatUtcDisplay(value: string): string {
 
 const lastSyncUtc = formatUtcDisplay(rawLastSync);
 const gpuTemperature = formatGpuTemperature(rawGpuTemperature);
+const localModelLabel =
+  latestLocalStatus === "downloaded"
+    ? "downloaded"
+    : latestLocalStatus === "family_available"
+      ? "family available"
+      : latestLocalStatus === "measured_recently"
+        ? "measured locally"
+        : "not local yet";
+const benchmarkModelLabel = latestBenchmarkStatus === "measured" ? "measured" : "pending";
+const newModelFreshnessLabel = latestOllamaUpdated ? ` (${latestOllamaUpdated})` : "";
 const homeStructuredData = [
   {
     "@context": "https://schema.org",
@@ -64,8 +80,8 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      Daily Update: {latestDailyUpdateDate} | RTX 3090: Stable @ {gpuTemperature} | DeepSeek-R1:
-      Verified | Ollama: {ollamaVersion} | Hardware Sync:
+      Daily Update: {latestDailyUpdateDate} | New on Ollama: {latestNewModelTag}{newModelFreshnessLabel} | Local:
+      {localModelLabel} | RTX 3090: {benchmarkModelLabel} @ {gpuTemperature} | Ollama: {ollamaVersion} | Hardware Sync:
       <span id="last-sync-local">local time loading...</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href="/en/status/data-freshness/">Data Status</a>

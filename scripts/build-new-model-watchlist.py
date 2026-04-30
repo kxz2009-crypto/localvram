@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_FILE = ROOT / "src" / "data" / "benchmark-results.json"
 CATALOG_FILE = ROOT / "src" / "data" / "model-catalog.json"
 WEEKLY_TARGET_PLAN_FILE = ROOT / "src" / "data" / "weekly-target-plan.json"
+RUNNER_STATUS_FILE = ROOT / "src" / "data" / "runner-status.json"
 OUT_FILE = ROOT / "src" / "data" / "new-model-watchlist.json"
 LOGGER = configure_logging("build-new-model-watchlist")
 OLLAMA_LIBRARY_BASE = "https://ollama.com/library"
@@ -227,6 +228,103 @@ def benchmark_row_for_tag(benchmark: dict[str, Any], tag: str) -> dict[str, Any]
     return row if isinstance(row, dict) else None
 
 
+def build_local_inventory_index(weekly_plan: dict[str, Any], runner_status: dict[str, Any]) -> dict[str, Any]:
+    tags: set[str] = set()
+    families: set[str] = set()
+
+    for raw in weekly_plan.get("local_models_sample", []):
+        tag = str(raw or "").strip().lower()
+        if not tag:
+            continue
+        tags.add(tag)
+        family = family_from_tag(tag)
+        if family:
+            families.add(family)
+    for raw in weekly_plan.get("local_families", []):
+        family = str(raw or "").strip().lower()
+        if family:
+            families.add(family)
+
+    api_tags = runner_status.get("api", {}).get("tags", {}) if isinstance(runner_status, dict) else {}
+    for raw in api_tags.get("sample", []):
+        tag = str(raw or "").strip().lower()
+        if not tag:
+            continue
+        tags.add(tag)
+        family = family_from_tag(tag)
+        if family:
+            families.add(family)
+
+    summary = runner_status.get("summary", {}) if isinstance(runner_status, dict) else {}
+    for raw in summary.get("required_targets_runnable", []):
+        family = str(raw or "").strip().lower()
+        if family:
+            families.add(family_from_tag(family))
+
+    return {
+        "tags": tags,
+        "families": families,
+        "model_count": int(api_tags.get("model_count", summary.get("model_count", weekly_plan.get("local_model_count", 0))) or 0),
+        "sources": ["runner-status.json", "weekly-target-plan.json"],
+    }
+
+
+def local_inventory_status(tag: str, benchmark_row: dict[str, Any] | None, inventory: dict[str, Any]) -> dict[str, Any]:
+    tag_text = str(tag or "").strip().lower()
+    family = family_from_tag(tag_text)
+    tags = inventory.get("tags", set())
+    families = inventory.get("families", set())
+    source = ""
+
+    if tag_text in tags:
+        status = "downloaded"
+        source = "runner_api_tags_exact"
+    elif benchmark_row:
+        status = "downloaded"
+        source = "benchmark_results"
+    elif family and family in families:
+        status = "family_available"
+        source = "runner_api_tags_family"
+    else:
+        status = "not_seen_locally"
+        source = "none"
+
+    return {
+        "status": status,
+        "source": source,
+        "model_count": int(inventory.get("model_count", 0) or 0),
+    }
+
+
+def benchmark_status_for_row(row: dict[str, Any] | None) -> dict[str, Any]:
+    if not row:
+        return {"status": "pending", "measured_at": "", "tokens_per_second": None, "latency_ms": None}
+    tps_raw = row.get("tokens_per_second")
+    return {
+        "status": "measured" if str(row.get("status", "")).strip().lower() == "ok" else "error",
+        "measured_at": str(row.get("test_time", "")),
+        "tokens_per_second": float(tps_raw) if isinstance(tps_raw, (int, float)) else None,
+        "latency_ms": row.get("latency_ms"),
+    }
+
+
+def ollama_freshness_status(freshness: dict[str, Any], max_library_age_days: int) -> str:
+    age_days = freshness.get("updated_days")
+    if isinstance(age_days, int):
+        return "fresh" if age_days <= max_library_age_days else "stale"
+    return "inferred"
+
+
+def traffic_priority_label(priority_score: int, local_status: str, benchmark_status: str) -> str:
+    if priority_score >= 90 and local_status in {"downloaded", "family_available", "measured_recently"} and benchmark_status == "measured":
+        return "publish_now"
+    if priority_score >= 80 and local_status in {"downloaded", "family_available", "measured_recently"}:
+        return "benchmark_then_publish"
+    if priority_score >= 70:
+        return "watch"
+    return "backlog"
+
+
 def measured_tags_for_family(benchmark: dict[str, Any], family: str) -> list[tuple[str, dict[str, Any]]]:
     rows = benchmark.get("models", {})
     if not isinstance(rows, dict):
@@ -357,6 +455,7 @@ def benchmark_candidates(
     benchmark: dict[str, Any],
     catalog_index: dict[str, dict[str, Any]],
     library_freshness: dict[str, dict[str, Any]] | None = None,
+    local_inventory: dict[str, Any] | None = None,
     *,
     now: dt.datetime,
     window_hours: int,
@@ -389,6 +488,7 @@ def benchmark_candidates(
         tps_raw = row.get("tokens_per_second")
         tps = float(tps_raw) if isinstance(tps_raw, (int, float)) else None
         catalog_item = catalog_index.get(tag_text)
+        family_freshness = freshness.get(family, {})
         source_url = source_url_for(tag_text, catalog_item)
         priority = score_candidate(
             tag=tag_text,
@@ -416,6 +516,20 @@ def benchmark_candidates(
                 "ollama_updated_label": freshness.get(family, {}).get("updated_label", ""),
                 "ollama_updated_days": freshness.get(family, {}).get("updated_days"),
                 "ollama_downloads": freshness.get(family, {}).get("downloads", ""),
+                "ollama_library_freshness": {
+                    "status": ollama_freshness_status(family_freshness, max_library_age_days),
+                    "updated_label": family_freshness.get("updated_label", ""),
+                    "updated_days": family_freshness.get("updated_days"),
+                    "downloads": family_freshness.get("downloads", ""),
+                    "source_url": source_url,
+                },
+                "local_inventory_status": local_inventory_status(tag_text, row, local_inventory or {}),
+                "benchmark_status": benchmark_status_for_row(row),
+                "traffic_priority": traffic_priority_label(
+                    priority,
+                    local_inventory_status(tag_text, row, local_inventory or {})["status"],
+                    benchmark_status_for_row(row)["status"],
+                ),
                 "landing": f"/en/models/{slugify(tag_text.replace(':', '-'))}/",
                 "content_angle": "Fresh RTX 3090 result; publish while Ollama search demand is warm.",
             }
@@ -429,6 +543,7 @@ def weekly_plan_candidates(
     catalog_family_index: dict[str, list[dict[str, Any]]],
     benchmark: dict[str, Any],
     library_freshness: dict[str, dict[str, Any]] | None = None,
+    local_inventory: dict[str, Any] | None = None,
     *,
     now: dt.datetime,
     max_library_age_days: int = 14,
@@ -462,6 +577,7 @@ def weekly_plan_candidates(
         if not is_fresh_on_ollama_library(family, tag, freshness, max_library_age_days=max_library_age_days):
             continue
         catalog_item = catalog_index.get(tag)
+        family_freshness = freshness.get(family, {})
         row = benchmark_row_for_tag(benchmark, tag)
         measured_at = parse_iso_utc(str(row.get("test_time", ""))) if row else None
         tps_raw = row.get("tokens_per_second") if row else None
@@ -498,6 +614,20 @@ def weekly_plan_candidates(
                 "ollama_updated_label": freshness.get(family, {}).get("updated_label", ""),
                 "ollama_updated_days": freshness.get(family, {}).get("updated_days"),
                 "ollama_downloads": freshness.get(family, {}).get("downloads", ""),
+                "ollama_library_freshness": {
+                    "status": ollama_freshness_status(family_freshness, max_library_age_days),
+                    "updated_label": family_freshness.get("updated_label", ""),
+                    "updated_days": family_freshness.get("updated_days"),
+                    "downloads": family_freshness.get("downloads", ""),
+                    "source_url": source_url_for(tag, catalog_item),
+                },
+                "local_inventory_status": local_inventory_status(tag, row, local_inventory or {}),
+                "benchmark_status": benchmark_status_for_row(row),
+                "traffic_priority": traffic_priority_label(
+                    priority,
+                    local_inventory_status(tag, row, local_inventory or {})["status"],
+                    benchmark_status_for_row(row)["status"],
+                ),
                 "landing": f"/en/models/{slugify(tag.replace(':', '-'))}/" if row else "/en/models/",
                 "content_angle": (
                     "New model family with RTX 3090 evidence; publish while launch-search demand is warm."
@@ -527,6 +657,7 @@ def build_watchlist(
     benchmark_file: Path = BENCHMARK_FILE,
     catalog_file: Path = CATALOG_FILE,
     weekly_target_plan_file: Path = WEEKLY_TARGET_PLAN_FILE,
+    runner_status_file: Path = RUNNER_STATUS_FILE,
     window_hours: int = 48,
     max_library_age_days: int = 14,
     fetch_library_freshness: bool = True,
@@ -543,6 +674,11 @@ def build_watchlist(
     catalog_family_index = catalog_by_family(catalog if isinstance(catalog, dict) else {"items": []})
     benchmark = load_json(benchmark_file, {"models": {}})
     weekly_plan = load_json(weekly_target_plan_file, {})
+    runner_status = load_json(runner_status_file, {})
+    local_inventory = build_local_inventory_index(
+        weekly_plan if isinstance(weekly_plan, dict) else {},
+        runner_status if isinstance(runner_status, dict) else {},
+    )
 
     families: set[str] = set()
     if isinstance(benchmark, dict):
@@ -562,6 +698,7 @@ def build_watchlist(
         benchmark if isinstance(benchmark, dict) else {"models": {}},
         catalog_index,
         library_freshness,
+        local_inventory,
         now=current,
         window_hours=window_hours,
         max_library_age_days=max_library_age_days,
@@ -573,6 +710,7 @@ def build_watchlist(
             catalog_family_index,
             benchmark if isinstance(benchmark, dict) else {"models": {}},
             library_freshness,
+            local_inventory,
             now=current,
             max_library_age_days=max_library_age_days,
         )
@@ -583,6 +721,10 @@ def build_watchlist(
         "window_hours": window_hours,
         "max_library_age_days": max_library_age_days,
         "strategy": "Prioritize new Ollama model families; use RTX 3090 benchmark recency as evidence, not as proof of model freshness.",
+        "local_inventory": {
+            "model_count": int(local_inventory.get("model_count", 0) or 0),
+            "source": "runner /api/tags via runner-status.json and weekly-target-plan.json",
+        },
         "items": ranked,
     }
 
@@ -592,6 +734,7 @@ def main() -> None:
     parser.add_argument("--benchmark-file", default=str(BENCHMARK_FILE))
     parser.add_argument("--catalog-file", default=str(CATALOG_FILE))
     parser.add_argument("--weekly-target-plan-file", default=str(WEEKLY_TARGET_PLAN_FILE))
+    parser.add_argument("--runner-status-file", default=str(RUNNER_STATUS_FILE))
     parser.add_argument("--output-file", default=str(OUT_FILE))
     parser.add_argument("--window-hours", type=int, default=48)
     parser.add_argument("--max-library-age-days", type=int, default=14)
@@ -603,6 +746,7 @@ def main() -> None:
         benchmark_file=Path(args.benchmark_file),
         catalog_file=Path(args.catalog_file),
         weekly_target_plan_file=Path(args.weekly_target_plan_file),
+        runner_status_file=Path(args.runner_status_file),
         window_hours=max(1, args.window_hours),
         max_library_age_days=max(1, args.max_library_age_days),
         fetch_library_freshness=not args.no_fetch_library_freshness,
