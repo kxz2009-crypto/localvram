@@ -13,6 +13,7 @@ const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || "未知");
 const latestNewModel = newModelWatchlist.items?.[0];
 const latestNewModelTag = String(latestNewModel?.tag || "未知");
+const latestNewModelLanding = String(latestNewModel?.landing || "/en/models/").replace(/^\/en/, "") || "/models/";
 const latestLocalStatus = String(latestNewModel?.local_inventory_status?.status || "unknown");
 const latestBenchmarkStatus = String(latestNewModel?.benchmark_status?.status || latestNewModel?.status || "unknown");
 const latestOllamaUpdated = String(latestNewModel?.ollama_updated_label || "");
@@ -81,7 +82,7 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM 中文站" />
     </a>
     <div class="ticker">
-      每日更新: {latestDailyUpdateDate} | Ollama 新模型: {latestNewModelTag}{newModelFreshnessLabel} | 本地:
+      每日更新: {latestDailyUpdateDate} | Ollama 新模型: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | 本地:
       {localModelLabel} | RTX 3090: {benchmarkModelLabel} @{gpuTemperature} | Ollama: {ollamaVersion} | 硬件同步:
       <span id="last-sync-local">本地时间加载中...</span> (UTC {lastSyncUtc})
     </div>

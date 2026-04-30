@@ -59,6 +59,7 @@ class DraftCandidate:
     body: str
     candidate_slug: str
     topic_key: str
+    model_tag: str
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -160,12 +161,27 @@ def markdown_escape(value: str) -> str:
     return str(value).replace("\\", "\\\\").replace('"', '\\"')
 
 
-def write_blog_post(path: Path, *, title: str, description: str, pub_date: str, tags: list[str], intent: str, body: str) -> None:
+def write_blog_post(
+    path: Path,
+    *,
+    title: str,
+    description: str,
+    pub_date: str,
+    tags: list[str],
+    intent: str,
+    body: str,
+    keyword: str = "",
+    model_tag: str = "",
+) -> None:
     tags_json = ", ".join(f'"{markdown_escape(tag)}"' for tag in tags)
+    keyword_line = f'keyword: "{markdown_escape(keyword)}"\n' if keyword.strip() else ""
+    model_tag_line = f'model_tag: "{markdown_escape(model_tag)}"\n' if model_tag.strip() else ""
     content = (
         "---\n"
         f'title: "{markdown_escape(title)}"\n'
         f'description: "{markdown_escape(description)}"\n'
+        f"{keyword_line}"
+        f"{model_tag_line}"
         f"pubDate: {pub_date}\n"
         f"updatedDate: {pub_date}\n"
         f"tags: [{tags_json}]\n"
@@ -347,6 +363,7 @@ def collect_candidates(queue_dir: Path, queue_date: str, min_score: float) -> li
         base_slug = re.sub(r"^\d+-", "", draft_path.stem.strip())
         candidate_slug = slugify(base_slug)
         topic_key = normalize_topic_key(keyword, candidate_slug)
+        model_tag = str(frontmatter.get("model_tag", "")).strip()
 
         if status not in {"approved_auto", "approved_manual"}:
             continue
@@ -367,6 +384,7 @@ def collect_candidates(queue_dir: Path, queue_date: str, min_score: float) -> li
                 body=body,
                 candidate_slug=candidate_slug,
                 topic_key=topic_key,
+                model_tag=model_tag,
             )
         )
     out.sort(key=lambda c: (-c.score, c.candidate_slug))
@@ -452,6 +470,8 @@ def main() -> None:
             tags=tags,
             intent=intent,
             body=cand.body,
+            keyword=cand.keyword,
+            model_tag=cand.model_tag,
         )
 
         published.append(
@@ -463,6 +483,7 @@ def main() -> None:
                 "source_draft": str(cand.path.relative_to(ROOT)).replace("\\", "/"),
                 "out_file": str(out_file.relative_to(ROOT)).replace("\\", "/"),
                 "intent": intent,
+                "model_tag": cand.model_tag,
             }
         )
         existing_slugs.add(cand.candidate_slug)
@@ -486,6 +507,7 @@ def main() -> None:
                 tags=list(fallback["tags"]),
                 intent=str(fallback["intent"]),
                 body=str(fallback["body"]),
+                keyword=str(fallback["keyword"]),
             )
             published.append(
                 {

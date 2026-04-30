@@ -21,6 +21,7 @@ PUBLISH_LOG_FILE = ROOT / "src" / "data" / "content-publish-log.json"
 BLOG_DIR = ROOT / "src" / "content" / "blog"
 QUEUE_DIR = ROOT / "content-queue"
 LOGGER = configure_logging("daily-content-agent")
+MODEL_TAG_RE = re.compile(r"\b([a-z0-9][a-z0-9.\-_]*:[a-z0-9][a-z0-9.\-_]*)\b", re.IGNORECASE)
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -113,9 +114,42 @@ def topic_key(item: dict[str, Any]) -> str:
     return ""
 
 
-def collect_blocked_topics(today: dt.date, lookback_days: int = 30) -> tuple[set[str], set[str]]:
+def model_key_from_tag(value: str) -> str:
+    return slugify(str(value or "").strip().replace(":", "-"))
+
+
+def model_key_from_text(value: str) -> str:
+    text = str(value or "")
+    match = MODEL_TAG_RE.search(text)
+    if match:
+        return model_key_from_tag(match.group(1))
+    slug = slugify(text)
+    for pattern in (
+        r"^model-(?P<model>.+?)-rtx-3090-ollama-benchmark$",
+        r"^model-(?P<model>.+?)-local-benchmark$",
+        r"^model-(?P<model>.+?)-vram-requirements-rtx-3090$",
+    ):
+        m = re.match(pattern, slug)
+        if m:
+            return slugify(m.group("model"))
+    return ""
+
+
+def date_from_frontmatter(value: str) -> dt.date | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    try:
+        return dt.date.fromisoformat(raw[:10])
+    except ValueError:
+        return None
+
+
+def collect_blocked_topics(today: dt.date, lookback_days: int = 30) -> tuple[set[str], set[str], set[str]]:
     blocked_slugs: set[str] = set()
     blocked_topics: set[str] = set()
+    blocked_model_keys: set[str] = set()
+    threshold = today - dt.timedelta(days=max(1, int(lookback_days)))
 
     if BLOG_DIR.exists():
         for post in BLOG_DIR.glob("*.md"):
@@ -125,22 +159,42 @@ def collect_blocked_topics(today: dt.date, lookback_days: int = 30) -> tuple[set
             k = slugify(str(frontmatter.get("keyword", "")).strip())
             if k and k != "untitled":
                 blocked_topics.add(k)
+            pub_date = date_from_frontmatter(frontmatter.get("pubDate", "") or frontmatter.get("date", ""))
+            if pub_date is None or pub_date >= threshold:
+                model_from_slug = model_key_from_text(post.stem)
+                if model_from_slug:
+                    blocked_model_keys.add(model_from_slug)
+                model_from_meta = model_key_from_tag(str(frontmatter.get("model_tag", "")).strip())
+                if model_from_meta and model_from_meta != "untitled":
+                    blocked_model_keys.add(model_from_meta)
+                model_from_keyword = model_key_from_text(str(frontmatter.get("keyword", "")).strip())
+                if model_from_keyword:
+                    blocked_model_keys.add(model_from_keyword)
 
     publish_log = load_json(PUBLISH_LOG_FILE, {"history": []})
     for run in publish_log.get("history", []):
         if not isinstance(run, dict):
             continue
+        run_date = date_from_frontmatter(run.get("queue_date", "") or run.get("run_at", ""))
+        model_log_in_window = run_date is None or run_date >= threshold
         for item in run.get("published", []):
             if not isinstance(item, dict):
                 continue
             s = slugify(str(item.get("slug", "")).strip())
             if s and s != "untitled":
                 blocked_slugs.add(s)
+            if model_log_in_window and s and s != "untitled":
+                model_from_slug = model_key_from_text(s)
+                if model_from_slug:
+                    blocked_model_keys.add(model_from_slug)
             t = slugify(str(item.get("topic_key", "")).strip())
             if t and t != "untitled":
                 blocked_topics.add(t)
+            if model_log_in_window:
+                model_from_meta = model_key_from_tag(str(item.get("model_tag", "")).strip())
+                if model_from_meta and model_from_meta != "untitled":
+                    blocked_model_keys.add(model_from_meta)
 
-    threshold = today - dt.timedelta(days=max(1, int(lookback_days)))
     draft_index = load_json(DRAFT_INDEX_FILE, {"items": []})
     for item in draft_index.get("items", []):
         if not isinstance(item, dict):
@@ -155,11 +209,17 @@ def collect_blocked_topics(today: dt.date, lookback_days: int = 30) -> tuple[set
         s = slugify(str(item.get("slug", "")).strip())
         if s and s != "untitled":
             blocked_slugs.add(s)
+            model_from_slug = model_key_from_text(s)
+            if model_from_slug:
+                blocked_model_keys.add(model_from_slug)
         t = topic_key(item)
         if t:
             blocked_topics.add(t)
+        model_from_meta = model_key_from_tag(str(item.get("model_tag", "")).strip())
+        if model_from_meta and model_from_meta != "untitled":
+            blocked_model_keys.add(model_from_meta)
 
-    return blocked_slugs, blocked_topics
+    return blocked_slugs, blocked_topics, blocked_model_keys
 
 
 def score(item: dict[str, Any]) -> int:
@@ -213,6 +273,8 @@ def candidate_from_new_model_watchlist(item: dict[str, Any]) -> dict[str, Any]:
         "ctr": 0.0,
         "source": "new_model_watchlist",
         "tag": tag,
+        "model_tag": tag,
+        "model_key": model_key_from_tag(tag),
         "watchlist_priority_score": raw_priority,
     }
 
@@ -235,22 +297,29 @@ def filter_fresh_candidates(
     *,
     blocked_slugs: set[str],
     blocked_topics: set[str],
+    blocked_model_keys: set[str] | None = None,
     min_score: int,
 ) -> list[dict[str, Any]]:
     selected: list[dict[str, Any]] = []
+    model_keys = blocked_model_keys if blocked_model_keys is not None else set()
     for item in sorted(dedupe_candidates(items), key=score_with_boost, reverse=True):
         current_score = score_with_boost(item)
         if current_score < min_score:
             continue
         s = slugify(item.get("slug") or item.get("keyword") or "")
         t = topic_key(item)
+        model_key = str(item.get("model_key") or model_key_from_tag(str(item.get("model_tag", ""))) or model_key_from_text(str(item.get("keyword", ""))) or model_key_from_text(s)).strip()
         if s in blocked_slugs:
             continue
         if t and t in blocked_topics:
             continue
+        if model_key and model_key in model_keys:
+            continue
         blocked_slugs.add(s)
         if t:
             blocked_topics.add(t)
+        if model_key:
+            model_keys.add(model_key)
         selected.append(item)
     return selected
 
@@ -446,6 +515,7 @@ def draft_markdown(
     links: dict[str, str],
     landing: str,
     date_iso: str,
+    model_tag: str = "",
 ) -> str:
     measured_lines = []
     for row in measured:
@@ -469,22 +539,23 @@ def draft_markdown(
     }
     primary_action = intent_actions.get(intent, intent_actions["guide"])
     topic = humanize_topic(normalize_title_topic(keyword))
-    model_tag = ""
+    detected_model_tag = str(model_tag or "").strip()
     model_match = re.search(r"([a-z0-9][a-z0-9.\-_]*:[a-z0-9][a-z0-9.\-_]*)", keyword, flags=re.IGNORECASE)
-    if model_match:
-        model_tag = model_match.group(1)
-    run_command = f"ollama run {model_tag}" if model_tag else "ollama run <model-tag>"
+    if not detected_model_tag and model_match:
+        detected_model_tag = model_match.group(1)
+    run_command = f"ollama run {detected_model_tag}" if detected_model_tag else "ollama run <model-tag>"
     model_line = (
-        f"The model tag to validate first is `{model_tag}`."
-        if model_tag
+        f"The model tag to validate first is `{detected_model_tag}`."
+        if detected_model_tag
         else "Start from the exact Ollama tag named in the query or model page before testing variants."
     )
+    model_frontmatter = f'model_tag: "{detected_model_tag}"\n' if detected_model_tag else ""
 
     return f"""---
 title: "{title}"
 date: {date_iso}
 keyword: "{keyword}"
-score: {score_value}
+{model_frontmatter}score: {score_value}
 source: {source}
 status: draft
 ---
@@ -554,7 +625,7 @@ def main() -> None:
     min_candidate_score = max(0, int(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_SCORE", "120")))
     today = dt.date.today()
     today_iso = today.isoformat()
-    blocked_slugs, blocked_topics = collect_blocked_topics(today, lookback_days=30)
+    blocked_slugs, blocked_topics, blocked_model_keys = collect_blocked_topics(today, lookback_days=30)
 
     opportunities = load_json(OPPORTUNITY_FILE, {"items": []})
     ranked = sorted(opportunities.get("items", []), key=score, reverse=True)
@@ -576,6 +647,7 @@ def main() -> None:
         watchlist_ranked + seeded + sc_ranked,
         blocked_slugs=blocked_slugs,
         blocked_topics=blocked_topics,
+        blocked_model_keys=blocked_model_keys,
         min_score=min_candidate_score,
     )
     selected = primary[:max_drafts]
@@ -584,6 +656,7 @@ def main() -> None:
             build_benchmark_fallback_candidates(max_count=200),
             blocked_slugs=blocked_slugs,
             blocked_topics=blocked_topics,
+            blocked_model_keys=blocked_model_keys,
             min_score=min_candidate_score,
         )
         selected.extend(fallback[: max_drafts - len(selected)])
@@ -608,6 +681,7 @@ def main() -> None:
             links=links,
             landing=str(item.get("landing", "")).strip(),
             date_iso=today_iso,
+            model_tag=str(item.get("model_tag", item.get("tag", ""))).strip(),
         )
         draft_path = queue_day_dir / f"{idx:02d}-{slug}.md"
         draft_path.write_text(draft_text, encoding="utf-8")
@@ -620,6 +694,8 @@ def main() -> None:
                 "score": score_with_boost(item),
                 "source": str(item.get("source", "unknown")),
                 "landing": str(item.get("landing", "")),
+                "model_tag": str(item.get("model_tag", item.get("tag", ""))).strip(),
+                "model_key": str(item.get("model_key", "")).strip(),
                 "draft_path": str(draft_path.relative_to(ROOT)).replace("\\", "/"),
             }
         )

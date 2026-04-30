@@ -88,7 +88,37 @@ class ContentStrategyTests(unittest.TestCase):
         self.assertEqual(candidate["source"], "new_model_watchlist")
         self.assertEqual(candidate["landing"], "/en/models/gpt-oss-20b/")
         self.assertEqual(candidate["tag"], "gpt-oss:20b")
+        self.assertEqual(candidate["model_key"], "gpt-oss-20b")
         self.assertGreaterEqual(agent.score_with_boost(candidate), 900)
+
+    def test_new_model_candidates_respect_model_cooldown(self):
+        agent = load_script("daily-content-agent")
+        first = agent.candidate_from_new_model_watchlist(
+            {
+                "tag": "qwen3.6:35b",
+                "keyword": "qwen3.6:35b rtx 3090 ollama benchmark",
+                "slug": "model-qwen3-6-35b-rtx-3090-ollama-benchmark",
+                "priority_score": 100,
+            }
+        )
+        second = agent.candidate_from_new_model_watchlist(
+            {
+                "tag": "gpt-oss:20b",
+                "keyword": "gpt-oss:20b rtx 3090 ollama benchmark",
+                "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
+                "priority_score": 96,
+            }
+        )
+
+        selected = agent.filter_fresh_candidates(
+            [first, second],
+            blocked_slugs=set(),
+            blocked_topics=set(),
+            blocked_model_keys={"qwen3-6-35b"},
+            min_score=120,
+        )
+
+        self.assertEqual([item["tag"] for item in selected], ["gpt-oss:20b"])
 
     def test_title_humanizer_preserves_local_llm_acronyms(self):
         agent = load_script("daily-content-agent")

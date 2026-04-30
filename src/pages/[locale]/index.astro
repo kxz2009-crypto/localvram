@@ -33,6 +33,7 @@ const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || unknownLabel);
 const latestNewModel = newModelWatchlist.items?.[0];
 const latestNewModelTag = String(latestNewModel?.tag || unknownLabel);
+const latestNewModelLanding = localHref(String(latestNewModel?.landing || "/en/models/"));
 const latestLocalStatus = String(latestNewModel?.local_inventory_status?.status || "unknown");
 const latestBenchmarkStatus = String(latestNewModel?.benchmark_status?.status || latestNewModel?.status || "unknown");
 const latestOllamaUpdated = String(latestNewModel?.ollama_updated_label || "");
@@ -106,7 +107,7 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      {text.ticker_daily_update_label || "Daily Update"}: {latestDailyUpdateDate} | New on Ollama: {latestNewModelTag}{newModelFreshnessLabel} | Local: {localModelLabel} | {text.ticker_gpu_label || "RTX 3090"}: {benchmarkModelLabel} @ {gpuTemperature} | {text.ticker_ollama_label || "Ollama"}: {ollamaVersion} | {text.ticker_hardware_sync_label || "Hardware Sync"}: <span id="last-sync-local">{localLoadingLabel}</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
+      {text.ticker_daily_update_label || "Daily Update"}: {latestDailyUpdateDate} | New on Ollama: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | Local: {localModelLabel} | {text.ticker_gpu_label || "RTX 3090"}: {benchmarkModelLabel} @ {gpuTemperature} | {text.ticker_ollama_label || "Ollama"}: {ollamaVersion} | {text.ticker_hardware_sync_label || "Hardware Sync"}: <span id="last-sync-local">{localLoadingLabel}</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href={localHref("/en/status/data-freshness/")}>{text.nav_data_status}</a>
   </header>
