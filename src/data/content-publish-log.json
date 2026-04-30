@@ -1,29 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-29T22:32:40.038328Z",
+  "updated_at": "2026-04-30T04:11:33.980349Z",
   "last_run": {
-    "run_at": "2026-04-29T22:32:40.038328Z",
-    "queue_date": "2026-04-29",
-    "candidate_count": 1,
+    "run_at": "2026-04-30T04:11:33.980349Z",
+    "queue_date": "2026-04-30",
+    "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 0,
+    "fallback_generated_count": 1,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "model-qwen3-6-35b-rtx-3090-ollama-benchmark",
-        "title": "qwen3.6:35B RTX 3090 Ollama Benchmark: Practical GPU Selection for Stable Local Inference (2026)",
-        "topic_key": "qwen3-6-35b-rtx-3090-ollama-benchmark",
-        "score": 1000.0,
-        "source_draft": "content-queue/2026-04-29/01-model-qwen3-6-35b-rtx-3090-ollama-benchmark.md",
-        "out_file": "src/content/blog/model-qwen3-6-35b-rtx-3090-ollama-benchmark.md",
-        "intent": "hardware"
+        "slug": "daily-local-llm-benchmark-snapshot-2026-04-30",
+        "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-04-30-daily-local-llm-benchmark-snapshot-2026-04-30",
+        "score": 120.0,
+        "source_draft": "system:fallback-daily-generator",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-30.md",
+        "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-04-30T04:11:33.980349Z",
+      "queue_date": "2026-04-30",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-04-30",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-04-30-daily-local-llm-benchmark-snapshot-2026-04-30",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-30.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-04-29T22:32:40.038328Z",
       "queue_date": "2026-04-29",
@@ -1543,15 +1565,6 @@
     {
       "run_at": "2026-02-28T02:58:10.028963Z",
       "queue_date": "2026-02-28",
-      "candidate_count": 0,
-      "published_count": 0,
-      "skipped_count": 0,
-      "published": [],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-02-27T17:41:45.886690Z",
-      "queue_date": "2026-02-27",
       "candidate_count": 0,
       "published_count": 0,
       "skipped_count": 0,

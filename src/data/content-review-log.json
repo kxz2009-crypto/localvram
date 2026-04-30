@@ -1,117 +1,29 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-29T22:32:39.962863Z",
+  "updated_at": "2026-04-30T04:11:33.920299Z",
   "last_run": {
-    "run_at": "2026-04-29T22:32:39.962863Z",
-    "queue_date": "2026-04-29",
-    "reviewed_count": 6,
-    "auto_approved_count": 1,
-    "pending_manual_review_count": 1,
-    "rejected_manual_count": 4,
-    "high_risk_count": 2,
-    "risk_flag_counts": {
-      "duplicate_queue_topic": 2,
-      "existing_blog_slug": 2,
-      "near_duplicate_published": 2
-    },
-    "items": [
-      {
-        "draft": "content-queue/2026-04-29/01-model-deepseek-r1-14b-rtx-3090-ollama-benchmark.md",
-        "slug": "model-deepseek-r1-14b-rtx-3090-ollama-benchmark",
-        "score": 1000.0,
-        "status_before": "rejected_manual",
-        "status_after": "rejected_manual",
-        "word_count": 548,
-        "risk_flags": [
-          "existing_blog_slug",
-          "near_duplicate_published"
-        ],
-        "similarity": {
-          "score": 0.9927,
-          "topic_score": 1.0,
-          "slug": "model-deepseek-r1-14b-rtx-3090-ollama-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-29/01-model-qwen3-6-35b-rtx-3090-ollama-benchmark.md",
-        "slug": "model-qwen3-6-35b-rtx-3090-ollama-benchmark",
-        "score": 1000.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 548,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.9507,
-          "topic_score": 0.3889,
-          "slug": "model-gemma3-27b-rtx-3090-ollama-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
-        "slug": "q4-vs-q8-quality-loss-ollama-guide",
-        "score": 576.0,
-        "status_before": "rejected_manual",
-        "status_after": "rejected_manual",
-        "word_count": 219,
-        "risk_flags": [
-          "duplicate_queue_topic"
-        ],
-        "similarity": {
-          "score": 0.8397,
-          "topic_score": 0.0667,
-          "slug": "model-qwen3-6-35b-local-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-29/02-model-gemma3-27b-rtx-3090-ollama-benchmark.md",
-        "slug": "model-gemma3-27b-rtx-3090-ollama-benchmark",
-        "score": 1000.0,
-        "status_before": "rejected_manual",
-        "status_after": "rejected_manual",
-        "word_count": 543,
-        "risk_flags": [
-          "existing_blog_slug",
-          "near_duplicate_published"
-        ],
-        "similarity": {
-          "score": 0.9928,
-          "topic_score": 1.0,
-          "slug": "model-gemma3-27b-rtx-3090-ollama-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-29/02-q4-vs-q8-quality-loss-ollama-guide.md",
-        "slug": "q4-vs-q8-quality-loss-ollama-guide",
-        "score": 576.0,
-        "status_before": "draft",
-        "status_after": "pending_manual_review",
-        "word_count": 545,
-        "risk_flags": [
-          "duplicate_queue_topic"
-        ],
-        "similarity": {
-          "score": 0.9103,
-          "topic_score": 0.1765,
-          "slug": "model-deepseek-r1-14b-rtx-3090-ollama-benchmark"
-        }
-      },
-      {
-        "draft": "content-queue/2026-04-29/03-model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
-        "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
-        "score": 1000.0,
-        "status_before": "rejected_manual",
-        "status_after": "rejected_manual",
-        "word_count": 548,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.9574,
-          "topic_score": 0.3684,
-          "slug": "model-gemma3-27b-rtx-3090-ollama-benchmark"
-        }
-      }
-    ]
+    "run_at": "2026-04-30T04:11:33.920299Z",
+    "queue_date": "2026-04-30",
+    "reviewed_count": 0,
+    "auto_approved_count": 0,
+    "pending_manual_review_count": 0,
+    "rejected_manual_count": 0,
+    "high_risk_count": 0,
+    "risk_flag_counts": {},
+    "items": []
   },
   "history": [
+    {
+      "run_at": "2026-04-30T04:11:33.920299Z",
+      "queue_date": "2026-04-30",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-04-29T22:32:39.962863Z",
       "queue_date": "2026-04-29",
@@ -2494,100 +2406,6 @@
           "similarity": {
             "score": 0.9905,
             "slug": "model-qwen3-coder-30b-local-benchmark"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-02-27T17:17:33.596339Z",
-      "queue_date": "2026-02-27",
-      "reviewed_count": 6,
-      "auto_approved_count": 3,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 3,
-      "high_risk_count": 0,
-      "risk_flag_counts": {
-        "existing_blog_slug": 1
-      },
-      "items": [
-        {
-          "draft": "content-queue/2026-02-27/01-model-qwen3-coder-30b-local-benchmark.md",
-          "slug": "model-qwen3-coder-30b-local-benchmark",
-          "score": 1000.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 195,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.7672,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-27/01-q4-vs-q8-quality-loss.md",
-          "slug": "q4-vs-q8-quality-loss",
-          "score": 360.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 195,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.7845,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-27/02-model-qwen3-8b-local-benchmark.md",
-          "slug": "model-qwen3-8b-local-benchmark",
-          "score": 1000.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 194,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.7672,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-27/02-ollama-local-cluster-network.md",
-          "slug": "ollama-local-cluster-network",
-          "score": 336.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 193,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.7692,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-27/03-en-tools-quantization-blind-test.md",
-          "slug": "en-tools-quantization-blind-test",
-          "score": 137.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 197,
-          "risk_flags": [
-            "existing_blog_slug"
-          ],
-          "similarity": {
-            "score": 0.8158,
-            "slug": "en-tools-quantization-blind-test"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-27/03-model-deepseek-r1-14b-local-benchmark.md",
-          "slug": "model-deepseek-r1-14b-local-benchmark",
-          "score": 560.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 195,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.7607,
-            "slug": "en-tools-quantization-blind-test"
           }
         }
       ]
