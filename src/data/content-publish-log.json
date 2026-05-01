@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-04-30T04:11:33.980349Z",
+  "updated_at": "2026-05-01T04:36:06.371121Z",
   "last_run": {
-    "run_at": "2026-04-30T04:11:33.980349Z",
-    "queue_date": "2026-04-30",
+    "run_at": "2026-05-01T04:36:06.371121Z",
+    "queue_date": "2026-05-01",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-04-30",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-01",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-04-30-daily-local-llm-benchmark-snapshot-2026-04-30",
+        "topic_key": "daily-benchmark-fallback-2026-05-01-daily-local-llm-benchmark-snapshot-2026-05-01",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-30.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-01.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-01T04:36:06.371121Z",
+      "queue_date": "2026-05-01",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-01",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-01-daily-local-llm-benchmark-snapshot-2026-05-01",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-01.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-04-30T04:11:33.980349Z",
       "queue_date": "2026-04-30",
@@ -1555,15 +1577,6 @@
     },
     {
       "run_at": "2026-02-28T10:46:49.293867Z",
-      "queue_date": "2026-02-28",
-      "candidate_count": 0,
-      "published_count": 0,
-      "skipped_count": 0,
-      "published": [],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-02-28T02:58:10.028963Z",
       "queue_date": "2026-02-28",
       "candidate_count": 0,
       "published_count": 0,
