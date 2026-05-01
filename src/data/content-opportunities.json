@@ -1,24 +1,28 @@
 {
-  "updated_at": "2026-04-24T04:42:03.841576Z",
+  "updated_at": "2026-05-01T05:27:50.964544Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-05-01T00:00:00Z",
+    "next_refresh_at": "2026-05-08T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-04-24T04:42:03.841576Z",
+    "last_refresh_at": "2026-05-01T05:27:50.964544Z",
     "last_refresh_summary": {
-      "incoming_count": 0,
-      "removed_count": 0,
-      "incoming_topic_keys": [],
-      "removed_topic_keys": [],
-      "blocked_recent_topic_count": 62
+      "incoming_count": 1,
+      "removed_count": 1,
+      "incoming_topic_keys": [
+        "qwen3-6-35b-local-inference-benchmark-update"
+      ],
+      "removed_topic_keys": [
+        "gemma3-27b-local-inference-benchmark-update"
+      ],
+      "blocked_recent_topic_count": 70
     }
   },
   "items": [
@@ -156,13 +160,6 @@
       "freshness_gap_score": 10
     },
     {
-      "slug": "model-gemma3-27b-benchmark-refresh",
-      "keyword": "gemma3:27b local inference benchmark update",
-      "search_intent_score": 6,
-      "commercial_intent_score": 6,
-      "freshness_gap_score": 10
-    },
-    {
       "slug": "model-qwen2-5-coder-32b-benchmark-refresh",
       "keyword": "qwen2.5-coder:32b local inference benchmark update",
       "search_intent_score": 6,
@@ -172,6 +169,13 @@
     {
       "slug": "model-qwen3-5-35b-benchmark-refresh",
       "keyword": "qwen3.5:35b local inference benchmark update",
+      "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
+      "slug": "model-qwen3-6-35b-benchmark-refresh",
+      "keyword": "qwen3.6:35b local inference benchmark update",
       "search_intent_score": 6,
       "commercial_intent_score": 6,
       "freshness_gap_score": 10
