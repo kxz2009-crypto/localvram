@@ -1,29 +1,53 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-01T04:36:06.371121Z",
+  "updated_at": "2026-05-02T04:00:04.644186Z",
   "last_run": {
-    "run_at": "2026-05-01T04:36:06.371121Z",
-    "queue_date": "2026-05-01",
-    "candidate_count": 0,
+    "run_at": "2026-05-02T04:00:04.644186Z",
+    "queue_date": "2026-05-02",
+    "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 1,
+    "fallback_generated_count": 0,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-01",
-        "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-01-daily-local-llm-benchmark-snapshot-2026-05-01",
-        "score": 120.0,
-        "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-01.md",
-        "intent": "benchmark"
+        "slug": "model-deepseek-r1-14b-benchmark-refresh",
+        "title": "deepseek-r1:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+        "topic_key": "deepseek-r1-14b-local-inference-benchmark-update",
+        "score": 640.0,
+        "source_draft": "content-queue/2026-05-02/01-model-deepseek-r1-14b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-deepseek-r1-14b-benchmark-refresh.md",
+        "intent": "benchmark",
+        "model_tag": "deepseek-r1:14b"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-02T04:00:04.644186Z",
+      "queue_date": "2026-05-02",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "model-deepseek-r1-14b-benchmark-refresh",
+          "title": "deepseek-r1:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "topic_key": "deepseek-r1-14b-local-inference-benchmark-update",
+          "score": 640.0,
+          "source_draft": "content-queue/2026-05-02/01-model-deepseek-r1-14b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-deepseek-r1-14b-benchmark-refresh.md",
+          "intent": "benchmark",
+          "model_tag": "deepseek-r1:14b"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-01T04:36:06.371121Z",
       "queue_date": "2026-05-01",
@@ -1574,15 +1598,6 @@
           "reason": "max_publish_reached"
         }
       ]
-    },
-    {
-      "run_at": "2026-02-28T10:46:49.293867Z",
-      "queue_date": "2026-02-28",
-      "candidate_count": 0,
-      "published_count": 0,
-      "skipped_count": 0,
-      "published": [],
-      "skipped": []
     }
   ]
 }

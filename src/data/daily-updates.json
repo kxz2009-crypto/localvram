@@ -1,6 +1,32 @@
 {
   "items": [
     {
+      "date": "2026-05-02",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-05-02",
+          "slug": "model-deepseek-r1-14b-benchmark-refresh",
+          "title": "deepseek-r1:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
+          "keyword": "deepseek-r1:14b local inference benchmark update",
+          "score": 640,
+          "source": "opportunity",
+          "landing": "",
+          "model_tag": "",
+          "model_key": "",
+          "draft_path": "content-queue/2026-05-02/01-model-deepseek-r1-14b-benchmark-refresh.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-deepseek-r1-14b-benchmark-refresh",
+          "title": "deepseek-r1:14B Local Benchmark: Throughput, Latency, and VRAM (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-05-02T04:00:04.644186Z"
+    },
+    {
       "date": "2026-05-01",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -625,44 +651,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-03-31T03:38:52.580852Z"
-    },
-    {
-      "date": "2026-03-30",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-03-30",
-          "slug": "model-qwen3-8b-benchmark-refresh",
-          "title": "qwen3:8B: Local Inference Performance Report (2026)",
-          "keyword": "qwen3:8b local inference benchmark update",
-          "score": 1000,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-30/01-model-qwen3-8b-benchmark-refresh.md"
-        },
-        {
-          "date": "2026-03-30",
-          "slug": "model-qwen3-coder-30b-benchmark-refresh",
-          "title": "qwen3-coder:30B Local Benchmark: Throughput, Latency, and VRAM (2026)",
-          "keyword": "qwen3-coder:30b local inference benchmark update",
-          "score": 1000,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-30/02-model-qwen3-coder-30b-benchmark-refresh.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "model-qwen3-8b-benchmark-refresh",
-          "title": "qwen3:8B: Local Inference Performance Report (2026)"
-        },
-        {
-          "slug": "model-qwen3-coder-30b-benchmark-refresh",
-          "title": "qwen3-coder:30B Local Benchmark: Throughput, Latency, and VRAM (2026)"
-        }
-      ],
-      "published_count": 2,
-      "publish_run_at": "2026-03-30T03:48:07.649435Z"
     }
   ]
 }

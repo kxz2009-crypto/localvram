@@ -1,18 +1,59 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-01T04:36:06.297931Z",
+  "updated_at": "2026-05-02T04:00:04.569893Z",
   "last_run": {
-    "run_at": "2026-05-01T04:36:06.297931Z",
-    "queue_date": "2026-05-01",
-    "reviewed_count": 0,
-    "auto_approved_count": 0,
+    "run_at": "2026-05-02T04:00:04.569893Z",
+    "queue_date": "2026-05-02",
+    "reviewed_count": 1,
+    "auto_approved_count": 1,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": []
+    "items": [
+      {
+        "draft": "content-queue/2026-05-02/01-model-deepseek-r1-14b-benchmark-refresh.md",
+        "slug": "model-deepseek-r1-14b-benchmark-refresh",
+        "score": 640.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 539,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.9574,
+          "topic_score": 0.2778,
+          "slug": "model-deepseek-r1-14b-rtx-3090-ollama-benchmark"
+        }
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-05-02T04:00:04.569893Z",
+      "queue_date": "2026-05-02",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-05-02/01-model-deepseek-r1-14b-benchmark-refresh.md",
+          "slug": "model-deepseek-r1-14b-benchmark-refresh",
+          "score": 640.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 539,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.9574,
+            "topic_score": 0.2778,
+            "slug": "model-deepseek-r1-14b-rtx-3090-ollama-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-05-01T04:36:06.297931Z",
       "queue_date": "2026-05-01",
@@ -2204,65 +2245,6 @@
           "similarity": {
             "score": 0.9537,
             "topic_score": 0.2,
-            "slug": "model-qwen3-coder-30b-local-benchmark"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-02-28T02:58:09.954445Z",
-      "queue_date": "2026-02-28",
-      "reviewed_count": 3,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 3,
-      "rejected_manual_count": 0,
-      "high_risk_count": 3,
-      "risk_flag_counts": {
-        "near_duplicate_published": 3
-      },
-      "items": [
-        {
-          "draft": "content-queue/2026-02-28/01-llama-70b-on-rtx-3090-local-setup.md",
-          "slug": "llama-70b-on-rtx-3090-local-setup",
-          "score": 720.0,
-          "status_before": "draft",
-          "status_after": "pending_manual_review",
-          "word_count": 196,
-          "risk_flags": [
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.945,
-            "slug": "model-qwen3-coder-30b-local-benchmark"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/02-qwen35-122b-cloud-vs-local-cost.md",
-          "slug": "qwen35-122b-cloud-vs-local-cost",
-          "score": 720.0,
-          "status_before": "draft",
-          "status_after": "pending_manual_review",
-          "word_count": 196,
-          "risk_flags": [
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.981,
-            "slug": "model-qwen3-coder-30b-local-benchmark"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/03-rtx4090-vs-rtx3090-for-local-llm.md",
-          "slug": "rtx4090-vs-rtx3090-for-local-llm",
-          "score": 720.0,
-          "status_before": "draft",
-          "status_after": "pending_manual_review",
-          "word_count": 196,
-          "risk_flags": [
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.9537,
             "slug": "model-qwen3-coder-30b-local-benchmark"
           }
         }
