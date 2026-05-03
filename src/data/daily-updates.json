@@ -1,6 +1,32 @@
 {
   "items": [
     {
+      "date": "2026-05-03",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-05-03",
+          "slug": "model-qwen3-6-35b-benchmark-refresh",
+          "title": "qwen3.6:35B: Local Inference Performance Report (2026)",
+          "keyword": "qwen3.6:35b local inference benchmark update",
+          "score": 360,
+          "source": "opportunity",
+          "landing": "",
+          "model_tag": "",
+          "model_key": "",
+          "draft_path": "content-queue/2026-05-03/01-model-qwen3-6-35b-benchmark-refresh.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-qwen3-6-35b-benchmark-refresh",
+          "title": "qwen3.6:35B: Local Inference Performance Report (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-05-03T04:28:20.045106Z"
+    },
+    {
       "date": "2026-05-02",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -627,30 +653,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-04-01T03:50:12.814061Z"
-    },
-    {
-      "date": "2026-03-31",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-03-31",
-          "slug": "ollama-vs-vllm-throughput-comparison-2026",
-          "title": "Ollama Vs Vllm Throughput Comparison Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "ollama vs vllm throughput comparison",
-          "score": 648,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-03-31/01-ollama-vs-vllm-throughput-comparison-2026.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "ollama-vs-vllm-throughput-comparison-2026",
-          "title": "Ollama Vs Vllm Throughput Comparison Benchmark Results: Local GPU Throughput Breakdown (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-03-31T03:38:52.580852Z"
     }
   ]
 }

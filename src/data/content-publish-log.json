@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-02T04:00:04.644186Z",
+  "updated_at": "2026-05-03T04:28:20.045106Z",
   "last_run": {
-    "run_at": "2026-05-02T04:00:04.644186Z",
-    "queue_date": "2026-05-02",
+    "run_at": "2026-05-03T04:28:20.045106Z",
+    "queue_date": "2026-05-03",
     "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,19 +12,42 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "model-deepseek-r1-14b-benchmark-refresh",
-        "title": "deepseek-r1:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
-        "topic_key": "deepseek-r1-14b-local-inference-benchmark-update",
-        "score": 640.0,
-        "source_draft": "content-queue/2026-05-02/01-model-deepseek-r1-14b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-deepseek-r1-14b-benchmark-refresh.md",
+        "slug": "model-qwen3-6-35b-benchmark-refresh",
+        "title": "qwen3.6:35B: Local Inference Performance Report (2026)",
+        "topic_key": "qwen3-6-35b-local-inference-benchmark-update",
+        "score": 360.0,
+        "source_draft": "content-queue/2026-05-03/01-model-qwen3-6-35b-benchmark-refresh.md",
+        "out_file": "src/content/blog/model-qwen3-6-35b-benchmark-refresh.md",
         "intent": "benchmark",
-        "model_tag": "deepseek-r1:14b"
+        "model_tag": "qwen3.6:35b"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-03T04:28:20.045106Z",
+      "queue_date": "2026-05-03",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "model-qwen3-6-35b-benchmark-refresh",
+          "title": "qwen3.6:35B: Local Inference Performance Report (2026)",
+          "topic_key": "qwen3-6-35b-local-inference-benchmark-update",
+          "score": 360.0,
+          "source_draft": "content-queue/2026-05-03/01-model-qwen3-6-35b-benchmark-refresh.md",
+          "out_file": "src/content/blog/model-qwen3-6-35b-benchmark-refresh.md",
+          "intent": "benchmark",
+          "model_tag": "qwen3.6:35b"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-02T04:00:04.644186Z",
       "queue_date": "2026-05-02",
@@ -1565,39 +1588,6 @@
         }
       ],
       "skipped": []
-    },
-    {
-      "run_at": "2026-02-28T10:47:27.825578Z",
-      "queue_date": "2026-02-28",
-      "candidate_count": 3,
-      "published_count": 2,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "llama-70b-on-rtx-3090-local-setup",
-          "title": "Llama 70B On Rtx 3090 Local Setup: Practical Guide (2026)",
-          "topic_key": "llama-70b-on-rtx-3090-local-setup",
-          "score": 720.0,
-          "source_draft": "content-queue/2026-02-28/01-llama-70b-on-rtx-3090-local-setup.md",
-          "out_file": "src/content/blog/llama-70b-on-rtx-3090-local-setup.md",
-          "intent": "hardware"
-        },
-        {
-          "slug": "qwen35-122b-cloud-vs-local-cost",
-          "title": "Qwen3.5 122B Cloud Vs Local Cost: Practical Guide (2026)",
-          "topic_key": "qwen3-5-122b-cloud-vs-local-cost",
-          "score": 720.0,
-          "source_draft": "content-queue/2026-02-28/02-qwen35-122b-cloud-vs-local-cost.md",
-          "out_file": "src/content/blog/qwen35-122b-cloud-vs-local-cost.md",
-          "intent": "cost"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-02-28/03-rtx4090-vs-rtx3090-for-local-llm.md",
-          "reason": "max_publish_reached"
-        }
-      ]
     }
   ]
 }
