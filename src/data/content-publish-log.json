@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-03T04:28:20.045106Z",
+  "updated_at": "2026-05-04T04:27:50.272200Z",
   "last_run": {
-    "run_at": "2026-05-03T04:28:20.045106Z",
-    "queue_date": "2026-05-03",
+    "run_at": "2026-05-04T04:27:50.272200Z",
+    "queue_date": "2026-05-04",
     "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,19 +12,42 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "model-qwen3-6-35b-benchmark-refresh",
-        "title": "qwen3.6:35B: Local Inference Performance Report (2026)",
-        "topic_key": "qwen3-6-35b-local-inference-benchmark-update",
-        "score": 360.0,
-        "source_draft": "content-queue/2026-05-03/01-model-qwen3-6-35b-benchmark-refresh.md",
-        "out_file": "src/content/blog/model-qwen3-6-35b-benchmark-refresh.md",
+        "slug": "model-gemma3-27b-local-benchmark",
+        "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+        "topic_key": "gemma3-27b-local-inference-benchmark",
+        "score": 180.0,
+        "source_draft": "content-queue/2026-05-04/01-model-gemma3-27b-local-benchmark.md",
+        "out_file": "src/content/blog/model-gemma3-27b-local-benchmark.md",
         "intent": "benchmark",
-        "model_tag": "qwen3.6:35b"
+        "model_tag": "gemma3:27b"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-04T04:27:50.272200Z",
+      "queue_date": "2026-05-04",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "model-gemma3-27b-local-benchmark",
+          "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "topic_key": "gemma3-27b-local-inference-benchmark",
+          "score": 180.0,
+          "source_draft": "content-queue/2026-05-04/01-model-gemma3-27b-local-benchmark.md",
+          "out_file": "src/content/blog/model-gemma3-27b-local-benchmark.md",
+          "intent": "benchmark",
+          "model_tag": "gemma3:27b"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-03T04:28:20.045106Z",
       "queue_date": "2026-05-03",
@@ -1560,34 +1583,6 @@
           "reason": "max_publish_reached"
         }
       ]
-    },
-    {
-      "run_at": "2026-02-28T11:08:58.923123Z",
-      "queue_date": "2026-02-28",
-      "candidate_count": 2,
-      "published_count": 2,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "qwen35-35b-vram-requirements-guide",
-          "title": "Qwen3.5 35B Vram Requirements: Practical Guide (2026)",
-          "topic_key": "qwen3-5-35b-vram-requirements",
-          "score": 648.0,
-          "source_draft": "content-queue/2026-02-28/02-qwen35-35b-vram-requirements-guide.md",
-          "out_file": "src/content/blog/qwen35-35b-vram-requirements-guide.md",
-          "intent": "hardware"
-        },
-        {
-          "slug": "cuda-out-of-memory-ollama-fixes-2026",
-          "title": "Cuda Out Of Memory Ollama Fix: Practical Guide (2026)",
-          "topic_key": "cuda-out-of-memory-ollama-fix",
-          "score": 640.0,
-          "source_draft": "content-queue/2026-02-28/03-cuda-out-of-memory-ollama-fixes-2026.md",
-          "out_file": "src/content/blog/cuda-out-of-memory-ollama-fixes-2026.md",
-          "intent": "troubleshooting"
-        }
-      ],
-      "skipped": []
     }
   ]
 }

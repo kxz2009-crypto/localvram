@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-03T04:28:19.973240Z",
+  "updated_at": "2026-05-04T04:27:50.201574Z",
   "last_run": {
-    "run_at": "2026-05-03T04:28:19.973240Z",
-    "queue_date": "2026-05-03",
+    "run_at": "2026-05-04T04:27:50.201574Z",
+    "queue_date": "2026-05-04",
     "reviewed_count": 1,
     "auto_approved_count": 1,
     "pending_manual_review_count": 0,
@@ -12,22 +12,48 @@
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-05-03/01-model-qwen3-6-35b-benchmark-refresh.md",
-        "slug": "model-qwen3-6-35b-benchmark-refresh",
-        "score": 360.0,
+        "draft": "content-queue/2026-05-04/01-model-gemma3-27b-local-benchmark.md",
+        "slug": "model-gemma3-27b-local-benchmark",
+        "score": 180.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 539,
+        "word_count": 534,
         "risk_flags": [],
         "similarity": {
           "score": 0.958,
-          "topic_score": 0.4,
-          "slug": "model-deepseek-r1-14b-benchmark-refresh"
+          "topic_score": 0.375,
+          "slug": "model-gemma3-27b-rtx-3090-ollama-benchmark"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-05-04T04:27:50.201574Z",
+      "queue_date": "2026-05-04",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-05-04/01-model-gemma3-27b-local-benchmark.md",
+          "slug": "model-gemma3-27b-local-benchmark",
+          "score": 180.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 534,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.958,
+            "topic_score": 0.375,
+            "slug": "model-gemma3-27b-rtx-3090-ollama-benchmark"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-05-03T04:28:19.973240Z",
       "queue_date": "2026-05-03",
@@ -2044,158 +2070,6 @@
           "score": 648.0,
           "status_before": "draft",
           "status_after": "approved_auto",
-          "word_count": 194,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.9537,
-            "topic_score": 0.25,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/03-rtx4090-vs-rtx3090-for-local-llm.md",
-          "slug": "rtx4090-vs-rtx3090-for-local-llm",
-          "score": 720.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 196,
-          "risk_flags": [
-            "duplicate_queue_topic"
-          ],
-          "similarity": {
-            "score": 0.9537,
-            "topic_score": 0.2143,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-02-28T11:08:58.848736Z",
-      "queue_date": "2026-02-28",
-      "reviewed_count": 9,
-      "auto_approved_count": 2,
-      "pending_manual_review_count": 1,
-      "rejected_manual_count": 6,
-      "high_risk_count": 2,
-      "risk_flag_counts": {
-        "duplicate_queue_topic": 2,
-        "existing_blog_slug": 2,
-        "near_duplicate_published": 2
-      },
-      "items": [
-        {
-          "draft": "content-queue/2026-02-28/01-best-local-rag-models-under-24gb-vram.md",
-          "slug": "best-local-rag-models-under-24gb-vram",
-          "score": 648.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 196,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.9537,
-            "topic_score": 0.2143,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/01-llama-70b-on-rtx-3090-local-setup.md",
-          "slug": "llama-70b-on-rtx-3090-local-setup",
-          "score": 720.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 196,
-          "risk_flags": [
-            "existing_blog_slug",
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.9908,
-            "topic_score": 1.0,
-            "slug": "llama-70b-on-rtx-3090-local-setup"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/01-rtx4090-vs-rtx3090-for-local-llm.md",
-          "slug": "rtx4090-vs-rtx3090-for-local-llm",
-          "score": 720.0,
-          "status_before": "draft",
-          "status_after": "pending_manual_review",
-          "word_count": 196,
-          "risk_flags": [
-            "duplicate_queue_topic"
-          ],
-          "similarity": {
-            "score": 0.9537,
-            "topic_score": 0.2143,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/02-deepseek-r1-14b-3090-benchmark.md",
-          "slug": "deepseek-r1-14b-3090-benchmark",
-          "score": 648.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 195,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.9626,
-            "topic_score": 0.2308,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/02-qwen35-122b-cloud-vs-local-cost.md",
-          "slug": "qwen35-122b-cloud-vs-local-cost",
-          "score": 720.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 196,
-          "risk_flags": [
-            "existing_blog_slug",
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 1.0,
-            "topic_score": 1.0,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/02-qwen35-35b-vram-requirements-guide.md",
-          "slug": "qwen35-35b-vram-requirements-guide",
-          "score": 648.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 194,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.9717,
-            "topic_score": 0.4545,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/03-cuda-out-of-memory-ollama-fixes-2026.md",
-          "slug": "cuda-out-of-memory-ollama-fixes-2026",
-          "score": 640.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 195,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.945,
-            "topic_score": 0.2143,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-02-28/03-ollama-vs-vllm-throughput-comparison-2026.md",
-          "slug": "ollama-vs-vllm-throughput-comparison-2026",
-          "score": 648.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
           "word_count": 194,
           "risk_flags": [],
           "similarity": {

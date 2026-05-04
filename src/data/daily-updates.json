@@ -1,6 +1,32 @@
 {
   "items": [
     {
+      "date": "2026-05-04",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-05-04",
+          "slug": "model-gemma3-27b-local-benchmark",
+          "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
+          "keyword": "gemma3:27b local inference benchmark",
+          "score": 180,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "model_tag": "",
+          "model_key": "",
+          "draft_path": "content-queue/2026-05-04/01-model-gemma3-27b-local-benchmark.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-gemma3-27b-local-benchmark",
+          "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-05-04T04:27:50.272200Z"
+    },
+    {
       "date": "2026-05-03",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -629,30 +655,6 @@
       ],
       "published_count": 2,
       "publish_run_at": "2026-04-02T03:32:31.257263Z"
-    },
-    {
-      "date": "2026-04-01",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-04-01",
-          "slug": "model-deepseek-r1-14b-benchmark-refresh",
-          "title": "deepseek-r1:14B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "deepseek-r1:14b local inference benchmark update",
-          "score": 640,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-04-01/01-model-deepseek-r1-14b-benchmark-refresh.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-04-01",
-          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-04-01T03:50:12.814061Z"
     }
   ]
 }
