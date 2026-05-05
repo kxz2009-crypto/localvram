@@ -1,30 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-04T04:27:50.272200Z",
+  "updated_at": "2026-05-05T03:56:57.626237Z",
   "last_run": {
-    "run_at": "2026-05-04T04:27:50.272200Z",
-    "queue_date": "2026-05-04",
-    "candidate_count": 1,
+    "run_at": "2026-05-05T03:56:57.626237Z",
+    "queue_date": "2026-05-05",
+    "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 0,
+    "fallback_generated_count": 1,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "model-gemma3-27b-local-benchmark",
-        "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-        "topic_key": "gemma3-27b-local-inference-benchmark",
-        "score": 180.0,
-        "source_draft": "content-queue/2026-05-04/01-model-gemma3-27b-local-benchmark.md",
-        "out_file": "src/content/blog/model-gemma3-27b-local-benchmark.md",
-        "intent": "benchmark",
-        "model_tag": "gemma3:27b"
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-05",
+        "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-05-05-daily-local-llm-benchmark-snapshot-2026-05-05",
+        "score": 120.0,
+        "source_draft": "system:fallback-daily-generator",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-05.md",
+        "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-05T03:56:57.626237Z",
+      "queue_date": "2026-05-05",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-05",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-05-daily-local-llm-benchmark-snapshot-2026-05-05",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-05.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-04T04:27:50.272200Z",
       "queue_date": "2026-05-04",
@@ -1547,39 +1568,6 @@
       "skipped": [
         {
           "draft": "content-queue/2026-03-01/03-model-deepseek-r1-14b-benchmark-refresh.md",
-          "reason": "max_publish_reached"
-        }
-      ]
-    },
-    {
-      "run_at": "2026-02-28T13:01:15.838337Z",
-      "queue_date": "2026-02-28",
-      "candidate_count": 3,
-      "published_count": 2,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "best-local-rag-models-under-24gb-vram",
-          "title": "Best Local Rag Models Under 24Gb Vram: Practical Guide (2026)",
-          "topic_key": "best-local-rag-models-under-24gb-vram",
-          "score": 648.0,
-          "source_draft": "content-queue/2026-02-28/01-best-local-rag-models-under-24gb-vram.md",
-          "out_file": "src/content/blog/best-local-rag-models-under-24gb-vram.md",
-          "intent": "hardware"
-        },
-        {
-          "slug": "deepseek-r1-14b-3090-benchmark",
-          "title": "Deepseek R1 14B Rtx 3090 Benchmark: Practical Guide (2026)",
-          "topic_key": "deepseek-r1-14b-rtx-3090-benchmark",
-          "score": 648.0,
-          "source_draft": "content-queue/2026-02-28/02-deepseek-r1-14b-3090-benchmark.md",
-          "out_file": "src/content/blog/deepseek-r1-14b-3090-benchmark.md",
-          "intent": "hardware"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-02-28/03-ollama-vs-vllm-throughput-comparison-2026.md",
           "reason": "max_publish_reached"
         }
       ]
