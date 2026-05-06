@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-05T03:56:57.626237Z",
+  "updated_at": "2026-05-06T04:22:52.224658Z",
   "last_run": {
-    "run_at": "2026-05-05T03:56:57.626237Z",
-    "queue_date": "2026-05-05",
+    "run_at": "2026-05-06T04:22:52.224658Z",
+    "queue_date": "2026-05-06",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-05",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-06",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-05-daily-local-llm-benchmark-snapshot-2026-05-05",
+        "topic_key": "daily-benchmark-fallback-2026-05-06-daily-local-llm-benchmark-snapshot-2026-05-06",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-05.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-06.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-06T04:22:52.224658Z",
+      "queue_date": "2026-05-06",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-06",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-06-daily-local-llm-benchmark-snapshot-2026-05-06",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-06.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-05T03:56:57.626237Z",
       "queue_date": "2026-05-05",
@@ -1535,39 +1557,6 @@
       "skipped": [
         {
           "draft": "content-queue/2026-03-02/03-runpod-vs-vast-for-local-llm-fallback.md",
-          "reason": "max_publish_reached"
-        }
-      ]
-    },
-    {
-      "run_at": "2026-03-01T03:28:34.664966Z",
-      "queue_date": "2026-03-01",
-      "candidate_count": 3,
-      "published_count": 2,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "rtx4090-vs-rtx3090-for-local-llm",
-          "title": "Rtx 4090 Vs Rtx 3090 Local Llm: Practical Guide (2026)",
-          "topic_key": "rtx-4090-vs-rtx-3090-local-llm",
-          "score": 720.0,
-          "source_draft": "content-queue/2026-03-01/01-rtx4090-vs-rtx3090-for-local-llm.md",
-          "out_file": "src/content/blog/rtx4090-vs-rtx3090-for-local-llm.md",
-          "intent": "hardware"
-        },
-        {
-          "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu",
-          "title": "Deepseek R1 32B Rent Cloud Gpu Or Local: Practical Guide (2026)",
-          "topic_key": "deepseek-r1-32b-rent-cloud-gpu-or-local",
-          "score": 640.0,
-          "source_draft": "content-queue/2026-03-01/02-deepseek-r1-32b-when-to-rent-cloud-gpu.md",
-          "out_file": "src/content/blog/deepseek-r1-32b-when-to-rent-cloud-gpu.md",
-          "intent": "cost"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-03-01/03-model-deepseek-r1-14b-benchmark-refresh.md",
           "reason": "max_publish_reached"
         }
       ]

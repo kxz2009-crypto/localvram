@@ -1,6 +1,19 @@
 {
   "items": [
     {
+      "date": "2026-05-06",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [],
+      "published_posts": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-06",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-05-06T04:22:52.224658Z"
+    },
+    {
       "date": "2026-05-05",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -585,54 +598,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-04-04T03:21:50.434269Z"
-    },
-    {
-      "date": "2026-04-03",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-04-03",
-          "slug": "ministral-3-14b-local-benchmark-guide",
-          "title": "Ministral 3 14B Local Benchmark: Local Inference Performance Report (2026)",
-          "keyword": "ministral 3 14b local benchmark",
-          "score": 576,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-04-03/01-ministral-3-14b-local-benchmark-guide.md"
-        },
-        {
-          "date": "2026-04-03",
-          "slug": "model-llama4-16x17b-local-benchmark",
-          "title": "llama4:16x17B Local Benchmark: Throughput, Latency, and VRAM (2026)",
-          "keyword": "llama4:16x17b local inference benchmark",
-          "score": 144,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "draft_path": "content-queue/2026-04-03/02-model-llama4-16x17b-local-benchmark.md"
-        },
-        {
-          "date": "2026-04-03",
-          "slug": "model-qwq-32b-local-benchmark",
-          "title": "qwq:32B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "qwq:32b local inference benchmark",
-          "score": 144,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "draft_path": "content-queue/2026-04-03/03-model-qwq-32b-local-benchmark.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "ministral-3-14b-local-benchmark-guide",
-          "title": "Ministral 3 14B Local Benchmark: Local Inference Performance Report (2026)"
-        },
-        {
-          "slug": "model-llama4-16x17b-local-benchmark",
-          "title": "llama4:16x17B Local Benchmark: Throughput, Latency, and VRAM (2026)"
-        }
-      ],
-      "published_count": 2,
-      "publish_run_at": "2026-04-03T03:34:07.148695Z"
     }
   ]
 }
