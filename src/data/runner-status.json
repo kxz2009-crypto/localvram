@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-29T05:57:35Z",
+  "updated_at": "2026-05-06T05:54:08Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -66,11 +66,11 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=16133,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=136503,fd=3))"
     ],
     "ps_ollama": [
-      "gao20      16133       1  1 13:41 ?        00:00:14 /usr/local/bin/ollama serve",
-      "gao20      34728   16133 24 13:56 ?        00:00:22 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 54537"
+      "gao20     136503       1  1 13:42 ?        00:00:08 /usr/local/bin/ollama serve",
+      "gao20     153246  136503 23 13:52 ?        00:00:20 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 53761"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -99,7 +99,7 @@
       "version": "0.20.2"
     },
     "tags": {
-      "model_count": 44,
+      "model_count": 41,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -112,7 +112,7 @@
         "glm-4.7-flash:bf16",
         "glm-4.7-flash:q8_0",
         "glm-5:cloud",
-        "gpt-oss:20b",
+        "granite4.1:30b",
         "llama3.2-vision:11b",
         "llama3.3:70b-instruct-q4_k_m",
         "llama3.3:latest",
@@ -125,20 +125,17 @@
     }
   },
   "summary": {
-    "model_count": 44,
+    "model_count": 41,
     "required_targets_count": 14,
-    "required_targets_runnable_count": 14,
+    "required_targets_runnable_count": 11,
     "required_targets_runnable": [
       "qwen3",
       "deepseek-r1",
-      "qwen2.5",
       "qwen3-coder",
       "qwen3.5",
       "qwen3.6",
       "llama3.3",
-      "qwen2.5-coder",
       "ministral-3",
-      "gpt-oss",
       "mistral-small",
       "gemma3",
       "llama4",
