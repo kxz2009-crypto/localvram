@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-06T04:22:52.224658Z",
+  "updated_at": "2026-05-07T04:22:43.796208Z",
   "last_run": {
-    "run_at": "2026-05-06T04:22:52.224658Z",
-    "queue_date": "2026-05-06",
+    "run_at": "2026-05-07T04:22:43.796208Z",
+    "queue_date": "2026-05-07",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-06",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-07",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-06-daily-local-llm-benchmark-snapshot-2026-05-06",
+        "topic_key": "daily-benchmark-fallback-2026-05-07-daily-local-llm-benchmark-snapshot-2026-05-07",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-06.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-07.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-07T04:22:43.796208Z",
+      "queue_date": "2026-05-07",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-07",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-07-daily-local-llm-benchmark-snapshot-2026-05-07",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-07.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-06T04:22:52.224658Z",
       "queue_date": "2026-05-06",
@@ -1527,39 +1549,6 @@
         }
       ],
       "skipped": []
-    },
-    {
-      "run_at": "2026-03-02T03:16:31.588059Z",
-      "queue_date": "2026-03-02",
-      "candidate_count": 3,
-      "published_count": 2,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "model-ministral-3-14b-benchmark-refresh",
-          "title": "Ministral-3:14B Local Inference Benchmark Update: Practical Guide (2026)",
-          "topic_key": "ministral-3-14b-local-inference-benchmark-update",
-          "score": 640.0,
-          "source_draft": "content-queue/2026-03-02/01-model-ministral-3-14b-benchmark-refresh.md",
-          "out_file": "src/content/blog/model-ministral-3-14b-benchmark-refresh.md",
-          "intent": "benchmark"
-        },
-        {
-          "slug": "model-qwen2-5-14b-benchmark-refresh",
-          "title": "Qwen2.5:14B Local Inference Benchmark Update: Practical Guide (2026)",
-          "topic_key": "qwen2-5-14b-local-inference-benchmark-update",
-          "score": 640.0,
-          "source_draft": "content-queue/2026-03-02/02-model-qwen2-5-14b-benchmark-refresh.md",
-          "out_file": "src/content/blog/model-qwen2-5-14b-benchmark-refresh.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-03-02/03-runpod-vs-vast-for-local-llm-fallback.md",
-          "reason": "max_publish_reached"
-        }
-      ]
     }
   ]
 }
