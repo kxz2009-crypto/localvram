@@ -1,6 +1,19 @@
 {
   "items": [
     {
+      "date": "2026-05-08",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [],
+      "published_posts": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-08",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-05-08T03:58:54.264596Z"
+    },
+    {
       "date": "2026-05-07",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -563,30 +576,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-04-06T03:47:04.508231Z"
-    },
-    {
-      "date": "2026-04-05",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-04-05",
-          "slug": "model-llama3-3-70b-benchmark-refresh",
-          "title": "llama3.3:70B Local Benchmark: Throughput, Latency, and VRAM (2026)",
-          "keyword": "llama3.3:70b local inference benchmark update",
-          "score": 200,
-          "source": "opportunity",
-          "landing": "",
-          "draft_path": "content-queue/2026-04-05/01-model-llama3-3-70b-benchmark-refresh.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "model-llama3-3-70b-benchmark-refresh",
-          "title": "llama3.3:70B Local Benchmark: Throughput, Latency, and VRAM (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-04-05T03:43:36.445952Z"
     }
   ]
 }

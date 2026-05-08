@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-07T04:22:43.796208Z",
+  "updated_at": "2026-05-08T03:58:54.264596Z",
   "last_run": {
-    "run_at": "2026-05-07T04:22:43.796208Z",
-    "queue_date": "2026-05-07",
+    "run_at": "2026-05-08T03:58:54.264596Z",
+    "queue_date": "2026-05-08",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-07",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-08",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-07-daily-local-llm-benchmark-snapshot-2026-05-07",
+        "topic_key": "daily-benchmark-fallback-2026-05-08-daily-local-llm-benchmark-snapshot-2026-05-08",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-07.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-08.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-08T03:58:54.264596Z",
+      "queue_date": "2026-05-08",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-08",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-08-daily-local-llm-benchmark-snapshot-2026-05-08",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-08.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-07T04:22:43.796208Z",
       "queue_date": "2026-05-07",
@@ -1517,34 +1539,6 @@
           "score": 576.0,
           "source_draft": "content-queue/2026-03-03/03-qwen25-coder-32b-self-host-guide.md",
           "out_file": "src/content/blog/qwen25-coder-32b-self-host-guide.md",
-          "intent": "guide"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-03-03T03:19:50.269004Z",
-      "queue_date": "2026-03-03",
-      "candidate_count": 2,
-      "published_count": 2,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "16gb-vram-model-selection-guide",
-          "title": "Best Local Llm For 16Gb Vram: Practical Guide (2026)",
-          "topic_key": "best-local-llm-for-16gb-vram",
-          "score": 576.0,
-          "source_draft": "content-queue/2026-03-03/01-16gb-vram-model-selection-guide.md",
-          "out_file": "src/content/blog/16gb-vram-model-selection-guide.md",
-          "intent": "hardware"
-        },
-        {
-          "slug": "llama4-local-inference-feasibility-check",
-          "title": "Llama 4 Local Inference Feasibility: Practical Guide (2026)",
-          "topic_key": "llama-4-local-inference-feasibility",
-          "score": 576.0,
-          "source_draft": "content-queue/2026-03-03/03-llama4-local-inference-feasibility-check.md",
-          "out_file": "src/content/blog/llama4-local-inference-feasibility-check.md",
           "intent": "guide"
         }
       ],

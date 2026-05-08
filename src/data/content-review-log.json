@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-07T04:22:43.711540Z",
+  "updated_at": "2026-05-08T03:58:54.192536Z",
   "last_run": {
-    "run_at": "2026-05-07T04:22:43.711540Z",
-    "queue_date": "2026-05-07",
+    "run_at": "2026-05-08T03:58:54.192536Z",
+    "queue_date": "2026-05-08",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-05-08T03:58:54.192536Z",
+      "queue_date": "2026-05-08",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-05-07T04:22:43.711540Z",
       "queue_date": "2026-05-07",
@@ -1805,64 +1816,6 @@
             "score": 0.9464,
             "topic_score": 0.2857,
             "slug": "deepseek-r1-32b-when-to-rent-cloud-gpu"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-03-03T03:19:50.203784Z",
-      "queue_date": "2026-03-03",
-      "reviewed_count": 3,
-      "auto_approved_count": 2,
-      "pending_manual_review_count": 1,
-      "rejected_manual_count": 0,
-      "high_risk_count": 1,
-      "risk_flag_counts": {
-        "near_duplicate_published": 1
-      },
-      "items": [
-        {
-          "draft": "content-queue/2026-03-03/01-16gb-vram-model-selection-guide.md",
-          "slug": "16gb-vram-model-selection-guide",
-          "score": 576.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 195,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.955,
-            "topic_score": 0.2857,
-            "slug": "rtx4090-vs-rtx3090-for-local-llm"
-          }
-        },
-        {
-          "draft": "content-queue/2026-03-03/02-apple-silicon-vs-rtx3090-local-llm.md",
-          "slug": "apple-silicon-vs-rtx3090-local-llm",
-          "score": 576.0,
-          "status_before": "draft",
-          "status_after": "pending_manual_review",
-          "word_count": 196,
-          "risk_flags": [
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.973,
-            "topic_score": 0.6364,
-            "slug": "rtx4090-vs-rtx3090-for-local-llm"
-          }
-        },
-        {
-          "draft": "content-queue/2026-03-03/03-llama4-local-inference-feasibility-check.md",
-          "slug": "llama4-local-inference-feasibility-check",
-          "score": 576.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 194,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.9725,
-            "topic_score": 0.2857,
-            "slug": "model-ministral-3-14b-benchmark-refresh"
           }
         }
       ]
