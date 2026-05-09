@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-08T03:58:54.264596Z",
+  "updated_at": "2026-05-09T04:03:45.768586Z",
   "last_run": {
-    "run_at": "2026-05-08T03:58:54.264596Z",
-    "queue_date": "2026-05-08",
+    "run_at": "2026-05-09T04:03:45.768586Z",
+    "queue_date": "2026-05-09",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-08",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-09",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-08-daily-local-llm-benchmark-snapshot-2026-05-08",
+        "topic_key": "daily-benchmark-fallback-2026-05-09-daily-local-llm-benchmark-snapshot-2026-05-09",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-08.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-09.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-09T04:03:45.768586Z",
+      "queue_date": "2026-05-09",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-09",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-09-daily-local-llm-benchmark-snapshot-2026-05-09",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-09.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-08T03:58:54.264596Z",
       "queue_date": "2026-05-08",
@@ -1515,34 +1537,6 @@
           "reason": "max_publish_reached"
         }
       ]
-    },
-    {
-      "run_at": "2026-03-03T11:02:10.531188Z",
-      "queue_date": "2026-03-03",
-      "candidate_count": 2,
-      "published_count": 2,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "local-llm-customer-support-rag-stack",
-          "title": "Local Llm Customer Support Rag Stack: Practical Guide (2026)",
-          "topic_key": "local-llm-customer-support-rag-stack",
-          "score": 576.0,
-          "source_draft": "content-queue/2026-03-03/01-local-llm-customer-support-rag-stack.md",
-          "out_file": "src/content/blog/local-llm-customer-support-rag-stack.md",
-          "intent": "guide"
-        },
-        {
-          "slug": "qwen25-coder-32b-self-host-guide",
-          "title": "Qwen2.5 Coder 32B Self Host Guide: Practical Guide (2026)",
-          "topic_key": "qwen2-5-coder-32b-self-host-guide",
-          "score": 576.0,
-          "source_draft": "content-queue/2026-03-03/03-qwen25-coder-32b-self-host-guide.md",
-          "out_file": "src/content/blog/qwen25-coder-32b-self-host-guide.md",
-          "intent": "guide"
-        }
-      ],
-      "skipped": []
     }
   ]
 }
