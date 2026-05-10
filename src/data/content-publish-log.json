@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-09T04:03:45.768586Z",
+  "updated_at": "2026-05-10T04:32:25.348734Z",
   "last_run": {
-    "run_at": "2026-05-09T04:03:45.768586Z",
-    "queue_date": "2026-05-09",
+    "run_at": "2026-05-10T04:32:25.348734Z",
+    "queue_date": "2026-05-10",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-09",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-10",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-09-daily-local-llm-benchmark-snapshot-2026-05-09",
+        "topic_key": "daily-benchmark-fallback-2026-05-10-daily-local-llm-benchmark-snapshot-2026-05-10",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-09.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-10.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-10T04:32:25.348734Z",
+      "queue_date": "2026-05-10",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-10",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-10-daily-local-llm-benchmark-snapshot-2026-05-10",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-10.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-09T04:03:45.768586Z",
       "queue_date": "2026-05-09",
@@ -1501,39 +1523,6 @@
       "skipped": [
         {
           "draft": "content-queue/2026-03-05/03-model-llama3-3-70b-benchmark-refresh.md",
-          "reason": "max_publish_reached"
-        }
-      ]
-    },
-    {
-      "run_at": "2026-03-04T03:11:22.586808Z",
-      "queue_date": "2026-03-04",
-      "candidate_count": 3,
-      "published_count": 2,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "apple-silicon-vs-rtx3090-local-llm",
-          "title": "Apple Silicon Vs Rtx 3090 Local Llm: Practical Guide (2026)",
-          "topic_key": "apple-silicon-vs-rtx-3090-local-llm",
-          "score": 576.0,
-          "source_draft": "content-queue/2026-03-04/01-apple-silicon-vs-rtx3090-local-llm.md",
-          "out_file": "src/content/blog/apple-silicon-vs-rtx3090-local-llm.md",
-          "intent": "hardware"
-        },
-        {
-          "slug": "qwen3-coder-30b-local-coding-stack",
-          "title": "Qwen3 Coder 30B Local Coding Setup: Practical Guide (2026)",
-          "topic_key": "qwen3-coder-30b-local-coding-setup",
-          "score": 576.0,
-          "source_draft": "content-queue/2026-03-04/02-qwen3-coder-30b-local-coding-stack.md",
-          "out_file": "src/content/blog/qwen3-coder-30b-local-coding-stack.md",
-          "intent": "guide"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-03-04/03-multi-gpu-local-llm-roi-calculator-guide.md",
           "reason": "max_publish_reached"
         }
       ]
