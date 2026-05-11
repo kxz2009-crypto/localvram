@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-10T04:32:25.272452Z",
+  "updated_at": "2026-05-11T04:44:44.028485Z",
   "last_run": {
-    "run_at": "2026-05-10T04:32:25.272452Z",
-    "queue_date": "2026-05-10",
+    "run_at": "2026-05-11T04:44:44.028485Z",
+    "queue_date": "2026-05-11",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-05-11T04:44:44.028485Z",
+      "queue_date": "2026-05-11",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-05-10T04:32:25.272452Z",
       "queue_date": "2026-05-10",
@@ -1623,60 +1634,6 @@
             "score": 0.9459,
             "topic_score": 0.1875,
             "slug": "en-affiliate-cloud-gpu"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-03-05T03:14:41.360127Z",
-      "queue_date": "2026-03-05",
-      "reviewed_count": 3,
-      "auto_approved_count": 3,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-03-05/01-weekly-local-llm-benchmark-roundup-template.md",
-          "slug": "weekly-local-llm-benchmark-roundup-template",
-          "score": 560.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 194,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.7966,
-            "topic_score": 0.2308,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-03-05/02-en-affiliate-cloud-gpu.md",
-          "slug": "en-affiliate-cloud-gpu",
-          "score": 280.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 192,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.8034,
-            "topic_score": 0.3077,
-            "slug": "qwen35-122b-cloud-vs-local-cost"
-          }
-        },
-        {
-          "draft": "content-queue/2026-03-05/03-model-llama3-3-70b-benchmark-refresh.md",
-          "slug": "model-llama3-3-70b-benchmark-refresh",
-          "score": 200.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 196,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.8051,
-            "topic_score": 0.4615,
-            "slug": "model-qwen3-coder-30b-local-benchmark"
           }
         }
       ]

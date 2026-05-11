@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-10T04:32:25.348734Z",
+  "updated_at": "2026-05-11T04:44:44.092898Z",
   "last_run": {
-    "run_at": "2026-05-10T04:32:25.348734Z",
-    "queue_date": "2026-05-10",
+    "run_at": "2026-05-11T04:44:44.092898Z",
+    "queue_date": "2026-05-11",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-10",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-11",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-10-daily-local-llm-benchmark-snapshot-2026-05-10",
+        "topic_key": "daily-benchmark-fallback-2026-05-11-daily-local-llm-benchmark-snapshot-2026-05-11",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-10.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-11.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-11T04:44:44.092898Z",
+      "queue_date": "2026-05-11",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-11",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-11-daily-local-llm-benchmark-snapshot-2026-05-11",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-11.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-10T04:32:25.348734Z",
       "queue_date": "2026-05-10",
@@ -1490,39 +1512,6 @@
       "skipped": [
         {
           "draft": "content-queue/2026-03-10/03-model-gemma3-27b-benchmark-refresh.md",
-          "reason": "max_publish_reached"
-        }
-      ]
-    },
-    {
-      "run_at": "2026-03-05T03:14:41.445505Z",
-      "queue_date": "2026-03-05",
-      "candidate_count": 3,
-      "published_count": 2,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "weekly-local-llm-benchmark-roundup-template",
-          "title": "Weekly Local Llm Benchmark Roundup: Practical Guide (2026)",
-          "topic_key": "weekly-local-llm-benchmark-roundup",
-          "score": 560.0,
-          "source_draft": "content-queue/2026-03-05/01-weekly-local-llm-benchmark-roundup-template.md",
-          "out_file": "src/content/blog/weekly-local-llm-benchmark-roundup-template.md",
-          "intent": "benchmark"
-        },
-        {
-          "slug": "en-affiliate-cloud-gpu",
-          "title": "Runpod A100 Ollama: Practical Guide (2026)",
-          "topic_key": "runpod-a100-ollama",
-          "score": 280.0,
-          "source_draft": "content-queue/2026-03-05/02-en-affiliate-cloud-gpu.md",
-          "out_file": "src/content/blog/en-affiliate-cloud-gpu.md",
-          "intent": "cost"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-03-05/03-model-llama3-3-70b-benchmark-refresh.md",
           "reason": "max_publish_reached"
         }
       ]
