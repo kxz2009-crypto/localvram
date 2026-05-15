@@ -1,28 +1,30 @@
 {
-  "updated_at": "2026-05-08T04:43:05.718831Z",
+  "updated_at": "2026-05-15T05:39:12.565583Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-05-15T00:00:00Z",
+    "next_refresh_at": "2026-05-22T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-05-08T04:43:05.718831Z",
+    "last_refresh_at": "2026-05-15T05:39:12.565583Z",
     "last_refresh_summary": {
-      "incoming_count": 1,
-      "removed_count": 1,
+      "incoming_count": 2,
+      "removed_count": 2,
       "incoming_topic_keys": [
-        "llama3-3-70b-local-inference-benchmark-update"
-      ],
-      "removed_topic_keys": [
+        "gemma3-27b-local-inference-benchmark-update",
         "qwen3-5-35b-local-inference-benchmark-update"
       ],
-      "blocked_recent_topic_count": 66
+      "removed_topic_keys": [
+        "deepseek-r1-14b-local-inference-benchmark-update",
+        "qwen3-6-35b-local-inference-benchmark-update"
+      ],
+      "blocked_recent_topic_count": 68
     }
   },
   "items": [
@@ -104,13 +106,6 @@
       "freshness_gap_score": 8
     },
     {
-      "slug": "model-deepseek-r1-14b-benchmark-refresh",
-      "keyword": "deepseek-r1:14b local inference benchmark update",
-      "search_intent_score": 8,
-      "commercial_intent_score": 8,
-      "freshness_gap_score": 10
-    },
-    {
       "slug": "model-ministral-3-14b-benchmark-refresh",
       "keyword": "ministral-3:14b local inference benchmark update",
       "search_intent_score": 8,
@@ -167,13 +162,6 @@
       "freshness_gap_score": 10
     },
     {
-      "slug": "model-qwen3-6-35b-benchmark-refresh",
-      "keyword": "qwen3.6:35b local inference benchmark update",
-      "search_intent_score": 6,
-      "commercial_intent_score": 6,
-      "freshness_gap_score": 10
-    },
-    {
       "slug": "model-qwq-32b-benchmark-refresh",
       "keyword": "qwq:32b local inference benchmark update",
       "search_intent_score": 6,
@@ -184,6 +172,13 @@
       "slug": "model-translategemma-27b-benchmark-refresh",
       "keyword": "translategemma:27b local inference benchmark update",
       "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
+      "slug": "model-qwen3-5-35b-benchmark-refresh",
+      "keyword": "qwen3.5:35b local inference benchmark update",
+      "search_intent_score": 5,
       "commercial_intent_score": 6,
       "freshness_gap_score": 10
     },
@@ -200,6 +195,13 @@
       "search_intent_score": 3,
       "commercial_intent_score": 10,
       "freshness_gap_score": 8
+    },
+    {
+      "slug": "model-gemma3-27b-benchmark-refresh",
+      "keyword": "gemma3:27b local inference benchmark update",
+      "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 6
     },
     {
       "slug": "en-blog-best-local-rag-models-2026",
