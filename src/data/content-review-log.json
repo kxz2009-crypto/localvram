@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-16T04:09:25.727496Z",
+  "updated_at": "2026-05-17T04:39:25.109882Z",
   "last_run": {
-    "run_at": "2026-05-16T04:09:25.727496Z",
-    "queue_date": "2026-05-16",
+    "run_at": "2026-05-17T04:39:25.109882Z",
+    "queue_date": "2026-05-17",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-05-17T04:39:25.109882Z",
+      "queue_date": "2026-05-17",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-05-16T04:09:25.727496Z",
       "queue_date": "2026-05-16",
@@ -1310,64 +1321,6 @@
             "score": 0.9836,
             "topic_score": 0.5455,
             "slug": "model-gpt-oss-20b-local-benchmark"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-03-18T03:25:59.333282Z",
-      "queue_date": "2026-03-18",
-      "reviewed_count": 3,
-      "auto_approved_count": 2,
-      "pending_manual_review_count": 1,
-      "rejected_manual_count": 0,
-      "high_risk_count": 1,
-      "risk_flag_counts": {
-        "near_duplicate_published": 1
-      },
-      "items": [
-        {
-          "draft": "content-queue/2026-03-18/01-en-blog-best-local-rag-models-2026.md",
-          "slug": "en-blog-best-local-rag-models-2026",
-          "score": 192.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 217,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.8615,
-            "topic_score": 0.1176,
-            "slug": "model-gpt-oss-20b-local-benchmark"
-          }
-        },
-        {
-          "draft": "content-queue/2026-03-18/02-model-ministral-3-14b-local-benchmark.md",
-          "slug": "model-ministral-3-14b-local-benchmark",
-          "score": 512.0,
-          "status_before": "draft",
-          "status_after": "pending_manual_review",
-          "word_count": 221,
-          "risk_flags": [
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.984,
-            "topic_score": 0.7273,
-            "slug": "model-deepseek-r1-14b-local-benchmark"
-          }
-        },
-        {
-          "draft": "content-queue/2026-03-18/03-model-mistral-small-22b-local-benchmark.md",
-          "slug": "model-mistral-small-22b-local-benchmark",
-          "score": 392.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 221,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.9606,
-            "topic_score": 0.5385,
-            "slug": "model-deepseek-r1-14b-local-benchmark"
           }
         }
       ]

@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-16T04:09:25.805548Z",
+  "updated_at": "2026-05-17T04:39:25.190146Z",
   "last_run": {
-    "run_at": "2026-05-16T04:09:25.805548Z",
-    "queue_date": "2026-05-16",
+    "run_at": "2026-05-17T04:39:25.190146Z",
+    "queue_date": "2026-05-17",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-16",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-17",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-16-daily-local-llm-benchmark-snapshot-2026-05-16",
+        "topic_key": "daily-benchmark-fallback-2026-05-17-daily-local-llm-benchmark-snapshot-2026-05-17",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-16.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-17.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-17T04:39:25.190146Z",
+      "queue_date": "2026-05-17",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-17",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-17-daily-local-llm-benchmark-snapshot-2026-05-17",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-17.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-16T04:09:25.805548Z",
       "queue_date": "2026-05-16",
@@ -1425,33 +1447,6 @@
         {
           "draft": "content-queue/2026-03-19/03-model-qwen2-5-14b-local-benchmark.md",
           "reason": "max_publish_reached"
-        }
-      ]
-    },
-    {
-      "run_at": "2026-03-18T03:25:59.409152Z",
-      "queue_date": "2026-03-18",
-      "candidate_count": 2,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 0,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "model-mistral-small-22b-local-benchmark",
-          "title": "mistral-small:22B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "topic_key": "mistral-small-22b-local-inference-benchmark",
-          "score": 392.0,
-          "source_draft": "content-queue/2026-03-18/03-model-mistral-small-22b-local-benchmark.md",
-          "out_file": "src/content/blog/model-mistral-small-22b-local-benchmark.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-03-18/01-en-blog-best-local-rag-models-2026.md",
-          "reason": "similar_slug:best-local-rag-models-2026"
         }
       ]
     }
