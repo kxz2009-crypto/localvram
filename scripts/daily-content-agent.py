@@ -115,7 +115,8 @@ def topic_key(item: dict[str, Any]) -> str:
 
 
 def model_key_from_tag(value: str) -> str:
-    return slugify(str(value or "").strip().replace(":", "-"))
+    raw = str(value or "").strip()
+    return slugify(raw.replace(":", "-")) if raw else ""
 
 
 def model_key_from_text(value: str) -> str:
@@ -234,7 +235,13 @@ def score_with_boost(item: dict[str, Any]) -> int:
     base = score(item)
     click_boost = int(item.get("clicks", 0))
     ctr_boost = int(float(item.get("ctr", 0)) * 100)
-    return base + click_boost + ctr_boost
+    traffic_boost = {
+        "publish_now": 5000,
+        "benchmark_then_publish": 2500,
+        "watch": 0,
+        "backlog": -10000,
+    }.get(str(item.get("traffic_priority", "")).strip(), 0)
+    return base + click_boost + ctr_boost + traffic_boost
 
 
 def candidate_from_sc(item: dict[str, Any]) -> dict[str, Any]:
@@ -257,6 +264,9 @@ def candidate_from_sc(item: dict[str, Any]) -> dict[str, Any]:
 def candidate_from_new_model_watchlist(item: dict[str, Any]) -> dict[str, Any]:
     tag = str(item.get("tag", "")).strip()
     keyword = str(item.get("keyword", "")).strip() or f"{tag} rtx 3090 ollama benchmark"
+    local_inventory = item.get("local_inventory_status", {}) if isinstance(item.get("local_inventory_status"), dict) else {}
+    benchmark_status = item.get("benchmark_status", {}) if isinstance(item.get("benchmark_status"), dict) else {}
+    library_freshness = item.get("ollama_library_freshness", {}) if isinstance(item.get("ollama_library_freshness"), dict) else {}
     try:
         raw_priority = int(item.get("priority_score", 70))
     except (TypeError, ValueError):
@@ -275,6 +285,12 @@ def candidate_from_new_model_watchlist(item: dict[str, Any]) -> dict[str, Any]:
         "tag": tag,
         "model_tag": tag,
         "model_key": model_key_from_tag(tag),
+        "traffic_priority": str(item.get("traffic_priority", "")).strip(),
+        "ollama_updated_label": str(item.get("ollama_updated_label") or library_freshness.get("updated_label") or "").strip(),
+        "ollama_downloads": str(item.get("ollama_downloads") or library_freshness.get("downloads") or "").strip(),
+        "local_inventory_status": str(local_inventory.get("status", "")).strip(),
+        "benchmark_status": str(benchmark_status.get("status", item.get("status", ""))).strip(),
+        "benchmark_measured_at": str(benchmark_status.get("measured_at", item.get("measured_at", ""))).strip(),
         "watchlist_priority_score": raw_priority,
     }
 
@@ -516,6 +532,12 @@ def draft_markdown(
     landing: str,
     date_iso: str,
     model_tag: str = "",
+    traffic_priority: str = "",
+    ollama_updated_label: str = "",
+    ollama_downloads: str = "",
+    local_inventory_status: str = "",
+    benchmark_status: str = "",
+    benchmark_measured_at: str = "",
 ) -> str:
     measured_lines = []
     for row in measured:
@@ -550,12 +572,24 @@ def draft_markdown(
         else "Start from the exact Ollama tag named in the query or model page before testing variants."
     )
     model_frontmatter = f'model_tag: "{detected_model_tag}"\n' if detected_model_tag else ""
+    opportunity_frontmatter = ""
+    if traffic_priority:
+        opportunity_frontmatter += f'traffic_priority: "{traffic_priority}"\n'
+    if ollama_updated_label:
+        opportunity_frontmatter += f'ollama_updated_label: "{ollama_updated_label}"\n'
+    if benchmark_measured_at:
+        opportunity_frontmatter += f'benchmark_measured_at: "{benchmark_measured_at}"\n'
+    local_display = local_inventory_status or "unknown"
+    benchmark_display = benchmark_status or "pending"
+    ollama_display = ollama_updated_label or "unknown"
+    downloads_display = f" ({ollama_downloads} downloads)" if ollama_downloads else ""
+    priority_display = traffic_priority or "standard"
 
     return f"""---
 title: "{title}"
 date: {date_iso}
 keyword: "{keyword}"
-{model_frontmatter}score: {score_value}
+{model_frontmatter}{opportunity_frontmatter}score: {score_value}
 source: {source}
 status: draft
 ---
@@ -565,6 +599,15 @@ status: draft
 This page targets "{keyword}" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether {topic} is worth testing on a 24GB RTX 3090, what failure boundary to watch, and what to do if the model misses the target.
 
 For the first pass, treat the RTX 3090 as the practical baseline. If the model is stable at the required context length with enough VRAM headroom, keep it local. If throughput or p95 latency misses the workload target, use local as the validation baseline and burst to cloud for peak jobs.
+
+## Evidence snapshot
+
+- Ollama freshness: {ollama_display}{downloads_display}
+- Local inventory: {local_display}
+- RTX 3090 benchmark: {benchmark_display}
+- Benchmark measured at: {benchmark_measured_at or "pending"}
+- Traffic priority: {priority_display}
+- Related landing: {landing_ref}
 
 ## Measured anchor data
 
@@ -682,6 +725,12 @@ def main() -> None:
             landing=str(item.get("landing", "")).strip(),
             date_iso=today_iso,
             model_tag=str(item.get("model_tag", item.get("tag", ""))).strip(),
+            traffic_priority=str(item.get("traffic_priority", "")).strip(),
+            ollama_updated_label=str(item.get("ollama_updated_label", "")).strip(),
+            ollama_downloads=str(item.get("ollama_downloads", "")).strip(),
+            local_inventory_status=str(item.get("local_inventory_status", "")).strip(),
+            benchmark_status=str(item.get("benchmark_status", "")).strip(),
+            benchmark_measured_at=str(item.get("benchmark_measured_at", "")).strip(),
         )
         draft_path = queue_day_dir / f"{idx:02d}-{slug}.md"
         draft_path.write_text(draft_text, encoding="utf-8")
@@ -696,6 +745,9 @@ def main() -> None:
                 "landing": str(item.get("landing", "")),
                 "model_tag": str(item.get("model_tag", item.get("tag", ""))).strip(),
                 "model_key": str(item.get("model_key", "")).strip(),
+                "traffic_priority": str(item.get("traffic_priority", "")).strip(),
+                "ollama_updated_label": str(item.get("ollama_updated_label", "")).strip(),
+                "benchmark_measured_at": str(item.get("benchmark_measured_at", "")).strip(),
                 "draft_path": str(draft_path.relative_to(ROOT)).replace("\\", "/"),
             }
         )

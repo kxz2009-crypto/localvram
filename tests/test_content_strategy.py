@@ -66,12 +66,22 @@ class ContentStrategyTests(unittest.TestCase):
             links={"runpod": "/go/runpod", "vast": "/go/vast"},
             landing="/en/models/",
             date_iso="2026-04-29",
+            traffic_priority="publish_now",
+            ollama_updated_label="2 days ago",
+            local_inventory_status="downloaded",
+            benchmark_status="measured",
+            benchmark_measured_at="2026-04-29T05:39:58Z",
         )
 
         self.assertIn("ollama run qwen3-coder:30b", body)
         self.assertIn("first 24-48 hours after an Ollama model appears", body)
         self.assertIn("RTX 3090 decision matrix", body)
         self.assertIn("Who should skip it", body)
+        self.assertIn("## Evidence snapshot", body)
+        self.assertIn("Ollama freshness: 2 days ago", body)
+        self.assertIn("Local inventory: downloaded", body)
+        self.assertIn("RTX 3090 benchmark: measured", body)
+        self.assertIn('traffic_priority: "publish_now"', body)
 
     def test_watchlist_item_becomes_high_score_daily_candidate(self):
         agent = load_script("daily-content-agent")
@@ -82,6 +92,10 @@ class ContentStrategyTests(unittest.TestCase):
                 "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
                 "landing": "/en/models/gpt-oss-20b/",
                 "priority_score": 96,
+                "traffic_priority": "publish_now",
+                "ollama_updated_label": "1 day ago",
+                "local_inventory_status": {"status": "downloaded"},
+                "benchmark_status": {"status": "measured", "measured_at": "2026-04-29T05:39:58Z"},
             }
         )
 
@@ -89,7 +103,47 @@ class ContentStrategyTests(unittest.TestCase):
         self.assertEqual(candidate["landing"], "/en/models/gpt-oss-20b/")
         self.assertEqual(candidate["tag"], "gpt-oss:20b")
         self.assertEqual(candidate["model_key"], "gpt-oss-20b")
-        self.assertGreaterEqual(agent.score_with_boost(candidate), 900)
+        self.assertEqual(candidate["traffic_priority"], "publish_now")
+        self.assertEqual(candidate["ollama_updated_label"], "1 day ago")
+        self.assertEqual(candidate["local_inventory_status"], "downloaded")
+        self.assertEqual(candidate["benchmark_status"], "measured")
+        self.assertEqual(candidate["benchmark_measured_at"], "2026-04-29T05:39:58Z")
+        self.assertGreaterEqual(agent.score_with_boost(candidate), 5900)
+
+    def test_traffic_priority_drives_daily_candidate_order(self):
+        agent = load_script("daily-content-agent")
+        publish_now = {
+            "slug": "new-model",
+            "keyword": "new model rtx 3090 benchmark",
+            "search_intent_score": 8,
+            "commercial_intent_score": 8,
+            "freshness_gap_score": 8,
+            "traffic_priority": "publish_now",
+        }
+        ordinary = {
+            "slug": "ordinary",
+            "keyword": "ordinary guide",
+            "search_intent_score": 10,
+            "commercial_intent_score": 10,
+            "freshness_gap_score": 10,
+        }
+        backlog = {
+            "slug": "backlog",
+            "keyword": "backlog model",
+            "search_intent_score": 10,
+            "commercial_intent_score": 10,
+            "freshness_gap_score": 10,
+            "traffic_priority": "backlog",
+        }
+
+        selected = agent.filter_fresh_candidates(
+            [ordinary, publish_now, backlog],
+            blocked_slugs=set(),
+            blocked_topics=set(),
+            min_score=120,
+        )
+
+        self.assertEqual([item["slug"] for item in selected], ["new-model", "ordinary"])
 
     def test_new_model_candidates_respect_model_cooldown(self):
         agent = load_script("daily-content-agent")

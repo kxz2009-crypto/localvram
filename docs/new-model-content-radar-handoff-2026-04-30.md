@@ -95,6 +95,85 @@ Validation:
 - `npm.cmd run build` passed, 8034 pages.
 - GitHub CI run `25170277300` passed.
 
+### 5. Traffic Priority Drives Daily Content
+
+Commit: pending in current session after this document update.
+
+Daily content now uses `traffic_priority` directly in candidate scoring:
+
+- `publish_now`: strong boost so a fresh measured model can lead the daily draft list.
+- `benchmark_then_publish`: medium boost for models that need evidence next.
+- `watch`: no boost, so it does not outrank stronger measured content.
+- `backlog`: negative boost, normally filtered out.
+
+New-model candidates also carry these fields into draft records:
+
+- `traffic_priority`
+- `ollama_updated_label`
+- `benchmark_measured_at`
+- `model_tag`
+- `model_key`
+
+Main files:
+
+- `scripts/daily-content-agent.py`
+- `tests/test_content_strategy.py`
+
+### 6. New-Model Drafts Include Evidence Blocks
+
+Commit: pending in current session after this document update.
+
+Generated drafts now include an `Evidence snapshot` section with:
+
+- Ollama freshness
+- Local inventory status
+- RTX 3090 benchmark status
+- Benchmark measured timestamp
+- Traffic priority
+- Related landing URL
+
+Draft frontmatter also preserves `traffic_priority`, `ollama_updated_label`, and `benchmark_measured_at`.
+
+Main file:
+
+- `scripts/daily-content-agent.py`
+
+### 7. Publish Logs Preserve Opportunity Fields
+
+Commit: pending in current session after this document update.
+
+When an approved draft is published, the formal blog frontmatter and publish log now preserve:
+
+- `keyword`
+- `model_tag`
+- `model_key`
+- `traffic_priority`
+- `ollama_updated_label`
+- `benchmark_measured_at`
+
+The English Content Publish status page now shows model, traffic, Ollama, and benchmark fields in the last published posts table.
+
+Main files:
+
+- `scripts/publish-content-queue.py`
+- `src/pages/en/status/content-publish.astro`
+
+### 8. New Model Radar Status Page
+
+Commit: pending in current session after this document update.
+
+Added an English status page for the three-signal radar:
+
+- URL: `/en/status/new-model-radar/`
+- Shows watchlist item count, local inventory count, publish-now count, measured count, and downloaded count.
+- Main table shows model tag, traffic priority, Ollama freshness/downloads, local inventory status, benchmark status, measured timestamp, and landing URL.
+- English homepage now includes a `New Model Radar` navigation button.
+
+Main files:
+
+- `src/pages/en/status/new-model-radar.astro`
+- `src/pages/en/index.astro`
+
 ## Current Data Snapshot
 
 As of the last generated watchlist in this work:
@@ -113,7 +192,7 @@ The local status may come from exact runner tags, family availability, or benchm
 
 ### High Priority
 
-1. Make `traffic_priority` drive daily content more explicitly.
+1. Make `traffic_priority` drive daily content more explicitly. Done in current session.
 
 Current state: new-model watchlist candidates get high scores and enter the daily candidate pool.
 
@@ -135,7 +214,7 @@ Next step: allow an exception when:
 - Tokens/sec or latency changed meaningfully.
 - Local inventory status moved from `not_seen_locally` to `downloaded` or `measured`.
 
-3. Add a status page/table for the three signals.
+3. Add a status page/table for the three signals. Done for English in current session.
 
 Show the radar in a visible ops/status page:
 
@@ -150,7 +229,7 @@ This would make LocalVRAM feel more trustworthy because users can inspect the ev
 
 ### Medium Priority
 
-4. Enrich generated new-model posts with evidence blocks.
+4. Enrich generated new-model posts with evidence blocks. Done in current session.
 
 The draft template should include:
 
@@ -171,7 +250,7 @@ Not every useful article needs a new model. Use local inventory and benchmark da
 
 This should be separate from the launch-window radar.
 
-6. Add "new model opportunity" fields to publish logs.
+6. Add "new model opportunity" fields to publish logs. Done in current session.
 
 Future publish records should include:
 
@@ -238,4 +317,3 @@ Expected relevant files for this initiative are mainly:
 - `src/pages/en/index.astro`
 - `src/pages/zh/index.astro`
 - `src/pages/[locale]/index.astro`
-

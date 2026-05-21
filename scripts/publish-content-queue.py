@@ -60,6 +60,10 @@ class DraftCandidate:
     candidate_slug: str
     topic_key: str
     model_tag: str
+    model_key: str
+    traffic_priority: str
+    ollama_updated_label: str
+    benchmark_measured_at: str
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -172,16 +176,25 @@ def write_blog_post(
     body: str,
     keyword: str = "",
     model_tag: str = "",
+    traffic_priority: str = "",
+    ollama_updated_label: str = "",
+    benchmark_measured_at: str = "",
 ) -> None:
     tags_json = ", ".join(f'"{markdown_escape(tag)}"' for tag in tags)
     keyword_line = f'keyword: "{markdown_escape(keyword)}"\n' if keyword.strip() else ""
     model_tag_line = f'model_tag: "{markdown_escape(model_tag)}"\n' if model_tag.strip() else ""
+    traffic_line = f'traffic_priority: "{markdown_escape(traffic_priority)}"\n' if traffic_priority.strip() else ""
+    ollama_line = f'ollama_updated_label: "{markdown_escape(ollama_updated_label)}"\n' if ollama_updated_label.strip() else ""
+    benchmark_line = f'benchmark_measured_at: "{markdown_escape(benchmark_measured_at)}"\n' if benchmark_measured_at.strip() else ""
     content = (
         "---\n"
         f'title: "{markdown_escape(title)}"\n'
         f'description: "{markdown_escape(description)}"\n'
         f"{keyword_line}"
         f"{model_tag_line}"
+        f"{traffic_line}"
+        f"{ollama_line}"
+        f"{benchmark_line}"
         f"pubDate: {pub_date}\n"
         f"updatedDate: {pub_date}\n"
         f"tags: [{tags_json}]\n"
@@ -364,6 +377,10 @@ def collect_candidates(queue_dir: Path, queue_date: str, min_score: float) -> li
         candidate_slug = slugify(base_slug)
         topic_key = normalize_topic_key(keyword, candidate_slug)
         model_tag = str(frontmatter.get("model_tag", "")).strip()
+        model_key = slugify(model_tag.replace(":", "-")) if model_tag else ""
+        traffic_priority = str(frontmatter.get("traffic_priority", "")).strip()
+        ollama_updated_label = str(frontmatter.get("ollama_updated_label", "")).strip()
+        benchmark_measured_at = str(frontmatter.get("benchmark_measured_at", "")).strip()
 
         if status not in {"approved_auto", "approved_manual"}:
             continue
@@ -385,6 +402,10 @@ def collect_candidates(queue_dir: Path, queue_date: str, min_score: float) -> li
                 candidate_slug=candidate_slug,
                 topic_key=topic_key,
                 model_tag=model_tag,
+                model_key=model_key,
+                traffic_priority=traffic_priority,
+                ollama_updated_label=ollama_updated_label,
+                benchmark_measured_at=benchmark_measured_at,
             )
         )
     out.sort(key=lambda c: (-c.score, c.candidate_slug))
@@ -472,6 +493,9 @@ def main() -> None:
             body=cand.body,
             keyword=cand.keyword,
             model_tag=cand.model_tag,
+            traffic_priority=cand.traffic_priority,
+            ollama_updated_label=cand.ollama_updated_label,
+            benchmark_measured_at=cand.benchmark_measured_at,
         )
 
         published.append(
@@ -484,6 +508,10 @@ def main() -> None:
                 "out_file": str(out_file.relative_to(ROOT)).replace("\\", "/"),
                 "intent": intent,
                 "model_tag": cand.model_tag,
+                "model_key": cand.model_key,
+                "traffic_priority": cand.traffic_priority,
+                "ollama_updated_label": cand.ollama_updated_label,
+                "benchmark_measured_at": cand.benchmark_measured_at,
             }
         )
         existing_slugs.add(cand.candidate_slug)

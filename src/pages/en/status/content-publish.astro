@@ -106,18 +106,26 @@ const reviewFlags = Object.entries((lastReview.risk_flag_counts || {}) as Record
             <th>Slug</th>
             <th>Score</th>
             <th>Intent</th>
+            <th>Model</th>
+            <th>Traffic</th>
+            <th>Ollama</th>
+            <th>Benchmark</th>
             <th>Source Draft</th>
           </tr>
         </thead>
         <tbody>
           {publishedRows.length === 0 ? (
-            <tr><td colSpan={4}>No posts published in last run.</td></tr>
+            <tr><td colSpan={8}>No posts published in last run.</td></tr>
           ) : (
             publishedRows.map((row) => (
               <tr>
                 <td><a href={`/en/blog/${row.slug}/`}>{row.slug}</a></td>
                 <td>{row.score ?? "-"}</td>
                 <td>{row.intent || "-"}</td>
+                <td>{row.model_tag || "-"}</td>
+                <td>{row.traffic_priority || "-"}</td>
+                <td>{row.ollama_updated_label || "-"}</td>
+                <td>{row.benchmark_measured_at || "-"}</td>
                 <td>{row.source_draft || "-"}</td>
               </tr>
             ))

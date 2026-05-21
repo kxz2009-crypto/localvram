@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import watchlist from "../../../data/new-model-watchlist.json";
+
+const items = Array.isArray(watchlist.items) ? watchlist.items : [];
+const localInventory = (watchlist.local_inventory || {}) as Record<string, any>;
+
+function text(value: unknown, fallback = "-"): string {
+  const normalized = String(value ?? "").trim();
+  return normalized || fallback;
+}
+
+function nested(row: Record<string, any>, key: string, field: string, fallback = "-"): string {
+  const value = row[key];
+  if (!value || typeof value !== "object") {
+    return fallback;
+  }
+  return text(value[field], fallback);
+}
+
+const publishNowCount = items.filter((row: any) => row?.traffic_priority === "publish_now").length;
+const measuredCount = items.filter((row: any) => row?.benchmark_status?.status === "measured" || row?.status === "measured").length;
+const localCount = items.filter((row: any) => row?.local_inventory_status?.status === "downloaded").length;
+---
+
+<BaseLayout
+  title="New Model Radar | LocalVRAM"
+  description="Three-signal radar for Ollama model freshness, local RTX 3090 inventory, and benchmark readiness."
+  locale="en"
+>
+  <main class="container">
+    <h1>New Model Radar</h1>
+    <p>Tracks new Ollama model opportunities against local runner inventory and RTX 3090 benchmark evidence.</p>
+
+    <div class="card-grid">
+      <article class="card">
+        <h2>Updated</h2>
+        <p>{text(watchlist.updated_at)}</p>
+      </article>
+      <article class="card">
+        <h2>Watchlist Items</h2>
+        <p>{items.length}</p>
+      </article>
+      <article class="card">
+        <h2>Publish Now</h2>
+        <p>{publishNowCount}</p>
+      </article>
+      <article class="card">
+        <h2>Measured</h2>
+        <p>{measuredCount}</p>
+      </article>
+      <article class="card">
+        <h2>Local Downloaded</h2>
+        <p>{localCount}</p>
+      </article>
+      <article class="card">
+        <h2>Local Inventory</h2>
+        <p>{localInventory.model_count ?? 0} models</p>
+      </article>
+    </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Radar Items</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Traffic</th>
+            <th>Ollama Freshness</th>
+            <th>Downloads</th>
+            <th>Local Inventory</th>
+            <th>Benchmark</th>
+            <th>Measured At</th>
+            <th>Landing</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.length === 0 ? (
+            <tr><td colSpan={8}>No new model opportunities in the current watchlist.</td></tr>
+          ) : (
+            items.map((row: any) => (
+              <tr>
+                <td><code>{text(row.tag)}</code></td>
+                <td>{text(row.traffic_priority, "standard")}</td>
+                <td>{text(row.ollama_updated_label || row.ollama_library_freshness?.updated_label)}</td>
+                <td>{text(row.ollama_downloads || row.ollama_library_freshness?.downloads)}</td>
+                <td>{nested(row, "local_inventory_status", "status")}</td>
+                <td>{nested(row, "benchmark_status", "status", text(row.status, "-"))}</td>
+                <td>{nested(row, "benchmark_status", "measured_at", text(row.measured_at, "-"))}</td>
+                <td><a href={text(row.landing, "/en/models/")}>{text(row.landing, "/en/models/")}</a></td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Signal Meaning</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Source</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ollama Freshness</td>
+            <td>Ollama library page update/download labels</td>
+            <td>Detects launch-window search demand.</td>
+          </tr>
+          <tr>
+            <td>Local Inventory</td>
+            <td>Runner `/api/tags`, weekly target plan, and benchmark evidence</td>
+            <td>Shows whether LocalVRAM can honestly discuss local availability.</td>
+          </tr>
+          <tr>
+            <td>Benchmark</td>
+            <td>`src/data/benchmark-results.json`</td>
+            <td>Separates measured RTX 3090 evidence from pending setup pages.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</BaseLayout>

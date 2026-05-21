@@ -58,6 +58,12 @@ export const STATUS_ROUTE_ITEMS: RouteManifestItem[] = [
     enPath: "/en/status/data-freshness/",
   },
   {
+    slug: "new-model-radar",
+    title: "New Model Radar",
+    description: "Ollama freshness, local runner inventory, and RTX 3090 benchmark opportunity tracking.",
+    enPath: "/en/status/new-model-radar/",
+  },
+  {
     slug: "pipeline-status",
     title: "Pipeline Status",
     description: "Workflow health, SLO snapshot, and operation guardrail status.",
