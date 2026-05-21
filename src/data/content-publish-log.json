@@ -1,34 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-05-20T04:47:07.536572Z",
+  "updated_at": "2026-05-21T04:53:49.749942Z",
   "last_run": {
-    "run_at": "2026-05-20T04:47:07.536572Z",
-    "queue_date": "2026-05-20",
-    "candidate_count": 1,
+    "run_at": "2026-05-21T04:53:49.749942Z",
+    "queue_date": "2026-05-21",
+    "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
     "fallback_generated_count": 1,
-    "skipped_count": 1,
+    "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-05-20",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-05-21",
         "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-05-20-daily-local-llm-benchmark-snapshot-2026-05-20",
+        "topic_key": "daily-benchmark-fallback-2026-05-21-daily-local-llm-benchmark-snapshot-2026-05-21",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-20.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-21.md",
         "intent": "benchmark"
       }
     ],
-    "skipped": [
-      {
-        "draft": "content-queue/2026-05-20/01-en-blog-best-local-rag-models-2026.md",
-        "reason": "similar_slug:best-local-rag-models-2026"
-      }
-    ]
+    "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-05-21T04:53:49.749942Z",
+      "queue_date": "2026-05-21",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-05-21",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-05-21-daily-local-llm-benchmark-snapshot-2026-05-21",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-21.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-05-20T04:47:07.536572Z",
       "queue_date": "2026-05-20",
@@ -1419,28 +1436,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-03-23.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-03-22T03:25:53.873355Z",
-      "queue_date": "2026-03-22",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-03-22",
-          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-03-22-daily-local-llm-benchmark-snapshot-2026-03-22",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-03-22.md",
           "intent": "benchmark"
         }
       ],
