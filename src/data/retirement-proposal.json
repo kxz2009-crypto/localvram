@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-20T06:36:42Z",
+  "generated_at": "2026-05-27T06:58:22Z",
   "candidates_file": "/home/runner/work/localvram/localvram/src/data/retirement-candidates.json",
   "policy_file": "/home/runner/work/localvram/localvram/src/data/retired-models.json",
   "rules": {
@@ -15,7 +15,7 @@
     {
       "model": "glm-4.7-flash:bf16",
       "family": "glm-4.7-flash",
-      "last_seen_run_index": 9,
+      "last_seen_run_index": 10,
       "seen_ok_count": 1,
       "reasons": [
         "absent_in_recent_runs>=3",
@@ -29,7 +29,7 @@
     {
       "model": "nemotron-3-nano:30b",
       "family": "nemotron-3-nano",
-      "last_seen_run_index": 5,
+      "last_seen_run_index": 6,
       "seen_ok_count": 4,
       "blockers": [
         "seen_ok_count>2"
@@ -38,7 +38,7 @@
         "model": "nemotron-3-nano:30b",
         "family": "nemotron-3-nano",
         "last_seen_at": "2026-03-10T08:00:30Z",
-        "last_seen_run_index": 5,
+        "last_seen_run_index": 6,
         "last_success_at": "2026-03-10T08:00:30Z",
         "seen_ok_count": 4,
         "seen_targets_count": 0,
@@ -53,7 +53,7 @@
     {
       "model": "translategemma:27b",
       "family": "translategemma",
-      "last_seen_run_index": 5,
+      "last_seen_run_index": 6,
       "seen_ok_count": 5,
       "blockers": [
         "seen_ok_count>2"
@@ -62,7 +62,7 @@
         "model": "translategemma:27b",
         "family": "translategemma",
         "last_seen_at": "2026-03-04T09:01:38Z",
-        "last_seen_run_index": 5,
+        "last_seen_run_index": 6,
         "last_success_at": "2026-03-04T09:01:38Z",
         "seen_ok_count": 5,
         "seen_targets_count": 0,
