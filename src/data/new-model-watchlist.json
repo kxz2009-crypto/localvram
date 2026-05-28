@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T04:56:11.047529Z",
+  "updated_at": "2026-05-28T04:50:25.070280Z",
   "window_hours": 48,
   "max_library_age_days": 14,
   "strategy": "Prioritize new Ollama model families; use RTX 3090 benchmark recency as evidence, not as proof of model freshness.",
@@ -17,18 +17,18 @@
       "source": "new_family_benchmark",
       "priority_score": 100,
       "status": "measured",
-      "measured_at": "2026-05-20T06:24:07Z",
-      "tokens_per_second": 47.84,
-      "latency_ms": 2592.0,
+      "measured_at": "2026-05-27T06:45:03Z",
+      "tokens_per_second": 38.801,
+      "latency_ms": 3124.0,
       "ollama_command": "ollama run qwen3.6:35b",
       "source_url": "https://ollama.com/library/qwen3.6",
-      "ollama_updated_label": "5 days ago",
-      "ollama_updated_days": 5,
+      "ollama_updated_label": "6 days ago",
+      "ollama_updated_days": 6,
       "ollama_downloads": "1.7M",
       "ollama_library_freshness": {
         "status": "fresh",
-        "updated_label": "5 days ago",
-        "updated_days": 5,
+        "updated_label": "6 days ago",
+        "updated_days": 6,
         "downloads": "1.7M",
         "source_url": "https://ollama.com/library/qwen3.6"
       },
@@ -39,13 +39,13 @@
       },
       "benchmark_status": {
         "status": "measured",
-        "measured_at": "2026-05-20T06:24:07Z",
-        "tokens_per_second": 47.84,
-        "latency_ms": 2592.0
+        "measured_at": "2026-05-27T06:45:03Z",
+        "tokens_per_second": 38.801,
+        "latency_ms": 3124.0
       },
       "traffic_priority": "publish_now",
       "landing": "/en/models/qwen3-6-35b/",
-      "content_angle": "New model family with RTX 3090 evidence; publish while launch-search demand is warm."
+      "content_angle": "Fresh RTX 3090 result; publish while Ollama search demand is warm."
     }
   ]
 }
