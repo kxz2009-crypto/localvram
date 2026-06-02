@@ -1,6 +1,19 @@
 {
   "items": [
     {
+      "date": "2026-06-02",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [],
+      "published_posts": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-06-02",
+          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-06-02T05:11:31.398430Z"
+    },
+    {
       "date": "2026-06-01",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -444,32 +457,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-05-03T04:28:20.045106Z"
-    },
-    {
-      "date": "2026-05-02",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-05-02",
-          "slug": "model-deepseek-r1-14b-benchmark-refresh",
-          "title": "deepseek-r1:14B Local Benchmark: Throughput, Latency, and VRAM (2026)",
-          "keyword": "deepseek-r1:14b local inference benchmark update",
-          "score": 640,
-          "source": "opportunity",
-          "landing": "",
-          "model_tag": "",
-          "model_key": "",
-          "draft_path": "content-queue/2026-05-02/01-model-deepseek-r1-14b-benchmark-refresh.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "model-deepseek-r1-14b-benchmark-refresh",
-          "title": "deepseek-r1:14B Local Benchmark: Throughput, Latency, and VRAM (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-05-02T04:00:04.644186Z"
     }
   ]
 }

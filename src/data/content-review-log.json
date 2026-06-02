@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-01T05:26:09.027962Z",
+  "updated_at": "2026-06-02T05:11:31.327265Z",
   "last_run": {
-    "run_at": "2026-06-01T05:26:09.027962Z",
-    "queue_date": "2026-06-01",
+    "run_at": "2026-06-02T05:11:31.327265Z",
+    "queue_date": "2026-06-02",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-06-02T05:11:31.327265Z",
+      "queue_date": "2026-06-02",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-06-01T05:26:09.027962Z",
       "queue_date": "2026-06-01",
@@ -1157,60 +1168,6 @@
             "score": 0.9426,
             "topic_score": 0.2857,
             "slug": "model-translategemma-27b-local-benchmark"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-04-02T03:32:31.185575Z",
-      "queue_date": "2026-04-02",
-      "reviewed_count": 3,
-      "auto_approved_count": 3,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-04-02/01-runpod-vs-vast-for-local-llm-fallback.md",
-          "slug": "runpod-vs-vast-for-local-llm-fallback",
-          "score": 640.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 219,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.7174,
-            "topic_score": 0.0556,
-            "slug": "model-qwen3-coder-30b-benchmark-refresh"
-          }
-        },
-        {
-          "draft": "content-queue/2026-04-02/02-model-translategemma-27b-local-benchmark.md",
-          "slug": "model-translategemma-27b-local-benchmark",
-          "score": 300.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 220,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.8092,
-            "topic_score": 0.4615,
-            "slug": "model-qwen3-coder-30b-benchmark-refresh"
-          }
-        },
-        {
-          "draft": "content-queue/2026-04-02/03-model-gemma3-27b-local-benchmark.md",
-          "slug": "model-gemma3-27b-local-benchmark",
-          "score": 160.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 220,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.8209,
-            "topic_score": 0.5833,
-            "slug": "model-deepseek-r1-14b-local-benchmark"
           }
         }
       ]
