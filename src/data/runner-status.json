@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T06:57:54Z",
+  "updated_at": "2026-06-03T07:25:37Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -66,11 +66,11 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=171573,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=128801,fd=3))"
     ],
     "ps_ollama": [
-      "gao20     171573       1  1 14:45 ?        00:00:09 /usr/local/bin/ollama serve",
-      "gao20     194150  171573 42 14:56 ?        00:00:44 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 54213"
+      "gao20     128801       1  1 15:13 ?        00:00:09 /usr/local/bin/ollama serve",
+      "gao20     158989  128801 43 15:23 ?        00:00:43 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 50111"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -99,7 +99,7 @@
       "version": "0.20.2"
     },
     "tags": {
-      "model_count": 45,
+      "model_count": 46,
       "sample": [
         "antangelmed/ling-flash-2.0:100b",
         "bge-m3:latest",
@@ -125,7 +125,7 @@
     }
   },
   "summary": {
-    "model_count": 45,
+    "model_count": 46,
     "required_targets_count": 14,
     "required_targets_runnable_count": 12,
     "required_targets_runnable": [
