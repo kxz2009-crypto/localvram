@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-03T05:27:45.811548Z",
+  "updated_at": "2026-06-04T05:22:58.929837Z",
   "last_run": {
-    "run_at": "2026-06-03T05:27:45.811548Z",
-    "queue_date": "2026-06-03",
+    "run_at": "2026-06-04T05:22:58.929837Z",
+    "queue_date": "2026-06-04",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-06-04T05:22:58.929837Z",
+      "queue_date": "2026-06-04",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-06-03T05:27:45.811548Z",
       "queue_date": "2026-06-03",
@@ -1099,32 +1110,6 @@
             "score": 0.9664,
             "topic_score": 0.1875,
             "slug": "ministral-3-14b-local-benchmark-guide"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-04-04T03:21:50.362632Z",
-      "queue_date": "2026-04-04",
-      "reviewed_count": 1,
-      "auto_approved_count": 1,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-04-04/01-multi-gpu-local-llm-roi-calculator-guide.md",
-          "slug": "multi-gpu-local-llm-roi-calculator-guide",
-          "score": 560.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 220,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.845,
-            "topic_score": 0.1,
-            "slug": "runpod-vs-vast-for-local-llm-fallback"
           }
         }
       ]
