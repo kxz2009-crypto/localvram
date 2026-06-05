@@ -1,30 +1,34 @@
 {
-  "updated_at": "2026-05-29T05:57:27.329937Z",
+  "updated_at": "2026-06-05T06:06:50.686455Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-06-05T00:00:00Z",
+    "next_refresh_at": "2026-06-12T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-05-29T05:57:27.329937Z",
+    "last_refresh_at": "2026-06-05T06:06:50.686455Z",
     "last_refresh_summary": {
-      "incoming_count": 2,
-      "removed_count": 2,
+      "incoming_count": 4,
+      "removed_count": 4,
       "incoming_topic_keys": [
-        "llama4-16x17b-local-inference-benchmark-update",
-        "qwen3-5-122b-local-inference-benchmark-update"
+        "deepseek-r1-14b-local-inference-benchmark-update",
+        "glm-4-7-flash-bf16-local-inference-benchmark-update",
+        "llama3-3-70b-local-inference-benchmark-update",
+        "qwen3-6-35b-local-inference-benchmark-update"
       ],
       "removed_topic_keys": [
-        "glm-4-7-flash-bf16-local-inference-benchmark-update",
-        "llama3-3-70b-local-inference-benchmark-update"
+        "best-local-rag-model",
+        "llama4-16x17b-local-inference-benchmark-update",
+        "mistral-small-22b-local-inference-benchmark-update",
+        "qwen3-5-122b-local-inference-benchmark-update"
       ],
-      "blocked_recent_topic_count": 66
+      "blocked_recent_topic_count": 58
     }
   },
   "items": [
@@ -104,6 +108,13 @@
       "search_intent_score": 9,
       "commercial_intent_score": 9,
       "freshness_gap_score": 8
+    },
+    {
+      "slug": "model-deepseek-r1-14b-benchmark-refresh",
+      "keyword": "deepseek-r1:14b local inference benchmark update",
+      "search_intent_score": 8,
+      "commercial_intent_score": 8,
+      "freshness_gap_score": 10
     },
     {
       "slug": "model-ministral-3-14b-benchmark-refresh",
@@ -190,6 +201,13 @@
       "freshness_gap_score": 10
     },
     {
+      "slug": "model-qwen3-6-35b-benchmark-refresh",
+      "keyword": "qwen3.6:35b local inference benchmark update",
+      "search_intent_score": 5,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
       "slug": "en-affiliate-cloud-gpu",
       "keyword": "runpod a100 ollama",
       "search_intent_score": 5,
@@ -211,29 +229,15 @@
       "freshness_gap_score": 6
     },
     {
-      "slug": "model-llama4-16x17b-benchmark-refresh",
-      "keyword": "llama4:16x17b local inference benchmark update",
+      "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+      "keyword": "glm-4.7-flash:bf16 local inference benchmark update",
       "search_intent_score": 4,
       "commercial_intent_score": 5,
-      "freshness_gap_score": 10
+      "freshness_gap_score": 5
     },
     {
-      "slug": "en-blog-best-local-rag-models-2026",
-      "keyword": "best local rag model",
-      "search_intent_score": 3,
-      "commercial_intent_score": 8,
-      "freshness_gap_score": 8
-    },
-    {
-      "slug": "model-mistral-small-22b-benchmark-refresh",
-      "keyword": "mistral-small:22b local inference benchmark update",
-      "search_intent_score": 4,
-      "commercial_intent_score": 5,
-      "freshness_gap_score": 7
-    },
-    {
-      "slug": "model-qwen3-5-122b-benchmark-refresh",
-      "keyword": "qwen3.5:122b local inference benchmark update",
+      "slug": "model-llama3-3-70b-benchmark-refresh",
+      "keyword": "llama3.3:70b local inference benchmark update",
       "search_intent_score": 4,
       "commercial_intent_score": 5,
       "freshness_gap_score": 5
