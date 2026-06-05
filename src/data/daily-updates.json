@@ -1,6 +1,35 @@
 {
   "items": [
     {
+      "date": "2026-06-05",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-06-05",
+          "slug": "model-qwq-32b-local-benchmark",
+          "title": "qwq:32B: Local Inference Performance Report (2026)",
+          "keyword": "qwq:32b local inference benchmark",
+          "score": 225,
+          "source": "benchmark_fallback",
+          "landing": "/en/models/",
+          "model_tag": "",
+          "model_key": "",
+          "traffic_priority": "",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "",
+          "draft_path": "content-queue/2026-06-05/01-model-qwq-32b-local-benchmark.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-qwq-32b-local-benchmark",
+          "title": "qwq:32B: Local Inference Performance Report (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-06-05T04:57:23.066832Z"
+    },
+    {
       "date": "2026-06-04",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -405,32 +434,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-05-06T04:22:52.224658Z"
-    },
-    {
-      "date": "2026-05-05",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-05-05",
-          "slug": "model-qwq-32b-local-benchmark",
-          "title": "qwq:32B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "keyword": "qwq:32b local inference benchmark",
-          "score": 150,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "model_tag": "",
-          "model_key": "",
-          "draft_path": "content-queue/2026-05-05/01-model-qwq-32b-local-benchmark.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-05-05",
-          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-05-05T03:56:57.626237Z"
     }
   ]
 }
