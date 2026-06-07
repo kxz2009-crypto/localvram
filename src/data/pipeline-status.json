@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-06T04:38:05Z",
+  "updated_at": "2026-06-07T05:08:15Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -30,18 +30,31 @@
     "daily_content": {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
-      "run_id": "27052756458",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/27052756458",
+      "run_id": "27083408793",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/27083408793",
       "status": "completed",
-      "conclusion": "success",
+      "conclusion": "failure",
       "event": "schedule",
-      "head_sha": "38fa4896ff4d152ce2ebea4a2e13f5d50d5c4136",
-      "failure_class": "none",
-      "failure_detail": "",
-      "updated_at": "2026-06-06T04:38:05Z"
+      "head_sha": "02119df62e83b7e6f15d63782a15ae5c107083f8",
+      "failure_class": "daily_content_failed",
+      "failure_detail": "auto-fill-i18n-blog-body.py --locales zh failed",
+      "updated_at": "2026-06-07T05:08:15Z"
     }
   },
   "history": [
+    {
+      "workflow_key": "daily_content",
+      "workflow_name": "Daily Content Agent",
+      "run_id": "27083408793",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/27083408793",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "schedule",
+      "head_sha": "02119df62e83b7e6f15d63782a15ae5c107083f8",
+      "failure_class": "daily_content_failed",
+      "failure_detail": "auto-fill-i18n-blog-body.py --locales zh failed",
+      "updated_at": "2026-06-07T05:08:15Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
@@ -808,19 +821,6 @@
       "failure_class": "none",
       "failure_detail": "",
       "updated_at": "2026-04-24T06:02:30Z"
-    },
-    {
-      "workflow_key": "weekly_benchmark",
-      "workflow_name": "Weekly Benchmark",
-      "run_id": "24874114930",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/24874114930",
-      "status": "completed",
-      "conclusion": "success",
-      "event": "workflow_dispatch",
-      "head_sha": "002e57366ffffcabfee86248a42cc486143cdf67",
-      "failure_class": "none",
-      "failure_detail": "",
-      "updated_at": "2026-04-24T06:02:16Z"
     }
   ]
 }
