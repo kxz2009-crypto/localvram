@@ -207,7 +207,7 @@ def write_blog_post(
     path.write_text(content, encoding="utf-8")
 
 
-def pick_measured_highlights(max_count: int = 5) -> list[dict[str, Any]]:
+def pick_measured_highlights(max_count: int = 50) -> list[dict[str, Any]]:
     payload = load_json(BENCHMARK_FILE, {"models": {}})
     rows = payload.get("models", {})
     if not isinstance(rows, dict):
@@ -233,24 +233,62 @@ def pick_measured_highlights(max_count: int = 5) -> list[dict[str, Any]]:
     return measured[:max_count]
 
 
-def pick_today_model(measured: list[dict[str, Any]]) -> dict[str, Any] | None:
-    if not measured:
-        return None
-    def utility(row: dict[str, Any]) -> tuple[int, float]:
-        tag = str(row.get("tag", "")).lower()
-        tps = float(row.get("tokens_per_second", 0) or 0)
-        score = 0
-        if any(token in tag for token in ("coder", "qwen", "deepseek", "mistral", "gemma")):
-            score += 3
-        if any(token in tag for token in ("30b", "32b", "35b", "27b", "24b", "20b", "14b")):
-            score += 2
-        if tps >= 20:
-            score += 2
-        if tps >= 60:
-            score += 1
-        return (score, tps)
+def pick_today_model(measured: list[dict[str, Any]], queue_date: str = "") -> dict[str, Any]:
+    """Pick today's featured model via date-based rotation with cascading fallback.
 
-    return sorted(measured, key=utility, reverse=True)[0]
+    Priority:
+      1. Models with test_time within last 3 months (newest up to 30)
+      2. Models with test_time at any date (newest up to 30)
+      3. Any available model
+
+    Always returns a dict (never None).
+    """
+    try:
+        today = dt.date.fromisoformat((queue_date or "")[:10])
+    except (ValueError, TypeError):
+        today = dt.date.today()
+
+    three_months_ago = today - dt.timedelta(days=90)
+
+    def parse_test_time(row: dict[str, Any]) -> dt.datetime | None:
+        raw = str(row.get("test_time", "")).strip()
+        if not raw:
+            return None
+        try:
+            return dt.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+
+    def newest_key(row: dict[str, Any]) -> dt.datetime:
+        parsed = parse_test_time(row)
+        if parsed is not None:
+            return parsed
+        return dt.datetime.min.replace(tzinfo=dt.timezone.utc)
+
+    # Tier 1: tested within last 3 months, newest 30
+    tier1 = sorted(
+        [m for m in measured if parse_test_time(m) is not None and parse_test_time(m).date() >= three_months_ago],
+        key=newest_key,
+        reverse=True,
+    )[:30]
+
+    # Tier 2: any model with test_time, newest 30
+    tier2 = sorted(
+        [m for m in measured if parse_test_time(m) is not None],
+        key=newest_key,
+        reverse=True,
+    )[:30]
+
+    # Tier 3: any model at all
+    tier3 = list(measured)
+
+    for pool in (tier1, tier2, tier3):
+        if pool:
+            day_seed = sum(ord(ch) for ch in today.isoformat())
+            return pool[day_seed % len(pool)]
+
+    # Ultimate guard — caller should have verified measured is non-empty
+    return {"tag": "local LLM", "tokens_per_second": 0.0, "latency_ms": 0.0, "test_time": ""}
 
 
 def unique_slug(base_slug: str, existing_slugs: set[str]) -> str:
@@ -264,80 +302,332 @@ def unique_slug(base_slug: str, existing_slugs: set[str]) -> str:
         idx += 1
 
 
+def _infer_model_category(tag: str) -> str:
+    """Return one of: coding, reasoning, chat, vision, general."""
+    t = tag.lower()
+    if "coder" in t or "/code" in t or "-code" in t or "codeqwen" in t:
+        return "coding"
+    if "deepseek" in t or "qwq" in t or "reason" in t or "think" in t:
+        return "reasoning"
+    if "vision" in t or "vl" in t:
+        return "vision"
+    if "chat" in t or "instruct" in t:
+        return "chat"
+    return "general"
+
+
+def _infer_size_tier(tag: str) -> str:
+    """Return one of: small, medium, large, xl, unknown."""
+    m = re.search(r'[:/-](\d+)b', tag.lower())
+    if not m:
+        return "unknown"
+    n = int(m.group(1))
+    if n < 7:
+        return "small"
+    if n < 20:
+        return "medium"
+    if n <= 40:
+        return "large"
+    return "xl"
+
+
+def _build_benchmark_context(pick_tag: str, measured: list[dict[str, Any]]) -> dict[str, str | None]:
+    """Build positioning context: rank, nearest faster/slower model comparisons."""
+    ranked = sorted(measured, key=lambda r: float(r.get("tokens_per_second", 0) or 0), reverse=True)
+    tags = [r["tag"] for r in ranked]
+    try:
+        idx = tags.index(pick_tag)
+    except ValueError:
+        return {"rank": None, "out_of": len(ranked), "faster": None, "slower": None}
+
+    pick_tps = float(ranked[idx]["tokens_per_second"])
+    faster = ranked[idx - 1] if idx > 0 else None
+    slower = ranked[idx + 1] if idx < len(ranked) - 1 else None
+
+    out: dict[str, str | None] = {
+        "rank": str(idx + 1),
+        "out_of": str(len(ranked)),
+    }
+    if faster:
+        gap = ((faster["tokens_per_second"] / pick_tps) - 1) * 100 if pick_tps > 0 else 0
+        out["faster"] = f"`{faster['tag']}` ({faster['tokens_per_second']:.1f} tok/s, {gap:.0f}% faster)"
+    else:
+        out["faster"] = None
+    if slower:
+        gap = ((pick_tps / slower["tokens_per_second"]) - 1) * 100 if slower["tokens_per_second"] > 0 else 0
+        out["slower"] = f"`{slower['tag']}` ({slower['tokens_per_second']:.1f} tok/s, {gap:.0f}% slower)"
+    else:
+        out["slower"] = None
+    return out
+
+
+def _perf_tier(tps: float) -> str:
+    if tps >= 100:
+        return "fast"
+    if tps >= 40:
+        return "moderate"
+    if tps >= 15:
+        return "deliberate"
+    return "heavy"
+
+
 def build_daily_fallback_content(queue_date: str, measured: list[dict[str, Any]]) -> dict[str, Any]:
     year = queue_date[:4] if len(queue_date) >= 4 else "2026"
-    pick = pick_today_model(measured)
-    pick_tag = str(pick.get("tag", "local LLM")).strip() if pick else "local LLM"
-    pick_slug = slugify(pick_tag.replace(":", "-")) if pick else "local-llm"
-    pick_tps = float(pick.get("tokens_per_second", 0) or 0) if pick else 0.0
-    pick_latency = float(pick.get("latency_ms", 0) or 0) if pick else 0.0
-    pick_test_time = str(pick.get("test_time", "")).strip() if pick else ""
+    pick = pick_today_model(measured, queue_date=queue_date)
+    pick_tag = str(pick.get("tag", "local LLM")).strip()
+    pick_slug = slugify(pick_tag.replace(":", "-"))
+    pick_tps = float(pick.get("tokens_per_second", 0) or 0)
+    pick_latency = float(pick.get("latency_ms", 0) or 0)
+    pick_test_time = str(pick.get("test_time", "")).strip()
+
+    category = _infer_model_category(pick_tag)
+    size_tier = _infer_size_tier(pick_tag)
+    perf = _perf_tier(pick_tps)
+    context = _build_benchmark_context(pick_tag, measured)
+
     title = f"Today's Local LLM Pick: {pick_tag} on RTX 3090 ({year})"
-    keyword = f"{pick_tag} rtx 3090 ollama benchmark" if pick else "best local llm rtx 3090 today"
+    keyword = f"{pick_tag} rtx 3090 ollama benchmark"
     summary = (
-        f"Daily 3090 recommendation for {pick_tag}: verified speed, VRAM decision guidance, "
-        "Ollama setup path, and local-vs-cloud fallback triggers."
+        f"Daily 3090 recommendation for {pick_tag}: {perf} performer at {pick_tps:.1f} tok/s, "
+        "RTX 3090 benchmark data, use-case fit, and local-vs-cloud decision guide."
     )
-    lines = []
-    for row in measured:
-        lines.append(
-            f"- `{row['tag']}`: {row['tokens_per_second']:.1f} tok/s | latency {row['latency_ms']:.0f} ms | test {row['test_time']}"
+
+    # ---- measured block (top 5 TPS) ----
+    top5 = sorted(measured, key=lambda r: float(r.get("tokens_per_second", 0) or 0), reverse=True)[:5]
+    measured_block_lines = [
+        f"- `{r['tag']}`: {r['tokens_per_second']:.1f} tok/s | latency {r['latency_ms']:.0f} ms | test {r['test_time']}"
+        for r in top5
+    ]
+    measured_block = "\n".join(measured_block_lines) if measured_block_lines else "- No verified measurements available yet."
+
+    # ---- category-specific personas and guidance ----
+    category_personas = {
+        "coding": (
+            "## Who should try it\n\n"
+            f"- Developers evaluating `{pick_tag}` for code completion, refactoring, or agentic coding on a local RTX 3090.\n"
+            "- Teams that want a private, offline coding assistant without sending source code to a cloud API.\n"
+            "- Anyone comparing `{pick_tag}` against Copilot or cloud coding agents on latency and throughput.\n\n"
+            "## Who should skip it\n\n"
+            "- Users whose primary workload is long-context chat or document analysis rather than code.\n"
+            "- Teams that need guaranteed performance on a specific programming language; test with your own benchmark first.\n"
+            "- 8GB/12GB GPU owners unless a smaller quantized variant is available.\n"
+        ),
+        "reasoning": (
+            "## Who should try it\n\n"
+            f"- Users working on math, logic, planning, or multi-step reasoning tasks where `{pick_tag}`'s chain-of-thought adds accuracy.\n"
+            "- Researchers and power users who want a local alternative to cloud reasoning APIs like o1 or Claude.\n"
+            "- Anyone curious whether local reasoning models have caught up to cloud counterparts on a 24GB RTX 3090.\n\n"
+            "## Who should skip it\n\n"
+            "- Teams that need fast, single-turn responses for real-time applications; reasoning models trade speed for depth.\n"
+            "- Users running simple classification or extraction tasks that don't benefit from extended reasoning chains.\n"
+            "- Anyone deploying to production without first validating output quality on representative data.\n"
+        ),
+        "vision": (
+            "## Who should try it\n\n"
+            f"- Developers building local image analysis pipelines who want to run `{pick_tag}` entirely on-device.\n"
+            "- Privacy-sensitive users who need to process images without uploading to cloud vision APIs.\n"
+            "- Anyone testing whether local vision models can handle their document scanning or screenshot analysis workload.\n\n"
+            "## Who should skip it\n\n"
+            "- Users who primarily work with text-only tasks; a smaller text-only model will be faster and more efficient.\n"
+            "- Teams needing real-time video processing; current local vision models are optimized for single-image inference.\n"
+            "- 8GB/12GB GPU owners unless a quantized vision variant is available.\n"
+        ),
+        "chat": (
+            "## Who should try it\n\n"
+            f"- Teams building conversational agents, customer support bots, or interactive assistants using `{pick_tag}`.\n"
+            "- Users who want a local everyday chat model that runs entirely on their own hardware.\n"
+            "- Anyone comparing `{pick_tag}`'s multi-turn coherence against their current local or cloud chat model.\n\n"
+            "## Who should skip it\n\n"
+            "- Users who need specialized coding or reasoning capabilities; consider a task-specific model instead.\n"
+            "- Teams deploying at scale without first verifying p95 latency under concurrent conversations.\n"
+            "- 8GB/12GB GPU owners unless a smaller quantized variant is available.\n"
+        ),
+    }
+    general_personas = (
+        "## Who should try it\n\n"
+        f"- RTX 3090 owners deciding whether to download `{pick_tag}` tonight for local experimentation.\n"
+        "- Users comparing local inference speed against cloud rental (RunPod, Vast) before committing to a workflow.\n"
+        "- Anyone building a local LLM toolbox who wants a verified baseline for this model.\n\n"
+        "## Who should skip it\n\n"
+        "- Users who need long-context production stability before a sustained run has been verified.\n"
+        "- Teams whose workload requires predictable p95 latency under concurrency.\n"
+        "- 8GB/12GB GPU owners unless a smaller quantized variant exists.\n"
+    )
+    personas = category_personas.get(category, general_personas)
+
+    # ---- perf-tier verdict ----
+    cat_label = {"coding": "coding", "reasoning": "reasoning", "vision": "vision", "chat": "chat", "general": "general-purpose"}[category]
+    if perf == "fast":
+        verdict = (
+            f"`{pick_tag}` is a **fast** {cat_label} model on a 24GB RTX 3090 ({pick_tps:.1f} tok/s). "
+            "If it fits your VRAM with headroom for your target context length, it is a strong candidate for daily local use. "
+            "Download it and validate on your own prompts — the numbers suggest it will handle interactive workloads comfortably."
         )
-    measured_block = "\n".join(lines) if lines else "- Latest benchmark feed is temporarily unavailable."
-    if pick_tps >= 60:
-        verdict = f"Download `{pick_tag}` first if you want a fast local baseline on a 24GB RTX 3090."
-    elif pick_tps >= 20:
-        verdict = f"`{pick_tag}` is worth testing locally, but watch context length and sustained latency."
-    elif pick:
-        verdict = f"`{pick_tag}` is a specialist or heavy model on 24GB; test locally before relying on it for production."
+    elif perf == "moderate":
+        verdict = (
+            f"`{pick_tag}` is a **moderate-speed** {cat_label} model on a 24GB RTX 3090 ({pick_tps:.1f} tok/s). "
+            "It is worth testing locally for batch or offline workloads. For real-time interactive use, "
+            "measure end-to-end latency with your typical prompt length before committing."
+        )
+    elif perf == "deliberate":
+        verdict = (
+            f"`{pick_tag}` runs at **{pick_tps:.1f} tok/s** on a 24GB RTX 3090 — in the deliberate range. "
+            "This model prioritizes quality or parameter count over raw speed. "
+            "Test it on offline or background tasks first, and consider a smaller quantization if interactive response time matters."
+        )
     else:
-        verdict = "No verified model changed enough today to justify a full SEO article; use this as a feed update."
+        verdict = (
+            f"`{pick_tag}` is a **heavy** model on 24GB VRAM ({pick_tps:.1f} tok/s). "
+            "It is best suited for offline batch processing, proof-of-concept validation, or cloud fallback scenarios. "
+            "Reduce context or step down quantization before attempting interactive use."
+        )
+
+    # ---- size-specific vram note ----
+    size_note = ""
+    if size_tier == "small":
+        size_note = f"\n\nAt this model scale, `{pick_tag}` leaves substantial VRAM headroom on a 24GB card. You can run it alongside other services or allocate extra context without OOM risk."
+    elif size_tier == "medium":
+        size_note = f"\n\n`{pick_tag}` fits comfortably in 24GB at standard quantizations. Monitor VRAM usage if you push context beyond 8K tokens."
+    elif size_tier == "large":
+        size_note = f"\n\n`{pick_tag}` approaches the 24GB boundary at higher quantizations. Consider Q4 or Q5 if you need context headroom on the RTX 3090."
+    elif size_tier == "xl":
+        size_note = f"\n\n`{pick_tag}` exceeds 24GB at full precision. Use Q4 or lower quantization, or treat this as a cloud-fallback candidate."
+
+    # ---- benchmark positioning ----
+    positioning = ""
+    rank = context.get("rank")
+    out_of = context.get("out_of")
+    faster = context.get("faster")
+    slower = context.get("slower")
+    if rank and out_of:
+        parts = [f"It ranks **#{rank} of {out_of}** in throughput among currently measured models on this RTX 3090."]
+        if faster:
+            parts.append(f"The next faster model is {faster}.")
+        if slower:
+            parts.append(f"The next slower model is {slower}.")
+        positioning = " " + " ".join(parts)
+
+    # ---- category-specific watch points ----
+    watch_points = {
+        "coding": (
+            "- **Output quality varies by language**: test {tag} on your primary language before depending on it.\n"
+            "- **Temperature sensitivity**: coding tasks usually perform best at temperature 0; higher values may introduce errors.\n"
+            "- **Context window**: verify the model keeps instruction adherence stable at the context length you need."
+        ),
+        "reasoning": (
+            "- **Over-thinking risk**: on simple prompts the model may produce unnecessary chain-of-thought, increasing latency.\n"
+            "- **Temperature tuning**: lower temperatures (0–0.3) improve factual accuracy; higher values may hallucinate reasoning steps.\n"
+            "- **Batch efficiency**: for throughput-critical tasks, group prompts and process offline rather than requesting real-time responses."
+        ),
+        "vision": (
+            "- **Image resolution**: higher-resolution inputs increase processing time significantly; resize images when possible.\n"
+            "- **Single-image focus**: current local vision models are optimized for one image at a time, not video streams.\n"
+            "- **OCR accuracy**: test on your document types; results vary by font, layout, and image quality."
+        ),
+        "chat": (
+            "- **Multi-turn coherence**: test the model on 5+ turn conversations to verify it maintains context.\n"
+            "- **System prompt adherence**: {tag} may need explicit formatting instructions for production use.\n"
+            "- **Concurrent sessions**: measure p95 latency under your expected concurrency before deploying to users."
+        ),
+        "general": (
+            "- **Workload-specific testing**: generic benchmarks do not guarantee performance on your particular use case.\n"
+            "- **Context length**: always test at your target context length before assuming production readiness.\n"
+            "- **Quantization trade-off**: lower quantization saves VRAM but may reduce output quality on nuanced tasks."
+        ),
+    }
+    watch_block = watch_points.get(category, watch_points["general"]).format(tag=pick_tag)
+
+    # ---- decision guide (perf-tier adaptive) ----
+    if perf == "fast":
+        decision = (
+            "1. **VRAM check first**: if {tag} fits with headroom at your target context length, run it locally.\n"
+            "2. **Latency validation**: verify p95 latency matches your workload requirements under realistic concurrency.\n"
+            "3. **Cloud only for bursts**: keep local as the default; use cloud rental for peak overflow or batch jobs.\n"
+            "4. **New release watch**: if a newer version of {tag} drops, re-test within 48 hours to capture the traffic window."
+        )
+    elif perf == "moderate":
+        decision = (
+            "1. **Batch is the sweet spot**: {tag} is best for offline/batch jobs where throughput matters more than single-shot latency.\n"
+            "2. **Test at your context length**: moderate-speed models can slow significantly at longer contexts.\n"
+            "3. **Quantization choice matters**: stepping from Q8 to Q4 gains speed but test quality degradation first.\n"
+            "4. **Cloud fallback plan**: if local latency misses your target, use RunPod/Vast for time-sensitive runs."
+        )
+    elif perf == "deliberate":
+        decision = (
+            "1. **Offline first**: prioritize {tag} for scheduled batch inference, research, or validation workflows.\n"
+            "2. **Context is the bottleneck**: reduce context to the minimum viable length for your task.\n"
+            "3. **Quantize before you buy hardware**: Q4 or Q5 may make this viable on 24GB where Q8 is not.\n"
+            "4. **Cloud for interactive**: if real-time response is required, treat {tag} as a cloud-fallback candidate."
+        )
+    else:  # heavy
+        decision = (
+            "1. **Cloud may win**: at {tps:.1f} tok/s on 24GB, {tag} may be more cost-effective on RunPod or Vast.\n"
+            "2. **Reduce aggressively**: step down to Q4 or IQ4 and minimize context to fit VRAM.\n"
+            "3. **Offline only**: do not rely on this model for interactive or real-time local workloads.\n"
+            "4. **Hardware path**: if you run models this size daily, consider multi-GPU or cloud as a permanent solution."
+        )
+    decision_block = decision.format(tag=pick_tag, tps=pick_tps)
+
+    # ---- data-driven comparisons ----
+    comp_lines = [f"- `{pick_tag}` vs the next-fastest and next-slowest model in the benchmark feed."]
+    # Find comparable models in similar size range
+    same_tier = [
+        r for r in measured
+        if r["tag"] != pick_tag and _infer_size_tier(r["tag"]) == size_tier
+    ]
+    if same_tier:
+        fastest_same = max(same_tier, key=lambda r: r["tokens_per_second"])
+        comp_lines.append(
+            f"- `{pick_tag}` vs `{fastest_same['tag']}` — same size tier, "
+            f"{pick_tps:.0f} vs {fastest_same['tokens_per_second']:.0f} tok/s."
+        )
+    comp_lines.append(f"- `{pick_tag}` local power cost vs A100 rental for the same workload.")
+
     body = (
         "## Fast verdict\n\n"
-        f"{verdict}\n\n"
-        "The daily goal is simple: help a 3090 owner decide what to download tonight, what to skip, and when a cloud fallback is the better use of time. This page is not a generic changelog; it is a practical decision note built from the latest verified LocalVRAM benchmark feed.\n\n"
+        f"{verdict}{size_note}{positioning}\n\n"
+        "The daily goal is simple: help a 3090 owner decide what to download tonight, what to skip, "
+        "and when a cloud fallback is the better use of time.\n\n"
         "## Today's pick\n\n"
-        f"- Model: `{pick_tag}`\n"
-        f"- RTX 3090 speed: {pick_tps:.1f} tok/s\n"
-        f"- Latency: {pick_latency:.0f} ms\n"
-        f"- Test time: {pick_test_time or 'pending'}\n"
-        "- Baseline command:\n\n"
+        f"- **Model:** `{pick_tag}`\n"
+        f"- **Category:** {cat_label}\n"
+        f"- **Size tier:** {size_tier}\n"
+        f"- **Performance tier:** {perf}\n"
+        f"- **RTX 3090 speed:** {pick_tps:.1f} tok/s\n"
+        f"- **Latency:** {pick_latency:.0f} ms\n"
+        f"- **Test time:** {pick_test_time or 'pending'}\n"
+        "- **Baseline command:**\n\n"
         "```bash\n"
         f"ollama run {pick_tag if ':' in pick_tag else '<model-tag>'}\n"
         "```\n\n"
-        "## Who should try it\n\n"
-        f"- Developers and local AI users who want a fresh 24GB RTX 3090 baseline for `{pick_tag}`.\n"
-        "- Readers comparing local speed against RunPod/Vast before spending cloud credits.\n"
-        "- Anyone deciding whether a new Ollama model is worth downloading in the first 24-48 hour traffic window.\n\n"
-        "## Who should skip it\n\n"
-        "- Users who need long-context production stability before a sustained run has been verified.\n"
-        "- Teams whose workload requires predictable p95 latency under concurrency; validate locally first, then burst to cloud.\n"
-        "- 8GB/12GB GPU owners unless the model has a smaller quantization or distilled variant.\n\n"
+        f"{personas}"
+        "## Watch points\n\n"
+        f"{watch_block}\n\n"
         "## Verified benchmark anchors\n\n"
         f"{measured_block}\n\n"
-        "## 3090 decision guide\n\n"
-        "1. If the model fits VRAM with headroom and response time is acceptable, run it locally first.\n"
-        "2. If it fits but misses p95 latency, keep the local machine for validation and burst to cloud for peak windows.\n"
-        "3. If it OOMs, reduce context or quantization before buying hardware.\n"
-        "4. If a new Ollama release is trending, publish the estimated page early and update it with verified 3090 data within 24-48 hours.\n\n"
-        "## Comparison prompts to run next\n\n"
-        f"- `{pick_tag}` vs the current coding baseline.\n"
-        f"- `{pick_tag}` vs the best 14B/20B fast local model.\n"
-        f"- `{pick_tag}` local power cost vs A100 rental for the same workload.\n\n"
+        "## RTX 3090 decision guide\n\n"
+        f"{decision_block}\n\n"
+        "## Comparisons to validate\n\n"
+        + "\n".join(comp_lines) + "\n\n"
         "## Next actions\n\n"
-        "- Estimate fit: /en/tools/vram-calculator/\n"
+        "- Estimate VRAM fit: /en/tools/vram-calculator/\n"
         f"- Model page: /en/models/{pick_slug}-q4/\n"
         "- Benchmark changelog: /en/benchmarks/changelog/\n"
-        "- Hardware path: /en/affiliate/hardware-upgrade/\n"
+        "- Local hardware path: /en/affiliate/hardware-upgrade/\n"
         "- Cloud fallback: /go/runpod and /go/vast\n\n"
         "Affiliate Disclosure: This post may include affiliate links. LocalVRAM may earn a commission at no extra cost.\n"
     )
+
+    tags = ["ollama", "benchmark", "vram", "latency", perf]
+    if category != "general":
+        tags.append(category)
+
     return {
         "title": title,
         "keyword": keyword,
         "description": summary,
         "intent": "benchmark",
-        "tags": ["ollama", "benchmark", "vram", "latency", "throughput"],
+        "tags": tags,
         "body": body,
     }
 
@@ -520,7 +810,7 @@ def main() -> None:
     fallback_generated = 0
     if len(published) < min_publish:
         needed = min_publish - len(published)
-        measured = pick_measured_highlights(max_count=5)
+        measured = pick_measured_highlights(max_count=50)
         for _ in range(needed):
             fallback = build_daily_fallback_content(queue_date, measured)
             base_slug = slugify(f"daily-local-llm-benchmark-snapshot-{queue_date}")
