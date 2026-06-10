@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-03T07:25:37Z",
+  "updated_at": "2026-06-10T06:57:50Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -66,11 +66,11 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=128801,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=20207,fd=3))"
     ],
     "ps_ollama": [
-      "gao20     128801       1  1 15:13 ?        00:00:09 /usr/local/bin/ollama serve",
-      "gao20     158989  128801 43 15:23 ?        00:00:43 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 50111"
+      "gao20      20207       1  1 14:45 ?        00:00:09 /usr/local/bin/ollama serve",
+      "gao20      37128   20207 22 14:56 ?        00:00:20 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 46629"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
