@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-11T05:10:21.511566Z",
+  "updated_at": "2026-06-13T05:04:48.361454Z",
   "window_hours": 48,
   "max_library_age_days": 14,
   "strategy": "Prioritize new Ollama model families; use RTX 3090 benchmark recency as evidence, not as proof of model freshness.",
@@ -7,45 +7,5 @@
     "model_count": 46,
     "source": "runner /api/tags via runner-status.json and weekly-target-plan.json"
   },
-  "items": [
-    {
-      "tag": "qwen3.6:35b",
-      "family": "qwen3.6",
-      "keyword": "qwen3.6:35b rtx 3090 ollama benchmark",
-      "slug": "model-qwen3-6-35b-rtx-3090-ollama-benchmark",
-      "title": "qwen3.6:35b on RTX 3090: Ollama Benchmark, VRAM, and Setup",
-      "source": "new_family_benchmark",
-      "priority_score": 100,
-      "status": "measured",
-      "measured_at": "2026-06-10T06:45:58Z",
-      "tokens_per_second": 41.111,
-      "latency_ms": 2973.0,
-      "ollama_command": "ollama run qwen3.6:35b",
-      "source_url": "https://ollama.com/library/qwen3.6",
-      "ollama_updated_label": "1 week ago",
-      "ollama_updated_days": 7,
-      "ollama_downloads": "2.2M",
-      "ollama_library_freshness": {
-        "status": "fresh",
-        "updated_label": "1 week ago",
-        "updated_days": 7,
-        "downloads": "2.2M",
-        "source_url": "https://ollama.com/library/qwen3.6"
-      },
-      "local_inventory_status": {
-        "status": "downloaded",
-        "source": "benchmark_results",
-        "model_count": 46
-      },
-      "benchmark_status": {
-        "status": "measured",
-        "measured_at": "2026-06-10T06:45:58Z",
-        "tokens_per_second": 41.111,
-        "latency_ms": 2973.0
-      },
-      "traffic_priority": "publish_now",
-      "landing": "/en/models/qwen3-6-35b/",
-      "content_angle": "Fresh RTX 3090 result; publish while Ollama search demand is warm."
-    }
-  ]
+  "items": []
 }
