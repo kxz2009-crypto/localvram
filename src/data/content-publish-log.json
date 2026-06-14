@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-13T05:04:49.351614Z",
+  "updated_at": "2026-06-14T05:16:33.337109Z",
   "last_run": {
-    "run_at": "2026-06-13T05:04:49.351614Z",
-    "queue_date": "2026-06-13",
+    "run_at": "2026-06-14T05:16:33.337109Z",
+    "queue_date": "2026-06-14",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-06-13",
-        "title": "Today's Local LLM Pick: nemotron-3-nano:30b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-06-13-daily-local-llm-benchmark-snapshot-2026-06-13",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-06-14",
+        "title": "Today's Local LLM Pick: translategemma:27b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-06-14-daily-local-llm-benchmark-snapshot-2026-06-14",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-13.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-14.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-06-14T05:16:33.337109Z",
+      "queue_date": "2026-06-14",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-06-14",
+          "title": "Today's Local LLM Pick: translategemma:27b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-06-14-daily-local-llm-benchmark-snapshot-2026-06-14",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-14.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-06-13T05:04:49.351614Z",
       "queue_date": "2026-06-13",
@@ -1382,28 +1404,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-12.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-04-11T03:25:03.836615Z",
-      "queue_date": "2026-04-11",
-      "candidate_count": 1,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 0,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "model-gemma3-27b-benchmark-refresh",
-          "title": "gemma3:27B Benchmark Results: Local GPU Throughput Breakdown (2026)",
-          "topic_key": "gemma3-27b-local-inference-benchmark-update",
-          "score": 360.0,
-          "source_draft": "content-queue/2026-04-11/01-model-gemma3-27b-benchmark-refresh.md",
-          "out_file": "src/content/blog/model-gemma3-27b-benchmark-refresh.md",
           "intent": "benchmark"
         }
       ],
