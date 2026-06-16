@@ -24,6 +24,7 @@ on:
 permissions:
   contents: write
   issues: write
+  id-token: write
 
 jobs:
   refresh-kpi:
@@ -41,19 +42,33 @@ jobs:
         if: always()
         run: mkdir -p logs
 
+      - name: Authenticate to Google Cloud
+        id: google_auth
+        if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && vars.GCP_SERVICE_ACCOUNT != '' }}
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+
       - name: Sync Search Console keywords snapshot
         id: sync_search_console
         env:
           INPUT_LOCALES: ${{ github.event.inputs.locales }}
           GSC_SITE_URL: ${{ vars.GSC_SITE_URL }}
           GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          GCP_SERVICE_ACCOUNT: ${{ vars.GCP_SERVICE_ACCOUNT }}
         run: |
           missing_gsc_config=()
           if [ -z "${GSC_SITE_URL}" ]; then
             missing_gsc_config+=("vars.GSC_SITE_URL")
           fi
-          if [ -z "${GSC_SERVICE_ACCOUNT_JSON}" ]; then
-            missing_gsc_config+=("secrets.GSC_SERVICE_ACCOUNT_JSON")
+          if [ -z "${GSC_SERVICE_ACCOUNT_JSON}" ] && [ -z "${GOOGLE_APPLICATION_CREDENTIALS}" ]; then
+            if [ -z "${GCP_WORKLOAD_IDENTITY_PROVIDER}" ] || [ -z "${GCP_SERVICE_ACCOUNT}" ]; then
+              missing_gsc_config+=("vars.GCP_WORKLOAD_IDENTITY_PROVIDER/vars.GCP_SERVICE_ACCOUNT or secrets.GSC_SERVICE_ACCOUNT_JSON")
+            else
+              missing_gsc_config+=("google-github-actions/auth credentials")
+            fi
           fi
 
           if [ "${#missing_gsc_config[@]}" -gt 0 ]; then
@@ -72,13 +87,18 @@ jobs:
             LOCALES="es,pt,ja,fr,de,ko,ru,ar,hi,id"
           fi
 
-          python scripts/fetch-search-console-keywords.py \
-            --site-url "${GSC_SITE_URL}" \
-            --credentials-json "${GSC_SERVICE_ACCOUNT_JSON}" \
-            --locales "${LOCALES},en" \
-            --days 28 \
-            --row-limit 160 \
+          GSC_ARGS=(
+            --site-url "${GSC_SITE_URL}"
+            --locales "${LOCALES},en"
+            --days 28
+            --row-limit 160
             --output "src/data/search-console-keywords.json"
+          )
+          if [ -n "${GSC_SERVICE_ACCOUNT_JSON}" ]; then
+            GSC_ARGS+=(--credentials-json "${GSC_SERVICE_ACCOUNT_JSON}")
+          fi
+
+          python scripts/fetch-search-console-keywords.py "${GSC_ARGS[@]}"
 
       - name: Validate Search Console coverage
         if: steps.sync_search_console.outputs.gsc_sync_ready == 'true'

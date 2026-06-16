@@ -66,8 +66,9 @@ def extract_locale_from_landing(landing: str) -> str:
     return m.group(1).lower()
 
 
-def build_service(credentials_json: str):
+def build_service(credentials_json: str = ""):
     try:
+        import google.auth
         from google.oauth2 import service_account
         from googleapiclient.discovery import build
     except ModuleNotFoundError as exc:  # pragma: no cover
@@ -75,8 +76,11 @@ def build_service(credentials_json: str):
             "missing google api dependencies; install google-api-python-client and google-auth"
         ) from exc
 
-    info = json.loads(credentials_json)
-    creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
+    if str(credentials_json or "").strip():
+        info = json.loads(credentials_json)
+        creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
+    else:
+        creds, _project_id = google.auth.default(scopes=SCOPES)
     return build("searchconsole", "v1", credentials=creds, cache_discovery=False)
 
 
@@ -213,8 +217,6 @@ def main() -> int:
     credentials_json = str(args.credentials_json or "").strip()
     if not site_url:
         raise SystemExit("missing --site-url")
-    if not credentials_json:
-        raise SystemExit("missing --credentials-json")
 
     locales = parse_locales(args.locales)
     if not locales:
