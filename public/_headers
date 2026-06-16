@@ -1,5 +1,22 @@
 /*
   X-Robots-Tag: index, follow
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com https://*.cloudflareinsights.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/branding/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/og/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/favicon.svg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
 /404
   X-Robots-Tag: noindex, nofollow
