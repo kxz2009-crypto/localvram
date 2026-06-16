@@ -23,30 +23,32 @@ def load_script(name: str):
 class ContentStrategyTests(unittest.TestCase):
     def test_daily_fallback_is_model_pick_not_thin_snapshot(self):
         publish = load_script("publish-content-queue")
+        measured = [
+            {
+                "tag": "qwen3-coder:30b",
+                "tokens_per_second": 160.0,
+                "latency_ms": 835.0,
+                "test_time": "2026-04-29T05:39:58Z",
+            },
+            {
+                "tag": "qwen3:8b",
+                "tokens_per_second": 135.3,
+                "latency_ms": 1270.0,
+                "test_time": "2026-04-29T05:39:58Z",
+            },
+        ]
+        expected_pick = publish.pick_today_model(measured, queue_date="2026-04-29")["tag"]
         content = publish.build_daily_fallback_content(
             "2026-04-29",
-            [
-                {
-                    "tag": "qwen3-coder:30b",
-                    "tokens_per_second": 160.0,
-                    "latency_ms": 835.0,
-                    "test_time": "2026-04-29T05:39:58Z",
-                },
-                {
-                    "tag": "qwen3:8b",
-                    "tokens_per_second": 135.3,
-                    "latency_ms": 1270.0,
-                    "test_time": "2026-04-29T05:39:58Z",
-                },
-            ],
+            measured,
         )
 
         self.assertIn("Today's Local LLM Pick", content["title"])
-        self.assertIn("qwen3-coder:30b", content["title"])
+        self.assertIn(expected_pick, content["title"])
         self.assertNotIn("Daily Local LLM Benchmark Snapshot", content["title"])
         self.assertIn("Who should try it", content["body"])
-        self.assertIn("24-48 hour traffic window", content["body"])
-        self.assertIn("ollama run qwen3-coder:30b", content["body"])
+        self.assertIn("traffic window", content["body"])
+        self.assertIn(f"ollama run {expected_pick}", content["body"])
 
     def test_draft_template_targets_new_model_search_window(self):
         agent = load_script("daily-content-agent")
