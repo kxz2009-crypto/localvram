@@ -14,6 +14,8 @@ jobs:
       CF_AFFILIATE_EVENTS_NAMESPACE_ID: ${{ secrets.CF_AFFILIATE_EVENTS_NAMESPACE_ID }}
       GSC_SITE_URL: ${{ vars.GSC_SITE_URL }}
       GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ vars.GCP_SERVICE_ACCOUNT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -71,8 +73,8 @@ jobs:
           if [ -z "${GSC_SITE_URL}" ]; then
             missing_gsc_config+=("vars.GSC_SITE_URL")
           fi
-          if [ -z "${GSC_SERVICE_ACCOUNT_JSON}" ]; then
-            missing_gsc_config+=("secrets.GSC_SERVICE_ACCOUNT_JSON")
+          if [ -z "${GSC_SERVICE_ACCOUNT_JSON}" ] && { [ -z "${GCP_WORKLOAD_IDENTITY_PROVIDER}" ] || [ -z "${GCP_SERVICE_ACCOUNT}" ]; }; then
+            missing_gsc_config+=("vars.GCP_WORKLOAD_IDENTITY_PROVIDER/vars.GCP_SERVICE_ACCOUNT or secrets.GSC_SERVICE_ACCOUNT_JSON")
           fi
 
           if [ "${#missing_gsc_config[@]}" -gt 0 ]; then
