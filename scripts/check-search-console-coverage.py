@@ -38,6 +38,10 @@ def parse_locales(raw: str) -> list[str]:
     return out
 
 
+def parse_expected_sources(raw: str) -> set[str]:
+    return {chunk.strip() for chunk in str(raw or "").split(",") if chunk.strip()}
+
+
 def parse_iso_utc(value: str) -> dt.datetime | None:
     text = str(value or "").strip()
     if not text:
@@ -64,29 +68,15 @@ def locale_from_item(item: dict) -> str:
     return m.group(1).lower()
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate Search Console snapshot coverage for locale KPI refresh.")
-    parser.add_argument("--file", default=str(DEFAULT_FILE), help="Path to search-console-keywords.json")
-    parser.add_argument("--locales", default="en", help="Required locales CSV")
-    parser.add_argument("--max-age-hours", type=int, default=96, help="Maximum allowed data age")
-    parser.add_argument("--min-items-per-locale", type=int, default=1, help="Minimum keyword rows per locale")
-    parser.add_argument("--expected-source", default="google-search-console-api", help="Expected snapshot source")
-    parser.add_argument("--allow-stub-data", choices=["true", "false"], default="false")
-    args = parser.parse_args()
-
-    file_path = Path(args.file)
-    if not file_path.is_absolute():
-        file_path = (ROOT / file_path).resolve()
-
-    required_locales = parse_locales(args.locales)
-    if not required_locales:
-        emit("gsc_coverage_error=no_valid_locales", level="error")
-        return 1
-
-    if not file_path.exists():
-        emit(f"gsc_coverage_error=missing_file path={file_path}", level="error")
-        return 1
-
+def validate_search_console_coverage(
+    *,
+    file_path: Path,
+    required_locales: list[str],
+    max_age_hours: int,
+    min_items_per_locale: int,
+    expected_sources: set[str],
+    allow_stub: bool,
+) -> dict:
     payload = json.loads(file_path.read_text(encoding="utf-8-sig"))
     items = payload.get("items", []) if isinstance(payload, dict) else []
     source = str(payload.get("source", "")).strip()
@@ -107,31 +97,78 @@ def main() -> int:
     if updated_at is not None:
         age = dt.datetime.now(dt.timezone.utc) - updated_at
         age_hours = round(age.total_seconds() / 3600, 2)
-        stale = age.total_seconds() > max(0, int(args.max_age_hours)) * 3600
+        stale = age.total_seconds() > max(0, int(max_age_hours)) * 3600
 
     missing_locales = sorted(
-        [locale for locale, count in counts.items() if count < max(0, int(args.min_items_per_locale))]
+        [locale for locale, count in counts.items() if count < max(0, int(min_items_per_locale))]
     )
-    allow_stub = str(args.allow_stub_data).strip().lower() == "true"
-    source_ok = source == str(args.expected_source).strip()
-
-    emit(f"gsc_file={file_path}")
-    emit(f"gsc_updated_at={updated_at_raw or 'unknown'}")
-    emit(f"gsc_age_hours={age_hours}")
-    emit(f"gsc_source={source or 'unknown'}")
-    emit("gsc_locale_counts=" + ",".join([f"{locale}:{counts.get(locale, 0)}" for locale in required_locales]))
+    source_ok = source in expected_sources
 
     errors: list[str] = []
     if stale:
-        errors.append(f"stale_data(max_age_hours={args.max_age_hours})")
+        errors.append(f"stale_data(max_age_hours={max_age_hours})")
     if not source_ok and not allow_stub:
-        errors.append(f"unexpected_source(expected={args.expected_source}, got={source or 'unknown'})")
+        expected = ",".join(sorted(expected_sources)) or "unknown"
+        errors.append(f"unexpected_source(expected={expected}, got={source or 'unknown'})")
     if missing_locales:
         errors.append("missing_locales=" + ",".join(missing_locales))
 
-    if errors:
+    return {
+        "errors": errors,
+        "counts": counts,
+        "source": source,
+        "updated_at_raw": updated_at_raw,
+        "age_hours": age_hours,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Validate Search Console snapshot coverage for locale KPI refresh.")
+    parser.add_argument("--file", default=str(DEFAULT_FILE), help="Path to search-console-keywords.json")
+    parser.add_argument("--locales", default="en", help="Required locales CSV")
+    parser.add_argument("--max-age-hours", type=int, default=96, help="Maximum allowed data age")
+    parser.add_argument("--min-items-per-locale", type=int, default=1, help="Minimum keyword rows per locale")
+    parser.add_argument(
+        "--expected-source",
+        default="google-search-console-api,google-search-console-ui-export",
+        help="Comma-separated expected snapshot sources",
+    )
+    parser.add_argument("--allow-stub-data", choices=["true", "false"], default="false")
+    args = parser.parse_args()
+
+    file_path = Path(args.file)
+    if not file_path.is_absolute():
+        file_path = (ROOT / file_path).resolve()
+
+    required_locales = parse_locales(args.locales)
+    if not required_locales:
+        emit("gsc_coverage_error=no_valid_locales", level="error")
+        return 1
+
+    if not file_path.exists():
+        emit(f"gsc_coverage_error=missing_file path={file_path}", level="error")
+        return 1
+
+    allow_stub = str(args.allow_stub_data).strip().lower() == "true"
+    report = validate_search_console_coverage(
+        file_path=file_path,
+        required_locales=required_locales,
+        max_age_hours=int(args.max_age_hours),
+        min_items_per_locale=int(args.min_items_per_locale),
+        expected_sources=parse_expected_sources(args.expected_source),
+        allow_stub=allow_stub,
+    )
+
+    emit(f"gsc_file={file_path}")
+    emit(f"gsc_updated_at={report['updated_at_raw'] or 'unknown'}")
+    emit(f"gsc_age_hours={report['age_hours']}")
+    emit(f"gsc_source={report['source'] or 'unknown'}")
+    counts = report["counts"]
+    emit("gsc_locale_counts=" + ",".join([f"{locale}:{counts.get(locale, 0)}" for locale in required_locales]))
+
+    if report["errors"]:
         emit("gsc_coverage_result=failed", level="error")
-        for error in errors:
+        for error in report["errors"]:
             emit(f"gsc_coverage_error={error}", level="error")
         return 1
 

@@ -40,6 +40,8 @@
     "baidu:push:cn:day-after": "python scripts/push-baidu-urls-2day.py --site https://localvram.cn --sitemap-url https://localvram.cn/sitemap-cn.xml --day 2 --out-file dist/seo-audit/baidu/day2-urls.txt",
     "check:cn-blog-sync": "python scripts/check-cn-blog-sync.py",
     "check:locale-links": "python scripts/check-locale-links.py",
+    "check:site-updates": "python scripts/check-site-update-health.py --report-file dist/seo-audit/site-update-health.json",
+    "import:gsc-performance": "python scripts/import-gsc-performance-export.py",
     "check:quality": "python scripts/quality-gate.py",
     "report:freshness": "python scripts/report-data-freshness.py",
     "test:unit": "python -m unittest discover -s tests -p \"test_*.py\"",

@@ -512,6 +512,22 @@ def main() -> None:
         sys.exit(1)
     log_line(f"blog post count ok: {post_count}")
 
+    site_update_checker = ROOT / "scripts" / "check-site-update-health.py"
+    if not site_update_checker.exists():
+        log_line("quality gate failed: missing scripts/check-site-update-health.py")
+        sys.exit(1)
+    site_update_cmd = [
+        sys.executable,
+        str(site_update_checker),
+        "--report-file",
+        "dist/seo-audit/site-update-health.json",
+    ]
+    site_update_result = subprocess.run(site_update_cmd, cwd=ROOT)
+    if site_update_result.returncode != 0:
+        log_line("quality gate failed: site update health check failed")
+        sys.exit(site_update_result.returncode)
+    log_line("site update health checks ok")
+
     cn_blog_sync_checker = ROOT / "scripts" / "check-cn-blog-sync.py"
     if not cn_blog_sync_checker.exists():
         log_line("quality gate failed: missing scripts/check-cn-blog-sync.py")

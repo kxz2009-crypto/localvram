@@ -67,9 +67,18 @@ jobs:
       - name: Enforce affiliate funnel health gate
         run: |
           max_sc_age_hours="240"
-          if [ -z "${GSC_SITE_URL}" ] || [ -z "${GSC_SERVICE_ACCOUNT_JSON}" ]; then
+          missing_gsc_config=()
+          if [ -z "${GSC_SITE_URL}" ]; then
+            missing_gsc_config+=("vars.GSC_SITE_URL")
+          fi
+          if [ -z "${GSC_SERVICE_ACCOUNT_JSON}" ]; then
+            missing_gsc_config+=("secrets.GSC_SERVICE_ACCOUNT_JSON")
+          fi
+
+          if [ "${#missing_gsc_config[@]}" -gt 0 ]; then
             max_sc_age_hours="8760"
-            echo "::warning title=GSCFreshnessRelaxed::missing GSC_SITE_URL or GSC_SERVICE_ACCOUNT_JSON; relax search console age gate to ${max_sc_age_hours}h."
+            missing_csv="$(IFS=,; echo "${missing_gsc_config[*]}")"
+            echo "::warning title=GSCFreshnessRelaxed::missing ${missing_csv}; relax search console age gate to ${max_sc_age_hours}h. See docs/search-console-ops-setup.md."
           fi
 
           python scripts/check-affiliate-funnel-health.py \
