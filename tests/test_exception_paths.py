@@ -38,6 +38,7 @@ SCORE_SUBMISSION_MODULE_PATH = SCRIPTS_DIR / "score-user-submission.py"
 RETIREMENT_CANDIDATES_MODULE_PATH = SCRIPTS_DIR / "generate-retirement-candidates.py"
 REVIEW_RETIREMENT_MODULE_PATH = SCRIPTS_DIR / "review-retirement-candidates.py"
 REFRESH_AFFILIATE_FUNNEL_MODULE_PATH = SCRIPTS_DIR / "refresh-affiliate-funnel.py"
+EXPORT_AFFILIATE_KV_MODULE_PATH = SCRIPTS_DIR / "export-affiliate-kv-events.py"
 
 
 def load_module(module_name: str, module_path: Path):
@@ -76,6 +77,7 @@ class ExceptionPathTests(unittest.TestCase):
         cls.retirement_candidates = load_module("generate_retirement_candidates", RETIREMENT_CANDIDATES_MODULE_PATH)
         cls.review_retirement = load_module("review_retirement_candidates", REVIEW_RETIREMENT_MODULE_PATH)
         cls.refresh_affiliate = load_module("refresh_affiliate_funnel", REFRESH_AFFILIATE_FUNNEL_MODULE_PATH)
+        cls.export_affiliate_kv = load_module("export_affiliate_kv_events", EXPORT_AFFILIATE_KV_MODULE_PATH)
 
     def test_runner_run_cmd_exception(self):
         with patch.object(self.runner.subprocess, "run", side_effect=RuntimeError("boom")):
@@ -376,6 +378,19 @@ function buildProviderTarget(provider, env) {
         self.assertEqual(len(passed), 2)
         self.assertEqual(len(failed), 1)
         self.assertIn("unsupported /go provider", failed[0])
+
+    def test_export_affiliate_kv_http_401_is_actionable(self):
+        http_error = urllib.error.HTTPError(
+            url="https://api.cloudflare.com/client/v4/accounts/acct/storage/kv/namespaces/ns/keys",
+            code=401,
+            msg="Unauthorized",
+            hdrs=None,
+            fp=io.BytesIO(b'{"success":false,"errors":[{"message":"Authentication error"}]}'),
+        )
+        message = self.export_affiliate_kv.format_http_error(http_error)
+        self.assertIn("HTTP 401", message)
+        self.assertIn("CF_API_TOKEN", message)
+        self.assertIn("KV read access", message)
 
 
 if __name__ == "__main__":

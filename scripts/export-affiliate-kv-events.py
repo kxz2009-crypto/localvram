@@ -40,6 +40,22 @@ def cf_request_json(url: str, token: str, timeout_s: int) -> dict[str, Any]:
     return payload
 
 
+def format_http_error(exc: urllib.error.HTTPError) -> str:
+    try:
+        detail = exc.read().decode("utf-8", errors="replace")[:400]
+    except Exception:
+        detail = ""
+    base = f"HTTP {exc.code}: {exc.reason}"
+    if detail:
+        base = f"{base} - {detail}"
+    if exc.code in {401, 403}:
+        base = (
+            f"{base}. Check CF_API_TOKEN permissions, CF_ACCOUNT_ID, and "
+            "CF_AFFILIATE_EVENTS_NAMESPACE_ID; the token needs Cloudflare KV read access."
+        )
+    return base
+
+
 def list_kv_keys(
     *,
     account_id: str,
@@ -140,14 +156,19 @@ def main() -> None:
     if not token:
         raise SystemExit("missing --api-token (or CF_API_TOKEN)")
 
-    key_names = list_kv_keys(
-        account_id=account_id,
-        namespace_id=namespace_id,
-        token=token,
-        prefix=str(args.prefix).strip(),
-        max_keys=max(1, int(args.max_keys)),
-        timeout_s=max(5, int(args.request_timeout_s)),
-    )
+    try:
+        key_names = list_kv_keys(
+            account_id=account_id,
+            namespace_id=namespace_id,
+            token=token,
+            prefix=str(args.prefix).strip(),
+            max_keys=max(1, int(args.max_keys)),
+            timeout_s=max(5, int(args.request_timeout_s)),
+        )
+    except urllib.error.HTTPError as exc:
+        raise SystemExit(f"cloudflare kv key export failed: {format_http_error(exc)}") from exc
+    except Exception as exc:
+        raise SystemExit(f"cloudflare kv key export failed: {exc}") from exc
 
     events: list[dict[str, Any]] = []
     parse_errors = 0

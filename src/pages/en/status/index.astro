@@ -1,0 +1,162 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import status from "../../../data/status.json";
+import contentPublish from "../../../data/content-publish-log.json";
+import conversionFunnel from "../../../data/conversion-funnel.json";
+import pipelineStatus from "../../../data/pipeline-status.json";
+import pipelineSlo from "../../../data/pipeline-slo.json";
+import newModelWatchlist from "../../../data/new-model-watchlist.json";
+import modelCatalog from "../../../data/model-catalog.json";
+
+type WorkflowRow = {
+  workflow_name?: string;
+  conclusion?: string;
+  updated_at?: string;
+  failure_class?: string;
+  failure_detail?: string;
+  run_url?: string;
+};
+
+const workflows = (pipelineStatus.workflows || {}) as Record<string, WorkflowRow>;
+const dailyWorkflow = workflows.daily_content || {};
+const weeklyWorkflow = workflows.weekly_benchmark || {};
+const publishArtifactWorkflow = workflows.publish_benchmark_artifact || {};
+const lastRun = (contentPublish.last_run || {}) as Record<string, any>;
+const lastPublished = Array.isArray(lastRun.published) ? lastRun.published[0] : null;
+const funnel = (conversionFunnel.funnel || {}) as Record<string, any>;
+const dataQuality = (conversionFunnel.data_quality || {}) as Record<string, any>;
+const watchlistItems = Array.isArray(newModelWatchlist.items) ? newModelWatchlist.items : [];
+const publishCount = Number(lastRun.published_count || 0);
+const affiliateEventsInWindow = Number(dataQuality.affiliate_event_items_in_window || 0);
+const affiliateStatus = affiliateEventsInWindow > 0 ? "Live events in window" : "No recent KV events";
+const pipelineHealth = pipelineSlo.pipeline_slo_met ? "SLO met" : "SLO miss";
+const dailyHealth = dailyWorkflow.conclusion === "success" ? "Healthy" : "Needs attention";
+const benchmarkHealth = weeklyWorkflow.conclusion === "success" ? "Healthy" : "Needs attention";
+const catalogVerifiedAt = String(modelCatalog.ollama_verified_at || modelCatalog.generated_at || "unknown");
+
+const statusCards = [
+  {
+    label: "Daily content",
+    value: dailyHealth,
+    detail: `Last publish ${contentPublish.updated_at || "unknown"}; published ${publishCount} post(s).`,
+    href: "/en/status/content-publish/",
+  },
+  {
+    label: "Benchmark data",
+    value: benchmarkHealth,
+    detail: `Last hardware sync ${status.last_hardware_sync || "unknown"}.`,
+    href: "/en/status/data-freshness/",
+  },
+  {
+    label: "Pipeline SLO",
+    value: pipelineHealth,
+    detail: `Reference ${pipelineSlo.reference_time || pipelineStatus.updated_at || "unknown"}.`,
+    href: "/en/status/pipeline-status/",
+  },
+  {
+    label: "Affiliate events",
+    value: affiliateStatus,
+    detail: `${affiliateEventsInWindow} redirect event(s) in the ${conversionFunnel.window_days || 30}d window.`,
+    href: "/en/status/conversion-funnel/",
+  },
+  {
+    label: "Model catalog",
+    value: `${modelCatalog.count || 0} models`,
+    detail: `Ollama catalog verified ${catalogVerifiedAt}.`,
+    href: "/en/models/",
+  },
+  {
+    label: "New model radar",
+    value: `${watchlistItems.length} item(s)`,
+    detail: `Updated ${newModelWatchlist.updated_at || "unknown"}.`,
+    href: "/en/status/new-model-radar/",
+  },
+];
+
+const workflowRows = [
+  ["Daily Content", dailyWorkflow],
+  ["Weekly Benchmark", weeklyWorkflow],
+  ["Publish Benchmark Artifact", publishArtifactWorkflow],
+] as Array<[string, WorkflowRow]>;
+---
+
+<BaseLayout
+  title="Operations Health | LocalVRAM"
+  description="A single-page health overview for LocalVRAM content, benchmark, model, and affiliate data pipelines."
+  locale="en"
+  canonicalPath="/en/status/"
+>
+  <main class="container">
+    <section class="hero">
+      <h1>Operations Health</h1>
+      <p>Current health for LocalVRAM publishing, benchmark freshness, model inventory, and conversion telemetry.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/en/status/pipeline-status/">Pipeline Status</a>
+        <a class="btn" href="/en/status/data-freshness/">Data Freshness</a>
+        <a class="btn" href="/en/status/conversion-funnel/">Conversion Funnel</a>
+      </div>
+    </section>
+
+    <div class="card-grid">
+      {statusCards.map((card) => (
+        <article class="card">
+          <h2>{card.label}</h2>
+          <p><strong>{card.value}</strong></p>
+          <p>{card.detail}</p>
+          <a class="btn" href={card.href}>Open</a>
+        </article>
+      ))}
+    </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Latest Publication</h2>
+      {lastPublished ? (
+        <>
+          <p>{lastPublished.title || lastPublished.slug}</p>
+          <p>Queue date: {lastRun.queue_date || "unknown"} | Source: {lastPublished.source_draft || "unknown"}</p>
+          <a class="btn" href={`/en/blog/${lastPublished.slug}/`}>Open Post</a>
+        </>
+      ) : (
+        <p>No published post recorded in the latest run.</p>
+      )}
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Workflow Snapshot</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Workflow</th>
+            <th>Conclusion</th>
+            <th>Updated</th>
+            <th>Failure Class</th>
+            <th>Run</th>
+          </tr>
+        </thead>
+        <tbody>
+          {workflowRows.map(([label, row]) => (
+            <tr>
+              <td>{row.workflow_name || label}</td>
+              <td>{row.conclusion || "unknown"}</td>
+              <td>{row.updated_at || "unknown"}</td>
+              <td>{row.failure_class || "none"}</td>
+              <td>
+                {row.run_url ? (
+                  <a href={row.run_url} target="_blank" rel="noopener noreferrer">Open</a>
+                ) : (
+                  "-"
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Conversion Telemetry</h2>
+      <p>Organic clicks: {funnel.organic_search_clicks || 0} | Decision clicks: {funnel.decision_page_clicks || 0} | Redirect events: {funnel.affiliate_redirect_clicks || 0}</p>
+      <p>Affiliate event feed total: {dataQuality.affiliate_event_items_total || 0}; in current window: {dataQuality.affiliate_event_items_in_window || 0}.</p>
+    </section>
+  </main>
+</BaseLayout>
