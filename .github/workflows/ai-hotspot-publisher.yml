@@ -1,0 +1,68 @@
+name: AI Hotspot Publisher
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # 10:00 AM Beijing time (UTC+8)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-hotspot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Check publisher configuration
+        id: preflight
+        env:
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          missing=()
+          if [ -z "${TAVILY_API_KEY}" ]; then
+            missing+=("secrets.TAVILY_API_KEY")
+          fi
+          if [ -z "${ANTHROPIC_API_KEY}" ]; then
+            missing+=("secrets.ANTHROPIC_API_KEY")
+          fi
+
+          if [ "${#missing[@]}" -gt 0 ]; then
+            missing_csv="$(IFS=,; echo "${missing[*]}")"
+            echo "ready=false" >> "${GITHUB_OUTPUT}"
+            echo "::warning title=AIHotspotSkipped::missing ${missing_csv}; skip AI hotspot publisher."
+            exit 0
+          fi
+
+          echo "ready=true" >> "${GITHUB_OUTPUT}"
+
+      - name: Install dependencies
+        if: steps.preflight.outputs.ready == 'true'
+        run: pip install -r requirements-hotspot.txt
+
+      - name: Run AI Hotspot Publisher
+        if: steps.preflight.outputs.ready == 'true'
+        env:
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          APIMART_API_KEY: ${{ secrets.APIMART_API_KEY }}
+          WECHAT_SKIP_UPLOAD: "true"
+        run: python scripts/ai-hotspot-publisher.py
+
+      - name: Commit run log
+        if: steps.preflight.outputs.ready == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/hotspot-publish-log.json content-queue/hotspot/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update hotspot publish log"
+            git push
+          fi
