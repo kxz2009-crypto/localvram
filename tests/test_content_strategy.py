@@ -85,8 +85,18 @@ class ContentStrategyTests(unittest.TestCase):
         self.assertIn("Local inventory: downloaded", body)
         self.assertIn("RTX 3090 benchmark: measured", body)
         self.assertIn("Content angle:", body)
+        self.assertIn("Model page: /en/models/qwen3-coder-30b-q4/", body)
+        self.assertIn("Topic hub: /en/guides/best-coding-models/", body)
+        self.assertIn("Latest verified data: /en/status/data-freshness/", body)
         self.assertIn('content_angle: "', body)
         self.assertIn('traffic_priority: "publish_now"', body)
+
+    def test_model_landing_from_tag_prefers_catalog_q4_page(self):
+        agent = load_script("daily-content-agent")
+
+        landing = agent.model_landing_from_tag("qwen3-coder:30b", "/en/models/")
+
+        self.assertEqual(landing, "/en/models/qwen3-coder-30b-q4/")
 
     def test_quality_floor_candidates_keep_daily_content_specific(self):
         agent = load_script("daily-content-agent")

@@ -21,8 +21,10 @@ const modelId = String(item?.id || "").trim();
 const modelName = String(item?.name || modelId || "Model");
 const enPath = `/en/models/${modelId}/`;
 const pagePath = withLocale(locale, enPath);
+const pageUrl = `https://localvram.com${pagePath}`;
 const minVram = Number(item?.vram_min_gb || 0);
 const optimalVram = Number(item?.vram_optimal_gb || 0);
+const updatedAt = String(item?.updated_at || "");
 const copy = resolvePageCopy("models-detail", locale, {
   localeUpper: locale.toUpperCase(),
   modelName,
@@ -31,6 +33,49 @@ const copy = resolvePageCopy("models-detail", locale, {
 });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const modelSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: `${modelName} VRAM Requirement and Benchmark`,
+  description: String(text.meta_description || ""),
+  dateModified: updatedAt || undefined,
+  inLanguage: locale,
+  url: pageUrl,
+  mainEntityOfPage: pageUrl,
+  author: {
+    "@type": "Organization",
+    name: "LocalVRAM",
+  },
+  about: {
+    "@type": "SoftwareApplication",
+    name: modelName,
+    applicationCategory: "DeveloperApplication",
+  },
+};
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: `https://localvram.com/${locale}/`,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Models",
+      item: `https://localvram.com${withLocale(locale, "/en/models/")}`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: modelName,
+      item: pageUrl,
+    },
+  ],
+};
 ---
 
 <BaseLayout
@@ -39,6 +84,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
+  structuredData={[modelSchema, breadcrumbSchema]}
   noindex={shouldNoindex}
 >
   <main class="container">

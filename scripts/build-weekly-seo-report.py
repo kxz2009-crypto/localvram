@@ -18,6 +18,44 @@ def fmt_pct(value: object) -> str:
         return "0.0%"
 
 
+def metric_int(row: dict, key: str) -> int:
+    try:
+        return int(float(row.get(key, 0) or 0))
+    except Exception:  # noqa: BLE001
+        return 0
+
+
+def metric_float(row: dict, key: str) -> float:
+    try:
+        return float(row.get(key, 0) or 0)
+    except Exception:  # noqa: BLE001
+        return 0.0
+
+
+def keyword(row: dict) -> str:
+    return str(row.get("keyword", row.get("query", ""))).replace("|", " ").strip() or "-"
+
+
+def landing(row: dict) -> str:
+    return str(row.get("landing", "")).replace("|", " ").strip() or "-"
+
+
+def append_search_rows(lines: list[str], rows: list[dict]) -> None:
+    lines.append("| Keyword | Clicks | Impressions | CTR | Position | Landing |")
+    lines.append("| --- | ---: | ---: | ---: | ---: | --- |")
+    for row in rows:
+        lines.append(
+            "| {keyword} | {clicks} | {impr} | {ctr} | {pos} | {landing} |".format(
+                keyword=keyword(row),
+                clicks=fmt_num(row.get("clicks", 0)),
+                impr=fmt_num(row.get("impressions", 0)),
+                ctr=fmt_pct(row.get("ctr", 0)),
+                pos=f"{metric_float(row, 'position'):.1f}",
+                landing=landing(row),
+            )
+        )
+
+
 def main() -> None:
     root = Path(".")
     status_path = root / "src" / "data" / "status.json"
@@ -55,20 +93,36 @@ def main() -> None:
     lines.append("")
     lines.append("## Top Search Queries (by clicks)")
     lines.append("")
-    lines.append("| Keyword | Clicks | Impressions | CTR | Position | Landing |")
-    lines.append("| --- | ---: | ---: | ---: | ---: | --- |")
+    append_search_rows(lines, items[:10])
 
-    for row in items[:10]:
-        lines.append(
-            "| {keyword} | {clicks} | {impr} | {ctr} | {pos} | {landing} |".format(
-                keyword=str(row.get("keyword", row.get("query", ""))).replace("|", " ").strip() or "-",
-                clicks=fmt_num(row.get("clicks", 0)),
-                impr=fmt_num(row.get("impressions", 0)),
-                ctr=fmt_pct(row.get("ctr", 0)),
-                pos=f"{float(row.get('position', 0) or 0):.1f}",
-                landing=str(row.get("landing", "")).replace("|", " ").strip() or "-",
-            )
-        )
+    low_ctr = [
+        row
+        for row in items
+        if metric_int(row, "impressions") >= 100 and metric_float(row, "ctr") < 0.01
+    ]
+    low_ctr.sort(key=lambda row: metric_int(row, "impressions"), reverse=True)
+    lines.append("")
+    lines.append("## CTR Rewrite Candidates")
+    lines.append("")
+    lines.append("High-impression queries below 1% CTR. Review page titles, meta descriptions, and first-screen intent match.")
+    lines.append("")
+    append_search_rows(lines, low_ctr[:10])
+
+    striking_distance = [
+        row
+        for row in items
+        if 8 <= metric_float(row, "position") <= 20 and metric_int(row, "impressions") >= 50
+    ]
+    striking_distance.sort(
+        key=lambda row: (metric_int(row, "impressions"), -metric_float(row, "position")),
+        reverse=True,
+    )
+    lines.append("")
+    lines.append("## Striking-Distance Pages")
+    lines.append("")
+    lines.append("Queries ranking around positions 8-20. Add internal links, benchmark evidence, or a sharper answer block.")
+    lines.append("")
+    append_search_rows(lines, striking_distance[:10])
 
     lines.append("")
     lines.append("## Top Content Opportunities")

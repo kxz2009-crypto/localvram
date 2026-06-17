@@ -141,6 +141,36 @@ def model_key_from_tag(value: str) -> str:
     return slugify(raw.replace(":", "-")) if raw else ""
 
 
+def model_landing_from_tag(tag: str, fallback: str = "/en/models/") -> str:
+    raw = str(tag or "").strip()
+    if not raw:
+        return fallback
+    catalog = load_json(ROOT / "src" / "data" / "model-catalog.json", {"items": []})
+    items = catalog.get("items", []) if isinstance(catalog, dict) else []
+    if not isinstance(items, list):
+        return fallback
+
+    matches = [
+        item
+        for item in items
+        if isinstance(item, dict) and str(item.get("ollama_tag", "")).strip().lower() == raw.lower()
+    ]
+    if not matches:
+        return fallback
+    matches.sort(
+        key=lambda item: (
+            {"Q4": 0, "Q5": 1, "Q8": 2, "FP16": 3, "CLOUD": 4}.get(
+                str(item.get("quantization", "")).strip().upper(),
+                9,
+            ),
+            str(item.get("id", "")),
+        )
+    )
+    target = matches[0]
+    slug = str(target.get("slug") or target.get("id") or "").strip()
+    return f"/en/models/{slug}/" if slug else fallback
+
+
 def model_key_from_text(value: str) -> str:
     text = str(value or "")
     match = MODEL_TAG_RE.search(text)
@@ -606,6 +636,14 @@ def draft_markdown(
         if detected_model_tag
         else "Start from the exact Ollama tag named in the query or model page before testing variants."
     )
+    model_landing_ref = model_landing_from_tag(detected_model_tag, landing_ref)
+    guide_ref = (
+        "/en/guides/best-coding-models/"
+        if any(token in keyword.lower() for token in ("code", "coder", "coding"))
+        else "/en/guides/best-rag-models/"
+        if any(token in keyword.lower() for token in ("rag", "embedding", "retrieval"))
+        else "/en/models/"
+    )
     model_frontmatter = f'model_tag: "{detected_model_tag}"\n' if detected_model_tag else ""
     opportunity_frontmatter = ""
     if traffic_priority:
@@ -647,6 +685,7 @@ For the first pass, treat the RTX 3090 as the practical baseline. If the model i
 - Traffic priority: {priority_display}
 - Content angle: {angle}
 - Related landing: {landing_ref}
+- Model page: {model_landing_ref}
 
 ## Editorial angle
 
@@ -698,7 +737,10 @@ The traffic window is strongest in the first 24-48 hours after an Ollama model a
 ## Next actions
 
 - Estimate VRAM fit: {tool}
+- Model page: {model_landing_ref}
 - Related landing: {landing_ref}
+- Topic hub: {guide_ref}
+- Latest verified data: /en/status/data-freshness/
 - Local hardware path: {hardware}
 - Cloud fallback: {runpod} and {vast}
 
