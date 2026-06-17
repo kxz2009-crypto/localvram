@@ -82,6 +82,61 @@ const softwareSchema = {
   inLanguage: locale,
   description: text.rollout_intro,
 };
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: `${home.cta_start_vram || "VRAM Calculator"}: ${ui.model_profile}`,
+  description: text.rollout_intro,
+  inLanguage: locale,
+  step: [
+    {
+      "@type": "HowToStep",
+      name: ui.model_profile,
+      text: `${ui.model_profile}: select a model profile from the LocalVRAM catalog.`,
+    },
+    {
+      "@type": "HowToStep",
+      name: `${ui.minimum_vram} / ${ui.optimal_vram}`,
+      text: `${ui.minimum_vram} and ${ui.optimal_vram}: review the memory envelope before deployment.`,
+    },
+    {
+      "@type": "HowToStep",
+      name: `${ui.best_local} / ${ui.cloud_fallback}`,
+      text: `${ui.best_local} and ${ui.cloud_fallback}: choose local hardware or a cloud fallback path.`,
+    },
+  ],
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: locale,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: `${ui.minimum_vram}: what does it mean?`,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `${ui.minimum_vram} is the lower bound for loading and running a model profile with conservative settings.`,
+      },
+    },
+    {
+      "@type": "Question",
+      name: `${ui.optimal_vram}: what does it mean?`,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `${ui.optimal_vram} is the recommended target for stable throughput and lower latency under sustained load.`,
+      },
+    },
+    {
+      "@type": "Question",
+      name: `${ui.data_status}: measured or estimated?`,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `${ui.verified_real} profiles use benchmark data. ${ui.estimated} profiles use catalog baseline anchors.`,
+      },
+    },
+  ],
+};
 ---
 
 <BaseLayout
@@ -91,7 +146,7 @@ const softwareSchema = {
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
-  structuredData={[softwareSchema]}
+  structuredData={[softwareSchema, howToSchema, faqSchema]}
 >
   <main class="container">
     <h1>{home.cta_start_vram || "VRAM Calculator"}</h1>
