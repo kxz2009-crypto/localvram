@@ -7,6 +7,9 @@ import pipelineStatus from "../../../data/pipeline-status.json";
 import pipelineSlo from "../../../data/pipeline-slo.json";
 import newModelWatchlist from "../../../data/new-model-watchlist.json";
 import modelCatalog from "../../../data/model-catalog.json";
+import searchConsole from "../../../data/search-console-keywords.json";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 
 type WorkflowRow = {
   workflow_name?: string;
@@ -16,6 +19,70 @@ type WorkflowRow = {
   failure_detail?: string;
   run_url?: string;
 };
+
+type LocaleKpiRow = {
+  date: string;
+  locale: string;
+  indexed_urls: number;
+  discovered_urls: number;
+  index_rate_pct: number;
+  impressions: number;
+  clicks: number;
+  ctr_pct: number;
+  avg_position: number;
+  next_action: string;
+};
+
+function parseCsvLine(line: string): string[] {
+  const cells: string[] = [];
+  let current = "";
+  let inQuotes = false;
+  for (let index = 0; index < line.length; index += 1) {
+    const char = line[index];
+    if (char === '"') {
+      if (inQuotes && line[index + 1] === '"') {
+        current += '"';
+        index += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+    if (char === "," && !inQuotes) {
+      cells.push(current);
+      current = "";
+      continue;
+    }
+    current += char;
+  }
+  cells.push(current);
+  return cells;
+}
+
+function parseLocaleKpi(): LocaleKpiRow[] {
+  const filePath = join(process.cwd(), "docs", "seo-ops", "locale-kpi-tracker.csv");
+  if (!existsSync(filePath)) {
+    return [];
+  }
+  const lines = readFileSync(filePath, "utf-8").trim().split(/\r?\n/).filter(Boolean);
+  const headers = parseCsvLine(lines[0] || "");
+  return lines.slice(1).map((line) => {
+    const values = parseCsvLine(line);
+    const row = Object.fromEntries(headers.map((header, index) => [header, values[index] || ""]));
+    return {
+      date: row.date || "",
+      locale: row.locale || "",
+      indexed_urls: Number(row.indexed_urls || 0),
+      discovered_urls: Number(row.discovered_urls || 0),
+      index_rate_pct: Number(row.index_rate_pct || 0),
+      impressions: Number(row.impressions || 0),
+      clicks: Number(row.clicks || 0),
+      ctr_pct: Number(row.ctr_pct || 0),
+      avg_position: Number(row.avg_position || 0),
+      next_action: row.next_action || "",
+    };
+  });
+}
 
 const workflows = (pipelineStatus.workflows || {}) as Record<string, WorkflowRow>;
 const dailyWorkflow = workflows.daily_content || {};
@@ -33,6 +100,16 @@ const pipelineHealth = pipelineSlo.pipeline_slo_met ? "SLO met" : "SLO miss";
 const dailyHealth = dailyWorkflow.conclusion === "success" ? "Healthy" : "Needs attention";
 const benchmarkHealth = weeklyWorkflow.conclusion === "success" ? "Healthy" : "Needs attention";
 const catalogVerifiedAt = String(modelCatalog.ollama_verified_at || modelCatalog.generated_at || "unknown");
+const localeKpiRows = parseLocaleKpi();
+const latestLocaleKpiDate = localeKpiRows[0]?.date || "unknown";
+const topLocaleRows = [...localeKpiRows].sort((a, b) => b.impressions - a.impressions).slice(0, 5);
+const lowestIndexRows = [...localeKpiRows].sort((a, b) => a.index_rate_pct - b.index_rate_pct).slice(0, 5);
+const searchItems = Array.isArray(searchConsole.items) ? searchConsole.items : [];
+const topSearchRows = [...searchItems]
+  .sort((a: any, b: any) => Number(b.impressions || 0) - Number(a.impressions || 0))
+  .slice(0, 6);
+const searchConsoleWindow = (searchConsole.window || {}) as Record<string, any>;
+const searchConsoleSummary = `${searchItems.length} rows; ${searchConsoleWindow.start_date || "unknown"} to ${searchConsoleWindow.end_date || "unknown"}`;
 
 const statusCards = [
   {
@@ -70,6 +147,12 @@ const statusCards = [
     value: `${watchlistItems.length} item(s)`,
     detail: `Updated ${newModelWatchlist.updated_at || "unknown"}.`,
     href: "/en/status/new-model-radar/",
+  },
+  {
+    label: "Search Console",
+    value: searchConsole.source || "unknown",
+    detail: `Updated ${searchConsole.updated_at || "unknown"}; ${searchConsoleSummary}.`,
+    href: "#search-console",
   },
 ];
 
@@ -157,6 +240,87 @@ const workflowRows = [
       <h2>Conversion Telemetry</h2>
       <p>Organic clicks: {funnel.organic_search_clicks || 0} | Decision clicks: {funnel.decision_page_clicks || 0} | Redirect events: {funnel.affiliate_redirect_clicks || 0}</p>
       <p>Affiliate event feed total: {dataQuality.affiliate_event_items_total || 0}; in current window: {dataQuality.affiliate_event_items_in_window || 0}.</p>
+    </section>
+
+    <section id="search-console" class="card" style="margin-top: 16px;">
+      <h2>Search Console Snapshot</h2>
+      <p>Source: {searchConsole.source || "unknown"} | Updated: {searchConsole.updated_at || "unknown"} | Window: {searchConsoleWindow.start_date || "unknown"} to {searchConsoleWindow.end_date || "unknown"}</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Locale</th>
+            <th>Query</th>
+            <th>Landing</th>
+            <th>Impressions</th>
+            <th>Clicks</th>
+            <th>Avg. Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          {topSearchRows.map((row: any) => (
+            <tr>
+              <td>{row.locale || "-"}</td>
+              <td>{row.query || row.keyword || "-"}</td>
+              <td>{row.landing || "-"}</td>
+              <td>{row.impressions || 0}</td>
+              <td>{row.clicks || 0}</td>
+              <td>{row.position || 0}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Locale KPI</h2>
+      <p>Latest checkpoint: {latestLocaleKpiDate}. Top locales by impressions are listed first; low index-rate locales show where inspection work is most urgent.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Locale</th>
+            <th>Indexed / Discovered</th>
+            <th>Index Rate</th>
+            <th>Impressions</th>
+            <th>Clicks</th>
+            <th>Next Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {topLocaleRows.map((row) => (
+            <tr>
+              <td>{row.locale}</td>
+              <td>{row.indexed_urls} / {row.discovered_urls}</td>
+              <td>{row.index_rate_pct}%</td>
+              <td>{row.impressions}</td>
+              <td>{row.clicks}</td>
+              <td>{row.next_action}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h3>Lowest Index Rate</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Locale</th>
+            <th>Index Rate</th>
+            <th>Indexed</th>
+            <th>Discovered</th>
+            <th>Avg. Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          {lowestIndexRows.map((row) => (
+            <tr>
+              <td>{row.locale}</td>
+              <td>{row.index_rate_pct}%</td>
+              <td>{row.indexed_urls}</td>
+              <td>{row.discovered_urls}</td>
+              <td>{row.avg_position}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </section>
   </main>
 </BaseLayout>
