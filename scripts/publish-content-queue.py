@@ -17,6 +17,7 @@ BLOG_DIR = ROOT / "src" / "content" / "blog"
 LOG_FILE = ROOT / "src" / "data" / "content-publish-log.json"
 UPDATES_FILE = ROOT / "src" / "data" / "daily-updates.json"
 BENCHMARK_FILE = ROOT / "src" / "data" / "benchmark-results.json"
+MODEL_CATALOG_FILE = ROOT / "src" / "data" / "model-catalog.json"
 
 DATE_DIR_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 STOPWORDS = {
@@ -80,6 +81,35 @@ def save_json(path: Path, payload: Any) -> None:
 def slugify(value: str) -> str:
     cleaned = re.sub(r"[^a-z0-9]+", "-", str(value or "").lower()).strip("-")
     return cleaned or "untitled"
+
+
+def model_landing_from_tag(tag: str, fallback: str = "/en/models/") -> str:
+    raw = str(tag or "").strip()
+    if not raw:
+        return fallback
+    catalog = load_json(MODEL_CATALOG_FILE, {"items": []})
+    items = catalog.get("items", []) if isinstance(catalog, dict) else []
+    if not isinstance(items, list):
+        return fallback
+
+    matches = [
+        item
+        for item in items
+        if isinstance(item, dict) and str(item.get("ollama_tag", "")).strip().lower() == raw.lower()
+    ]
+    if not matches:
+        return fallback
+    matches.sort(
+        key=lambda item: (
+            {"Q4": 0, "Q5": 1, "Q8": 2, "FP16": 3, "CLOUD": 4}.get(
+                str(item.get("quantization", "")).strip().upper(),
+                9,
+            ),
+            str(item.get("id", "")),
+        )
+    )
+    slug = str(matches[0].get("slug") or matches[0].get("id") or "").strip()
+    return f"/en/models/{slug}/" if slug else fallback
 
 
 def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
@@ -375,7 +405,7 @@ def build_daily_fallback_content(queue_date: str, measured: list[dict[str, Any]]
     year = queue_date[:4] if len(queue_date) >= 4 else "2026"
     pick = pick_today_model(measured, queue_date=queue_date)
     pick_tag = str(pick.get("tag", "local LLM")).strip()
-    pick_slug = slugify(pick_tag.replace(":", "-"))
+    model_landing = model_landing_from_tag(pick_tag)
     pick_tps = float(pick.get("tokens_per_second", 0) or 0)
     pick_latency = float(pick.get("latency_ms", 0) or 0)
     pick_test_time = str(pick.get("test_time", "")).strip()
@@ -611,7 +641,7 @@ def build_daily_fallback_content(queue_date: str, measured: list[dict[str, Any]]
         + "\n".join(comp_lines) + "\n\n"
         "## Next actions\n\n"
         "- Estimate VRAM fit: /en/tools/vram-calculator/\n"
-        f"- Model page: /en/models/{pick_slug}-q4/\n"
+        f"- Model page: {model_landing}\n"
         "- Benchmark changelog: /en/benchmarks/changelog/\n"
         "- Local hardware path: /en/affiliate/hardware-upgrade/\n"
         "- Cloud fallback: /go/runpod and /go/vast\n\n"

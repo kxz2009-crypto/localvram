@@ -42,6 +42,7 @@ class ContentStrategyTests(unittest.TestCase):
             "2026-04-29",
             measured,
         )
+        expected_landing = publish.model_landing_from_tag(expected_pick, "/en/models/")
 
         self.assertIn("Today's Local LLM Pick", content["title"])
         self.assertIn(expected_pick, content["title"])
@@ -49,6 +50,14 @@ class ContentStrategyTests(unittest.TestCase):
         self.assertIn("Who should try it", content["body"])
         self.assertIn("traffic window", content["body"])
         self.assertIn(f"ollama run {expected_pick}", content["body"])
+        self.assertIn(f"Model page: {expected_landing}", content["body"])
+
+    def test_publish_fallback_model_landing_prefers_catalog_q4_page(self):
+        publish = load_script("publish-content-queue")
+
+        landing = publish.model_landing_from_tag("qwen3-coder:30b", "/en/models/")
+
+        self.assertEqual(landing, "/en/models/qwen3-coder-30b-q4/")
 
     def test_draft_template_targets_new_model_search_window(self):
         agent = load_script("daily-content-agent")

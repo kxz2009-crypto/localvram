@@ -25,6 +25,22 @@ const pageUrl = `https://localvram.com${pagePath}`;
 const minVram = Number(item?.vram_min_gb || 0);
 const optimalVram = Number(item?.vram_optimal_gb || 0);
 const updatedAt = String(item?.updated_at || "");
+const ollamaTag = String(item?.ollama_tag || "").trim();
+const relatedProfiles = (Array.isArray(modelCatalog?.items) ? modelCatalog.items : [])
+  .filter((candidate) => {
+    if (!candidate || typeof candidate !== "object") {
+      return false;
+    }
+    return String(candidate?.id || "") !== modelId && String(candidate?.ollama_tag || "").trim() === ollamaTag;
+  })
+  .sort((a, b) => {
+    const priority: Record<string, number> = { Q4: 0, Q5: 1, Q8: 2, FP16: 3, CLOUD: 4 };
+    return (
+      (priority[String(a?.quantization || "").toUpperCase()] ?? 9) -
+      (priority[String(b?.quantization || "").toUpperCase()] ?? 9)
+    );
+  })
+  .slice(0, 4);
 const copy = resolvePageCopy("models-detail", locale, {
   localeUpper: locale.toUpperCase(),
   modelName,
@@ -76,6 +92,20 @@ const breadcrumbSchema = {
     },
   ],
 };
+const relatedProfilesSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `${modelName} related LocalVRAM model profiles`,
+  itemListElement: relatedProfiles.map((profile, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: String(profile?.name || profile?.id || ""),
+    url: `https://localvram.com${withLocale(locale, `/en/models/${String(profile?.id || "").trim()}/`)}`,
+  })),
+};
+const structuredData = relatedProfiles.length
+  ? [modelSchema, breadcrumbSchema, relatedProfilesSchema]
+  : [modelSchema, breadcrumbSchema];
 ---
 
 <BaseLayout
@@ -84,7 +114,7 @@ const breadcrumbSchema = {
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
-  structuredData={[modelSchema, breadcrumbSchema]}
+  structuredData={structuredData}
   noindex={shouldNoindex}
 >
   <main class="container">

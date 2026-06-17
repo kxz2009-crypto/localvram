@@ -34,6 +34,16 @@ const chartPayload = {
   hasMeasured: hasRealBenchmark,
   modelName: item.name,
 };
+const relatedProfiles = catalog.items
+  .filter((candidate) => candidate.id !== item.id && candidate.ollama_tag === item.ollama_tag)
+  .sort((a, b) => {
+    const priority: Record<string, number> = { Q4: 0, Q5: 1, Q8: 2, FP16: 3, CLOUD: 4 };
+    return (
+      (priority[String(a.quantization || "").toUpperCase()] ?? 9) -
+      (priority[String(b.quantization || "").toUpperCase()] ?? 9)
+    );
+  })
+  .slice(0, 4);
 const modelPath = `/en/models/${item.id}/`;
 const modelUrl = `https://localvram.com${modelPath}`;
 const seoTitle =
@@ -84,6 +94,20 @@ const breadcrumbSchema = {
     }
   ]
 };
+const relatedProfilesSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `${item.name} related LocalVRAM model profiles`,
+  itemListElement: relatedProfiles.map((profile, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: profile.name,
+    url: `https://localvram.com/en/models/${profile.id}/`
+  }))
+};
+const structuredData = relatedProfiles.length
+  ? [modelSchema, breadcrumbSchema, relatedProfilesSchema]
+  : [modelSchema, breadcrumbSchema];
 ---
 
 <BaseLayout
@@ -94,7 +118,7 @@ const breadcrumbSchema = {
   alternates={ROOT_ALTERNATES}
   ogType="article"
   modifiedTime={item.updated_at}
-  structuredData={[modelSchema, breadcrumbSchema]}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>{item.name}</h1>
@@ -297,6 +321,23 @@ const breadcrumbSchema = {
         </tbody>
       </table>
     </section>
+
+    {relatedProfiles.length > 0 && (
+      <section class="card">
+        <h2>Related Model Profiles</h2>
+        <ul>
+          {relatedProfiles.map((profile) => (
+            <li>
+              <a href={`/en/models/${profile.id}/`}>{profile.name}</a>
+              {" "}
+              <span class="affiliate-note">
+                {profile.vram_min_gb}GB min, {profile.vram_optimal_gb}GB optimal
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <section class="cta-row">
       {item.ollama_command && <span class="btn"><code>{item.ollama_command}</code></span>}
