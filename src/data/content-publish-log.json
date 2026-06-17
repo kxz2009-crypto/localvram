@@ -1,29 +1,61 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-16T14:55:41.231918Z",
+  "updated_at": "2026-06-17T05:25:37.085116Z",
   "last_run": {
-    "run_at": "2026-06-16T14:55:41.231918Z",
-    "queue_date": "2026-06-16",
-    "candidate_count": 0,
+    "run_at": "2026-06-17T05:25:37.085116Z",
+    "queue_date": "2026-06-17",
+    "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 1,
+    "fallback_generated_count": 0,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-06-16",
-        "title": "Today's Local LLM Pick: qwen3:8b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-06-16-daily-local-llm-benchmark-snapshot-2026-06-16",
-        "score": 120.0,
-        "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-16.md",
-        "intent": "benchmark"
+        "slug": "2026-06-17-gpt-oss-20b-hardware-upgrade",
+        "title": "gpt-oss:20B RTX 3090 Local Benchmark Hardware Upgrade: Practical GPU Selection for Stable Local Inference (2026)",
+        "topic_key": "gpt-oss-20b-rtx-3090-local-benchmark-hardware-upgrade",
+        "score": 216.0,
+        "source_draft": "content-queue/2026-06-17/01-2026-06-17-gpt-oss-20b-hardware-upgrade.md",
+        "out_file": "src/content/blog/2026-06-17-gpt-oss-20b-hardware-upgrade.md",
+        "intent": "hardware",
+        "model_tag": "gpt-oss:20b",
+        "model_key": "gpt-oss-20b",
+        "traffic_priority": "fallback",
+        "ollama_updated_label": "",
+        "benchmark_measured_at": "2026-04-29T05:39:58Z"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-06-17T05:25:37.085116Z",
+      "queue_date": "2026-06-17",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "2026-06-17-gpt-oss-20b-hardware-upgrade",
+          "title": "gpt-oss:20B RTX 3090 Local Benchmark Hardware Upgrade: Practical GPU Selection for Stable Local Inference (2026)",
+          "topic_key": "gpt-oss-20b-rtx-3090-local-benchmark-hardware-upgrade",
+          "score": 216.0,
+          "source_draft": "content-queue/2026-06-17/01-2026-06-17-gpt-oss-20b-hardware-upgrade.md",
+          "out_file": "src/content/blog/2026-06-17-gpt-oss-20b-hardware-upgrade.md",
+          "intent": "hardware",
+          "model_tag": "gpt-oss:20b",
+          "model_key": "gpt-oss-20b",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-04-29T05:39:58Z"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-06-16T14:55:41.231918Z",
       "queue_date": "2026-06-16",
@@ -1382,28 +1414,6 @@
           "score": 360.0,
           "source_draft": "content-queue/2026-04-15/01-model-qwen3-5-35b-benchmark-refresh.md",
           "out_file": "src/content/blog/model-qwen3-5-35b-benchmark-refresh.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-04-14T03:49:34.891045Z",
-      "queue_date": "2026-04-14",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-04-14",
-          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-04-14-daily-local-llm-benchmark-snapshot-2026-04-14",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-14.md",
           "intent": "benchmark"
         }
       ],

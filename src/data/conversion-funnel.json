@@ -1,54 +1,210 @@
 {
-  "generated_at": "2026-06-16T14:56:04.582012Z",
+  "generated_at": "2026-06-17T05:27:04.362217Z",
   "window_days": 30,
-  "window_start": "2026-05-17T14:56:04.582012Z",
-  "window_end": "2026-06-16T14:56:04.582012Z",
+  "window_start": "2026-05-18T05:27:04.362217Z",
+  "window_end": "2026-06-17T05:27:04.362217Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
-    "search_console_updated_at": "2026-02-24T10:00:00Z"
+    "search_console_updated_at": "2026-06-16T16:43:49Z"
   },
   "funnel": {
-    "organic_search_clicks": 84,
-    "decision_page_clicks": 67,
-    "affiliate_redirect_clicks": 0,
-    "cloud_redirect_clicks": 0,
-    "hardware_redirect_clicks": 0,
-    "search_to_affiliate_pct": 0.0,
-    "search_to_cloud_pct": 0.0,
-    "affiliate_to_cloud_pct": 0.0
+    "organic_search_clicks": 3,
+    "decision_page_clicks": 0,
+    "affiliate_redirect_clicks": 285,
+    "cloud_redirect_clicks": 100,
+    "hardware_redirect_clicks": 185,
+    "search_to_affiliate_pct": 9500.0,
+    "search_to_cloud_pct": 3333.33,
+    "affiliate_to_cloud_pct": 35.09
   },
   "breakdown": {
-    "providers": [],
-    "routes": [],
-    "source_pages": [],
+    "providers": [
+      {
+        "provider": "amazon",
+        "clicks": 185,
+        "share_pct": 64.91
+      },
+      {
+        "provider": "runpod",
+        "clicks": 51,
+        "share_pct": 17.89
+      },
+      {
+        "provider": "vast",
+        "clicks": 49,
+        "share_pct": 17.19
+      }
+    ],
+    "routes": [
+      {
+        "route": "/recommends/rtx-3090-24gb",
+        "clicks": 80,
+        "share_pct": 28.07
+      },
+      {
+        "route": "/go/runpod",
+        "clicks": 51,
+        "share_pct": 17.89
+      },
+      {
+        "route": "/go/vast",
+        "clicks": 49,
+        "share_pct": 17.19
+      },
+      {
+        "route": "/recommends/rtx-4090-24gb",
+        "clicks": 39,
+        "share_pct": 13.68
+      },
+      {
+        "route": "/recommends/atx3-1000w-psu",
+        "clicks": 33,
+        "share_pct": 11.58
+      },
+      {
+        "route": "/recommends/high-airflow-case",
+        "clicks": 33,
+        "share_pct": 11.58
+      }
+    ],
+    "source_pages": [
+      {
+        "page": "unknown",
+        "clicks": 275
+      },
+      {
+        "page": "/es/tools/vram-calculator/",
+        "clicks": 4
+      },
+      {
+        "page": "/en/tools/vram-calculator/",
+        "clicks": 2
+      },
+      {
+        "page": "/ru/tools/vram-calculator/",
+        "clicks": 1
+      },
+      {
+        "page": "/en/models/deepseek-coder-33b-q4/",
+        "clicks": 1
+      },
+      {
+        "page": "/ko/tools/vram-calculator/",
+        "clicks": 1
+      },
+      {
+        "page": "/en/blog/still-the-vram-king-rtx-3090-2026/",
+        "clicks": 1
+      }
+    ],
     "search_landings": [
       {
-        "landing": "/en/models/llama-70b-q4/",
-        "clicks": 31,
-        "share_pct": 36.9
+        "landing": "/de/matrix/",
+        "clicks": 1,
+        "share_pct": 33.33
       },
       {
-        "landing": "/en/tools/quantization-blind-test/",
-        "clicks": 22,
-        "share_pct": 26.19
+        "landing": "/de/models/openhermes-7b-q5/",
+        "clicks": 1,
+        "share_pct": 33.33
       },
       {
-        "landing": "/en/blog/best-local-rag-models-2026/",
-        "clicks": 17,
-        "share_pct": 20.24
+        "landing": "/ko/benchmarks/",
+        "clicks": 1,
+        "share_pct": 33.33
       },
       {
-        "landing": "/en/affiliate/cloud-gpu/",
-        "clicks": 14,
-        "share_pct": 16.67
+        "landing": "/ar/blog/local-llm-customer-support-rag-stack/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/status/conversion-funnel/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/tools/vram-calculator/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/errors/cuda-out-of-memory/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/hardware/verified-3090/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/guides/ollama-local-cluster-network/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/models/llama32-3b-q4/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/hardware/apple-silicon-llm-guide/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/en/models/gemma2-2b-q4/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/en/models/qwen25-coder-14b-q4/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/en/models/llama2-7b-fp16/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/en/models/qwen25-coder-14b-fp16/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/en/models/gemma2-2b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/en/models/deepseek-coder-v2-16b-fp16/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/en/models/qwen25-coder-3b-q5/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/en/models/qwen25-coder-14b-q5/",
+        "clicks": 0,
+        "share_pct": 0.0
       }
     ]
   },
   "data_quality": {
-    "search_console_items": 4,
-    "affiliate_event_items_total": 141,
-    "affiliate_event_items_in_window": 0,
+    "search_console_items": 239,
+    "affiliate_event_items_total": 285,
+    "affiliate_event_items_in_window": 285,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }
