@@ -12,7 +12,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 type WorkflowRow = {
+  workflow_key?: string;
   workflow_name?: string;
+  status?: string;
   conclusion?: string;
   updated_at?: string;
   failure_class?: string;
@@ -31,6 +33,32 @@ type LocaleKpiRow = {
   ctr_pct: number;
   avg_position: number;
   next_action: string;
+};
+
+type SloWindow = {
+  total_runs?: number;
+  success_runs?: number;
+  failure_runs?: number;
+  success_rate?: number;
+  target_success_rate?: number;
+  slo_met?: boolean;
+  top_failure_class?: string;
+  top_failure_action?: string;
+};
+
+type SloWorkflow = {
+  workflow_key?: string;
+  workflow_name?: string;
+  current_success_streak?: number;
+  windows?: Record<string, SloWindow>;
+};
+
+type FailureRecommendation = {
+  workflow_key?: string;
+  workflow_name?: string;
+  failure_class?: string;
+  count?: number;
+  action?: string;
 };
 
 function parseCsvLine(line: string): string[] {
@@ -84,10 +112,21 @@ function parseLocaleKpi(): LocaleKpiRow[] {
   });
 }
 
+function formatWindow(row: SloWindow): string {
+  return `${row.success_runs ?? 0}/${row.total_runs ?? 0} (${row.success_rate ?? 0}%)`;
+}
+
 const workflows = (pipelineStatus.workflows || {}) as Record<string, WorkflowRow>;
 const dailyWorkflow = workflows.daily_content || {};
 const weeklyWorkflow = workflows.weekly_benchmark || {};
 const publishArtifactWorkflow = workflows.publish_benchmark_artifact || {};
+const sloWorkflows = (pipelineSlo.workflows || {}) as Record<string, SloWorkflow>;
+const weeklyReport = (pipelineSlo.weekly_report || {}) as Record<string, any>;
+const weeklyLines = Array.isArray(weeklyReport.summary_lines) ? weeklyReport.summary_lines : [];
+const failureRecommendations = (pipelineSlo.failure_recommendations || {}) as Record<string, any>;
+const topFailureRows = Array.isArray(failureRecommendations.global_top_failures)
+  ? (failureRecommendations.global_top_failures as FailureRecommendation[])
+  : [];
 const lastRun = (contentPublish.last_run || {}) as Record<string, any>;
 const lastPublished = Array.isArray(lastRun.published) ? lastRun.published[0] : null;
 const funnel = (conversionFunnel.funnel || {}) as Record<string, any>;
@@ -95,7 +134,12 @@ const dataQuality = (conversionFunnel.data_quality || {}) as Record<string, any>
 const watchlistItems = Array.isArray(newModelWatchlist.items) ? newModelWatchlist.items : [];
 const publishCount = Number(lastRun.published_count || 0);
 const affiliateEventsInWindow = Number(dataQuality.affiliate_event_items_in_window || 0);
-const affiliateStatus = affiliateEventsInWindow > 0 ? "Live events in window" : "No recent KV events";
+const affiliateFeedTotal = Number(dataQuality.affiliate_event_items_total || 0);
+const affiliateStatus = affiliateEventsInWindow > 0
+  ? "Live events in window"
+  : affiliateFeedTotal > 0
+    ? "Feed healthy; no recent redirects"
+    : "No event feed";
 const pipelineHealth = pipelineSlo.pipeline_slo_met ? "SLO met" : "SLO miss";
 const dailyHealth = dailyWorkflow.conclusion === "success" ? "Healthy" : "Needs attention";
 const benchmarkHealth = weeklyWorkflow.conclusion === "success" ? "Healthy" : "Needs attention";
@@ -110,6 +154,20 @@ const topSearchRows = [...searchItems]
   .slice(0, 6);
 const searchConsoleWindow = (searchConsole.window || {}) as Record<string, any>;
 const searchConsoleSummary = `${searchItems.length} rows; ${searchConsoleWindow.start_date || "unknown"} to ${searchConsoleWindow.end_date || "unknown"}`;
+const topFailure = topFailureRows[0] || {};
+const pipelineHealthDetail = topFailure.failure_class
+  ? `${topFailure.failure_class}: ${topFailure.count ?? 0} run(s) in 28d.`
+  : "No failed runs in the selected window.";
+const workflowSloRows = ["daily_content", "weekly_benchmark", "publish_benchmark_artifact"].map((key) => {
+  const row = sloWorkflows[key] || {};
+  const windows = (row.windows || {}) as Record<string, SloWindow>;
+  return {
+    workflowName: row.workflow_name || workflows[key]?.workflow_name || key,
+    w7: windows["7"] || {},
+    w28: windows["28"] || {},
+    streak: Number(row.current_success_streak || 0),
+  };
+});
 
 const statusCards = [
   {
@@ -127,13 +185,13 @@ const statusCards = [
   {
     label: "Pipeline SLO",
     value: pipelineHealth,
-    detail: `Reference ${pipelineSlo.reference_time || pipelineStatus.updated_at || "unknown"}.`,
+    detail: `${pipelineHealthDetail} Reference ${pipelineSlo.reference_time || pipelineStatus.updated_at || "unknown"}.`,
     href: "/en/status/pipeline-status/",
   },
   {
     label: "Affiliate events",
     value: affiliateStatus,
-    detail: `${affiliateEventsInWindow} redirect event(s) in the ${conversionFunnel.window_days || 30}d window.`,
+    detail: `${affiliateEventsInWindow} redirect event(s) in the ${conversionFunnel.window_days || 30}d window; ${affiliateFeedTotal} total captured.`,
     href: "/en/status/conversion-funnel/",
   },
   {
@@ -234,6 +292,43 @@ const workflowRows = [
           ))}
         </tbody>
       </table>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>Pipeline SLO Summary</h2>
+      <p>Overall: {pipelineSlo.pipeline_slo_met ? "Met" : "Not met"} | Target: {pipelineSlo.target_success_rate ?? 95}% | Window: {weeklyReport.window_start || "unknown"} to {weeklyReport.window_end || "unknown"}</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Workflow</th>
+            <th>7d Success</th>
+            <th>28d Success</th>
+            <th>Current Streak</th>
+            <th>Top Failure</th>
+          </tr>
+        </thead>
+        <tbody>
+          {workflowSloRows.map((row) => (
+            <tr>
+              <td>{row.workflowName}</td>
+              <td>{formatWindow(row.w7)}</td>
+              <td>{formatWindow(row.w28)}</td>
+              <td>{row.streak}</td>
+              <td>{row.w28.top_failure_class || "none"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {topFailureRows.length > 0 ? (
+        <p>Recommended action: {topFailureRows[0].action || "Review the latest failed workflow run."}</p>
+      ) : (
+        <p>No workflow-level remediation is needed in the current SLO window.</p>
+      )}
+      {weeklyLines.length > 0 ? (
+        <ul>
+          {weeklyLines.map((line) => <li>{line}</li>)}
+        </ul>
+      ) : null}
     </section>
 
     <section class="card" style="margin-top: 16px;">
