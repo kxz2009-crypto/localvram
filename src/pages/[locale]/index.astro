@@ -4,10 +4,13 @@ import runnerStatus from "../../data/runner-status.json";
 import statusReport from "../../data/status.json";
 import dailyUpdates from "../../data/daily-updates.json";
 import newModelWatchlist from "../../data/new-model-watchlist.json";
+import catalog from "../../data/model-catalog.json";
+import benchmarkResults from "../../data/benchmark-results.json";
 import { ROOT_ALTERNATES } from "../../data/root-alternates";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../config/i18n";
 import { withLocale } from "../../lib/locale-paths";
 import { resolvePageCopy, shouldNoindexByFallback } from "../../lib/i18n-copy";
+import { getFeaturedTestModel } from "../../lib/featured-test-models";
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -32,10 +35,16 @@ const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || unknownLabel);
 const latestNewModel = newModelWatchlist.items?.[0];
-const latestNewModelTag = String(latestNewModel?.tag || unknownLabel);
-const latestNewModelLanding = localHref(String(latestNewModel?.landing || "/en/models/"));
+const benchmarkMap = benchmarkResults.models || {};
+const featuredTestModel = getFeaturedTestModel(catalog.items, benchmarkMap);
+const latestNewModelTag = String(latestNewModel?.tag || featuredTestModel?.featured_tag || unknownLabel);
+const latestNewModelLanding = localHref(String(latestNewModel?.landing || featuredTestModel?.featured_path || "/en/models/"));
 const latestLocalStatus = String(latestNewModel?.local_inventory_status?.status || "unknown");
-const latestBenchmarkStatus = String(latestNewModel?.benchmark_status?.status || latestNewModel?.status || "unknown");
+const latestBenchmarkStatus = String(
+  latestNewModel?.benchmark_status?.status ||
+    latestNewModel?.status ||
+    (featuredTestModel?.measured_tokens_per_second ? "measured" : "unknown")
+);
 const latestOllamaUpdated = String(latestNewModel?.ollama_updated_label || "");
 
 function formatGpuTemperature(value: number, fallback: string): string {
@@ -73,6 +82,9 @@ const localModelLabel =
         : "not local yet";
 const benchmarkModelLabel = latestBenchmarkStatus === "measured" ? "measured" : "pending";
 const newModelFreshnessLabel = latestOllamaUpdated ? ` (${latestOllamaUpdated})` : "";
+const featuredPerfLabel = featuredTestModel?.measured_tokens_per_second
+  ? `${featuredTestModel.measured_tokens_per_second.toFixed(1)} tok/s`
+  : "pending";
 
 const homeStructuredData = [
   {
@@ -107,7 +119,7 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      {text.ticker_daily_update_label || "Daily Update"}: {latestDailyUpdateDate} | New on Ollama: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | Local: {localModelLabel} | {text.ticker_gpu_label || "RTX 3090"}: {benchmarkModelLabel} @ {gpuTemperature} | {text.ticker_ollama_label || "Ollama"}: {ollamaVersion} | {text.ticker_hardware_sync_label || "Hardware Sync"}: <span id="last-sync-local">{localLoadingLabel}</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
+      {text.ticker_daily_update_label || "Daily Update"}: {latestDailyUpdateDate} | Featured test: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | {text.ticker_gpu_label || "RTX 3090"}: {featuredPerfLabel} | Local: {localModelLabel} | Runner status: {benchmarkModelLabel} @ {gpuTemperature} | {text.ticker_ollama_label || "Ollama"}: {ollamaVersion} | {text.ticker_hardware_sync_label || "Hardware Sync"}: <span id="last-sync-local">{localLoadingLabel}</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href={localHref("/en/status/data-freshness/")}>{text.nav_data_status}</a>
   </header>

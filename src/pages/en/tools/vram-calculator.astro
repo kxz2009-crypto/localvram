@@ -4,19 +4,23 @@ import catalog from "../../../data/model-catalog.json";
 import links from "../../../data/affiliate-links.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
 import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { getFeaturedTestModels } from "../../../lib/featured-test-models";
 
 const allModels = Array.isArray(catalog.items) ? catalog.items : [];
 const benchmarkMap = benchmarkResults.models || {};
-const priorityTag = "qwen3.5:35b";
+const featuredModels = getFeaturedTestModels(allModels, benchmarkMap);
+const featuredIdSet = new Set(featuredModels.map((item) => item.id));
 const sampleModels = [...allModels].sort((a, b) => {
-  const aTag = String(a?.ollama_tag || "");
-  const bTag = String(b?.ollama_tag || "");
-  const aPriority = aTag === priorityTag ? 0 : 1;
-  const bPriority = bTag === priorityTag ? 0 : 1;
+  const aFeaturedIndex = featuredModels.findIndex((item) => item.id === a.id);
+  const bFeaturedIndex = featuredModels.findIndex((item) => item.id === b.id);
+  const aPriority = aFeaturedIndex === -1 ? 999 : aFeaturedIndex;
+  const bPriority = bFeaturedIndex === -1 ? 999 : bFeaturedIndex;
   if (aPriority !== bPriority) {
     return aPriority - bPriority;
   }
 
+  const aTag = String(a?.ollama_tag || "");
+  const bTag = String(b?.ollama_tag || "");
   const aMeasured = aTag && benchmarkMap[aTag]?.status === "ok" ? 0 : 1;
   const bMeasured = bTag && benchmarkMap[bTag]?.status === "ok" ? 0 : 1;
   if (aMeasured !== bMeasured) {
@@ -38,9 +42,7 @@ const firstMeasuredModel = sampleModels.find((item) => {
   const data = benchmarkMap[item.ollama_tag];
   return data && data.status === "ok" && typeof data.tokens_per_second === "number";
 });
-const pinnedModelId =
-  sampleModels.find((item) => String(item?.ollama_tag || "") === priorityTag && String(item?.quantization || "") === "Q4")
-    ?.id || "";
+const pinnedModelId = featuredModels.find((item) => featuredIdSet.has(item.id))?.id || "";
 const defaultModelId = pinnedModelId || firstMeasuredModel?.id || sampleModels[0]?.id || "";
 const calculatorPath = "/en/tools/vram-calculator/";
 const calculatorUrl = `https://localvram.com${calculatorPath}`;

@@ -4,7 +4,10 @@ import runnerStatus from "../../data/runner-status.json";
 import statusReport from "../../data/status.json";
 import dailyUpdates from "../../data/daily-updates.json";
 import newModelWatchlist from "../../data/new-model-watchlist.json";
+import catalog from "../../data/model-catalog.json";
+import benchmarkResults from "../../data/benchmark-results.json";
 import { ROOT_ALTERNATES } from "../../data/root-alternates";
+import { getFeaturedTestModel } from "../../lib/featured-test-models";
 
 const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
 const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
@@ -12,11 +15,20 @@ const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || "unknown");
 const latestNewModel = newModelWatchlist.items?.[0];
-const latestNewModelTag = String(latestNewModel?.tag || "unknown");
-const latestNewModelLanding = String(latestNewModel?.landing || "/en/models/");
+const benchmarkMap = benchmarkResults.models || {};
+const featuredTestModel = getFeaturedTestModel(catalog.items, benchmarkMap);
+const latestNewModelTag = String(latestNewModel?.tag || featuredTestModel?.featured_tag || "unknown");
+const latestNewModelLanding = String(latestNewModel?.landing || featuredTestModel?.featured_path || "/en/models/");
 const latestLocalStatus = String(latestNewModel?.local_inventory_status?.status || "unknown");
-const latestBenchmarkStatus = String(latestNewModel?.benchmark_status?.status || latestNewModel?.status || "unknown");
+const latestBenchmarkStatus = String(
+  latestNewModel?.benchmark_status?.status ||
+    latestNewModel?.status ||
+    (featuredTestModel?.measured_tokens_per_second ? "measured" : "unknown")
+);
 const latestOllamaUpdated = String(latestNewModel?.ollama_updated_label || "");
+const featuredPerfLabel = featuredTestModel?.measured_tokens_per_second
+  ? `${featuredTestModel.measured_tokens_per_second.toFixed(1)} tok/s`
+  : "pending";
 
 function formatGpuTemperature(value: number): string {
   if (!Number.isFinite(value) || value <= 0) {
@@ -81,8 +93,9 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      Daily Update: {latestDailyUpdateDate} | New on Ollama: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | Local:
-      {localModelLabel} | RTX 3090: {benchmarkModelLabel} @ {gpuTemperature} | Ollama: {ollamaVersion} | Hardware Sync:
+      Daily Update: {latestDailyUpdateDate} | Featured test: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | RTX 3090:
+      {featuredPerfLabel} | Local:
+      {localModelLabel} | Runner status: {benchmarkModelLabel} @ {gpuTemperature} | Ollama: {ollamaVersion} | Hardware Sync:
       <span id="last-sync-local">local time loading...</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href="/en/status/">Data Status</a>

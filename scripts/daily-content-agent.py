@@ -22,6 +22,28 @@ BLOG_DIR = ROOT / "src" / "content" / "blog"
 QUEUE_DIR = ROOT / "content-queue"
 LOGGER = configure_logging("daily-content-agent")
 MODEL_TAG_RE = re.compile(r"\b([a-z0-9][a-z0-9.\-_]*:[a-z0-9][a-z0-9.\-_]*)\b", re.IGNORECASE)
+CONTENT_ANGLES = {
+    "benchmark": ["benchmark-refresh", "vram-fit", "latency-budget"],
+    "hardware": ["vram-fit", "hardware-upgrade", "setup-playbook"],
+    "cost": ["cloud-fallback", "roi-check", "burst-vs-local"],
+    "troubleshooting": ["failure-triage", "oom-checklist", "recovery-playbook"],
+    "guide": ["setup-playbook", "decision-matrix", "operator-checklist"],
+}
+ANGLE_GUIDANCE = {
+    "benchmark-refresh": "Focus on what changed in measured throughput and whether the new number changes the run-local decision.",
+    "vram-fit": "Focus on minimum VRAM, practical headroom, context length, and quantization choice before the first run.",
+    "latency-budget": "Focus on first-token latency, sustained tokens per second, and whether the workload can tolerate the response time.",
+    "hardware-upgrade": "Focus on whether the reader should keep a 24GB card, move to 48GB+, or rent a larger GPU.",
+    "setup-playbook": "Focus on the exact validation path: tag, run command, smoke prompt, benchmark prompt, and rollback choice.",
+    "cloud-fallback": "Focus on when local testing is enough and when RunPod or Vast should take over the production workload.",
+    "roi-check": "Focus on weekly usage hours, local power cost, rental cost, and breakeven thinking.",
+    "burst-vs-local": "Focus on keeping the baseline local while using cloud GPUs only for peak or long-context jobs.",
+    "failure-triage": "Focus on the fastest way to identify whether the blocker is VRAM, model files, runtime, or prompt length.",
+    "oom-checklist": "Focus on reducing context, changing quantization, closing competing processes, and retrying with a smaller profile.",
+    "recovery-playbook": "Focus on safe rollback steps and how to preserve a usable local workflow after a failed test.",
+    "decision-matrix": "Focus on a practical go/no-go matrix instead of announcing the model generically.",
+    "operator-checklist": "Focus on repeatable checks an operator can run before adding the model to a daily workflow.",
+}
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -480,7 +502,14 @@ def stable_template_index(seed: str, size: int) -> int:
     return total % size
 
 
-def build_title(keyword: str, date_iso: str) -> str:
+def choose_content_angle(keyword: str, slug: str, date_iso: str, source: str = "") -> str:
+    intent = infer_content_intent(keyword, slug)
+    pool = CONTENT_ANGLES.get(intent, CONTENT_ANGLES["guide"])
+    seed = f"{keyword}:{slug}:{date_iso}:{source}"
+    return pool[stable_template_index(seed, len(pool))]
+
+
+def build_title(keyword: str, date_iso: str, content_angle: str = "") -> str:
     if keyword:
         base = keyword.strip().rstrip("?")
     else:
@@ -494,30 +523,35 @@ def build_title(keyword: str, date_iso: str) -> str:
             "{topic} Local Benchmark: Throughput, Latency, and VRAM ({year})",
             "{topic} Benchmark Results: Local GPU Throughput Breakdown ({year})",
             "{topic}: Local Inference Performance Report ({year})",
+            "{topic}: Benchmark Refresh and Go/No-Go Notes ({year})",
         ],
         "hardware": [
             "{topic}: GPU and VRAM Sizing Guide ({year})",
             "{topic}: Hardware Decision Matrix for Local LLM ({year})",
             "{topic}: Practical GPU Selection for Stable Local Inference ({year})",
+            "{topic}: VRAM Fit and Quantization Plan ({year})",
         ],
         "cost": [
             "{topic}: Local vs Cloud Cost Breakdown ({year})",
             "{topic}: Cloud Rental vs Self-Host Decision Model ({year})",
             "{topic}: Cost, Throughput, and ROI Analysis ({year})",
+            "{topic}: Burst-to-Cloud or Keep Local? ({year})",
         ],
         "troubleshooting": [
             "{topic}: Root Cause Checklist and Reliable Fixes ({year})",
             "{topic}: Fast Triage Playbook for Local LLM Failures ({year})",
             "{topic}: Error-to-Fix Handbook ({year})",
+            "{topic}: Recovery Steps Before You Change Hardware ({year})",
         ],
         "guide": [
             "{topic}: Step-by-Step Deployment Workflow ({year})",
             "{topic}: Setup, Validation, and Scaling Playbook ({year})",
             "{topic}: Practical Local LLM Implementation Guide ({year})",
+            "{topic}: Operator Checklist and Decision Matrix ({year})",
         ],
     }
     pool = templates.get(intent, templates["guide"])
-    idx = stable_template_index(f"{base}:{date_iso}", len(pool))
+    idx = stable_template_index(f"{base}:{date_iso}:{content_angle}", len(pool))
     return pool[idx].format(topic=topic, year=year)
 
 
@@ -538,6 +572,7 @@ def draft_markdown(
     local_inventory_status: str = "",
     benchmark_status: str = "",
     benchmark_measured_at: str = "",
+    content_angle: str = "",
 ) -> str:
     measured_lines = []
     for row in measured:
@@ -584,6 +619,8 @@ def draft_markdown(
     ollama_display = ollama_updated_label or "unknown"
     downloads_display = f" ({ollama_downloads} downloads)" if ollama_downloads else ""
     priority_display = traffic_priority or "standard"
+    angle = content_angle or choose_content_angle(keyword, landing_ref, date_iso, source)
+    angle_guidance = ANGLE_GUIDANCE.get(angle, ANGLE_GUIDANCE["decision-matrix"])
 
     return f"""---
 title: "{title}"
@@ -591,6 +628,7 @@ date: {date_iso}
 keyword: "{keyword}"
 {model_frontmatter}{opportunity_frontmatter}score: {score_value}
 source: {source}
+content_angle: "{angle}"
 status: draft
 ---
 
@@ -607,7 +645,12 @@ For the first pass, treat the RTX 3090 as the practical baseline. If the model i
 - RTX 3090 benchmark: {benchmark_display}
 - Benchmark measured at: {benchmark_measured_at or "pending"}
 - Traffic priority: {priority_display}
+- Content angle: {angle}
 - Related landing: {landing_ref}
+
+## Editorial angle
+
+{angle_guidance} This keeps the article useful even when the same model family appears in several operational contexts.
 
 ## Measured anchor data
 
@@ -663,6 +706,43 @@ Affiliate Disclosure: This post may include affiliate links. LocalVRAM may earn 
 """
 
 
+def build_quality_floor_candidates(measured: list[dict[str, Any]], date_iso: str, max_count: int = 3) -> list[dict[str, Any]]:
+    """Last-resort drafts: specific measured-model decision posts, not generic snapshots."""
+    out: list[dict[str, Any]] = []
+    for row in measured[: max(1, max_count * 2)]:
+        tag = str(row.get("tag", "")).strip()
+        if not tag:
+            continue
+        angle = choose_content_angle(
+            f"{tag} rtx 3090 local benchmark",
+            f"quality-floor-{tag}",
+            date_iso,
+            "quality_floor_fallback",
+        )
+        out.append(
+            {
+                "slug": f"{date_iso}-{slugify(tag.replace(':', '-'))}-{angle}",
+                "keyword": f"{tag} rtx 3090 local benchmark {angle.replace('-', ' ')}",
+                "landing": "/en/models/",
+                "search_intent_score": 6,
+                "commercial_intent_score": 6,
+                "freshness_gap_score": 6,
+                "clicks": 0,
+                "ctr": 0.0,
+                "source": "quality_floor_fallback",
+                "model_tag": tag,
+                "model_key": "",
+                "traffic_priority": "fallback",
+                "benchmark_status": "measured",
+                "benchmark_measured_at": str(row.get("test_time", "")),
+                "content_angle": angle,
+            }
+        )
+        if len(out) >= max_count:
+            break
+    return out
+
+
 def main() -> None:
     max_drafts = max(1, int(os.getenv("LV_CONTENT_DRAFT_COUNT", "3")))
     min_candidate_score = max(0, int(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_SCORE", "120")))
@@ -706,6 +786,15 @@ def main() -> None:
 
     links = load_json(AFFILIATE_LINKS_FILE, {"runpod": "/go/runpod", "vast": "/go/vast"})
     measured = pick_measured_highlights(max_count=3)
+    if len(selected) < max_drafts:
+        quality_floor = filter_fresh_candidates(
+            build_quality_floor_candidates(measured, today_iso, max_count=max_drafts),
+            blocked_slugs=blocked_slugs,
+            blocked_topics=blocked_topics,
+            blocked_model_keys=blocked_model_keys,
+            min_score=min(120, min_candidate_score),
+        )
+        selected.extend(quality_floor[: max_drafts - len(selected)])
 
     queue_day_dir = QUEUE_DIR / today_iso
     queue_day_dir.mkdir(parents=True, exist_ok=True)
@@ -714,7 +803,13 @@ def main() -> None:
     draft_records = []
     for idx, item in enumerate(selected, start=1):
         slug = slugify(item.get("slug") or item.get("keyword") or f"draft-{idx}")[:80]
-        title = build_title(str(item.get("keyword", "")).strip(), today_iso)
+        content_angle = str(item.get("content_angle", "")).strip() or choose_content_angle(
+            str(item.get("keyword", "")).strip(),
+            slug,
+            today_iso,
+            str(item.get("source", "unknown")),
+        )
+        title = build_title(str(item.get("keyword", "")).strip(), today_iso, content_angle)
         draft_text = draft_markdown(
             title=title,
             keyword=str(item.get("keyword", "")).strip(),
@@ -731,6 +826,7 @@ def main() -> None:
             local_inventory_status=str(item.get("local_inventory_status", "")).strip(),
             benchmark_status=str(item.get("benchmark_status", "")).strip(),
             benchmark_measured_at=str(item.get("benchmark_measured_at", "")).strip(),
+            content_angle=content_angle,
         )
         draft_path = queue_day_dir / f"{idx:02d}-{slug}.md"
         draft_path.write_text(draft_text, encoding="utf-8")
@@ -748,6 +844,7 @@ def main() -> None:
                 "traffic_priority": str(item.get("traffic_priority", "")).strip(),
                 "ollama_updated_label": str(item.get("ollama_updated_label", "")).strip(),
                 "benchmark_measured_at": str(item.get("benchmark_measured_at", "")).strip(),
+                "content_angle": content_angle,
                 "draft_path": str(draft_path.relative_to(ROOT)).replace("\\", "/"),
             }
         )

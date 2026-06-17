@@ -80,10 +80,40 @@ class ContentStrategyTests(unittest.TestCase):
         self.assertIn("RTX 3090 decision matrix", body)
         self.assertIn("Who should skip it", body)
         self.assertIn("## Evidence snapshot", body)
+        self.assertIn("## Editorial angle", body)
         self.assertIn("Ollama freshness: 2 days ago", body)
         self.assertIn("Local inventory: downloaded", body)
         self.assertIn("RTX 3090 benchmark: measured", body)
+        self.assertIn("Content angle:", body)
+        self.assertIn('content_angle: "', body)
         self.assertIn('traffic_priority: "publish_now"', body)
+
+    def test_quality_floor_candidates_keep_daily_content_specific(self):
+        agent = load_script("daily-content-agent")
+
+        candidates = agent.build_quality_floor_candidates(
+            [
+                {
+                    "tag": "qwen3-coder:30b",
+                    "tokens_per_second": 160.0,
+                    "latency_ms": 835.0,
+                    "test_time": "2026-04-29T05:39:58Z",
+                }
+            ],
+            "2026-04-29",
+            max_count=1,
+        )
+
+        self.assertEqual(len(candidates), 1)
+        candidate = candidates[0]
+        self.assertEqual(candidate["source"], "quality_floor_fallback")
+        self.assertEqual(candidate["model_tag"], "qwen3-coder:30b")
+        self.assertEqual(candidate["benchmark_status"], "measured")
+        self.assertEqual(candidate["traffic_priority"], "fallback")
+        self.assertEqual(candidate["model_key"], "")
+        self.assertIn("qwen3-coder-30b", candidate["slug"])
+        self.assertIn(candidate["content_angle"], candidate["slug"])
+        self.assertGreaterEqual(agent.score_with_boost(candidate), 120)
 
     def test_watchlist_item_becomes_high_score_daily_candidate(self):
         agent = load_script("daily-content-agent")
