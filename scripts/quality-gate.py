@@ -501,6 +501,17 @@ def main() -> None:
         sys.exit(1)
     log_line("pipeline slo snapshot ok")
 
+    status_kpi_checker = ROOT / "scripts" / "check-status-kpi-data.py"
+    if not status_kpi_checker.exists():
+        log_line("quality gate failed: missing scripts/check-status-kpi-data.py")
+        sys.exit(1)
+    status_kpi_cmd = [sys.executable, str(status_kpi_checker)]
+    status_kpi_result = subprocess.run(status_kpi_cmd, cwd=ROOT)
+    if status_kpi_result.returncode != 0:
+        log_line("quality gate failed: status KPI data check failed")
+        sys.exit(status_kpi_result.returncode)
+    log_line("status KPI data checks ok")
+
     blog_dir = ROOT / "src" / "content" / "blog"
     if not blog_dir.exists():
         log_line("quality gate failed: src/content/blog missing")
