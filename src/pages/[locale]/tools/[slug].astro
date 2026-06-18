@@ -33,6 +33,107 @@ const copy = resolvePageCopy("tools-detail", locale, {
 });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const pageUrl = `https://localvram.com${pagePath}`;
+const roiSoftwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: localizedItem.title,
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Web",
+  url: pageUrl,
+  inLanguage: locale,
+  description: localizedItem.description,
+};
+const roiFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: locale,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "When should I run local instead of cloud?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "If sustained monthly usage is high and the target model fits local VRAM, local deployment is usually cheaper over time.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "When should I burst to cloud?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Use cloud when the target model exceeds local VRAM or when short-term high-throughput capacity is needed.",
+      },
+    },
+  ],
+};
+const quantDatasetSchema = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: localizedItem.title,
+  description: localizedItem.description,
+  url: pageUrl,
+  inLanguage: locale,
+  creator: {
+    "@type": "Organization",
+    name: "LocalVRAM",
+  },
+  license: "https://localvram.com/legal/",
+};
+const quantFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: locale,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What does this blind test compare?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "It compares answer quality between lower-VRAM and higher-retention quantization profiles without exposing which output is which.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Does this page run live inference now?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "It supports offline side-by-side samples now and can be connected to an execution queue later.",
+      },
+    },
+  ],
+};
+const quantHowToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: localizedItem.title,
+  description: localizedItem.description,
+  inLanguage: locale,
+  totalTime: "PT10M",
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Prepare one benchmark prompt set",
+      text: "Use the same prompts for both quantization runs so only quantization level changes.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Generate blind outputs",
+      text: "Label outputs A/B without showing which profile used lower or higher quantization.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Score before reveal",
+      text: "Score factuality, structure, and latency first, then reveal quantization labels.",
+    },
+  ],
+};
+const structuredData =
+  item.slug === "roi-calculator"
+    ? [roiSoftwareSchema, roiFaqSchema]
+    : item.slug === "quantization-blind-test"
+      ? [quantDatasetSchema, quantFaqSchema, quantHowToSchema]
+      : [];
 ---
 
 <BaseLayout
@@ -42,6 +143,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">
