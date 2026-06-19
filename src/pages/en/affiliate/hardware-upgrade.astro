@@ -3,13 +3,71 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import links from "../../../data/affiliate-links.json";
 
 const pagePath = "/en/affiliate/hardware-upgrade/";
+const pageTitle = "Hardware Upgrade Simulator | LocalVRAM";
+const pageDescription = "See practical GPU upgrade paths for local Ollama workloads.";
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Hardware Upgrade Simulator",
+    description: pageDescription,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: "en",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Choose a GPU upgrade path for local Ollama workloads",
+    description: pageDescription,
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "Check current VRAM tier",
+        text: "Start from your current GPU memory and target model size.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Compare local upgrade options",
+        text: "Compare used RTX 3090 value against RTX 4090 throughput and headroom.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Keep a cloud fallback",
+        text: "Use cloud GPU fallback for models that exceed local VRAM or peak-load needs.",
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Is a used RTX 3090 still useful for local LLM workloads?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Its 24GB VRAM makes it a strong value option for many quantized local models.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When should I use cloud GPU instead of upgrading locally?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Use cloud GPU when a target model needs more VRAM than your local machine can provide or when peak-load demand is temporary.",
+        },
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
-  title="Hardware Upgrade Simulator | LocalVRAM"
-  description="See practical GPU upgrade paths for local Ollama workloads."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
   canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Hardware Upgrade Simulator</h1>

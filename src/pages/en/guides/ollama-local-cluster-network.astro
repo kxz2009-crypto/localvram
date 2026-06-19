@@ -3,13 +3,54 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import links from "../../../data/affiliate-links.json";
 
 const pagePath = "/en/guides/ollama-local-cluster-network/";
+const pageTitle = "Ollama Local Cluster Network Guide | LocalVRAM";
+const pageDescription = "Topology and performance checklist for local Ollama cluster setups.";
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "Ollama Local Cluster Network Guide",
+    description: pageDescription,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: "en",
+    author: {
+      "@type": "Organization",
+      name: "LocalVRAM",
+      url: "https://localvram.com/en/",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Validate a local Ollama cluster network",
+    description: pageDescription,
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "Confirm node topology",
+        text: "Use one main GPU node and helper nodes for routing or queueing.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Check LAN baseline",
+        text: "Validate Gigabit LAN at minimum and prefer 2.5GbE for lower jitter.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Run a fixed benchmark suite",
+        text: "Measure latency, TTFT jitter, and throughput with the same prompt suite across runs.",
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
-  title="Ollama Local Cluster Network Guide | LocalVRAM"
-  description="Topology and performance checklist for local Ollama cluster setups."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
   canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Ollama Local Cluster Network Guide</h1>
