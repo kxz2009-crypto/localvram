@@ -12,9 +12,60 @@ export function getStaticPaths() {
 
 const { tier } = Astro.props;
 const title = `${tier.vram_gb}GB VRAM Models | LocalVRAM`;
+const pagePath = `/en/hardware/${tier.vram_gb}gb-vram-models/`;
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: title,
+    description: tier.summary,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: "en",
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: tier.recommended_models.length,
+      itemListElement: tier.recommended_models.map((model, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: model.name,
+        description: `${model.fit} fit, expected ${model.expected_tok_s} tok/s`,
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "LocalVRAM",
+        item: "https://localvram.com/en/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Hardware Tiers",
+        item: "https://localvram.com/en/hardware/",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `${tier.vram_gb}GB VRAM`,
+        item: `https://localvram.com${pagePath}`,
+      },
+    ],
+  },
+];
 ---
 
-<BaseLayout title={title} description={tier.summary} locale="en">
+<BaseLayout
+  title={title}
+  description={tier.summary}
+  locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
+>
   <main class="container">
     <h1>{tier.title}</h1>
     <p>{tier.summary}</p>

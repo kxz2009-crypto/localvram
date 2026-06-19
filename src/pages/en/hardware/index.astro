@@ -1,13 +1,50 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import tiers from "../../../data/hardware-tiers.json";
+
+const pagePath = "/en/hardware/";
+const pageTitle = "Hardware Tiers | LocalVRAM";
+const pageDescription = "Pick Ollama models by available VRAM tier.";
+const hardwareItems = [
+  ...tiers.tiers.map((tier) => ({
+    name: `${tier.vram_gb}GB VRAM`,
+    url: `https://localvram.com/en/hardware/${tier.vram_gb}gb-vram-models/`,
+  })),
+  {
+    name: "Apple Silicon",
+    url: "https://localvram.com/en/hardware/apple-silicon-llm-guide/",
+  },
+  {
+    name: "Verified on RTX 3090",
+    url: "https://localvram.com/en/hardware/verified-3090/",
+  },
+];
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Hardware Tiers",
+  description: pageDescription,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: "en",
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: hardwareItems.length,
+    itemListElement: hardwareItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+    })),
+  },
+};
 ---
 
 <BaseLayout
-  title="Hardware Tiers | LocalVRAM"
-  description="Pick Ollama models by available VRAM tier."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
-  canonicalPath="/en/hardware/"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Hardware VRAM Tiers</h1>

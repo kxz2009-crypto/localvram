@@ -14,12 +14,35 @@ const { group } = Astro.props;
 const items = catalog.items
   .filter((item) => item.license_scope === group.id || item.size_class === group.id || item.scenario === group.id)
   .sort((a, b) => b.params_b - a.params_b || a.name.localeCompare(b.name));
+const pagePath = `/en/models/group/${group.id}/`;
+const pageTitle = `${group.label} | LocalVRAM`;
+const pageDescription = `${group.label}: VRAM requirements, benchmark anchors, and local/cloud path.`;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: group.label,
+  description: pageDescription,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: "en",
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: items.length,
+    itemListElement: items.slice(0, 100).map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: `https://localvram.com/en/models/${item.id}/`,
+    })),
+  },
+};
 ---
 
 <BaseLayout
-  title={`${group.label} | LocalVRAM`}
-  description={`${group.label}: VRAM requirements, benchmark anchors, and local/cloud path.`}
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>{group.label}</h1>

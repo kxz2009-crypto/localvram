@@ -39,12 +39,66 @@ const trendPoints = clusterTests
       latencyMs: typeof item.metrics?.avg_node_latency_ms === "number" ? item.metrics.avg_node_latency_ms : null,
     };
   });
+const pagePath = "/en/benchmarks/";
+const pageTitle = "Benchmarks | LocalVRAM";
+const pageDescription = "Benchmark update timeline and community result submission for LocalVRAM.";
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Benchmarks",
+    description: pageDescription,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: "en",
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: 3,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Benchmark Changelog",
+          url: "https://localvram.com/en/benchmarks/changelog/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Submit Your Test Result",
+          url: "https://localvram.com/en/benchmarks/submit-result/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Cluster Runbook",
+          url: "https://localvram.com/en/guides/ollama-local-cluster-network/",
+        },
+      ],
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: "LocalVRAM Cluster Benchmark Snapshot",
+    description: "Recent local multi-node Ollama benchmark snapshots with throughput and latency metrics.",
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: "en",
+    isAccessibleForFree: true,
+    dateModified: clusterUpdatedAt || latestCluster?.verified_date,
+    creator: {
+      "@type": "Organization",
+      name: "LocalVRAM",
+      url: "https://localvram.com/en/",
+    },
+  },
+];
 ---
 
 <BaseLayout
-  title="Benchmarks | LocalVRAM"
-  description="Benchmark update timeline and community result submission for LocalVRAM."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Benchmarks</h1>

@@ -1,11 +1,50 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const pagePath = "/en/benchmarks/submit-result/";
+const pageTitle = "Submit Your Test Result | LocalVRAM";
+const pageDescription = "Contribute your hardware benchmark data to LocalVRAM with a standardized precheck flow.";
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Submit Your Test Result",
+    description: pageDescription,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: "en",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Submit a LocalVRAM benchmark result",
+    description: pageDescription,
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "Prepare hardware details",
+        text: "Record model ID, hardware profile, Ollama version, backend, prompt shape, throughput, and runtime notes.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Run the precheck",
+        text: "Score the submission with the LocalVRAM precheck command before opening a review issue.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Open a GitHub issue",
+        text: "Attach the data package, logs, and screenshots for manual validation.",
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
-  title="Submit Your Test Result | LocalVRAM"
-  description="Contribute your hardware benchmark data to LocalVRAM with a standardized precheck flow."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Submit Your Test Result</h1>

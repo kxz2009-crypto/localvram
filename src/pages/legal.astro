@@ -8,12 +8,29 @@ const pageDescription = isCnBuild
   ? "localVRAM.cn 的联盟披露、免责声明与隐私政策。"
   : "Affiliate disclosure, disclaimer, and privacy policy for localVRAM.com.";
 const pageLocale = isCnBuild ? "zh" : "en";
+const pagePath = "/legal/";
+const siteOrigin = isCnBuild ? "https://localvram.cn" : "https://localvram.com";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": ["WebPage", "PrivacyPolicy"],
+  name: isCnBuild ? "法律与隐私" : "Legal Information",
+  description: pageDescription,
+  url: `${siteOrigin}${pagePath}`,
+  inLanguage: pageLocale,
+  publisher: {
+    "@type": "Organization",
+    name: "LocalVRAM",
+    url: isCnBuild ? "https://localvram.cn/" : "https://localvram.com/en/",
+  },
+};
 ---
 
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
   locale={pageLocale}
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <article class="post-page">
