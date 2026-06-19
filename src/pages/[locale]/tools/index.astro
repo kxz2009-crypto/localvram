@@ -20,6 +20,29 @@ const copy = resolvePageCopy("tools-index", locale, { localeUpper: locale.toUppe
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
+const localizedItems = TOOL_ROUTE_ITEMS.map((item) => ({
+  ...item,
+  localized: localizeRouteItem(item, home, text.hero_intro),
+  localizedPath: withLocale(locale, item.enPath),
+}));
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: text.meta_title,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: locale,
+  description: text.meta_description,
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: localizedItems.length,
+    itemListElement: localizedItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.localized.title,
+      url: `https://localvram.com${item.localizedPath}`,
+    })),
+  },
+};
 ---
 
 <BaseLayout
@@ -29,6 +52,7 @@ const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUppe
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">
@@ -50,10 +74,10 @@ const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUppe
           </tr>
         </thead>
         <tbody>
-          {TOOL_ROUTE_ITEMS.map((item) => (
+          {localizedItems.map((item) => (
             <tr>
-              <td>{localizeRouteItem(item, home, text.hero_intro).title}</td>
-              <td><a href={withLocale(locale, item.enPath)}>{withLocale(locale, item.enPath)}</a></td>
+              <td>{item.localized.title}</td>
+              <td><a href={item.localizedPath}>{item.localizedPath}</a></td>
               <td><code>{item.enPath}</code></td>
             </tr>
           ))}

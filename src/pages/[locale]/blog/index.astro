@@ -50,6 +50,38 @@ const shouldNoindex = shouldNoindexByFallback(
   locale,
   Math.max(homeCopy.fallbackRatio, bridgeCopy.fallbackRatio, listFallbackRatio),
 );
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: title,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: locale,
+  description,
+  publisher: {
+    "@type": "Organization",
+    name: "LocalVRAM",
+    url: "https://localvram.com/en/",
+  },
+  blogPost: postCards.slice(0, 30).map((card, index) => ({
+    "@type": "BlogPosting",
+    position: index + 1,
+    headline: card.localized.title,
+    description: card.localized.description,
+    url: `https://localvram.com${card.localizedPath}`,
+    datePublished: card.post.data.pubDate.toISOString(),
+    inLanguage: locale,
+  })),
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: postCards.length,
+    itemListElement: postCards.slice(0, 30).map((card, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: card.localized.title,
+      url: `https://localvram.com${card.localizedPath}`,
+    })),
+  },
+};
 ---
 
 <BaseLayout
@@ -59,6 +91,7 @@ const shouldNoindex = shouldNoindexByFallback(
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">
