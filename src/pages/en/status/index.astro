@@ -8,6 +8,7 @@ import pipelineSlo from "../../../data/pipeline-slo.json";
 import newModelWatchlist from "../../../data/new-model-watchlist.json";
 import modelCatalog from "../../../data/model-catalog.json";
 import searchConsole from "../../../data/search-console-keywords.json";
+import { buildStatusCollectionSchema } from "../../../lib/status-schema";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -154,6 +155,9 @@ const topSearchRows = [...searchItems]
   .slice(0, 6);
 const searchConsoleWindow = (searchConsole.window || {}) as Record<string, any>;
 const searchConsoleSummary = `${searchItems.length} rows; ${searchConsoleWindow.start_date || "unknown"} to ${searchConsoleWindow.end_date || "unknown"}`;
+const pagePath = "/en/status/";
+const pageTitle = "Operations Health | LocalVRAM";
+const pageDescription = "A single-page health overview for LocalVRAM content, benchmark, model, and affiliate data pipelines.";
 const topFailure = topFailureRows[0] || {};
 const pipelineHealthDetail = topFailure.failure_class
   ? `${topFailure.failure_class}: ${topFailure.count ?? 0} run(s) in 28d.`
@@ -213,6 +217,22 @@ const statusCards = [
     href: "#search-console",
   },
 ];
+const statusSchemaItems = [
+  { name: "Content Publish Status", path: "/en/status/content-publish/" },
+  { name: "Conversion Funnel", path: "/en/status/conversion-funnel/" },
+  { name: "Data Freshness", path: "/en/status/data-freshness/" },
+  { name: "New Model Radar", path: "/en/status/new-model-radar/" },
+  { name: "Pipeline Status", path: "/en/status/pipeline-status/" },
+  { name: "Runner Health", path: "/en/status/runner-health/" },
+  { name: "Submission Review Queue", path: "/en/status/submission-review/" },
+];
+const structuredData = buildStatusCollectionSchema({
+  name: "Operations Health",
+  description: pageDescription,
+  path: pagePath,
+  dateModified: pipelineSlo.reference_time || pipelineStatus.updated_at || status.last_verified || searchConsole.updated_at,
+  items: statusSchemaItems,
+});
 
 const workflowRows = [
   ["Daily Content", dailyWorkflow],
@@ -222,10 +242,11 @@ const workflowRows = [
 ---
 
 <BaseLayout
-  title="Operations Health | LocalVRAM"
-  description="A single-page health overview for LocalVRAM content, benchmark, model, and affiliate data pipelines."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
-  canonicalPath="/en/status/"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">

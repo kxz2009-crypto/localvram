@@ -1,17 +1,30 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import runnerStatus from "../../../data/runner-status.json";
+import { buildStatusDatasetSchema } from "../../../lib/status-schema";
 
 const summary = runnerStatus.summary || {};
 const failureClass = String(summary.failure_class || "unknown");
 const failureDetail = String(summary.failure_detail || "");
 const statusText = failureClass === "none" ? "Healthy" : "Degraded";
+const pagePath = "/en/status/runner-health/";
+const pageTitle = "Runner Health | LocalVRAM";
+const pageDescription = "Self-hosted runner and Ollama health snapshot.";
+const structuredData = buildStatusDatasetSchema({
+  name: "Runner Health",
+  description: pageDescription,
+  path: pagePath,
+  dateModified: runnerStatus.updated_at,
+  keywords: ["LocalVRAM runner health", "Ollama diagnostics", "self-hosted benchmark runner"],
+});
 ---
 
 <BaseLayout
-  title="Runner Health | LocalVRAM"
-  description="Self-hosted runner and Ollama health snapshot."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Runner Health</h1>

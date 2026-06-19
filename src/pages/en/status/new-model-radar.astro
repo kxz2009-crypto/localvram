@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import watchlist from "../../../data/new-model-watchlist.json";
+import { buildStatusDatasetSchema } from "../../../lib/status-schema";
 
 const items = Array.isArray(watchlist.items) ? watchlist.items : [];
 const localInventory = (watchlist.local_inventory || {}) as Record<string, any>;
@@ -21,12 +22,24 @@ function nested(row: Record<string, any>, key: string, field: string, fallback =
 const publishNowCount = items.filter((row: any) => row?.traffic_priority === "publish_now").length;
 const measuredCount = items.filter((row: any) => row?.benchmark_status?.status === "measured" || row?.status === "measured").length;
 const localCount = items.filter((row: any) => row?.local_inventory_status?.status === "downloaded").length;
+const pagePath = "/en/status/new-model-radar/";
+const pageTitle = "New Model Radar | LocalVRAM";
+const pageDescription = "Three-signal radar for Ollama model freshness, local RTX 3090 inventory, and benchmark readiness.";
+const structuredData = buildStatusDatasetSchema({
+  name: "New Model Radar",
+  description: pageDescription,
+  path: pagePath,
+  dateModified: watchlist.updated_at,
+  keywords: ["new Ollama models", "LocalVRAM model radar", "RTX 3090 benchmark readiness"],
+});
 ---
 
 <BaseLayout
-  title="New Model Radar | LocalVRAM"
-  description="Three-signal radar for Ollama model freshness, local RTX 3090 inventory, and benchmark readiness."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>New Model Radar</h1>

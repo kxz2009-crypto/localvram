@@ -1,18 +1,31 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import report from "../../../data/submission-review.json";
+import { buildStatusDatasetSchema } from "../../../lib/status-schema";
 
 const summary = report.summary || {};
 const riskRows = Array.isArray(report.risk_breakdown) ? report.risk_breakdown : [];
 const submitterRows = Array.isArray(report.top_submitters) ? report.top_submitters : [];
 const modelRows = Array.isArray(report.top_models) ? report.top_models : [];
 const pendingRows = Array.isArray(report.pending_review_sample) ? report.pending_review_sample : [];
+const pagePath = "/en/status/submission-review/";
+const pageTitle = "Submission Review Queue | LocalVRAM";
+const pageDescription = "Community benchmark submission queue health and risk snapshot.";
+const structuredData = buildStatusDatasetSchema({
+  name: "Submission Review Queue",
+  description: pageDescription,
+  path: pagePath,
+  dateModified: report.generated_at,
+  keywords: ["LocalVRAM benchmark submissions", "submission review queue", "community benchmark risk"],
+});
 ---
 
 <BaseLayout
-  title="Submission Review Queue | LocalVRAM"
-  description="Community benchmark submission queue health and risk snapshot."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Submission Review Queue</h1>

@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import pipelineStatus from "../../../data/pipeline-status.json";
 import pipelineSlo from "../../../data/pipeline-slo.json";
+import { buildStatusDatasetSchema } from "../../../lib/status-schema";
 
 type WorkflowRow = {
   workflow_key?: string;
@@ -87,12 +88,24 @@ const sloRows: Array<{
     lastFailure: String(row.last_failure_at || ""),
   };
 });
+const pagePath = "/en/status/pipeline-status/";
+const pageTitle = "Pipeline Status | LocalVRAM";
+const pageDescription = "Latest Weekly, Daily Content, and Publish workflow status snapshots.";
+const structuredData = buildStatusDatasetSchema({
+  name: "Pipeline Status",
+  description: pageDescription,
+  path: pagePath,
+  dateModified: pipelineSlo.reference_time || pipelineStatus.updated_at,
+  keywords: ["LocalVRAM pipeline status", "workflow SLO", "benchmark pipeline health"],
+});
 ---
 
 <BaseLayout
-  title="Pipeline Status | LocalVRAM"
-  description="Latest Weekly, Daily Content, and Publish workflow status snapshots."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Pipeline Status</h1>

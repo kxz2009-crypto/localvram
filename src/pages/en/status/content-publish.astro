@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import report from "../../../data/content-publish-log.json";
 import reviewLog from "../../../data/content-review-log.json";
+import { buildStatusDatasetSchema } from "../../../lib/status-schema";
 
 const lastRun = (report.last_run || {}) as Record<string, any>;
 const history = Array.isArray(report.history) ? report.history.slice(0, 12) : [];
@@ -9,12 +10,24 @@ const publishedRows = Array.isArray(lastRun.published) ? lastRun.published : [];
 const skippedRows = Array.isArray(lastRun.skipped) ? lastRun.skipped : [];
 const lastReview = (reviewLog.last_run || {}) as Record<string, any>;
 const reviewFlags = Object.entries((lastReview.risk_flag_counts || {}) as Record<string, number>);
+const pagePath = "/en/status/content-publish/";
+const pageTitle = "Content Publish Status | LocalVRAM";
+const pageDescription = "Auto-publish status for content-queue to blog pipeline.";
+const structuredData = buildStatusDatasetSchema({
+  name: "Content Publish Status",
+  description: pageDescription,
+  path: pagePath,
+  dateModified: report.updated_at || lastRun.run_at || lastReview.run_at,
+  keywords: ["LocalVRAM content pipeline", "blog publish status", "content quality review"],
+});
 ---
 
 <BaseLayout
-  title="Content Publish Status | LocalVRAM"
-  description="Auto-publish status for content-queue to blog pipeline."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Content Publish Status</h1>

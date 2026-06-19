@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import report from "../../../data/conversion-funnel.json";
+import { buildStatusDatasetSchema } from "../../../lib/status-schema";
 
 const funnel = report.funnel || {};
 const breakdown = report.breakdown || {};
@@ -9,12 +10,24 @@ const providerRows = Array.isArray(breakdown.providers) ? breakdown.providers : 
 const routeRows = Array.isArray(breakdown.routes) ? breakdown.routes : [];
 const sourceRows = Array.isArray(breakdown.source_pages) ? breakdown.source_pages : [];
 const landingRows = Array.isArray(breakdown.search_landings) ? breakdown.search_landings : [];
+const pagePath = "/en/status/conversion-funnel/";
+const pageTitle = "Conversion Funnel | LocalVRAM";
+const pageDescription = "Search intent to affiliate redirect funnel snapshot.";
+const structuredData = buildStatusDatasetSchema({
+  name: "Conversion Funnel",
+  description: pageDescription,
+  path: pagePath,
+  dateModified: report.generated_at || report.window_end,
+  keywords: ["LocalVRAM conversion funnel", "affiliate telemetry", "Search Console clicks"],
+});
 ---
 
 <BaseLayout
-  title="Conversion Funnel | LocalVRAM"
-  description="Search intent to affiliate redirect funnel snapshot."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Conversion Funnel</h1>

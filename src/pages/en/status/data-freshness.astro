@@ -1,17 +1,30 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import report from "../../../data/status.json";
+import { buildStatusDatasetSchema } from "../../../lib/status-schema";
 
 const rawGpuTemperature = Number(report.latest_gpu_temperature_c);
 const latestGpuTemperature = Number.isFinite(rawGpuTemperature) && rawGpuTemperature > 0
   ? `${rawGpuTemperature.toFixed(1)}°C`
   : "unknown";
+const pagePath = "/en/status/data-freshness/";
+const pageTitle = "LocalVRAM Data Freshness";
+const pageDescription = "See verification freshness and update cadence.";
+const structuredData = buildStatusDatasetSchema({
+  name: "LocalVRAM Data Freshness",
+  description: pageDescription,
+  path: pagePath,
+  dateModified: report.last_verified || report.last_hardware_sync,
+  keywords: ["LocalVRAM data freshness", "benchmark verification", "hardware sync"],
+});
 ---
 
 <BaseLayout
-  title="LocalVRAM Data Freshness"
-  description="See verification freshness and update cadence."
+  title={pageTitle}
+  description={pageDescription}
   locale="en"
+  canonicalPath={pagePath}
+  structuredData={structuredData}
 >
   <main class="container">
     <h1>Data Freshness</h1>
