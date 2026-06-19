@@ -18,15 +18,43 @@ export function getStaticPaths() {
 
 const { locale, group } = Astro.props as { locale: ComLocale; group: Record<string, unknown> };
 const groupId = String(group?.id || "").trim();
-const groupName = String(group?.name || groupId || "Model Group");
+const groupName = String(group?.label || group?.name || groupId || "Model Group");
 const enPath = `/en/models/group/${groupId}/`;
 const pagePath = withLocale(locale, enPath);
 const copy = resolvePageCopy("models-group", locale, {
   localeUpper: locale.toUpperCase(),
   groupName,
 });
+const indexCopy = resolvePageCopy("models-index", locale, { localeUpper: locale.toUpperCase() });
 const text = copy.fields;
+const indexText = indexCopy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const items = (Array.isArray(modelCatalog?.items) ? modelCatalog.items : [])
+  .filter((item) => item?.license_scope === groupId || item?.size_class === groupId || item?.scenario === groupId)
+  .sort((a, b) => Number(b?.params_b || 0) - Number(a?.params_b || 0) || String(a?.name || "").localeCompare(String(b?.name || "")));
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: text.meta_title,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: locale,
+  description: text.meta_description,
+  mainEntity: {
+    "@type": "ItemList",
+    name: groupName,
+    numberOfItems: items.length,
+    itemListElement: items.slice(0, 30).map((item, index) => {
+      const id = String(item?.id || "").trim();
+      const modelPath = withLocale(locale, `/en/models/${id}/`);
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        name: String(item?.name || id),
+        url: `https://localvram.com${modelPath}`,
+      };
+    }),
+  },
+};
 ---
 
 <BaseLayout
@@ -36,6 +64,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">
@@ -45,6 +74,39 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
         <a class="btn" href={withLocale(locale, "/en/models/")}>{text.cta_back_hub}</a>
         <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{text.cta_open_vram}</a>
       </div>
+    </section>
+
+    <section class="kpi-row">
+      <article class="kpi">
+        <h3>{indexText.kpi_models}</h3>
+        <p>{items.length}</p>
+      </article>
+    </section>
+
+    <section class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>{indexText.table_col_item}</th>
+            <th>{indexText.table_col_localized_path}</th>
+            <th>{indexText.table_col_en_source}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => {
+            const id = String(item?.id || "").trim();
+            const modelEnPath = `/en/models/${id}/`;
+            const localizedPath = withLocale(locale, modelEnPath);
+            return (
+              <tr>
+                <td>{indexText.label_model}: {String(item?.name || id)}</td>
+                <td><a href={localizedPath}>{localizedPath}</a></td>
+                <td><code>{modelEnPath}</code></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </section>
   </main>
 </BaseLayout>

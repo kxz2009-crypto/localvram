@@ -20,6 +20,42 @@ const groupDefs = Array.isArray(modelCatalog?.group_definitions) ? modelCatalog.
 const copy = resolvePageCopy("models-index", locale, { localeUpper: locale.toUpperCase() });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const featuredGroups = groupDefs.slice(0, 12);
+const featuredModels = items.slice(0, 20);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: text.meta_title,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: locale,
+  description: text.meta_description,
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: items.length,
+    itemListElement: [
+      ...featuredGroups.map((group, index) => {
+        const id = String(group?.id || "").trim();
+        const enPath = `/en/models/group/${id}/`;
+        return {
+          "@type": "ListItem",
+          position: index + 1,
+          name: String(group?.label || group?.name || id),
+          url: `https://localvram.com${withLocale(locale, enPath)}`,
+        };
+      }),
+      ...featuredModels.map((item, index) => {
+        const id = String(item?.id || "").trim();
+        const enPath = `/en/models/${id}/`;
+        return {
+          "@type": "ListItem",
+          position: featuredGroups.length + index + 1,
+          name: String(item?.name || id),
+          url: `https://localvram.com${withLocale(locale, enPath)}`,
+        };
+      }),
+    ],
+  },
+};
 ---
 
 <BaseLayout
@@ -29,6 +65,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">
@@ -60,7 +97,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
           </tr>
         </thead>
         <tbody>
-          {groupDefs.slice(0, 12).map((group) => {
+          {featuredGroups.map((group) => {
             const id = String(group?.id || "").trim();
             const enPath = `/en/models/group/${id}/`;
             const localizedPath = withLocale(locale, enPath);
@@ -72,7 +109,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
               </tr>
             );
           })}
-          {items.slice(0, 20).map((item) => {
+          {featuredModels.map((item) => {
             const id = String(item?.id || "").trim();
             const enPath = `/en/models/${id}/`;
             const localizedPath = withLocale(locale, enPath);
