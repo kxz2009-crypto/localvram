@@ -19,6 +19,34 @@ const errorItems = Array.isArray(errorData?.errors) ? errorData.errors : [];
 const copy = resolvePageCopy("errors-index", locale, { localeUpper: locale.toUpperCase() });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const localizedItems = errorItems.map((item) => {
+  const id = String(item?.id || "").trim();
+  const enPath = `/en/errors/${id}/`;
+  return {
+    id,
+    title: String(item?.title || id),
+    enPath,
+    localizedPath: withLocale(locale, enPath),
+  };
+});
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: text.meta_title,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: locale,
+  description: text.meta_description,
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: localizedItems.length,
+    itemListElement: localizedItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.title,
+      url: `https://localvram.com${item.localizedPath}`,
+    })),
+  },
+};
 ---
 
 <BaseLayout
@@ -28,6 +56,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">
@@ -48,15 +77,12 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
           </tr>
         </thead>
         <tbody>
-          {errorItems.map((item) => {
-            const id = String(item?.id || "").trim();
-            const enPath = `/en/errors/${id}/`;
-            const localizedPath = withLocale(locale, enPath);
+          {localizedItems.map((item) => {
             return (
               <tr>
-                <td>{id}</td>
-                <td><a href={localizedPath}>{localizedPath}</a></td>
-                <td><code>{enPath}</code></td>
+                <td>{item.title}</td>
+                <td><a href={item.localizedPath}>{item.localizedPath}</a></td>
+                <td><code>{item.enPath}</code></td>
               </tr>
             );
           })}

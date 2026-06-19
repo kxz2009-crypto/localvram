@@ -38,6 +38,70 @@ const copy = resolvePageCopy("errors-detail", locale, {
 });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const causes = Array.isArray(item?.causes) ? item.causes.map((cause) => String(cause || "").trim()).filter(Boolean) : [];
+const fixes = Array.isArray(item?.fixes) ? item.fixes : [];
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: String(item?.title || errorId),
+    description: text.meta_description,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: locale,
+    about: String(item?.seo_keyword || errorId),
+    author: {
+      "@type": "Organization",
+      name: "LocalVRAM",
+      url: "https://localvram.com/en/",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: `${String(item?.title || errorId)} fix`,
+    description: localizedSymptom,
+    inLanguage: locale,
+    step: fixes.map((fix, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: String(fix?.label || `Fix ${index + 1}`),
+      text: String(fix?.command || fix?.label || ""),
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: locale,
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: localizedSymptom,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: causes.length ? causes.join(" ") : text.rollout_intro,
+        },
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Error KB",
+        item: `https://localvram.com${withLocale(locale, "/en/errors/")}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: errorId,
+        item: `https://localvram.com${pagePath}`,
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
@@ -47,6 +111,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">
