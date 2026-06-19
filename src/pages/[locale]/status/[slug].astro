@@ -33,6 +33,40 @@ const copy = resolvePageCopy("status-detail", locale, {
 });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: localizedItem.title,
+    description: localizedItem.description,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: locale,
+    creator: {
+      "@type": "Organization",
+      name: "LocalVRAM",
+      url: "https://localvram.com/en/",
+    },
+    license: "https://localvram.com/legal/",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Status",
+        item: `https://localvram.com${withLocale(locale, "/en/status/")}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: localizedItem.title,
+        item: `https://localvram.com${pagePath}`,
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
@@ -42,6 +76,7 @@ const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
   noindex={shouldNoindex}
+  structuredData={structuredData}
 >
   <main class="container">
     <section class="hero">
