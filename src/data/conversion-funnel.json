@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-06-18T05:20:32.759370Z",
+  "generated_at": "2026-06-19T05:35:48.240737Z",
   "window_days": 30,
-  "window_start": "2026-05-19T05:20:32.759370Z",
-  "window_end": "2026-06-18T05:20:32.759370Z",
+  "window_start": "2026-05-20T05:35:48.240737Z",
+  "window_end": "2026-06-19T05:35:48.240737Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -11,67 +11,67 @@
   "funnel": {
     "organic_search_clicks": 3,
     "decision_page_clicks": 0,
-    "affiliate_redirect_clicks": 284,
+    "affiliate_redirect_clicks": 282,
     "cloud_redirect_clicks": 99,
-    "hardware_redirect_clicks": 185,
-    "search_to_affiliate_pct": 9466.67,
+    "hardware_redirect_clicks": 183,
+    "search_to_affiliate_pct": 9400.0,
     "search_to_cloud_pct": 3300.0,
-    "affiliate_to_cloud_pct": 34.86
+    "affiliate_to_cloud_pct": 35.11
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 185,
-        "share_pct": 65.14
+        "clicks": 183,
+        "share_pct": 64.89
       },
       {
         "provider": "runpod",
         "clicks": 51,
-        "share_pct": 17.96
+        "share_pct": 18.09
       },
       {
         "provider": "vast",
         "clicks": 48,
-        "share_pct": 16.9
+        "share_pct": 17.02
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 80,
-        "share_pct": 28.17
+        "clicks": 79,
+        "share_pct": 28.01
       },
       {
         "route": "/go/runpod",
         "clicks": 51,
-        "share_pct": 17.96
+        "share_pct": 18.09
       },
       {
         "route": "/go/vast",
         "clicks": 48,
-        "share_pct": 16.9
+        "share_pct": 17.02
       },
       {
         "route": "/recommends/rtx-4090-24gb",
-        "clicks": 39,
-        "share_pct": 13.73
+        "clicks": 38,
+        "share_pct": 13.48
       },
       {
         "route": "/recommends/atx3-1000w-psu",
         "clicks": 33,
-        "share_pct": 11.62
+        "share_pct": 11.7
       },
       {
         "route": "/recommends/high-airflow-case",
         "clicks": 33,
-        "share_pct": 11.62
+        "share_pct": 11.7
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 274
+        "clicks": 272
       },
       {
         "page": "/es/tools/vram-calculator/",
@@ -203,8 +203,8 @@
   },
   "data_quality": {
     "search_console_items": 239,
-    "affiliate_event_items_total": 292,
-    "affiliate_event_items_in_window": 284,
+    "affiliate_event_items_total": 299,
+    "affiliate_event_items_in_window": 282,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }

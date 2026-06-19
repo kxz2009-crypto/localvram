@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-18T05:19:12.632094Z",
+  "updated_at": "2026-06-19T05:34:17.863168Z",
   "last_run": {
-    "run_at": "2026-06-18T05:19:12.632094Z",
-    "queue_date": "2026-06-18",
+    "run_at": "2026-06-19T05:34:17.863168Z",
+    "queue_date": "2026-06-19",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-06-18",
-        "title": "Today's Local LLM Pick: ministral-3:14b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-06-18-daily-local-llm-benchmark-snapshot-2026-06-18",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-06-19",
+        "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-06-19-daily-local-llm-benchmark-snapshot-2026-06-19",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-18.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-19.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-06-19T05:34:17.863168Z",
+      "queue_date": "2026-06-19",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-06-19",
+          "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-06-19-daily-local-llm-benchmark-snapshot-2026-06-19",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-19.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-06-18T05:19:12.632094Z",
       "queue_date": "2026-06-18",
@@ -1388,28 +1410,6 @@
           "source_draft": "content-queue/2026-04-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
           "out_file": "src/content/blog/model-glm-4-7-flash-bf16-benchmark-refresh.md",
           "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-04-16T03:55:15.219843Z",
-      "queue_date": "2026-04-16",
-      "candidate_count": 1,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 0,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "en-models-llama-70b-q4",
-          "title": "Llama 70B On 3090: Step-by-Step Deployment Workflow (2026)",
-          "topic_key": "llama-70b-on-3090",
-          "score": 300.0,
-          "source_draft": "content-queue/2026-04-16/01-en-models-llama-70b-q4.md",
-          "out_file": "src/content/blog/en-models-llama-70b-q4.md",
-          "intent": "guide"
         }
       ],
       "skipped": []
