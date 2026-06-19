@@ -4,6 +4,7 @@ import json
 import os
 import re
 from pathlib import Path
+from typing import TypedDict
 from urllib.parse import urlsplit, urlunsplit
 
 from logging_utils import configure_logging
@@ -42,6 +43,14 @@ LOCALIZABLE_EN_EXACT_PATHS = {
     "/en/hardware/verified-3090/",
 }
 LOGGER = configure_logging("build-sitemap")
+FRONTMATTER_RE = re.compile(r"^\ufeff?---\s*\r?\n(?P<frontmatter>[\s\S]*?)\r?\n---\s*(\r?\n)?")
+FRONTMATTER_FIELD_RE = re.compile(r"(?m)^(?P<key>[A-Za-z][A-Za-z0-9_-]*):\s*(?P<value>.+?)\s*$")
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+class SitemapEntry(TypedDict, total=False):
+    loc: str
+    lastmod: str
 
 
 def parse_args() -> argparse.Namespace:
@@ -81,6 +90,35 @@ def load_json(path: Path) -> dict:
 def blog_slugs() -> list[str]:
     blog_dir = ROOT / "src" / "content" / "blog"
     return sorted([p.stem for p in blog_dir.glob("*.md")])
+
+
+def parse_frontmatter_fields(markdown: str) -> dict[str, str]:
+    match = FRONTMATTER_RE.match(markdown)
+    if not match:
+        return {}
+    fields: dict[str, str] = {}
+    for item in FRONTMATTER_FIELD_RE.finditer(match.group("frontmatter")):
+        fields[item.group("key")] = item.group("value").strip().strip('"').strip("'")
+    return fields
+
+
+def normalize_lastmod(value: object) -> str:
+    text = str(value or "").strip().strip('"').strip("'")
+    if not text:
+        return ""
+    date_part = text.split("T", 1)[0].strip()
+    return date_part if DATE_RE.match(date_part) else ""
+
+
+def blog_lastmod_by_slug() -> dict[str, str]:
+    blog_dir = ROOT / "src" / "content" / "blog"
+    lastmods: dict[str, str] = {}
+    for path in blog_dir.glob("*.md"):
+        fields = parse_frontmatter_fields(path.read_text(encoding="utf-8"))
+        lastmod = normalize_lastmod(fields.get("updatedDate") or fields.get("pubDate"))
+        if lastmod:
+            lastmods[path.stem] = lastmod
+    return lastmods
 
 
 def en_static_paths() -> list[str]:
@@ -123,13 +161,34 @@ def load_rollout_locales() -> list[str]:
     return sanitize_rollout_locales(data.get("sitemap_rollout_locales", ["en"]))
 
 
-def write_urlset(out: Path, urls: list[str]) -> None:
+def write_urlset(out: Path, entries: list[SitemapEntry] | list[str]) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for url in sorted(set(urls)):
-        lines.extend(["  <url>", f"    <loc>{url}</loc>", "  </url>"])
+    normalized_entries = normalize_sitemap_entries(entries)
+    for entry in sorted(normalized_entries, key=lambda item: item["loc"]):
+        lines.extend(["  <url>", f"    <loc>{entry['loc']}</loc>"])
+        if entry.get("lastmod"):
+            lines.append(f"    <lastmod>{entry['lastmod']}</lastmod>")
+        lines.append("  </url>")
     lines.append("</urlset>")
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def normalize_sitemap_entries(entries: list[SitemapEntry] | list[str]) -> list[SitemapEntry]:
+    deduped: dict[str, SitemapEntry] = {}
+    for item in entries:
+        if isinstance(item, str):
+            entry: SitemapEntry = {"loc": item}
+        else:
+            entry = {"loc": str(item.get("loc", "")).strip()}
+            lastmod = normalize_lastmod(item.get("lastmod"))
+            if lastmod:
+                entry["lastmod"] = lastmod
+        if entry["loc"]:
+            existing = deduped.get(entry["loc"])
+            if existing is None or (entry.get("lastmod") and not existing.get("lastmod")):
+                deduped[entry["loc"]] = entry
+    return list(deduped.values())
 
 
 def write_sitemap_index(out: Path, sitemap_urls: list[str]) -> None:
@@ -176,6 +235,20 @@ def to_cn_root_path(url: str, cn_origin: str) -> str:
     return urlunsplit((target.scheme, target.netloc, path, parts.query, parts.fragment))
 
 
+def replace_entry_en_locale(entry: SitemapEntry, locale: str) -> SitemapEntry:
+    localized: SitemapEntry = {"loc": replace_en_locale(entry["loc"], locale)}
+    if entry.get("lastmod"):
+        localized["lastmod"] = entry["lastmod"]
+    return localized
+
+
+def to_cn_root_entry(entry: SitemapEntry, cn_origin: str) -> SitemapEntry:
+    localized: SitemapEntry = {"loc": to_cn_root_path(entry["loc"], cn_origin)}
+    if entry.get("lastmod"):
+        localized["lastmod"] = entry["lastmod"]
+    return localized
+
+
 def is_localizable_en_url(url: str) -> bool:
     path = urlsplit(url).path
     if path in LOCALIZABLE_EN_EXACT_PATHS:
@@ -202,50 +275,60 @@ def cleanup_stale_cn_locale_sitemaps(out_dir: Path) -> None:
             file.unlink(missing_ok=True)
 
 
-def build_en_urls(site_origin: str) -> list[str]:
+def build_en_url_entries(site_origin: str) -> list[SitemapEntry]:
     error_data = load_json(ROOT / "src" / "data" / "errors.json")
     hardware_data = load_json(ROOT / "src" / "data" / "hardware-tiers.json")
     model_catalog = load_json(ROOT / "src" / "data" / "model-catalog.json")
+    blog_lastmods = blog_lastmod_by_slug()
 
-    urls = [f"{site_origin}/legal/"]
-    urls.extend([f"{site_origin}{path}" for path in en_static_paths()])
+    entries: list[SitemapEntry] = [{"loc": f"{site_origin}/legal/"}]
+    entries.extend({"loc": f"{site_origin}{path}"} for path in en_static_paths())
 
     for item in model_catalog.get("items", []):
         item_id = str(item.get("id", "")).strip()
         if item_id:
-            urls.append(f"{site_origin}/en/models/{item_id}/")
+            entries.append({"loc": f"{site_origin}/en/models/{item_id}/"})
 
     for group in model_catalog.get("group_definitions", []):
         group_id = str(group.get("id", "")).strip()
         if group_id:
-            urls.append(f"{site_origin}/en/models/group/{group_id}/")
+            entries.append({"loc": f"{site_origin}/en/models/group/{group_id}/"})
 
     for slug in blog_slugs():
-        urls.append(f"{site_origin}/en/blog/{slug}/")
+        entry: SitemapEntry = {"loc": f"{site_origin}/en/blog/{slug}/"}
+        if blog_lastmods.get(slug):
+            entry["lastmod"] = blog_lastmods[slug]
+        entries.append(entry)
 
     for tier in hardware_data.get("tiers", []):
-        urls.append(f"{site_origin}/en/hardware/{tier['vram_gb']}gb-vram-models/")
-    urls.append(f"{site_origin}/en/hardware/{APPLE_SILICON_SLUG}/")
+        entries.append({"loc": f"{site_origin}/en/hardware/{tier['vram_gb']}gb-vram-models/"})
+    entries.append({"loc": f"{site_origin}/en/hardware/{APPLE_SILICON_SLUG}/"})
 
     for item in error_data.get("errors", []):
-        urls.append(f"{site_origin}/en/errors/{item['id']}/")
+        entries.append({"loc": f"{site_origin}/en/errors/{item['id']}/"})
 
-    return sorted(set(urls))
+    return normalize_sitemap_entries(entries)
+
+
+def build_en_urls(site_origin: str) -> list[str]:
+    return sorted(entry["loc"] for entry in build_en_url_entries(site_origin))
 
 
 def build_com_artifacts(out_dir: Path, site_origin: str) -> None:
     rollout_locales = load_rollout_locales()
-    en_urls = build_en_urls(site_origin)
+    en_entries = build_en_url_entries(site_origin)
+    en_urls = [entry["loc"] for entry in en_entries]
     localizable_en_urls = [url for url in en_urls if is_localizable_en_url(url)]
+    localizable_en_entries = [entry for entry in en_entries if is_localizable_en_url(entry["loc"])]
 
     generated_sitemaps: list[str] = []
     for locale in rollout_locales:
         out_file = out_dir / f"sitemap-{locale}.xml"
         if locale == "en":
-            locale_urls = en_urls
+            locale_entries = en_entries
         else:
-            locale_urls = [replace_en_locale(url, locale) for url in localizable_en_urls]
-        write_urlset(out_file, locale_urls)
+            locale_entries = [replace_entry_en_locale(entry, locale) for entry in localizable_en_entries]
+        write_urlset(out_file, locale_entries)
         generated_sitemaps.append(f"{site_origin}/{out_file.name}")
 
     cleanup_stale_com_locale_sitemaps(out_dir, rollout_locales)
@@ -265,15 +348,15 @@ def build_com_artifacts(out_dir: Path, site_origin: str) -> None:
 
 
 def build_cn_artifacts(out_dir: Path, site_origin: str) -> None:
-    en_urls = build_en_urls(site_origin)
-    cn_urls = [to_cn_root_path(url, site_origin) for url in en_urls if is_localizable_en_url(url)]
+    en_entries = build_en_url_entries(site_origin)
+    cn_entries = [to_cn_root_entry(entry, site_origin) for entry in en_entries if is_localizable_en_url(entry["loc"])]
 
     cleanup_stale_cn_locale_sitemaps(out_dir)
     cn_sitemap = out_dir / "sitemap-cn.xml"
     out_index = out_dir / "sitemap-index.xml"
     out_alias = out_dir / "sitemap.xml"
 
-    write_urlset(cn_sitemap, cn_urls)
+    write_urlset(cn_sitemap, cn_entries)
     write_sitemap_index(out_index, [f"{site_origin}/sitemap-cn.xml"])
     out_alias.write_text(cn_sitemap.read_text(encoding="utf-8"), encoding="utf-8")
     write_robots(out_dir, f"{site_origin}/sitemap-cn.xml")
