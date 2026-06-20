@@ -16,7 +16,45 @@ const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUppe
 const enPath = "/en/matrix/";
 const pagePath = withLocale(locale, enPath);
 const title = home.cta_compat_matrix;
-const description = home.hero_intro;
+const descriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Kompatibilitätsmatrix für lokale LLM-Workloads nach Szenario und VRAM-Stufe.",
+  ko: "로컬 LLM 워크로드를 시나리오와 VRAM 등급별로 비교하는 호환성 매트릭스입니다.",
+};
+const calculatorDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Schätze die praktische Modell-Passung, bevor du GPU oder Runtime wählst.",
+  ko: "GPU나 런타임을 선택하기 전에 실제 모델 적합성을 추정합니다.",
+};
+const hardwareLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "VRAM-Stufen",
+  ko: "VRAM 등급",
+};
+const hardwareDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Vergleiche 8GB-, 16GB-, 24GB- und 48GB-Hardwarestufen für lokale Modellplanung.",
+  ko: "로컬 모델 계획을 위해 8GB, 16GB, 24GB, 48GB 하드웨어 등급을 비교합니다.",
+};
+const description =
+  descriptionByLocale[locale] || "Compatibility matrix of local LLM workloads by scenario and VRAM tier.";
+const relatedLinks = [
+  {
+    href: withLocale(locale, "/en/models/"),
+    label: home.cta_model_catalog || "Model Catalog",
+    description: home.card_model_hub_desc || "Open model profiles grouped by size, license, and workload.",
+  },
+  {
+    href: withLocale(locale, "/en/tools/vram-calculator/"),
+    label: home.cta_start_vram || "VRAM Calculator",
+    description:
+      calculatorDescriptionByLocale[locale] ||
+      "Estimate practical model fit before choosing a GPU or runtime.",
+  },
+  {
+    href: withLocale(locale, "/en/hardware/"),
+    label: hardwareLabelByLocale[locale] || "VRAM Tiers",
+    description:
+      hardwareDescriptionByLocale[locale] ||
+      "Compare 8GB, 16GB, 24GB, and 48GB hardware tiers for local model planning.",
+  },
+];
 ---
 
 <LocaleBridgePage
@@ -25,4 +63,5 @@ const description = home.hero_intro;
   enPath={enPath}
   title={title}
   description={description}
+  relatedLinks={relatedLinks}
 />

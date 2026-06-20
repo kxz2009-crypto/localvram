@@ -11,10 +11,19 @@ type Props = {
   enPath?: string;
   title: string;
   description: string;
+  relatedLinks?: Array<{ href: string; label: string; description: string }>;
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
 };
 
-const { locale, pagePath, enPath = "/en/", title, description, structuredData } = Astro.props as Props;
+const {
+  locale,
+  pagePath,
+  enPath = "/en/",
+  title,
+  description,
+  relatedLinks = [],
+  structuredData,
+} = Astro.props as Props;
 const copy = resolvePageCopy("guides-detail", locale, {
   localeUpper: locale.toUpperCase(),
   itemTitle: title,
@@ -84,6 +93,18 @@ const bridgeStructuredData = structuredData || [
         <a class="btn" href={withLocale(locale, "/en/status/")}>{text.cta_open_status}</a>
       </div>
     </section>
+
+    {relatedLinks.length > 0 && (
+      <section class="card-grid">
+        {relatedLinks.map((link) => (
+          <article class="card">
+            <h2>{link.label}</h2>
+            <p>{link.description}</p>
+            <a class="btn" href={link.href}>{link.label}</a>
+          </article>
+        ))}
+      </section>
+    )}
 
     <section class="card-grid">
       <article class="card">
