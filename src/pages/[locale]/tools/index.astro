@@ -20,18 +20,83 @@ const copy = resolvePageCopy("tools-index", locale, { localeUpper: locale.toUppe
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
+const pageDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Praktische Local-LLM-Tools fuer VRAM-Schaetzung, Run-vs-Rent-Entscheidungen und Quantisierungsvergleiche.",
+  ko: "VRAM 추정, 로컬 실행과 클라우드 임대 비교, 양자화 품질 비교를 위한 Local LLM 도구입니다.",
+};
+const pageIntroByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Waehle ein Werkzeug fuer VRAM-Planung, Kostenvergleich oder Quantisierungsentscheidungen und gehe danach direkt zu passenden Modellen.",
+  ko: "VRAM 계획, 비용 비교, 양자화 판단에 맞는 도구를 선택하고 바로 관련 모델로 이동합니다.",
+};
+const openLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Oeffnen",
+  ko: "열기",
+};
+const nextStepTitleByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Naechste Entscheidung",
+  ko: "다음 결정",
+};
+const nextStepDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Nutze die Tools zusammen mit Modellkatalog, Kompatibilitaetsmatrix und Datenfrische, damit Empfehlungen nicht isoliert bleiben.",
+  ko: "도구 결과를 모델 카탈로그, 호환성 매트릭스, 데이터 신선도와 함께 확인해 추천이 고립되지 않도록 합니다.",
+};
+const toolDescriptionsBySlug: Record<string, Partial<Record<ComLocale | "default", string>>> = {
+  "vram-calculator": {
+    default: "Estimate practical VRAM for a model, quantization level, context window, and runtime setup.",
+    de: "Schaetze praktischen VRAM fuer Modell, Quantisierung, Kontextfenster und Runtime-Setup.",
+    ko: "모델, 양자화 수준, 컨텍스트 길이, 런타임 설정에 필요한 실전 VRAM을 추정합니다.",
+  },
+  "roi-calculator": {
+    default: "Compare local hardware cost against cloud rental for recurring inference workloads.",
+    de: "Vergleiche lokale Hardwarekosten mit Cloud-Miete fuer wiederkehrende Inferenz-Workloads.",
+    ko: "반복 추론 워크로드에서 로컬 하드웨어 비용과 클라우드 임대 비용을 비교합니다.",
+  },
+  "quantization-blind-test": {
+    default: "Run an A/B quality check before choosing lower-VRAM or higher-retention quantization.",
+    de: "Fuehre einen A/B-Qualitaetscheck durch, bevor du niedrigere VRAM- oder hoehere Retention-Quantisierung waehlst.",
+    ko: "낮은 VRAM 양자화와 높은 보존율 양자화 중 선택하기 전에 A/B 품질 검사를 실행합니다.",
+  },
+};
+const pageDescription =
+  pageDescriptionByLocale[locale] ||
+  "Practical Local LLM tools for VRAM estimation, run-vs-rent decisions, and quantization comparisons.";
+const pageIntro = pageIntroByLocale[locale] || text.hero_intro || pageDescription;
+const openLabel = openLabelByLocale[locale] || "Open";
+const nextStepTitle = nextStepTitleByLocale[locale] || "Next decision";
+const nextStepDescription =
+  nextStepDescriptionByLocale[locale] ||
+  "Use these tools with the model catalog, compatibility matrix, and data freshness views so recommendations stay grounded.";
 const localizedItems = TOOL_ROUTE_ITEMS.map((item) => ({
   ...item,
   localized: localizeRouteItem(item, home, text.hero_intro),
   localizedPath: withLocale(locale, item.enPath),
+  description:
+    toolDescriptionsBySlug[item.slug]?.[locale] ||
+    toolDescriptionsBySlug[item.slug]?.default ||
+    item.description,
 }));
+const primaryTool = localizedItems.find((item) => item.slug === "vram-calculator");
+const nextLinks = [
+  {
+    href: withLocale(locale, "/en/models/"),
+    label: home.card_model_hub_title || "Model catalog",
+  },
+  {
+    href: withLocale(locale, "/en/matrix/"),
+    label: home.cta_compat_matrix || "Compatibility Matrix",
+  },
+  {
+    href: withLocale(locale, "/en/status/data-freshness/"),
+    label: home.cta_data_freshness || "Data Freshness",
+  },
+];
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: text.meta_title,
   url: `https://localvram.com${pagePath}`,
   inLanguage: locale,
-  description: text.meta_description,
+  description: pageDescription,
   mainEntity: {
     "@type": "ItemList",
     numberOfItems: localizedItems.length,
@@ -47,7 +112,7 @@ const structuredData = {
 
 <BaseLayout
   title={text.meta_title}
-  description={text.meta_description}
+  description={pageDescription}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -57,32 +122,32 @@ const structuredData = {
   <main class="container">
     <section class="hero">
       <h1>{text.hero_title}</h1>
-      <p>{text.hero_intro}</p>
+      <p>{pageIntro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
-        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{home.cta_start_vram}</a>
+        {primaryTool ? <a class="btn btn-primary" href={primaryTool.localizedPath}>{primaryTool.localized.title}</a> : null}
+        <a class="btn" href={withLocale(locale, "/en/models/")}>{home.card_model_hub_title || "Model catalog"}</a>
+        <a class="btn" href={withLocale(locale, "/en/matrix/")}>{home.cta_compat_matrix || "Compatibility Matrix"}</a>
       </div>
     </section>
 
-    <section class="table-card">
-      <table>
-        <thead>
-          <tr>
-            <th>{text.table_col_item}</th>
-            <th>{text.table_col_localized_path}</th>
-            <th>{text.table_col_en_source}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {localizedItems.map((item) => (
-            <tr>
-              <td>{item.localized.title}</td>
-              <td><a href={item.localizedPath}>{item.localizedPath}</a></td>
-              <td><code>{item.enPath}</code></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div class="card-grid">
+      {localizedItems.map((item) => (
+        <article class="card">
+          <h2>{item.localized.title}</h2>
+          <p>{item.description}</p>
+          <a class="btn" href={item.localizedPath}>{openLabel}</a>
+        </article>
+      ))}
+    </div>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>{nextStepTitle}</h2>
+      <p>{nextStepDescription}</p>
+      <div class="cta-row">
+        {nextLinks.map((link) => (
+          <a class="btn" href={link.href}>{link.label}</a>
+        ))}
+      </div>
     </section>
   </main>
 </BaseLayout>
