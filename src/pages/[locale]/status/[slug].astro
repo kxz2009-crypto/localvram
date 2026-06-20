@@ -33,6 +33,47 @@ const copy = resolvePageCopy("status-detail", locale, {
 });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const matrixDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Kompatibilitätsmatrix nach Szenario und VRAM-Stufe öffnen.",
+  ko: "시나리오와 VRAM 등급별 호환성 매트릭스를 엽니다.",
+};
+const calculatorDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Prüfe die praktische Modell-Passung, bevor du Hardware oder Cloud auswählst.",
+  ko: "하드웨어나 클라우드를 선택하기 전에 실제 모델 적합성을 확인합니다.",
+};
+const relatedActionMap = {
+  modelCatalog: {
+    href: withLocale(locale, "/en/models/"),
+    label: home.cta_model_catalog || "Model Catalog",
+    description: home.card_model_hub_desc || home.meta_description,
+  },
+  matrix: {
+    href: withLocale(locale, "/en/matrix/"),
+    label: home.cta_compat_matrix || "Compatibility Matrix",
+    description:
+      matrixDescriptionByLocale[locale] ||
+      "Open the compatibility matrix by workload scenario and VRAM tier.",
+  },
+  calculator: {
+    href: withLocale(locale, "/en/tools/vram-calculator/"),
+    label: home.cta_start_vram || "VRAM Calculator",
+    description:
+      calculatorDescriptionByLocale[locale] ||
+      "Check practical model fit before choosing hardware or cloud.",
+  },
+  runRent: {
+    href: withLocale(locale, "/en/guides/local-llm-cost-vs-cloud/"),
+    label: home.card_run_rent_title || "Run or Rent",
+    description: home.card_run_rent_desc || home.meta_description,
+  },
+};
+const relatedActionKeys =
+  item.slug === "conversion-funnel"
+    ? (["runRent", "calculator", "matrix"] as const)
+    : item.slug === "data-freshness" || item.slug === "new-model-radar"
+      ? (["modelCatalog", "matrix", "calculator"] as const)
+      : (["calculator", "modelCatalog", "runRent"] as const);
+const relatedActions = relatedActionKeys.map((key) => relatedActionMap[key]);
 const structuredData = [
   {
     "@context": "https://schema.org",
@@ -88,6 +129,16 @@ const structuredData = [
         <a class="btn" href={withLocale(locale, "/en/status/")}>{text.cta_back_hub}</a>
         <a class="btn" href={withLocale(locale, "/en/guides/")}>{text.cta_open_guides}</a>
       </div>
+    </section>
+
+    <section class="card-grid">
+      {relatedActions.map((action) => (
+        <article class="card">
+          <h2>{action.label}</h2>
+          <p>{action.description}</p>
+          <a class="btn" href={action.href}>{action.label}</a>
+        </article>
+      ))}
     </section>
 
     <section class="card-grid">
