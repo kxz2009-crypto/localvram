@@ -20,18 +20,104 @@ const copy = resolvePageCopy("guides-index", locale, { localeUpper: locale.toUpp
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
+const pageTitleByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Local-LLM-Leitfaden fuer VRAM, Kosten und Workloads",
+  ko: "VRAM, 비용, 워크로드별 Local LLM 가이드",
+};
+const pageDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Praktische Local-LLM-Guides fuer Coding, RAG, Kostenvergleich, Clusterplanung und VRAM-Auswahl.",
+  ko: "코딩, RAG, 비용 비교, 클러스터 계획, VRAM 선택을 위한 실전 Local LLM 가이드입니다.",
+};
+const pageIntroByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Starte mit dem Guide, der zu deinem Workload passt, und pruefe danach Modellkatalog, Rechner und Datenfrische.",
+  ko: "워크로드에 맞는 가이드부터 시작하고 모델 카탈로그, 계산기, 데이터 신선도를 함께 확인하세요.",
+};
+const openLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Guide oeffnen",
+  ko: "가이드 열기",
+};
+const vramCalculatorLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "VRAM-Rechner",
+  ko: "VRAM 계산기",
+};
+const nextStepTitleByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Nach dem Guide",
+  ko: "가이드 다음 단계",
+};
+const nextStepDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Nutze die Guides als Einstieg und validiere konkrete Modell- oder Hardwareentscheidungen mit den Live-Tools.",
+  ko: "가이드는 출발점으로 쓰고, 실제 모델이나 하드웨어 결정은 라이브 도구로 검증하세요.",
+};
+const guideDescriptionsBySlug: Record<
+  string,
+  Partial<Record<ComLocale | "default", string>>
+> = {
+  "best-coding-models": {
+    default: "Compare coding-focused local models for refactoring, agent workflows, and practical VRAM limits.",
+    de: "Vergleiche lokale Coding-Modelle fuer Refactoring, Agent-Workflows und realistische VRAM-Grenzen.",
+    ko: "리팩터링, 에이전트 워크플로, 현실적인 VRAM 한도에 맞는 로컬 코딩 모델을 비교합니다.",
+  },
+  "best-rag-models": {
+    default: "Pick RAG models by retrieval quality, latency, context window, and memory pressure.",
+    de: "Waehle RAG-Modelle nach Retrieval-Qualitaet, Latenz, Kontextfenster und Speicherdruck.",
+    ko: "검색 품질, 지연 시간, 컨텍스트 길이, 메모리 부담을 기준으로 RAG 모델을 고릅니다.",
+  },
+  "local-llm-cost-vs-cloud": {
+    default: "Decide when local GPUs beat rented inference and when cloud fallback is the cleaner choice.",
+    de: "Entscheide, wann lokale GPUs gemietete Inferenz schlagen und wann Cloud-Fallback sinnvoller ist.",
+    ko: "로컬 GPU가 임대 추론보다 나은 때와 클라우드 fallback이 더 깔끔한 때를 판단합니다.",
+  },
+  "ollama-local-cluster-network": {
+    default: "Plan local Ollama clusters with network, runner, and reliability checks before scaling.",
+    de: "Plane lokale Ollama-Cluster mit Netzwerk-, Runner- und Zuverlaessigkeitschecks vor dem Ausbau.",
+    ko: "확장 전에 네트워크, 러너, 안정성 체크로 로컬 Ollama 클러스터를 계획합니다.",
+  },
+  "ollama-vs-vllm-vram": {
+    default: "Compare Ollama and vLLM by VRAM behavior, throughput needs, and deployment complexity.",
+    de: "Vergleiche Ollama und vLLM nach VRAM-Verhalten, Durchsatzbedarf und Deployment-Komplexitaet.",
+    ko: "VRAM 동작, 처리량 요구, 배포 복잡도를 기준으로 Ollama와 vLLM을 비교합니다.",
+  },
+};
 const localizedItems = GUIDE_ROUTE_ITEMS.map((item) => ({
   ...item,
   localized: localizeRouteItem(item, home, text.hero_intro),
   localizedPath: withLocale(locale, item.enPath),
+  description:
+    guideDescriptionsBySlug[item.slug]?.[locale] ||
+    guideDescriptionsBySlug[item.slug]?.default ||
+    item.description,
 }));
+const pageTitle = pageTitleByLocale[locale] || text.meta_title;
+const pageDescription = pageDescriptionByLocale[locale] || text.meta_description;
+const pageIntro = pageIntroByLocale[locale] || text.hero_intro;
+const openLabel = openLabelByLocale[locale] || text.cta_open_english || "Open guide";
+const vramCalculatorLabel =
+  vramCalculatorLabelByLocale[locale] || home.card_vram_calculator_title || "VRAM calculator";
+const nextStepTitle = nextStepTitleByLocale[locale] || "Next step";
+const nextStepDescription =
+  nextStepDescriptionByLocale[locale] ||
+  "Use these guides with the model catalog, VRAM calculator, and data freshness status before making a deployment decision.";
+const nextLinks = [
+  {
+    href: withLocale(locale, "/en/models/"),
+    label: home.card_model_hub_title || "Model catalog",
+  },
+  {
+    href: withLocale(locale, "/en/tools/vram-calculator/"),
+    label: vramCalculatorLabel,
+  },
+  {
+    href: withLocale(locale, "/en/status/data-freshness/"),
+    label: home.cta_data_freshness || "Data freshness",
+  },
+];
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: text.meta_title,
+  name: pageTitle,
   url: `https://localvram.com${pagePath}`,
   inLanguage: locale,
-  description: text.meta_description,
+  description: pageDescription,
   mainEntity: {
     "@type": "ItemList",
     numberOfItems: localizedItems.length,
@@ -46,8 +132,8 @@ const structuredData = {
 ---
 
 <BaseLayout
-  title={text.meta_title}
-  description={text.meta_description}
+  title={pageTitle}
+  description={pageDescription}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -57,31 +143,32 @@ const structuredData = {
   <main class="container">
     <section class="hero">
       <h1>{text.hero_title}</h1>
-      <p>{text.hero_intro}</p>
+      <p>{pageIntro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
+        <a class="btn btn-primary" href={localizedItems[0]?.localizedPath}>{localizedItems[0]?.localized.title}</a>
+        <a class="btn" href={withLocale(locale, "/en/models/")}>{home.card_model_hub_title || "Model catalog"}</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{vramCalculatorLabel}</a>
       </div>
     </section>
 
-    <section class="table-card">
-      <table>
-        <thead>
-          <tr>
-            <th>{text.table_col_item}</th>
-            <th>{text.table_col_localized_path}</th>
-            <th>{text.table_col_en_source}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {localizedItems.map((item) => (
-            <tr>
-              <td>{item.localized.title}</td>
-              <td><a href={item.localizedPath}>{item.localizedPath}</a></td>
-              <td><code>{item.enPath}</code></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <section class="card-grid">
+      {localizedItems.map((item) => (
+        <article class="card">
+          <h2>{item.localized.title}</h2>
+          <p>{item.description}</p>
+          <a class="btn" href={item.localizedPath}>{openLabel}</a>
+        </article>
+      ))}
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>{nextStepTitle}</h2>
+      <p>{nextStepDescription}</p>
+      <div class="cta-row">
+        {nextLinks.map((link) => (
+          <a class="btn" href={link.href}>{link.label}</a>
+        ))}
+      </div>
     </section>
   </main>
 </BaseLayout>
