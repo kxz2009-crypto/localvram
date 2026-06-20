@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-19T05:34:17.775648Z",
+  "updated_at": "2026-06-20T04:52:49.315290Z",
   "last_run": {
-    "run_at": "2026-06-19T05:34:17.775648Z",
-    "queue_date": "2026-06-19",
+    "run_at": "2026-06-20T04:52:49.315290Z",
+    "queue_date": "2026-06-20",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-06-20T04:52:49.315290Z",
+      "queue_date": "2026-06-20",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-06-19T05:34:17.775648Z",
       "queue_date": "2026-06-19",
@@ -1053,32 +1064,6 @@
           "similarity": {
             "score": 0.9829,
             "topic_score": 0.3077,
-            "slug": "ministral-3-14b-local-benchmark-guide"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-04-17T03:52:22.144589Z",
-      "queue_date": "2026-04-17",
-      "reviewed_count": 1,
-      "auto_approved_count": 1,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-04-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
-          "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
-          "score": 140.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 224,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.9667,
-            "topic_score": 0.3571,
             "slug": "ministral-3-14b-local-benchmark-guide"
           }
         }

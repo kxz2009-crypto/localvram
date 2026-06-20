@@ -1,77 +1,77 @@
 {
-  "generated_at": "2026-06-19T05:35:48.240737Z",
+  "generated_at": "2026-06-20T04:54:09.470146Z",
   "window_days": 30,
-  "window_start": "2026-05-20T05:35:48.240737Z",
-  "window_end": "2026-06-19T05:35:48.240737Z",
+  "window_start": "2026-05-21T04:54:09.470146Z",
+  "window_end": "2026-06-20T04:54:09.470146Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
-    "search_console_updated_at": "2026-06-16T16:43:49Z"
+    "search_console_updated_at": "2026-06-19T07:32:38Z"
   },
   "funnel": {
-    "organic_search_clicks": 3,
+    "organic_search_clicks": 2,
     "decision_page_clicks": 0,
-    "affiliate_redirect_clicks": 282,
-    "cloud_redirect_clicks": 99,
+    "affiliate_redirect_clicks": 283,
+    "cloud_redirect_clicks": 100,
     "hardware_redirect_clicks": 183,
-    "search_to_affiliate_pct": 9400.0,
-    "search_to_cloud_pct": 3300.0,
-    "affiliate_to_cloud_pct": 35.11
+    "search_to_affiliate_pct": 14150.0,
+    "search_to_cloud_pct": 5000.0,
+    "affiliate_to_cloud_pct": 35.34
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
         "clicks": 183,
-        "share_pct": 64.89
+        "share_pct": 64.66
       },
       {
         "provider": "runpod",
         "clicks": 51,
-        "share_pct": 18.09
+        "share_pct": 18.02
       },
       {
         "provider": "vast",
-        "clicks": 48,
-        "share_pct": 17.02
+        "clicks": 49,
+        "share_pct": 17.31
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
         "clicks": 79,
-        "share_pct": 28.01
+        "share_pct": 27.92
       },
       {
         "route": "/go/runpod",
         "clicks": 51,
-        "share_pct": 18.09
+        "share_pct": 18.02
       },
       {
         "route": "/go/vast",
-        "clicks": 48,
-        "share_pct": 17.02
+        "clicks": 49,
+        "share_pct": 17.31
       },
       {
         "route": "/recommends/rtx-4090-24gb",
         "clicks": 38,
-        "share_pct": 13.48
+        "share_pct": 13.43
       },
       {
         "route": "/recommends/atx3-1000w-psu",
         "clicks": 33,
-        "share_pct": 11.7
+        "share_pct": 11.66
       },
       {
         "route": "/recommends/high-airflow-case",
         "clicks": 33,
-        "share_pct": 11.7
+        "share_pct": 11.66
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 272
+        "clicks": 273
       },
       {
         "page": "/es/tools/vram-calculator/",
@@ -100,22 +100,22 @@
     ],
     "search_landings": [
       {
-        "landing": "/de/matrix/",
-        "clicks": 1,
-        "share_pct": 33.33
-      },
-      {
         "landing": "/de/models/openhermes-7b-q5/",
         "clicks": 1,
-        "share_pct": 33.33
+        "share_pct": 50.0
       },
       {
         "landing": "/ko/benchmarks/",
         "clicks": 1,
-        "share_pct": 33.33
+        "share_pct": 50.0
       },
       {
         "landing": "/ar/blog/local-llm-customer-support-rag-stack/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/matrix/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -130,17 +130,17 @@
         "share_pct": 0.0
       },
       {
+        "landing": "/de/hardware/verified-3090/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/de/errors/cuda-out-of-memory/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
         "landing": "/de/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/hardware/verified-3090/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -202,9 +202,9 @@
     ]
   },
   "data_quality": {
-    "search_console_items": 239,
-    "affiliate_event_items_total": 299,
-    "affiliate_event_items_in_window": 282,
+    "search_console_items": 240,
+    "affiliate_event_items_total": 307,
+    "affiliate_event_items_in_window": 283,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }

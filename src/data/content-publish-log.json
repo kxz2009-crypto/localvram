@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-19T05:34:17.863168Z",
+  "updated_at": "2026-06-20T04:52:49.405199Z",
   "last_run": {
-    "run_at": "2026-06-19T05:34:17.863168Z",
-    "queue_date": "2026-06-19",
+    "run_at": "2026-06-20T04:52:49.405199Z",
+    "queue_date": "2026-06-20",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-06-19",
-        "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-06-19-daily-local-llm-benchmark-snapshot-2026-06-19",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-06-20",
+        "title": "Today's Local LLM Pick: qwen2.5:14b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-06-20-daily-local-llm-benchmark-snapshot-2026-06-20",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-19.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-20.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-06-20T04:52:49.405199Z",
+      "queue_date": "2026-06-20",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-06-20",
+          "title": "Today's Local LLM Pick: qwen2.5:14b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-06-20-daily-local-llm-benchmark-snapshot-2026-06-20",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-20.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-06-19T05:34:17.863168Z",
       "queue_date": "2026-06-19",
@@ -1391,28 +1413,6 @@
           "reason": "similar_slug:best-local-rag-models-2026"
         }
       ]
-    },
-    {
-      "run_at": "2026-04-17T03:52:22.207000Z",
-      "queue_date": "2026-04-17",
-      "candidate_count": 1,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 0,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
-          "title": "glm-4.7-flash:bf16: Local Inference Performance Report (2026)",
-          "topic_key": "glm-4-7-flash-bf16-local-inference-benchmark-update",
-          "score": 140.0,
-          "source_draft": "content-queue/2026-04-17/01-model-glm-4-7-flash-bf16-benchmark-refresh.md",
-          "out_file": "src/content/blog/model-glm-4-7-flash-bf16-benchmark-refresh.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
     }
   ]
 }
