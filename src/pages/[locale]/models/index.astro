@@ -18,17 +18,79 @@ const pagePath = `/${locale}/models/`;
 const items = Array.isArray(modelCatalog?.items) ? modelCatalog.items : [];
 const groupDefs = Array.isArray(modelCatalog?.group_definitions) ? modelCatalog.group_definitions : [];
 const copy = resolvePageCopy("models-index", locale, { localeUpper: locale.toUpperCase() });
+const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
-const featuredGroups = groupDefs.slice(0, 12);
-const featuredModels = items.slice(0, 20);
+const catalogDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Durchsuche lokale LLM-Modelle nach VRAM-Bedarf, Workload, Lizenz und praktischer Hardware-Passung.",
+  ko: "VRAM 요구량, 워크로드, 라이선스, 실제 하드웨어 적합성별로 로컬 LLM 모델을 탐색합니다.",
+};
+const pageDescription =
+  catalogDescriptionByLocale[locale] ||
+  home.card_model_hub_desc ||
+  "Browse local LLM model profiles by VRAM requirement, workload, license, and hardware fit.";
+const measuredLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Gemessene Profile",
+  ko: "측정된 프로필",
+};
+const curatedLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Kuratierte Modelle",
+  ko: "선별 모델",
+};
+const modelsLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Modelle",
+  ko: "모델",
+};
+const groupsLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Gruppen",
+  ko: "그룹",
+};
+const itemColumnLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Modell",
+  ko: "모델",
+};
+const measuredLabel = measuredLabelByLocale[locale] || "Measured profiles";
+const curatedLabel = curatedLabelByLocale[locale] || "Curated models";
+const modelsLabel = modelsLabelByLocale[locale] || text.kpi_models || "Models";
+const groupsLabel = groupsLabelByLocale[locale] || text.kpi_groups || "Groups";
+const itemColumnLabel = itemColumnLabelByLocale[locale] || text.table_col_item || "Item";
+const measuredCount = items.filter((item) => item?.data_status === "measured").length;
+const groupCount = (groupId: string) =>
+  items.filter(
+    (item) =>
+      item?.license_scope === groupId ||
+      item?.size_class === groupId ||
+      item?.scenario === groupId,
+  ).length;
+const featuredGroups = [...groupDefs]
+  .map((group) => ({ ...group, modelCount: groupCount(String(group?.id || "")) }))
+  .sort((a, b) => Number(b.modelCount || 0) - Number(a.modelCount || 0))
+  .slice(0, 12);
+const curatedQ4 = items
+  .filter((item) => item?.is_top20_curated && item?.quantization === "Q4")
+  .sort((a, b) => Number(a?.top20_rank || 999) - Number(b?.top20_rank || 999));
+const featuredModels = (curatedQ4.length ? curatedQ4 : items).slice(0, 20);
+const actionLinks = [
+  {
+    href: withLocale(locale, "/en/tools/vram-calculator/"),
+    label: home.cta_start_vram || "VRAM Calculator",
+  },
+  {
+    href: withLocale(locale, "/en/matrix/"),
+    label: home.cta_compat_matrix || "Compatibility Matrix",
+  },
+  {
+    href: withLocale(locale, "/en/status/data-freshness/"),
+    label: home.cta_data_freshness || "Data Freshness",
+  },
+];
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: text.meta_title,
   url: `https://localvram.com${pagePath}`,
   inLanguage: locale,
-  description: text.meta_description,
+  description: pageDescription,
   mainEntity: {
     "@type": "ItemList",
     numberOfItems: items.length,
@@ -60,7 +122,7 @@ const structuredData = {
 
 <BaseLayout
   title={text.meta_title}
-  description={text.meta_description}
+  description={pageDescription}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -70,54 +132,74 @@ const structuredData = {
   <main class="container">
     <section class="hero">
       <h1>{text.hero_title}</h1>
-      <p>{text.hero_intro}</p>
+      <p>{pageDescription}</p>
       <div class="cta-row">
         <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
+        {actionLinks.map((link) => (
+          <a class="btn" href={link.href}>{link.label}</a>
+        ))}
       </div>
     </section>
 
     <section class="kpi-row">
       <article class="kpi">
-        <h3>{text.kpi_models}</h3>
+        <h3>{modelsLabel}</h3>
         <p>{items.length}</p>
       </article>
       <article class="kpi">
-        <h3>{text.kpi_groups}</h3>
+        <h3>{groupsLabel}</h3>
         <p>{groupDefs.length}</p>
+      </article>
+      <article class="kpi">
+        <h3>{measuredLabel}</h3>
+        <p>{measuredCount}</p>
+      </article>
+      <article class="kpi">
+        <h3>{curatedLabel}</h3>
+        <p>{featuredModels.length}</p>
       </article>
     </section>
 
+    <section>
+      <h2>{groupsLabel}</h2>
+      <div class="group-grid">
+        {featuredGroups.map((group) => {
+          const id = String(group?.id || "").trim();
+          const label = String(group?.label || group?.name || id);
+          const localizedPath = withLocale(locale, `/en/models/group/${id}/`);
+          return (
+            <article class="group-card">
+              <h3>{label}</h3>
+              <p>{group.modelCount} {modelsLabel}</p>
+              <a class="btn btn-primary" href={localizedPath}>{label}</a>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
     <section class="table-card">
+      <h2>{modelsLabel}</h2>
       <table>
         <thead>
           <tr>
-            <th>{text.table_col_item}</th>
+            <th>{itemColumnLabel}</th>
+            <th>VRAM</th>
+            <th>Tag</th>
             <th>{text.table_col_localized_path}</th>
-            <th>{text.table_col_en_source}</th>
           </tr>
         </thead>
         <tbody>
-          {featuredGroups.map((group) => {
-            const id = String(group?.id || "").trim();
-            const enPath = `/en/models/group/${id}/`;
-            const localizedPath = withLocale(locale, enPath);
-            return (
-              <tr>
-                <td>{text.label_group}: {id}</td>
-                <td><a href={localizedPath}>{localizedPath}</a></td>
-                <td><code>{enPath}</code></td>
-              </tr>
-            );
-          })}
           {featuredModels.map((item) => {
             const id = String(item?.id || "").trim();
             const enPath = `/en/models/${id}/`;
             const localizedPath = withLocale(locale, enPath);
             return (
               <tr>
-                <td>{text.label_model}: {id}</td>
-                <td><a href={localizedPath}>{localizedPath}</a></td>
-                <td><code>{enPath}</code></td>
+                <td>{String(item?.name || id)}</td>
+                <td>{item?.vram_min_gb}GB / {item?.vram_optimal_gb}GB</td>
+                <td><code>{item?.ollama_tag || "-"}</code></td>
+                <td><a class="btn" href={localizedPath}>{String(item?.name || id)}</a></td>
               </tr>
             );
           })}
