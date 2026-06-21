@@ -435,6 +435,39 @@ li code {
   align-self: flex-start;
 }
 
+.model-detail-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 12px;
+}
+
+.related-list {
+  display: grid;
+  gap: 8px;
+}
+
+.related-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #e5e7eb;
+}
+
+.related-item span {
+  overflow-wrap: anywhere;
+}
+
+.related-item strong {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 13px;
+}
+
 .affiliate-note {
   margin-top: 12px;
   color: #7a7a7a;
@@ -512,6 +545,10 @@ li code {
 
 @media (max-width: 900px) {
   .top-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .model-detail-grid {
     grid-template-columns: 1fr;
   }
 

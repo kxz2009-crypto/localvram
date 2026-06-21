@@ -49,11 +49,61 @@ const copy = resolvePageCopy("models-detail", locale, {
 });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const pageDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: `${modelName} benötigt etwa ${minVram}GB VRAM minimal und ${optimalVram}GB als komfortables Ziel. Vergleichen Sie Quantisierung, Einsatzszenario und verwandte Profile.`,
+  ko: `${modelName}은 최소 약 ${minVram}GB VRAM, 권장 ${optimalVram}GB VRAM이 필요합니다. 양자화, 사용 시나리오, 관련 프로필을 비교하세요.`,
+};
+const pageIntroByLocale: Partial<Record<ComLocale, string>> = {
+  de: `${modelName} als Local-LLM-Profil mit VRAM-Schätzung, Quantisierung, Ollama-Tag und passenden Varianten für die Hardware-Planung.`,
+  ko: `${modelName} 로컬 LLM 프로필입니다. VRAM 추정치, 양자화, Ollama 태그, 하드웨어 계획에 맞는 관련 변형을 확인하세요.`,
+};
+const labelsByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
+  de: {
+    dataStatus: "Datenstatus",
+    details: "Modellprofil",
+    license: "Lizenz",
+    openProfile: "Profil öffnen",
+    quantization: "Quantisierung",
+    related: "Weitere Varianten",
+    scenario: "Szenario",
+    tag: "Ollama-Tag",
+    updated: "Aktualisiert",
+    vramCalculator: "Im VRAM-Rechner prüfen",
+  },
+  ko: {
+    dataStatus: "데이터 상태",
+    details: "모델 프로필",
+    license: "라이선스",
+    openProfile: "프로필 열기",
+    quantization: "양자화",
+    related: "관련 변형",
+    scenario: "시나리오",
+    tag: "Ollama 태그",
+    updated: "업데이트",
+    vramCalculator: "VRAM 계산기에서 확인",
+  },
+};
+const labels = labelsByLocale[locale] || {
+  dataStatus: "Data status",
+  details: "Model profile",
+  license: "License",
+  openProfile: "Open profile",
+  quantization: "Quantization",
+  related: "Related variants",
+  scenario: "Scenario",
+  tag: "Ollama tag",
+  updated: "Updated",
+  vramCalculator: "Check in VRAM calculator",
+};
+const pageDescription =
+  pageDescriptionByLocale[locale] ||
+  `${modelName} needs about ${minVram}GB VRAM minimum and ${optimalVram}GB for a safer target. Compare quantization, workload fit, and related profiles.`;
+const pageIntro = pageIntroByLocale[locale] || pageDescription;
 const modelSchema = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
   headline: `${modelName} VRAM Requirement and Benchmark`,
-  description: String(text.meta_description || ""),
+  description: pageDescription,
   dateModified: updatedAt || undefined,
   inLanguage: locale,
   url: pageUrl,
@@ -110,7 +160,7 @@ const structuredData = relatedProfiles.length
 
 <BaseLayout
   title={text.meta_title}
-  description={text.meta_description}
+  description={pageDescription}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -120,7 +170,7 @@ const structuredData = relatedProfiles.length
   <main class="container">
     <section class="hero">
       <h1>{modelName}</h1>
-      <p>{text.hero_intro}</p>
+      <p>{pageIntro}</p>
       <div class="kpi-row">
         <article class="kpi">
           <h3>{text.kpi_min_vram}</h3>
@@ -133,8 +183,64 @@ const structuredData = relatedProfiles.length
       </div>
       <div class="cta-row">
         <a class="btn" href={withLocale(locale, "/en/models/")}>{text.cta_back_hub}</a>
-        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{text.cta_open_vram}</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{labels.vramCalculator}</a>
       </div>
+    </section>
+
+    <section class="model-detail-grid">
+      <article class="model-card">
+        <div>
+          <p class="eyebrow">{labels.details}</p>
+          <h2>{modelName}</h2>
+        </div>
+        <dl>
+          <div>
+            <dt>{labels.quantization}</dt>
+            <dd>{String(item?.quantization || "-")}</dd>
+          </div>
+          <div>
+            <dt>{labels.scenario}</dt>
+            <dd>{String(item?.scenario || "-")}</dd>
+          </div>
+          <div>
+            <dt>{labels.license}</dt>
+            <dd>{String(item?.license_scope || "-")}</dd>
+          </div>
+          <div>
+            <dt>{labels.tag}</dt>
+            <dd>{ollamaTag || "-"}</dd>
+          </div>
+          <div>
+            <dt>{labels.dataStatus}</dt>
+            <dd>{String(item?.data_status || "-")}</dd>
+          </div>
+          <div>
+            <dt>{labels.updated}</dt>
+            <dd>{updatedAt || "-"}</dd>
+          </div>
+        </dl>
+      </article>
+
+      {relatedProfiles.length > 0 && (
+        <article class="model-card">
+          <div>
+            <p class="eyebrow">{labels.related}</p>
+            <h2>{ollamaTag || modelName}</h2>
+          </div>
+          <div class="related-list">
+            {relatedProfiles.map((profile) => {
+              const id = String(profile?.id || "").trim();
+              const href = withLocale(locale, `/en/models/${id}/`);
+              return (
+                <a class="related-item" href={href}>
+                  <span>{String(profile?.name || id)}</span>
+                  <strong>{profile?.vram_min_gb}GB / {profile?.vram_optimal_gb}GB</strong>
+                </a>
+              );
+            })}
+          </div>
+        </article>
+      )}
     </section>
   </main>
 </BaseLayout>

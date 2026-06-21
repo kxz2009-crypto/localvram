@@ -49,11 +49,21 @@ const itemColumnLabelByLocale: Partial<Record<ComLocale, string>> = {
   de: "Modell",
   ko: "모델",
 };
+const detailColumnLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Details",
+  ko: "상세",
+};
+const openModelLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Profil öffnen",
+  ko: "프로필 열기",
+};
 const measuredLabel = measuredLabelByLocale[locale] || "Measured profiles";
 const curatedLabel = curatedLabelByLocale[locale] || "Curated models";
 const modelsLabel = modelsLabelByLocale[locale] || text.kpi_models || "Models";
 const groupsLabel = groupsLabelByLocale[locale] || text.kpi_groups || "Groups";
 const itemColumnLabel = itemColumnLabelByLocale[locale] || text.table_col_item || "Item";
+const detailColumnLabel = detailColumnLabelByLocale[locale] || "Details";
+const openModelLabel = openModelLabelByLocale[locale] || "Open profile";
 const measuredCount = items.filter((item) => item?.data_status === "measured").length;
 const groupCount = (groupId: string) =>
   items.filter(
@@ -186,7 +196,7 @@ const structuredData = {
             <th>{itemColumnLabel}</th>
             <th>VRAM</th>
             <th>Tag</th>
-            <th>{text.table_col_localized_path}</th>
+            <th>{detailColumnLabel}</th>
           </tr>
         </thead>
         <tbody>
@@ -199,7 +209,7 @@ const structuredData = {
                 <td>{String(item?.name || id)}</td>
                 <td>{item?.vram_min_gb}GB / {item?.vram_optimal_gb}GB</td>
                 <td><code>{item?.ollama_tag || "-"}</code></td>
-                <td><a class="btn" href={localizedPath}>{String(item?.name || id)}</a></td>
+                <td><a class="btn" href={localizedPath}>{openModelLabel}</a></td>
               </tr>
             );
           })}
