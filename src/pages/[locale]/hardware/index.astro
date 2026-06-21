@@ -1,8 +1,16 @@
 ---
-import LocaleBridgePage from "../../../components/i18n/LocaleBridgePage.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import tiers from "../../../data/hardware-tiers.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import { resolvePageCopy } from "../../../lib/i18n-copy";
 import { withLocale } from "../../../lib/locale-paths";
+
+type HardwareTier = {
+  vram_gb: number;
+  summary: string;
+  recommended_models?: { name: string; fit: string; expected_tok_s: string }[];
+};
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -13,16 +21,323 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props as { locale: ComLocale };
 const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
-const enPath = "/en/hardware/";
-const pagePath = withLocale(locale, enPath);
-const title = `${home.ticker_gpu_label || "GPU"} VRAM Tiers`;
-const description = home.card_model_hub_desc || "Pick Ollama models by available VRAM tier.";
+const pagePath = withLocale(locale, "/en/hardware/");
+const hardwareTiers = tiers.tiers as HardwareTier[];
+
+const copyByLocale: Partial<Record<ComLocale, {
+  title: string;
+  description: string;
+  heading: string;
+  intro: string;
+  tierSuffix: string;
+  modelLabel: string;
+  speedLabel: string;
+  fitLabel: string;
+  viewModels: string;
+  appleTitle: string;
+  appleSummary: string;
+  appleCta: string;
+  verifiedTitle: string;
+  verifiedSummary: string;
+  verifiedCta: string;
+}>> = {
+  es: {
+    title: "Niveles de hardware VRAM | LocalVRAM",
+    description: "Elige modelos de Ollama por memoria VRAM disponible, desde 8GB hasta 24GB y Apple Silicon.",
+    heading: "Niveles de hardware VRAM",
+    intro: "Compara cada nivel de VRAM con modelos locales recomendados, velocidad esperada y rutas de actualizacion.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "Modelos recomendados",
+    speedLabel: "tok/s esperados",
+    fitLabel: "ajuste",
+    viewModels: "Ver modelos recomendados",
+    appleTitle: "Apple Silicon",
+    appleSummary: "Guia de memoria unificada para inferencia LLM local en dispositivos M-series.",
+    appleCta: "Abrir guia Apple Silicon",
+    verifiedTitle: "Verificado en RTX 3090",
+    verifiedSummary: "Modelos medidos y snapshots de carga sostenida en RTX 3090.",
+    verifiedCta: "Abrir verificacion",
+  },
+  pt: {
+    title: "Niveis de hardware VRAM | LocalVRAM",
+    description: "Escolha modelos Ollama pela VRAM disponivel, de 8GB a 24GB e Apple Silicon.",
+    heading: "Niveis de hardware VRAM",
+    intro: "Compare cada faixa de VRAM com modelos locais recomendados, velocidade esperada e caminhos de upgrade.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "Modelos recomendados",
+    speedLabel: "tok/s esperados",
+    fitLabel: "ajuste",
+    viewModels: "Ver modelos recomendados",
+    appleTitle: "Apple Silicon",
+    appleSummary: "Guia de memoria unificada para inferencia LLM local em dispositivos M-series.",
+    appleCta: "Abrir guia Apple Silicon",
+    verifiedTitle: "Verificado na RTX 3090",
+    verifiedSummary: "Tags de modelo medidas e snapshots de carga sustentada na RTX 3090.",
+    verifiedCta: "Abrir verificacao",
+  },
+  fr: {
+    title: "Niveaux materiels VRAM | LocalVRAM",
+    description: "Choisissez les modeles Ollama selon la VRAM disponible, de 8GB a 24GB et Apple Silicon.",
+    heading: "Niveaux materiels VRAM",
+    intro: "Comparez chaque niveau de VRAM avec les modeles locaux recommandes, le debit attendu et les options d'evolution.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "Modeles recommandes",
+    speedLabel: "tok/s attendus",
+    fitLabel: "compatibilite",
+    viewModels: "Voir les modeles recommandes",
+    appleTitle: "Apple Silicon",
+    appleSummary: "Guide de memoire unifiee pour l'inference LLM locale sur appareils M-series.",
+    appleCta: "Ouvrir le guide Apple Silicon",
+    verifiedTitle: "Verifie sur RTX 3090",
+    verifiedSummary: "Modeles mesures et snapshots de charge soutenue sur RTX 3090.",
+    verifiedCta: "Ouvrir la verification",
+  },
+  de: {
+    title: "VRAM-Hardware-Stufen | LocalVRAM",
+    description: "Waehle Ollama-Modelle nach verfuegbarer VRAM-Stufe, von 8GB bis 24GB plus Apple Silicon.",
+    heading: "VRAM-Hardware-Stufen",
+    intro: "Vergleiche VRAM-Stufen mit empfohlenen lokalen Modellen, erwarteter Geschwindigkeit und Upgrade-Pfaden.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "Empfohlene Modelle",
+    speedLabel: "erwartete tok/s",
+    fitLabel: "Eignung",
+    viewModels: "Empfohlene Modelle anzeigen",
+    appleTitle: "Apple Silicon",
+    appleSummary: "Unified-Memory-Planung fuer lokale LLM-Inferenz auf M-Series-Geraeten.",
+    appleCta: "Apple-Silicon-Guide oeffnen",
+    verifiedTitle: "Verifiziert auf RTX 3090",
+    verifiedSummary: "Gemessene Modell-Tags und Sustained-Load-Snapshots auf RTX 3090.",
+    verifiedCta: "Verifizierungsseite oeffnen",
+  },
+  ru: {
+    title: "Уровни VRAM для железа | LocalVRAM",
+    description: "Выбирайте модели Ollama по доступной VRAM: от 8GB до 24GB, включая Apple Silicon.",
+    heading: "Уровни VRAM для железа",
+    intro: "Сравните уровни VRAM, рекомендуемые локальные модели, ожидаемую скорость и варианты апгрейда.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "Рекомендуемые модели",
+    speedLabel: "ожидаемые tok/s",
+    fitLabel: "подходит",
+    viewModels: "Смотреть модели",
+    appleTitle: "Apple Silicon",
+    appleSummary: "Планирование unified memory для локального LLM-инференса на M-series.",
+    appleCta: "Открыть гид Apple Silicon",
+    verifiedTitle: "Проверено на RTX 3090",
+    verifiedSummary: "Измеренные теги моделей и снимки стабильной нагрузки на RTX 3090.",
+    verifiedCta: "Открыть проверку",
+  },
+  ja: {
+    title: "VRAM ハードウェア階層 | LocalVRAM",
+    description: "8GB から 24GB、Apple Silicon まで、利用可能な VRAM で Ollama モデルを選びます。",
+    heading: "VRAM ハードウェア階層",
+    intro: "VRAM 階層ごとに、推奨ローカルモデル、想定速度、アップグレード方針を比較できます。",
+    tierSuffix: "GB VRAM",
+    modelLabel: "推奨モデル",
+    speedLabel: "想定 tok/s",
+    fitLabel: "適合",
+    viewModels: "推奨モデルを見る",
+    appleTitle: "Apple Silicon",
+    appleSummary: "M-series デバイスでのローカル LLM 推論向け unified memory 計画ガイド。",
+    appleCta: "Apple Silicon ガイドを開く",
+    verifiedTitle: "RTX 3090 で検証済み",
+    verifiedSummary: "RTX 3090 で測定したモデルタグと継続負荷ベンチマークの記録。",
+    verifiedCta: "検証ページを開く",
+  },
+  ko: {
+    title: "VRAM 하드웨어 티어 | LocalVRAM",
+    description: "8GB부터 24GB, Apple Silicon까지 보유한 VRAM에 맞춰 Ollama 모델을 고릅니다.",
+    heading: "VRAM 하드웨어 티어",
+    intro: "각 VRAM 티어별 추천 로컬 모델, 예상 속도, 업그레이드 경로를 비교합니다.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "추천 모델",
+    speedLabel: "예상 tok/s",
+    fitLabel: "적합도",
+    viewModels: "추천 모델 보기",
+    appleTitle: "Apple Silicon",
+    appleSummary: "M-series 장치에서 로컬 LLM 추론을 위한 통합 메모리 계획 가이드입니다.",
+    appleCta: "Apple Silicon 가이드 열기",
+    verifiedTitle: "RTX 3090 검증 완료",
+    verifiedSummary: "RTX 3090에서 측정한 모델 태그와 지속 부하 벤치마크 스냅샷입니다.",
+    verifiedCta: "검증 페이지 열기",
+  },
+  ar: {
+    title: "مستويات عتاد VRAM | LocalVRAM",
+    description: "اختر نماذج Ollama حسب VRAM المتاحة من 8GB إلى 24GB وApple Silicon.",
+    heading: "مستويات عتاد VRAM",
+    intro: "قارن مستويات VRAM مع النماذج المحلية الموصى بها والسرعة المتوقعة ومسارات الترقية.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "النماذج الموصى بها",
+    speedLabel: "tok/s المتوقع",
+    fitLabel: "الملاءمة",
+    viewModels: "عرض النماذج الموصى بها",
+    appleTitle: "Apple Silicon",
+    appleSummary: "دليل تخطيط الذاكرة الموحدة لاستدلال LLM المحلي على أجهزة M-series.",
+    appleCta: "فتح دليل Apple Silicon",
+    verifiedTitle: "تم التحقق على RTX 3090",
+    verifiedSummary: "وسوم نماذج مقاسة ولقطات حمل مستمر على RTX 3090.",
+    verifiedCta: "فتح صفحة التحقق",
+  },
+  hi: {
+    title: "VRAM हार्डवेयर टियर | LocalVRAM",
+    description: "8GB से 24GB और Apple Silicon तक उपलब्ध VRAM के आधार पर Ollama मॉडल चुनें.",
+    heading: "VRAM हार्डवेयर टियर",
+    intro: "हर VRAM टियर के लिए सुझाए गए लोकल मॉडल, अपेक्षित गति और अपग्रेड रास्ते देखें.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "सुझाए गए मॉडल",
+    speedLabel: "अपेक्षित tok/s",
+    fitLabel: "फिट",
+    viewModels: "सुझाए गए मॉडल देखें",
+    appleTitle: "Apple Silicon",
+    appleSummary: "M-series डिवाइस पर लोकल LLM inference के लिए unified memory planning guide.",
+    appleCta: "Apple Silicon guide खोलें",
+    verifiedTitle: "RTX 3090 पर सत्यापित",
+    verifiedSummary: "RTX 3090 पर measured model tags और sustained-load benchmark snapshots.",
+    verifiedCta: "Verification page खोलें",
+  },
+  id: {
+    title: "Tingkat hardware VRAM | LocalVRAM",
+    description: "Pilih model Ollama berdasarkan VRAM tersedia, dari 8GB sampai 24GB dan Apple Silicon.",
+    heading: "Tingkat hardware VRAM",
+    intro: "Bandingkan tiap tingkat VRAM dengan model lokal yang direkomendasikan, estimasi kecepatan, dan jalur upgrade.",
+    tierSuffix: "GB VRAM",
+    modelLabel: "Model rekomendasi",
+    speedLabel: "perkiraan tok/s",
+    fitLabel: "kecocokan",
+    viewModels: "Lihat model rekomendasi",
+    appleTitle: "Apple Silicon",
+    appleSummary: "Panduan unified memory untuk inferensi LLM lokal di perangkat M-series.",
+    appleCta: "Buka panduan Apple Silicon",
+    verifiedTitle: "Terverifikasi di RTX 3090",
+    verifiedSummary: "Tag model terukur dan snapshot benchmark beban berkelanjutan di RTX 3090.",
+    verifiedCta: "Buka halaman verifikasi",
+  },
+};
+
+const text = copyByLocale[locale] || {
+  title: `${home.ticker_gpu_label || "GPU"} VRAM Tiers | LocalVRAM`,
+  description: home.card_model_hub_desc || "Pick Ollama models by available VRAM tier.",
+  heading: "Hardware VRAM Tiers",
+  intro: "Pick Ollama models by available VRAM tier.",
+  tierSuffix: "GB VRAM",
+  modelLabel: "Recommended models",
+  speedLabel: "expected tok/s",
+  fitLabel: "fit",
+  viewModels: "View recommended models",
+  appleTitle: "Apple Silicon",
+  appleSummary: "Unified memory planning guide for local LLM inference on M-series devices.",
+  appleCta: "Open Apple Silicon guide",
+  verifiedTitle: "Verified on RTX 3090",
+  verifiedSummary: "Measured model tags and sustained-load benchmark snapshots on 3090.",
+  verifiedCta: "Open verification page",
+};
+
+const tierSummaryByVram: Partial<Record<ComLocale, Record<number, string>>> = {
+  de: {
+    8: "Einstiegsstufe fuer leichte Chat- und Coding-Modelle.",
+    12: "Ausgewogene Stufe fuer 7B/13B mit praktikablen lokalen Laeufen.",
+    16: "Komfortzone fuer 13B/14B und ausgewaehlte 32B-Q4-Setups.",
+    24: "Preis-Leistungs-Stufe fuer grosse quantisierte Modelle und Long-Context-Tests.",
+  },
+  ko: {
+    8: "가벼운 채팅과 코딩 모델을 위한 입문 티어입니다.",
+    12: "7B/13B 모델을 현실적으로 로컬 실행하기 좋은 균형 티어입니다.",
+    16: "13B/14B 및 일부 32B Q4 구성을 다루기 좋은 구간입니다.",
+    24: "대형 양자화 모델과 긴 컨텍스트 테스트에 가치가 높은 티어입니다.",
+  },
+};
+
+const tierSummary = (tier: HardwareTier) => tierSummaryByVram[locale]?.[tier.vram_gb] || tier.summary;
+
+const hardwareItems = [
+  ...hardwareTiers.map((tier) => ({
+    name: `${tier.vram_gb}${text.tierSuffix}`,
+    url: `https://localvram.com${withLocale(locale, `/en/hardware/${tier.vram_gb}gb-vram-models/`)}`,
+  })),
+  {
+    name: text.appleTitle,
+    url: `https://localvram.com${withLocale(locale, "/en/hardware/apple-silicon-llm-guide/")}`,
+  },
+  {
+    name: text.verifiedTitle,
+    url: `https://localvram.com${withLocale(locale, "/en/hardware/verified-3090/")}`,
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: text.heading,
+  description: text.description,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: locale,
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: hardwareItems.length,
+    itemListElement: hardwareItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+    })),
+  },
+};
 ---
 
-<LocaleBridgePage
+<BaseLayout
+  title={text.title}
+  description={text.description}
   locale={locale}
-  pagePath={pagePath}
-  enPath={enPath}
-  title={title}
-  description={description}
-/>
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero compact-hero">
+      <p class="eyebrow">LocalVRAM</p>
+      <h1>{text.heading}</h1>
+      <p>{text.intro}</p>
+    </section>
+
+    <section class="card-grid" aria-label={text.heading}>
+      {hardwareTiers.map((tier) => (
+        <article class="card">
+          <h2>{tier.vram_gb}{text.tierSuffix}</h2>
+          <p>{tierSummary(tier)}</p>
+          {tier.recommended_models && tier.recommended_models.length > 0 && (
+            <>
+              <h3>{text.modelLabel}</h3>
+              <ul>
+                {tier.recommended_models.map((model) => (
+                  <li>
+                    <strong>{model.name}</strong>
+                    <br />
+                    <span class="muted">
+                      {text.speedLabel}: {model.expected_tok_s} | {text.fitLabel}: {model.fit}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          <a class="btn btn-primary" href={withLocale(locale, `/en/hardware/${tier.vram_gb}gb-vram-models/`)}>
+            {text.viewModels}
+          </a>
+        </article>
+      ))}
+      <article class="card">
+        <h2>{text.appleTitle}</h2>
+        <p>{text.appleSummary}</p>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/hardware/apple-silicon-llm-guide/")}>
+          {text.appleCta}
+        </a>
+      </article>
+      <article class="card">
+        <h2>{text.verifiedTitle}</h2>
+        <p>{text.verifiedSummary}</p>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/hardware/verified-3090/")}>
+          {text.verifiedCta}
+        </a>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
