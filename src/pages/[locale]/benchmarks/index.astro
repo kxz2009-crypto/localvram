@@ -1,8 +1,30 @@
 ---
-import LocaleBridgePage from "../../../components/i18n/LocaleBridgePage.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import clusterBenchmarks from "../../../data/cluster-benchmarks.json";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { resolvePageCopy } from "../../../lib/i18n-copy";
 import { withLocale } from "../../../lib/locale-paths";
+
+type ClusterNode = {
+  endpoint?: string;
+  status?: string;
+  avg_tokens_per_s?: number;
+  avg_latency_ms?: number;
+  error?: string;
+};
+
+type ClusterTest = {
+  topology?: string;
+  model_id?: string;
+  verified_date?: string;
+  id?: string;
+  metrics?: {
+    tokens_per_s?: number;
+    avg_node_latency_ms?: number;
+  };
+  nodes?: ClusterNode[];
+};
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -15,15 +37,305 @@ const { locale } = Astro.props as { locale: ComLocale };
 const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
 const enPath = "/en/benchmarks/";
 const pagePath = withLocale(locale, enPath);
-const title = "Benchmark Hub";
-const description = home.card_changelog_desc || home.hero_intro;
+const clusterTests = Array.isArray(clusterBenchmarks.tests) ? clusterBenchmarks.tests : [];
+const latestCluster = (clusterTests[0] || null) as ClusterTest | null;
+const latestNodes = latestCluster && Array.isArray(latestCluster.nodes) ? latestCluster.nodes : [];
+const clusterUpdatedAt = clusterBenchmarks.updated_at || "";
+const trendPoints = clusterTests
+  .slice(0, 12)
+  .reverse()
+  .map((item: ClusterTest) => {
+    const date = (item.verified_date || "").trim();
+    const fallback = (item.id || "").replace(/^cluster_/, "").slice(0, 8);
+    const labelDate = date || fallback || "unknown";
+    return {
+      label: `${labelDate} · ${item.model_id || "unknown"}`,
+      tokensPerSecond: typeof item.metrics?.tokens_per_s === "number" ? item.metrics.tokens_per_s : null,
+      latencyMs: typeof item.metrics?.avg_node_latency_ms === "number" ? item.metrics.avg_node_latency_ms : null,
+    };
+  });
+const copyByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
+  de: {
+    title: "Benchmarks | LocalVRAM",
+    description: "Verifizierte Local-LLM-Benchmark-Snapshots, Cluster-Durchsatz, Latenz und Einreichungswege fuer eigene Hardware.",
+    h1: "Benchmarks",
+    intro: "Pruefen Sie, welche Messungen neu sind, welche Clusterwerte zuletzt gemeldet wurden und wie eigene Resultate eingereicht werden.",
+    changelog: "Benchmark-Changelog",
+    changelogDesc: "Alle Updates mit Datum, Umgebung und Ergebnisveraenderungen.",
+    submit: "Testergebnis einreichen",
+    submitDesc: "Community-Datenpipeline mit Vorpruefung und manueller Review.",
+    runbook: "Cluster-Runbook",
+    runbookDesc: "Netzwerk-Checkliste und Topologie-Hinweise fuer lokale Multi-Node-Ollama-Setups.",
+    openChangelog: "Changelog oeffnen",
+    openSubmit: "Einreichung oeffnen",
+    openGuide: "Guide oeffnen",
+    latest: "Letzter Cluster-Snapshot",
+    updated: "Aktualisiert",
+    topology: "Topologie",
+    model: "Modell",
+    aggregate: "Aggregat",
+    endpoint: "Endpoint",
+    status: "Status",
+    avgTps: "Avg tok/s",
+    avgLatency: "Avg Latenz",
+    error: "Fehler",
+    noData: "Noch keine Cluster-Benchmark-Daten vorhanden.",
+    trend: "Cluster-Performance-Trend",
+    trendDesc: "Neuere Clusterlaeufe mit aggregierten Tokens/s und durchschnittlicher Node-Latenz.",
+  },
+  ko: {
+    title: "벤치마크 | LocalVRAM",
+    description: "검증된 로컬 LLM 벤치마크 스냅샷, 클러스터 처리량, 지연 시간, 하드웨어 결과 제출 흐름을 확인합니다.",
+    h1: "벤치마크",
+    intro: "최근 측정값, 클러스터 처리량, 노드 지연 시간, 자체 하드웨어 결과 제출 경로를 확인하세요.",
+    changelog: "벤치마크 변경 기록",
+    changelogDesc: "날짜, 환경, 결과 변화를 포함한 모든 업데이트입니다.",
+    submit: "테스트 결과 제출",
+    submitDesc: "사전 점검과 수동 리뷰를 거치는 커뮤니티 데이터 파이프라인입니다.",
+    runbook: "클러스터 런북",
+    runbookDesc: "로컬 멀티 노드 Ollama 구성을 위한 네트워크 체크리스트와 토폴로지 안내입니다.",
+    openChangelog: "변경 기록 열기",
+    openSubmit: "제출 안내 열기",
+    openGuide: "가이드 열기",
+    latest: "최신 클러스터 스냅샷",
+    updated: "업데이트",
+    topology: "토폴로지",
+    model: "모델",
+    aggregate: "집계",
+    endpoint: "엔드포인트",
+    status: "상태",
+    avgTps: "평균 tok/s",
+    avgLatency: "평균 지연",
+    error: "오류",
+    noData: "아직 클러스터 벤치마크 데이터가 없습니다.",
+    trend: "클러스터 성능 추세",
+    trendDesc: "최근 클러스터 실행의 집계 tokens/s와 평균 노드 지연 시간입니다.",
+  },
+};
+const copy = copyByLocale[locale] || {
+  title: "Benchmarks | LocalVRAM",
+  description: home.card_changelog_desc || "Benchmark update timeline, cluster throughput snapshots, and community result submission for LocalVRAM.",
+  h1: "Benchmarks",
+  intro: "Track what changed, when it changed, and submit verified runs from your own hardware.",
+  changelog: "Benchmark Changelog",
+  changelogDesc: "Every update with date, environment, and result deltas.",
+  submit: "Submit Your Test Result",
+  submitDesc: "Community-backed data pipeline with precheck and manual review.",
+  runbook: "Cluster Runbook",
+  runbookDesc: "Network checklist and topology guidance for local multi-node Ollama setup.",
+  openChangelog: "Open changelog",
+  openSubmit: "Open submit guide",
+  openGuide: "Open guide",
+  latest: "Latest Cluster Snapshot",
+  updated: "Updated",
+  topology: "Topology",
+  model: "Model",
+  aggregate: "Aggregate",
+  endpoint: "Endpoint",
+  status: "Status",
+  avgTps: "Avg tok/s",
+  avgLatency: "Avg latency",
+  error: "Error",
+  noData: "No cluster benchmark data yet.",
+  trend: "Cluster Performance Trend",
+  trendDesc: "Recent cluster runs with aggregate tokens/s and average node latency.",
+};
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: copy.h1,
+    description: copy.description,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: locale,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: 3,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: copy.changelog,
+          url: `https://localvram.com${withLocale(locale, "/en/benchmarks/changelog/")}`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: copy.submit,
+          url: `https://localvram.com${withLocale(locale, "/en/benchmarks/submit-result/")}`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: copy.runbook,
+          url: `https://localvram.com${withLocale(locale, "/en/guides/ollama-local-cluster-network/")}`,
+        },
+      ],
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: "LocalVRAM Cluster Benchmark Snapshot",
+    description: copy.description,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: locale,
+    isAccessibleForFree: true,
+    dateModified: clusterUpdatedAt || latestCluster?.verified_date,
+    creator: {
+      "@type": "Organization",
+      name: "LocalVRAM",
+      url: "https://localvram.com/en/",
+    },
+  },
+];
 ---
 
-<LocaleBridgePage
+<BaseLayout
+  title={copy.title}
+  description={copy.description}
   locale={locale}
-  pagePath={pagePath}
-  enPath={enPath}
-  title={title}
-  description={description}
-/>
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero">
+      <h1>{copy.h1}</h1>
+      <p>{copy.intro}</p>
+      <div class="cta-row">
+        <a class="btn" href={withLocale(locale, "/en/benchmarks/changelog/")}>{copy.openChangelog}</a>
+        <a class="btn" href={withLocale(locale, "/en/benchmarks/submit-result/")}>{copy.openSubmit}</a>
+        <a class="btn" href={withLocale(locale, "/en/guides/ollama-local-cluster-network/")}>{copy.openGuide}</a>
+      </div>
+    </section>
 
+    <section class="card-grid">
+      <article class="card">
+        <h2>{copy.changelog}</h2>
+        <p>{copy.changelogDesc}</p>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/benchmarks/changelog/")}>{copy.openChangelog}</a>
+      </article>
+      <article class="card">
+        <h2>{copy.submit}</h2>
+        <p>{copy.submitDesc}</p>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/benchmarks/submit-result/")}>{copy.openSubmit}</a>
+      </article>
+      <article class="card">
+        <h2>{copy.runbook}</h2>
+        <p>{copy.runbookDesc}</p>
+        <a class="btn btn-primary" href={withLocale(locale, "/en/guides/ollama-local-cluster-network/")}>{copy.openGuide}</a>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>{copy.latest}</h2>
+      {latestCluster ? (
+        <>
+          <p>
+            {copy.updated} {clusterUpdatedAt ? clusterUpdatedAt.slice(0, 10) : "unknown"} · {copy.topology} {latestCluster.topology}
+            {" "}· {copy.model} {latestCluster.model_id} · {copy.aggregate} {latestCluster.metrics?.tokens_per_s ?? "N/A"} tok/s
+          </p>
+          <div style="overflow-x: auto; margin-top: 12px;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{copy.endpoint}</th>
+                  <th>{copy.status}</th>
+                  <th>{copy.avgTps}</th>
+                  <th>{copy.avgLatency}</th>
+                  <th>{copy.error}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {latestNodes.map((node: ClusterNode) => (
+                  <tr>
+                    <td>{node.endpoint || "unknown"}</td>
+                    <td>{node.status || "unknown"}</td>
+                    <td>{typeof node.avg_tokens_per_s === "number" ? node.avg_tokens_per_s.toFixed(2) : "N/A"}</td>
+                    <td>{typeof node.avg_latency_ms === "number" ? `${node.avg_latency_ms.toFixed(1)} ms` : "N/A"}</td>
+                    <td>{node.error || "-"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      ) : (
+        <p>{copy.noData}</p>
+      )}
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>{copy.trend}</h2>
+      <p>{copy.trendDesc}</p>
+      <div class="chart-wrap">
+        <canvas id="cluster-trend-chart" aria-label={copy.trend}></canvas>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script define:vars={{ trendPoints }}>
+    const mountClusterTrend = () => {
+      const canvas = document.getElementById("cluster-trend-chart");
+      if (!canvas || !window.Chart) return;
+      const labels = trendPoints.map((p) => p.label);
+      const tps = trendPoints.map((p) => p.tokensPerSecond);
+      const latency = trendPoints.map((p) => p.latencyMs);
+      if (!labels.length) return;
+      new window.Chart(canvas, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Aggregate tok/s",
+              data: tps,
+              borderColor: "#0ea5e9",
+              backgroundColor: "rgba(14,165,233,0.15)",
+              yAxisID: "y",
+              tension: 0.25,
+            },
+            {
+              label: "Avg node latency (ms)",
+              data: latency,
+              borderColor: "#fb923c",
+              backgroundColor: "rgba(251,146,60,0.12)",
+              yAxisID: "y1",
+              tension: 0.25,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              title: { display: true, text: "tok/s" },
+              ticks: { color: "#94a3b8" },
+              grid: { color: "rgba(148,163,184,0.15)" },
+            },
+            y1: {
+              position: "right",
+              title: { display: true, text: "ms" },
+              ticks: { color: "#94a3b8" },
+              grid: { drawOnChartArea: false },
+            },
+            x: {
+              ticks: { color: "#94a3b8", maxRotation: 20, minRotation: 20 },
+              grid: { color: "rgba(148,163,184,0.08)" },
+            },
+          },
+          plugins: {
+            legend: { labels: { color: "#cbd5e1" } },
+          },
+        },
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", mountClusterTrend, { once: true });
+    } else {
+      mountClusterTrend();
+    }
+  </script>
+</BaseLayout>
