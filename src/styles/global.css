@@ -383,6 +383,58 @@ li code {
   color: var(--muted);
 }
 
+.model-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.model-card {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  background: var(--card);
+}
+
+.model-card h2 {
+  margin: 4px 0 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.model-card dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.model-card dl div {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.42fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.model-card dt {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.model-card dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #e5e7eb;
+}
+
+.model-card .text-link {
+  align-self: flex-start;
+}
+
 .affiliate-note {
   margin-top: 12px;
   color: #7a7a7a;

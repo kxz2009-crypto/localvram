@@ -25,20 +25,70 @@ const copy = resolvePageCopy("models-group", locale, {
   localeUpper: locale.toUpperCase(),
   groupName,
 });
-const indexCopy = resolvePageCopy("models-index", locale, { localeUpper: locale.toUpperCase() });
 const text = copy.fields;
-const indexText = indexCopy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 const items = (Array.isArray(modelCatalog?.items) ? modelCatalog.items : [])
   .filter((item) => item?.license_scope === groupId || item?.size_class === groupId || item?.scenario === groupId)
   .sort((a, b) => Number(b?.params_b || 0) - Number(a?.params_b || 0) || String(a?.name || "").localeCompare(String(b?.name || "")));
+const featuredItems = items.slice(0, 24);
+const measuredCount = items.filter((item) => item?.data_status === "measured").length;
+const curatedCount = items.filter((item) => Boolean(item?.is_top20_curated)).length;
+const pageDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: `${groupName}-Modelle nach VRAM-Bedarf, Quantisierung, Lizenz und praktischer Hardware-Passung vergleichen.`,
+  ko: `${groupName} 모델을 VRAM 요구량, 양자화, 라이선스, 실제 하드웨어 적합성으로 비교합니다.`,
+};
+const pageIntroByLocale: Partial<Record<ComLocale, string>> = {
+  de: `Vergleichen Sie ${groupName}-Modelle mit VRAM-Schätzungen, Quantisierungs-Hinweisen und direkten Links zu den Detailseiten.`,
+  ko: `${groupName} 모델을 VRAM 추정치, 양자화 힌트, 상세 모델 페이지 링크와 함께 비교하세요.`,
+};
+const labelsByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
+  de: {
+    curated: "Ausgewählt",
+    measured: "Gemessen",
+    models: "Modelle",
+    noModels: "Für diese Gruppe sind noch keine Modelle im Katalog verfügbar.",
+    openModel: "Modelldetails",
+    quantization: "Quantisierung",
+    scenario: "Szenario",
+    tag: "Tag",
+    vram: "VRAM",
+    dataFreshness: "Datenfrische",
+  },
+  ko: {
+    curated: "추천",
+    measured: "측정됨",
+    models: "모델",
+    noModels: "이 그룹에는 아직 카탈로그 모델이 없습니다.",
+    openModel: "모델 상세",
+    quantization: "양자화",
+    scenario: "시나리오",
+    tag: "태그",
+    vram: "VRAM",
+    dataFreshness: "데이터 최신성",
+  },
+};
+const labels = labelsByLocale[locale] || {
+  curated: "Curated",
+  measured: "Measured",
+  models: "Models",
+  noModels: "No catalog models are available for this group yet.",
+  openModel: "Model details",
+  quantization: "Quantization",
+  scenario: "Scenario",
+  tag: "Tag",
+  vram: "VRAM",
+  dataFreshness: "Data freshness",
+};
+const pageDescription =
+  pageDescriptionByLocale[locale] || `Compare ${groupName} models by VRAM requirement, quantization, license, and practical hardware fit.`;
+const pageIntro = pageIntroByLocale[locale] || pageDescription;
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: text.meta_title,
   url: `https://localvram.com${pagePath}`,
   inLanguage: locale,
-  description: text.meta_description,
+  description: pageDescription,
   mainEntity: {
     "@type": "ItemList",
     name: groupName,
@@ -59,7 +109,7 @@ const structuredData = {
 
 <BaseLayout
   title={text.meta_title}
-  description={text.meta_description}
+  description={pageDescription}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -69,44 +119,71 @@ const structuredData = {
   <main class="container">
     <section class="hero">
       <h1>{groupName}</h1>
-      <p>{text.hero_intro}</p>
+      <p>{pageIntro}</p>
       <div class="cta-row">
         <a class="btn" href={withLocale(locale, "/en/models/")}>{text.cta_back_hub}</a>
         <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{text.cta_open_vram}</a>
+        <a class="btn btn-secondary" href={withLocale(locale, "/en/status/data-freshness/")}>{labels.dataFreshness}</a>
       </div>
     </section>
 
     <section class="kpi-row">
       <article class="kpi">
-        <h3>{indexText.kpi_models}</h3>
+        <h3>{labels.models}</h3>
         <p>{items.length}</p>
+      </article>
+      <article class="kpi">
+        <h3>{labels.measured}</h3>
+        <p>{measuredCount}</p>
+      </article>
+      <article class="kpi">
+        <h3>{labels.curated}</h3>
+        <p>{curatedCount}</p>
       </article>
     </section>
 
-    <section class="table-card">
-      <table>
-        <thead>
-          <tr>
-            <th>{indexText.table_col_item}</th>
-            <th>{indexText.table_col_localized_path}</th>
-            <th>{indexText.table_col_en_source}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => {
+    <section class="model-grid" aria-label={groupName}>
+      {featuredItems.length > 0 ? (
+        featuredItems.map((item) => {
             const id = String(item?.id || "").trim();
-            const modelEnPath = `/en/models/${id}/`;
-            const localizedPath = withLocale(locale, modelEnPath);
+            const modelPath = withLocale(locale, `/en/models/${id}/`);
+            const vram = [item?.vram_min_gb, item?.vram_optimal_gb]
+              .filter((value) => value !== undefined && value !== null && String(value).trim() !== "")
+              .join(" / ");
             return (
-              <tr>
-                <td>{indexText.label_model}: {String(item?.name || id)}</td>
-                <td><a href={localizedPath}>{localizedPath}</a></td>
-                <td><code>{modelEnPath}</code></td>
-              </tr>
+              <article class="model-card">
+                <div>
+                  <p class="eyebrow">{item?.data_status === "measured" ? labels.measured : labels.curated}</p>
+                  <h2>{String(item?.name || id)}</h2>
+                </div>
+                <dl>
+                  <div>
+                    <dt>{labels.vram}</dt>
+                    <dd>{vram ? `${vram} GB` : "-"}</dd>
+                  </div>
+                  <div>
+                    <dt>{labels.quantization}</dt>
+                    <dd>{String(item?.quantization || "-")}</dd>
+                  </div>
+                  <div>
+                    <dt>{labels.scenario}</dt>
+                    <dd>{String(item?.scenario || "-")}</dd>
+                  </div>
+                  <div>
+                    <dt>{labels.tag}</dt>
+                    <dd>{String(item?.ollama_tag || id)}</dd>
+                  </div>
+                </dl>
+                <a class="text-link" href={modelPath}>{labels.openModel}</a>
+              </article>
             );
-          })}
-        </tbody>
-      </table>
+          })
+      ) : (
+        <article class="model-card">
+          <h2>{groupName}</h2>
+          <p>{labels.noModels}</p>
+        </article>
+      )}
     </section>
   </main>
 </BaseLayout>
