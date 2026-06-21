@@ -19,12 +19,114 @@ const errorItems = Array.isArray(errorData?.errors) ? errorData.errors : [];
 const copy = resolvePageCopy("errors-index", locale, { localeUpper: locale.toUpperCase() });
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
+const pageTitleByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Ollama-Fehler beheben: CUDA, ROCm und Metal",
+  ko: "Ollama 오류 해결: CUDA, ROCm, Metal",
+};
+const pageDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Terminal-orientierte Ollama-Fehlerdatenbank fuer CUDA Out of Memory, ROCm-Erkennung und Metal-Probleme.",
+  ko: "CUDA Out of Memory, ROCm 감지, Metal 문제를 빠르게 찾는 터미널 중심 Ollama 오류 지식베이스입니다.",
+};
+const pageIntroByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Finde die passende Fehlersignatur, oeffne den kuerzesten Fix und pruefe danach VRAM, Quantisierung oder Cloud-Fallback.",
+  ko: "맞는 오류 시그니처를 찾고 가장 짧은 해결 절차를 연 뒤 VRAM, 양자화, 클라우드 fallback을 함께 확인하세요.",
+};
+const openFixLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Fix oeffnen",
+  ko: "해결 방법 열기",
+};
+const symptomLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Symptom",
+  ko: "증상",
+};
+const firstFixLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Erster Fix",
+  ko: "첫 번째 해결책",
+};
+const nextStepTitleByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Nach dem Fehlerfix",
+  ko: "오류 해결 다음 단계",
+};
+const nextStepDescriptionByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Wenn der Fehler durch Speicher oder Backend-Auswahl entsteht, pruefe Modellgroesse, Quantisierung und Datenfrische vor dem naechsten Lauf.",
+  ko: "오류가 메모리나 백엔드 선택에서 온다면 다음 실행 전에 모델 크기, 양자화, 데이터 신선도를 확인하세요.",
+};
+const vramCalculatorLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "VRAM-Rechner",
+  ko: "VRAM 계산기",
+};
+const quantizationLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Quantisierung testen",
+  ko: "양자화 테스트",
+};
+const dataFreshnessLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Datenfrische",
+  ko: "데이터 신선도",
+};
+const symptomByErrorId: Record<string, Partial<Record<ComLocale | "default", string>>> = {
+  "cuda-out-of-memory": {
+    default: "Model loading fails or generation stops with OOM.",
+    de: "Das Modell laedt nicht oder die Generierung stoppt mit Out-of-Memory.",
+    ko: "모델 로딩이 실패하거나 생성 중 Out of Memory로 중단됩니다.",
+  },
+  "rocm-not-detected": {
+    default: "AMD GPU is present but Ollama falls back to CPU.",
+    de: "Die AMD-GPU ist vorhanden, aber Ollama faellt auf CPU-Ausfuehrung zurueck.",
+    ko: "AMD GPU가 있지만 Ollama가 CPU 실행으로 fallback됩니다.",
+  },
+  "metal-not-found": {
+    default: "Apple Silicon machine runs only on CPU path.",
+    de: "Apple-Silicon-Hardware nutzt nur den CPU-Pfad.",
+    ko: "Apple Silicon 장비가 CPU 경로로만 실행됩니다.",
+  },
+};
+const firstFixByErrorId: Record<string, Partial<Record<ComLocale | "default", string>>> = {
+  "cuda-out-of-memory": {
+    default: "Use lower quantization",
+    de: "Niedrigere Quantisierung verwenden",
+    ko: "더 낮은 양자화 사용",
+  },
+  "rocm-not-detected": {
+    default: "Verify ROCm runtime",
+    de: "ROCm-Runtime pruefen",
+    ko: "ROCm 런타임 확인",
+  },
+  "metal-not-found": {
+    default: "Check macOS and Ollama version",
+    de: "macOS- und Ollama-Version pruefen",
+    ko: "macOS 및 Ollama 버전 확인",
+  },
+};
+const pageTitle = pageTitleByLocale[locale] || text.meta_title;
+const pageDescription = pageDescriptionByLocale[locale] || text.meta_description;
+const pageIntro = pageIntroByLocale[locale] || text.hero_intro;
+const openFixLabel = openFixLabelByLocale[locale] || "Open fix";
+const symptomLabel = symptomLabelByLocale[locale] || "Symptom";
+const firstFixLabel = firstFixLabelByLocale[locale] || "First fix";
+const nextStepTitle = nextStepTitleByLocale[locale] || "After the fix";
+const nextStepDescription =
+  nextStepDescriptionByLocale[locale] ||
+  "If the error points to memory or backend fit, validate model size, quantization, and data freshness before the next run.";
+const vramCalculatorLabel = vramCalculatorLabelByLocale[locale] || "VRAM calculator";
+const quantizationLabel = quantizationLabelByLocale[locale] || "Quantization test";
+const dataFreshnessLabel = dataFreshnessLabelByLocale[locale] || "Data freshness";
 const localizedItems = errorItems.map((item) => {
   const id = String(item?.id || "").trim();
   const enPath = `/en/errors/${id}/`;
+  const fixes = Array.isArray(item?.fixes) ? item.fixes : [];
+  const firstFix = fixes[0] || {};
   return {
     id,
     title: String(item?.title || id),
+    symptom:
+      symptomByErrorId[id]?.[locale] ||
+      symptomByErrorId[id]?.default ||
+      String(item?.symptom || "Troubleshooting reference"),
+    firstFixLabel:
+      firstFixByErrorId[id]?.[locale] ||
+      firstFixByErrorId[id]?.default ||
+      String(firstFix?.label || ""),
+    firstFixCommand: String(firstFix?.command || ""),
     enPath,
     localizedPath: withLocale(locale, enPath),
   };
@@ -32,10 +134,10 @@ const localizedItems = errorItems.map((item) => {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: text.meta_title,
+  name: pageTitle,
   url: `https://localvram.com${pagePath}`,
   inLanguage: locale,
-  description: text.meta_description,
+  description: pageDescription,
   mainEntity: {
     "@type": "ItemList",
     numberOfItems: localizedItems.length,
@@ -50,8 +152,8 @@ const structuredData = {
 ---
 
 <BaseLayout
-  title={text.meta_title}
-  description={text.meta_description}
+  title={pageTitle}
+  description={pageDescription}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -61,33 +163,38 @@ const structuredData = {
   <main class="container">
     <section class="hero">
       <h1>{text.hero_title}</h1>
-      <p>{text.hero_intro}</p>
+      <p>{pageIntro}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href={withLocale(locale, "/en/")}>{text.cta_back_home}</a>
+        <a class="btn btn-primary" href={localizedItems[0]?.localizedPath}>{localizedItems[0]?.title}</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{vramCalculatorLabel}</a>
+        <a class="btn" href={withLocale(locale, "/en/status/data-freshness/")}>{dataFreshnessLabel}</a>
       </div>
     </section>
 
-    <section class="table-card">
-      <table>
-        <thead>
-          <tr>
-            <th>{text.table_col_item}</th>
-            <th>{text.table_col_localized_path}</th>
-            <th>{text.table_col_en_source}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {localizedItems.map((item) => {
-            return (
-              <tr>
-                <td>{item.title}</td>
-                <td><a href={item.localizedPath}>{item.localizedPath}</a></td>
-                <td><code>{item.enPath}</code></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+    <section class="card-grid">
+      {localizedItems.map((item) => (
+        <article class="card">
+          <h2>{item.title}</h2>
+          <p><strong>{symptomLabel}:</strong> {item.symptom}</p>
+          {item.firstFixLabel && (
+            <p><strong>{firstFixLabel}:</strong> {item.firstFixLabel}</p>
+          )}
+          {item.firstFixCommand && <code>{item.firstFixCommand}</code>}
+          <div class="cta-row">
+            <a class="btn btn-primary" href={item.localizedPath}>{openFixLabel}</a>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>{nextStepTitle}</h2>
+      <p>{nextStepDescription}</p>
+      <div class="cta-row">
+        <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{vramCalculatorLabel}</a>
+        <a class="btn" href={withLocale(locale, "/en/tools/quantization-blind-test/")}>{quantizationLabel}</a>
+        <a class="btn" href={withLocale(locale, "/en/status/data-freshness/")}>{dataFreshnessLabel}</a>
+      </div>
     </section>
   </main>
 </BaseLayout>
