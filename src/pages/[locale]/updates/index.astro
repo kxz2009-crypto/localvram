@@ -1,8 +1,33 @@
 ---
-import LocaleBridgePage from "../../../components/i18n/LocaleBridgePage.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
+import updates from "../../../data/daily-updates.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import { resolveBlogCopy } from "../../../lib/i18n-blog-copy";
 import { resolvePageCopy } from "../../../lib/i18n-copy";
 import { withLocale } from "../../../lib/locale-paths";
+
+type UpdateCandidate = {
+  keyword?: string;
+  score?: number;
+  landing?: string;
+  source?: string;
+  traffic_priority?: string;
+};
+
+type PublishedPost = {
+  slug: string;
+  title: string;
+};
+
+type DailyUpdate = {
+  date: string;
+  summary: string;
+  candidates?: UpdateCandidate[];
+  published_posts?: PublishedPost[];
+  published_count?: number;
+  publish_run_at?: string;
+};
 
 export function getStaticPaths() {
   return STANDARD_I18N_LOCALES.map((locale) => ({
@@ -13,16 +38,300 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props as { locale: ComLocale };
 const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
-const enPath = "/en/updates/";
-const pagePath = withLocale(locale, enPath);
-const title = home.card_updates_title;
-const description = home.card_updates_desc || home.hero_intro;
+const pagePath = withLocale(locale, "/en/updates/");
+const allUpdates = updates.items as DailyUpdate[];
+const latest = allUpdates[0];
+
+const copyByLocale: Partial<Record<ComLocale, {
+  title: string;
+  description: string;
+  heading: string;
+  intro: string;
+  latestLabel: string;
+  publishedLabel: string;
+  candidatesLabel: string;
+  noCandidates: string;
+  scoreLabel: string;
+  openPost: string;
+  runLabel: string;
+}>> = {
+  es: {
+    title: "Actualizaciones diarias | LocalVRAM",
+    description: "Feed diario de cambios de LocalVRAM para contenido, verificacion y prioridades SEO.",
+    heading: "Actualizaciones diarias",
+    intro: "Resumen operativo de lo que cambio cada dia: publicaciones, candidatos revisados y senales de frescura.",
+    latestLabel: "Ultima ejecucion",
+    publishedLabel: "Publicado",
+    candidatesLabel: "Candidatos revisados",
+    noCandidates: "Sin candidatos adicionales registrados para esta ejecucion.",
+    scoreLabel: "puntuacion",
+    openPost: "Abrir articulo",
+    runLabel: "Ejecucion",
+  },
+  pt: {
+    title: "Atualizacoes diarias | LocalVRAM",
+    description: "Feed diario de alteracoes do LocalVRAM para conteudo, verificacao e prioridades de SEO.",
+    heading: "Atualizacoes diarias",
+    intro: "Resumo operacional do que mudou a cada dia: posts publicados, candidatos revisados e sinais de frescor.",
+    latestLabel: "Ultima execucao",
+    publishedLabel: "Publicado",
+    candidatesLabel: "Candidatos revisados",
+    noCandidates: "Nenhum candidato adicional registrado para esta execucao.",
+    scoreLabel: "pontuacao",
+    openPost: "Abrir artigo",
+    runLabel: "Execucao",
+  },
+  fr: {
+    title: "Mises a jour quotidiennes | LocalVRAM",
+    description: "Flux quotidien LocalVRAM pour le contenu, la verification et les priorites SEO.",
+    heading: "Mises a jour quotidiennes",
+    intro: "Suivi operationnel de ce qui change chaque jour: articles publies, candidats analyses et signaux de fraicheur.",
+    latestLabel: "Derniere execution",
+    publishedLabel: "Publie",
+    candidatesLabel: "Candidats analyses",
+    noCandidates: "Aucun candidat supplementaire enregistre pour cette execution.",
+    scoreLabel: "score",
+    openPost: "Ouvrir l'article",
+    runLabel: "Execution",
+  },
+  de: {
+    title: "Taegliche Updates | LocalVRAM",
+    description: "Taeglicher LocalVRAM-Feed fuer Content-Aenderungen, Verifizierung und SEO-Prioritaeten.",
+    heading: "Taegliche Updates",
+    intro: "Operativer Verlauf dessen, was sich taeglich aendert: veroeffentlichte Beitraege, gepruefte Kandidaten und Frischesignale.",
+    latestLabel: "Letzter Lauf",
+    publishedLabel: "Veroeffentlicht",
+    candidatesLabel: "Gepruefte Kandidaten",
+    noCandidates: "Keine zusaetzlichen Kandidaten fuer diesen Lauf protokolliert.",
+    scoreLabel: "Score",
+    openPost: "Beitrag oeffnen",
+    runLabel: "Lauf",
+  },
+  ru: {
+    title: "Ежедневные обновления | LocalVRAM",
+    description: "Ежедневная лента LocalVRAM: контент, проверки и SEO-приоритеты.",
+    heading: "Ежедневные обновления",
+    intro: "Операционная сводка ежедневных изменений: опубликованные материалы, проверенные кандидаты и сигналы свежести.",
+    latestLabel: "Последний запуск",
+    publishedLabel: "Опубликовано",
+    candidatesLabel: "Проверенные кандидаты",
+    noCandidates: "Для этого запуска нет дополнительных кандидатов.",
+    scoreLabel: "оценка",
+    openPost: "Открыть статью",
+    runLabel: "Запуск",
+  },
+  ja: {
+    title: "デイリー更新 | LocalVRAM",
+    description: "LocalVRAM のコンテンツ、検証、SEO 優先度を追跡する日次フィードです。",
+    heading: "デイリー更新",
+    intro: "公開記事、レビュー候補、鮮度シグナルなど、毎日の更新内容を確認できます。",
+    latestLabel: "最新実行",
+    publishedLabel: "公開済み",
+    candidatesLabel: "確認した候補",
+    noCandidates: "この実行では追加候補は記録されていません。",
+    scoreLabel: "スコア",
+    openPost: "記事を開く",
+    runLabel: "実行",
+  },
+  ko: {
+    title: "일일 업데이트 | LocalVRAM",
+    description: "LocalVRAM 콘텐츠, 검증, SEO 우선순위를 추적하는 일일 업데이트 피드입니다.",
+    heading: "일일 업데이트",
+    intro: "게시된 글, 검토한 후보, 최신성 신호 등 매일 바뀐 내용을 한곳에서 확인합니다.",
+    latestLabel: "최근 실행",
+    publishedLabel: "게시됨",
+    candidatesLabel: "검토한 후보",
+    noCandidates: "이 실행에는 추가 후보가 기록되지 않았습니다.",
+    scoreLabel: "점수",
+    openPost: "글 열기",
+    runLabel: "실행",
+  },
+  ar: {
+    title: "التحديثات اليومية | LocalVRAM",
+    description: "موجز يومي من LocalVRAM لتغييرات المحتوى والتحقق وأولويات SEO.",
+    heading: "التحديثات اليومية",
+    intro: "ملخص تشغيلي لما تغير كل يوم: المقالات المنشورة والمرشحات التي تمت مراجعتها وإشارات الحداثة.",
+    latestLabel: "آخر تشغيل",
+    publishedLabel: "منشور",
+    candidatesLabel: "المرشحون المراجعون",
+    noCandidates: "لا توجد مرشحات إضافية مسجلة لهذا التشغيل.",
+    scoreLabel: "الدرجة",
+    openPost: "فتح المقال",
+    runLabel: "تشغيل",
+  },
+  hi: {
+    title: "दैनिक अपडेट | LocalVRAM",
+    description: "LocalVRAM सामग्री, सत्यापन और SEO प्राथमिकताओं के लिए दैनिक अपडेट फीड.",
+    heading: "दैनिक अपडेट",
+    intro: "हर दिन बदली चीजों का परिचालन सार: प्रकाशित पोस्ट, जांचे गए उम्मीदवार और ताजगी संकेत.",
+    latestLabel: "नवीनतम रन",
+    publishedLabel: "प्रकाशित",
+    candidatesLabel: "जांचे गए उम्मीदवार",
+    noCandidates: "इस रन के लिए कोई अतिरिक्त उम्मीदवार दर्ज नहीं है.",
+    scoreLabel: "स्कोर",
+    openPost: "पोस्ट खोलें",
+    runLabel: "रन",
+  },
+  id: {
+    title: "Pembaruan harian | LocalVRAM",
+    description: "Umpan harian LocalVRAM untuk perubahan konten, verifikasi, dan prioritas SEO.",
+    heading: "Pembaruan harian",
+    intro: "Ringkasan operasional perubahan harian: artikel terbit, kandidat yang ditinjau, dan sinyal kesegaran.",
+    latestLabel: "Run terbaru",
+    publishedLabel: "Terbit",
+    candidatesLabel: "Kandidat ditinjau",
+    noCandidates: "Tidak ada kandidat tambahan yang dicatat untuk run ini.",
+    scoreLabel: "skor",
+    openPost: "Buka artikel",
+    runLabel: "Run",
+  },
+};
+
+const text = copyByLocale[locale] || {
+  title: `${home.card_updates_title} | LocalVRAM`,
+  description: home.card_updates_desc || "Daily update feed generated by LocalVRAM content agent.",
+  heading: home.card_updates_title || "Daily Updates",
+  intro: home.card_updates_desc || "Operational feed for what is updated every day.",
+  latestLabel: "Latest run",
+  publishedLabel: "Published",
+  candidatesLabel: "Reviewed candidates",
+  noCandidates: "No additional candidates recorded for this run.",
+  scoreLabel: "score",
+  openPost: "Open post",
+  runLabel: "Run",
+};
+
+const defaultAgentSummary =
+  "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.";
+const localizedAgentSummary: Partial<Record<ComLocale, string>> = {
+  es: "El agente priorizo oportunidades SEO, filtro temas repetidos y preparo borradores listos para revision.",
+  pt: "O agente priorizou oportunidades de SEO, filtrou temas repetidos e preparou rascunhos prontos para revisao.",
+  fr: "L'agent a classe les opportunites SEO, filtre les sujets repetes et prepare des brouillons prets a reviser.",
+  de: "Der Agent priorisierte SEO-Chancen, filterte Wiederholungsthemen und erstellte review-faehige Entwuerfe.",
+  ru: "Агент ранжировал SEO-возможности, отфильтровал повторяющиеся темы и подготовил черновики для проверки.",
+  ja: "エージェントが SEO 機会を優先順位付けし、重複トピックを除外して、レビュー可能な下書きを作成しました。",
+  ko: "에이전트가 SEO 기회를 우선순위화하고 반복 주제를 걸러낸 뒤 검토 가능한 초안을 생성했습니다.",
+  ar: "رتب الوكيل فرص SEO، وفلتر المواضيع المتكررة، وأنشأ مسودات جاهزة للمراجعة.",
+  hi: "एजेंट ने SEO अवसरों को प्राथमिकता दी, दोहराए गए विषयों को फ़िल्टर किया और समीक्षा योग्य ड्राफ्ट बनाए.",
+  id: "Agen memeringkat peluang SEO, menyaring topik berulang, dan membuat draf yang siap ditinjau.",
+};
+
+const localizeSummary = (summary: string) =>
+  summary === defaultAgentSummary ? localizedAgentSummary[locale] || summary : summary;
+
+const localizePostTitle = (post: PublishedPost) =>
+  resolveBlogCopy(post.slug, locale, {
+    title: post.title,
+    description: post.title,
+    ctaLine: "",
+  }).title;
+
+const formatDate = (value: string) =>
+  new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+
+const formatDateTime = (value?: string) => {
+  if (!value) {
+    return "";
+  }
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: "UTC",
+  }).format(new Date(value));
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: text.heading,
+  description: text.description,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: locale,
+  dateModified: latest?.publish_run_at || latest?.date,
+  isPartOf: {
+    "@type": "WebSite",
+    name: "LocalVRAM",
+    url: "https://localvram.com/",
+  },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: allUpdates.length,
+    itemListElement: allUpdates.slice(0, 30).map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "CreativeWork",
+        name: `${text.heading} ${item.date}`,
+        description: localizeSummary(item.summary),
+        datePublished: item.publish_run_at || item.date,
+        url: `https://localvram.com${pagePath}#update-${item.date}`,
+      },
+    })),
+  },
+};
 ---
 
-<LocaleBridgePage
+<BaseLayout
+  title={text.title}
+  description={text.description}
   locale={locale}
-  pagePath={pagePath}
-  enPath={enPath}
-  title={title}
-  description={description}
-/>
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero compact-hero">
+      <p class="eyebrow">LocalVRAM</p>
+      <h1>{text.heading}</h1>
+      <p>{text.intro}</p>
+      {latest && (
+        <p class="muted">
+          {text.latestLabel}: {formatDateTime(latest.publish_run_at) || formatDate(latest.date)}
+        </p>
+      )}
+    </section>
+
+    <section class="post-list" aria-label={text.heading}>
+      {allUpdates.map((item) => (
+        <article class="post-card" id={`update-${item.date}`}>
+          <h2>{formatDate(item.date)}</h2>
+          <p>{localizeSummary(item.summary)}</p>
+          {item.published_posts && item.published_posts.length > 0 && (
+            <>
+              <h3>{text.publishedLabel}</h3>
+              <ul>
+                {item.published_posts.map((post) => (
+                  <li>
+                    <a href={withLocale(locale, `/en/blog/${post.slug}/`)}>{localizePostTitle(post)}</a>
+                    {" "}
+                    <span class="muted">({text.openPost})</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          <h3>{text.candidatesLabel}</h3>
+          {item.candidates && item.candidates.length > 0 ? (
+            <ul>
+              {item.candidates.slice(0, 8).map((candidate) => (
+                <li>
+                  {candidate.landing ? (
+                    <a href={withLocale(locale, candidate.landing)}>{candidate.keyword}</a>
+                  ) : (
+                    <span>{candidate.keyword}</span>
+                  )}
+                  {typeof candidate.score === "number" && (
+                    <span class="muted"> ({text.scoreLabel}: {candidate.score})</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="muted">{text.noCandidates}</p>
+          )}
+          <p class="muted">{text.runLabel}: {formatDateTime(item.publish_run_at) || item.date}</p>
+        </article>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
