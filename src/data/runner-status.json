@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-17T07:43:26Z",
+  "updated_at": "2026-06-24T06:44:34Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -66,11 +66,11 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=174866,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=277461,fd=3))"
     ],
     "ps_ollama": [
-      "gao20     174866       1  1 15:31 ?        00:00:09 /usr/local/bin/ollama serve",
-      "gao20     188962  174866 21 15:41 ?        00:00:20 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 46439"
+      "gao20     277461       1  0 14:22 ?        00:00:10 /usr/local/bin/ollama serve",
+      "gao20     309563  277461 99 14:41 ?        00:16:53 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 44999"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -99,7 +99,7 @@
       "version": "0.20.2"
     },
     "tags": {
-      "model_count": 46,
+      "model_count": 51,
       "sample": [
         "antangelmed/ling-flash-2.0:100b",
         "bge-m3:latest",
@@ -107,25 +107,25 @@
         "deepseek-r1:14b",
         "deepseek-r1:32b",
         "deepseek-r1:70b",
+        "deepseek-v4-flash:cloud",
+        "deepseek-v4-pro:cloud",
         "gemma3:27b",
         "gemma4:26b",
         "gemma4:31b",
         "glm-4.7-flash:bf16",
         "glm-4.7-flash:q8_0",
+        "glm-5.2:cloud",
         "glm-5:cloud",
         "granite4.1:30b",
+        "kimi-k2.7-code:cloud",
         "llama3.2-vision:11b",
         "llama3.3:70b-instruct-q4_k_m",
-        "llama3.3:latest",
-        "llama4:latest",
-        "minimax-m2.5:cloud",
-        "ministral-3:14b",
-        "mistral-small:22b"
+        "llama3.3:latest"
       ]
     }
   },
   "summary": {
-    "model_count": 46,
+    "model_count": 51,
     "required_targets_count": 14,
     "required_targets_runnable_count": 12,
     "required_targets_runnable": [
