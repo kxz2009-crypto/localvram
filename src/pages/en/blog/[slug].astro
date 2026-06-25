@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
+import catalog from "../../../data/model-catalog.json";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => data.lang === "en");
@@ -13,6 +14,76 @@ const postPath = `/en/blog/${post.slug}/`;
 const postUrl = `https://localvram.com${postPath}`;
 const publishedIso = post.data.pubDate.toISOString();
 const modifiedIso = (post.data.updatedDate || post.data.pubDate).toISOString();
+const normalizeToken = (value: unknown) =>
+  String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+const primaryHaystack = [
+  post.slug,
+  post.data.title,
+  post.data.description,
+  ...(post.data.tags || [])
+].join(" ").toLowerCase();
+const bodyHaystack = String(post.body || "").toLowerCase();
+const normalizedPrimaryHaystack = normalizeToken(primaryHaystack);
+const normalizedBodyHaystack = normalizeToken(bodyHaystack);
+const quantScore = (quantization: string) => {
+  const quant = String(quantization || "").toUpperCase();
+  if (quant === "Q4") return 8;
+  if (quant === "Q5") return 6;
+  if (quant === "Q8") return 4;
+  if (quant === "FP16") return 1;
+  return 0;
+};
+const modelScore = (item: (typeof catalog.items)[number]) => {
+  const tag = String(item.ollama_tag || "").toLowerCase();
+  const tagSlug = normalizeToken(tag);
+  const idSlug = normalizeToken(item.id);
+  const librarySlug = normalizeToken(item.library_id);
+  const familySlug = normalizeToken(item.family);
+  let score = 0;
+  if (tag && primaryHaystack.includes(tag)) score += 180;
+  if (tagSlug && normalizedPrimaryHaystack.includes(tagSlug)) score += 160;
+  if (idSlug && normalizedPrimaryHaystack.includes(idSlug)) score += 140;
+  if (librarySlug && normalizedPrimaryHaystack.includes(librarySlug)) score += 70;
+  if (familySlug && normalizedPrimaryHaystack.includes(familySlug)) score += 30;
+  if (tag && bodyHaystack.includes(tag)) score += 35;
+  if (tagSlug && normalizedBodyHaystack.includes(tagSlug)) score += 30;
+  if (idSlug && normalizedBodyHaystack.includes(idSlug)) score += 25;
+  if (librarySlug && normalizedBodyHaystack.includes(librarySlug)) score += 15;
+  if (familySlug && normalizedBodyHaystack.includes(familySlug)) score += 8;
+  if (!score) return 0;
+  score += quantScore(item.quantization);
+  if (item.data_status === "measured") score += 8;
+  if (item.is_top20_curated) score += 6;
+  return score;
+};
+const relatedModelCandidates = new Map<
+  string,
+  { item: (typeof catalog.items)[number]; score: number }
+>();
+for (const item of catalog.items) {
+  const score = modelScore(item);
+  if (!score) continue;
+  const key = String(item.ollama_tag || item.library_id || item.id);
+  const existing = relatedModelCandidates.get(key);
+  if (!existing || score > existing.score) {
+    relatedModelCandidates.set(key, { item, score });
+  }
+}
+const relatedModels = Array.from(relatedModelCandidates.values())
+  .sort((a, b) => b.score - a.score || String(a.item.name).localeCompare(String(b.item.name)))
+  .slice(0, 5)
+  .map(({ item }) => ({
+    id: item.id,
+    name: item.name,
+    tag: item.ollama_tag,
+    status: item.data_status === "measured" ? "measured" : "estimated",
+    quantization: item.quantization,
+    vramMin: item.vram_min_gb,
+    vramOptimal: item.vram_optimal_gb
+  }));
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -35,7 +106,13 @@ const articleSchema = {
   },
   mainEntityOfPage: postUrl,
   url: postUrl,
-  keywords: post.data.tags
+  keywords: post.data.tags,
+  about: relatedModels.slice(0, 3).map((model) => ({
+    "@type": "SoftwareApplication",
+    name: model.name,
+    url: `https://localvram.com/en/models/${model.id}/`,
+    applicationCategory: "AI model"
+  }))
 };
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -61,6 +138,22 @@ const breadcrumbSchema = {
     }
   ]
 };
+const relatedModelsSchema = relatedModels.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: `${post.data.title} related model pages`,
+      itemListElement: relatedModels.map((model, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: model.name,
+        url: `https://localvram.com/en/models/${model.id}/`
+      }))
+    }
+  : null;
+const structuredData = relatedModelsSchema
+  ? [articleSchema, breadcrumbSchema, relatedModelsSchema]
+  : [articleSchema, breadcrumbSchema];
 ---
 
 <BaseLayout
@@ -71,7 +164,7 @@ const breadcrumbSchema = {
   ogType="article"
   publishedTime={publishedIso}
   modifiedTime={modifiedIso}
-  structuredData={[articleSchema, breadcrumbSchema]}
+  structuredData={structuredData}
 >
   <main class="container">
     <article class="post-page">
@@ -90,6 +183,23 @@ const breadcrumbSchema = {
       <section class="prose">
         <Content />
       </section>
+
+      {relatedModels.length > 0 && (
+        <section class="card">
+          <h2>Related model pages</h2>
+          <p>Model profiles referenced by this article, with VRAM fit and measured or estimated status.</p>
+          <ul class="link-list">
+            {relatedModels.map((model) => (
+              <li>
+                <a href={`/en/models/${model.id}/`}>{model.name}</a>
+                <span>
+                  {model.tag} · {model.quantization} · {model.vramMin}-{model.vramOptimal}GB VRAM · {model.status}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section class="cta-row">
         <a class="btn" href="/en/tools/vram-calculator/">Check model fit</a>
