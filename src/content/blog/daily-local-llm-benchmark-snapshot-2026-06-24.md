@@ -36,7 +36,7 @@ ollama run qwen3-coder:30b
 
 - Developers evaluating `qwen3-coder:30b` for code completion, refactoring, or agentic coding on a local RTX 3090.
 - Teams that want a private, offline coding assistant without sending source code to a cloud API.
-- Anyone comparing `{pick_tag}` against Copilot or cloud coding agents on latency and throughput.
+- Anyone comparing `qwen3-coder:30b` against Copilot or cloud coding agents on latency and throughput.
 
 ## Who should skip it
 

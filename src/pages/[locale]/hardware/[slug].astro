@@ -1,13 +1,44 @@
 ---
-import LocaleBridgePage from "../../../components/i18n/LocaleBridgePage.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import affiliateLinks from "../../../data/affiliate-links.json";
 import tiers from "../../../data/hardware-tiers.json";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
+
+type TierModel = {
+  name: string;
+  fit: string;
+  expected_tok_s: string;
+};
 
 type Tier = {
   vram_gb: number;
   title: string;
   summary: string;
+  recommended_models: TierModel[];
+};
+
+type TierCopy = {
+  title: string;
+  summary: string;
+};
+
+type PageCopy = {
+  titleSuffix: string;
+  hardwareCrumb: string;
+  introPrefix: string;
+  recommendedModels: string;
+  modelLabel: string;
+  fitLabel: string;
+  speedLabel: string;
+  checkFit: string;
+  hardwareUpgrade: string;
+  cloudFallback: string;
+  fitGood: string;
+  fitConditional: string;
+  fitEdge: string;
+  tierCopy: Record<number, TierCopy>;
 };
 
 export function getStaticPaths() {
@@ -23,12 +54,322 @@ export function getStaticPaths() {
 const { locale, tier } = Astro.props as { locale: ComLocale; tier: Tier };
 const enPath = `/en/hardware/${tier.vram_gb}gb-vram-models/`;
 const pagePath = withLocale(locale, enPath);
+
+const copyByLocale: Partial<Record<ComLocale, PageCopy>> = {
+  es: {
+    titleSuffix: "modelos para Ollama",
+    hardwareCrumb: "Niveles de hardware",
+    introPrefix: "Usa este nivel para decidir que modelos locales caben de forma realista antes de comprar GPU o usar nube.",
+    recommendedModels: "Modelos recomendados",
+    modelLabel: "Modelo",
+    fitLabel: "Ajuste",
+    speedLabel: "tok/s esperados",
+    checkFit: "Comprobar ajuste",
+    hardwareUpgrade: "Actualizar hardware",
+    cloudFallback: "Cloud GPU de respaldo",
+    fitGood: "bueno",
+    fitConditional: "condicional",
+    fitEdge: "limite",
+    tierCopy: {
+      8: { title: "Modelos Ollama para 8GB VRAM", summary: "Nivel de entrada para chat ligero y modelos de codigo pequenos." },
+      12: { title: "Modelos Ollama para 12GB VRAM", summary: "Nivel equilibrado para 7B/13B con ejecuciones locales practicas." },
+      16: { title: "Modelos Ollama para 16GB VRAM", summary: "Zona comoda para 13B/14B y algunos setups 32B Q4." },
+      24: { title: "Modelos Ollama para 24GB VRAM", summary: "Nivel de alto valor para modelos cuantizados grandes y pruebas de contexto largo." },
+    },
+  },
+  pt: {
+    titleSuffix: "modelos para Ollama",
+    hardwareCrumb: "Niveis de hardware",
+    introPrefix: "Use este nivel para decidir quais modelos locais cabem antes de comprar GPU ou usar nuvem.",
+    recommendedModels: "Modelos recomendados",
+    modelLabel: "Modelo",
+    fitLabel: "Ajuste",
+    speedLabel: "tok/s esperados",
+    checkFit: "Verificar encaixe",
+    hardwareUpgrade: "Upgrade de hardware",
+    cloudFallback: "Cloud GPU de fallback",
+    fitGood: "bom",
+    fitConditional: "condicional",
+    fitEdge: "limite",
+    tierCopy: {
+      8: { title: "Modelos Ollama para 8GB VRAM", summary: "Nivel de entrada para chat leve e modelos pequenos de codigo." },
+      12: { title: "Modelos Ollama para 12GB VRAM", summary: "Nivel equilibrado para 7B/13B com execucoes locais praticas." },
+      16: { title: "Modelos Ollama para 16GB VRAM", summary: "Zona confortavel para 13B/14B e alguns setups 32B Q4." },
+      24: { title: "Modelos Ollama para 24GB VRAM", summary: "Nivel de alto valor para modelos quantizados grandes e testes de contexto longo." },
+    },
+  },
+  fr: {
+    titleSuffix: "modeles pour Ollama",
+    hardwareCrumb: "Niveaux materiels",
+    introPrefix: "Utilisez ce niveau pour savoir quels modeles locaux tiennent avant d'acheter un GPU ou de passer au cloud.",
+    recommendedModels: "Modeles recommandes",
+    modelLabel: "Modele",
+    fitLabel: "Compatibilite",
+    speedLabel: "tok/s attendus",
+    checkFit: "Verifier l'ajustement",
+    hardwareUpgrade: "Upgrade materiel",
+    cloudFallback: "Cloud GPU de secours",
+    fitGood: "bon",
+    fitConditional: "conditionnel",
+    fitEdge: "limite",
+    tierCopy: {
+      8: { title: "Modeles Ollama pour 8GB VRAM", summary: "Niveau d'entree pour chat leger et petits modeles de code." },
+      12: { title: "Modeles Ollama pour 12GB VRAM", summary: "Niveau equilibre pour 7B/13B avec executions locales pratiques." },
+      16: { title: "Modeles Ollama pour 16GB VRAM", summary: "Zone confortable pour 13B/14B et certains setups 32B Q4." },
+      24: { title: "Modeles Ollama pour 24GB VRAM", summary: "Niveau a forte valeur pour grands modeles quantifies et tests long contexte." },
+    },
+  },
+  de: {
+    titleSuffix: "Modelle fuer Ollama",
+    hardwareCrumb: "Hardware-Stufen",
+    introPrefix: "Nutze diese Stufe, um vor GPU-Kauf oder Cloud-Fallback realistisch passende lokale Modelle zu waehlen.",
+    recommendedModels: "Empfohlene Modelle",
+    modelLabel: "Modell",
+    fitLabel: "Eignung",
+    speedLabel: "erwartete tok/s",
+    checkFit: "Passung pruefen",
+    hardwareUpgrade: "Hardware-Upgrade",
+    cloudFallback: "Cloud-GPU-Fallback",
+    fitGood: "gut",
+    fitConditional: "bedingt",
+    fitEdge: "Grenzfall",
+    tierCopy: {
+      8: { title: "8GB-VRAM-Modelle fuer Ollama", summary: "Einstiegsstufe fuer leichte Chat- und Coding-Modelle." },
+      12: { title: "12GB-VRAM-Modelle fuer Ollama", summary: "Ausgewogene Stufe fuer 7B/13B mit praktikablen lokalen Laeufen." },
+      16: { title: "16GB-VRAM-Modelle fuer Ollama", summary: "Komfortzone fuer 13B/14B und ausgewaehlte 32B-Q4-Setups." },
+      24: { title: "24GB-VRAM-Modelle fuer Ollama", summary: "Preis-Leistungs-Stufe fuer grosse quantisierte Modelle und Long-Context-Tests." },
+    },
+  },
+  ru: {
+    titleSuffix: "модели для Ollama",
+    hardwareCrumb: "Уровни железа",
+    introPrefix: "Используйте этот уровень, чтобы понять, какие локальные модели реально поместятся до покупки GPU или перехода в облако.",
+    recommendedModels: "Рекомендуемые модели",
+    modelLabel: "Модель",
+    fitLabel: "Подходит",
+    speedLabel: "ожидаемые tok/s",
+    checkFit: "Проверить размер",
+    hardwareUpgrade: "Апгрейд железа",
+    cloudFallback: "Cloud GPU fallback",
+    fitGood: "хорошо",
+    fitConditional: "условно",
+    fitEdge: "на грани",
+    tierCopy: {
+      8: { title: "Модели Ollama для 8GB VRAM", summary: "Начальный уровень для легкого чата и небольших coding-моделей." },
+      12: { title: "Модели Ollama для 12GB VRAM", summary: "Сбалансированный уровень для 7B/13B с практичными локальными запусками." },
+      16: { title: "Модели Ollama для 16GB VRAM", summary: "Комфортная зона для 13B/14B и отдельных 32B Q4 setups." },
+      24: { title: "Модели Ollama для 24GB VRAM", summary: "Ценный уровень для крупных quantized моделей и long-context тестов." },
+    },
+  },
+  ja: {
+    titleSuffix: "Ollama 向けモデル",
+    hardwareCrumb: "ハードウェア階層",
+    introPrefix: "GPU 購入やクラウド利用の前に、この VRAM 階層で現実的に動くローカルモデルを確認できます。",
+    recommendedModels: "推奨モデル",
+    modelLabel: "モデル",
+    fitLabel: "適合",
+    speedLabel: "想定 tok/s",
+    checkFit: "適合を確認",
+    hardwareUpgrade: "ハードウェア更新",
+    cloudFallback: "Cloud GPU フォールバック",
+    fitGood: "良好",
+    fitConditional: "条件付き",
+    fitEdge: "限界",
+    tierCopy: {
+      8: { title: "8GB VRAM 向け Ollama モデル", summary: "軽量チャットや小さな coding モデル向けの入門階層です。" },
+      12: { title: "12GB VRAM 向け Ollama モデル", summary: "7B/13B を実用的にローカル実行しやすいバランス階層です。" },
+      16: { title: "16GB VRAM 向け Ollama モデル", summary: "13B/14B と一部の 32B Q4 構成に向いた余裕ある階層です。" },
+      24: { title: "24GB VRAM 向け Ollama モデル", summary: "大型量子化モデルや長いコンテキスト試験に価値の高い階層です。" },
+    },
+  },
+  ko: {
+    titleSuffix: "Ollama 모델",
+    hardwareCrumb: "하드웨어 티어",
+    introPrefix: "GPU 구매나 클라우드 폴백 전에 이 VRAM 티어에서 현실적으로 돌릴 수 있는 로컬 모델을 확인합니다.",
+    recommendedModels: "추천 모델",
+    modelLabel: "모델",
+    fitLabel: "적합도",
+    speedLabel: "예상 tok/s",
+    checkFit: "적합도 확인",
+    hardwareUpgrade: "하드웨어 업그레이드",
+    cloudFallback: "Cloud GPU 폴백",
+    fitGood: "좋음",
+    fitConditional: "조건부",
+    fitEdge: "경계",
+    tierCopy: {
+      8: { title: "8GB VRAM용 Ollama 모델", summary: "가벼운 채팅과 코딩 모델을 위한 입문 티어입니다." },
+      12: { title: "12GB VRAM용 Ollama 모델", summary: "7B/13B 모델을 현실적으로 로컬 실행하기 좋은 균형 티어입니다." },
+      16: { title: "16GB VRAM용 Ollama 모델", summary: "13B/14B 및 일부 32B Q4 구성을 다루기 좋은 구간입니다." },
+      24: { title: "24GB VRAM용 Ollama 모델", summary: "대형 양자화 모델과 긴 컨텍스트 테스트에 가치가 높은 티어입니다." },
+    },
+  },
+  ar: {
+    titleSuffix: "نماذج Ollama",
+    hardwareCrumb: "مستويات العتاد",
+    introPrefix: "استخدم هذا المستوى لمعرفة النماذج المحلية المناسبة قبل شراء GPU أو استخدام السحابة.",
+    recommendedModels: "النماذج الموصى بها",
+    modelLabel: "النموذج",
+    fitLabel: "الملاءمة",
+    speedLabel: "tok/s المتوقع",
+    checkFit: "تحقق من الملاءمة",
+    hardwareUpgrade: "ترقية العتاد",
+    cloudFallback: "Cloud GPU احتياطي",
+    fitGood: "جيد",
+    fitConditional: "مشروط",
+    fitEdge: "حدي",
+    tierCopy: {
+      8: { title: "نماذج Ollama لـ 8GB VRAM", summary: "مستوى دخول للدردشة الخفيفة ونماذج البرمجة الصغيرة." },
+      12: { title: "نماذج Ollama لـ 12GB VRAM", summary: "مستوى متوازن لتشغيل 7B/13B محليا بشكل عملي." },
+      16: { title: "نماذج Ollama لـ 16GB VRAM", summary: "منطقة مريحة لـ 13B/14B وبعض إعدادات 32B Q4." },
+      24: { title: "نماذج Ollama لـ 24GB VRAM", summary: "مستوى عالي القيمة للنماذج الكبيرة المكممة واختبارات السياق الطويل." },
+    },
+  },
+  hi: {
+    titleSuffix: "Ollama मॉडल",
+    hardwareCrumb: "हार्डवेयर टियर",
+    introPrefix: "GPU खरीदने या cloud fallback से पहले इस VRAM tier में चलने वाले लोकल मॉडल जांचें.",
+    recommendedModels: "सुझाए गए मॉडल",
+    modelLabel: "मॉडल",
+    fitLabel: "फिट",
+    speedLabel: "अपेक्षित tok/s",
+    checkFit: "फिट जांचें",
+    hardwareUpgrade: "हार्डवेयर अपग्रेड",
+    cloudFallback: "Cloud GPU fallback",
+    fitGood: "अच्छा",
+    fitConditional: "शर्तों पर",
+    fitEdge: "सीमा पर",
+    tierCopy: {
+      8: { title: "8GB VRAM के लिए Ollama मॉडल", summary: "हल्के chat और छोटे coding models के लिए entry tier." },
+      12: { title: "12GB VRAM के लिए Ollama मॉडल", summary: "7B/13B के practical local runs के लिए balanced tier." },
+      16: { title: "16GB VRAM के लिए Ollama मॉडल", summary: "13B/14B और selected 32B Q4 setups के लिए comfort zone." },
+      24: { title: "24GB VRAM के लिए Ollama मॉडल", summary: "बड़े quantized models और long-context tests के लिए high-value tier." },
+    },
+  },
+  id: {
+    titleSuffix: "model untuk Ollama",
+    hardwareCrumb: "Tingkat hardware",
+    introPrefix: "Gunakan tingkat ini untuk memilih model lokal yang realistis sebelum membeli GPU atau memakai cloud.",
+    recommendedModels: "Model rekomendasi",
+    modelLabel: "Model",
+    fitLabel: "Kecocokan",
+    speedLabel: "perkiraan tok/s",
+    checkFit: "Cek kecocokan",
+    hardwareUpgrade: "Upgrade hardware",
+    cloudFallback: "Cloud GPU fallback",
+    fitGood: "baik",
+    fitConditional: "bersyarat",
+    fitEdge: "batas",
+    tierCopy: {
+      8: { title: "Model Ollama untuk 8GB VRAM", summary: "Tingkat awal untuk chat ringan dan model coding kecil." },
+      12: { title: "Model Ollama untuk 12GB VRAM", summary: "Tingkat seimbang untuk 7B/13B dengan run lokal yang praktis." },
+      16: { title: "Model Ollama untuk 16GB VRAM", summary: "Zona nyaman untuk 13B/14B dan beberapa setup 32B Q4." },
+      24: { title: "Model Ollama untuk 24GB VRAM", summary: "Tingkat bernilai tinggi untuk model quantized besar dan uji konteks panjang." },
+    },
+  },
+};
+
+const text = copyByLocale[locale] || copyByLocale.de!;
+const localizedTier = text.tierCopy[tier.vram_gb] || {
+  title: tier.title,
+  summary: tier.summary,
+};
+const title = `${tier.vram_gb}GB VRAM ${text.titleSuffix} | LocalVRAM`;
+
+const fitLabel = (fit: string) => {
+  if (fit === "good") return text.fitGood;
+  if (fit === "conditional") return text.fitConditional;
+  if (fit === "edge") return text.fitEdge;
+  return fit;
+};
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: localizedTier.title,
+    description: localizedTier.summary,
+    url: `https://localvram.com${pagePath}`,
+    inLanguage: locale,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: tier.recommended_models.length,
+      itemListElement: tier.recommended_models.map((model, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: model.name,
+        description: `${text.fitLabel}: ${fitLabel(model.fit)}, ${text.speedLabel}: ${model.expected_tok_s}`,
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "LocalVRAM",
+        item: `https://localvram.com${withLocale(locale, "/en/")}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: text.hardwareCrumb,
+        item: `https://localvram.com${withLocale(locale, "/en/hardware/")}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `${tier.vram_gb}GB VRAM`,
+        item: `https://localvram.com${pagePath}`,
+      },
+    ],
+  },
+];
 ---
 
-<LocaleBridgePage
+<BaseLayout
+  title={title}
+  description={localizedTier.summary}
   locale={locale}
-  pagePath={pagePath}
-  enPath={enPath}
-  title={tier.title}
-  description={tier.summary}
-/>
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  structuredData={structuredData}
+>
+  <main class="container">
+    <section class="hero compact-hero">
+      <p class="eyebrow">{tier.vram_gb}GB VRAM</p>
+      <h1>{localizedTier.title}</h1>
+      <p>{localizedTier.summary}</p>
+      <p>{text.introPrefix}</p>
+    </section>
+
+    <section class="card">
+      <h2>{text.recommendedModels}</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{text.modelLabel}</th>
+            <th>{text.fitLabel}</th>
+            <th>{text.speedLabel}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tier.recommended_models.map((model) => (
+            <tr>
+              <td>{model.name}</td>
+              <td>{fitLabel(model.fit)}</td>
+              <td>{model.expected_tok_s}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{text.checkFit}</a>
+      <a class="btn" href={withLocale(locale, "/en/affiliate/hardware-upgrade/")}>{text.hardwareUpgrade}</a>
+      <a class="btn btn-primary" href={affiliateLinks.runpod}>{text.cloudFallback}</a>
+    </section>
+  </main>
+</BaseLayout>
