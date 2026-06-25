@@ -1,6 +1,6 @@
 {
   "version": "2026.02.24.ollama-popular",
-  "count": 569,
+  "count": 593,
   "models": [
     {
       "id": "llama31-8b-q4",
@@ -4395,6 +4395,166 @@
       "verified": false
     },
     {
+      "id": "qwen36-35b-q4",
+      "name": "Qwen3.6 35B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen36-35b-q5",
+      "name": "Qwen3.6 35B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen36-35b-q8",
+      "name": "Qwen3.6 35B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen36-35b-fp16",
+      "name": "Qwen3.6 35B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "antangelmed-ling-flash-20-100b-q4",
+      "name": "Antangelmed/Ling Flash 2.0 100B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "antangelmed-ling-flash-20-100b-q5",
+      "name": "Antangelmed/Ling Flash 2.0 100B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "antangelmed-ling-flash-20-100b-q8",
+      "name": "Antangelmed/Ling Flash 2.0 100B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "antangelmed-ling-flash-20-100b-fp16",
+      "name": "Antangelmed/Ling Flash 2.0 100B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-ocr-3b-q4",
+      "name": "Deepseek Ocr 3B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-ocr-3b-q5",
+      "name": "Deepseek Ocr 3B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-ocr-3b-q8",
+      "name": "Deepseek Ocr 3B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "deepseek-ocr-3b-fp16",
+      "name": "Deepseek Ocr 3B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma4-26b-q4",
+      "name": "Gemma4 26B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma4-26b-q5",
+      "name": "Gemma4 26B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma4-26b-q8",
+      "name": "Gemma4 26B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma4-26b-fp16",
+      "name": "Gemma4 26B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma4-31b-q4",
+      "name": "Gemma4 31B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma4-31b-q5",
+      "name": "Gemma4 31B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma4-31b-q8",
+      "name": "Gemma4 31B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gemma4-31b-fp16",
+      "name": "Gemma4 31B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
       "id": "glm-47-flash-7b-q4",
       "name": "Glm 4.7 Flash 7B Q4",
       "quantizations": [
@@ -4425,6 +4585,70 @@
         "FP16"
       ],
       "verified": true
+    },
+    {
+      "id": "granite41-30b-q4",
+      "name": "Granite4.1 30B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite41-30b-q5",
+      "name": "Granite4.1 30B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite41-30b-q8",
+      "name": "Granite4.1 30B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "granite41-30b-fp16",
+      "name": "Granite4.1 30B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama33-70b-q4",
+      "name": "Llama3.3 70B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama33-70b-q5",
+      "name": "Llama3.3 70B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama33-70b-q8",
+      "name": "Llama3.3 70B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "llama33-70b-fp16",
+      "name": "Llama3.3 70B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
     },
     {
       "id": "ministral-3-14b-q4",
@@ -4485,38 +4709,6 @@
     {
       "id": "nemotron-3-nano-30b-fp16",
       "name": "Nemotron 3 Nano 30B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": true
-    },
-    {
-      "id": "qwen36-35b-q4",
-      "name": "Qwen3.6 35B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": true
-    },
-    {
-      "id": "qwen36-35b-q5",
-      "name": "Qwen3.6 35B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": true
-    },
-    {
-      "id": "qwen36-35b-q8",
-      "name": "Qwen3.6 35B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": true
-    },
-    {
-      "id": "qwen36-35b-fp16",
-      "name": "Qwen3.6 35B FP16",
       "quantizations": [
         "FP16"
       ],

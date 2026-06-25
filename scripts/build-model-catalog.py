@@ -11,6 +11,8 @@ OUT = ROOT / "src" / "data" / "model-catalog.json"
 MODELS_OUT = ROOT / "src" / "data" / "models.json"
 TOP20_CURATED_FILE = ROOT / "src" / "data" / "ollama-top20-curated.json"
 BENCHMARK_RESULTS_FILE = ROOT / "src" / "data" / "benchmark-results.json"
+RUNNER_STATUS_FILE = ROOT / "src" / "data" / "runner-status.json"
+WEEKLY_TARGET_PLAN_FILE = ROOT / "src" / "data" / "weekly-target-plan.json"
 VERIFIED_AT = "2026-02-24"
 POPULAR_SOURCE = "https://ollama.com/library"
 LOGGER = configure_logging("build-model-catalog")
@@ -83,6 +85,7 @@ POPULAR_MODELS = [
     {"id": "magistral", "name": "Magistral", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["24b"], "source_url": "https://ollama.com/library/magistral"},
     {"id": "qwen3.5", "name": "Qwen3.5", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["35b", "122b"], "source_url": "https://ollama.com/library/qwen3.5"},
     {"id": "qwen3.5", "name": "Qwen3.5", "scenario": "multimodal", "license_scope": "open-source", "sizes": ["397b-a17b"], "quant_mode": "cloud", "source_url": "https://ollama.com/library/qwen3.5%3Acloud"},
+    {"id": "qwen3.6", "name": "Qwen3.6", "scenario": "reasoning", "license_scope": "open-source", "sizes": ["35b"], "source_url": "https://ollama.com/library/qwen3.6"},
 ]
 
 VERIFIED_IDS = {
@@ -262,10 +265,10 @@ def load_top20_overrides() -> dict[tuple[str, str], dict]:
     return overrides
 
 
-def parse_size_label_from_tag(tag: str) -> str:
+def parse_size_label_from_tag(tag: str, fallback: str = "7b") -> str:
     raw = str(tag or "").strip().lower()
     if ":" not in raw:
-        return "7b"
+        return fallback
     size_part = raw.split(":", 1)[1]
     match = re.search(
         r"(e[0-9]+(?:\.[0-9]+)?b|[0-9]+(?:\.[0-9]+)?x[0-9]+(?:\.[0-9]+)?b|"
@@ -273,7 +276,7 @@ def parse_size_label_from_tag(tag: str) -> str:
         size_part,
     )
     if not match:
-        return "7b"
+        return fallback
     return match.group(1).lower()
 
 
@@ -293,6 +296,53 @@ def load_measured_tags() -> set[str]:
         if tag:
             out.add(tag)
     return out
+
+
+def tags_from_runner_status(payload: dict) -> set[str]:
+    tags: set[str] = set()
+    api_tags = payload.get("api", {}).get("tags", {}) if isinstance(payload, dict) else {}
+    for raw in api_tags.get("sample", []) if isinstance(api_tags, dict) else []:
+        tag = str(raw or "").strip().lower()
+        if tag:
+            tags.add(tag)
+    return tags
+
+
+def tags_from_weekly_plan(payload: dict) -> set[str]:
+    tags: set[str] = set()
+    if not isinstance(payload, dict):
+        return tags
+    for key in ("local_models_sample", "added_targets"):
+        for raw in payload.get(key, []) if isinstance(payload.get(key), list) else []:
+            tag = str(raw or "").strip().lower()
+            if tag and ":" in tag:
+                tags.add(tag)
+    return tags
+
+
+def load_local_inventory_tags() -> set[str]:
+    tags: set[str] = set()
+    for path, loader in (
+        (RUNNER_STATUS_FILE, tags_from_runner_status),
+        (WEEKLY_TARGET_PLAN_FILE, tags_from_weekly_plan),
+    ):
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8-sig"))
+        except Exception:  # noqa: BLE001
+            continue
+        tags.update(loader(payload))
+    return tags
+
+
+def is_catalogable_local_tag(tag: str) -> bool:
+    raw = str(tag or "").strip().lower()
+    if not raw or ":" not in raw:
+        return False
+    if raw.endswith(":latest") or raw.endswith(":cloud") or raw.endswith("-cloud") or ":cloud" in raw:
+        return False
+    return bool(parse_size_label_from_tag(raw, fallback=""))
 
 
 def infer_scenario_from_family(family: str) -> str:
@@ -388,15 +438,20 @@ def main() -> None:
                 )
 
     measured_tags = load_measured_tags()
+    local_inventory_tags = {tag for tag in load_local_inventory_tags() if is_catalogable_local_tag(tag)}
     known_tags = {str(item.get("ollama_tag", "")).strip().lower() for item in items if str(item.get("ollama_tag", "")).strip()}
-    missing_measured_tags = sorted(tag for tag in measured_tags if tag not in known_tags)
+    missing_measured_tags = sorted(tag for tag in (measured_tags | local_inventory_tags) if tag not in known_tags)
 
     for tag in missing_measured_tags:
         family = tag.split(":", 1)[0].strip().lower()
         if not family:
             continue
         family_name = display_name_from_family(family)
-        size_label = parse_size_label_from_tag(tag)
+        size_label = parse_size_label_from_tag(tag, fallback="")
+        if not size_label:
+            if tag not in measured_tags:
+                continue
+            size_label = "7b"
         params_b = parse_params(size_label)
         base_vram = base_vram_floor(params_b)
         source_url = f"https://ollama.com/library/{family}"
@@ -404,12 +459,21 @@ def main() -> None:
 
         for q in STANDARD_QUANTS:
             model_id = f"{safe_slug(family)}-{size_label}-{q['label']}"
+            override = top20_overrides.get((tag, q["label"]))
             min_vram = max(2, base_vram + q["delta_min"])
             opt_vram = max(min_vram + 2, base_vram + 8 + q["delta_opt"])
+            if override:
+                min_vram = int(override["vram_min_gb"])
+                opt_vram = int(override["vram_optimal_gb"])
             tok_3090 = round(base_tokens(params_b) * q["speed_mult"], 1)
             tok_4090 = round(tok_3090 * 1.35, 1)
             tok_a100 = round(tok_3090 * 2.4, 1)
             best_local_gpu, cloud_fallback, cloud_hourly_usd = pick_hardware(opt_vram)
+            seo_title = override["seo_title"] if override else f"{family_name} {size_label.upper()} on RTX 3090: Performance & VRAM Requirements"
+            category_label = override["category_label"] if override else scenario
+            popularity = override["popularity"] if override else ""
+            ollama_command = override["ollama_command"] if override else f"ollama run {tag}"
+            recommended_hardware = override["recommended_hardware"] if override else best_local_gpu
 
             items.append(
                 {
@@ -426,19 +490,19 @@ def main() -> None:
                     "vram_min_gb": min_vram,
                     "vram_optimal_gb": opt_vram,
                     "best_local_gpu": best_local_gpu,
-                    "recommended_hardware": best_local_gpu,
+                    "recommended_hardware": recommended_hardware,
                     "cloud_fallback": cloud_fallback,
                     "cloud_hourly_usd": cloud_hourly_usd,
                     "local_monthly_power_usd": round((0.35 * 0.16) * 120, 2),
-                    "data_status": "measured",
-                    "verified": True,
-                    "is_top20_curated": False,
-                    "top20_rank": None,
-                    "popularity": "",
-                    "category_label": scenario,
+                    "data_status": "measured" if tag in measured_tags else "local_inventory",
+                    "verified": tag in measured_tags,
+                    "is_top20_curated": override is not None,
+                    "top20_rank": override["top20_rank"] if override else None,
+                    "popularity": popularity,
+                    "category_label": category_label,
                     "ollama_tag": tag,
-                    "seo_title": f"{family_name} {size_label.upper()} on RTX 3090: Performance & VRAM Requirements",
-                    "ollama_command": f"ollama run {tag}",
+                    "seo_title": seo_title,
+                    "ollama_command": ollama_command,
                     "ollama_source_url": source_url,
                     "ollama_verified_at": VERIFIED_AT,
                     "benchmarks": {
@@ -446,7 +510,7 @@ def main() -> None:
                         "rtx4090_tok_s": tok_4090,
                         "a100_tok_s": tok_a100,
                     },
-                    "focus": "Auto-discovered from measured benchmark results.",
+                    "focus": "Top-20 curated profile from ollama.com popular list." if override else "Auto-discovered from local Ollama inventory.",
                     "caveat": "Auto-generated family metadata; review for taxonomy accuracy.",
                     "updated_at": VERIFIED_AT,
                 }

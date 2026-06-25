@@ -35,17 +35,30 @@ const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || unknownLabel);
 const latestNewModel = newModelWatchlist.items?.[0];
+const newModelItems = Array.isArray(newModelWatchlist.items) ? newModelWatchlist.items : [];
 const benchmarkMap = benchmarkResults.models || {};
-const featuredTestModel = getFeaturedTestModel(catalog.items, benchmarkMap);
-const latestNewModelTag = String(latestNewModel?.tag || featuredTestModel?.featured_tag || unknownLabel);
-const latestNewModelLanding = localHref(String(latestNewModel?.landing || featuredTestModel?.featured_path || "/en/models/"));
-const latestLocalStatus = String(latestNewModel?.local_inventory_status?.status || "unknown");
+const featuredTestModel = getFeaturedTestModel(catalog.items, benchmarkMap, newModelItems);
+const featuredWatchlistItem =
+  newModelItems.find((item) => item?.tag && item.tag === featuredTestModel?.featured_tag) || latestNewModel;
+const latestNewModelTag = String(featuredTestModel?.featured_tag || featuredWatchlistItem?.tag || unknownLabel);
+const latestNewModelLanding = localHref(
+  String(featuredTestModel?.featured_path || featuredWatchlistItem?.landing || "/en/models/"),
+);
+const featuredDataStatus = String(featuredTestModel?.data_status || "");
+const latestLocalStatus = String(
+  featuredWatchlistItem?.local_inventory_status?.status ||
+    (featuredDataStatus === "local_inventory"
+      ? "downloaded"
+      : featuredDataStatus === "measured" || featuredTestModel?.measured_tokens_per_second
+        ? "measured_recently"
+        : "unknown")
+);
 const latestBenchmarkStatus = String(
-  latestNewModel?.benchmark_status?.status ||
-    latestNewModel?.status ||
+  featuredWatchlistItem?.benchmark_status?.status ||
+    featuredWatchlistItem?.status ||
     (featuredTestModel?.measured_tokens_per_second ? "measured" : "unknown")
 );
-const latestOllamaUpdated = String(latestNewModel?.ollama_updated_label || "");
+const latestOllamaUpdated = String(featuredWatchlistItem?.ollama_updated_label || "");
 
 function formatGpuTemperature(value: number, fallback: string): string {
   if (!Number.isFinite(value) || value <= 0) {

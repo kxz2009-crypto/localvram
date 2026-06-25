@@ -166,62 +166,37 @@ const structuredData = [
       <canvas id="cluster-trend-chart" aria-label="Cluster benchmark trend chart" style="height: 280px;"></canvas>
     </section>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script is:inline src="/js/performance-chart.js?v=20260625"></script>
   <script define:vars={{ trendPoints }}>
     const mountClusterTrend = () => {
       const canvas = document.getElementById("cluster-trend-chart");
-      if (!canvas || !window.Chart) return;
+      if (!canvas || !window.LocalVRAMCharts) {
+        window.addEventListener("localvram:charts-ready", mountClusterTrend, { once: true });
+        return;
+      }
       const labels = trendPoints.map((p) => p.label);
       const tps = trendPoints.map((p) => p.tokensPerSecond);
       const latency = trendPoints.map((p) => p.latencyMs);
       if (!labels.length) return;
-      new window.Chart(canvas, {
-        type: "line",
-        data: {
-          labels,
-          datasets: [
-            {
-              label: "Aggregate tok/s",
-              data: tps,
-              borderColor: "#0ea5e9",
-              backgroundColor: "rgba(14,165,233,0.15)",
-              yAxisID: "y",
-              tension: 0.25,
-            },
-            {
-              label: "Avg node latency (ms)",
-              data: latency,
-              borderColor: "#fb923c",
-              backgroundColor: "rgba(251,146,60,0.12)",
-              yAxisID: "y1",
-              tension: 0.25,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              title: { display: true, text: "tok/s" },
-              ticks: { color: "#94a3b8" },
-              grid: { color: "rgba(148,163,184,0.15)" },
-            },
-            y1: {
-              position: "right",
-              title: { display: true, text: "ms" },
-              ticks: { color: "#94a3b8" },
-              grid: { drawOnChartArea: false },
-            },
-            x: {
-              ticks: { color: "#94a3b8", maxRotation: 20, minRotation: 20 },
-              grid: { color: "rgba(148,163,184,0.08)" },
-            },
+      window.LocalVRAMCharts.renderLineChart(canvas, {
+        labels,
+        datasets: [
+          {
+            label: "Aggregate tok/s",
+            data: tps,
+            borderColor: "#0ea5e9",
+            backgroundColor: "rgba(14,165,233,0.15)",
           },
-          plugins: {
-            legend: { labels: { color: "#cbd5e1" } },
+          {
+            label: "Avg node latency (ms)",
+            data: latency,
+            borderColor: "#fb923c",
+            backgroundColor: "rgba(251,146,60,0.12)",
+            axis: "right",
           },
-        },
+        ],
+        yAxisLabel: "tok/s",
+        rightAxisLabel: "ms",
       });
     };
     if (document.readyState === "loading") {

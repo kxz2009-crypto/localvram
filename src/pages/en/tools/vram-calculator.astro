@@ -3,12 +3,13 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import links from "../../../data/affiliate-links.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
+import newModelWatchlist from "../../../data/new-model-watchlist.json";
 import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import { getFeaturedTestModels } from "../../../lib/featured-test-models";
 
 const allModels = Array.isArray(catalog.items) ? catalog.items : [];
 const benchmarkMap = benchmarkResults.models || {};
-const featuredModels = getFeaturedTestModels(allModels, benchmarkMap);
+const featuredModels = getFeaturedTestModels(allModels, benchmarkMap, newModelWatchlist.items);
 const featuredIdSet = new Set(featuredModels.map((item) => item.id));
 const sampleModels = [...allModels].sort((a, b) => {
   const aFeaturedIndex = featuredModels.findIndex((item) => item.id === a.id);
@@ -136,7 +137,7 @@ const faqSchema = {
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script is:inline src="/js/performance-chart.js?v=20260625"></script>
   <script define:vars={{ items: sampleModels, benchmarkMap, defaultModelId }}>
     const select = document.getElementById("model-select");
     const result = document.getElementById("calc-result");
@@ -144,14 +145,15 @@ const faqSchema = {
     const primary = document.getElementById("calc-primary");
     const runpod = document.getElementById("calc-cloud-runpod");
     const vast = document.getElementById("calc-cloud-vast");
-    let chart = null;
+    let destroyChart = null;
 
     const renderChart = (model, realData) => {
-      if (!chartCanvas || !window.Chart) {
+      if (!chartCanvas || !window.LocalVRAMCharts) {
+        window.addEventListener("localvram:charts-ready", () => renderChart(model, realData), { once: true });
         return;
       }
-      if (chart) {
-        chart.destroy();
+      if (destroyChart) {
+        destroyChart();
       }
       const hasMeasured = realData && realData.status === "ok" && typeof realData.tokens_per_second === "number";
       const datasets = [
@@ -160,8 +162,7 @@ const faqSchema = {
           data: [model.benchmarks.rtx3090_tok_s, model.benchmarks.rtx4090_tok_s, model.benchmarks.a100_tok_s],
           borderColor: "#3b82f6",
           backgroundColor: "rgba(59,130,246,0.15)",
-          borderWidth: 2,
-          tension: 0.2
+          borderWidth: 2
         }
       ];
       if (hasMeasured) {
@@ -171,27 +172,13 @@ const faqSchema = {
           borderColor: "#10b981",
           backgroundColor: "rgba(16,185,129,0.2)",
           borderWidth: 2,
-          pointRadius: 5,
-          spanGaps: true,
-          tension: 0
+          pointRadius: 5
         });
       }
-      chart = new window.Chart(chartCanvas, {
-        type: "line",
-        data: {
-          labels: ["RTX 3090", "RTX 4090", "A100 80GB"],
-          datasets
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              title: { display: true, text: "tokens/s" },
-              beginAtZero: true
-            }
-          }
-        }
+      destroyChart = window.LocalVRAMCharts.renderLineChart(chartCanvas, {
+        labels: ["RTX 3090", "RTX 4090", "A100 80GB"],
+        datasets,
+        yAxisLabel: "tokens/s"
       });
     };
 
