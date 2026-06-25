@@ -1,7 +1,9 @@
 ---
-import LocaleBridgePage from "../../../components/i18n/LocaleBridgePage.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import catalog from "../../../data/model-catalog.json";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
-import { resolvePageCopy } from "../../../lib/i18n-copy";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 import { withLocale } from "../../../lib/locale-paths";
 
 export function getStaticPaths() {
@@ -12,56 +14,205 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props as { locale: ComLocale };
-const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
-const enPath = "/en/matrix/";
-const pagePath = withLocale(locale, enPath);
-const title = home.cta_compat_matrix;
+const homeCopy = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() });
+const home = homeCopy.fields;
+const pagePath = withLocale(locale, "/en/matrix/");
+const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+const tiers = [8, 12, 16, 24, 48];
+const scenarios = [
+  { id: "chat", label: "Chat" },
+  { id: "coding", label: "Coding" },
+  { id: "multimodal", label: "Multimodal" },
+  { id: "reasoning", label: "Reasoning" },
+  { id: "embedding", label: "Embedding" }
+];
+
+function compatibleCount(scenarioId: string, vramTier: number) {
+  return allItems.filter((item) => item.scenario === scenarioId && item.vram_min_gb <= vramTier).length;
+}
+
+const titleByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Kompatibilitaetsmatrix",
+  ko: "호환성 매트릭스"
+};
 const descriptionByLocale: Partial<Record<ComLocale, string>> = {
-  de: "Kompatibilitätsmatrix für lokale LLM-Workloads nach Szenario und VRAM-Stufe.",
-  ko: "로컬 LLM 워크로드를 시나리오와 VRAM 등급별로 비교하는 호환성 매트릭스입니다.",
+  de: "Kompatibilitaetsmatrix fuer lokale LLM-Workloads nach Szenario und VRAM-Stufe.",
+  ko: "로컬 LLM 워크로드를 시나리오와 VRAM 등급별로 비교하는 호환성 매트릭스입니다."
 };
-const calculatorDescriptionByLocale: Partial<Record<ComLocale, string>> = {
-  de: "Schätze die praktische Modell-Passung, bevor du GPU oder Runtime wählst.",
-  ko: "GPU나 런타임을 선택하기 전에 실제 모델 적합성을 추정합니다.",
+const introByLocale: Partial<Record<ComLocale, string>> = {
+  de:
+    "Diese Matrix zeigt, wie viele Katalogprofile in jeder VRAM-Stufe laufen koennen, getrennt nach Workload-Szenario.",
+  ko: "이 매트릭스는 워크로드 시나리오별로 각 VRAM 등급에서 실행 가능한 카탈로그 프로필 수를 보여줍니다."
 };
-const hardwareLabelByLocale: Partial<Record<ComLocale, string>> = {
-  de: "VRAM-Stufen",
-  ko: "VRAM 등급",
+const labelsByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
+  de: {
+    scenario: "Szenario",
+    howToTitle: "So nutzt du die Matrix",
+    step1: "Waehle zuerst deine tatsaechliche VRAM-Grenze.",
+    step2: "Finde die Szenario-Zeile, die zu deinem Workload passt.",
+    step3: "Oeffne Modellseiten aus dieser Gruppe und vergleiche gemessene Signale.",
+    faqTitle: "Kompatibilitaets-FAQ",
+    models: "Modellkatalog",
+    calculator: "VRAM-Rechner",
+    hardware: "Hardware-Stufen",
+    tier: "Stufe"
+  },
+  ko: {
+    scenario: "시나리오",
+    howToTitle: "매트릭스 사용 방법",
+    step1: "먼저 실제 VRAM 한도를 선택합니다.",
+    step2: "워크로드에 맞는 시나리오 행을 찾습니다.",
+    step3: "해당 모델 페이지를 열어 측정 신호를 비교합니다.",
+    faqTitle: "호환성 FAQ",
+    models: "모델 카탈로그",
+    calculator: "VRAM 계산기",
+    hardware: "하드웨어 등급",
+    tier: "등급"
+  }
 };
-const hardwareDescriptionByLocale: Partial<Record<ComLocale, string>> = {
-  de: "Vergleiche 8GB-, 16GB-, 24GB- und 48GB-Hardwarestufen für lokale Modellplanung.",
-  ko: "로컬 모델 계획을 위해 8GB, 16GB, 24GB, 48GB 하드웨어 등급을 비교합니다.",
+const defaultLabels = {
+  scenario: "Scenario",
+  howToTitle: "How to use this matrix",
+  step1: "Pick your actual VRAM ceiling first.",
+  step2: "Find the scenario row that matches your workload.",
+  step3: "Open model pages from that subset and compare measured signals.",
+  faqTitle: "Compatibility FAQ",
+  models: "Model catalog",
+  calculator: "VRAM calculator",
+  hardware: "Hardware tiers",
+  tier: "tier"
 };
+const labels = { ...defaultLabels, ...(labelsByLocale[locale] || {}) };
+const title = titleByLocale[locale] || home.cta_compat_matrix || "Compatibility Matrix";
 const description =
   descriptionByLocale[locale] || "Compatibility matrix of local LLM workloads by scenario and VRAM tier.";
-const relatedLinks = [
+const intro =
+  introByLocale[locale] ||
+  "This matrix shows how many catalog profiles can run at each VRAM tier, split by workload scenario.";
+const shouldNoindex = shouldNoindexByFallback(locale, homeCopy.fallbackRatio);
+const faqItems = [
   {
-    href: withLocale(locale, "/en/models/"),
-    label: home.cta_model_catalog || "Model Catalog",
-    description: home.card_model_hub_desc || "Open model profiles grouped by size, license, and workload.",
+    question: locale === "de" ? "Was bedeutet eine kompatible Modellanzahl?" : "What does a compatible model count mean?",
+    answer:
+      locale === "de"
+        ? "Eine kompatible Anzahl bedeutet, dass das Katalogprofil eine minimale VRAM-Anforderung in oder unter dieser Stufe hat. Es ist ein Planungsfilter, keine Garantie fuer Qualitaet, Latenz oder Kontextlaenge."
+        : "A compatible count means the catalog profile has a minimum VRAM requirement at or below that tier. It is a planning filter, not a guarantee of quality, latency, or context length."
   },
   {
-    href: withLocale(locale, "/en/tools/vram-calculator/"),
-    label: home.cta_start_vram || "VRAM Calculator",
-    description:
-      calculatorDescriptionByLocale[locale] ||
-      "Estimate practical model fit before choosing a GPU or runtime.",
+    question: locale === "de" ? "Mit welcher VRAM-Stufe sollte ich beginnen?" : "Which VRAM tier should I start with?",
+    answer:
+      locale === "de"
+        ? "Beginne mit der physischen VRAM-Grenze deiner GPU und pruefe danach Modellseiten, Quantisierung, Messstatus und Workload-Passung."
+        : "Start with your physical GPU VRAM ceiling, then open model pages to compare quantization, measured status, and workload fit before choosing a runtime."
   },
   {
-    href: withLocale(locale, "/en/hardware/"),
-    label: hardwareLabelByLocale[locale] || "VRAM Tiers",
-    description:
-      hardwareDescriptionByLocale[locale] ||
-      "Compare 8GB, 16GB, 24GB, and 48GB hardware tiers for local model planning.",
-  },
+    question:
+      locale === "de"
+        ? "Warum haben manche Workloads weniger kompatible Modelle?"
+        : "Why do some workloads have fewer compatible models?",
+    answer:
+      locale === "de"
+        ? "Coding-, Reasoning-, Multimodal- und Embedding-Workloads nutzen unterschiedliche Modellfamilien und Speicherprofile, deshalb aendert sich die Anzahl je Szenario."
+        : "Coding, reasoning, multimodal, and embedding workloads can have different model families and memory profiles, so the compatible count changes by scenario."
+  }
 ];
+const datasetSchema = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: title,
+  description,
+  inLanguage: locale,
+  url: `https://localvram.com${pagePath}`
+};
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "LocalVRAM",
+      item: `https://localvram.com${withLocale(locale, "/en/")}`
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: title,
+      item: `https://localvram.com${pagePath}`
+    }
+  ]
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer
+    }
+  }))
+};
 ---
 
-<LocaleBridgePage
-  locale={locale}
-  pagePath={pagePath}
-  enPath={enPath}
-  title={title}
+<BaseLayout
+  title={`${title} | LocalVRAM`}
   description={description}
-  relatedLinks={relatedLinks}
-/>
+  locale={locale}
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={shouldNoindex}
+  structuredData={[datasetSchema, breadcrumbSchema, faqSchema]}
+>
+  <main class="container">
+    <h1>{title}</h1>
+    <p>{intro}</p>
+
+    <section class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{labels.scenario}</th>
+            {tiers.map((tier) => <th>{tier}GB {labels.tier}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {scenarios.map((scenario) => (
+            <tr>
+              <td>{scenario.label}</td>
+              {tiers.map((tier) => <td>{compatibleCount(scenario.id, tier)}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>{labels.howToTitle}</h2>
+      <ol>
+        <li>{labels.step1}</li>
+        <li>{labels.step2}</li>
+        <li>{labels.step3}</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>{labels.faqTitle}</h2>
+      <dl class="faq-list">
+        {faqItems.map((item) => (
+          <>
+            <dt>{item.question}</dt>
+            <dd>{item.answer}</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href={withLocale(locale, "/en/models/")}>{home.cta_model_catalog || labels.models}</a>
+      <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{home.cta_start_vram || labels.calculator}</a>
+      <a class="btn" href={withLocale(locale, "/en/hardware/")}>{labels.hardware}</a>
+    </section>
+  </main>
+</BaseLayout>
