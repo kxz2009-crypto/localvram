@@ -53,6 +53,36 @@ const seoTitle =
 const seoDescription = `${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal. RTX 3090 ${
   hasRealBenchmark ? `${realBenchmark.tokens_per_second} tok/s measured` : `${item.benchmarks.rtx3090_tok_s} tok/s baseline`
 }, RTX 4090 ${item.benchmarks.rtx4090_tok_s} tok/s, cloud ${item.benchmarks.a100_tok_s} tok/s.`;
+const canRunOnRtx3090 = item.vram_min_gb <= 24;
+const comfortableOnRtx3090 = item.vram_optimal_gb <= 24;
+const localFitAnswer = comfortableOnRtx3090
+  ? `Yes. ${item.name} fits comfortably on an RTX 3090 24GB target with ${item.vram_optimal_gb}GB optimal VRAM.`
+  : canRunOnRtx3090
+    ? `It may load on an RTX 3090 24GB because the minimum estimate is ${item.vram_min_gb}GB, but the safer target is ${item.vram_optimal_gb}GB. Expect tighter context or lower throughput.`
+    : `Not as a comfortable local target. ${item.name} needs about ${item.vram_min_gb}GB minimum and ${item.vram_optimal_gb}GB optimal VRAM, so cloud or larger local GPUs are safer.`;
+const dataStatusAnswer = hasRealBenchmark
+  ? `${item.name} has a verified RTX 3090 result of ${realBenchmark.tokens_per_second} tokens/s from LocalVRAM benchmark data.`
+  : `${item.name} currently uses estimated baseline anchors on this page. Verified benchmark data will replace the estimate after a local hardware run is available.`;
+const faqItems = [
+  {
+    question: `How much VRAM does ${item.name} need?`,
+    answer: `${item.name} needs about ${item.vram_min_gb}GB minimum VRAM and ${item.vram_optimal_gb}GB optimal VRAM for a safer local run target.`,
+  },
+  {
+    question: `Can ${item.name} run on an RTX 3090 24GB?`,
+    answer: localFitAnswer,
+  },
+  {
+    question: `What is the Ollama command for ${item.name}?`,
+    answer: item.ollama_command
+      ? `Use ${item.ollama_command}. Check the Ollama tag ${item.ollama_tag || "listed on this page"} before running.`
+      : `Use the Ollama tag ${item.ollama_tag || "listed on this page"} with your local Ollama installation.`,
+  },
+  {
+    question: `Is ${item.name} benchmark data measured or estimated?`,
+    answer: dataStatusAnswer,
+  },
+];
 const modelSchema = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
@@ -67,8 +97,23 @@ const modelSchema = {
   },
   about: {
     "@type": "SoftwareApplication",
-    name: item.name
+    name: item.name,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Linux, Windows, macOS",
+    softwareRequirements: `${item.vram_min_gb}GB minimum VRAM; ${item.vram_optimal_gb}GB optimal VRAM`,
   }
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((entry) => ({
+    "@type": "Question",
+    name: entry.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: entry.answer,
+    },
+  })),
 };
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -106,8 +151,8 @@ const relatedProfilesSchema = {
   }))
 };
 const structuredData = relatedProfiles.length
-  ? [modelSchema, breadcrumbSchema, relatedProfilesSchema]
-  : [modelSchema, breadcrumbSchema];
+  ? [modelSchema, faqSchema, breadcrumbSchema, relatedProfilesSchema]
+  : [modelSchema, faqSchema, breadcrumbSchema];
 ---
 
 <BaseLayout
@@ -218,6 +263,18 @@ const structuredData = relatedProfiles.length
           </tr>
         </tbody>
       </table>
+    </section>
+
+    <section class="card">
+      <h2>Quick Answers</h2>
+      <dl>
+        {faqItems.map((entry) => (
+          <div>
+            <dt>{entry.question}</dt>
+            <dd>{entry.answer}</dd>
+          </div>
+        ))}
+      </dl>
     </section>
 
     <section class="card">
