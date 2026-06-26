@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-06-25T04:48:04.328883Z",
+  "generated_at": "2026-06-26T04:51:56.219877Z",
   "window_days": 30,
-  "window_start": "2026-05-26T04:48:04.328883Z",
-  "window_end": "2026-06-25T04:48:04.328883Z",
+  "window_start": "2026-05-27T04:51:56.219877Z",
+  "window_end": "2026-06-26T04:51:56.219877Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -199,7 +199,7 @@
   },
   "data_quality": {
     "search_console_items": 240,
-    "affiliate_event_items_total": 377,
+    "affiliate_event_items_total": 384,
     "affiliate_event_items_in_window": 305,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
