@@ -31,6 +31,79 @@ const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 const uiCatalog = vramUiCatalog as Record<string, Record<string, string>>;
 const ui = uiCatalog[locale] || uiCatalog.en;
+const seoCopyByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
+  de: {
+    title: "VRAM Rechner und VRAM Test | LocalVRAM",
+    description:
+      "Teste, wie viel VRAM ein lokales LLM braucht. Vergleiche Mindest-VRAM, optimalen VRAM, RTX 3090 Benchmarks und Cloud-Fallback.",
+    intro:
+      "Wähle ein Modellprofil, um Mindest-VRAM, optimalen VRAM, reale RTX 3090 Messwerte und die Entscheidung lokal oder Cloud zu prüfen.",
+    testTitle: "So funktioniert der VRAM Test",
+    testStep1Title: "1. Modellprofil wählen",
+    testStep1Body:
+      "Der Rechner nutzt den LocalVRAM Modellkatalog und priorisiert aktuelle Ollama-Modelle mit Benchmark-Snapshots.",
+    testStep2Title: "2. VRAM Bedarf lesen",
+    testStep2Body:
+      "Minimaler VRAM zeigt die Untergrenze. Optimaler VRAM ist der Zielwert für stabilere Latenz und sustained throughput.",
+    testStep3Title: "3. Lokal oder Cloud entscheiden",
+    testStep3Body:
+      "Wenn das Profil über 24GB VRAM braucht, zeigt die Seite Cloud-Optionen. Kleinere Profile verweisen zuerst auf lokale Hardware.",
+    faqTitle: "VRAM Rechner FAQ",
+    faqQ1: "Wie teste ich, ob genug VRAM vorhanden ist?",
+    faqA1:
+      "Wähle das Modellprofil und vergleiche minimalen VRAM, optimalen VRAM und Datenstatus. Verifizierte Profile enthalten reale RTX 3090 Messwerte.",
+    faqQ2: "Was ist der Unterschied zwischen RAM Rechner und VRAM Rechner?",
+    faqA2:
+      "RAM beschreibt Systemspeicher. VRAM ist der GPU-Speicher, der beim lokalen LLM oft zuerst limitiert.",
+    faqQ3: "Sind die Werte gemessen oder geschätzt?",
+    faqA3:
+      "Verifizierte Profile nutzen Benchmark-Daten. Nicht verifizierte Profile nutzen katalogbasierte Baseline-Schätzungen."
+  },
+  ko: {
+    title: "VRAM 계산기와 로컬 LLM 테스트 | LocalVRAM",
+    description:
+      "로컬 LLM에 필요한 VRAM을 계산하고 최소 VRAM, 최적 VRAM, RTX 3090 benchmark, cloud fallback을 비교합니다.",
+    intro:
+      "모델 프로필을 선택해 최소 VRAM, 최적 VRAM, RTX 3090 실측값, local 또는 cloud 결정을 확인합니다.",
+    testTitle: "VRAM 테스트 방식",
+    testStep1Title: "1. 모델 프로필 선택",
+    testStep1Body: "계산기는 LocalVRAM 모델 카탈로그와 benchmark snapshot이 있는 최신 Ollama 모델을 우선합니다.",
+    testStep2Title: "2. VRAM 요구량 확인",
+    testStep2Body: "최소 VRAM은 실행 하한선이고 최적 VRAM은 안정적인 latency와 sustained throughput을 위한 목표입니다.",
+    testStep3Title: "3. Local 또는 cloud 결정",
+    testStep3Body: "프로필이 24GB VRAM을 넘으면 cloud 옵션을 우선 표시하고, 작은 프로필은 local hardware를 먼저 안내합니다.",
+    faqTitle: "VRAM 계산기 FAQ",
+    faqQ1: "VRAM이 충분한지 어떻게 테스트하나요?",
+    faqA1: "모델 프로필을 고른 뒤 최소 VRAM, 최적 VRAM, 데이터 상태를 비교합니다. verified 프로필은 RTX 3090 실측값을 포함합니다.",
+    faqQ2: "RAM 계산기와 VRAM 계산기는 무엇이 다른가요?",
+    faqA2: "RAM은 시스템 메모리이고 VRAM은 GPU 메모리입니다. 로컬 LLM에서는 VRAM이 먼저 병목이 되는 경우가 많습니다.",
+    faqQ3: "값은 측정인가요, 추정인가요?",
+    faqA3: "verified 프로필은 benchmark 데이터를 사용하고, 나머지는 catalog baseline estimate를 사용합니다."
+  }
+};
+const seoCopy = {
+  title: text.meta_title,
+  description: text.meta_description,
+  intro: text.rollout_intro,
+  testTitle: "How the VRAM test works",
+  testStep1Title: "1. Choose a model profile",
+  testStep1Body: "The calculator uses the LocalVRAM catalog and prioritizes current Ollama models with benchmark snapshots.",
+  testStep2Title: "2. Read the VRAM envelope",
+  testStep2Body: "Minimum VRAM is the lower bound. Optimal VRAM is the target for steadier latency and sustained throughput.",
+  testStep3Title: "3. Decide local or cloud",
+  testStep3Body: "Profiles above 24GB VRAM surface cloud options first. Smaller profiles point to local hardware paths.",
+  faqTitle: "VRAM Calculator FAQ",
+  faqQ1: "How do I test whether I have enough VRAM?",
+  faqA1:
+    "Choose the model profile and compare minimum VRAM, optimal VRAM, and data status. Verified profiles include real RTX 3090 measurements.",
+  faqQ2: "What is the difference between a RAM calculator and a VRAM calculator?",
+  faqA2:
+    "RAM is system memory. VRAM is GPU memory, and it is often the first limit when running a local LLM.",
+  faqQ3: "Are the values measured or estimated?",
+  faqA3:
+    "Verified profiles use benchmark data. Unverified profiles use catalog baseline estimates.",
+  ...(seoCopyByLocale[locale] || {})
+};
 
 const allModels = Array.isArray(catalog.items) ? catalog.items : [];
 const benchmarkMap = benchmarkResults.models || {};
@@ -73,6 +146,11 @@ const defaultModelId = pinnedModelId || firstMeasuredModel?.id || sampleModels[0
 const pageUrl = `https://localvram.com${pagePath}`;
 const affiliateLocalPath = withLocale(locale, "/en/affiliate/hardware-upgrade/");
 const affiliateCloudPath = withLocale(locale, "/en/affiliate/cloud-gpu/");
+const faqItems = [
+  { question: seoCopy.faqQ1, answer: seoCopy.faqA1 },
+  { question: seoCopy.faqQ2, answer: seoCopy.faqA2 },
+  { question: seoCopy.faqQ3, answer: seoCopy.faqA3 },
+];
 const softwareSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -81,29 +159,29 @@ const softwareSchema = {
   operatingSystem: "Web",
   url: pageUrl,
   inLanguage: locale,
-  description: text.rollout_intro,
+  description: seoCopy.description,
 };
 const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  name: `${home.cta_start_vram || "VRAM Calculator"}: ${ui.model_profile}`,
-  description: text.rollout_intro,
+  name: seoCopy.testTitle,
+  description: seoCopy.intro,
   inLanguage: locale,
   step: [
     {
       "@type": "HowToStep",
-      name: ui.model_profile,
-      text: `${ui.model_profile}: select a model profile from the LocalVRAM catalog.`,
+      name: seoCopy.testStep1Title,
+      text: seoCopy.testStep1Body,
     },
     {
       "@type": "HowToStep",
-      name: `${ui.minimum_vram} / ${ui.optimal_vram}`,
-      text: `${ui.minimum_vram} and ${ui.optimal_vram}: review the memory envelope before deployment.`,
+      name: seoCopy.testStep2Title,
+      text: seoCopy.testStep2Body,
     },
     {
       "@type": "HowToStep",
-      name: `${ui.best_local} / ${ui.cloud_fallback}`,
-      text: `${ui.best_local} and ${ui.cloud_fallback}: choose local hardware or a cloud fallback path.`,
+      name: seoCopy.testStep3Title,
+      text: seoCopy.testStep3Body,
     },
   ],
 };
@@ -111,38 +189,20 @@ const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   inLanguage: locale,
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: `${ui.minimum_vram}: what does it mean?`,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: `${ui.minimum_vram} is the lower bound for loading and running a model profile with conservative settings.`,
-      },
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
     },
-    {
-      "@type": "Question",
-      name: `${ui.optimal_vram}: what does it mean?`,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: `${ui.optimal_vram} is the recommended target for stable throughput and lower latency under sustained load.`,
-      },
-    },
-    {
-      "@type": "Question",
-      name: `${ui.data_status}: measured or estimated?`,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: `${ui.verified_real} profiles use benchmark data. ${ui.estimated} profiles use catalog baseline anchors.`,
-      },
-    },
-  ],
+  })),
 };
 ---
 
 <BaseLayout
-  title={text.meta_title}
-  description={text.meta_description}
+  title={seoCopy.title}
+  description={seoCopy.description}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -151,7 +211,7 @@ const faqSchema = {
 >
   <main class="container">
     <h1>{home.cta_start_vram || "VRAM Calculator"}</h1>
-    <p>{text.rollout_intro}</p>
+    <p>{seoCopy.intro}</p>
 
     <section class="card">
       <label for="model-select">{ui.model_profile}</label>
@@ -174,6 +234,33 @@ const faqSchema = {
           <canvas id="calc-chart" aria-label={ui.hardware_chart_label}></canvas>
         </div>
       </div>
+    </section>
+
+    <section class="card-grid" style="margin-top: 16px;">
+      <article class="card">
+        <h2>{seoCopy.testStep1Title}</h2>
+        <p>{seoCopy.testStep1Body}</p>
+      </article>
+      <article class="card">
+        <h2>{seoCopy.testStep2Title}</h2>
+        <p>{seoCopy.testStep2Body}</p>
+      </article>
+      <article class="card">
+        <h2>{seoCopy.testStep3Title}</h2>
+        <p>{seoCopy.testStep3Body}</p>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>{seoCopy.faqTitle}</h2>
+      <dl class="faq-list">
+        {faqItems.map((item) => (
+          <>
+            <dt>{item.question}</dt>
+            <dd>{item.answer}</dd>
+          </>
+        ))}
+      </dl>
     </section>
   </main>
 
