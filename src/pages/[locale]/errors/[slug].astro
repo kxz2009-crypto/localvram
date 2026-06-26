@@ -39,16 +39,131 @@ const copy = resolvePageCopy("errors-detail", locale, {
 const text = copy.fields;
 const shouldNoindex = shouldNoindexByFallback(locale, copy.fallbackRatio);
 const causes = Array.isArray(item?.causes) ? item.causes.map((cause) => String(cause || "").trim()).filter(Boolean) : [];
-const fixes = Array.isArray(item?.fixes) ? item.fixes : [];
+const fixes = Array.isArray(item?.fixes)
+  ? item.fixes
+      .map((fix) => ({
+        label: String(fix?.label || "").trim(),
+        command: String(fix?.command || "").trim(),
+      }))
+      .filter((fix) => fix.label || fix.command)
+  : [];
+const relatedLinks = Array.isArray(item?.related_links)
+  ? item.related_links.map((link) => String(link || "").trim()).filter(Boolean)
+  : [];
+const rawStackTrace = String(item?.raw_stack_trace || "").trim();
+const errorTitle = String(item?.title || errorId);
+const seoKeyword = String(item?.seo_keyword || errorId);
+const pageCopyByErrorAndLocale: Partial<
+  Record<
+    string,
+    Partial<
+      Record<
+        ComLocale,
+        {
+          title: string;
+          description: string;
+          hero: string;
+          symptomsTitle: string;
+          symptomsBody: string;
+          stackTitle: string;
+          causesTitle: string;
+          fixesTitle: string;
+          relatedTitle: string;
+          faqTitle: string;
+          faq: Array<{ question: string; answer: string }>;
+        }
+      >
+    >
+  >
+> = {
+  "cuda-out-of-memory": {
+    de: {
+      title: "CUDA Out of Memory beheben | Ollama VRAM Fix",
+      description:
+        "Behebe CUDA Out of Memory in Ollama: VRAM testen, Quantisierung senken, Kontext reduzieren und GPU-Layers passend einstellen.",
+      hero:
+        "Wenn Ollama mit CUDA out of memory stoppt, ist meist Modellgröße, Quantisierung, Kontext oder KV-Cache größer als dein praktisches VRAM-Budget.",
+      symptomsTitle: "Typische CUDA Out of Memory Symptome",
+      symptomsBody:
+        "Das Modell lädt nicht, die Antwort bricht ab oder der Log meldet ggml_cuda_mul_mat out of memory. Prüfe zuerst VRAM-Bedarf und Kontextfenster, bevor du Hardware wechselst.",
+      stackTitle: "Häufiger Fehlerauszug",
+      causesTitle: "Wahrscheinliche Ursachen",
+      fixesTitle: "Schnelle Fix-Reihenfolge",
+      relatedTitle: "Nächste Diagnose",
+      faqTitle: "CUDA Out of Memory FAQ",
+      faq: [
+        {
+          question: "Wie behebe ich CUDA out of memory in Ollama?",
+          answer:
+            "Starte mit einem kleineren Quant, reduziere die Kontextlänge und senke GPU-Layers. Danach prüfst du mit dem VRAM Calculator, ob Modell plus KV-Cache in dein GPU-Budget passt.",
+        },
+        {
+          question: "Warum passiert der Fehler trotz 24 GB VRAM?",
+          answer:
+            "Ein 24-GB-Budget kann durch FP16, hohe Kontextlänge oder zu viele GPU-Layers überschritten werden. Q4/Q5 und ein kleinerer Kontext sind meist der erste stabile Test.",
+        },
+      ],
+    },
+    ru: {
+      title: "CUDA Out of Memory в Ollama | VRAM fix",
+      description:
+        "Исправьте CUDA Out of Memory в Ollama: проверьте VRAM, уменьшите quant, context length и GPU layers перед сменой железа.",
+      hero:
+        "Ошибка CUDA out of memory обычно означает, что размер модели, quant, context window или KV cache превышает практический запас VRAM.",
+      symptomsTitle: "Типичные симптомы CUDA Out of Memory",
+      symptomsBody:
+        "Модель не загружается, генерация обрывается или лог показывает ggml_cuda_mul_mat out of memory. Сначала проверьте VRAM и context window.",
+      stackTitle: "Частый фрагмент ошибки",
+      causesTitle: "Вероятные причины",
+      fixesTitle: "Быстрый порядок исправления",
+      relatedTitle: "Следующая диагностика",
+      faqTitle: "FAQ по CUDA Out of Memory",
+      faq: [
+        {
+          question: "Как исправить CUDA out of memory в Ollama?",
+          answer:
+            "Начните с меньшего quant, уменьшите context length и снизьте GPU layers. Затем проверьте модель в VRAM Calculator с учетом KV cache.",
+        },
+        {
+          question: "Почему ошибка есть даже на GPU с 24 GB VRAM?",
+          answer:
+            "FP16, большой context window или слишком много GPU layers могут превысить 24 GB. Для стабильного теста обычно начинают с Q4/Q5 и меньшего контекста.",
+        },
+      ],
+    },
+  },
+};
+const defaultPageCopy = {
+  title: text.meta_title,
+  description: text.meta_description,
+  hero: localizedSymptom,
+  symptomsTitle: "Symptoms",
+  symptomsBody: localizedSymptom,
+  stackTitle: "Common stack trace",
+  causesTitle: "Likely causes",
+  fixesTitle: "Fix order",
+  relatedTitle: "Related diagnostics",
+  faqTitle: "Troubleshooting FAQ",
+  faq: [
+    {
+      question: localizedSymptom,
+      answer: causes.length ? causes.join(" ") : text.rollout_intro,
+    },
+  ],
+};
+const pageCopy = {
+  ...defaultPageCopy,
+  ...(pageCopyByErrorAndLocale[errorId]?.[locale] || {}),
+};
 const structuredData = [
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    headline: String(item?.title || errorId),
-    description: text.meta_description,
+    headline: pageCopy.title,
+    description: pageCopy.description,
     url: `https://localvram.com${pagePath}`,
     inLanguage: locale,
-    about: String(item?.seo_keyword || errorId),
+    about: seoKeyword,
     author: {
       "@type": "Organization",
       name: "LocalVRAM",
@@ -58,30 +173,28 @@ const structuredData = [
   {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    name: `${String(item?.title || errorId)} fix`,
-    description: localizedSymptom,
+    name: `${errorTitle} fix`,
+    description: pageCopy.hero,
     inLanguage: locale,
     step: fixes.map((fix, index) => ({
       "@type": "HowToStep",
       position: index + 1,
-      name: String(fix?.label || `Fix ${index + 1}`),
-      text: String(fix?.command || fix?.label || ""),
+      name: fix.label || `Fix ${index + 1}`,
+      text: fix.command || fix.label,
     })),
   },
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     inLanguage: locale,
-    mainEntity: [
-      {
+    mainEntity: pageCopy.faq.map((faq) => ({
         "@type": "Question",
-        name: localizedSymptom,
+        name: faq.question,
         acceptedAnswer: {
           "@type": "Answer",
-          text: causes.length ? causes.join(" ") : text.rollout_intro,
+          text: faq.answer,
         },
-      },
-    ],
+    })),
   },
   {
     "@context": "https://schema.org",
@@ -105,8 +218,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title={text.meta_title}
-  description={text.meta_description}
+  title={pageCopy.title}
+  description={pageCopy.description}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -115,13 +228,66 @@ const structuredData = [
 >
   <main class="container">
     <section class="hero">
-      <h1>{errorId}</h1>
-      <p>{localizedSymptom}</p>
+      <h1>{errorTitle}</h1>
+      <p>{pageCopy.hero}</p>
       <p>{text.rollout_intro}</p>
       <div class="cta-row">
         <a class="btn" href={withLocale(locale, "/en/errors/")}>{text.cta_back_hub}</a>
         <a class="btn" href={withLocale(locale, "/en/status/submission-review/")}>{text.cta_open_submission_review}</a>
       </div>
+    </section>
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>{pageCopy.symptomsTitle}</h2>
+      <p>{pageCopy.symptomsBody}</p>
+    </section>
+
+    {rawStackTrace && (
+      <section class="card" style="margin-top: 16px;">
+        <h2>{pageCopy.stackTitle}</h2>
+        <pre><code>{rawStackTrace}</code></pre>
+      </section>
+    )}
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>{pageCopy.causesTitle}</h2>
+        <ul>
+          {causes.map((cause) => <li>{cause}</li>)}
+        </ul>
+      </article>
+      <article class="card">
+        <h2>{pageCopy.fixesTitle}</h2>
+        <ol>
+          {fixes.map((fix) => (
+            <li>
+              <strong>{fix.label}</strong>
+              {fix.command && <code>{fix.command}</code>}
+            </li>
+          ))}
+        </ol>
+      </article>
+    </section>
+
+    {relatedLinks.length > 0 && (
+      <section class="card" style="margin-top: 16px;">
+        <h2>{pageCopy.relatedTitle}</h2>
+        <div class="cta-row">
+          {relatedLinks.map((link) => (
+            <a class="btn" href={withLocale(locale, link)}>{link.replace("/en/", "/").replace(/\/$/, "")}</a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="card" style="margin-top: 16px;">
+      <h2>{pageCopy.faqTitle}</h2>
+      {pageCopy.faq.map((faq) => (
+        <details>
+          <summary>{faq.question}</summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
     </section>
   </main>
 </BaseLayout>
