@@ -32,26 +32,28 @@ function compatibleCount(scenarioId: string, vramTier: number) {
 }
 
 const titleByLocale: Partial<Record<ComLocale, string>> = {
-  de: "Kompatibilitaetsmatrix",
+  de: "LLM VRAM Kompatibilitätsmatrix",
   ko: "호환성 매트릭스"
 };
 const descriptionByLocale: Partial<Record<ComLocale, string>> = {
-  de: "Kompatibilitaetsmatrix fuer lokale LLM-Workloads nach Szenario und VRAM-Stufe.",
+  de: "LLM Kompatibilitätsmatrix nach VRAM-Stufe: vergleiche Chat, Coding, Multimodal, Reasoning und Embedding Modelle für lokale GPUs.",
   ko: "로컬 LLM 워크로드를 시나리오와 VRAM 등급별로 비교하는 호환성 매트릭스입니다."
 };
 const introByLocale: Partial<Record<ComLocale, string>> = {
   de:
-    "Diese Matrix zeigt, wie viele Katalogprofile in jeder VRAM-Stufe laufen koennen, getrennt nach Workload-Szenario.",
+    "Diese LLM VRAM Kompatibilitätsmatrix zeigt, wie viele Katalogprofile in jeder VRAM-Stufe laufen können, getrennt nach Workload-Szenario. Nutze sie als schnelle Vorauswahl, bevor du einzelne Modellseiten und Messwerte prüfst.",
   ko: "이 매트릭스는 워크로드 시나리오별로 각 VRAM 등급에서 실행 가능한 카탈로그 프로필 수를 보여줍니다."
 };
 const labelsByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
   de: {
     scenario: "Szenario",
     howToTitle: "So nutzt du die Matrix",
-    step1: "Waehle zuerst deine tatsaechliche VRAM-Grenze.",
+    step1: "Wähle zuerst deine tatsächliche VRAM-Grenze.",
     step2: "Finde die Szenario-Zeile, die zu deinem Workload passt.",
-    step3: "Oeffne Modellseiten aus dieser Gruppe und vergleiche gemessene Signale.",
-    faqTitle: "Kompatibilitaets-FAQ",
+    step3: "Öffne Modellseiten aus dieser Gruppe und vergleiche gemessene Signale.",
+    faqTitle: "Kompatibilitäts-FAQ",
+    summaryTitle: "24GB VRAM Schnellcheck",
+    summaryIntro: "Für RTX 3090 und RTX 4090 ist die 24GB-Spalte meist der wichtigste Startpunkt.",
     models: "Modellkatalog",
     calculator: "VRAM-Rechner",
     hardware: "Hardware-Stufen",
@@ -77,6 +79,8 @@ const defaultLabels = {
   step2: "Find the scenario row that matches your workload.",
   step3: "Open model pages from that subset and compare measured signals.",
   faqTitle: "Compatibility FAQ",
+  summaryTitle: "24GB VRAM quick check",
+  summaryIntro: "For RTX 3090 and RTX 4090 users, the 24GB column is usually the first planning filter.",
   models: "Model catalog",
   calculator: "VRAM calculator",
   hardware: "Hardware tiers",
@@ -89,20 +93,24 @@ const description =
 const intro =
   introByLocale[locale] ||
   "This matrix shows how many catalog profiles can run at each VRAM tier, split by workload scenario.";
+const summaryRows = scenarios.map((scenario) => ({
+  ...scenario,
+  count: compatibleCount(scenario.id, 24)
+}));
 const shouldNoindex = shouldNoindexByFallback(locale, homeCopy.fallbackRatio);
 const faqItems = [
   {
-    question: locale === "de" ? "Was bedeutet eine kompatible Modellanzahl?" : "What does a compatible model count mean?",
+    question: locale === "de" ? "Was bedeutet eine kompatible Modellanzahl in der LLM Matrix?" : "What does a compatible model count mean?",
     answer:
       locale === "de"
-        ? "Eine kompatible Anzahl bedeutet, dass das Katalogprofil eine minimale VRAM-Anforderung in oder unter dieser Stufe hat. Es ist ein Planungsfilter, keine Garantie fuer Qualitaet, Latenz oder Kontextlaenge."
+        ? "Eine kompatible Anzahl bedeutet, dass das Katalogprofil eine minimale VRAM-Anforderung in oder unter dieser Stufe hat. Es ist ein Planungsfilter, keine Garantie für Qualität, Latenz oder Kontextlänge."
         : "A compatible count means the catalog profile has a minimum VRAM requirement at or below that tier. It is a planning filter, not a guarantee of quality, latency, or context length."
   },
   {
     question: locale === "de" ? "Mit welcher VRAM-Stufe sollte ich beginnen?" : "Which VRAM tier should I start with?",
     answer:
       locale === "de"
-        ? "Beginne mit der physischen VRAM-Grenze deiner GPU und pruefe danach Modellseiten, Quantisierung, Messstatus und Workload-Passung."
+        ? "Beginne mit der physischen VRAM-Grenze deiner GPU. Bei RTX 3090 oder RTX 4090 ist das meist die 24GB-Spalte; danach prüfst du Modellseiten, Quantisierung, Messstatus und Workload-Passung."
         : "Start with your physical GPU VRAM ceiling, then open model pages to compare quantization, measured status, and workload fit before choosing a runtime."
   },
   {
@@ -112,7 +120,7 @@ const faqItems = [
         : "Why do some workloads have fewer compatible models?",
     answer:
       locale === "de"
-        ? "Coding-, Reasoning-, Multimodal- und Embedding-Workloads nutzen unterschiedliche Modellfamilien und Speicherprofile, deshalb aendert sich die Anzahl je Szenario."
+        ? "Coding-, Reasoning-, Multimodal- und Embedding-Workloads nutzen unterschiedliche Modellfamilien und Speicherprofile, deshalb ändert sich die Anzahl je Szenario."
         : "Coding, reasoning, multimodal, and embedding workloads can have different model families and memory profiles, so the compatible count changes by scenario."
   }
 ];
@@ -168,6 +176,19 @@ const faqSchema = {
   <main class="container">
     <h1>{title}</h1>
     <p>{intro}</p>
+
+    <section class="card">
+      <h2>{labels.summaryTitle}</h2>
+      <p>{labels.summaryIntro}</p>
+      <div class="kpi-row">
+        {summaryRows.map((row) => (
+          <article class="kpi">
+            <h3>{row.label}</h3>
+            <p>{row.count}</p>
+          </article>
+        ))}
+      </div>
+    </section>
 
     <section class="card">
       <table class="table">
