@@ -53,6 +53,9 @@ const seoTitle =
 const seoDescription = `${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal. RTX 3090 ${
   hasRealBenchmark ? `${realBenchmark.tokens_per_second} tok/s measured` : `${item.benchmarks.rtx3090_tok_s} tok/s baseline`
 }, RTX 4090 ${item.benchmarks.rtx4090_tok_s} tok/s, cloud ${item.benchmarks.a100_tok_s} tok/s.`;
+const paramsB = Number(item.params_b || 0);
+const systemRamTargetGb =
+  item.vram_optimal_gb <= 12 ? 16 : item.vram_optimal_gb <= 24 ? 32 : item.vram_optimal_gb <= 48 ? 64 : 128;
 const canRunOnRtx3090 = item.vram_min_gb <= 24;
 const comfortableOnRtx3090 = item.vram_optimal_gb <= 24;
 const localFitAnswer = comfortableOnRtx3090
@@ -77,6 +80,14 @@ const faqItems = [
     answer: item.ollama_command
       ? `Use ${item.ollama_command}. Check the Ollama tag ${item.ollama_tag || "listed on this page"} before running.`
       : `Use the Ollama tag ${item.ollama_tag || "listed on this page"} with your local Ollama installation.`,
+  },
+  {
+    question: `What is the approximate Ollama model size for ${item.name}?`,
+    answer: `${item.name} uses the ${item.ollama_tag || "listed"} Ollama tag. Treat the ${item.quantization} ${paramsB || item.size_class} profile as smaller than the runtime VRAM budget; use ${item.vram_min_gb}GB minimum VRAM and ${item.vram_optimal_gb}GB optimal VRAM as the safer sizing numbers.`,
+  },
+  {
+    question: `How much system RAM does ${item.name} need in Ollama?`,
+    answer: `Plan for at least ${systemRamTargetGb}GB system RAM alongside ${item.vram_min_gb}GB minimum VRAM and ${item.vram_optimal_gb}GB optimal VRAM. More RAM helps if layers spill to CPU or if you run multiple models.`,
   },
   {
     question: `Is ${item.name} benchmark data measured or estimated?`,
@@ -275,6 +286,43 @@ const structuredData = relatedProfiles.length
           </div>
         ))}
       </dl>
+    </section>
+
+    <section class="card">
+      <h2>Ollama Model Size and RAM Notes</h2>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Ollama tag</th>
+            <td><code>{item.ollama_tag || "not listed"}</code></td>
+          </tr>
+          <tr>
+            <th>Run command</th>
+            <td>
+              {item.ollama_command ? (
+                <code>{item.ollama_command}</code>
+              ) : (
+                "Use the listed Ollama tag with ollama run."
+              )}
+            </td>
+          </tr>
+          <tr>
+            <th>Model size guidance</th>
+            <td>{item.quantization} quantization, {paramsB || item.size_class} profile; size runtime by VRAM, not download size alone</td>
+          </tr>
+          <tr>
+            <th>Runtime VRAM target</th>
+            <td>{item.vram_min_gb}GB minimum, {item.vram_optimal_gb}GB optimal</td>
+          </tr>
+          <tr>
+            <th>System RAM planning</th>
+            <td>{systemRamTargetGb}GB or more when running this tag locally with Ollama</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="affiliate-note">
+        Download size alone is not a safe runtime budget. Runtime memory also includes KV cache, context length, and GPU layer placement.
+      </p>
     </section>
 
     <section class="card">
