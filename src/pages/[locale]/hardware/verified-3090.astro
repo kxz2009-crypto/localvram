@@ -1,7 +1,10 @@
 ---
-import LocaleBridgePage from "../../../components/i18n/LocaleBridgePage.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import benchmarkResults from "../../../data/benchmark-results.json";
+import catalog from "../../../data/model-catalog.json";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
-import { resolvePageCopy } from "../../../lib/i18n-copy";
+import { resolvePageCopy, shouldNoindexByFallback } from "../../../lib/i18n-copy";
 import { withLocale } from "../../../lib/locale-paths";
 
 export function getStaticPaths() {
@@ -12,17 +15,251 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props as { locale: ComLocale };
-const home = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() }).fields;
+const homeCopy = resolvePageCopy("locale-home", locale, { localeUpper: locale.toUpperCase() });
+const home = homeCopy.fields;
 const enPath = "/en/hardware/verified-3090/";
 const pagePath = withLocale(locale, enPath);
-const title = home.card_verified_title;
-const description = home.card_verified_desc || home.hero_intro;
+const allItems = Array.isArray(catalog.items) ? catalog.items : [];
+const benchmarkMap = benchmarkResults.models || {};
+const modelByTag = new Map(allItems.map((item) => [String(item.ollama_tag || ""), item]));
+
+const measuredRows = Object.entries(benchmarkMap)
+  .filter(([, row]) => row?.status === "ok" && typeof row.tokens_per_second === "number")
+  .map(([tag, row]) => {
+    const model = modelByTag.get(String(tag)) || null;
+    return {
+      tag,
+      name: model?.name || String(tag),
+      id: model?.id || "",
+      tokensPerSecond: Number(row.tokens_per_second),
+      latencyMs: Number(row.latency_ms || 0),
+      testTime: String(row.test_time || "unknown"),
+      gpuModel: String(row.gpu_model || "RTX 3090")
+    };
+  })
+  .sort((a, b) => b.tokensPerSecond - a.tokensPerSecond);
+
+const textByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
+  de: {
+    title: "RTX 3090 VRAM Benchmarks",
+    description: "Gemessene lokale Modell-Benchmarks auf RTX 3090 mit Tokens pro Sekunde, Latenz und Testzeit.",
+    intro:
+      "Diese Seite zeigt Modell-Tags mit gemessenen lokalen Laeufen auf RTX 3090. Nutze sie fuer evidenzbasierte VRAM- und Performance-Entscheidungen statt reiner Schaetzwerte.",
+    measuredTitle: "Gemessene Modell-Tags",
+    model: "Modell",
+    tag: "Tag",
+    speed: "Tokens/s",
+    latency: "Latenz (ms)",
+    testTime: "Testzeit",
+    detail: "Detail",
+    open: "Oeffnen",
+    notesTitle: "Validierungsnotizen",
+    note1: "Gemessene Zeilen stammen aus Benchmark-Snapshots, nicht aus Template-Platzhaltern.",
+    note2: "Modellseiten zeigen weiterhin Baseline-Werte fuer den Vergleich.",
+    note3: "Bei schweren Profilen pruefe Cloud-Fallback erst nach lokaler Saettigung.",
+    faqTitle: "RTX 3090 FAQ",
+    faqQ1: "Was bedeutet verifiziert auf RTX 3090?",
+    faqA1:
+      "Verifiziert bedeutet, dass fuer den Modell-Tag ein lokaler Benchmark-Snapshot mit RTX 3090 GPU-Modell, Tokens pro Sekunde, Latenz und Testzeit vorliegt.",
+    faqQ2: "Ist 24GB VRAM genug fuer jedes lokale LLM?",
+    faqA2:
+      "Nein. 24GB VRAM ist stark fuer viele quantisierte Modelle, aber 70B-Profile, lange Kontexte oder FP16-Varianten koennen weiterhin Cloud- oder Multi-GPU-Fallback brauchen.",
+    faqQ3: "Welche Zahl sollte ich zuerst vergleichen?",
+    faqA3:
+      "Vergleiche zuerst Tokens/s und Latenz fuer deinen Modell-Tag, danach Quantisierung, Kontextlaenge und ob die Modellseite gemessen oder geschaetzt ist.",
+    changelog: "Benchmark-Changelog",
+    catalog: "Modellkatalog",
+    calculator: "VRAM schaetzen"
+  },
+  ko: {
+    title: "RTX 3090 VRAM 벤치마크",
+    description: "RTX 3090에서 측정한 로컬 모델 벤치마크, 토큰/초, 지연 시간, 테스트 시각입니다.",
+    intro:
+      "이 페이지는 RTX 3090에서 실제로 측정된 모델 태그를 보여줍니다. 추정값만 보지 않고 로컬 성능과 VRAM 결정을 확인할 때 사용합니다.",
+    measuredTitle: "측정된 모델 태그",
+    model: "모델",
+    tag: "태그",
+    speed: "토큰/s",
+    latency: "지연 시간 (ms)",
+    testTime: "테스트 시각",
+    detail: "상세",
+    open: "열기",
+    notesTitle: "검증 참고",
+    note1: "측정 행은 템플릿 값이 아니라 실제 벤치마크 스냅샷에서 옵니다.",
+    note2: "모델 페이지에는 비교를 위한 기준값도 함께 표시됩니다.",
+    note3: "무거운 프로필은 로컬 한계를 확인한 뒤 cloud fallback을 검토합니다.",
+    faqTitle: "RTX 3090 FAQ",
+    faqQ1: "RTX 3090 검증은 무엇을 의미하나요?",
+    faqA1:
+      "해당 모델 태그에 대해 RTX 3090 GPU 모델, 토큰/초, 지연 시간, 테스트 시각이 포함된 로컬 벤치마크 스냅샷이 있다는 뜻입니다.",
+    faqQ2: "24GB VRAM이면 모든 로컬 LLM에 충분한가요?",
+    faqA2:
+      "아닙니다. 24GB VRAM은 많은 양자화 모델에 강하지만 70B, 긴 컨텍스트, FP16 변형은 cloud 또는 multi-GPU fallback이 필요할 수 있습니다.",
+    faqQ3: "어떤 수치를 먼저 봐야 하나요?",
+    faqA3:
+      "먼저 모델 태그의 토큰/초와 지연 시간을 보고, 그다음 양자화, 컨텍스트 길이, 모델 페이지의 measured/estimated 상태를 확인합니다.",
+    changelog: "벤치마크 변경 기록",
+    catalog: "모델 카탈로그",
+    calculator: "VRAM 계산"
+  }
+};
+const text = {
+  title: home.card_verified_title || "Verified on RTX 3090",
+  description:
+    home.card_verified_desc ||
+    "Measured model benchmarks validated on RTX 3090 with latency and throughput snapshots.",
+  intro:
+    "This page tracks model tags with measured local runs on RTX 3090. Use it when you want evidence-backed local performance instead of pure baseline estimates.",
+  measuredTitle: "Measured model tags",
+  model: "Model",
+  tag: "Tag",
+  speed: "Tokens/s",
+  latency: "Latency (ms)",
+  testTime: "Test time",
+  detail: "Detail",
+  open: "Open",
+  notesTitle: "Validation notes",
+  note1: "Measured rows come from actual benchmark snapshots, not template placeholders.",
+  note2: "Catalog baseline values stay visible on model pages for comparison.",
+  note3: "For heavy profiles, use cloud fallback links after local saturation.",
+  faqTitle: "RTX 3090 FAQ",
+  faqQ1: "What does verified on RTX 3090 mean?",
+  faqA1:
+    "Verified means the model tag has a local benchmark snapshot with RTX 3090 GPU model, tokens per second, latency, and test time.",
+  faqQ2: "Is 24GB VRAM enough for every local LLM?",
+  faqA2:
+    "No. 24GB VRAM is strong for many quantized models, but 70B profiles, long context, or FP16 variants can still need cloud or multi-GPU fallback.",
+  faqQ3: "Which number should I compare first?",
+  faqA3:
+    "Compare tokens per second and latency for your model tag first, then check quantization, context length, and whether the model page is measured or estimated.",
+  changelog: "Benchmark changelog",
+  catalog: "Model catalog",
+  calculator: "Estimate VRAM",
+  ...(textByLocale[locale] || {})
+};
+const shouldNoindex = shouldNoindexByFallback(locale, homeCopy.fallbackRatio);
+const faqItems = [
+  { question: text.faqQ1, answer: text.faqA1 },
+  { question: text.faqQ2, answer: text.faqA2 },
+  { question: text.faqQ3, answer: text.faqA3 }
+];
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: text.title,
+  url: `https://localvram.com${pagePath}`,
+  inLanguage: locale,
+  description: text.description,
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: measuredRows.length,
+    itemListElement: measuredRows.slice(0, 20).map((row, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: row.name,
+      url: row.id ? `https://localvram.com${withLocale(locale, `/en/models/${row.id}/`)}` : undefined
+    }))
+  }
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: locale,
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer
+    }
+  }))
+};
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "LocalVRAM",
+      item: `https://localvram.com${withLocale(locale, "/en/")}`
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: text.title,
+      item: `https://localvram.com${pagePath}`
+    }
+  ]
+};
 ---
 
-<LocaleBridgePage
+<BaseLayout
+  title={`${text.title} | LocalVRAM`}
+  description={text.description}
   locale={locale}
-  pagePath={pagePath}
-  enPath={enPath}
-  title={title}
-  description={description}
-/>
+  canonicalPath={pagePath}
+  alternates={ROOT_ALTERNATES}
+  noindex={shouldNoindex}
+  structuredData={[collectionSchema, faqSchema, breadcrumbSchema]}
+>
+  <main class="container">
+    <h1>{text.title}</h1>
+    <p>{text.intro}</p>
+
+    <section class="card">
+      <h2>{text.measuredTitle}</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{text.model}</th>
+            <th>{text.tag}</th>
+            <th>{text.speed}</th>
+            <th>{text.latency}</th>
+            <th>{text.testTime}</th>
+            <th>{text.detail}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {measuredRows.map((row) => (
+            <tr>
+              <td>{row.name}</td>
+              <td><code>{row.tag}</code></td>
+              <td>{row.tokensPerSecond.toFixed(1)}</td>
+              <td>{row.latencyMs > 0 ? row.latencyMs : "-"}</td>
+              <td>{row.testTime}</td>
+              <td>{row.id ? <a class="btn" href={withLocale(locale, `/en/models/${row.id}/`)}>{text.open}</a> : "-"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>{text.notesTitle}</h2>
+      <ul>
+        <li>{text.note1}</li>
+        <li>{text.note2}</li>
+        <li>{text.note3}</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>{text.faqTitle}</h2>
+      <dl class="faq-list">
+        {faqItems.map((item) => (
+          <>
+            <dt>{item.question}</dt>
+            <dd>{item.answer}</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+
+    <section class="cta-row">
+      <a class="btn btn-primary" href={withLocale(locale, "/en/benchmarks/changelog/")}>{text.changelog}</a>
+      <a class="btn" href={withLocale(locale, "/en/models/")}>{text.catalog}</a>
+      <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{text.calculator}</a>
+    </section>
+  </main>
+</BaseLayout>
