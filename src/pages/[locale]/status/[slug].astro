@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { ROOT_ALTERNATES } from "../../../data/root-alternates";
+import conversionReport from "../../../data/conversion-funnel.json";
+import freshnessReport from "../../../data/status.json";
 import { STATUS_ROUTE_ITEMS, type RouteManifestItem } from "../../../data/i18n-route-manifest";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import { withLocale } from "../../../lib/locale-paths";
@@ -74,12 +76,172 @@ const relatedActionKeys =
       ? (["modelCatalog", "matrix", "calculator"] as const)
       : (["calculator", "modelCatalog", "runRent"] as const);
 const relatedActions = relatedActionKeys.map((key) => relatedActionMap[key]);
+const funnel = conversionReport.funnel || {};
+const funnelBreakdown = conversionReport.breakdown || {};
+const providerRows = Array.isArray(funnelBreakdown.providers) ? funnelBreakdown.providers : [];
+const routeRows = Array.isArray(funnelBreakdown.routes) ? funnelBreakdown.routes : [];
+const sourceRows = Array.isArray(funnelBreakdown.source_pages) ? funnelBreakdown.source_pages : [];
+const landingRows = Array.isArray(funnelBreakdown.search_landings) ? funnelBreakdown.search_landings : [];
+const rawGpuTemperature = Number(freshnessReport.latest_gpu_temperature_c);
+const latestGpuTemperature =
+  Number.isFinite(rawGpuTemperature) && rawGpuTemperature > 0
+    ? `${rawGpuTemperature.toFixed(1)}°C`
+    : "unknown";
+const statusTextByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
+  de: {
+    funnelIntro:
+      "Dieser Conversion-Trichter verbindet Suchnachfrage, Entscheidungsseiten und Affiliate-Weiterleitungen in einem 30-Tage-Snapshot.",
+    organicSearch: "Organische Suchklicks",
+    decisionClicks: "Klicks auf Entscheidungsseiten",
+    affiliateClicks: "Affiliate-Weiterleitungen",
+    cloudClicks: "Cloud-Weiterleitungen",
+    hardwareClicks: "Hardware-Weiterleitungen",
+    searchAffiliateCtr: "Suche zu Affiliate",
+    dataWindow: "Datenfenster",
+    generated: "Generiert",
+    searchConsoleUpdated: "Search Console aktualisiert",
+    providerBreakdown: "Anbieter-Aufschlüsselung",
+    topRoutes: "Top-Routen",
+    topSources: "Top-Quellseiten",
+    topLandings: "Top-Such-Landings",
+    provider: "Anbieter",
+    route: "Route",
+    page: "Seite",
+    landing: "Landing",
+    clicks: "Klicks",
+    share: "Anteil",
+    noProvider: "Keine Affiliate-Ereignisse im aktuellen Fenster.",
+    noRoute: "Keine Routen-Klickdaten im aktuellen Fenster.",
+    noSource: "Keine Quellseiten-Klickdaten im aktuellen Fenster.",
+    noLanding: "Keine Search-Console-Landingdaten gefunden.",
+    freshnessIntro:
+      "Diese Datenfrische-Seite zeigt, wann Benchmarks, Hardware-Sync und operative Statusdaten zuletzt geprüft wurden.",
+    lastVerified: "Zuletzt verifiziert",
+    lastHardwareSync: "Letzter Hardware-Sync",
+    freshnessScore: "Frische-Score",
+    latestGpuTemp: "Neueste GPU-Temperatur",
+    operationalUse: "Wie du diese Seite nutzt",
+    operationalUseBody:
+      "Nutze den Frische-Score vor Hardware- oder Cloud-Entscheidungen. Wenn Verifizierung oder Hardware-Sync alt wirkt, prüfe Modellseiten und Benchmark-Changelog zusammen.",
+    faqTitle: "Status-FAQ",
+    faqQ1: "Warum ist der Conversion-Trichter wichtig?",
+    faqA1:
+      "Er zeigt, ob Suchnachfrage, Entscheidungsseiten und ausgehende Empfehlungen zusammenpassen, statt nur isolierte Traffic-Zahlen zu lesen.",
+    faqQ2: "Warum ist Datenfrische wichtig?",
+    faqA2:
+      "VRAM- und Benchmark-Seiten altern schnell. Frische Zeitstempel helfen zu erkennen, ob eine Empfehlung auf aktuellen Snapshots basiert."
+  },
+  ko: {
+    funnelIntro:
+      "이 conversion funnel은 검색 수요, 의사결정 페이지, affiliate redirect 클릭을 30일 스냅샷으로 함께 보여줍니다.",
+    organicSearch: "자연 검색 클릭",
+    decisionClicks: "의사결정 페이지 클릭",
+    affiliateClicks: "Affiliate redirect 클릭",
+    cloudClicks: "Cloud redirect 클릭",
+    hardwareClicks: "Hardware redirect 클릭",
+    searchAffiliateCtr: "검색에서 affiliate 전환",
+    dataWindow: "데이터 기간",
+    generated: "생성 시각",
+    searchConsoleUpdated: "Search Console 업데이트",
+    providerBreakdown: "Provider breakdown",
+    topRoutes: "상위 route",
+    topSources: "상위 source page",
+    topLandings: "상위 search landing",
+    provider: "Provider",
+    route: "Route",
+    page: "Page",
+    landing: "Landing",
+    clicks: "Clicks",
+    share: "Share",
+    noProvider: "현재 기간에 affiliate 이벤트가 없습니다.",
+    noRoute: "현재 기간에 route 클릭 데이터가 없습니다.",
+    noSource: "현재 기간에 source page 클릭 데이터가 없습니다.",
+    noLanding: "Search Console landing 데이터가 없습니다.",
+    freshnessIntro:
+      "이 data freshness 페이지는 benchmark, hardware sync, 운영 상태 데이터가 언제 마지막으로 확인되었는지 보여줍니다.",
+    lastVerified: "마지막 검증",
+    lastHardwareSync: "마지막 hardware sync",
+    freshnessScore: "Freshness score",
+    latestGpuTemp: "최근 GPU 온도",
+    operationalUse: "운영에서 보는 방법",
+    operationalUseBody:
+      "하드웨어나 cloud 결정을 내리기 전에 freshness score를 확인합니다. 검증 또는 hardware sync가 오래되면 모델 페이지와 benchmark changelog를 함께 봅니다.",
+    faqTitle: "Status FAQ",
+    faqQ1: "Conversion funnel이 왜 중요한가요?",
+    faqA1:
+      "검색 수요, 의사결정 페이지, 외부 추천 클릭이 서로 맞물리는지 보여주므로 단순 traffic 숫자보다 실행 판단에 가깝습니다.",
+    faqQ2: "Data freshness가 왜 중요한가요?",
+    faqA2:
+      "VRAM과 benchmark 페이지는 빠르게 오래될 수 있습니다. 최신 timestamp는 추천이 현재 snapshot에 기반하는지 확인하게 해줍니다."
+  }
+};
+const statusText = {
+  funnelIntro:
+    "This conversion funnel connects search demand, decision pages, and affiliate redirect clicks in one 30-day snapshot.",
+  organicSearch: "Organic Search Clicks",
+  decisionClicks: "Decision Page Clicks",
+  affiliateClicks: "Affiliate Redirect Clicks",
+  cloudClicks: "Cloud Redirect Clicks",
+  hardwareClicks: "Hardware Redirect Clicks",
+  searchAffiliateCtr: "Search to Affiliate",
+  dataWindow: "Data Window",
+  generated: "Generated",
+  searchConsoleUpdated: "Search Console Updated",
+  providerBreakdown: "Provider Breakdown",
+  topRoutes: "Top Routes",
+  topSources: "Top Source Pages",
+  topLandings: "Top Search Landing Pages",
+  provider: "Provider",
+  route: "Route",
+  page: "Page",
+  landing: "Landing",
+  clicks: "Clicks",
+  share: "Share",
+  noProvider: "No affiliate events in current window.",
+  noRoute: "No route click data in current window.",
+  noSource: "No source-page click data in current window.",
+  noLanding: "No Search Console landing data found.",
+  freshnessIntro:
+    "This data freshness page shows when benchmark verification, hardware sync, and operating status data were last checked.",
+  lastVerified: "Last Verified",
+  lastHardwareSync: "Last Hardware Sync",
+  freshnessScore: "Freshness Score",
+  latestGpuTemp: "Latest GPU Temp",
+  operationalUse: "How to use this status",
+  operationalUseBody:
+    "Check freshness before hardware or cloud decisions. If verification or hardware sync looks stale, compare model pages with the benchmark changelog.",
+  faqTitle: "Status FAQ",
+  faqQ1: "Why does the conversion funnel matter?",
+  faqA1:
+    "It shows whether search demand, decision pages, and outbound recommendations line up instead of reading traffic metrics in isolation.",
+  faqQ2: "Why does data freshness matter?",
+  faqA2:
+    "VRAM and benchmark pages age quickly. Fresh timestamps help confirm whether a recommendation is based on current snapshots.",
+  ...(statusTextByLocale[locale] || {})
+};
+const statusFaqItems = [
+  { question: statusText.faqQ1, answer: statusText.faqA1 },
+  { question: statusText.faqQ2, answer: statusText.faqA2 },
+];
+const hasEnhancedStatusDetail = item.slug === "conversion-funnel" || item.slug === "data-freshness";
+const seoTitle =
+  item.slug === "conversion-funnel"
+    ? `${localizedItem.title} KPI | LocalVRAM`
+    : item.slug === "data-freshness"
+      ? `${localizedItem.title} KPI | LocalVRAM`
+      : text.meta_title;
+const seoDescription =
+  item.slug === "conversion-funnel"
+    ? statusText.funnelIntro
+    : item.slug === "data-freshness"
+      ? statusText.freshnessIntro
+      : text.meta_description;
 const structuredData = [
   {
     "@context": "https://schema.org",
     "@type": "Dataset",
     name: localizedItem.title,
-    description: localizedItem.description,
+    description: seoDescription,
     url: `https://localvram.com${pagePath}`,
     sameAs: `https://localvram.com${item.enPath}`,
     inLanguage: locale,
@@ -108,12 +270,29 @@ const structuredData = [
       },
     ],
   },
+  ...(hasEnhancedStatusDetail
+    ? [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          inLanguage: locale,
+          mainEntity: statusFaqItems.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        },
+      ]
+    : []),
 ];
 ---
 
 <BaseLayout
-  title={text.meta_title}
-  description={text.meta_description}
+  title={seoTitle}
+  description={seoDescription}
   locale={locale}
   canonicalPath={pagePath}
   alternates={ROOT_ALTERNATES}
@@ -130,6 +309,199 @@ const structuredData = [
         <a class="btn" href={withLocale(locale, "/en/guides/")}>{text.cta_open_guides}</a>
       </div>
     </section>
+
+    {item.slug === "conversion-funnel" && (
+      <>
+        <section class="card" style="margin-top: 16px;">
+          <h2>{localizedItem.title}</h2>
+          <p>{statusText.funnelIntro}</p>
+        </section>
+
+        <section class="card-grid">
+          <article class="card">
+            <h2>{statusText.organicSearch}</h2>
+            <p>{funnel.organic_search_clicks ?? 0}</p>
+          </article>
+          <article class="card">
+            <h2>{statusText.decisionClicks}</h2>
+            <p>{funnel.decision_page_clicks ?? 0}</p>
+          </article>
+          <article class="card">
+            <h2>{statusText.affiliateClicks}</h2>
+            <p>{funnel.affiliate_redirect_clicks ?? 0}</p>
+          </article>
+          <article class="card">
+            <h2>{statusText.cloudClicks}</h2>
+            <p>{funnel.cloud_redirect_clicks ?? 0}</p>
+          </article>
+          <article class="card">
+            <h2>{statusText.hardwareClicks}</h2>
+            <p>{funnel.hardware_redirect_clicks ?? 0}</p>
+          </article>
+          <article class="card">
+            <h2>{statusText.searchAffiliateCtr}</h2>
+            <p>{funnel.search_to_affiliate_pct ?? 0}%</p>
+          </article>
+        </section>
+
+        <section class="card" style="margin-top: 16px;">
+          <h2>{statusText.dataWindow}</h2>
+          <p>{conversionReport.window_start || "unknown"} → {conversionReport.window_end || "unknown"} ({conversionReport.window_days || 0} days)</p>
+          <p>{statusText.generated}: {conversionReport.generated_at || "unknown"}</p>
+          <p>{statusText.searchConsoleUpdated}: {conversionReport.sources?.search_console_updated_at || "unknown"}</p>
+          <p>{conversionReport.data_quality?.note || "-"}</p>
+        </section>
+
+        <section class="card" style="margin-top: 16px;">
+          <h2>{statusText.providerBreakdown}</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{statusText.provider}</th>
+                <th>{statusText.clicks}</th>
+                <th>{statusText.share}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {providerRows.length === 0 ? (
+                <tr><td colSpan={3}>{statusText.noProvider}</td></tr>
+              ) : (
+                providerRows.map((row) => (
+                  <tr>
+                    <td>{row.provider || "unknown"}</td>
+                    <td>{row.clicks ?? 0}</td>
+                    <td>{row.share_pct ?? 0}%</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card" style="margin-top: 16px;">
+          <h2>{statusText.topRoutes}</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{statusText.route}</th>
+                <th>{statusText.clicks}</th>
+                <th>{statusText.share}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {routeRows.length === 0 ? (
+                <tr><td colSpan={3}>{statusText.noRoute}</td></tr>
+              ) : (
+                routeRows.map((row) => (
+                  <tr>
+                    <td>{row.route || "/unknown"}</td>
+                    <td>{row.clicks ?? 0}</td>
+                    <td>{row.share_pct ?? 0}%</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card" style="margin-top: 16px;">
+          <h2>{statusText.topSources}</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{statusText.page}</th>
+                <th>{statusText.clicks}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sourceRows.length === 0 ? (
+                <tr><td colSpan={2}>{statusText.noSource}</td></tr>
+              ) : (
+                sourceRows.map((row) => (
+                  <tr>
+                    <td>{row.page || "unknown"}</td>
+                    <td>{row.clicks ?? 0}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card" style="margin-top: 16px;">
+          <h2>{statusText.topLandings}</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{statusText.landing}</th>
+                <th>{statusText.clicks}</th>
+                <th>{statusText.share}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {landingRows.length === 0 ? (
+                <tr><td colSpan={3}>{statusText.noLanding}</td></tr>
+              ) : (
+                landingRows.map((row) => (
+                  <tr>
+                    <td>{row.landing || "/unknown"}</td>
+                    <td>{row.clicks ?? 0}</td>
+                    <td>{row.share_pct ?? 0}%</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </section>
+      </>
+    )}
+
+    {item.slug === "data-freshness" && (
+      <>
+        <section class="card" style="margin-top: 16px;">
+          <h2>{localizedItem.title}</h2>
+          <p>{statusText.freshnessIntro}</p>
+        </section>
+
+        <section class="card-grid">
+          <article class="card">
+            <h2>{statusText.lastVerified}</h2>
+            <p>{freshnessReport.last_verified}</p>
+          </article>
+          <article class="card">
+            <h2>{statusText.lastHardwareSync}</h2>
+            <p>{freshnessReport.last_hardware_sync}</p>
+          </article>
+          <article class="card">
+            <h2>{statusText.freshnessScore}</h2>
+            <p>{freshnessReport.freshness_score}/100</p>
+          </article>
+          <article class="card">
+            <h2>{statusText.latestGpuTemp}</h2>
+            <p>{latestGpuTemperature}</p>
+          </article>
+        </section>
+
+        <section class="card" style="margin-top: 16px;">
+          <h2>{statusText.operationalUse}</h2>
+          <p>{statusText.operationalUseBody}</p>
+        </section>
+      </>
+    )}
+
+    {hasEnhancedStatusDetail && (
+      <section class="card" style="margin-top: 16px;">
+        <h2>{statusText.faqTitle}</h2>
+        <dl class="faq-list">
+          {statusFaqItems.map((faq) => (
+            <>
+              <dt>{faq.question}</dt>
+              <dd>{faq.answer}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    )}
 
     <section class="card-grid">
       {relatedActions.map((action) => (
