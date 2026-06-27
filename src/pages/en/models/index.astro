@@ -13,6 +13,10 @@ const q5ByTag = new Map(
     .filter((item) => item.quantization === "Q5")
     .map((item) => [item.ollama_tag, item.vram_min_gb])
 );
+const systemRamTarget = (optimalVram: number) =>
+  optimalVram <= 12 ? 16 : optimalVram <= 24 ? 32 : optimalVram <= 48 ? 64 : 128;
+const rtx3090Fit = (minVram: number, optimalVram: number) =>
+  optimalVram <= 24 ? "Comfortable" : minVram <= 24 ? "Borderline" : "Cloud / larger GPU";
 const top20Curated = items
   .filter((item) => item.is_top20_curated && item.quantization === "Q4")
   .sort((a, b) => (a.top20_rank ?? 999) - (b.top20_rank ?? 999));
@@ -68,6 +72,10 @@ const breadcrumbSchema = {
       Every profile includes VRAM requirements, local-vs-cloud recommendation, and benchmark anchor metrics.
     </p>
     <p>
+      Use the catalog as a RAM/VRAM planning map: GPU VRAM decides whether a model loads locally, while system RAM
+      protects Ollama when context grows or layers spill back to CPU.
+    </p>
+    <p>
       Ollama naming/source alignment date: <strong>{catalog.ollama_verified_at}</strong>.
       Each profile links back to its Ollama library source.
     </p>
@@ -114,6 +122,8 @@ const breadcrumbSchema = {
             <th>Tag</th>
             <th>VRAM Q4</th>
             <th>VRAM Q5</th>
+            <th>System RAM</th>
+            <th>RTX 3090 fit</th>
             <th>Category</th>
             <th>Command</th>
           </tr>
@@ -126,6 +136,8 @@ const breadcrumbSchema = {
               <td><code>{item.ollama_tag}</code></td>
               <td>{item.vram_min_gb}GB</td>
               <td>{q5ByTag.has(item.ollama_tag) ? `${q5ByTag.get(item.ollama_tag)}GB` : "-"}</td>
+              <td>{systemRamTarget(item.vram_optimal_gb)}GB+</td>
+              <td>{rtx3090Fit(item.vram_min_gb, item.vram_optimal_gb)}</td>
               <td>{item.category_label}</td>
               <td><code>{item.ollama_command}</code></td>
             </tr>
@@ -159,6 +171,8 @@ const breadcrumbSchema = {
           <tr>
             <th>Model</th>
             <th>VRAM (min/optimal)</th>
+            <th>System RAM</th>
+            <th>RTX 3090 fit</th>
             <th>3090 tok/s</th>
             <th>Path</th>
           </tr>
@@ -168,6 +182,8 @@ const breadcrumbSchema = {
             <tr>
               <td>{item.name}</td>
               <td>{item.vram_min_gb}GB / {item.vram_optimal_gb}GB</td>
+              <td>{systemRamTarget(item.vram_optimal_gb)}GB+</td>
+              <td>{rtx3090Fit(item.vram_min_gb, item.vram_optimal_gb)}</td>
               <td>{item.benchmarks.rtx3090_tok_s}</td>
               <td>
                 <a class="btn" href={`/en/models/${item.id}/`}>View</a>

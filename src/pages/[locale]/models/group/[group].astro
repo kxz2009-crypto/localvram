@@ -33,13 +33,26 @@ const items = (Array.isArray(modelCatalog?.items) ? modelCatalog.items : [])
 const featuredItems = items.slice(0, 24);
 const measuredCount = items.filter((item) => item?.data_status === "measured").length;
 const curatedCount = items.filter((item) => Boolean(item?.is_top20_curated)).length;
+const systemRamTarget = (optimalVram: number) =>
+  optimalVram <= 12 ? 16 : optimalVram <= 24 ? 32 : optimalVram <= 48 ? 64 : 128;
+const rtx3090Fit = (minVram: number, optimalVram: number) =>
+  optimalVram <= 24 ? "Comfortable" : minVram <= 24 ? "Borderline" : "Cloud / larger GPU";
+const localizedFit = (minVram: number, optimalVram: number) => {
+  if (locale === "de") {
+    return optimalVram <= 24 ? "Komfortabel" : minVram <= 24 ? "Grenzwertig" : "Cloud / größere GPU";
+  }
+  if (locale === "ko") {
+    return optimalVram <= 24 ? "여유 있음" : minVram <= 24 ? "경계선" : "클라우드 / 더 큰 GPU";
+  }
+  return rtx3090Fit(minVram, optimalVram);
+};
 const pageDescriptionByLocale: Partial<Record<ComLocale, string>> = {
-  de: `${groupName}-Modelle nach VRAM-Bedarf, Quantisierung, Lizenz und praktischer Hardware-Passung vergleichen.`,
-  ko: `${groupName} 모델을 VRAM 요구량, 양자화, 라이선스, 실제 하드웨어 적합성으로 비교합니다.`,
+  de: `${groupName}-Modelle nach RAM-/VRAM-Bedarf, Quantisierung, Lizenz und praktischer Hardware-Passung vergleichen.`,
+  ko: `${groupName} 모델을 RAM/VRAM 요구량, 양자화, 라이선스, 실제 하드웨어 적합성으로 비교합니다.`,
 };
 const pageIntroByLocale: Partial<Record<ComLocale, string>> = {
-  de: `Vergleichen Sie ${groupName}-Modelle mit VRAM-Schätzungen, Quantisierungs-Hinweisen und direkten Links zu den Detailseiten.`,
-  ko: `${groupName} 모델을 VRAM 추정치, 양자화 힌트, 상세 모델 페이지 링크와 함께 비교하세요.`,
+  de: `Vergleichen Sie ${groupName}-Modelle mit VRAM-Schätzungen, System-RAM-Zielen, Quantisierungs-Hinweisen und direkten Links zu den Detailseiten.`,
+  ko: `${groupName} 모델을 VRAM 추정치, 시스템 RAM 목표, 양자화 힌트, 상세 모델 페이지 링크와 함께 비교하세요.`,
 };
 const labelsByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
   de: {
@@ -50,7 +63,9 @@ const labelsByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
     openModel: "Modelldetails",
     quantization: "Quantisierung",
     scenario: "Szenario",
+    systemRam: "System-RAM",
     tag: "Tag",
+    rtx3090Fit: "RTX 3090 Eignung",
     vram: "VRAM",
     dataFreshness: "Datenfrische",
   },
@@ -62,7 +77,9 @@ const labelsByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
     openModel: "모델 상세",
     quantization: "양자화",
     scenario: "시나리오",
+    systemRam: "시스템 RAM",
     tag: "태그",
+    rtx3090Fit: "RTX 3090 적합성",
     vram: "VRAM",
     dataFreshness: "데이터 최신성",
   },
@@ -75,12 +92,14 @@ const labels = labelsByLocale[locale] || {
   openModel: "Model details",
   quantization: "Quantization",
   scenario: "Scenario",
+  systemRam: "System RAM",
   tag: "Tag",
+  rtx3090Fit: "RTX 3090 fit",
   vram: "VRAM",
   dataFreshness: "Data freshness",
 };
 const pageDescription =
-  pageDescriptionByLocale[locale] || `Compare ${groupName} models by VRAM requirement, quantization, license, and practical hardware fit.`;
+  pageDescriptionByLocale[locale] || `Compare ${groupName} models by RAM and VRAM requirement, quantization, license, and practical hardware fit.`;
 const pageIntro = pageIntroByLocale[locale] || pageDescription;
 const structuredData = {
   "@context": "https://schema.org",
@@ -150,6 +169,8 @@ const structuredData = {
             const vram = [item?.vram_min_gb, item?.vram_optimal_gb]
               .filter((value) => value !== undefined && value !== null && String(value).trim() !== "")
               .join(" / ");
+            const minVram = Number(item?.vram_min_gb || 0);
+            const optimalVram = Number(item?.vram_optimal_gb || 0);
             return (
               <article class="model-card">
                 <div>
@@ -160,6 +181,14 @@ const structuredData = {
                   <div>
                     <dt>{labels.vram}</dt>
                     <dd>{vram ? `${vram} GB` : "-"}</dd>
+                  </div>
+                  <div>
+                    <dt>{labels.systemRam}</dt>
+                    <dd>{optimalVram ? `${systemRamTarget(optimalVram)}GB+` : "-"}</dd>
+                  </div>
+                  <div>
+                    <dt>{labels.rtx3090Fit}</dt>
+                    <dd>{minVram || optimalVram ? localizedFit(minVram, optimalVram) : "-"}</dd>
                   </div>
                   <div>
                     <dt>{labels.quantization}</dt>

@@ -16,7 +16,11 @@ const items = catalog.items
   .sort((a, b) => b.params_b - a.params_b || a.name.localeCompare(b.name));
 const pagePath = `/en/models/group/${group.id}/`;
 const pageTitle = `${group.label} | LocalVRAM`;
-const pageDescription = `${group.label}: VRAM requirements, benchmark anchors, and local/cloud path.`;
+const pageDescription = `${group.label}: RAM and VRAM requirements, benchmark anchors, RTX 3090 fit, and local/cloud path.`;
+const systemRamTarget = (optimalVram: number) =>
+  optimalVram <= 12 ? 16 : optimalVram <= 24 ? 32 : optimalVram <= 48 ? 64 : 128;
+const rtx3090Fit = (minVram: number, optimalVram: number) =>
+  optimalVram <= 24 ? "Comfortable" : minVram <= 24 ? "Borderline" : "Cloud / larger GPU";
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
@@ -50,6 +54,9 @@ const structuredData = {
       {items.length} profiles in this group. Use this hub page to compare practical VRAM floor, expected throughput,
       and best local-vs-cloud path.
     </p>
+    <p>
+      RAM planning is included because Ollama may spill layers to CPU when VRAM is tight, especially with long context.
+    </p>
 
     <section class="card">
       <table class="table">
@@ -59,6 +66,8 @@ const structuredData = {
             <th>Data</th>
             <th>VRAM min</th>
             <th>VRAM optimal</th>
+            <th>System RAM</th>
+            <th>RTX 3090 fit</th>
             <th>Best local GPU</th>
             <th>Cloud fallback</th>
             <th>Detail</th>
@@ -71,6 +80,8 @@ const structuredData = {
               <td>{item.data_status === "measured" ? "Measured" : "Estimated"}</td>
               <td>{item.vram_min_gb}GB</td>
               <td>{item.vram_optimal_gb}GB</td>
+              <td>{systemRamTarget(item.vram_optimal_gb)}GB+</td>
+              <td>{rtx3090Fit(item.vram_min_gb, item.vram_optimal_gb)}</td>
               <td>{item.best_local_gpu}</td>
               <td>{item.cloud_fallback}</td>
               <td>
