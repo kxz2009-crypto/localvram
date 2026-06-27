@@ -35,6 +35,22 @@ const faqSchema = {
         "@type": "Answer",
         text: "It supports offline side-by-side samples now and can be connected to a serverless execution queue later."
       }
+    },
+    {
+      "@type": "Question",
+      name: "Is Q8 better than Q4 quantization?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Q8 usually preserves more model quality, but Q4 is often the better local default when VRAM, latency, or cost matter. Use Q8 when accuracy-sensitive extraction, strict formatting, or long reasoning fails under Q4."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "When should I choose Q4 instead of Q8?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Choose Q4 when the model fits comfortably, the blind test shows no material quality loss, and lower memory pressure improves latency or avoids cloud fallback."
+      }
     }
   ]
 };
@@ -85,6 +101,44 @@ const howToSchema = {
         <li>Generate two outputs: one with Q4, one with Q8. Keep temperature and prompt identical.</li>
         <li>Hide model labels and score quality first, then reveal labels.</li>
       </ol>
+    </section>
+
+    <section class="card">
+      <h2>Q8 vs Q4 Quantization: Quick Decision Table</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Choose Q4 when...</th>
+            <th>Choose Q8 when...</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VRAM fit</td>
+            <td>You need the model to fit on 8GB, 12GB, 16GB, or 24GB cards with context headroom.</td>
+            <td>The model still fits comfortably after accounting for KV cache and real prompt length.</td>
+          </tr>
+          <tr>
+            <td>Quality risk</td>
+            <td>Blind outputs are effectively tied on your real prompts.</td>
+            <td>Q4 loses factual accuracy, formatting discipline, or reasoning stability.</td>
+          </tr>
+          <tr>
+            <td>Latency and cost</td>
+            <td>Lower memory pressure keeps local latency acceptable and avoids cloud spillover.</td>
+            <td>Quality matters more than throughput, or the workload is batch/offline.</td>
+          </tr>
+          <tr>
+            <td>Best default</td>
+            <td>Local chat, RAG with strong retrieval, experiments, and high-volume low-risk traffic.</td>
+            <td>Extraction, compliance review, code review, and long reasoning paths.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="affiliate-note">
+        In practice, Q4 vs Q8 is not a universal quality ranking. It is a task-specific tradeoff between memory fit, latency, and acceptable error risk.
+      </p>
     </section>
 
     <section class="card">
