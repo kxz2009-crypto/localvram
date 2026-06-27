@@ -1,18 +1,59 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-26T04:50:30.399814Z",
+  "updated_at": "2026-06-27T04:35:44.673148Z",
   "last_run": {
-    "run_at": "2026-06-26T04:50:30.399814Z",
-    "queue_date": "2026-06-26",
-    "reviewed_count": 0,
-    "auto_approved_count": 0,
+    "run_at": "2026-06-27T04:35:44.673148Z",
+    "queue_date": "2026-06-27",
+    "reviewed_count": 1,
+    "auto_approved_count": 1,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": []
+    "items": [
+      {
+        "draft": "content-queue/2026-06-27/01-ko-benchmarks.md",
+        "slug": "ko-benchmarks",
+        "score": 240.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 619,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.7186,
+          "topic_score": 0.1111,
+          "slug": "2026-06-17-gpt-oss-20b-hardware-upgrade"
+        }
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-06-27T04:35:44.673148Z",
+      "queue_date": "2026-06-27",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-06-27/01-ko-benchmarks.md",
+          "slug": "ko-benchmarks",
+          "score": 240.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 619,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.7186,
+            "topic_score": 0.1111,
+            "slug": "2026-06-17-gpt-oss-20b-hardware-upgrade"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-06-26T04:50:30.399814Z",
       "queue_date": "2026-06-26",
@@ -964,17 +1005,6 @@
     {
       "run_at": "2026-04-27T04:08:01.322594Z",
       "queue_date": "2026-04-27",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
-    },
-    {
-      "run_at": "2026-04-26T04:03:11.012116Z",
-      "queue_date": "2026-04-26",
       "reviewed_count": 0,
       "auto_approved_count": 0,
       "pending_manual_review_count": 0,
