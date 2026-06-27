@@ -44,6 +44,10 @@ const relatedProfiles = catalog.items
     );
   })
   .slice(0, 4);
+const tagVariantProfiles = [item, ...relatedProfiles];
+const tagVariantSummary = tagVariantProfiles
+  .map((profile) => `${profile.name} (${profile.quantization}, ${profile.vram_min_gb}GB min/${profile.vram_optimal_gb}GB optimal)`)
+  .join("; ");
 const modelPath = `/en/models/${item.id}/`;
 const modelUrl = `https://localvram.com${modelPath}`;
 const seoTitle =
@@ -88,6 +92,12 @@ const faqItems = [
   {
     question: `How much system RAM does ${item.name} need in Ollama?`,
     answer: `Plan for at least ${systemRamTargetGb}GB system RAM alongside ${item.vram_min_gb}GB minimum VRAM and ${item.vram_optimal_gb}GB optimal VRAM. More RAM helps if layers spill to CPU or if you run multiple models.`,
+  },
+  {
+    question: `Which LocalVRAM profiles share the ${item.ollama_tag || item.family} Ollama tag?`,
+    answer: tagVariantSummary
+      ? `LocalVRAM tracks these profiles for the same Ollama tag or model family: ${tagVariantSummary}. Use the table on this page to compare quantization and VRAM targets before choosing a run command.`
+      : `${item.name} is the tracked LocalVRAM profile for this Ollama tag or model family.`,
   },
   {
     question: `Is ${item.name} benchmark data measured or estimated?`,
@@ -324,6 +334,41 @@ const structuredData = relatedProfiles.length
         Download size alone is not a safe runtime budget. Runtime memory also includes KV cache, context length, and GPU layer placement.
       </p>
     </section>
+
+    {tagVariantProfiles.length > 1 && (
+      <section class="card">
+        <h2>Available Tag Variants and VRAM Targets</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Profile</th>
+              <th>Quantization</th>
+              <th>VRAM target</th>
+              <th>Ollama tag</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tagVariantProfiles.map((profile) => (
+              <tr>
+                <td>
+                  {profile.id === item.id ? (
+                    <strong>{profile.name}</strong>
+                  ) : (
+                    <a href={`/en/models/${profile.id}/`}>{profile.name}</a>
+                  )}
+                </td>
+                <td>{profile.quantization}</td>
+                <td>{profile.vram_min_gb}GB min / {profile.vram_optimal_gb}GB optimal</td>
+                <td><code>{profile.ollama_tag || profile.family}</code></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="affiliate-note">
+          Ollama library tags often group multiple quantization choices under one model family. LocalVRAM separates them into VRAM profiles so you can pick the right local target.
+        </p>
+      </section>
+    )}
 
     <section class="card">
       <h2>Real Hardware Benchmark (RTX 3090)</h2>
