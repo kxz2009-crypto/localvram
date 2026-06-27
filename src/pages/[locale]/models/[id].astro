@@ -24,6 +24,9 @@ const pagePath = withLocale(locale, enPath);
 const pageUrl = `https://localvram.com${pagePath}`;
 const minVram = Number(item?.vram_min_gb || 0);
 const optimalVram = Number(item?.vram_optimal_gb || 0);
+const systemRamTargetGb = optimalVram <= 12 ? 16 : optimalVram <= 24 ? 32 : optimalVram <= 48 ? 64 : 128;
+const canRunOnRtx3090 = minVram <= 24;
+const comfortableOnRtx3090 = optimalVram <= 24;
 const updatedAt = String(item?.updated_at || "");
 const ollamaTag = String(item?.ollama_tag || "").trim();
 const relatedProfiles = (Array.isArray(modelCatalog?.items) ? modelCatalog.items : [])
@@ -59,46 +62,125 @@ const pageIntroByLocale: Partial<Record<ComLocale, string>> = {
 };
 const labelsByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
   de: {
+    contextWarning: "Kontext-Hinweis",
+    cpuSpillRisk: "CPU-Spill-Risiko",
     dataStatus: "Datenstatus",
     details: "Modellprofil",
+    gpuVramEstimate: "GPU-VRAM-Schätzung",
     license: "Lizenz",
     openProfile: "Profil öffnen",
     quantization: "Quantisierung",
+    ramVramNote:
+      "Für Ollama ist VRAM die erste Passformprüfung. System-RAM wird wichtig, wenn Layer auf die CPU ausweichen, der Kontext wächst oder weitere lokale Dienste parallel laufen.",
+    ramVramTitle: "Ollama RAM- und VRAM-Anforderungen",
     related: "Weitere Varianten",
+    rtx3090Fit: "RTX 3090 24GB Eignung",
     scenario: "Szenario",
+    systemRamRequirement: "System-RAM-Anforderung",
     tag: "Ollama-Tag",
     updated: "Aktualisiert",
     vramCalculator: "Im VRAM-Rechner prüfen",
   },
   ko: {
+    contextWarning: "컨텍스트 주의",
+    cpuSpillRisk: "CPU 스필 위험",
     dataStatus: "데이터 상태",
     details: "모델 프로필",
+    gpuVramEstimate: "GPU VRAM 추정치",
     license: "라이선스",
     openProfile: "프로필 열기",
     quantization: "양자화",
+    ramVramNote:
+      "Ollama에서는 VRAM이 먼저 확인해야 할 기준입니다. 레이어가 CPU로 넘어가거나 컨텍스트가 길어지거나 로컬 앱 스택을 함께 실행하면 시스템 RAM도 중요해집니다.",
+    ramVramTitle: "Ollama RAM 및 VRAM 요구 사항",
     related: "관련 변형",
+    rtx3090Fit: "RTX 3090 24GB 적합성",
     scenario: "시나리오",
+    systemRamRequirement: "시스템 RAM 요구 사항",
     tag: "Ollama 태그",
     updated: "업데이트",
     vramCalculator: "VRAM 계산기에서 확인",
   },
 };
 const labels = labelsByLocale[locale] || {
+  contextWarning: "Context warning",
+  cpuSpillRisk: "CPU spill risk",
   dataStatus: "Data status",
   details: "Model profile",
+  gpuVramEstimate: "GPU VRAM estimate",
   license: "License",
   openProfile: "Open profile",
   quantization: "Quantization",
+  ramVramNote:
+    "For Ollama, VRAM is the first fit check. System RAM matters when layers spill to CPU, context grows, or the local app stack runs beside the model.",
+  ramVramTitle: "Ollama RAM vs VRAM Requirements",
   related: "Related variants",
+  rtx3090Fit: "RTX 3090 24GB fit",
   scenario: "Scenario",
+  systemRamRequirement: "System RAM requirement",
   tag: "Ollama tag",
   updated: "Updated",
   vramCalculator: "Check in VRAM calculator",
 };
+const fitLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: comfortableOnRtx3090 ? "Komfortabel" : canRunOnRtx3090 ? "Grenzwertig" : "Nicht empfohlen",
+  ko: comfortableOnRtx3090 ? "여유 있음" : canRunOnRtx3090 ? "경계선" : "권장하지 않음",
+};
+const spillRiskLabelByLocale: Partial<Record<ComLocale, string>> = {
+  de: optimalVram <= 12 ? "Niedrig" : optimalVram <= 24 ? "Mittel bei langem Kontext" : "Hoch ohne größere GPU oder Cloud",
+  ko: optimalVram <= 12 ? "낮음" : optimalVram <= 24 ? "긴 컨텍스트에서 보통" : "더 큰 GPU 또는 클라우드 없이는 높음",
+};
+const contextWarningByLocale: Partial<Record<ComLocale, string>> = {
+  de: "Längerer Kontext erhöht den KV-Cache-Speicher, daher kann der reale VRAM-Verbrauch über Kurzprompt-Schätzungen liegen.",
+  ko: "컨텍스트가 길어질수록 KV 캐시 메모리가 증가하므로 실제 VRAM 사용량은 짧은 프롬프트 추정치를 넘을 수 있습니다.",
+};
+const fitLabel = fitLabelByLocale[locale] || (comfortableOnRtx3090 ? "Comfortable" : canRunOnRtx3090 ? "Borderline" : "Not recommended");
+const fitText = comfortableOnRtx3090 ? "comfortable" : canRunOnRtx3090 ? "borderline" : "not recommended";
+const germanFitText = comfortableOnRtx3090 ? "komfortabel" : canRunOnRtx3090 ? "grenzwertig" : "nicht empfohlen";
+const spillRiskLabel =
+  spillRiskLabelByLocale[locale] || (optimalVram <= 12 ? "Low" : optimalVram <= 24 ? "Moderate at long context" : "High without larger GPU or cloud");
+const spillRiskText = optimalVram <= 12 ? "low" : optimalVram <= 24 ? "moderate at long context" : "high without a larger GPU or cloud";
+const germanSpillRiskText =
+  optimalVram <= 12 ? "niedrig" : optimalVram <= 24 ? "mittel bei langem Kontext" : "hoch ohne größere GPU oder Cloud";
+const contextWarning =
+  contextWarningByLocale[locale] || "Longer context increases KV cache memory, so real VRAM usage can exceed short-prompt estimates.";
 const pageDescription =
   pageDescriptionByLocale[locale] ||
   `${modelName} needs about ${minVram}GB VRAM minimum and ${optimalVram}GB for a safer target. Compare quantization, workload fit, and related profiles.`;
 const pageIntro = pageIntroByLocale[locale] || pageDescription;
+const faqItemsByLocale: Partial<Record<ComLocale, Array<{ question: string; answer: string }>>> = {
+  de: [
+    {
+      question: `Welche RAM- und VRAM-Anforderungen hat ${modelName}?`,
+      answer: `${modelName} sollte zuerst nach GPU-VRAM dimensioniert werden: ${minVram}GB Minimum und ${optimalVram}GB als Ziel. Planen Sie mindestens ${systemRamTargetGb}GB System-RAM für Ollama, CPU-seitige Layer, Kontext und die umgebende App ein.`,
+    },
+    {
+      question: `Wie ist die VRAM-Nutzung von ${modelName} auf einer RTX 3090?`,
+      answer: `${modelName} ist für eine RTX 3090 24GB als ${germanFitText} eingestuft. Die Seite schätzt ${minVram}GB Minimum und ${optimalVram}GB optimalen VRAM; das CPU-Spill-Risiko ist ${germanSpillRiskText}.`,
+    },
+  ],
+  ko: [
+    {
+      question: `${modelName}의 RAM 및 VRAM 요구 사항은 무엇인가요?`,
+      answer: `${modelName}은 GPU VRAM을 먼저 기준으로 잡아야 합니다: 최소 ${minVram}GB, 권장 ${optimalVram}GB입니다. Ollama의 CPU 측 레이어, 컨텍스트, 주변 앱 프로세스를 위해 시스템 RAM은 최소 ${systemRamTargetGb}GB를 권장합니다.`,
+    },
+    {
+      question: `RTX 3090에서 ${modelName}의 VRAM 사용량은 어느 정도인가요?`,
+      answer: `${modelName}은 RTX 3090 24GB 기준으로 ${fitLabel}입니다. 이 페이지는 최소 ${minVram}GB, 권장 ${optimalVram}GB VRAM으로 추정하며 CPU 스필 위험은 ${spillRiskLabel}입니다.`,
+    },
+  ],
+};
+const faqItems =
+  faqItemsByLocale[locale] || [
+    {
+      question: `What is the RAM vs VRAM requirement for ${modelName}?`,
+      answer: `${modelName} should be sized by GPU VRAM first: ${minVram}GB minimum and ${optimalVram}GB optimal. System RAM should be at least ${systemRamTargetGb}GB so Ollama has room for CPU-side layers, context, and the surrounding app process.`,
+    },
+    {
+      question: `What is ${modelName} VRAM usage on an RTX 3090?`,
+      answer: `${modelName} is ${fitText} for an RTX 3090 24GB target. The page estimates ${minVram}GB minimum and ${optimalVram}GB optimal VRAM, with spill risk marked as ${spillRiskText}.`,
+    },
+  ];
 const modelSchema = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
@@ -116,7 +198,20 @@ const modelSchema = {
     "@type": "SoftwareApplication",
     name: modelName,
     applicationCategory: "DeveloperApplication",
+    softwareRequirements: `${minVram}GB minimum VRAM; ${optimalVram}GB optimal VRAM; ${systemRamTargetGb}GB system RAM target`,
   },
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
 };
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -154,8 +249,8 @@ const relatedProfilesSchema = {
   })),
 };
 const structuredData = relatedProfiles.length
-  ? [modelSchema, breadcrumbSchema, relatedProfilesSchema]
-  : [modelSchema, breadcrumbSchema];
+  ? [modelSchema, faqSchema, breadcrumbSchema, relatedProfilesSchema]
+  : [modelSchema, faqSchema, breadcrumbSchema];
 ---
 
 <BaseLayout
@@ -185,6 +280,38 @@ const structuredData = relatedProfiles.length
         <a class="btn" href={withLocale(locale, "/en/models/")}>{text.cta_back_hub}</a>
         <a class="btn" href={withLocale(locale, "/en/tools/vram-calculator/")}>{labels.vramCalculator}</a>
       </div>
+    </section>
+
+    <section class="model-detail-grid">
+      <article class="model-card">
+        <div>
+          <p class="eyebrow">RAM / VRAM</p>
+          <h2>{labels.ramVramTitle}</h2>
+        </div>
+        <dl>
+          <div>
+            <dt>{labels.gpuVramEstimate}</dt>
+            <dd>{minVram}GB / {optimalVram}GB</dd>
+          </div>
+          <div>
+            <dt>{labels.systemRamRequirement}</dt>
+            <dd>{systemRamTargetGb}GB+</dd>
+          </div>
+          <div>
+            <dt>{labels.rtx3090Fit}</dt>
+            <dd>{fitLabel}</dd>
+          </div>
+          <div>
+            <dt>{labels.cpuSpillRisk}</dt>
+            <dd>{spillRiskLabel}</dd>
+          </div>
+          <div>
+            <dt>{labels.contextWarning}</dt>
+            <dd>{contextWarning}</dd>
+          </div>
+        </dl>
+        <p>{labels.ramVramNote}</p>
+      </article>
     </section>
 
     <section class="model-detail-grid">
