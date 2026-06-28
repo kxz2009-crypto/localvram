@@ -1,34 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-27T04:35:44.747445Z",
+  "updated_at": "2026-06-28T05:03:58.539735Z",
   "last_run": {
-    "run_at": "2026-06-27T04:35:44.747445Z",
-    "queue_date": "2026-06-27",
-    "candidate_count": 1,
+    "run_at": "2026-06-28T05:03:58.539735Z",
+    "queue_date": "2026-06-28",
+    "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 0,
+    "fallback_generated_count": 1,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "ko-benchmarks",
-        "title": "Benchmark Hub: Benchmark Refresh and Go/No-Go Notes (2026)",
-        "topic_key": "benchmark-hub",
-        "score": 240.0,
-        "source_draft": "content-queue/2026-06-27/01-ko-benchmarks.md",
-        "out_file": "src/content/blog/ko-benchmarks.md",
-        "intent": "benchmark",
-        "model_tag": "",
-        "model_key": "",
-        "traffic_priority": "",
-        "ollama_updated_label": "",
-        "benchmark_measured_at": ""
+        "slug": "daily-local-llm-benchmark-snapshot-2026-06-28",
+        "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-06-28-daily-local-llm-benchmark-snapshot-2026-06-28",
+        "score": 120.0,
+        "source_draft": "system:fallback-daily-generator",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-28.md",
+        "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-06-28T05:03:58.539735Z",
+      "queue_date": "2026-06-28",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-06-28",
+          "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-06-28-daily-local-llm-benchmark-snapshot-2026-06-28",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-28.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-06-27T04:35:44.747445Z",
       "queue_date": "2026-06-27",
@@ -1369,28 +1386,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-28.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-04-27T04:08:01.396549Z",
-      "queue_date": "2026-04-27",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-04-27",
-          "title": "Daily Local LLM Benchmark Snapshot: Decisions You Can Use (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-04-27-daily-local-llm-benchmark-snapshot-2026-04-27",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-04-27.md",
           "intent": "benchmark"
         }
       ],
