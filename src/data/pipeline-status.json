@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-01T06:58:01Z",
+  "updated_at": "2026-07-01T06:58:03Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -17,15 +17,15 @@
     "publish_benchmark_artifact": {
       "workflow_key": "publish_benchmark_artifact",
       "workflow_name": "Publish Benchmark Artifact",
-      "run_id": "28080475879",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/28080475879",
+      "run_id": "28499537808",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/28499537808",
       "status": "completed",
       "conclusion": "success",
       "event": "workflow_run",
-      "head_sha": "8b8cb0a4bc0826299700a9ce34261ef06964d420",
+      "head_sha": "54df4d35015e8356e9d76b4ee9fd82b549abc11a",
       "failure_class": "none",
       "failure_detail": "",
-      "updated_at": "2026-06-24T06:45:21Z"
+      "updated_at": "2026-07-01T06:58:03Z"
     },
     "daily_content": {
       "workflow_key": "daily_content",
@@ -42,6 +42,19 @@
     }
   },
   "history": [
+    {
+      "workflow_key": "publish_benchmark_artifact",
+      "workflow_name": "Publish Benchmark Artifact",
+      "run_id": "28499537808",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/28499537808",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "workflow_run",
+      "head_sha": "54df4d35015e8356e9d76b4ee9fd82b549abc11a",
+      "failure_class": "none",
+      "failure_detail": "",
+      "updated_at": "2026-07-01T06:58:03Z"
+    },
     {
       "workflow_key": "weekly_benchmark",
       "workflow_name": "Weekly Benchmark",
@@ -808,19 +821,6 @@
       "failure_class": "none",
       "failure_detail": "",
       "updated_at": "2026-05-18T04:51:04Z"
-    },
-    {
-      "workflow_key": "daily_content",
-      "workflow_name": "Daily Content Agent",
-      "run_id": "25981504957",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/25981504957",
-      "status": "completed",
-      "conclusion": "success",
-      "event": "schedule",
-      "head_sha": "d5702baf03fac23ce7a3548ea05c713f302f17c0",
-      "failure_class": "none",
-      "failure_detail": "",
-      "updated_at": "2026-05-17T04:39:49Z"
     }
   ]
 }
