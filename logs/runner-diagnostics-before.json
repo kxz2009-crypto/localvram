@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-24T06:19:12Z",
+  "updated_at": "2026-07-01T06:45:29Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -45,7 +45,7 @@
     },
     "ID": {
       "exit": 0,
-      "stdout": "uid=1000(gao20) gid=1000(gao20) groups=1000(gao20),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),989(ollama)",
+      "stdout": "uid=1000(gao20) gid=1000(gao20) groups=1000(gao20),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),988(docker),989(ollama)",
       "stderr": ""
     },
     "UNAME": {
@@ -66,7 +66,9 @@
   },
   "checks": {
     "port_listeners": [],
-    "ps_ollama": [],
+    "ps_ollama": [
+      "ollama      1389    1337  0 Jun29 ?        00:19:53 mysqld --max_connections=1000 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password --tls_version=TLSv1.2,TLSv1.3 --init-file /data/application/init.sql --binlog_expire_logs_seconds=604800"
+    ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
       "ollama_serve_process_count": 0,

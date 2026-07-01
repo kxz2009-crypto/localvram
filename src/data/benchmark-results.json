@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-06-24T06:22:37Z",
+  "updated_at": "2026-07-01T06:49:08Z",
   "history_limit": 20,
   "models": {
     "deepseek-r1:14b": {
-      "tokens_per_second": 7.45,
-      "latency_ms": 17792.0,
+      "tokens_per_second": 81.204,
+      "latency_ms": 1957.0,
       "prompt_tokens": 24,
       "eval_tokens": 128,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -20,12 +20,12 @@
       "source_model_tag": "deepseek-r1:14b"
     },
     "gemma3:27b": {
-      "tokens_per_second": 3.629,
-      "latency_ms": 26904.0,
+      "tokens_per_second": 43.997,
+      "latency_ms": 2755.0,
       "prompt_tokens": 30,
-      "eval_tokens": 93,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "eval_tokens": 96,
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -88,12 +88,12 @@
       "source_model_tag": "llama3.3:70b-instruct-q4_k_m"
     },
     "llama4:16x17b": {
-      "tokens_per_second": 5.585,
-      "latency_ms": 12521.0,
+      "tokens_per_second": 9.449,
+      "latency_ms": 7499.0,
       "prompt_tokens": 363,
       "eval_tokens": 64,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -105,12 +105,12 @@
       "source_model_tag": "llama4:latest"
     },
     "ministral-3:14b": {
-      "tokens_per_second": 7.38,
-      "latency_ms": 18155.0,
+      "tokens_per_second": 88.068,
+      "latency_ms": 1860.0,
       "prompt_tokens": 575,
       "eval_tokens": 128,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -122,12 +122,12 @@
       "source_model_tag": "ministral-3:14b"
     },
     "mistral-small:22b": {
-      "tokens_per_second": 4.987,
-      "latency_ms": 19371.0,
+      "tokens_per_second": 62.224,
+      "latency_ms": 1727.0,
       "prompt_tokens": 29,
       "eval_tokens": 94,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -156,12 +156,12 @@
       "source_model_tag": "nemotron-3-nano:30b"
     },
     "qwen2.5-coder:32b": {
-      "tokens_per_second": 8.995,
-      "latency_ms": 12030.0,
+      "tokens_per_second": 38.88,
+      "latency_ms": 3061.0,
       "prompt_tokens": 29,
       "eval_tokens": 96,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -190,12 +190,12 @@
       "source_model_tag": "qwen2.5:14b"
     },
     "qwen3-coder:30b": {
-      "tokens_per_second": 24.937,
-      "latency_ms": 3724.0,
+      "tokens_per_second": 157.579,
+      "latency_ms": 853.0,
       "prompt_tokens": 29,
-      "eval_tokens": 80,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "eval_tokens": 81,
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -241,12 +241,12 @@
       "source_model_tag": "qwen3.5:27b"
     },
     "qwen3.6:35b": {
-      "tokens_per_second": 10.605,
-      "latency_ms": 10242.0,
+      "tokens_per_second": 34.642,
+      "latency_ms": 3417.0,
       "prompt_tokens": 31,
       "eval_tokens": 96,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -258,12 +258,12 @@
       "source_model_tag": "qwen3.6:35b"
     },
     "qwen3:8b": {
-      "tokens_per_second": 12.515,
-      "latency_ms": 10829.0,
+      "tokens_per_second": 136.449,
+      "latency_ms": 1281.0,
       "prompt_tokens": 31,
       "eval_tokens": 128,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -275,12 +275,12 @@
       "source_model_tag": "qwen3:8b"
     },
     "qwq:32b": {
-      "tokens_per_second": 3.175,
-      "latency_ms": 31101.0,
+      "tokens_per_second": 31.378,
+      "latency_ms": 3414.0,
       "prompt_tokens": 29,
       "eval_tokens": 96,
-      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260624T062237Z-8b8cb0a.txt",
-      "test_time": "2026-06-24T06:22:37Z",
+      "gpu_snapshot": "/screenshots/nvidia-geforce-rtx-3090-weekly-20260701T064908Z-54df4d3.txt",
+      "test_time": "2026-07-01T06:49:08Z",
       "gpu_model": "NVIDIA GeForce RTX 3090",
       "status": "ok",
       "error_type": "",
@@ -310,7 +310,7 @@
     }
   },
   "latest": {
-    "updated_at": "2026-06-24T06:22:37Z",
+    "updated_at": "2026-07-01T06:49:08Z",
     "runner": {
       "hostname": "Vernon",
       "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
@@ -319,7 +319,7 @@
     "ollama": {
       "endpoint": "http://127.0.x.x:11435",
       "version": "0.20.2",
-      "available_model_count": 51
+      "available_model_count": 47
     },
     "gpu_before": {
       "available": true,
@@ -328,10 +328,10 @@
           "name": "NVIDIA GeForce RTX 3090",
           "driver": "591.86",
           "memory_total_mb": 24576.0,
-          "memory_used_mb": 23924.0,
-          "temperature_c": 52.0,
-          "power_w": 183.12,
-          "utilization_pct": 98.0
+          "memory_used_mb": 3393.0,
+          "temperature_c": 40.0,
+          "power_w": 115.97,
+          "utilization_pct": 0.0
         }
       ]
     },
@@ -342,10 +342,10 @@
           "name": "NVIDIA GeForce RTX 3090",
           "driver": "591.86",
           "memory_total_mb": 24576.0,
-          "memory_used_mb": 23976.0,
-          "temperature_c": 54.0,
-          "power_w": 184.62,
-          "utilization_pct": 100.0
+          "memory_used_mb": 23322.0,
+          "temperature_c": 51.0,
+          "power_w": 305.05,
+          "utilization_pct": 55.0
         }
       ]
     },
@@ -453,34 +453,34 @@
             "model": "qwen3:8b",
             "num_predict": 128,
             "eval_count": 128,
-            "eval_duration_s": 10.4497,
+            "eval_duration_s": 0.9416,
             "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 0.0829,
-            "total_duration_s": 11.0808,
-            "wall_duration_s": 11.0832,
-            "tokens_per_s": 12.249,
-            "prompt_tokens_per_s": 373.905,
+            "prompt_eval_duration_s": 0.0077,
+            "total_duration_s": 1.2969,
+            "wall_duration_s": 1.298,
+            "tokens_per_s": 135.942,
+            "prompt_tokens_per_s": 4030.577,
             "run_index": 1
           },
           {
             "model": "qwen3:8b",
             "num_predict": 128,
             "eval_count": 128,
-            "eval_duration_s": 10.0138,
+            "eval_duration_s": 0.9346,
             "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 0.0783,
-            "total_duration_s": 10.5776,
-            "wall_duration_s": 10.5802,
-            "tokens_per_s": 12.782,
-            "prompt_tokens_per_s": 396.093,
+            "prompt_eval_duration_s": 0.0081,
+            "total_duration_s": 1.2645,
+            "wall_duration_s": 1.2655,
+            "tokens_per_s": 136.955,
+            "prompt_tokens_per_s": 3819.461,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 12.515,
-        "tokens_per_s_max": 12.782,
-        "latency_s_avg": 10.829,
+        "tokens_per_s_avg": 136.449,
+        "tokens_per_s_max": 136.955,
+        "latency_s_avg": 1.281,
         "requested_model": "qwen3",
         "canonical_model": "qwen3:8b"
       },
@@ -493,34 +493,34 @@
             "model": "deepseek-r1:14b",
             "num_predict": 128,
             "eval_count": 128,
-            "eval_duration_s": 17.1912,
+            "eval_duration_s": 1.572,
             "prompt_eval_count": 24,
-            "prompt_eval_duration_s": 0.137,
-            "total_duration_s": 17.7833,
-            "wall_duration_s": 17.7855,
-            "tokens_per_s": 7.446,
-            "prompt_tokens_per_s": 175.201,
+            "prompt_eval_duration_s": 0.0117,
+            "total_duration_s": 1.9517,
+            "wall_duration_s": 1.9547,
+            "tokens_per_s": 81.425,
+            "prompt_tokens_per_s": 2049.302,
             "run_index": 1
           },
           {
             "model": "deepseek-r1:14b",
             "num_predict": 128,
             "eval_count": 128,
-            "eval_duration_s": 17.1687,
+            "eval_duration_s": 1.5806,
             "prompt_eval_count": 24,
-            "prompt_eval_duration_s": 0.1328,
-            "total_duration_s": 17.8014,
-            "wall_duration_s": 17.8034,
-            "tokens_per_s": 7.455,
-            "prompt_tokens_per_s": 180.713,
+            "prompt_eval_duration_s": 0.0121,
+            "total_duration_s": 1.9626,
+            "wall_duration_s": 1.9643,
+            "tokens_per_s": 80.984,
+            "prompt_tokens_per_s": 1979.678,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 7.45,
-        "tokens_per_s_max": 7.455,
-        "latency_s_avg": 17.792,
+        "tokens_per_s_avg": 81.204,
+        "tokens_per_s_max": 81.425,
+        "latency_s_avg": 1.957,
         "requested_model": "deepseek-r1",
         "canonical_model": "deepseek-r1:14b"
       },
@@ -541,75 +541,45 @@
           {
             "model": "qwen3-coder:30b",
             "num_predict": 96,
-            "eval_count": 80,
-            "eval_duration_s": 3.207,
+            "eval_count": 81,
+            "eval_duration_s": 0.5151,
             "prompt_eval_count": 29,
-            "prompt_eval_duration_s": 0.0436,
-            "total_duration_s": 3.7566,
-            "wall_duration_s": 3.7583,
-            "tokens_per_s": 24.946,
-            "prompt_tokens_per_s": 665.77,
+            "prompt_eval_duration_s": 0.0082,
+            "total_duration_s": 0.8521,
+            "wall_duration_s": 0.8535,
+            "tokens_per_s": 157.256,
+            "prompt_tokens_per_s": 3517.128,
             "run_index": 1
           },
           {
             "model": "qwen3-coder:30b",
             "num_predict": 96,
-            "eval_count": 80,
-            "eval_duration_s": 3.2093,
+            "eval_count": 81,
+            "eval_duration_s": 0.513,
             "prompt_eval_count": 29,
-            "prompt_eval_duration_s": 0.0439,
-            "total_duration_s": 3.6909,
-            "wall_duration_s": 3.6925,
-            "tokens_per_s": 24.928,
-            "prompt_tokens_per_s": 660.879,
+            "prompt_eval_duration_s": 0.008,
+            "total_duration_s": 0.8533,
+            "wall_duration_s": 0.8544,
+            "tokens_per_s": 157.903,
+            "prompt_tokens_per_s": 3627.092,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 24.937,
-        "tokens_per_s_max": 24.946,
-        "latency_s_avg": 3.724,
+        "tokens_per_s_avg": 157.579,
+        "tokens_per_s_max": 157.903,
+        "latency_s_avg": 0.853,
         "requested_model": "qwen3-coder",
         "canonical_model": "qwen3-coder:30b"
       },
       {
         "model": "qwen3.5:27b",
         "num_predict": 96,
-        "status": "ok",
-        "runs": [
-          {
-            "model": "qwen3.5:27b",
-            "num_predict": 96,
-            "eval_count": 96,
-            "eval_duration_s": 34.5773,
-            "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 2.2524,
-            "total_duration_s": 37.5752,
-            "wall_duration_s": 37.5771,
-            "tokens_per_s": 2.776,
-            "prompt_tokens_per_s": 13.763,
-            "run_index": 1
-          },
-          {
-            "model": "qwen3.5:27b",
-            "num_predict": 96,
-            "eval_count": 96,
-            "eval_duration_s": 34.5309,
-            "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 2.232,
-            "total_duration_s": 37.5277,
-            "wall_duration_s": 37.5297,
-            "tokens_per_s": 2.78,
-            "prompt_tokens_per_s": 13.889,
-            "run_index": 2
-          }
-        ],
-        "error": "",
-        "error_type": "",
-        "tokens_per_s_avg": 2.778,
-        "tokens_per_s_max": 2.78,
-        "latency_s_avg": 37.551,
+        "status": "error",
+        "runs": [],
+        "error": "HTTP 404 Not Found: {\"error\":\"model 'qwen3.5:27b' not found\"}",
+        "error_type": "runtime",
         "requested_model": "qwen3.5",
         "canonical_model": "qwen3.5:35b"
       },
@@ -622,76 +592,45 @@
             "model": "qwen3.6:35b",
             "num_predict": 96,
             "eval_count": 96,
-            "eval_duration_s": 9.0601,
+            "eval_duration_s": 2.761,
             "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 0.5411,
-            "total_duration_s": 10.2793,
-            "wall_duration_s": 10.2809,
-            "tokens_per_s": 10.596,
-            "prompt_tokens_per_s": 57.292,
+            "prompt_eval_duration_s": 0.1392,
+            "total_duration_s": 3.4144,
+            "wall_duration_s": 3.416,
+            "tokens_per_s": 34.77,
+            "prompt_tokens_per_s": 222.679,
             "run_index": 1
           },
           {
             "model": "qwen3.6:35b",
             "num_predict": 96,
             "eval_count": 96,
-            "eval_duration_s": 9.0448,
+            "eval_duration_s": 2.7816,
             "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 0.5234,
-            "total_duration_s": 10.2042,
-            "wall_duration_s": 10.2064,
-            "tokens_per_s": 10.614,
-            "prompt_tokens_per_s": 59.225,
+            "prompt_eval_duration_s": 0.1463,
+            "total_duration_s": 3.4188,
+            "wall_duration_s": 3.4201,
+            "tokens_per_s": 34.513,
+            "prompt_tokens_per_s": 211.906,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 10.605,
-        "tokens_per_s_max": 10.614,
-        "latency_s_avg": 10.242,
+        "tokens_per_s_avg": 34.642,
+        "tokens_per_s_max": 34.77,
+        "latency_s_avg": 3.417,
         "requested_model": "qwen3.6",
         "canonical_model": "qwen3.6:35b"
       },
       {
-        "model": "llama3.3:70b-instruct-q4_k_m",
+        "model": "llama3.3",
+        "canonical_model": "llama3.3",
         "num_predict": 64,
-        "status": "ok",
-        "runs": [
-          {
-            "model": "llama3.3:70b-instruct-q4_k_m",
-            "num_predict": 64,
-            "eval_count": 53,
-            "eval_duration_s": 35.122,
-            "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 0.6645,
-            "total_duration_s": 36.3721,
-            "wall_duration_s": 36.3812,
-            "tokens_per_s": 1.509,
-            "prompt_tokens_per_s": 46.651,
-            "run_index": 1
-          },
-          {
-            "model": "llama3.3:70b-instruct-q4_k_m",
-            "num_predict": 64,
-            "eval_count": 53,
-            "eval_duration_s": 36.9592,
-            "prompt_eval_count": 31,
-            "prompt_eval_duration_s": 0.6642,
-            "total_duration_s": 38.1493,
-            "wall_duration_s": 38.1506,
-            "tokens_per_s": 1.434,
-            "prompt_tokens_per_s": 46.674,
-            "run_index": 2
-          }
-        ],
-        "error": "",
-        "error_type": "",
-        "tokens_per_s_avg": 1.471,
-        "tokens_per_s_max": 1.509,
-        "latency_s_avg": 37.261,
-        "requested_model": "llama3.3",
-        "canonical_model": "llama3.3:70b"
+        "status": "skipped",
+        "runs": [],
+        "error": "model family not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
+        "error_type": "missing_family"
       },
       {
         "model": "qwen2.5-coder:32b",
@@ -702,34 +641,34 @@
             "model": "qwen2.5-coder:32b",
             "num_predict": 96,
             "eval_count": 96,
-            "eval_duration_s": 10.9333,
+            "eval_duration_s": 2.4241,
             "prompt_eval_count": 29,
-            "prompt_eval_duration_s": 0.5944,
-            "total_duration_s": 12.3452,
-            "wall_duration_s": 12.3467,
-            "tokens_per_s": 8.781,
-            "prompt_tokens_per_s": 48.79,
+            "prompt_eval_duration_s": 0.1265,
+            "total_duration_s": 3.032,
+            "wall_duration_s": 3.0334,
+            "tokens_per_s": 39.603,
+            "prompt_tokens_per_s": 229.297,
             "run_index": 1
           },
           {
             "model": "qwen2.5-coder:32b",
             "num_predict": 96,
             "eval_count": 96,
-            "eval_duration_s": 10.4262,
+            "eval_duration_s": 2.5159,
             "prompt_eval_count": 29,
-            "prompt_eval_duration_s": 0.5668,
-            "total_duration_s": 11.7138,
-            "wall_duration_s": 11.7156,
-            "tokens_per_s": 9.208,
-            "prompt_tokens_per_s": 51.165,
+            "prompt_eval_duration_s": 0.1223,
+            "total_duration_s": 3.089,
+            "wall_duration_s": 3.0904,
+            "tokens_per_s": 38.157,
+            "prompt_tokens_per_s": 237.082,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 8.995,
-        "tokens_per_s_max": 9.208,
-        "latency_s_avg": 12.03,
+        "tokens_per_s_avg": 38.88,
+        "tokens_per_s_max": 39.603,
+        "latency_s_avg": 3.061,
         "requested_model": "qwen2.5-coder",
         "canonical_model": "qwen2.5-coder:32b"
       },
@@ -742,34 +681,34 @@
             "model": "ministral-3:14b",
             "num_predict": 128,
             "eval_count": 128,
-            "eval_duration_s": 17.3516,
+            "eval_duration_s": 1.4443,
             "prompt_eval_count": 575,
-            "prompt_eval_duration_s": 0.1332,
-            "total_duration_s": 18.172,
-            "wall_duration_s": 18.1756,
-            "tokens_per_s": 7.377,
-            "prompt_tokens_per_s": 4317.145,
+            "prompt_eval_duration_s": 0.0121,
+            "total_duration_s": 1.8586,
+            "wall_duration_s": 1.8606,
+            "tokens_per_s": 88.627,
+            "prompt_tokens_per_s": 47469.821,
             "run_index": 1
           },
           {
             "model": "ministral-3:14b",
             "num_predict": 128,
             "eval_count": 128,
-            "eval_duration_s": 17.3372,
+            "eval_duration_s": 1.4627,
             "prompt_eval_count": 575,
-            "prompt_eval_duration_s": 0.1409,
-            "total_duration_s": 18.1373,
-            "wall_duration_s": 18.1408,
-            "tokens_per_s": 7.383,
-            "prompt_tokens_per_s": 4079.762,
+            "prompt_eval_duration_s": 0.0116,
+            "total_duration_s": 1.8609,
+            "wall_duration_s": 1.8631,
+            "tokens_per_s": 87.509,
+            "prompt_tokens_per_s": 49680.069,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 7.38,
-        "tokens_per_s_max": 7.383,
-        "latency_s_avg": 18.155,
+        "tokens_per_s_avg": 88.068,
+        "tokens_per_s_max": 88.627,
+        "latency_s_avg": 1.86,
         "requested_model": "ministral-3",
         "canonical_model": "ministral-3:14b"
       },
@@ -791,34 +730,34 @@
             "model": "mistral-small:22b",
             "num_predict": 96,
             "eval_count": 94,
-            "eval_duration_s": 18.9131,
+            "eval_duration_s": 1.5089,
             "prompt_eval_count": 29,
-            "prompt_eval_duration_s": 0.2011,
-            "total_duration_s": 19.4344,
-            "wall_duration_s": 19.4363,
-            "tokens_per_s": 4.97,
-            "prompt_tokens_per_s": 144.206,
+            "prompt_eval_duration_s": 0.016,
+            "total_duration_s": 1.7262,
+            "wall_duration_s": 1.7273,
+            "tokens_per_s": 62.299,
+            "prompt_tokens_per_s": 1811.452,
             "run_index": 1
           },
           {
             "model": "mistral-small:22b",
             "num_predict": 96,
             "eval_count": 94,
-            "eval_duration_s": 18.781,
+            "eval_duration_s": 1.5125,
             "prompt_eval_count": 29,
-            "prompt_eval_duration_s": 0.2035,
-            "total_duration_s": 19.308,
-            "wall_duration_s": 19.3098,
-            "tokens_per_s": 5.005,
-            "prompt_tokens_per_s": 142.48,
+            "prompt_eval_duration_s": 0.0159,
+            "total_duration_s": 1.7287,
+            "wall_duration_s": 1.73,
+            "tokens_per_s": 62.148,
+            "prompt_tokens_per_s": 1822.596,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 4.987,
-        "tokens_per_s_max": 5.005,
-        "latency_s_avg": 19.371,
+        "tokens_per_s_avg": 62.224,
+        "tokens_per_s_max": 62.299,
+        "latency_s_avg": 1.727,
         "requested_model": "mistral-small",
         "canonical_model": "mistral-small:22b"
       },
@@ -830,35 +769,35 @@
           {
             "model": "gemma3:27b",
             "num_predict": 96,
-            "eval_count": 93,
-            "eval_duration_s": 25.6694,
+            "eval_count": 96,
+            "eval_duration_s": 2.1707,
             "prompt_eval_count": 30,
-            "prompt_eval_duration_s": 0.2972,
-            "total_duration_s": 27.027,
-            "wall_duration_s": 27.0294,
-            "tokens_per_s": 3.623,
-            "prompt_tokens_per_s": 100.945,
+            "prompt_eval_duration_s": 0.0233,
+            "total_duration_s": 2.7504,
+            "wall_duration_s": 2.7518,
+            "tokens_per_s": 44.226,
+            "prompt_tokens_per_s": 1287.476,
             "run_index": 1
           },
           {
             "model": "gemma3:27b",
             "num_predict": 96,
-            "eval_count": 93,
-            "eval_duration_s": 25.5867,
+            "eval_count": 96,
+            "eval_duration_s": 2.1934,
             "prompt_eval_count": 30,
-            "prompt_eval_duration_s": 0.2742,
-            "total_duration_s": 26.7814,
-            "wall_duration_s": 26.785,
-            "tokens_per_s": 3.635,
-            "prompt_tokens_per_s": 109.417,
+            "prompt_eval_duration_s": 0.0226,
+            "total_duration_s": 2.7589,
+            "wall_duration_s": 2.7603,
+            "tokens_per_s": 43.768,
+            "prompt_tokens_per_s": 1330.155,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 3.629,
-        "tokens_per_s_max": 3.635,
-        "latency_s_avg": 26.904,
+        "tokens_per_s_avg": 43.997,
+        "tokens_per_s_max": 44.226,
+        "latency_s_avg": 2.755,
         "requested_model": "gemma3",
         "canonical_model": "gemma3:27b"
       },
@@ -871,34 +810,34 @@
             "model": "llama4:latest",
             "num_predict": 64,
             "eval_count": 64,
-            "eval_duration_s": 11.4547,
+            "eval_duration_s": 6.7535,
             "prompt_eval_count": 363,
-            "prompt_eval_duration_s": 0.1822,
-            "total_duration_s": 12.5606,
-            "wall_duration_s": 12.5649,
-            "tokens_per_s": 5.587,
-            "prompt_tokens_per_s": 1992.171,
+            "prompt_eval_duration_s": 0.1091,
+            "total_duration_s": 7.5281,
+            "wall_duration_s": 7.5329,
+            "tokens_per_s": 9.477,
+            "prompt_tokens_per_s": 3328.295,
             "run_index": 1
           },
           {
             "model": "llama4:latest",
             "num_predict": 64,
             "eval_count": 64,
-            "eval_duration_s": 11.4651,
+            "eval_duration_s": 6.7936,
             "prompt_eval_count": 363,
-            "prompt_eval_duration_s": 0.185,
-            "total_duration_s": 12.4811,
-            "wall_duration_s": 12.4919,
-            "tokens_per_s": 5.582,
-            "prompt_tokens_per_s": 1962.009,
+            "prompt_eval_duration_s": 0.1081,
+            "total_duration_s": 7.4705,
+            "wall_duration_s": 7.4745,
+            "tokens_per_s": 9.421,
+            "prompt_tokens_per_s": 3359.536,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 5.585,
-        "tokens_per_s_max": 5.587,
-        "latency_s_avg": 12.521,
+        "tokens_per_s_avg": 9.449,
+        "tokens_per_s_max": 9.477,
+        "latency_s_avg": 7.499,
         "requested_model": "llama4",
         "canonical_model": "llama4:16x17b"
       },
@@ -911,34 +850,34 @@
             "model": "qwq:32b",
             "num_predict": 96,
             "eval_count": 96,
-            "eval_duration_s": 30.6677,
+            "eval_duration_s": 3.0591,
             "prompt_eval_count": 29,
-            "prompt_eval_duration_s": 0.3247,
-            "total_duration_s": 31.5337,
-            "wall_duration_s": 31.5741,
-            "tokens_per_s": 3.13,
-            "prompt_tokens_per_s": 89.312,
+            "prompt_eval_duration_s": 0.0328,
+            "total_duration_s": 3.4108,
+            "wall_duration_s": 3.4134,
+            "tokens_per_s": 31.382,
+            "prompt_tokens_per_s": 883.699,
             "run_index": 1
           },
           {
             "model": "qwq:32b",
             "num_predict": 96,
             "eval_count": 96,
-            "eval_duration_s": 29.8269,
+            "eval_duration_s": 3.0599,
             "prompt_eval_count": 29,
-            "prompt_eval_duration_s": 0.3481,
-            "total_duration_s": 30.6688,
-            "wall_duration_s": 30.6718,
-            "tokens_per_s": 3.219,
-            "prompt_tokens_per_s": 83.308,
+            "prompt_eval_duration_s": 0.0331,
+            "total_duration_s": 3.4174,
+            "wall_duration_s": 3.4195,
+            "tokens_per_s": 31.373,
+            "prompt_tokens_per_s": 875.495,
             "run_index": 2
           }
         ],
         "error": "",
         "error_type": "",
-        "tokens_per_s_avg": 3.175,
-        "tokens_per_s_max": 3.219,
-        "latency_s_avg": 31.101,
+        "tokens_per_s_avg": 31.378,
+        "tokens_per_s_max": 31.382,
+        "latency_s_avg": 3.414,
         "requested_model": "qwq",
         "canonical_model": "qwq:32b"
       }
@@ -946,13 +885,11 @@
     "changed_models": [
       "deepseek-r1:14b",
       "gemma3:27b",
-      "llama3.3:70b",
       "llama4:16x17b",
       "ministral-3:14b",
       "mistral-small:22b",
       "qwen2.5-coder:32b",
       "qwen3-coder:30b",
-      "qwen3.5:35b",
       "qwen3.6:35b",
       "qwen3:8b",
       "qwq:32b"
@@ -961,14 +898,610 @@
     "num_ctx": 4096,
     "temperature": 0,
     "pre_cooldown_s": 5.0,
-    "success_count": 12,
-    "failed_count": 2,
-    "skipped_count": 2,
-    "runnable_target_count": 12,
+    "success_count": 10,
+    "failed_count": 4,
+    "skipped_count": 3,
+    "runnable_target_count": 11,
     "min_success_configured": 5,
     "min_success_required": 5
   },
   "history": [
+    {
+      "updated_at": "2026-07-01T06:49:08Z",
+      "runner": {
+        "hostname": "Vernon",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "python": "3.11.15"
+      },
+      "ollama": {
+        "endpoint": "http://127.0.x.x:11435",
+        "version": "0.20.2",
+        "available_model_count": 47
+      },
+      "gpu_before": {
+        "available": true,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3090",
+            "driver": "591.86",
+            "memory_total_mb": 24576.0,
+            "memory_used_mb": 3393.0,
+            "temperature_c": 40.0,
+            "power_w": 115.97,
+            "utilization_pct": 0.0
+          }
+        ]
+      },
+      "gpu_after": {
+        "available": true,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3090",
+            "driver": "591.86",
+            "memory_total_mb": 24576.0,
+            "memory_used_mb": 23322.0,
+            "temperature_c": 51.0,
+            "power_w": 305.05,
+            "utilization_pct": 55.0
+          }
+        ]
+      },
+      "targets": [
+        {
+          "model": "qwen3",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "deepseek-r1",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwen2.5",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwen3-coder",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwen3.5",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwen3.6",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "llama3.3",
+          "num_predict": 64,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwen2.5-coder",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "ministral-3",
+          "num_predict": 128,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "gpt-oss",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "mistral-small",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "gemma3",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "llama4",
+          "num_predict": 64,
+          "num_ctx": 4096,
+          "temperature": 0
+        },
+        {
+          "model": "qwq",
+          "num_predict": 96,
+          "num_ctx": 4096,
+          "temperature": 0
+        }
+      ],
+      "auto_backfill_targets": [],
+      "retired_policy_file": "/mnt/e/github-actions/localvram-01/_work/localvram/localvram/src/data/retired-models.json",
+      "retired_families": [],
+      "retired_tags": [
+        "deepseek-r1:8b",
+        "llama3:8b"
+      ],
+      "retired_target_drops": [],
+      "results": [
+        {
+          "model": "qwen3:8b",
+          "num_predict": 128,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwen3:8b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 0.9416,
+              "prompt_eval_count": 31,
+              "prompt_eval_duration_s": 0.0077,
+              "total_duration_s": 1.2969,
+              "wall_duration_s": 1.298,
+              "tokens_per_s": 135.942,
+              "prompt_tokens_per_s": 4030.577,
+              "run_index": 1
+            },
+            {
+              "model": "qwen3:8b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 0.9346,
+              "prompt_eval_count": 31,
+              "prompt_eval_duration_s": 0.0081,
+              "total_duration_s": 1.2645,
+              "wall_duration_s": 1.2655,
+              "tokens_per_s": 136.955,
+              "prompt_tokens_per_s": 3819.461,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 136.449,
+          "tokens_per_s_max": 136.955,
+          "latency_s_avg": 1.281,
+          "requested_model": "qwen3",
+          "canonical_model": "qwen3:8b"
+        },
+        {
+          "model": "deepseek-r1:14b",
+          "num_predict": 128,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "deepseek-r1:14b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.572,
+              "prompt_eval_count": 24,
+              "prompt_eval_duration_s": 0.0117,
+              "total_duration_s": 1.9517,
+              "wall_duration_s": 1.9547,
+              "tokens_per_s": 81.425,
+              "prompt_tokens_per_s": 2049.302,
+              "run_index": 1
+            },
+            {
+              "model": "deepseek-r1:14b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.5806,
+              "prompt_eval_count": 24,
+              "prompt_eval_duration_s": 0.0121,
+              "total_duration_s": 1.9626,
+              "wall_duration_s": 1.9643,
+              "tokens_per_s": 80.984,
+              "prompt_tokens_per_s": 1979.678,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 81.204,
+          "tokens_per_s_max": 81.425,
+          "latency_s_avg": 1.957,
+          "requested_model": "deepseek-r1",
+          "canonical_model": "deepseek-r1:14b"
+        },
+        {
+          "model": "qwen2.5",
+          "canonical_model": "qwen2.5",
+          "num_predict": 128,
+          "status": "skipped",
+          "runs": [],
+          "error": "model family not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
+          "error_type": "missing_family"
+        },
+        {
+          "model": "qwen3-coder:30b",
+          "num_predict": 96,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwen3-coder:30b",
+              "num_predict": 96,
+              "eval_count": 81,
+              "eval_duration_s": 0.5151,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.0082,
+              "total_duration_s": 0.8521,
+              "wall_duration_s": 0.8535,
+              "tokens_per_s": 157.256,
+              "prompt_tokens_per_s": 3517.128,
+              "run_index": 1
+            },
+            {
+              "model": "qwen3-coder:30b",
+              "num_predict": 96,
+              "eval_count": 81,
+              "eval_duration_s": 0.513,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.008,
+              "total_duration_s": 0.8533,
+              "wall_duration_s": 0.8544,
+              "tokens_per_s": 157.903,
+              "prompt_tokens_per_s": 3627.092,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 157.579,
+          "tokens_per_s_max": 157.903,
+          "latency_s_avg": 0.853,
+          "requested_model": "qwen3-coder",
+          "canonical_model": "qwen3-coder:30b"
+        },
+        {
+          "model": "qwen3.5:27b",
+          "num_predict": 96,
+          "status": "error",
+          "runs": [],
+          "error": "HTTP 404 Not Found: {\"error\":\"model 'qwen3.5:27b' not found\"}",
+          "error_type": "runtime",
+          "requested_model": "qwen3.5",
+          "canonical_model": "qwen3.5:35b"
+        },
+        {
+          "model": "qwen3.6:35b",
+          "num_predict": 96,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwen3.6:35b",
+              "num_predict": 96,
+              "eval_count": 96,
+              "eval_duration_s": 2.761,
+              "prompt_eval_count": 31,
+              "prompt_eval_duration_s": 0.1392,
+              "total_duration_s": 3.4144,
+              "wall_duration_s": 3.416,
+              "tokens_per_s": 34.77,
+              "prompt_tokens_per_s": 222.679,
+              "run_index": 1
+            },
+            {
+              "model": "qwen3.6:35b",
+              "num_predict": 96,
+              "eval_count": 96,
+              "eval_duration_s": 2.7816,
+              "prompt_eval_count": 31,
+              "prompt_eval_duration_s": 0.1463,
+              "total_duration_s": 3.4188,
+              "wall_duration_s": 3.4201,
+              "tokens_per_s": 34.513,
+              "prompt_tokens_per_s": 211.906,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 34.642,
+          "tokens_per_s_max": 34.77,
+          "latency_s_avg": 3.417,
+          "requested_model": "qwen3.6",
+          "canonical_model": "qwen3.6:35b"
+        },
+        {
+          "model": "llama3.3",
+          "canonical_model": "llama3.3",
+          "num_predict": 64,
+          "status": "skipped",
+          "runs": [],
+          "error": "model family not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
+          "error_type": "missing_family"
+        },
+        {
+          "model": "qwen2.5-coder:32b",
+          "num_predict": 96,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwen2.5-coder:32b",
+              "num_predict": 96,
+              "eval_count": 96,
+              "eval_duration_s": 2.4241,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.1265,
+              "total_duration_s": 3.032,
+              "wall_duration_s": 3.0334,
+              "tokens_per_s": 39.603,
+              "prompt_tokens_per_s": 229.297,
+              "run_index": 1
+            },
+            {
+              "model": "qwen2.5-coder:32b",
+              "num_predict": 96,
+              "eval_count": 96,
+              "eval_duration_s": 2.5159,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.1223,
+              "total_duration_s": 3.089,
+              "wall_duration_s": 3.0904,
+              "tokens_per_s": 38.157,
+              "prompt_tokens_per_s": 237.082,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 38.88,
+          "tokens_per_s_max": 39.603,
+          "latency_s_avg": 3.061,
+          "requested_model": "qwen2.5-coder",
+          "canonical_model": "qwen2.5-coder:32b"
+        },
+        {
+          "model": "ministral-3:14b",
+          "num_predict": 128,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "ministral-3:14b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.4443,
+              "prompt_eval_count": 575,
+              "prompt_eval_duration_s": 0.0121,
+              "total_duration_s": 1.8586,
+              "wall_duration_s": 1.8606,
+              "tokens_per_s": 88.627,
+              "prompt_tokens_per_s": 47469.821,
+              "run_index": 1
+            },
+            {
+              "model": "ministral-3:14b",
+              "num_predict": 128,
+              "eval_count": 128,
+              "eval_duration_s": 1.4627,
+              "prompt_eval_count": 575,
+              "prompt_eval_duration_s": 0.0116,
+              "total_duration_s": 1.8609,
+              "wall_duration_s": 1.8631,
+              "tokens_per_s": 87.509,
+              "prompt_tokens_per_s": 49680.069,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 88.068,
+          "tokens_per_s_max": 88.627,
+          "latency_s_avg": 1.86,
+          "requested_model": "ministral-3",
+          "canonical_model": "ministral-3:14b"
+        },
+        {
+          "model": "gpt-oss",
+          "canonical_model": "gpt-oss",
+          "num_predict": 96,
+          "status": "skipped",
+          "runs": [],
+          "error": "model family not found locally on runner (adjust LV_WEEKLY_TARGETS or install model locally)",
+          "error_type": "missing_family"
+        },
+        {
+          "model": "mistral-small:22b",
+          "num_predict": 96,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "mistral-small:22b",
+              "num_predict": 96,
+              "eval_count": 94,
+              "eval_duration_s": 1.5089,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.016,
+              "total_duration_s": 1.7262,
+              "wall_duration_s": 1.7273,
+              "tokens_per_s": 62.299,
+              "prompt_tokens_per_s": 1811.452,
+              "run_index": 1
+            },
+            {
+              "model": "mistral-small:22b",
+              "num_predict": 96,
+              "eval_count": 94,
+              "eval_duration_s": 1.5125,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.0159,
+              "total_duration_s": 1.7287,
+              "wall_duration_s": 1.73,
+              "tokens_per_s": 62.148,
+              "prompt_tokens_per_s": 1822.596,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 62.224,
+          "tokens_per_s_max": 62.299,
+          "latency_s_avg": 1.727,
+          "requested_model": "mistral-small",
+          "canonical_model": "mistral-small:22b"
+        },
+        {
+          "model": "gemma3:27b",
+          "num_predict": 96,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "gemma3:27b",
+              "num_predict": 96,
+              "eval_count": 96,
+              "eval_duration_s": 2.1707,
+              "prompt_eval_count": 30,
+              "prompt_eval_duration_s": 0.0233,
+              "total_duration_s": 2.7504,
+              "wall_duration_s": 2.7518,
+              "tokens_per_s": 44.226,
+              "prompt_tokens_per_s": 1287.476,
+              "run_index": 1
+            },
+            {
+              "model": "gemma3:27b",
+              "num_predict": 96,
+              "eval_count": 96,
+              "eval_duration_s": 2.1934,
+              "prompt_eval_count": 30,
+              "prompt_eval_duration_s": 0.0226,
+              "total_duration_s": 2.7589,
+              "wall_duration_s": 2.7603,
+              "tokens_per_s": 43.768,
+              "prompt_tokens_per_s": 1330.155,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 43.997,
+          "tokens_per_s_max": 44.226,
+          "latency_s_avg": 2.755,
+          "requested_model": "gemma3",
+          "canonical_model": "gemma3:27b"
+        },
+        {
+          "model": "llama4:latest",
+          "num_predict": 64,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "llama4:latest",
+              "num_predict": 64,
+              "eval_count": 64,
+              "eval_duration_s": 6.7535,
+              "prompt_eval_count": 363,
+              "prompt_eval_duration_s": 0.1091,
+              "total_duration_s": 7.5281,
+              "wall_duration_s": 7.5329,
+              "tokens_per_s": 9.477,
+              "prompt_tokens_per_s": 3328.295,
+              "run_index": 1
+            },
+            {
+              "model": "llama4:latest",
+              "num_predict": 64,
+              "eval_count": 64,
+              "eval_duration_s": 6.7936,
+              "prompt_eval_count": 363,
+              "prompt_eval_duration_s": 0.1081,
+              "total_duration_s": 7.4705,
+              "wall_duration_s": 7.4745,
+              "tokens_per_s": 9.421,
+              "prompt_tokens_per_s": 3359.536,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 9.449,
+          "tokens_per_s_max": 9.477,
+          "latency_s_avg": 7.499,
+          "requested_model": "llama4",
+          "canonical_model": "llama4:16x17b"
+        },
+        {
+          "model": "qwq:32b",
+          "num_predict": 96,
+          "status": "ok",
+          "runs": [
+            {
+              "model": "qwq:32b",
+              "num_predict": 96,
+              "eval_count": 96,
+              "eval_duration_s": 3.0591,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.0328,
+              "total_duration_s": 3.4108,
+              "wall_duration_s": 3.4134,
+              "tokens_per_s": 31.382,
+              "prompt_tokens_per_s": 883.699,
+              "run_index": 1
+            },
+            {
+              "model": "qwq:32b",
+              "num_predict": 96,
+              "eval_count": 96,
+              "eval_duration_s": 3.0599,
+              "prompt_eval_count": 29,
+              "prompt_eval_duration_s": 0.0331,
+              "total_duration_s": 3.4174,
+              "wall_duration_s": 3.4195,
+              "tokens_per_s": 31.373,
+              "prompt_tokens_per_s": 875.495,
+              "run_index": 2
+            }
+          ],
+          "error": "",
+          "error_type": "",
+          "tokens_per_s_avg": 31.378,
+          "tokens_per_s_max": 31.382,
+          "latency_s_avg": 3.414,
+          "requested_model": "qwq",
+          "canonical_model": "qwq:32b"
+        }
+      ],
+      "changed_models": [
+        "deepseek-r1:14b",
+        "gemma3:27b",
+        "llama4:16x17b",
+        "ministral-3:14b",
+        "mistral-small:22b",
+        "qwen2.5-coder:32b",
+        "qwen3-coder:30b",
+        "qwen3.6:35b",
+        "qwen3:8b",
+        "qwq:32b"
+      ],
+      "significant_tps_delta": 0.5,
+      "num_ctx": 4096,
+      "temperature": 0,
+      "pre_cooldown_s": 5.0,
+      "success_count": 10,
+      "failed_count": 4,
+      "skipped_count": 3,
+      "runnable_target_count": 11,
+      "min_success_configured": 5,
+      "min_success_required": 5
+    },
     {
       "updated_at": "2026-06-24T06:22:37Z",
       "runner": {
@@ -13421,446 +13954,6 @@
       "failed_count": 1,
       "skipped_count": 0,
       "runnable_target_count": 10,
-      "min_success_configured": 3,
-      "min_success_required": 3
-    },
-    {
-      "updated_at": "2026-02-26T17:06:30Z",
-      "runner": {
-        "hostname": "Vernon",
-        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
-        "python": "3.11.14"
-      },
-      "ollama": {
-        "endpoint": "http://127.0.x.x:11434",
-        "version": "0.17.1",
-        "available_model_count": 35
-      },
-      "gpu_before": {
-        "available": true,
-        "gpus": [
-          {
-            "name": "NVIDIA GeForce RTX 3090",
-            "driver": "591.74",
-            "memory_total_mb": 24576.0,
-            "memory_used_mb": 24087.0,
-            "temperature_c": 38.0,
-            "power_w": 115.82,
-            "utilization_pct": 1.0
-          }
-        ]
-      },
-      "gpu_after": {
-        "available": true,
-        "gpus": [
-          {
-            "name": "NVIDIA GeForce RTX 3090",
-            "driver": "591.74",
-            "memory_total_mb": 24576.0,
-            "memory_used_mb": 12385.0,
-            "temperature_c": 48.0,
-            "power_w": 342.76,
-            "utilization_pct": 94.0
-          }
-        ]
-      },
-      "targets": [
-        {
-          "model": "qwen3",
-          "num_predict": 128,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
-          "model": "deepseek-r1",
-          "num_predict": 128,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
-          "model": "qwen2.5",
-          "num_predict": 128,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
-          "model": "qwen3-coder",
-          "num_predict": 96,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
-          "model": "qwen3.5",
-          "num_predict": 96,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
-          "model": "llama3.3",
-          "num_predict": 64,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
-          "model": "qwen2.5-coder",
-          "num_predict": 96,
-          "num_ctx": 4096,
-          "temperature": 0
-        },
-        {
-          "model": "ministral-3",
-          "num_predict": 128,
-          "num_ctx": 4096,
-          "temperature": 0
-        }
-      ],
-      "auto_backfill_targets": [],
-      "retired_policy_file": "/mnt/d/actions-runner/_work/localvram/localvram/src/data/retired-models.json",
-      "retired_families": [],
-      "retired_tags": [
-        "deepseek-r1:8b",
-        "llama3:8b"
-      ],
-      "retired_target_drops": [],
-      "results": [
-        {
-          "model": "qwen3:8b",
-          "num_predict": 128,
-          "status": "ok",
-          "runs": [
-            {
-              "model": "qwen3:8b",
-              "num_predict": 128,
-              "eval_count": 128,
-              "eval_duration_s": 0.9555,
-              "prompt_eval_count": 31,
-              "prompt_eval_duration_s": 0.0081,
-              "total_duration_s": 1.4448,
-              "wall_duration_s": 1.446,
-              "tokens_per_s": 133.959,
-              "prompt_tokens_per_s": 3818.949,
-              "run_index": 1
-            },
-            {
-              "model": "qwen3:8b",
-              "num_predict": 128,
-              "eval_count": 128,
-              "eval_duration_s": 0.9522,
-              "prompt_eval_count": 31,
-              "prompt_eval_duration_s": 0.008,
-              "total_duration_s": 1.4545,
-              "wall_duration_s": 1.4606,
-              "tokens_per_s": 134.42,
-              "prompt_tokens_per_s": 3890.708,
-              "run_index": 2
-            }
-          ],
-          "error": "",
-          "error_type": "",
-          "tokens_per_s_avg": 134.19,
-          "tokens_per_s_max": 134.42,
-          "latency_s_avg": 1.45,
-          "requested_model": "qwen3",
-          "canonical_model": "qwen3:8b"
-        },
-        {
-          "model": "deepseek-r1:14b",
-          "num_predict": 128,
-          "status": "ok",
-          "runs": [
-            {
-              "model": "deepseek-r1:14b",
-              "num_predict": 128,
-              "eval_count": 128,
-              "eval_duration_s": 1.5372,
-              "prompt_eval_count": 24,
-              "prompt_eval_duration_s": 0.0122,
-              "total_duration_s": 2.1163,
-              "wall_duration_s": 2.1182,
-              "tokens_per_s": 83.269,
-              "prompt_tokens_per_s": 1969.664,
-              "run_index": 1
-            },
-            {
-              "model": "deepseek-r1:14b",
-              "num_predict": 128,
-              "eval_count": 128,
-              "eval_duration_s": 1.6371,
-              "prompt_eval_count": 24,
-              "prompt_eval_duration_s": 0.0115,
-              "total_duration_s": 2.1871,
-              "wall_duration_s": 2.1895,
-              "tokens_per_s": 78.185,
-              "prompt_tokens_per_s": 2086.265,
-              "run_index": 2
-            }
-          ],
-          "error": "",
-          "error_type": "",
-          "tokens_per_s_avg": 80.727,
-          "tokens_per_s_max": 83.269,
-          "latency_s_avg": 2.152,
-          "requested_model": "deepseek-r1",
-          "canonical_model": "deepseek-r1:14b"
-        },
-        {
-          "model": "qwen2.5:14b",
-          "num_predict": 128,
-          "status": "ok",
-          "runs": [
-            {
-              "model": "qwen2.5:14b",
-              "num_predict": 128,
-              "eval_count": 53,
-              "eval_duration_s": 0.6263,
-              "prompt_eval_count": 50,
-              "prompt_eval_duration_s": 0.012,
-              "total_duration_s": 1.1355,
-              "wall_duration_s": 1.1377,
-              "tokens_per_s": 84.629,
-              "prompt_tokens_per_s": 4150.141,
-              "run_index": 1
-            },
-            {
-              "model": "qwen2.5:14b",
-              "num_predict": 128,
-              "eval_count": 53,
-              "eval_duration_s": 0.6279,
-              "prompt_eval_count": 50,
-              "prompt_eval_duration_s": 0.0116,
-              "total_duration_s": 1.1517,
-              "wall_duration_s": 1.1541,
-              "tokens_per_s": 84.409,
-              "prompt_tokens_per_s": 4327.694,
-              "run_index": 2
-            }
-          ],
-          "error": "",
-          "error_type": "",
-          "tokens_per_s_avg": 84.519,
-          "tokens_per_s_max": 84.629,
-          "latency_s_avg": 1.144,
-          "requested_model": "qwen2.5",
-          "canonical_model": "qwen2.5:14b"
-        },
-        {
-          "model": "qwen3-coder:30b",
-          "num_predict": 96,
-          "status": "ok",
-          "runs": [
-            {
-              "model": "qwen3-coder:30b",
-              "num_predict": 96,
-              "eval_count": 81,
-              "eval_duration_s": 0.5125,
-              "prompt_eval_count": 29,
-              "prompt_eval_duration_s": 0.0075,
-              "total_duration_s": 0.9982,
-              "wall_duration_s": 0.9992,
-              "tokens_per_s": 158.044,
-              "prompt_tokens_per_s": 3876.751,
-              "run_index": 1
-            },
-            {
-              "model": "qwen3-coder:30b",
-              "num_predict": 96,
-              "eval_count": 81,
-              "eval_duration_s": 0.5106,
-              "prompt_eval_count": 29,
-              "prompt_eval_duration_s": 0.0069,
-              "total_duration_s": 0.991,
-              "wall_duration_s": 0.992,
-              "tokens_per_s": 158.639,
-              "prompt_tokens_per_s": 4191.185,
-              "run_index": 2
-            }
-          ],
-          "error": "",
-          "error_type": "",
-          "tokens_per_s_avg": 158.341,
-          "tokens_per_s_max": 158.639,
-          "latency_s_avg": 0.995,
-          "requested_model": "qwen3-coder",
-          "canonical_model": "qwen3-coder:30b"
-        },
-        {
-          "model": "qwen3.5:35b",
-          "num_predict": 96,
-          "status": "ok",
-          "runs": [
-            {
-              "model": "qwen3.5:35b",
-              "num_predict": 96,
-              "eval_count": 96,
-              "eval_duration_s": 2.2416,
-              "prompt_eval_count": 31,
-              "prompt_eval_duration_s": 0.1223,
-              "total_duration_s": 3.0297,
-              "wall_duration_s": 3.0313,
-              "tokens_per_s": 42.827,
-              "prompt_tokens_per_s": 253.467,
-              "run_index": 1
-            },
-            {
-              "model": "qwen3.5:35b",
-              "num_predict": 96,
-              "eval_count": 96,
-              "eval_duration_s": 2.1594,
-              "prompt_eval_count": 31,
-              "prompt_eval_duration_s": 0.1215,
-              "total_duration_s": 2.9384,
-              "wall_duration_s": 2.9438,
-              "tokens_per_s": 44.458,
-              "prompt_tokens_per_s": 255.044,
-              "run_index": 2
-            }
-          ],
-          "error": "",
-          "error_type": "",
-          "tokens_per_s_avg": 43.642,
-          "tokens_per_s_max": 44.458,
-          "latency_s_avg": 2.984,
-          "requested_model": "qwen3.5",
-          "canonical_model": "qwen3.5:35b"
-        },
-        {
-          "model": "llama3.3:70b-instruct-q4_k_m",
-          "num_predict": 64,
-          "status": "ok",
-          "runs": [
-            {
-              "model": "llama3.3:70b-instruct-q4_k_m",
-              "num_predict": 64,
-              "eval_count": 53,
-              "eval_duration_s": 15.0684,
-              "prompt_eval_count": 31,
-              "prompt_eval_duration_s": 0.2877,
-              "total_duration_s": 15.9717,
-              "wall_duration_s": 15.9726,
-              "tokens_per_s": 3.517,
-              "prompt_tokens_per_s": 107.752,
-              "run_index": 1
-            },
-            {
-              "model": "llama3.3:70b-instruct-q4_k_m",
-              "num_predict": 64,
-              "eval_count": 53,
-              "eval_duration_s": 14.9265,
-              "prompt_eval_count": 31,
-              "prompt_eval_duration_s": 0.2915,
-              "total_duration_s": 15.7715,
-              "wall_duration_s": 15.7724,
-              "tokens_per_s": 3.551,
-              "prompt_tokens_per_s": 106.339,
-              "run_index": 2
-            }
-          ],
-          "error": "",
-          "error_type": "",
-          "tokens_per_s_avg": 3.534,
-          "tokens_per_s_max": 3.551,
-          "latency_s_avg": 15.872,
-          "requested_model": "llama3.3",
-          "canonical_model": "llama3.3:70b"
-        },
-        {
-          "model": "qwen2.5-coder:32b",
-          "num_predict": 96,
-          "status": "ok",
-          "runs": [
-            {
-              "model": "qwen2.5-coder:32b",
-              "num_predict": 96,
-              "eval_count": 46,
-              "eval_duration_s": 1.1323,
-              "prompt_eval_count": 50,
-              "prompt_eval_duration_s": 0.0237,
-              "total_duration_s": 1.6489,
-              "wall_duration_s": 1.6516,
-              "tokens_per_s": 40.624,
-              "prompt_tokens_per_s": 2108.689,
-              "run_index": 1
-            },
-            {
-              "model": "qwen2.5-coder:32b",
-              "num_predict": 96,
-              "eval_count": 46,
-              "eval_duration_s": 1.1581,
-              "prompt_eval_count": 50,
-              "prompt_eval_duration_s": 0.0266,
-              "total_duration_s": 1.7085,
-              "wall_duration_s": 1.7108,
-              "tokens_per_s": 39.719,
-              "prompt_tokens_per_s": 1882.825,
-              "run_index": 2
-            }
-          ],
-          "error": "",
-          "error_type": "",
-          "tokens_per_s_avg": 40.172,
-          "tokens_per_s_max": 40.624,
-          "latency_s_avg": 1.679,
-          "requested_model": "qwen2.5-coder",
-          "canonical_model": "qwen2.5-coder:32b"
-        },
-        {
-          "model": "ministral-3:14b",
-          "num_predict": 128,
-          "status": "ok",
-          "runs": [
-            {
-              "model": "ministral-3:14b",
-              "num_predict": 128,
-              "eval_count": 128,
-              "eval_duration_s": 1.4566,
-              "prompt_eval_count": 575,
-              "prompt_eval_duration_s": 0.012,
-              "total_duration_s": 2.0864,
-              "wall_duration_s": 2.0882,
-              "tokens_per_s": 87.878,
-              "prompt_tokens_per_s": 47887.232,
-              "run_index": 1
-            },
-            {
-              "model": "ministral-3:14b",
-              "num_predict": 128,
-              "eval_count": 128,
-              "eval_duration_s": 1.4515,
-              "prompt_eval_count": 575,
-              "prompt_eval_duration_s": 0.0112,
-              "total_duration_s": 2.063,
-              "wall_duration_s": 2.0649,
-              "tokens_per_s": 88.184,
-              "prompt_tokens_per_s": 51470.517,
-              "run_index": 2
-            }
-          ],
-          "error": "",
-          "error_type": "",
-          "tokens_per_s_avg": 88.031,
-          "tokens_per_s_max": 88.184,
-          "latency_s_avg": 2.075,
-          "requested_model": "ministral-3",
-          "canonical_model": "ministral-3:14b"
-        }
-      ],
-      "changed_models": [
-        "deepseek-r1:14b",
-        "ministral-3:14b",
-        "qwen2.5-coder:32b",
-        "qwen2.5:14b",
-        "qwen3-coder:30b",
-        "qwen3.5:35b",
-        "qwen3:8b"
-      ],
-      "significant_tps_delta": 0.5,
-      "num_ctx": 4096,
-      "temperature": 0,
-      "pre_cooldown_s": 5.0,
-      "success_count": 8,
-      "failed_count": 0,
-      "skipped_count": 0,
-      "runnable_target_count": 8,
       "min_success_configured": 3,
       "min_success_required": 3
     }

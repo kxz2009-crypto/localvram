@@ -1,6 +1,6 @@
 {
   "version": "2026.02.24.ollama-popular",
-  "count": 593,
+  "count": 585,
   "models": [
     {
       "id": "llama31-8b-q4",
@@ -4427,38 +4427,6 @@
       "verified": false
     },
     {
-      "id": "antangelmed-ling-flash-20-100b-q4",
-      "name": "Antangelmed/Ling Flash 2.0 100B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "antangelmed-ling-flash-20-100b-q5",
-      "name": "Antangelmed/Ling Flash 2.0 100B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "antangelmed-ling-flash-20-100b-q8",
-      "name": "Antangelmed/Ling Flash 2.0 100B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "antangelmed-ling-flash-20-100b-fp16",
-      "name": "Antangelmed/Ling Flash 2.0 100B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
       "id": "deepseek-ocr-3b-q4",
       "name": "Deepseek Ocr 3B Q4",
       "quantizations": [
@@ -4523,32 +4491,32 @@
       "verified": false
     },
     {
-      "id": "gemma4-31b-q4",
-      "name": "Gemma4 31B Q4",
+      "id": "gemma4-e2b-q4",
+      "name": "Gemma4 E2B Q4",
       "quantizations": [
         "Q4"
       ],
       "verified": false
     },
     {
-      "id": "gemma4-31b-q5",
-      "name": "Gemma4 31B Q5",
+      "id": "gemma4-e2b-q5",
+      "name": "Gemma4 E2B Q5",
       "quantizations": [
         "Q5"
       ],
       "verified": false
     },
     {
-      "id": "gemma4-31b-q8",
-      "name": "Gemma4 31B Q8",
+      "id": "gemma4-e2b-q8",
+      "name": "Gemma4 E2B Q8",
       "quantizations": [
         "Q8"
       ],
       "verified": false
     },
     {
-      "id": "gemma4-31b-fp16",
-      "name": "Gemma4 31B FP16",
+      "id": "gemma4-e2b-fp16",
+      "name": "Gemma4 E2B FP16",
       "quantizations": [
         "FP16"
       ],
@@ -4613,38 +4581,6 @@
     {
       "id": "granite41-30b-fp16",
       "name": "Granite4.1 30B FP16",
-      "quantizations": [
-        "FP16"
-      ],
-      "verified": false
-    },
-    {
-      "id": "llama33-70b-q4",
-      "name": "Llama3.3 70B Q4",
-      "quantizations": [
-        "Q4"
-      ],
-      "verified": false
-    },
-    {
-      "id": "llama33-70b-q5",
-      "name": "Llama3.3 70B Q5",
-      "quantizations": [
-        "Q5"
-      ],
-      "verified": false
-    },
-    {
-      "id": "llama33-70b-q8",
-      "name": "Llama3.3 70B Q8",
-      "quantizations": [
-        "Q8"
-      ],
-      "verified": false
-    },
-    {
-      "id": "llama33-70b-fp16",
-      "name": "Llama3.3 70B FP16",
       "quantizations": [
         "FP16"
       ],

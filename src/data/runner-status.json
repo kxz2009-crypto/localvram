@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-24T06:44:34Z",
+  "updated_at": "2026-07-01T06:57:29Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -45,7 +45,7 @@
     },
     "ID": {
       "exit": 0,
-      "stdout": "uid=1000(gao20) gid=1000(gao20) groups=1000(gao20),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),989(ollama)",
+      "stdout": "uid=1000(gao20) gid=1000(gao20) groups=1000(gao20),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),988(docker),989(ollama)",
       "stderr": ""
     },
     "UNAME": {
@@ -66,11 +66,12 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=277461,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=1115181,fd=3))"
     ],
     "ps_ollama": [
-      "gao20     277461       1  0 14:22 ?        00:00:10 /usr/local/bin/ollama serve",
-      "gao20     309563  277461 99 14:41 ?        00:16:53 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 44999"
+      "ollama      1389    1337  0 Jun29 ?        00:19:57 mysqld --max_connections=1000 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password --tls_version=TLSv1.2,TLSv1.3 --init-file /data/application/init.sql --binlog_expire_logs_seconds=604800",
+      "gao20    1115181       1  1 14:49 ?        00:00:07 /usr/local/bin/ollama serve",
+      "gao20    1134021 1115181 45 14:55 ?        00:00:41 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 44749"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -99,9 +100,8 @@
       "version": "0.20.2"
     },
     "tags": {
-      "model_count": 51,
+      "model_count": 47,
       "sample": [
-        "antangelmed/ling-flash-2.0:100b",
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
         "deepseek-r1:14b",
@@ -111,7 +111,7 @@
         "deepseek-v4-pro:cloud",
         "gemma3:27b",
         "gemma4:26b",
-        "gemma4:31b",
+        "gemma4:e2b",
         "glm-4.7-flash:bf16",
         "glm-4.7-flash:q8_0",
         "glm-5.2:cloud",
@@ -119,22 +119,22 @@
         "granite4.1:30b",
         "kimi-k2.7-code:cloud",
         "llama3.2-vision:11b",
-        "llama3.3:70b-instruct-q4_k_m",
-        "llama3.3:latest"
+        "llama4:latest",
+        "minimax-m2.5:cloud",
+        "ministral-3:14b"
       ]
     }
   },
   "summary": {
-    "model_count": 51,
+    "model_count": 47,
     "required_targets_count": 14,
-    "required_targets_runnable_count": 12,
+    "required_targets_runnable_count": 11,
     "required_targets_runnable": [
       "qwen3",
       "deepseek-r1",
       "qwen3-coder",
       "qwen3.5",
       "qwen3.6",
-      "llama3.3",
       "qwen2.5-coder",
       "ministral-3",
       "mistral-small",
