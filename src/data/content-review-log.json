@@ -1,33 +1,29 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-06-30T04:46:14.520936Z",
+  "updated_at": "2026-07-01T05:06:23.533326Z",
   "last_run": {
-    "run_at": "2026-06-30T04:46:14.520936Z",
-    "queue_date": "2026-06-30",
-    "reviewed_count": 1,
-    "auto_approved_count": 1,
+    "run_at": "2026-07-01T05:06:23.533326Z",
+    "queue_date": "2026-07-01",
+    "reviewed_count": 0,
+    "auto_approved_count": 0,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": [
-      {
-        "draft": "content-queue/2026-06-30/01-q4-vs-q8-quality-loss-ollama-guide.md",
-        "slug": "q4-vs-q8-quality-loss-ollama-guide",
-        "score": 576.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 625,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.8896,
-          "topic_score": 0.0769,
-          "slug": "ko-benchmarks"
-        }
-      }
-    ]
+    "items": []
   },
   "history": [
+    {
+      "run_at": "2026-07-01T05:06:23.533326Z",
+      "queue_date": "2026-07-01",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-06-30T04:46:14.520936Z",
       "queue_date": "2026-06-30",
@@ -983,32 +979,6 @@
             "score": 0.3077,
             "topic_score": 0.0952,
             "slug": "daily-local-llm-benchmark-snapshot-2026-04-29-2"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-04-29T16:13:19.352484Z",
-      "queue_date": "2026-04-29",
-      "reviewed_count": 1,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 1,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-04-29/01-q4-vs-q8-quality-loss-ollama-guide.md",
-          "slug": "q4-vs-q8-quality-loss-ollama-guide",
-          "score": 576.0,
-          "status_before": "rejected_manual",
-          "status_after": "rejected_manual",
-          "word_count": 219,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.8397,
-            "topic_score": 0.0667,
-            "slug": "model-qwen3-6-35b-local-benchmark"
           }
         }
       ]

@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-06-30T04:47:56.161543Z",
+  "generated_at": "2026-07-01T05:07:48.114479Z",
   "window_days": 30,
-  "window_start": "2026-05-31T04:47:56.161543Z",
-  "window_end": "2026-06-30T04:47:56.161543Z",
+  "window_start": "2026-06-01T05:07:48.114479Z",
+  "window_end": "2026-07-01T05:07:48.114479Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -12,18 +12,18 @@
     "organic_search_clicks": 2,
     "decision_page_clicks": 0,
     "affiliate_redirect_clicks": 307,
-    "cloud_redirect_clicks": 120,
-    "hardware_redirect_clicks": 187,
+    "cloud_redirect_clicks": 119,
+    "hardware_redirect_clicks": 188,
     "search_to_affiliate_pct": 15350.0,
-    "search_to_cloud_pct": 6000.0,
-    "affiliate_to_cloud_pct": 39.09
+    "search_to_cloud_pct": 5950.0,
+    "affiliate_to_cloud_pct": 38.76
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 187,
-        "share_pct": 60.91
+        "clicks": 188,
+        "share_pct": 61.24
       },
       {
         "provider": "runpod",
@@ -32,15 +32,15 @@
       },
       {
         "provider": "vast",
-        "clicks": 58,
-        "share_pct": 18.89
+        "clicks": 57,
+        "share_pct": 18.57
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 86,
-        "share_pct": 28.01
+        "clicks": 87,
+        "share_pct": 28.34
       },
       {
         "route": "/go/runpod",
@@ -49,8 +49,8 @@
       },
       {
         "route": "/go/vast",
-        "clicks": 58,
-        "share_pct": 18.89
+        "clicks": 57,
+        "share_pct": 18.57
       },
       {
         "route": "/recommends/rtx-4090-24gb",
@@ -207,7 +207,7 @@
   },
   "data_quality": {
     "search_console_items": 240,
-    "affiliate_event_items_total": 421,
+    "affiliate_event_items_total": 429,
     "affiliate_event_items_in_window": 307,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
