@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-07-01T05:06:23.620371Z",
+  "updated_at": "2026-07-02T04:41:16.040474Z",
   "last_run": {
-    "run_at": "2026-07-01T05:06:23.620371Z",
-    "queue_date": "2026-07-01",
+    "run_at": "2026-07-02T04:41:16.040474Z",
+    "queue_date": "2026-07-02",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-07-01",
-        "title": "Today's Local LLM Pick: qwen3.6:35b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-07-01-daily-local-llm-benchmark-snapshot-2026-07-01",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-07-02",
+        "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-07-02-daily-local-llm-benchmark-snapshot-2026-07-02",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-01.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-02.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-07-02T04:41:16.040474Z",
+      "queue_date": "2026-07-02",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-07-02",
+          "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-07-02-daily-local-llm-benchmark-snapshot-2026-07-02",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-02.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-07-01T05:06:23.620371Z",
       "queue_date": "2026-07-01",
@@ -1354,42 +1376,6 @@
         }
       ],
       "skipped": []
-    },
-    {
-      "run_at": "2026-04-29T22:13:09.673058Z",
-      "queue_date": "2026-04-29",
-      "candidate_count": 3,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 2,
-      "fallback_generated_count": 0,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "model-deepseek-r1-14b-rtx-3090-ollama-benchmark",
-          "title": "deepseek-r1:14B Rtx 3090 Ollama Benchmark: Hardware Decision Matrix for Local LLM (2026)",
-          "topic_key": "deepseek-r1-14b-rtx-3090-ollama-benchmark",
-          "score": 1000.0,
-          "source_draft": "content-queue/2026-04-29/01-model-deepseek-r1-14b-rtx-3090-ollama-benchmark.md",
-          "out_file": "src/content/blog/model-deepseek-r1-14b-rtx-3090-ollama-benchmark.md",
-          "intent": "hardware"
-        },
-        {
-          "slug": "model-gemma3-27b-rtx-3090-ollama-benchmark",
-          "title": "gemma3:27B Rtx 3090 Ollama Benchmark: GPU and VRAM Sizing Guide (2026)",
-          "topic_key": "gemma3-27b-rtx-3090-ollama-benchmark",
-          "score": 1000.0,
-          "source_draft": "content-queue/2026-04-29/02-model-gemma3-27b-rtx-3090-ollama-benchmark.md",
-          "out_file": "src/content/blog/model-gemma3-27b-rtx-3090-ollama-benchmark.md",
-          "intent": "hardware"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-04-29/03-model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
-          "reason": "max_publish_reached"
-        }
-      ]
     }
   ]
 }

@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-07-01T05:06:21.888410Z",
+  "updated_at": "2026-07-02T04:41:14.387231Z",
   "window_hours": 48,
   "max_library_age_days": 14,
   "strategy": "Prioritize new Ollama model families; use RTX 3090 benchmark recency as evidence, not as proof of model freshness.",
   "local_inventory": {
-    "model_count": 51,
+    "model_count": 47,
     "source": "runner /api/tags via runner-status.json and weekly-target-plan.json"
   },
   "items": []
