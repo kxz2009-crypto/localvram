@@ -99,6 +99,12 @@ const articleSchema = {
       url: "https://localvram.com/branding/logo.svg",
     },
   },
+  translationOfWork: {
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    inLanguage: "en",
+    url: `https://localvram.com${enPath}`,
+  },
   mainEntityOfPage: postUrl,
   url: postUrl,
   keywords: post.data.tags,

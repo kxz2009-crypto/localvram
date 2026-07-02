@@ -69,6 +69,16 @@ const articleSchema = {
       url: "https://localvram.cn/branding/logo.svg"
     }
   },
+  ...(bodyResolution.isLocalized
+    ? {
+        translationOfWork: {
+          "@type": "BlogPosting",
+          headline: post.data.title,
+          inLanguage: "en",
+          url: `https://localvram.com/en/blog/${post.slug}/`
+        }
+      }
+    : {}),
   mainEntityOfPage: postUrl,
   url: postUrl,
   keywords: post.data.tags
