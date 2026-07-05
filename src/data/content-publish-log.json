@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-07-04T04:20:08.159118Z",
+  "updated_at": "2026-07-05T04:40:57.710865Z",
   "last_run": {
-    "run_at": "2026-07-04T04:20:08.159118Z",
-    "queue_date": "2026-07-04",
+    "run_at": "2026-07-05T04:40:57.710865Z",
+    "queue_date": "2026-07-05",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-07-04",
-        "title": "Today's Local LLM Pick: gemma3:27b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-07-04-daily-local-llm-benchmark-snapshot-2026-07-04",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-07-05",
+        "title": "Today's Local LLM Pick: qwen2.5-coder:32b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-07-05-daily-local-llm-benchmark-snapshot-2026-07-05",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-04.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-05.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-07-05T04:40:57.710865Z",
+      "queue_date": "2026-07-05",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-07-05",
+          "title": "Today's Local LLM Pick: qwen2.5-coder:32b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-07-05-daily-local-llm-benchmark-snapshot-2026-07-05",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-05.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-07-04T04:20:08.159118Z",
       "queue_date": "2026-07-04",
@@ -1351,28 +1373,6 @@
           "out_file": "src/content/blog/model-deepseek-r1-14b-benchmark-refresh.md",
           "intent": "benchmark",
           "model_tag": "deepseek-r1:14b"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-05-01T04:36:06.371121Z",
-      "queue_date": "2026-05-01",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-05-01",
-          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-05-01-daily-local-llm-benchmark-snapshot-2026-05-01",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-01.md",
-          "intent": "benchmark"
         }
       ],
       "skipped": []

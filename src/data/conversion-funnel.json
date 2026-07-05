@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-04T04:21:36.285843Z",
+  "generated_at": "2026-07-05T04:42:36.684846Z",
   "window_days": 30,
-  "window_start": "2026-06-04T04:21:36.285843Z",
-  "window_end": "2026-07-04T04:21:36.285843Z",
+  "window_start": "2026-06-05T04:42:36.684846Z",
+  "window_end": "2026-07-05T04:42:36.684846Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -39,8 +39,8 @@
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 89,
-        "share_pct": 27.81
+        "clicks": 90,
+        "share_pct": 28.12
       },
       {
         "route": "/go/runpod",
@@ -54,8 +54,8 @@
       },
       {
         "route": "/recommends/rtx-4090-24gb",
-        "clicks": 36,
-        "share_pct": 11.25
+        "clicks": 35,
+        "share_pct": 10.94
       },
       {
         "route": "/recommends/atx3-1000w-psu",
@@ -211,7 +211,7 @@
   },
   "data_quality": {
     "search_console_items": 240,
-    "affiliate_event_items_total": 453,
+    "affiliate_event_items_total": 454,
     "affiliate_event_items_in_window": 320,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
