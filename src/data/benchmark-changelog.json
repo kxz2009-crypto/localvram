@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-07-01T06:49:08Z",
+  "updated_at": "2026-07-08T15:58:01Z",
   "items": [
+    {
+      "date": "2026-07-08",
+      "title": "Weekly benchmark run (10 successful model(s))",
+      "environment": "NVIDIA GeForce RTX 3090 | driver 591.86 | Ollama 0.20.2",
+      "changes": [
+        "qwen3:8b avg 112.715 tok/s, avg latency 1.536s (2 run(s))",
+        "deepseek-r1:14b avg 76.648 tok/s, avg latency 2.064s (2 run(s))",
+        "qwen3-coder:30b avg 149.798 tok/s, avg latency 0.897s (2 run(s))",
+        "qwen3.6:35b avg 32.968 tok/s, avg latency 3.591s (2 run(s))",
+        "qwen2.5-coder:32b avg 31.205 tok/s, avg latency 3.714s (2 run(s))",
+        "ministral-3:14b avg 80.663 tok/s, avg latency 2.003s (2 run(s))",
+        "mistral-small:22b avg 57.862 tok/s, avg latency 1.841s (2 run(s))",
+        "gemma3:27b avg 40.601 tok/s, avg latency 2.972s (2 run(s))",
+        "llama4:latest avg 9.098 tok/s, avg latency 7.777s (2 run(s))",
+        "qwq:32b avg 25.252 tok/s, avg latency 4.187s (2 run(s))",
+        "Skipped/failed targets: qwen2.5, qwen3.5:27b, llama3.3, gpt-oss"
+      ]
+    },
     {
       "date": "2026-07-01",
       "title": "Weekly benchmark run (10 successful model(s))",

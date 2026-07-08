@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-01T06:45:29Z",
+  "updated_at": "2026-07-08T15:54:17Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -66,9 +66,7 @@
   },
   "checks": {
     "port_listeners": [],
-    "ps_ollama": [
-      "ollama      1389    1337  0 Jun29 ?        00:19:53 mysqld --max_connections=1000 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password --tls_version=TLSv1.2,TLSv1.3 --init-file /data/application/init.sql --binlog_expire_logs_seconds=604800"
-    ],
+    "ps_ollama": [],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
       "ollama_serve_process_count": 0,

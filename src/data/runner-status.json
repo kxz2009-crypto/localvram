@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-01T06:57:29Z",
+  "updated_at": "2026-07-08T16:07:01Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -66,12 +66,11 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=1115181,fd=3))"
+      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=24137,fd=3))"
     ],
     "ps_ollama": [
-      "ollama      1389    1337  0 Jun29 ?        00:19:57 mysqld --max_connections=1000 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password --tls_version=TLSv1.2,TLSv1.3 --init-file /data/application/init.sql --binlog_expire_logs_seconds=604800",
-      "gao20    1115181       1  1 14:49 ?        00:00:07 /usr/local/bin/ollama serve",
-      "gao20    1134021 1115181 45 14:55 ?        00:00:41 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 44749"
+      "gao20      24137       1  1 Jul08 ?        00:00:07 /usr/local/bin/ollama serve",
+      "gao20      41224   24137 65 00:05 ?        00:01:04 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 45025"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
