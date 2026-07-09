@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-07-08T03:54:30.306603Z",
+  "updated_at": "2026-07-09T04:31:38.861442Z",
   "last_run": {
-    "run_at": "2026-07-08T03:54:30.306603Z",
-    "queue_date": "2026-07-08",
+    "run_at": "2026-07-09T04:31:38.861442Z",
+    "queue_date": "2026-07-09",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-07-09T04:31:38.861442Z",
+      "queue_date": "2026-07-09",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-07-08T03:54:30.306603Z",
       "queue_date": "2026-07-08",
@@ -767,32 +778,6 @@
             "score": 0.9653,
             "topic_score": 0.6667,
             "slug": "model-gemma3-27b-local-benchmark"
-          }
-        }
-      ]
-    },
-    {
-      "run_at": "2026-05-04T04:27:50.201574Z",
-      "queue_date": "2026-05-04",
-      "reviewed_count": 1,
-      "auto_approved_count": 1,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-05-04/01-model-gemma3-27b-local-benchmark.md",
-          "slug": "model-gemma3-27b-local-benchmark",
-          "score": 180.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 534,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.958,
-            "topic_score": 0.375,
-            "slug": "model-gemma3-27b-rtx-3090-ollama-benchmark"
           }
         }
       ]
