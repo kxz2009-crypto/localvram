@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-07-09T04:31:38.861442Z",
+  "updated_at": "2026-07-10T04:34:22.206542Z",
   "last_run": {
-    "run_at": "2026-07-09T04:31:38.861442Z",
-    "queue_date": "2026-07-09",
+    "run_at": "2026-07-10T04:34:22.206542Z",
+    "queue_date": "2026-07-10",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-07-10T04:34:22.206542Z",
+      "queue_date": "2026-07-10",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-07-09T04:31:38.861442Z",
       "queue_date": "2026-07-09",
@@ -751,36 +762,6 @@
       "high_risk_count": 0,
       "risk_flag_counts": {},
       "items": []
-    },
-    {
-      "run_at": "2026-05-05T03:56:57.551211Z",
-      "queue_date": "2026-05-05",
-      "reviewed_count": 1,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 1,
-      "rejected_manual_count": 0,
-      "high_risk_count": 1,
-      "risk_flag_counts": {
-        "near_duplicate_published": 1
-      },
-      "items": [
-        {
-          "draft": "content-queue/2026-05-05/01-model-qwq-32b-local-benchmark.md",
-          "slug": "model-qwq-32b-local-benchmark",
-          "score": 150.0,
-          "status_before": "draft",
-          "status_after": "pending_manual_review",
-          "word_count": 534,
-          "risk_flags": [
-            "near_duplicate_published"
-          ],
-          "similarity": {
-            "score": 0.9653,
-            "topic_score": 0.6667,
-            "slug": "model-gemma3-27b-local-benchmark"
-          }
-        }
-      ]
     }
   ]
 }

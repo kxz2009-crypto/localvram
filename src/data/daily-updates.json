@@ -1,6 +1,19 @@
 {
   "items": [
     {
+      "date": "2026-07-10",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [],
+      "published_posts": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-07-10",
+          "title": "Today's Local LLM Pick: ministral-3:14b on RTX 3090 (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-07-10T04:34:22.279567Z"
+    },
+    {
       "date": "2026-07-09",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -427,35 +440,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-06-06T04:37:39.908435Z"
-    },
-    {
-      "date": "2026-06-05",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-06-05",
-          "slug": "model-qwq-32b-local-benchmark",
-          "title": "qwq:32B: Local Inference Performance Report (2026)",
-          "keyword": "qwq:32b local inference benchmark",
-          "score": 225,
-          "source": "benchmark_fallback",
-          "landing": "/en/models/",
-          "model_tag": "",
-          "model_key": "",
-          "traffic_priority": "",
-          "ollama_updated_label": "",
-          "benchmark_measured_at": "",
-          "draft_path": "content-queue/2026-06-05/01-model-qwq-32b-local-benchmark.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "model-qwq-32b-local-benchmark",
-          "title": "qwq:32B: Local Inference Performance Report (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-06-05T04:57:23.066832Z"
     }
   ]
 }
