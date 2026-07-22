@@ -1,8 +1,8 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-07-22T03:57:44Z",
+  "updated_at": "2026-07-22T05:39:01Z",
   "target_success_rate": 95.0,
-  "reference_time": "2026-07-22T03:57:44Z",
+  "reference_time": "2026-07-22T05:39:01Z",
   "pipeline_slo_met": false,
   "workflow_keys": [
     "weekly_benchmark",
@@ -14,23 +14,23 @@
       "workflow_key": "weekly_benchmark",
       "workflow_name": "Weekly Benchmark",
       "latest_conclusion": "success",
-      "latest_updated_at": "2026-07-08T16:07:23Z",
-      "latest_run_id": "28919874614",
-      "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/28919874614",
-      "current_success_streak": 5,
-      "last_success_at": "2026-07-08T16:07:23Z",
+      "latest_updated_at": "2026-07-22T05:38:51Z",
+      "latest_run_id": "29893838386",
+      "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/29893838386",
+      "current_success_streak": 6,
+      "last_success_at": "2026-07-22T05:38:51Z",
       "last_failure_at": "",
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-07-15T03:57:44Z",
-          "window_end": "2026-07-22T03:57:44Z",
-          "total_runs": 0,
-          "success_runs": 0,
+          "window_start": "2026-07-15T05:39:01Z",
+          "window_end": "2026-07-22T05:39:01Z",
+          "total_runs": 1,
+          "success_runs": 1,
           "failure_runs": 0,
-          "success_rate": 0.0,
+          "success_rate": 100.0,
           "target_success_rate": 95.0,
-          "slo_met": false,
+          "slo_met": true,
           "top_failure_class": "none",
           "top_failure_count": 0,
           "top_failure_action": "",
@@ -42,10 +42,10 @@
         },
         "28": {
           "window_days": 28,
-          "window_start": "2026-06-24T03:57:44Z",
-          "window_end": "2026-07-22T03:57:44Z",
-          "total_runs": 3,
-          "success_runs": 3,
+          "window_start": "2026-06-24T05:39:01Z",
+          "window_end": "2026-07-22T05:39:01Z",
+          "total_runs": 4,
+          "success_runs": 4,
           "failure_runs": 0,
           "success_rate": 100.0,
           "target_success_rate": 95.0,
@@ -74,8 +74,8 @@
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-07-15T03:57:44Z",
-          "window_end": "2026-07-22T03:57:44Z",
+          "window_start": "2026-07-15T05:39:01Z",
+          "window_end": "2026-07-22T05:39:01Z",
           "total_runs": 7,
           "success_runs": 1,
           "failure_runs": 6,
@@ -101,12 +101,12 @@
         },
         "28": {
           "window_days": 28,
-          "window_start": "2026-06-24T03:57:44Z",
-          "window_end": "2026-07-22T03:57:44Z",
-          "total_runs": 29,
-          "success_runs": 22,
+          "window_start": "2026-06-24T05:39:01Z",
+          "window_end": "2026-07-22T05:39:01Z",
+          "total_runs": 28,
+          "success_runs": 21,
           "failure_runs": 7,
-          "success_rate": 75.86,
+          "success_rate": 75.0,
           "target_success_rate": 95.0,
           "slo_met": false,
           "top_failure_class": "daily_content_failed",
@@ -131,48 +131,64 @@
     "publish_benchmark_artifact": {
       "workflow_key": "publish_benchmark_artifact",
       "workflow_name": "Publish Benchmark Artifact",
-      "latest_conclusion": "success",
-      "latest_updated_at": "2026-07-08T16:07:36Z",
-      "latest_run_id": "28957358635",
-      "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/28957358635",
-      "current_success_streak": 5,
+      "latest_conclusion": "failure",
+      "latest_updated_at": "2026-07-22T05:39:01Z",
+      "latest_run_id": "29894374401",
+      "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/29894374401",
+      "current_success_streak": 0,
       "last_success_at": "2026-07-08T16:07:36Z",
-      "last_failure_at": "",
+      "last_failure_at": "2026-07-22T05:39:01Z",
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-07-15T03:57:44Z",
-          "window_end": "2026-07-22T03:57:44Z",
-          "total_runs": 0,
+          "window_start": "2026-07-15T05:39:01Z",
+          "window_end": "2026-07-22T05:39:01Z",
+          "total_runs": 1,
           "success_runs": 0,
-          "failure_runs": 0,
+          "failure_runs": 1,
           "success_rate": 0.0,
           "target_success_rate": 95.0,
           "slo_met": false,
-          "top_failure_class": "none",
-          "top_failure_count": 0,
-          "top_failure_action": "",
-          "top_failures": [],
-          "failure_class_counts": {},
+          "top_failure_class": "publish_workflow_failed",
+          "top_failure_count": 1,
+          "top_failure_action": "Review workflow logs and update runbook mitigation for this failure class.",
+          "top_failures": [
+            {
+              "failure_class": "publish_workflow_failed",
+              "count": 1,
+              "action": "Review workflow logs and update runbook mitigation for this failure class."
+            }
+          ],
+          "failure_class_counts": {
+            "publish_workflow_failed": 1
+          },
           "excluded_runs_count": 0,
           "excluded_reason_counts": {},
           "excluded_runs_sample": []
         },
         "28": {
           "window_days": 28,
-          "window_start": "2026-06-24T03:57:44Z",
-          "window_end": "2026-07-22T03:57:44Z",
-          "total_runs": 3,
+          "window_start": "2026-06-24T05:39:01Z",
+          "window_end": "2026-07-22T05:39:01Z",
+          "total_runs": 4,
           "success_runs": 3,
-          "failure_runs": 0,
-          "success_rate": 100.0,
+          "failure_runs": 1,
+          "success_rate": 75.0,
           "target_success_rate": 95.0,
-          "slo_met": true,
-          "top_failure_class": "none",
-          "top_failure_count": 0,
-          "top_failure_action": "",
-          "top_failures": [],
-          "failure_class_counts": {},
+          "slo_met": false,
+          "top_failure_class": "publish_workflow_failed",
+          "top_failure_count": 1,
+          "top_failure_action": "Review workflow logs and update runbook mitigation for this failure class.",
+          "top_failures": [
+            {
+              "failure_class": "publish_workflow_failed",
+              "count": 1,
+              "action": "Review workflow logs and update runbook mitigation for this failure class."
+            }
+          ],
+          "failure_class_counts": {
+            "publish_workflow_failed": 1
+          },
           "excluded_runs_count": 0,
           "excluded_reason_counts": {},
           "excluded_runs_sample": []
@@ -182,23 +198,28 @@
   },
   "weekly_report": {
     "window_days": 7,
-    "window_start": "2026-07-15T03:57:44Z",
-    "window_end": "2026-07-22T03:57:44Z",
+    "window_start": "2026-07-15T05:39:01Z",
+    "window_end": "2026-07-22T05:39:01Z",
     "summary_lines": [
-      "Weekly Benchmark: 0/0 (0.0%), top failure=none",
+      "Weekly Benchmark: 1/1 (100.0%), top failure=none",
       "Daily Content Agent: 1/7 (14.29%), top failure=daily_content_failed",
-      "Publish Benchmark Artifact: 0/0 (0.0%), top failure=none"
+      "Publish Benchmark Artifact: 0/1 (0.0%), top failure=publish_workflow_failed"
     ]
   },
   "failure_recommendations": {
     "window_days": 28,
-    "window_start": "2026-06-24T03:57:44Z",
-    "window_end": "2026-07-22T03:57:44Z",
+    "window_start": "2026-06-24T05:39:01Z",
+    "window_end": "2026-07-22T05:39:01Z",
     "global_top_failures": [
       {
         "failure_class": "daily_content_failed",
         "count": 7,
         "action": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers."
+      },
+      {
+        "failure_class": "publish_workflow_failed",
+        "count": 1,
+        "action": "Review workflow logs and update runbook mitigation for this failure class."
       }
     ],
     "global_excluded_reason_counts": {},
@@ -209,6 +230,13 @@
         "failure_class": "daily_content_failed",
         "count": 7,
         "action": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers."
+      },
+      {
+        "workflow_key": "publish_benchmark_artifact",
+        "workflow_name": "Publish Benchmark Artifact",
+        "failure_class": "publish_workflow_failed",
+        "count": 1,
+        "action": "Review workflow logs and update runbook mitigation for this failure class."
       }
     ]
   },
