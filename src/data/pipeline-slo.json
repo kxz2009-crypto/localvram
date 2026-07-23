@@ -1,8 +1,8 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-07-22T05:39:01Z",
+  "updated_at": "2026-07-23T03:55:44Z",
   "target_success_rate": 95.0,
-  "reference_time": "2026-07-22T05:39:01Z",
+  "reference_time": "2026-07-23T03:55:44Z",
   "pipeline_slo_met": false,
   "workflow_keys": [
     "weekly_benchmark",
@@ -23,8 +23,8 @@
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-07-15T05:39:01Z",
-          "window_end": "2026-07-22T05:39:01Z",
+          "window_start": "2026-07-16T03:55:44Z",
+          "window_end": "2026-07-23T03:55:44Z",
           "total_runs": 1,
           "success_runs": 1,
           "failure_runs": 0,
@@ -42,10 +42,10 @@
         },
         "28": {
           "window_days": 28,
-          "window_start": "2026-06-24T05:39:01Z",
-          "window_end": "2026-07-22T05:39:01Z",
-          "total_runs": 4,
-          "success_runs": 4,
+          "window_start": "2026-06-25T03:55:44Z",
+          "window_end": "2026-07-23T03:55:44Z",
+          "total_runs": 3,
+          "success_runs": 3,
           "failure_runs": 0,
           "success_rate": 100.0,
           "target_success_rate": 95.0,
@@ -65,48 +65,21 @@
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
       "latest_conclusion": "failure",
-      "latest_updated_at": "2026-07-22T03:57:44Z",
-      "latest_run_id": "29889771312",
-      "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/29889771312",
+      "latest_updated_at": "2026-07-23T03:55:44Z",
+      "latest_run_id": "29978180091",
+      "latest_run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/29978180091",
       "current_success_streak": 0,
       "last_success_at": "2026-07-16T03:49:04Z",
-      "last_failure_at": "2026-07-22T03:57:44Z",
+      "last_failure_at": "2026-07-23T03:55:44Z",
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-07-15T05:39:01Z",
-          "window_end": "2026-07-22T05:39:01Z",
+          "window_start": "2026-07-16T03:55:44Z",
+          "window_end": "2026-07-23T03:55:44Z",
           "total_runs": 7,
-          "success_runs": 1,
-          "failure_runs": 6,
-          "success_rate": 14.29,
-          "target_success_rate": 95.0,
-          "slo_met": false,
-          "top_failure_class": "daily_content_failed",
-          "top_failure_count": 6,
-          "top_failure_action": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers.",
-          "top_failures": [
-            {
-              "failure_class": "daily_content_failed",
-              "count": 6,
-              "action": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers."
-            }
-          ],
-          "failure_class_counts": {
-            "daily_content_failed": 6
-          },
-          "excluded_runs_count": 0,
-          "excluded_reason_counts": {},
-          "excluded_runs_sample": []
-        },
-        "28": {
-          "window_days": 28,
-          "window_start": "2026-06-24T05:39:01Z",
-          "window_end": "2026-07-22T05:39:01Z",
-          "total_runs": 28,
-          "success_runs": 21,
+          "success_runs": 0,
           "failure_runs": 7,
-          "success_rate": 75.0,
+          "success_rate": 0.0,
           "target_success_rate": 95.0,
           "slo_met": false,
           "top_failure_class": "daily_content_failed",
@@ -121,6 +94,33 @@
           ],
           "failure_class_counts": {
             "daily_content_failed": 7
+          },
+          "excluded_runs_count": 0,
+          "excluded_reason_counts": {},
+          "excluded_runs_sample": []
+        },
+        "28": {
+          "window_days": 28,
+          "window_start": "2026-06-25T03:55:44Z",
+          "window_end": "2026-07-23T03:55:44Z",
+          "total_runs": 29,
+          "success_runs": 21,
+          "failure_runs": 8,
+          "success_rate": 72.41,
+          "target_success_rate": 95.0,
+          "slo_met": false,
+          "top_failure_class": "daily_content_failed",
+          "top_failure_count": 8,
+          "top_failure_action": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers.",
+          "top_failures": [
+            {
+              "failure_class": "daily_content_failed",
+              "count": 8,
+              "action": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers."
+            }
+          ],
+          "failure_class_counts": {
+            "daily_content_failed": 8
           },
           "excluded_runs_count": 0,
           "excluded_reason_counts": {},
@@ -141,8 +141,8 @@
       "windows": {
         "7": {
           "window_days": 7,
-          "window_start": "2026-07-15T05:39:01Z",
-          "window_end": "2026-07-22T05:39:01Z",
+          "window_start": "2026-07-16T03:55:44Z",
+          "window_end": "2026-07-23T03:55:44Z",
           "total_runs": 1,
           "success_runs": 0,
           "failure_runs": 1,
@@ -168,12 +168,12 @@
         },
         "28": {
           "window_days": 28,
-          "window_start": "2026-06-24T05:39:01Z",
-          "window_end": "2026-07-22T05:39:01Z",
-          "total_runs": 4,
-          "success_runs": 3,
+          "window_start": "2026-06-25T03:55:44Z",
+          "window_end": "2026-07-23T03:55:44Z",
+          "total_runs": 3,
+          "success_runs": 2,
           "failure_runs": 1,
-          "success_rate": 75.0,
+          "success_rate": 66.67,
           "target_success_rate": 95.0,
           "slo_met": false,
           "top_failure_class": "publish_workflow_failed",
@@ -198,22 +198,22 @@
   },
   "weekly_report": {
     "window_days": 7,
-    "window_start": "2026-07-15T05:39:01Z",
-    "window_end": "2026-07-22T05:39:01Z",
+    "window_start": "2026-07-16T03:55:44Z",
+    "window_end": "2026-07-23T03:55:44Z",
     "summary_lines": [
       "Weekly Benchmark: 1/1 (100.0%), top failure=none",
-      "Daily Content Agent: 1/7 (14.29%), top failure=daily_content_failed",
+      "Daily Content Agent: 0/7 (0.0%), top failure=daily_content_failed",
       "Publish Benchmark Artifact: 0/1 (0.0%), top failure=publish_workflow_failed"
     ]
   },
   "failure_recommendations": {
     "window_days": 28,
-    "window_start": "2026-06-24T05:39:01Z",
-    "window_end": "2026-07-22T05:39:01Z",
+    "window_start": "2026-06-25T03:55:44Z",
+    "window_end": "2026-07-23T03:55:44Z",
     "global_top_failures": [
       {
         "failure_class": "daily_content_failed",
-        "count": 7,
+        "count": 8,
         "action": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers."
       },
       {
@@ -228,7 +228,7 @@
         "workflow_key": "daily_content",
         "workflow_name": "Daily Content Agent",
         "failure_class": "daily_content_failed",
-        "count": 7,
+        "count": 8,
         "action": "Inspect daily content agent/review/publish steps and rerun with workflow_dispatch after fixing data quality blockers."
       },
       {
