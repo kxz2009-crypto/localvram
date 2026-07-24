@@ -1,22 +1,32 @@
 {
-  "updated_at": "2026-07-17T04:46:35.269763Z",
+  "updated_at": "2026-07-24T04:53:16.040727Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-07-24T00:00:00Z",
+    "next_refresh_at": "2026-07-31T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-07-17T04:46:35.269763Z",
+    "last_refresh_at": "2026-07-24T04:53:16.040727Z",
     "last_refresh_summary": {
       "incoming_count": 8,
       "removed_count": 8,
       "incoming_topic_keys": [
+        "14b-q4",
+        "ai83090",
+        "llama4-16x17b-local-inference-benchmark-update",
+        "qwen2-5-coder-32b-local-inference-benchmark-update",
+        "qwen3-5-122b-local-inference-benchmark-update",
+        "qwen3-5-35b-local-inference-benchmark-update",
+        "qwen3-6-35b-local-inference-benchmark-update",
+        "search-space-complexity-performance-model-acceleration-llama-2-7b-rtx-3090"
+      ],
+      "removed_topic_keys": [
         "gemma3-27b-local-inference-benchmark-update",
         "glm-4-7-flash-bf16-local-inference-benchmark-update",
         "llama-3-1-70b-q4-vram-usage-rtx-3090",
@@ -26,17 +36,7 @@
         "ollama-gemma2-2b-ram-requirements",
         "openhermes"
       ],
-      "removed_topic_keys": [
-        "deepseek-coder-v2-ollama-vram-usage",
-        "llama4-16x17b-local-inference-benchmark-update",
-        "lqram",
-        "qwen2-5-32b-q4-k-m-vram-usage-rtx-3090",
-        "qwen2-5-coder-32b-local-inference-benchmark-update",
-        "qwen3-5-122b-local-inference-benchmark-update",
-        "qwen3-5-35b-local-inference-benchmark-update",
-        "qwen3-6-35b-local-inference-benchmark-update"
-      ],
-      "blocked_recent_topic_count": 58
+      "blocked_recent_topic_count": 42
     }
   },
   "items": [
@@ -195,58 +195,58 @@
       "freshness_gap_score": 10
     },
     {
-      "slug": "model-gemma3-27b-benchmark-refresh",
-      "keyword": "gemma3:27b local inference benchmark update",
-      "search_intent_score": 6,
+      "slug": "model-qwen2-5-coder-32b-benchmark-refresh",
+      "keyword": "qwen2.5-coder:32b local inference benchmark update",
+      "search_intent_score": 5,
       "commercial_intent_score": 6,
-      "freshness_gap_score": 7
+      "freshness_gap_score": 6
     },
     {
-      "slug": "model-llama3-3-70b-benchmark-refresh",
-      "keyword": "llama3.3:70b local inference benchmark update",
+      "slug": "model-qwen3-6-35b-benchmark-refresh",
+      "keyword": "qwen3.6:35b local inference benchmark update",
+      "search_intent_score": 5,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 6
+    },
+    {
+      "slug": "en-models",
+      "keyword": "ai83090",
+      "search_intent_score": 8,
+      "commercial_intent_score": 3,
+      "freshness_gap_score": 6
+    },
+    {
+      "slug": "model-llama4-16x17b-benchmark-refresh",
+      "keyword": "llama4:16x17b local inference benchmark update",
       "search_intent_score": 4,
       "commercial_intent_score": 5,
       "freshness_gap_score": 6
     },
     {
-      "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
-      "keyword": "glm-4.7-flash:bf16 local inference benchmark update",
+      "slug": "model-qwen3-5-35b-benchmark-refresh",
+      "keyword": "qwen3.5:35b local inference benchmark update",
+      "search_intent_score": 4,
+      "commercial_intent_score": 5,
+      "freshness_gap_score": 6
+    },
+    {
+      "slug": "model-qwen3-5-122b-benchmark-refresh",
+      "keyword": "qwen3.5:122b local inference benchmark update",
       "search_intent_score": 4,
       "commercial_intent_score": 5,
       "freshness_gap_score": 5
     },
     {
-      "slug": "de-models-openhermes-7b-q5",
-      "keyword": "openhermes",
-      "search_intent_score": 3,
+      "slug": "en-models",
+      "keyword": "\"search–space complexity\" \"performance–model acceleration\" llama-2-7b rtx 3090",
+      "search_intent_score": 10,
       "commercial_intent_score": 3,
-      "freshness_gap_score": 10
+      "freshness_gap_score": 3
     },
     {
-      "slug": "en-models-llama31-70b-fp16",
-      "keyword": "llama 3.1 70b quantized vram requirements rtx 3090",
+      "slug": "ko-models-qwen25-14b-q4",
+      "keyword": "14b q4",
       "search_intent_score": 9,
-      "commercial_intent_score": 3,
-      "freshness_gap_score": 3
-    },
-    {
-      "slug": "en-models-llama31-70b-q4",
-      "keyword": "llama 3.1 70b q4 vram usage rtx 3090",
-      "search_intent_score": 8,
-      "commercial_intent_score": 3,
-      "freshness_gap_score": 3
-    },
-    {
-      "slug": "en-models-gemma2-2b-q4",
-      "keyword": "ollama gemma2:2b ram requirements",
-      "search_intent_score": 7,
-      "commercial_intent_score": 3,
-      "freshness_gap_score": 3
-    },
-    {
-      "slug": "en-models-llava-llama3-8b-q4",
-      "keyword": "\"llama3:8b-q4\" ollama",
-      "search_intent_score": 7,
       "commercial_intent_score": 3,
       "freshness_gap_score": 3
     }
