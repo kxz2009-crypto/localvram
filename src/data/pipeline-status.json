@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-25T03:51:15Z",
+  "updated_at": "2026-07-26T04:08:39Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -30,18 +30,31 @@
     "daily_content": {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
-      "run_id": "30142918991",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/30142918991",
+      "run_id": "30187253998",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/30187253998",
       "status": "completed",
       "conclusion": "failure",
       "event": "schedule",
-      "head_sha": "02bb8201470aba1f3ff0d00e2946519a26675508",
+      "head_sha": "bf1c75d2bfb4214b5d0cc1a7e087f20ffa4fc272",
       "failure_class": "daily_content_failed",
       "failure_detail": "quality-gate.py failed",
-      "updated_at": "2026-07-25T03:51:15Z"
+      "updated_at": "2026-07-26T04:08:39Z"
     }
   },
   "history": [
+    {
+      "workflow_key": "daily_content",
+      "workflow_name": "Daily Content Agent",
+      "run_id": "30187253998",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/30187253998",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "schedule",
+      "head_sha": "bf1c75d2bfb4214b5d0cc1a7e087f20ffa4fc272",
+      "failure_class": "daily_content_failed",
+      "failure_detail": "quality-gate.py failed",
+      "updated_at": "2026-07-26T04:08:39Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
@@ -808,19 +821,6 @@
       "failure_class": "daily_content_failed",
       "failure_detail": "auto-fill-i18n-blog-body.py --locales zh failed",
       "updated_at": "2026-06-10T05:00:36Z"
-    },
-    {
-      "workflow_key": "daily_content",
-      "workflow_name": "Daily Content Agent",
-      "run_id": "27184437877",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/27184437877",
-      "status": "completed",
-      "conclusion": "failure",
-      "event": "schedule",
-      "head_sha": "fd8e89900ec55ac620e403678faba7d4c97e95a5",
-      "failure_class": "daily_content_failed",
-      "failure_detail": "auto-fill-i18n-blog-body.py --locales zh failed",
-      "updated_at": "2026-06-09T04:46:30Z"
     }
   ]
 }
