@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-07-25T05:25:16Z",
+  "updated_at": "2026-07-28T05:26:33Z",
   "source": "google-search-console-api",
   "site_url": "sc-domain:localvram.com",
   "window": {
-    "start_date": "2026-06-28",
-    "end_date": "2026-07-25",
+    "start_date": "2026-07-01",
+    "end_date": "2026-07-28",
     "days": 28
   },
   "locales": [
@@ -25,9 +25,9 @@
       "keyword": "how much vram for llama 2 7b fp16",
       "query": "how much vram for llama 2 7b fp16",
       "clicks": 0,
-      "impressions": 28,
+      "impressions": 36,
       "ctr": 0.0,
-      "position": 10.43,
+      "position": 10.47,
       "landing": "/ar/models/llama2-7b-fp16/",
       "locale": "ar"
     },
@@ -35,9 +35,9 @@
       "keyword": "llama 2 7b fp16 vram requirement",
       "query": "llama 2 7b fp16 vram requirement",
       "clicks": 0,
-      "impressions": 15,
+      "impressions": 20,
       "ctr": 0.0,
-      "position": 9.53,
+      "position": 9.45,
       "landing": "/ar/models/llama2-7b-fp16/",
       "locale": "ar"
     },
@@ -202,6 +202,16 @@
       "locale": "ar"
     },
     {
+      "keyword": "qwen2.5 coder 0.5b",
+      "query": "qwen2.5 coder 0.5b",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 21.0,
+      "landing": "/ar/models/qwen25-coder-05b-q8/",
+      "locale": "ar"
+    },
+    {
       "keyword": "qwen2.5-vl-3b vram requirements",
       "query": "qwen2.5-vl-3b vram requirements",
       "clicks": 0,
@@ -282,16 +292,6 @@
       "locale": "de"
     },
     {
-      "keyword": "kompatibilitätsmatrix",
-      "query": "kompatibilitätsmatrix",
-      "clicks": 0,
-      "impressions": 6,
-      "ctr": 0.0,
-      "position": 9.17,
-      "landing": "/de/matrix/",
-      "locale": "de"
-    },
-    {
       "keyword": "cluster lokale konten",
       "query": "cluster lokale konten",
       "clicks": 0,
@@ -299,16 +299,6 @@
       "ctr": 0.0,
       "position": 78.2,
       "landing": "/de/guides/ollama-local-cluster-network/",
-      "locale": "de"
-    },
-    {
-      "keyword": "vram",
-      "query": "vram",
-      "clicks": 0,
-      "impressions": 4,
-      "ctr": 0.0,
-      "position": 80.0,
-      "landing": "/de/tools/vram-calculator/",
       "locale": "de"
     },
     {
@@ -332,6 +322,16 @@
       "locale": "de"
     },
     {
+      "keyword": "vram",
+      "query": "vram",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 67.33,
+      "landing": "/de/tools/vram-calculator/",
+      "locale": "de"
+    },
+    {
       "keyword": "vram test",
       "query": "vram test",
       "clicks": 0,
@@ -342,6 +342,16 @@
       "locale": "de"
     },
     {
+      "keyword": "kompatibilitätsmatrix",
+      "query": "kompatibilitätsmatrix",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 9.5,
+      "landing": "/de/matrix/",
+      "locale": "de"
+    },
+    {
       "keyword": "qwen3 coder 30b",
       "query": "qwen3 coder 30b",
       "clicks": 0,
@@ -349,16 +359,6 @@
       "ctr": 0.0,
       "position": 34.0,
       "landing": "/de/models/qwen3-coder-30b-q4/",
-      "locale": "de"
-    },
-    {
-      "keyword": "rtx 3090 vram",
-      "query": "rtx 3090 vram",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0.0,
-      "position": 60.0,
-      "landing": "/de/hardware/verified-3090/",
       "locale": "de"
     },
     {
@@ -449,6 +449,16 @@
       "ctr": 0.0,
       "position": 29.0,
       "landing": "/de/models/qwen3-coder-30b-q4/",
+      "locale": "de"
+    },
+    {
+      "keyword": "rtx 3090 vram",
+      "query": "rtx 3090 vram",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 52.0,
+      "landing": "/de/hardware/verified-3090/",
       "locale": "de"
     },
     {
@@ -565,19 +575,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 825,
+      "impressions": 850,
       "ctr": 0.0,
-      "position": 4.93,
-      "landing": "/en/models/",
-      "locale": "en"
-    },
-    {
-      "keyword": "\"search-space complexity\" \"performance-model acceleration\" llama-2-7b rtx 3090",
-      "query": "\"search-space complexity\" \"performance-model acceleration\" llama-2-7b rtx 3090",
-      "clicks": 0,
-      "impressions": 14,
-      "ctr": 0.0,
-      "position": 1.64,
+      "position": 4.99,
       "landing": "/en/models/",
       "locale": "en"
     },
@@ -585,19 +585,39 @@
       "keyword": "\"search–space complexity\" \"performance–model acceleration\" llama-2-7b rtx 3090",
       "query": "\"search–space complexity\" \"performance–model acceleration\" llama-2-7b rtx 3090",
       "clicks": 0,
-      "impressions": 14,
+      "impressions": 20,
       "ctr": 0.0,
-      "position": 1.71,
+      "position": 1.75,
       "landing": "/en/models/",
+      "locale": "en"
+    },
+    {
+      "keyword": "\"search-space complexity\" \"performance-model acceleration\" llama-2-7b rtx 3090",
+      "query": "\"search-space complexity\" \"performance-model acceleration\" llama-2-7b rtx 3090",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 1.62,
+      "landing": "/en/models/",
+      "locale": "en"
+    },
+    {
+      "keyword": "\"search–space complexity\" \"performance–model acceleration\" llama-2-7b rtx 3090",
+      "query": "\"search–space complexity\" \"performance–model acceleration\" llama-2-7b rtx 3090",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0.0,
+      "position": 2.62,
+      "landing": "/en/status/",
       "locale": "en"
     },
     {
       "keyword": "best rag models",
       "query": "best rag models",
       "clicks": 0,
-      "impressions": 11,
+      "impressions": 13,
       "ctr": 0.0,
-      "position": 42.91,
+      "position": 41.54,
       "landing": "/en/guides/best-rag-models/",
       "locale": "en"
     },
@@ -615,19 +635,9 @@
       "keyword": "\"search-space complexity\" \"performance-model acceleration\" llama-2-7b rtx 3090",
       "query": "\"search-space complexity\" \"performance-model acceleration\" llama-2-7b rtx 3090",
       "clicks": 0,
-      "impressions": 7,
+      "impressions": 9,
       "ctr": 0.0,
-      "position": 2.57,
-      "landing": "/en/status/",
-      "locale": "en"
-    },
-    {
-      "keyword": "\"search–space complexity\" \"performance–model acceleration\" llama-2-7b rtx 3090",
-      "query": "\"search–space complexity\" \"performance–model acceleration\" llama-2-7b rtx 3090",
-      "clicks": 0,
-      "impressions": 7,
-      "ctr": 0.0,
-      "position": 2.43,
+      "position": 2.56,
       "landing": "/en/status/",
       "locale": "en"
     },
@@ -642,26 +652,6 @@
       "locale": "en"
     },
     {
-      "keyword": "ollama deepseek-coder-v2 16b size",
-      "query": "ollama deepseek-coder-v2 16b size",
-      "clicks": 0,
-      "impressions": 5,
-      "ctr": 0.0,
-      "position": 9.2,
-      "landing": "/en/models/deepseek-coder-v2-16b-fp16/",
-      "locale": "en"
-    },
-    {
-      "keyword": "ollama deepseek-coder-v2 16b model size",
-      "query": "ollama deepseek-coder-v2 16b model size",
-      "clicks": 0,
-      "impressions": 4,
-      "ctr": 0.0,
-      "position": 7.5,
-      "landing": "/en/models/deepseek-coder-v2-16b-fp16/",
-      "locale": "en"
-    },
-    {
       "keyword": "ollama qwen2.5-coder 14b q4_k_m size",
       "query": "ollama qwen2.5-coder 14b q4_k_m size",
       "clicks": 0,
@@ -669,26 +659,6 @@
       "ctr": 0.0,
       "position": 9.0,
       "landing": "/en/models/qwen25-coder-14b-q4/",
-      "locale": "en"
-    },
-    {
-      "keyword": "ollama qwen2.5-coder 14b size 9gb",
-      "query": "ollama qwen2.5-coder 14b size 9gb",
-      "clicks": 0,
-      "impressions": 4,
-      "ctr": 0.0,
-      "position": 9.0,
-      "landing": "/en/models/qwen25-coder-14b-fp16/",
-      "locale": "en"
-    },
-    {
-      "keyword": "ollama qwen2.5-coder 14b tags size",
-      "query": "ollama qwen2.5-coder 14b tags size",
-      "clicks": 0,
-      "impressions": 4,
-      "ctr": 0.0,
-      "position": 7.25,
-      "landing": "/en/models/qwen25-coder-14b-fp16/",
       "locale": "en"
     },
     {
@@ -702,16 +672,6 @@
       "locale": "en"
     },
     {
-      "keyword": "\"gpt-oss:120b-cloud\"",
-      "query": "\"gpt-oss:120b-cloud\"",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 8.0,
-      "landing": "/en/models/gpt-oss-120b-cloud/",
-      "locale": "en"
-    },
-    {
       "keyword": "gemma3 latency use case",
       "query": "gemma3 latency use case",
       "clicks": 0,
@@ -722,8 +682,18 @@
       "locale": "en"
     },
     {
-      "keyword": "ollama qwen2.5-coder tags 14b size",
-      "query": "ollama qwen2.5-coder tags 14b size",
+      "keyword": "ollama deepseek-coder-v2 16b size",
+      "query": "ollama deepseek-coder-v2 16b size",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 9.67,
+      "landing": "/en/models/deepseek-coder-v2-16b-fp16/",
+      "locale": "en"
+    },
+    {
+      "keyword": "ollama qwen2.5-coder 14b size 9gb",
+      "query": "ollama qwen2.5-coder 14b size 9gb",
       "clicks": 0,
       "impressions": 3,
       "ctr": 0.0,
@@ -732,23 +702,13 @@
       "locale": "en"
     },
     {
-      "keyword": "why is my vram so low",
-      "query": "why is my vram so low",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 49.33,
-      "landing": "/en/tools/vram-calculator/",
-      "locale": "en"
-    },
-    {
-      "keyword": "591.86 vs 591.74",
-      "query": "591.86 vs 591.74",
+      "keyword": "\"gpt-oss:120b-cloud\"",
+      "query": "\"gpt-oss:120b-cloud\"",
       "clicks": 0,
       "impressions": 2,
       "ctr": 0.0,
-      "position": 4.0,
-      "landing": "/en/benchmarks/changelog/",
+      "position": 7.5,
+      "landing": "/en/models/gpt-oss-120b-cloud/",
       "locale": "en"
     },
     {
@@ -772,6 +732,36 @@
       "locale": "en"
     },
     {
+      "keyword": "best local llm 16gb vram",
+      "query": "best local llm 16gb vram",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 19.0,
+      "landing": "/en/blog/16gb-vram-model-selection-guide/",
+      "locale": "en"
+    },
+    {
+      "keyword": "deepseek r1 14b quantized vram requirement",
+      "query": "deepseek r1 14b quantized vram requirement",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 11.0,
+      "landing": "/en/models/deepseek-r1-14b-q5/",
+      "locale": "en"
+    },
+    {
+      "keyword": "gemma 2 27b vram requirements quantized",
+      "query": "gemma 2 27b vram requirements quantized",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 10.5,
+      "landing": "/en/models/",
+      "locale": "en"
+    },
+    {
       "keyword": "how to know how much vram you have",
       "query": "how to know how much vram you have",
       "clicks": 0,
@@ -792,6 +782,16 @@
       "locale": "en"
     },
     {
+      "keyword": "lovram",
+      "query": "lovram",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 6.0,
+      "landing": "/en/",
+      "locale": "en"
+    },
+    {
       "keyword": "mistral small 24b rtx 3090 q4 tok/s",
       "query": "mistral small 24b rtx 3090 q4 tok/s",
       "clicks": 0,
@@ -802,12 +802,12 @@
       "locale": "en"
     },
     {
-      "keyword": "ollama deepseek-coder-v2 16b tags size context",
-      "query": "ollama deepseek-coder-v2 16b tags size context",
+      "keyword": "ollama deepseek-coder-v2 16b model size",
+      "query": "ollama deepseek-coder-v2 16b model size",
       "clicks": 0,
       "impressions": 2,
       "ctr": 0.0,
-      "position": 8.0,
+      "position": 7.0,
       "landing": "/en/models/deepseek-coder-v2-16b-fp16/",
       "locale": "en"
     },
@@ -829,16 +829,6 @@
       "ctr": 0.0,
       "position": 10.5,
       "landing": "/en/models/",
-      "locale": "en"
-    },
-    {
-      "keyword": "ollama qwen2.5-coder 14b 32b model size",
-      "query": "ollama qwen2.5-coder 14b 32b model size",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0.0,
-      "position": 10.0,
-      "landing": "/en/models/qwen25-coder-14b-fp16/",
       "locale": "en"
     },
     {
@@ -882,16 +872,6 @@
       "locale": "en"
     },
     {
-      "keyword": "q4 vs q8",
-      "query": "q4 vs q8",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0.0,
-      "position": 27.5,
-      "landing": "/en/tools/quantization-blind-test/",
-      "locale": "en"
-    },
-    {
       "keyword": "qwen2.5-coder 14b ollama vram requirements",
       "query": "qwen2.5-coder 14b ollama vram requirements",
       "clicks": 0,
@@ -912,12 +892,42 @@
       "locale": "en"
     },
     {
+      "keyword": "why is my vram so low",
+      "query": "why is my vram so low",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 49.5,
+      "landing": "/en/tools/vram-calculator/",
+      "locale": "en"
+    },
+    {
       "keyword": "16gb vram llm model",
       "query": "16gb vram llm model",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
       "position": 44.0,
+      "landing": "/en/blog/16gb-vram-model-selection-guide/",
+      "locale": "en"
+    },
+    {
+      "keyword": "best 12b model",
+      "query": "best 12b model",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 18.0,
+      "landing": "/en/guides/best-rag-models/",
+      "locale": "en"
+    },
+    {
+      "keyword": "best 16gb vram model",
+      "query": "best 16gb vram model",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 37.0,
       "landing": "/en/blog/16gb-vram-model-selection-guide/",
       "locale": "en"
     },
@@ -932,12 +942,32 @@
       "locale": "en"
     },
     {
+      "keyword": "best coding model 16gb vram",
+      "query": "best coding model 16gb vram",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 30.0,
+      "landing": "/en/guides/best-coding-models/",
+      "locale": "en"
+    },
+    {
       "keyword": "best coding models right now",
       "query": "best coding models right now",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
       "position": 75.0,
+      "landing": "/en/guides/best-coding-models/",
+      "locale": "en"
+    },
+    {
+      "keyword": "best fim model",
+      "query": "best fim model",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 60.0,
       "landing": "/en/guides/best-coding-models/",
       "locale": "en"
     },
@@ -962,12 +992,12 @@
       "locale": "en"
     },
     {
-      "keyword": "best local llm 16gb vram",
-      "query": "best local llm 16gb vram",
+      "keyword": "best local coding model for 16gb vram",
+      "query": "best local coding model for 16gb vram",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 27.0,
+      "position": 39.0,
       "landing": "/en/blog/16gb-vram-model-selection-guide/",
       "locale": "en"
     },
@@ -978,6 +1008,16 @@
       "impressions": 1,
       "ctr": 0.0,
       "position": 11.0,
+      "landing": "/en/blog/16gb-vram-model-selection-guide/",
+      "locale": "en"
+    },
+    {
+      "keyword": "best local llm for 16gb gpu",
+      "query": "best local llm for 16gb gpu",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 45.0,
       "landing": "/en/blog/16gb-vram-model-selection-guide/",
       "locale": "en"
     },
@@ -1032,16 +1072,6 @@
       "locale": "en"
     },
     {
-      "keyword": "gemma 2 27b vram requirements quantized",
-      "query": "gemma 2 27b vram requirements quantized",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 10.0,
-      "landing": "/en/models/",
-      "locale": "en"
-    },
-    {
       "keyword": "how do i check my vram",
       "query": "how do i check my vram",
       "clicks": 0,
@@ -1082,6 +1112,16 @@
       "locale": "en"
     },
     {
+      "keyword": "llm for 16gb vram",
+      "query": "llm for 16gb vram",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 37.0,
+      "landing": "/en/blog/16gb-vram-model-selection-guide/",
+      "locale": "en"
+    },
+    {
       "keyword": "ollama cluster",
       "query": "ollama cluster",
       "clicks": 0,
@@ -1102,16 +1142,6 @@
       "locale": "en"
     },
     {
-      "keyword": "ollama deepseek coder v2 16b model size",
-      "query": "ollama deepseek coder v2 16b model size",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 11.0,
-      "landing": "/en/models/deepseek-coder-v2-16b-q4/",
-      "locale": "en"
-    },
-    {
       "keyword": "ollama deepseek-coder-v2 tags size",
       "query": "ollama deepseek-coder-v2 tags size",
       "clicks": 0,
@@ -1119,6 +1149,26 @@
       "ctr": 0.0,
       "position": 8.0,
       "landing": "/en/models/deepseek-coder-v2-16b-q4/",
+      "locale": "en"
+    },
+    {
+      "keyword": "ollama deepseek-r1 14b size",
+      "query": "ollama deepseek-r1 14b size",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0,
+      "landing": "/en/models/deepseek-r1-14b-q5/",
+      "locale": "en"
+    },
+    {
+      "keyword": "ollama deepseek-r1:14b model size",
+      "query": "ollama deepseek-r1:14b model size",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0,
+      "landing": "/en/models/deepseek-r1-14b-q5/",
       "locale": "en"
     },
     {
@@ -1307,6 +1357,16 @@
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
+      "position": 6.0,
+      "landing": "/en/models/qwen25-coder-14b-fp16/",
+      "locale": "en"
+    },
+    {
+      "keyword": "ollama qwen2.5-coder 14b tags size",
+      "query": "ollama qwen2.5-coder 14b tags size",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
       "position": 8.0,
       "landing": "/en/models/qwen25-coder-14b-q4/",
       "locale": "en"
@@ -1342,16 +1402,6 @@
       "locale": "en"
     },
     {
-      "keyword": "ollama qwen2.5-coder 3b tag",
-      "query": "ollama qwen2.5-coder 3b tag",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 8.0,
-      "landing": "/en/models/qwen25-coder-3b-q5/",
-      "locale": "en"
-    },
-    {
       "keyword": "ollama qwen2.5-coder 3b tags size",
       "query": "ollama qwen2.5-coder 3b tags size",
       "clicks": 0,
@@ -1369,6 +1419,16 @@
       "ctr": 0.0,
       "position": 11.0,
       "landing": "/en/models/qwen25-coder-7b-q4/",
+      "locale": "en"
+    },
+    {
+      "keyword": "ollama qwen2.5-coder tags 14b size",
+      "query": "ollama qwen2.5-coder tags 14b size",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 11.0,
+      "landing": "/en/models/qwen25-coder-14b-fp16/",
       "locale": "en"
     },
     {
@@ -1469,16 +1529,6 @@
       "ctr": 0.0,
       "position": 11.0,
       "landing": "/en/models/qwen3-coder-30b-fp16/",
-      "locale": "en"
-    },
-    {
-      "keyword": "ollama qwen3-coder 30b tags size",
-      "query": "ollama qwen3-coder 30b tags size",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 9.0,
-      "landing": "/en/models/qwen3-coder-30b-q4/",
       "locale": "en"
     },
     {
@@ -1602,16 +1652,6 @@
       "locale": "en"
     },
     {
-      "keyword": "rtx 3090 llama.cpp 70b q4 tokens per second benchmark",
-      "query": "rtx 3090 llama.cpp 70b q4 tokens per second benchmark",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 6.0,
-      "landing": "/en/models/llama-70b-q4/",
-      "locale": "en"
-    },
-    {
       "keyword": "smollm2 1.7b",
       "query": "smollm2 1.7b",
       "clicks": 0,
@@ -1655,9 +1695,9 @@
       "keyword": "llama 2 7b vram requirement fp16",
       "query": "llama 2 7b vram requirement fp16",
       "clicks": 0,
-      "impressions": 13,
+      "impressions": 14,
       "ctr": 0.0,
-      "position": 9.08,
+      "position": 9.14,
       "landing": "/es/models/llama2-7b-fp16/",
       "locale": "es"
     },
@@ -1695,9 +1735,9 @@
       "keyword": "how much vram llama 2 7b fp16",
       "query": "how much vram llama 2 7b fp16",
       "clicks": 0,
-      "impressions": 3,
+      "impressions": 4,
       "ctr": 0.0,
-      "position": 6.67,
+      "position": 6.75,
       "landing": "/es/models/llama2-7b-fp16/",
       "locale": "es"
     },
@@ -1722,6 +1762,16 @@
       "locale": "es"
     },
     {
+      "keyword": "671b",
+      "query": "671b",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 68.0,
+      "landing": "/es/models/deepseek-r1-671b-q8/",
+      "locale": "es"
+    },
+    {
       "keyword": "colab vram",
       "query": "colab vram",
       "clicks": 0,
@@ -1739,6 +1789,16 @@
       "ctr": 0.0,
       "position": 47.0,
       "landing": "/es/",
+      "locale": "es"
+    },
+    {
+      "keyword": "gpt oss 120b memory requirements",
+      "query": "gpt oss 120b memory requirements",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 53.0,
+      "landing": "/es/models/gpt-oss-120b-q5/",
       "locale": "es"
     },
     {
@@ -1902,23 +1962,23 @@
       "locale": "fr"
     },
     {
-      "keyword": "vram",
-      "query": "vram",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 84.33,
-      "landing": "/fr/tools/vram-calculator/",
-      "locale": "fr"
-    },
-    {
       "keyword": "hub multimodal",
       "query": "hub multimodal",
       "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 8.67,
+      "landing": "/fr/multimodal/",
+      "locale": "fr"
+    },
+    {
+      "keyword": "entonnoir anglais",
+      "query": "entonnoir anglais",
+      "clicks": 0,
       "impressions": 2,
       "ctr": 0.0,
-      "position": 10.0,
-      "landing": "/fr/multimodal/",
+      "position": 36.5,
+      "landing": "/fr/status/conversion-funnel/",
       "locale": "fr"
     },
     {
@@ -1932,6 +1992,16 @@
       "locale": "fr"
     },
     {
+      "keyword": "vram",
+      "query": "vram",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 94.0,
+      "landing": "/fr/tools/vram-calculator/",
+      "locale": "fr"
+    },
+    {
       "keyword": "3090 vram",
       "query": "3090 vram",
       "clicks": 0,
@@ -1942,13 +2012,23 @@
       "locale": "fr"
     },
     {
-      "keyword": "entonnoir anglais",
-      "query": "entonnoir anglais",
+      "keyword": "apple silicon llm",
+      "query": "apple silicon llm",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 37.0,
-      "landing": "/fr/status/conversion-funnel/",
+      "position": 68.0,
+      "landing": "/fr/hardware/apple-silicon-llm-guide/",
+      "locale": "fr"
+    },
+    {
+      "keyword": "deepseek coder 33b fp16 memory requirements",
+      "query": "deepseek coder 33b fp16 memory requirements",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 6.0,
+      "landing": "/fr/models/deepseek-coder-33b-fp16/",
       "locale": "fr"
     },
     {
@@ -1969,6 +2049,16 @@
       "ctr": 0.0,
       "position": 32.0,
       "landing": "/fr/models/qwen-72b-q4/",
+      "locale": "fr"
+    },
+    {
+      "keyword": "set vram",
+      "query": "set vram",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 48.0,
+      "landing": "/fr/tools/vram-calculator/",
       "locale": "fr"
     },
     {
@@ -2012,13 +2102,33 @@
       "locale": "id"
     },
     {
-      "keyword": "llama 3 8b 4-bit vram requirement",
-      "query": "llama 3 8b 4-bit vram requirement",
+      "keyword": "llama 3.3 70b vram requirements",
+      "query": "llama 3.3 70b vram requirements",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 52.0,
-      "landing": "/id/models/llama3-8b-q4/",
+      "position": 50.0,
+      "landing": "/id/models/llama3-70b-q4/",
+      "locale": "id"
+    },
+    {
+      "keyword": "lowvram",
+      "query": "lowvram",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 39.0,
+      "landing": "/id/",
+      "locale": "id"
+    },
+    {
+      "keyword": "qwen3 235b a22b hardware requirements",
+      "query": "qwen3 235b a22b hardware requirements",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 35.0,
+      "landing": "/id/models/qwen3-235b-q5/",
       "locale": "id"
     },
     {
@@ -2045,9 +2155,9 @@
       "keyword": "データ 鮮度",
       "query": "データ 鮮度",
       "clicks": 0,
-      "impressions": 20,
+      "impressions": 16,
       "ctr": 0.0,
-      "position": 22.55,
+      "position": 22.19,
       "landing": "/ja/status/data-freshness/",
       "locale": "ja"
     },
@@ -2055,9 +2165,9 @@
       "keyword": "データ鮮度",
       "query": "データ鮮度",
       "clicks": 0,
-      "impressions": 8,
+      "impressions": 7,
       "ctr": 0.0,
-      "position": 21.12,
+      "position": 20.57,
       "landing": "/ja/status/data-freshness/",
       "locale": "ja"
     },
@@ -2112,6 +2222,16 @@
       "locale": "ja"
     },
     {
+      "keyword": "ブラインドテスト",
+      "query": "ブラインドテスト",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 43.5,
+      "landing": "/ja/tools/quantization-blind-test/",
+      "locale": "ja"
+    },
+    {
       "keyword": "magistral 24b",
       "query": "magistral 24b",
       "clicks": 0,
@@ -2142,32 +2262,12 @@
       "locale": "ja"
     },
     {
-      "keyword": "running status",
-      "query": "running status",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 49.0,
-      "landing": "/ja/status/runner-health/",
-      "locale": "ja"
-    },
-    {
-      "keyword": "ブラインドテスト",
-      "query": "ブラインドテスト",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 44.0,
-      "landing": "/ja/tools/quantization-blind-test/",
-      "locale": "ja"
-    },
-    {
       "keyword": "3090 vram",
       "query": "3090 vram",
       "clicks": 0,
-      "impressions": 54,
+      "impressions": 49,
       "ctr": 0.0,
-      "position": 11.28,
+      "position": 11.41,
       "landing": "/ko/blog/still-the-vram-king-rtx-3090-2026/",
       "locale": "ko"
     },
@@ -2175,9 +2275,9 @@
       "keyword": "데이터 신선도",
       "query": "데이터 신선도",
       "clicks": 0,
-      "impressions": 49,
+      "impressions": 47,
       "ctr": 0.0,
-      "position": 20.73,
+      "position": 21.23,
       "landing": "/ko/status/data-freshness/",
       "locale": "ko"
     },
@@ -2185,9 +2285,9 @@
       "keyword": "rtx 3090 vram",
       "query": "rtx 3090 vram",
       "clicks": 0,
-      "impressions": 9,
+      "impressions": 8,
       "ctr": 0.0,
-      "position": 8.11,
+      "position": 8.38,
       "landing": "/ko/blog/still-the-vram-king-rtx-3090-2026/",
       "locale": "ko"
     },
@@ -2229,6 +2329,16 @@
       "ctr": 0.0,
       "position": 10.0,
       "landing": "/ko/hardware/verified-3090/",
+      "locale": "ko"
+    },
+    {
+      "keyword": "70b q4",
+      "query": "70b q4",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 8.5,
+      "landing": "/ko/models/codellama-70b-q4/",
       "locale": "ko"
     },
     {
@@ -2309,16 +2419,6 @@
       "ctr": 0.0,
       "position": 9.0,
       "landing": "/ko/models/translategemma-27b-q4/",
-      "locale": "ko"
-    },
-    {
-      "keyword": "70b q4",
-      "query": "70b q4",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 7.0,
-      "landing": "/ko/models/codellama-70b-q4/",
       "locale": "ko"
     },
     {
@@ -2472,6 +2572,16 @@
       "locale": "ko"
     },
     {
+      "keyword": "qwen/qwen3-8b-fp8",
+      "query": "qwen/qwen3-8b-fp8",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 8.0,
+      "landing": "/ko/models/qwen3-8b-q8/",
+      "locale": "ko"
+    },
+    {
       "keyword": "qwen3 32b q4",
       "query": "qwen3 32b q4",
       "clicks": 0,
@@ -2489,6 +2599,16 @@
       "ctr": 0.0,
       "position": 6.0,
       "landing": "/ko/models/qwen3-4b-fp16/",
+      "locale": "ko"
+    },
+    {
+      "keyword": "qwen3 4b q4",
+      "query": "qwen3 4b q4",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 6.0,
+      "landing": "/ko/models/qwen3-4b-q4/",
       "locale": "ko"
     },
     {
@@ -2582,14 +2702,14 @@
       "locale": "ko"
     },
     {
-      "keyword": "vram",
-      "query": "vram",
+      "keyword": "vram rtx 3090",
+      "query": "vram rtx 3090",
       "clicks": 0,
-      "impressions": 4,
+      "impressions": 1,
       "ctr": 0.0,
-      "position": 71.25,
-      "landing": "/pt/tools/vram-calculator/",
-      "locale": "pt"
+      "position": 48.0,
+      "landing": "/ko/hardware/verified-3090/",
+      "locale": "ko"
     },
     {
       "keyword": "vram",
@@ -2602,13 +2722,23 @@
       "locale": "pt"
     },
     {
-      "keyword": "cluster tradução",
-      "query": "cluster tradução",
+      "keyword": "vram",
+      "query": "vram",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 72.0,
+      "landing": "/pt/tools/vram-calculator/",
+      "locale": "pt"
+    },
+    {
+      "keyword": "deepseek coder 33b fp16 vram requirement",
+      "query": "deepseek coder 33b fp16 vram requirement",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 77.0,
-      "landing": "/pt/guides/ollama-local-cluster-network/",
+      "position": 10.0,
+      "landing": "/pt/models/deepseek-coder-33b-fp16/",
       "locale": "pt"
     },
     {
@@ -2682,23 +2812,13 @@
       "locale": "ru"
     },
     {
-      "keyword": "roi калькулятор",
-      "query": "roi калькулятор",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 82.33,
-      "landing": "/ru/tools/roi-calculator/",
-      "locale": "ru"
-    },
-    {
-      "keyword": "dolphin3:8b",
-      "query": "dolphin3:8b",
+      "keyword": "cuda out of memory.",
+      "query": "cuda out of memory.",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 4.0,
-      "landing": "/ru/models/dolphin3-8b-q4/",
+      "position": 43.0,
+      "landing": "/ru/errors/cuda-out-of-memory/",
       "locale": "ru"
     },
     {
@@ -2729,6 +2849,16 @@
       "ctr": 0.0,
       "position": 40.0,
       "landing": "/ru/models/qwen3-coder-30b-cloud/",
+      "locale": "ru"
+    },
+    {
+      "keyword": "roi калькулятор",
+      "query": "roi калькулятор",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 73.0,
+      "landing": "/ru/tools/roi-calculator/",
       "locale": "ru"
     },
     {
