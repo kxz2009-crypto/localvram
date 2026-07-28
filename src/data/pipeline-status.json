@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-27T04:24:42Z",
+  "updated_at": "2026-07-28T03:49:09Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -30,18 +30,31 @@
     "daily_content": {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
-      "run_id": "30236921668",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/30236921668",
+      "run_id": "30326875224",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/30326875224",
       "status": "completed",
       "conclusion": "failure",
       "event": "schedule",
-      "head_sha": "a70af741a2910cc4bbd91b988b239a63acf148f5",
+      "head_sha": "c3e5e0b2bf0b1da2c324b6d71197528da962c3a5",
       "failure_class": "daily_content_failed",
       "failure_detail": "quality-gate.py failed",
-      "updated_at": "2026-07-27T04:24:42Z"
+      "updated_at": "2026-07-28T03:49:09Z"
     }
   },
   "history": [
+    {
+      "workflow_key": "daily_content",
+      "workflow_name": "Daily Content Agent",
+      "run_id": "30326875224",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/30326875224",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "schedule",
+      "head_sha": "c3e5e0b2bf0b1da2c324b6d71197528da962c3a5",
+      "failure_class": "daily_content_failed",
+      "failure_detail": "quality-gate.py failed",
+      "updated_at": "2026-07-28T03:49:09Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
@@ -808,19 +821,6 @@
       "failure_class": "none",
       "failure_detail": "",
       "updated_at": "2026-06-10T07:00:08Z"
-    },
-    {
-      "workflow_key": "weekly_benchmark",
-      "workflow_name": "Weekly Benchmark",
-      "run_id": "27258214427",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/27258214427",
-      "status": "completed",
-      "conclusion": "success",
-      "event": "schedule",
-      "head_sha": "d5f07b39a4f873d1c1c5dbd7200230804c9a3536",
-      "failure_class": "none",
-      "failure_detail": "",
-      "updated_at": "2026-06-10T06:59:55Z"
     }
   ]
 }
