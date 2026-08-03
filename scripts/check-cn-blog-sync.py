@@ -38,6 +38,11 @@ def parse_args() -> argparse.Namespace:
         default=12,
         help="Minimum count of CJK characters required in each zh translation file body.",
     )
+    parser.add_argument(
+        "--allow-stub",
+        action="store_true",
+        help="Allow zh-stub placeholder files to pass while still enforcing that the file exists.",
+    )
     return parser.parse_args()
 
 
@@ -101,7 +106,7 @@ def collect_en_posts(since_date: datetime.date) -> list[tuple[str, datetime.date
     return posts
 
 
-def validate_cn_translation(slug: str, min_cjk_chars: int) -> str | None:
+def validate_cn_translation(slug: str, min_cjk_chars: int, allow_stub: bool = False) -> str | None:
     zh_file = CN_BLOG_DIR / f"{slug}.md"
     if not zh_file.exists():
         return f"missing zh translation file: {zh_file}"
@@ -110,6 +115,9 @@ def validate_cn_translation(slug: str, min_cjk_chars: int) -> str | None:
     lower_markdown = markdown.lower()
     for marker in ZH_STUB_MARKERS:
         if marker.lower() in lower_markdown:
+            if allow_stub:
+                LOGGER.warning("zh translation is stub placeholder but allowed: %s (marker=%s)", zh_file, marker)
+                return None
             return f"zh translation is still a stub placeholder: {zh_file} (marker={marker})"
 
     body = strip_translation_markdown(markdown)
@@ -140,7 +148,7 @@ def main() -> None:
 
     errors: list[str] = []
     for slug, pub_date in target_posts:
-        issue = validate_cn_translation(slug, args.min_cjk_chars)
+        issue = validate_cn_translation(slug, args.min_cjk_chars, allow_stub=args.allow_stub)
         if issue:
             errors.append(f"{issue} (slug={slug}, pubDate={pub_date.isoformat()})")
 

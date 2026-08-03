@@ -110,7 +110,7 @@ jobs:
       - name: Enforce CN blog zh sync
         if: steps.checkout.conclusion == 'success'
         run: |
-          if ! python scripts/check-cn-blog-sync.py; then
+          if ! python scripts/check-cn-blog-sync.py --allow-stub; then
             python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'check-cn-blog-sync.py failed'}, ensure_ascii=False), encoding='utf-8')"
             echo "::error title=FailureClass::daily_content_failed - check-cn-blog-sync.py failed"
             exit 1

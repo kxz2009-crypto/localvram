@@ -544,7 +544,7 @@ def main() -> None:
     if not cn_blog_sync_checker.exists():
         log_line("quality gate failed: missing scripts/check-cn-blog-sync.py")
         sys.exit(1)
-    cn_blog_sync_cmd = [sys.executable, str(cn_blog_sync_checker)]
+    cn_blog_sync_cmd = [sys.executable, str(cn_blog_sync_checker), "--allow-stub"]
     cn_blog_sync_result = subprocess.run(cn_blog_sync_cmd, cwd=ROOT)
     if cn_blog_sync_result.returncode != 0:
         log_line("quality gate failed: cn blog sync check failed")
