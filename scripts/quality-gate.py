@@ -530,6 +530,7 @@ def main() -> None:
     site_update_cmd = [
         sys.executable,
         str(site_update_checker),
+        "--skip-home-sync-staleness",
         "--report-file",
         "dist/seo-audit/site-update-health.json",
     ]

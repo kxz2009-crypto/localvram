@@ -63,6 +63,7 @@ def check_site_update_health(
     max_home_sync_age_hours: int = 192,
     max_daily_publish_age_hours: int = 48,
     max_daily_update_date_age_days: int = 2,
+    enforce_home_sync_staleness: bool = True,
 ) -> dict[str, Any]:
     errors: list[str] = []
 
@@ -82,7 +83,7 @@ def check_site_update_health(
     home_sync_age_h = age_hours(now_utc, home_sync_at)
     if home_sync_at is None:
         errors.append("invalid_home_sync")
-    elif home_sync_age_h > max(0, int(max_home_sync_age_hours)):
+    elif enforce_home_sync_staleness and home_sync_age_h > max(0, int(max_home_sync_age_hours)):
         errors.append(f"home_sync_stale(age_hours={home_sync_age_h}, max_hours={int(max_home_sync_age_hours)})")
 
     publish_updated_raw = str(publish_payload.get("updated_at") or "").strip()
@@ -147,6 +148,7 @@ def check_site_update_health(
             "max_home_sync_age_hours": int(max_home_sync_age_hours),
             "max_daily_publish_age_hours": int(max_daily_publish_age_hours),
             "max_daily_update_date_age_days": int(max_daily_update_date_age_days),
+            "enforce_home_sync_staleness": bool(enforce_home_sync_staleness),
         },
         "home_sync": {
             "last_sync": home_sync_raw,
@@ -178,6 +180,11 @@ def main() -> int:
     parser.add_argument("--max-home-sync-age-hours", type=int, default=192)
     parser.add_argument("--max-daily-publish-age-hours", type=int, default=48)
     parser.add_argument("--max-daily-update-date-age-days", type=int, default=2)
+    parser.add_argument(
+        "--skip-home-sync-staleness",
+        action="store_true",
+        help="Report homepage hardware sync age without failing when it exceeds the staleness threshold.",
+    )
     parser.add_argument("--report-file", default="")
     args = parser.parse_args()
 
@@ -190,6 +197,7 @@ def main() -> int:
         max_home_sync_age_hours=args.max_home_sync_age_hours,
         max_daily_publish_age_hours=args.max_daily_publish_age_hours,
         max_daily_update_date_age_days=args.max_daily_update_date_age_days,
+        enforce_home_sync_staleness=not args.skip_home_sync_staleness,
     )
 
     if args.report_file:

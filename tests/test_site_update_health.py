@@ -107,6 +107,45 @@ class SiteUpdateHealthTests(unittest.TestCase):
         self.assertIn("daily_publish_stale(age_hours=183.0, max_hours=48)", report["errors"])
         self.assertIn("daily_publish_zero_published(queue_date=2026-04-20)", report["errors"])
 
+    def test_can_report_stale_home_sync_without_failing_daily_publish(self):
+        status = self.write_json("status.json", {"last_hardware_sync": "2026-04-18T00:00:00Z"})
+        publish_log = self.write_json(
+            "content-publish-log.json",
+            {
+                "updated_at": "2026-04-27T14:00:00Z",
+                "last_run": {
+                    "queue_date": "2026-04-27",
+                    "published_count": 1,
+                    "published": [
+                        {
+                            "slug": "daily-local-llm-benchmark-snapshot-2026-04-27",
+                            "out_file": str(self.tmp_dir / "daily-local-llm-benchmark-snapshot-2026-04-27.md"),
+                        }
+                    ],
+                },
+            },
+        )
+        updates = self.write_json(
+            "daily-updates.json",
+            {"items": [{"date": "2026-04-27", "published_posts": [{"slug": "daily-local-llm-benchmark-snapshot-2026-04-27"}]}]},
+        )
+        (self.tmp_dir / "daily-local-llm-benchmark-snapshot-2026-04-27.md").write_text("---\ntitle: ok\n---\n", encoding="utf-8")
+
+        report = self.mod.check_site_update_health(
+            now_utc=self.mod.parse_iso_utc("2026-04-27T15:00:00Z"),
+            status_file=status,
+            content_publish_file=publish_log,
+            daily_updates_file=updates,
+            root_dir=self.tmp_dir,
+            max_home_sync_age_hours=192,
+            enforce_home_sync_staleness=False,
+        )
+
+        self.assertEqual(report["result"], "ok")
+        self.assertEqual(report["home_sync"]["age_hours"], 231.0)
+        self.assertFalse(report["inputs"]["enforce_home_sync_staleness"])
+        self.assertEqual(report["errors"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
