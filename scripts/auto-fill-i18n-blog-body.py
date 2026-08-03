@@ -48,6 +48,7 @@ LOGGER = configure_logging("auto-fill-i18n-blog-body")
 DEFAULT_TRANSLATE_TIMEOUT_S = float(os.environ.get("I18N_TRANSLATE_TIMEOUT_S", "12"))
 DEFAULT_GEMINI_MODEL = str(os.environ.get("I18N_GEMINI_MODEL", "gemini-2.5-flash")).strip() or "gemini-2.5-flash"
 DEFAULT_GEMINI_TIMEOUT_S = float(os.environ.get("I18N_GEMINI_TIMEOUT_S", "45"))
+DEFAULT_GEMINI_ATTEMPTS = max(1, int(os.environ.get("I18N_GEMINI_ATTEMPTS", "3")))
 GEMINI_API_BASE = str(os.environ.get("GEMINI_API_BASE", "https://generativelanguage.googleapis.com/v1beta")).strip()
 CJK_RE = re.compile(r"[\u4e00-\u9fff]")
 INTENT_LABEL_ZH = {
@@ -162,18 +163,37 @@ def call_gemini(prompt: str, *, api_key: str, model: str, timeout_s: float) -> s
         headers={"Content-Type": "application/json; charset=utf-8"},
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(request, timeout=max(1.0, float(timeout_s))) as response:  # noqa: S310
-            raw = response.read().decode("utf-8", errors="replace")
-    except urllib.error.HTTPError as exc:  # pragma: no cover - network/runtime guard
-        detail = ""
+    raw = ""
+    last_error: Exception | None = None
+    for attempt in range(DEFAULT_GEMINI_ATTEMPTS):
         try:
-            detail = exc.read().decode("utf-8", errors="replace")[:400]
-        except Exception:
+            with urllib.request.urlopen(request, timeout=max(1.0, float(timeout_s))) as response:  # noqa: S310
+                raw = response.read().decode("utf-8", errors="replace")
+            last_error = None
+            break
+        except urllib.error.HTTPError as exc:  # pragma: no cover - network/runtime guard
             detail = ""
-        raise RuntimeError(f"gemini http error {exc.code}: {detail}") from exc
-    except Exception as exc:  # pragma: no cover - network/runtime guard
-        raise RuntimeError(f"gemini request failed: {exc}") from exc
+            try:
+                detail = exc.read().decode("utf-8", errors="replace")[:400]
+            except Exception:
+                detail = ""
+            last_error = RuntimeError(f"gemini http error {exc.code}: {detail}")
+            if exc.code not in {408, 409, 425, 429, 500, 502, 503, 504} or attempt >= DEFAULT_GEMINI_ATTEMPTS - 1:
+                raise last_error from exc
+        except Exception as exc:  # pragma: no cover - network/runtime guard
+            last_error = RuntimeError(f"gemini request failed: {exc}")
+            if attempt >= DEFAULT_GEMINI_ATTEMPTS - 1:
+                raise last_error from exc
+
+        wait_s = min(20, 2**attempt)
+        LOGGER.warning(
+            "gemini request failed attempt=%s/%s; retrying in %ss (%s)",
+            attempt + 1,
+            DEFAULT_GEMINI_ATTEMPTS,
+            wait_s,
+            last_error,
+        )
+        time.sleep(wait_s)
 
     try:
         payload = json.loads(raw)
