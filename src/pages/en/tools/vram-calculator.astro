@@ -50,18 +50,18 @@ const calculatorUrl = `https://localvram.com${calculatorPath}`;
 const softwareSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "LocalVRAM VRAM Calculator",
+  name: "LLM VRAM Calculator for Ollama Models",
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Web",
   url: calculatorUrl,
   inLanguage: "en",
-  description: "Estimate minimum and optimal VRAM for local LLM models with local-vs-cloud recommendation."
+  description: "Estimate minimum VRAM, optimal VRAM, system RAM, and local-vs-cloud fit for Ollama LLM models."
 };
 const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  name: "How to estimate VRAM for an Ollama model",
-  description: "Use LocalVRAM calculator to estimate minimum and optimal VRAM before deployment.",
+  name: "How to estimate VRAM for an Ollama LLM model",
+  description: "Use LocalVRAM calculator to estimate minimum VRAM, optimal VRAM, and local GPU fit before deployment.",
   step: [
     { "@type": "HowToStep", name: "Choose model", text: "Select a model profile from the dropdown." },
     { "@type": "HowToStep", name: "Review VRAM", text: "Check minimum and optimal VRAM requirements." },
@@ -101,16 +101,19 @@ const faqSchema = {
 ---
 
 <BaseLayout
-  title="VRAM Calculator | LocalVRAM"
-  description="Estimate LLM VRAM requirements and choose local GPU upgrade vs cloud fallback."
+  title="LLM VRAM Calculator for Ollama Models | RTX 3090, 4090, A100"
+  description="Estimate minimum VRAM, optimal VRAM, system RAM, and RTX 3090 fit for Ollama models before choosing local GPU or cloud."
   locale="en"
   canonicalPath={calculatorPath}
   alternates={ROOT_ALTERNATES}
   structuredData={[softwareSchema, howToSchema, faqSchema]}
 >
   <main class="container">
-    <h1>VRAM Calculator</h1>
-    <p>Pick a model profile to get minimum VRAM, optimal VRAM, and local-vs-cloud recommendation.</p>
+    <h1>LLM VRAM Calculator for Ollama Models</h1>
+    <p>
+      Pick a model profile to estimate minimum VRAM, optimal VRAM, system RAM headroom, RTX 3090 fit,
+      and whether a local GPU or cloud fallback is the safer path.
+    </p>
 
     <section class="card">
       <label for="model-select">Model profile</label>
@@ -119,6 +122,9 @@ const faqSchema = {
           <option value={item.id} selected={item.id === defaultModelId}>{item.name}</option>
         ))}
       </select>
+      <p class="affiliate-note">
+        Use this before downloading large Ollama tags: download size is not the same as runtime VRAM, especially with long context.
+      </p>
       <div id="calc-result" class="card" style="margin-top: 12px;" />
       <div class="card" style="margin-top: 12px;">
         <div class="card-head">

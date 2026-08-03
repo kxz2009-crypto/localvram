@@ -23,10 +23,10 @@ const top20Curated = items
 const modelsIndexSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "LocalVRAM Model Catalog",
+  name: "Ollama VRAM Requirements and RTX 3090 Benchmark Catalog",
   url: "https://localvram.com/en/models/",
   inLanguage: "en",
-  description: "Model catalog with VRAM requirements and local/cloud benchmark references.",
+  description: "Compare Ollama model VRAM requirements, RTX 3090 benchmark anchors, and local-vs-cloud fit.",
   mainEntity: {
     "@type": "ItemList",
     numberOfItems: catalog.count,
@@ -59,30 +59,40 @@ const breadcrumbSchema = {
 ---
 
 <BaseLayout
-  title={`Model Catalog (${catalog.count}) | LocalVRAM`}
-  description="200+ model profiles with VRAM requirements, local/cloud recommendations, and verified benchmark signals."
+  title={`Ollama VRAM Requirements & RTX 3090 Benchmarks (${catalog.count} Models) | LocalVRAM`}
+  description="Compare 200+ Ollama models by minimum VRAM, optimal VRAM, RTX 3090 benchmark speed, system RAM guidance, and local-vs-cloud fit."
   locale="en"
   canonicalPath="/en/models/"
   structuredData={[modelsIndexSchema, breadcrumbSchema]}
 >
   <main class="container">
-    <h1>Model Catalog ({catalog.count} profiles)</h1>
+    <h1>Ollama VRAM Requirements and RTX 3090 Benchmarks</h1>
     <p>
-      Structured model pages for long-tail SEO: grouped by license scope, model size, and workload scenario.
-      Every profile includes VRAM requirements, local-vs-cloud recommendation, and benchmark anchor metrics.
+      Compare {catalog.count} local LLM profiles by minimum VRAM, optimal VRAM, RTX 3090 speed, system RAM target,
+      and whether the model is safe to run locally or better rented on cloud GPUs.
     </p>
     <p>
-      Use the catalog as a RAM/VRAM planning map: GPU VRAM decides whether a model loads locally, while system RAM
-      protects Ollama when context grows or layers spill back to CPU.
+      Start here if you are searching for "how much VRAM does this Ollama model need", "can it run on RTX 3090",
+      or "which local LLM fits 24GB VRAM".
     </p>
     <p>
       Ollama naming/source alignment date: <strong>{catalog.ollama_verified_at}</strong>.
       Each profile links back to its Ollama library source.
     </p>
     <section class="cta-row">
+      <a class="btn btn-primary" href="/en/tools/vram-calculator/">Use VRAM Calculator</a>
       <a class="btn btn-primary" href="/en/matrix/">Compatibility Matrix</a>
       <a class="btn" href="/en/multimodal/">Multimodal Hub</a>
       <a class="btn" href="/en/compare/qwen35-35b-q4-vs-llama31-70b-q4/">Sample Compare Page</a>
+    </section>
+
+    <section class="card">
+      <h2>Fast Answers for High-Intent Searches</h2>
+      <ul>
+        <li>Need a 24GB GPU shortlist? Open the top curated Q4/Q5 rows and check the RTX 3090 fit column.</li>
+        <li>Need exact RAM vs VRAM guidance? Open a model profile for minimum VRAM, optimal VRAM, and system RAM.</li>
+        <li>Need measured speed? Prioritize rows marked measured, then verify tokens/s against the benchmark changelog.</li>
+      </ul>
     </section>
 
     <section class="kpi-row">

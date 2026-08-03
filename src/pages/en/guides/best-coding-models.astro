@@ -27,8 +27,8 @@ const measuredCount = rankedCoding.filter((item) => item.ollama_tag && benchmark
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  headline: "Best coding models for local inference in 2026",
-  description: "Select coding-focused models by VRAM budget, measured benchmarks, and local-vs-cloud path.",
+  headline: "Best local coding models for Ollama and RTX 3090 in 2026",
+  description: "Compare local coding LLMs by VRAM budget, measured RTX 3090 benchmarks, and cloud fallback path.",
   inLanguage: "en",
   url: `https://localvram.com${pagePath}`,
   author: {
@@ -39,17 +39,17 @@ const articleSchema = {
 ---
 
 <BaseLayout
-  title="Best Coding Models (2026) | LocalVRAM"
-  description="Best coding models for local LLM workflows, ranked by VRAM fit, measured data, and practical deployment path."
+  title="Best Local Coding Models 2026 | Ollama, VRAM, RTX 3090"
+  description="Rank coding LLMs for local Ollama workflows by 16GB/24GB VRAM fit, RTX 3090 benchmark speed, and cloud fallback."
   locale="en"
   canonicalPath={pagePath}
   structuredData={articleSchema}
 >
   <main class="container">
-    <h1>Best Coding Models for Local LLM Workflows</h1>
+    <h1>Best Local Coding Models for Ollama in 2026</h1>
     <p>
-      This guide prioritizes practical coding models you can run today with clear VRAM requirements. Ranking favors
-      measured profiles first, then stable local fit under 24GB VRAM.
+      This guide ranks coding models for developers choosing a private local assistant. It prioritizes Ollama profiles
+      with clear 16GB/24GB VRAM fit, measured RTX 3090 data, and a practical cloud fallback when local context is too tight.
     </p>
 
     <section class="kpi-row">
@@ -72,7 +72,7 @@ const articleSchema = {
     </section>
 
     <section class="card">
-      <h2>Local-first coding picks (<=24GB optimal)</h2>
+      <h2>Best coding models that fit 24GB VRAM</h2>
       <table class="table">
         <thead>
           <tr>
@@ -101,7 +101,7 @@ const articleSchema = {
     </section>
 
     <section class="card">
-      <h2>Heavy coding models (cloud-first)</h2>
+      <h2>Heavy coding models that usually need cloud or larger GPUs</h2>
       <table class="table">
         <thead>
           <tr>
