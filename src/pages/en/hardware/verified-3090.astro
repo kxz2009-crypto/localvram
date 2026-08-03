@@ -27,25 +27,25 @@ const measuredRows = Object.entries(benchmarkMap)
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "Verified on RTX 3090",
+  name: "RTX 3090 24GB VRAM Benchmarks",
   url: `https://localvram.com${pagePath}`,
   inLanguage: "en",
-  description: "Measured local benchmark pages validated on RTX 3090."
+  description: "Measured local LLM benchmark pages validated on RTX 3090 24GB VRAM."
 };
 ---
 
 <BaseLayout
-  title="Verified on RTX 3090 | LocalVRAM"
-  description="Measured model benchmarks validated on RTX 3090 with latency and throughput snapshots."
+  title="RTX 3090 VRAM Benchmarks: 24GB Local LLM Results | LocalVRAM"
+  description="How much VRAM does an RTX 3090 have? Compare measured local LLM benchmarks on RTX 3090 24GB with tokens/s, latency, and model fit."
   locale="en"
   canonicalPath={pagePath}
   structuredData={pageSchema}
 >
   <main class="container">
-    <h1>Verified on RTX 3090</h1>
+    <h1>RTX 3090 VRAM Benchmarks for Local LLMs</h1>
     <p>
-      This page tracks model tags with measured local runs on RTX 3090. Use it when you want evidence-backed local
-      performance instead of pure baseline estimates.
+      The RTX 3090 has 24GB VRAM. This page tracks model tags with measured local runs on RTX 3090 so you can compare
+      tokens/s, latency, and model fit instead of relying only on baseline estimates.
     </p>
 
     <section class="card">

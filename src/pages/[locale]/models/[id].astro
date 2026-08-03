@@ -146,8 +146,18 @@ const contextWarning =
   contextWarningByLocale[locale] || "Longer context increases KV cache memory, so real VRAM usage can exceed short-prompt estimates.";
 const pageDescription =
   pageDescriptionByLocale[locale] ||
-  `${modelName} needs about ${minVram}GB VRAM minimum and ${optimalVram}GB for a safer target. Compare quantization, workload fit, and related profiles.`;
+  `${modelName} Ollama model size and VRAM guide: ${minVram}GB minimum VRAM, ${optimalVram}GB optimal, ${systemRamTargetGb}GB+ system RAM, and RTX 3090 24GB fit.`;
 const pageIntro = pageIntroByLocale[locale] || pageDescription;
+const pageTitleByLocale: Partial<Record<ComLocale, string>> = {
+  de: `${modelName} VRAM-Anforderung & Ollama Modellgroesse | LocalVRAM`,
+  ko: `${modelName} VRAM 요구 사항 및 Ollama 모델 크기 | LocalVRAM`,
+};
+const pageTitle = pageTitleByLocale[locale] || `${modelName} VRAM Requirement & Ollama Model Size | LocalVRAM`;
+const pageH1ByLocale: Partial<Record<ComLocale, string>> = {
+  de: `${modelName} VRAM-Anforderung und Ollama Modellgroesse`,
+  ko: `${modelName} VRAM 요구 사항 및 Ollama 모델 크기`,
+};
+const pageH1 = pageH1ByLocale[locale] || `${modelName} VRAM Requirement and Ollama Model Size`;
 const faqItemsByLocale: Partial<Record<ComLocale, Array<{ question: string; answer: string }>>> = {
   de: [
     {
@@ -254,7 +264,7 @@ const structuredData = relatedProfiles.length
 ---
 
 <BaseLayout
-  title={text.meta_title}
+  title={pageTitle}
   description={pageDescription}
   locale={locale}
   canonicalPath={pagePath}
@@ -264,7 +274,7 @@ const structuredData = relatedProfiles.length
 >
   <main class="container">
     <section class="hero">
-      <h1>{modelName}</h1>
+      <h1>{pageH1}</h1>
       <p>{pageIntro}</p>
       <div class="kpi-row">
         <article class="kpi">

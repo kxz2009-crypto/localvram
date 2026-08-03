@@ -41,10 +41,10 @@ const measuredRows = Object.entries(benchmarkMap)
 
 const textByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
   de: {
-    title: "RTX 3090 VRAM Benchmarks",
-    description: "Gemessene lokale Modell-Benchmarks auf RTX 3090 mit Tokens pro Sekunde, Latenz und Testzeit.",
+    title: "RTX 3090 24GB VRAM Benchmarks",
+    description: "RTX 3090 hat 24GB VRAM. Vergleiche gemessene lokale LLM-Benchmarks mit Tokens pro Sekunde, Latenz und Modell-Passung.",
     intro:
-      "Diese Seite zeigt Modell-Tags mit gemessenen lokalen Laeufen auf RTX 3090. Nutze sie fuer evidenzbasierte VRAM- und Performance-Entscheidungen statt reiner Schaetzwerte.",
+      "Die RTX 3090 hat 24GB VRAM. Diese Seite zeigt Modell-Tags mit gemessenen lokalen Laeufen auf RTX 3090, damit du VRAM-Passung, Tokens/s und Latenz vergleichen kannst.",
     measuredTitle: "Gemessene Modell-Tags",
     model: "Modell",
     tag: "Tag",
@@ -72,10 +72,10 @@ const textByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
     calculator: "VRAM schaetzen"
   },
   ko: {
-    title: "RTX 3090 VRAM 벤치마크",
-    description: "RTX 3090에서 측정한 로컬 모델 벤치마크, 토큰/초, 지연 시간, 테스트 시각입니다.",
+    title: "RTX 3090 24GB VRAM 벤치마크",
+    description: "RTX 3090은 24GB VRAM GPU입니다. 로컬 LLM의 RTX 3090 실측 tokens/s, latency, 모델 적합성을 비교하세요.",
     intro:
-      "이 페이지는 RTX 3090에서 실제로 측정된 모델 태그를 보여줍니다. 추정값만 보지 않고 로컬 성능과 VRAM 결정을 확인할 때 사용합니다.",
+      "RTX 3090은 24GB VRAM을 제공합니다. 이 페이지는 RTX 3090에서 실제로 측정된 모델 태그를 보여주며, 로컬 성능과 VRAM 적합성을 확인할 때 사용합니다.",
     measuredTitle: "측정된 모델 태그",
     model: "모델",
     tag: "태그",
@@ -104,12 +104,12 @@ const textByLocale: Partial<Record<ComLocale, Record<string, string>>> = {
   }
 };
 const text = {
-  title: home.card_verified_title || "Verified on RTX 3090",
+  title: home.card_verified_title || "RTX 3090 24GB VRAM Benchmarks",
   description:
     home.card_verified_desc ||
-    "Measured model benchmarks validated on RTX 3090 with latency and throughput snapshots.",
+    "How much VRAM does an RTX 3090 have? Compare measured local LLM benchmarks on RTX 3090 24GB with tokens/s, latency, and model fit.",
   intro:
-    "This page tracks model tags with measured local runs on RTX 3090. Use it when you want evidence-backed local performance instead of pure baseline estimates.",
+    "The RTX 3090 has 24GB VRAM. This page tracks model tags with measured local runs on RTX 3090 so you can compare tokens/s, latency, and model fit.",
   measuredTitle: "Measured model tags",
   model: "Model",
   tag: "Tag",

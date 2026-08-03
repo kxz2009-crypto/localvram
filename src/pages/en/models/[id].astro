@@ -50,16 +50,16 @@ const tagVariantSummary = tagVariantProfiles
   .join("; ");
 const modelPath = `/en/models/${item.id}/`;
 const modelUrl = `https://localvram.com${modelPath}`;
-const seoTitle =
-  typeof item.seo_title === "string" && item.seo_title.trim()
-    ? item.seo_title.trim()
-    : `${item.name} on LocalVRAM`;
-const seoDescription = `${item.name}: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal. RTX 3090 ${
-  hasRealBenchmark ? `${realBenchmark.tokens_per_second} tok/s measured` : `${item.benchmarks.rtx3090_tok_s} tok/s baseline`
-}, RTX 4090 ${item.benchmarks.rtx4090_tok_s} tok/s, cloud ${item.benchmarks.a100_tok_s} tok/s.`;
 const paramsB = Number(item.params_b || 0);
 const systemRamTargetGb =
   item.vram_optimal_gb <= 12 ? 16 : item.vram_optimal_gb <= 24 ? 32 : item.vram_optimal_gb <= 48 ? 64 : 128;
+const seoTitle =
+  typeof item.seo_title === "string" && item.seo_title.trim()
+    ? item.seo_title.trim()
+    : `${item.name} VRAM Requirement & Ollama Model Size | RTX 3090`;
+const seoDescription = `${item.name} Ollama model size and VRAM guide: ${item.vram_min_gb}GB minimum VRAM, ${item.vram_optimal_gb}GB optimal, ${systemRamTargetGb}GB+ system RAM. RTX 3090 ${
+  hasRealBenchmark ? `${realBenchmark.tokens_per_second} tok/s measured` : `${item.benchmarks.rtx3090_tok_s} tok/s baseline`
+}; tag ${item.ollama_tag || item.family}.`;
 const canRunOnRtx3090 = item.vram_min_gb <= 24;
 const comfortableOnRtx3090 = item.vram_optimal_gb <= 24;
 const rtx3090FitLabel = comfortableOnRtx3090
@@ -217,8 +217,11 @@ const structuredData = relatedProfiles.length
   structuredData={structuredData}
 >
   <main class="container">
-    <h1>{item.name}</h1>
-    <p>{item.focus}. Caveat: {item.caveat}.</p>
+    <h1>{item.name} VRAM Requirement and Ollama Model Size</h1>
+    <p>
+      {item.name} needs {item.vram_min_gb}GB minimum VRAM, {item.vram_optimal_gb}GB optimal VRAM,
+      and {systemRamTargetGb}GB+ system RAM for a safer Ollama run. {item.focus}. Caveat: {item.caveat}.
+    </p>
 
     <section class="card">
       <h2>Hardware Snapshot</h2>
