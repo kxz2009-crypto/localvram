@@ -8,9 +8,9 @@ benchmark_measured_at: "2026-07-08T15:58:01Z"
 score: 216
 source: quality_floor_fallback
 content_angle: setup-playbook
-status: approved_auto
-reviewed_at: "2026-08-03T12:17:07.138151Z"
-risk_flags: ""
+status: rejected_manual
+reviewed_at: "2026-08-03T12:32:47.622677Z"
+risk_flags: existing_blog_slug,near_duplicate_published
 ---
 
 ## Fast verdict
