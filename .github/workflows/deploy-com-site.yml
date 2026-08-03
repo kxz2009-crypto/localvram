@@ -2,7 +2,7 @@ name: Deploy COM Site
 
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["CI", "Daily Content Agent"]
     types: [completed]
   workflow_dispatch:
     inputs:
@@ -44,7 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.event.inputs.ref || 'main' }}
+          ref: ${{ github.event.inputs.ref || 'main' }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -64,7 +64,7 @@ jobs:
 
       - name: Validate Cloudflare settings
         env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
           if [ -z "${CF_API_TOKEN}" ]; then
@@ -83,7 +83,7 @@ jobs:
 
       - name: Deploy Worker assets to production
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
           commit_sha="$(git rev-parse --short HEAD)"
