@@ -1,85 +1,97 @@
 {
-  "generated_at": "2026-07-16T03:49:02.255221Z",
+  "generated_at": "2026-08-03T12:19:20.025531Z",
   "window_days": 30,
-  "window_start": "2026-06-16T03:49:02.255221Z",
-  "window_end": "2026-07-16T03:49:02.255221Z",
+  "window_start": "2026-07-04T12:19:20.025531Z",
+  "window_end": "2026-08-03T12:19:20.025531Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
-    "search_console_updated_at": "2026-06-19T07:32:38Z"
+    "search_console_updated_at": "2026-08-01T05:37:36Z"
   },
   "funnel": {
-    "organic_search_clicks": 2,
-    "decision_page_clicks": 0,
-    "affiliate_redirect_clicks": 307,
-    "cloud_redirect_clicks": 119,
-    "hardware_redirect_clicks": 188,
-    "search_to_affiliate_pct": 15350.0,
-    "search_to_cloud_pct": 5950.0,
-    "affiliate_to_cloud_pct": 38.76
+    "organic_search_clicks": 1,
+    "decision_page_clicks": 1,
+    "affiliate_redirect_clicks": 296,
+    "cloud_redirect_clicks": 107,
+    "hardware_redirect_clicks": 189,
+    "search_to_affiliate_pct": 29600.0,
+    "search_to_cloud_pct": 10700.0,
+    "affiliate_to_cloud_pct": 36.15
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 188,
-        "share_pct": 61.24
+        "clicks": 189,
+        "share_pct": 63.85
       },
       {
         "provider": "runpod",
-        "clicks": 61,
-        "share_pct": 19.87
+        "clicks": 54,
+        "share_pct": 18.24
       },
       {
         "provider": "vast",
-        "clicks": 58,
-        "share_pct": 18.89
+        "clicks": 53,
+        "share_pct": 17.91
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 87,
-        "share_pct": 28.34
+        "clicks": 89,
+        "share_pct": 30.07
       },
       {
         "route": "/go/runpod",
-        "clicks": 61,
-        "share_pct": 19.87
+        "clicks": 54,
+        "share_pct": 18.24
       },
       {
         "route": "/go/vast",
-        "clicks": 58,
-        "share_pct": 18.89
+        "clicks": 53,
+        "share_pct": 17.91
       },
       {
         "route": "/recommends/rtx-4090-24gb",
-        "clicks": 35,
-        "share_pct": 11.4
+        "clicks": 40,
+        "share_pct": 13.51
       },
       {
         "route": "/recommends/atx3-1000w-psu",
-        "clicks": 33,
-        "share_pct": 10.75
+        "clicks": 30,
+        "share_pct": 10.14
       },
       {
         "route": "/recommends/high-airflow-case",
-        "clicks": 33,
-        "share_pct": 10.75
+        "clicks": 30,
+        "share_pct": 10.14
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 295
+        "clicks": 273
       },
       {
         "page": "/en/affiliate/hardware-upgrade/",
+        "clicks": 6
+      },
+      {
+        "page": "/go/vast",
         "clicks": 4
       },
       {
-        "page": "/en/affiliate/cloud-gpu/",
+        "page": "/en/models/qwen3-coder-30b-q4/",
         "clicks": 3
+      },
+      {
+        "page": "/go/runpod",
+        "clicks": 2
+      },
+      {
+        "page": "/ru/blog/still-the-vram-king-rtx-3090-2026/",
+        "clicks": 2
       },
       {
         "page": "/en/models/llama4-128x17b-q4/",
@@ -87,31 +99,94 @@
       },
       {
         "page": "/",
-        "clicks": 2
+        "clicks": 1
       },
       {
-        "page": "/de/hardware/12gb-vram-models/",
+        "page": "/en/tools/vram-calculator/",
+        "clicks": 1
+      },
+      {
+        "page": "/recommends/rtx-3090-24gb",
+        "clicks": 1
+      },
+      {
+        "page": "/en/guides/ollama-local-cluster-network/",
         "clicks": 1
       }
     ],
     "search_landings": [
       {
-        "landing": "/de/models/openhermes-7b-q5/",
+        "landing": "/en/guides/best-coding-models/",
         "clicks": 1,
-        "share_pct": 50.0
+        "share_pct": 100.0
       },
       {
-        "landing": "/ko/benchmarks/",
-        "clicks": 1,
-        "share_pct": 50.0
-      },
-      {
-        "landing": "/ar/blog/local-llm-customer-support-rag-stack/",
+        "landing": "/ar/models/llama2-7b-fp16/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
-        "landing": "/de/matrix/",
+        "landing": "/ar/models/qwen-18b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/deepseek-coder-67b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/llama3-70b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/mistral-small-22b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen35-35b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen3-vl-4b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen25-72b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen25-coder-05b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen25vl-3b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen25-coder-14b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen3-vl-2b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen3-4b-q4/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen3-17b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -131,7 +206,7 @@
         "share_pct": 0.0
       },
       {
-        "landing": "/de/errors/cuda-out-of-memory/",
+        "landing": "/de/models/qwen3-coder-30b-q4/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -139,68 +214,13 @@
         "landing": "/de/",
         "clicks": 0,
         "share_pct": 0.0
-      },
-      {
-        "landing": "/de/guides/ollama-local-cluster-network/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/models/llama32-3b-q4/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/hardware/apple-silicon-llm-guide/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/gemma2-2b-q4/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/qwen25-coder-14b-q4/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/llama2-7b-fp16/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/qwen25-coder-14b-fp16/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/gemma2-2b-q8/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/deepseek-coder-v2-16b-fp16/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/qwen25-coder-3b-q5/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/qwen25-coder-14b-q5/",
-        "clicks": 0,
-        "share_pct": 0.0
       }
     ]
   },
   "data_quality": {
-    "search_console_items": 240,
-    "affiliate_event_items_total": 441,
-    "affiliate_event_items_in_window": 307,
+    "search_console_items": 302,
+    "affiliate_event_items_total": 467,
+    "affiliate_event_items_in_window": 296,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }

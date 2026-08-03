@@ -1,6 +1,72 @@
 {
   "items": [
     {
+      "date": "2026-08-03",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-08-03",
+          "slug": "q4-vs-q8-quality-loss-ollama-guide",
+          "title": "Q4 Vs Q8 Quality Loss Ollama: Setup, Validation, and Scaling Playbook (2026)",
+          "keyword": "q4 vs q8 quality loss ollama",
+          "score": 576,
+          "source": "opportunity",
+          "landing": "",
+          "model_tag": "",
+          "model_key": "",
+          "traffic_priority": "",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "",
+          "content_angle": "setup-playbook",
+          "draft_path": "content-queue/2026-08-03/01-q4-vs-q8-quality-loss-ollama-guide.md"
+        },
+        {
+          "date": "2026-08-03",
+          "slug": "2026-08-03-qwen3-coder-30b-hardware-upgrade",
+          "title": "qwen3-coder:30B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "keyword": "qwen3-coder:30b rtx 3090 local benchmark hardware upgrade",
+          "score": 216,
+          "source": "quality_floor_fallback",
+          "landing": "/en/models/",
+          "model_tag": "qwen3-coder:30b",
+          "model_key": "",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-07-08T15:58:01Z",
+          "content_angle": "hardware-upgrade",
+          "draft_path": "content-queue/2026-08-03/02-2026-08-03-qwen3-coder-30b-hardware-upgrade.md"
+        },
+        {
+          "date": "2026-08-03",
+          "slug": "2026-08-03-qwen3-8b-setup-playbook",
+          "title": "qwen3:8B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "keyword": "qwen3:8b rtx 3090 local benchmark setup playbook",
+          "score": 216,
+          "source": "quality_floor_fallback",
+          "landing": "/en/models/",
+          "model_tag": "qwen3:8b",
+          "model_key": "",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-07-08T15:58:01Z",
+          "content_angle": "setup-playbook",
+          "draft_path": "content-queue/2026-08-03/03-2026-08-03-qwen3-8b-setup-playbook.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "2026-08-03-qwen3-8b-setup-playbook",
+          "title": "qwen3:8B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)"
+        },
+        {
+          "slug": "2026-08-03-qwen3-coder-30b-hardware-upgrade",
+          "title": "qwen3-coder:30B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)"
+        }
+      ],
+      "published_count": 2,
+      "publish_run_at": "2026-08-03T12:17:07.215018Z"
+    },
+    {
       "date": "2026-07-16",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -427,19 +493,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-06-17T05:25:37.085116Z"
-    },
-    {
-      "date": "2026-06-16",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-06-16",
-          "title": "Today's Local LLM Pick: qwen3:8b on RTX 3090 (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-06-16T14:55:41.231918Z"
     }
   ]
 }
