@@ -9,7 +9,7 @@ score: 216
 source: quality_floor_fallback
 content_angle: setup-playbook
 status: rejected_manual
-reviewed_at: "2026-08-03T12:32:47.622677Z"
+reviewed_at: "2026-08-03T14:42:35.985272Z"
 risk_flags: existing_blog_slug,near_duplicate_published
 ---
 
