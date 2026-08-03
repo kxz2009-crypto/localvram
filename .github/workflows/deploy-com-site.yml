@@ -1,0 +1,104 @@
+name: Deploy COM Site
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref to deploy"
+        required: false
+        default: "main"
+        type: string
+      com_domain:
+        description: "COM production origin for post-deploy verification"
+        required: false
+        default: "https://localvram.com"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-com-site
+  cancel-in-progress: false
+
+jobs:
+  deploy-com-site:
+    if: >-
+      ${{
+        github.event_name == 'workflow_dispatch' ||
+        (
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_branch == 'main'
+        )
+      }}
+    runs-on: ubuntu-latest
+    env:
+      ASTRO_TELEMETRY_DISABLED: "1"
+      COM_DOMAIN: ${{ github.event.inputs.com_domain || 'https://localvram.com' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.event.inputs.ref || 'main' }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build COM artifact
+        run: npm run build
+
+      - name: Validate Cloudflare settings
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          if [ -z "${CF_API_TOKEN}" ]; then
+            echo "::error::missing required secret CF_API_TOKEN"
+            exit 1
+          fi
+          if [ -z "${CF_ACCOUNT_ID}" ]; then
+            echo "::error::missing required secret CF_ACCOUNT_ID"
+            exit 1
+          fi
+          if [ ! -d "dist" ]; then
+            echo "::error::dist directory does not exist after build"
+            exit 1
+          fi
+
+      - name: Deploy Worker assets to production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          commit_sha="$(git rev-parse --short HEAD)"
+          npx wrangler@4 deploy \
+            --tag "${commit_sha}" \
+            --message "Deploy ${commit_sha} from GitHub Actions" \
+            --keep-vars
+
+      - name: Verify COM production freshness
+        run: |
+          set -euo pipefail
+          curl -sS -L -H "Cache-Control: no-cache" "${COM_DOMAIN}/en/models/" > /tmp/com-models.html
+          if ! grep -q 'Ollama VRAM Requirements and RTX 3090 Benchmarks' /tmp/com-models.html; then
+            echo "::error::COM /en/models/ did not render the expected current SEO title"
+            exit 1
+          fi
+          if ! grep -q 'Compare 200+ Ollama models by minimum VRAM' /tmp/com-models.html; then
+            echo "::error::COM /en/models/ did not render the expected current meta description"
+            exit 1
+          fi
