@@ -52,6 +52,11 @@ jobs:
           find "${HOME}" -maxdepth 3 -type f -name 'ollama*' -executable 2>/dev/null | head -n 10
           echo "=== systemd ollama ==="
           systemctl is-active ollama || true
+          echo "=== user systemd availability ==="
+          export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+          systemctl --user is-system-running 2>&1 || true
+          echo "=== previous remediate serve log ==="
+          tail -n 25 "${HOME}/ollama-serve-remediate.log" 2>/dev/null || echo "no log"
           echo "=== api probe ==="
           curl -s --max-time 5 "http://127.0.0.1:${PORT}/api/version" || echo "no api response"
 
