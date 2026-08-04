@@ -88,15 +88,38 @@ jobs:
             exit 1
           fi
 
-          # Pick the ollama binary: explicit input wins, otherwise first known candidate.
+          # Record systemd unit config for the ops trail.
+          echo "=== systemd unit (informational) ==="
+          cat /etc/systemd/system/ollama.service 2>/dev/null || true
+          cat /etc/systemd/system/ollama.service.d/override.conf 2>/dev/null || true
+
+          # If a newer ollama tarball was staged in home, extract and consider it.
+          TARBALL="${HOME}/ollama-linux-amd64.tar.zst"
+          if [ -f "${TARBALL}" ]; then
+            EXTRACT_DIR="${HOME}/ollama-remediate"
+            mkdir -p "${EXTRACT_DIR}"
+            tar --use-compress-program=unzstd -xf "${TARBALL}" -C "${EXTRACT_DIR}" || tar -xf "${TARBALL}" -C "${EXTRACT_DIR}" || true
+            find "${EXTRACT_DIR}" -maxdepth 3 -type f -name ollama -executable 2>/dev/null || true
+          fi
+
+          version_of() {
+            "$1" --version 2>/dev/null | grep -oP '[0-9]+\.[0-9]+\.[0-9]+' | head -n 1 || true
+          }
+
+          # Pick the ollama binary: explicit input wins, otherwise newest known candidate.
           if [ -n "${BIN_INPUT}" ]; then
             OLLAMA_BIN="${BIN_INPUT}"
           else
             OLLAMA_BIN=""
-            for cand in /usr/local/bin/ollama /usr/bin/ollama "${HOME}/ollama" "${HOME}/bin/ollama"; do
+            BEST_VER=""
+            for cand in /usr/local/bin/ollama /usr/bin/ollama "${HOME}/ollama" "${HOME}/bin/ollama" "${HOME}/ollama-remediate/bin/ollama" "${HOME}/ollama-remediate/ollama"; do
               if [ -x "${cand}" ]; then
-                OLLAMA_BIN="${cand}"
-                break
+                ver="$(version_of "${cand}")"
+                echo "candidate ${cand} version=${ver:-unknown}"
+                if [ -n "${ver}" ] && { [ -z "${BEST_VER}" ] || [ "$(printf '%s\n%s\n' "${BEST_VER}" "${ver}" | sort -V | tail -n 1)" = "${ver}" ]; }; then
+                  BEST_VER="${ver}"
+                  OLLAMA_BIN="${cand}"
+                fi
               fi
             done
           fi
