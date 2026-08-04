@@ -129,10 +129,38 @@ jobs:
           fi
           echo "using ollama binary: ${OLLAMA_BIN} ($("${OLLAMA_BIN}" --version 2>&1 | head -n 1))"
 
-          export OLLAMA_HOST="127.0.0.1:${PORT}"
           export OLLAMA_MODELS="${OLLAMA_MODELS:-/mnt/d/Ollama}"
-          nohup "${OLLAMA_BIN}" serve > "${HOME}/ollama-serve-remediate.log" 2>&1 &
-          echo "started ollama serve pid=$!"
+
+          # systemd-managed start survives the runner's job-cgroup cleanup;
+          # a plain nohup child of the step gets killed when the job ends.
+          if sudo -n true 2>/dev/null; then
+            echo "sudo available: managing ollama via systemd for durability"
+            UNIT=/etc/systemd/system/ollama.service
+            OVERRIDE_DIR=/etc/systemd/system/ollama.service.d
+            OVERRIDE=${OVERRIDE_DIR}/override.conf
+            sudo mkdir -p "${OVERRIDE_DIR}"
+            if sudo test -f "${OVERRIDE}" && sudo grep -q 'OLLAMA_HOST=' "${OVERRIDE}"; then
+              sudo sed -i "s/OLLAMA_HOST=[^\"]*/OLLAMA_HOST=127.0.0.1:${PORT}/" "${OVERRIDE}"
+            else
+              echo "Environment=\"OLLAMA_HOST=127.0.0.1:${PORT}\"" | sudo tee -a "${OVERRIDE}"
+            fi
+            if ! sudo grep -q "^ExecStart=${OLLAMA_BIN} serve" "${UNIT}"; then
+              sudo sed -i "s|^ExecStart=.*ollama serve.*|ExecStart=${OLLAMA_BIN} serve|" "${UNIT}" || true
+            fi
+            echo "=== effective unit config ==="
+            sudo cat "${UNIT}" || true
+            sudo cat "${OVERRIDE}" || true
+            sudo systemctl daemon-reload
+            sudo systemctl enable ollama || true
+            sudo systemctl restart ollama
+            sleep 3
+            systemctl status ollama --no-pager -l | head -n 15 || true
+          else
+            echo "::warning::sudo unavailable: falling back to setsid, may not survive runner cleanup"
+            export OLLAMA_HOST="127.0.0.1:${PORT}"
+            setsid nohup "${OLLAMA_BIN}" serve > "${HOME}/ollama-serve-remediate.log" 2>&1 < /dev/null &
+            echo "started ollama serve pid=$!"
+          fi
 
           for attempt in 1 2 3 4 5 6; do
             sleep 5
