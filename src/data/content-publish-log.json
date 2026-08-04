@@ -1,34 +1,61 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-03T14:42:36.076295Z",
+  "updated_at": "2026-08-04T03:48:54.845541Z",
   "last_run": {
-    "run_at": "2026-08-03T14:42:36.076295Z",
-    "queue_date": "2026-08-03",
+    "run_at": "2026-08-04T03:48:54.845541Z",
+    "queue_date": "2026-08-04",
     "candidate_count": 1,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 1,
-    "skipped_count": 1,
+    "fallback_generated_count": 0,
+    "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-08-03-2",
-        "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-08-03-daily-local-llm-benchmark-snapshot-2026-08-03-2",
-        "score": 120.0,
-        "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-03-2.md",
-        "intent": "benchmark"
+        "slug": "2026-08-04-gpt-oss-20b-setup-playbook",
+        "title": "gpt-oss:20B RTX 3090 Local Benchmark Setup Playbook: GPU and VRAM Sizing Guide (2026)",
+        "topic_key": "gpt-oss-20b-rtx-3090-local-benchmark-setup-playbook",
+        "score": 216.0,
+        "source_draft": "content-queue/2026-08-04/01-2026-08-04-gpt-oss-20b-setup-playbook.md",
+        "out_file": "src/content/blog/2026-08-04-gpt-oss-20b-setup-playbook.md",
+        "intent": "hardware",
+        "model_tag": "gpt-oss:20b",
+        "model_key": "gpt-oss-20b",
+        "traffic_priority": "fallback",
+        "ollama_updated_label": "",
+        "benchmark_measured_at": "2026-04-29T05:39:58Z"
       }
     ],
-    "skipped": [
-      {
-        "draft": "content-queue/2026-08-03/01-q4-vs-q8-quality-loss-ollama-guide.md",
-        "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
-      }
-    ]
+    "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-08-04T03:48:54.845541Z",
+      "queue_date": "2026-08-04",
+      "candidate_count": 1,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "2026-08-04-gpt-oss-20b-setup-playbook",
+          "title": "gpt-oss:20B RTX 3090 Local Benchmark Setup Playbook: GPU and VRAM Sizing Guide (2026)",
+          "topic_key": "gpt-oss-20b-rtx-3090-local-benchmark-setup-playbook",
+          "score": 216.0,
+          "source_draft": "content-queue/2026-08-04/01-2026-08-04-gpt-oss-20b-setup-playbook.md",
+          "out_file": "src/content/blog/2026-08-04-gpt-oss-20b-setup-playbook.md",
+          "intent": "hardware",
+          "model_tag": "gpt-oss:20b",
+          "model_key": "gpt-oss-20b",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-04-29T05:39:58Z"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-08-03T14:42:36.076295Z",
       "queue_date": "2026-08-03",
@@ -1381,28 +1408,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-16.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-05-15T04:35:13.375440Z",
-      "queue_date": "2026-05-15",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-05-15",
-          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-05-15-daily-local-llm-benchmark-snapshot-2026-05-15",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-15.md",
           "intent": "benchmark"
         }
       ],
