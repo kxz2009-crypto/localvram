@@ -1,34 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-04T03:48:54.845541Z",
+  "updated_at": "2026-08-05T03:44:28.848611Z",
   "last_run": {
-    "run_at": "2026-08-04T03:48:54.845541Z",
-    "queue_date": "2026-08-04",
-    "candidate_count": 1,
+    "run_at": "2026-08-05T03:44:28.848611Z",
+    "queue_date": "2026-08-05",
+    "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 0,
+    "fallback_generated_count": 1,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "2026-08-04-gpt-oss-20b-setup-playbook",
-        "title": "gpt-oss:20B RTX 3090 Local Benchmark Setup Playbook: GPU and VRAM Sizing Guide (2026)",
-        "topic_key": "gpt-oss-20b-rtx-3090-local-benchmark-setup-playbook",
-        "score": 216.0,
-        "source_draft": "content-queue/2026-08-04/01-2026-08-04-gpt-oss-20b-setup-playbook.md",
-        "out_file": "src/content/blog/2026-08-04-gpt-oss-20b-setup-playbook.md",
-        "intent": "hardware",
-        "model_tag": "gpt-oss:20b",
-        "model_key": "gpt-oss-20b",
-        "traffic_priority": "fallback",
-        "ollama_updated_label": "",
-        "benchmark_measured_at": "2026-04-29T05:39:58Z"
+        "slug": "daily-local-llm-benchmark-snapshot-2026-08-05",
+        "title": "Today's Local LLM Pick: gemma3:27b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-08-05-daily-local-llm-benchmark-snapshot-2026-08-05",
+        "score": 120.0,
+        "source_draft": "system:fallback-daily-generator",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-05.md",
+        "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-08-05T03:44:28.848611Z",
+      "queue_date": "2026-08-05",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-08-05",
+          "title": "Today's Local LLM Pick: gemma3:27b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-08-05-daily-local-llm-benchmark-snapshot-2026-08-05",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-05.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-08-04T03:48:54.845541Z",
       "queue_date": "2026-08-04",
@@ -1386,28 +1403,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-17.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-05-16T04:09:25.805548Z",
-      "queue_date": "2026-05-16",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-05-16",
-          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-05-16-daily-local-llm-benchmark-snapshot-2026-05-16",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-16.md",
           "intent": "benchmark"
         }
       ],

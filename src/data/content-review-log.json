@@ -1,33 +1,29 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-04T03:48:54.476858Z",
+  "updated_at": "2026-08-05T03:44:28.761751Z",
   "last_run": {
-    "run_at": "2026-08-04T03:48:54.476858Z",
-    "queue_date": "2026-08-04",
-    "reviewed_count": 1,
-    "auto_approved_count": 1,
+    "run_at": "2026-08-05T03:44:28.761751Z",
+    "queue_date": "2026-08-05",
+    "reviewed_count": 0,
+    "auto_approved_count": 0,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": [
-      {
-        "draft": "content-queue/2026-08-04/01-2026-08-04-gpt-oss-20b-setup-playbook.md",
-        "slug": "2026-08-04-gpt-oss-20b-setup-playbook",
-        "score": 216.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 641,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.9645,
-          "topic_score": 0.3889,
-          "slug": "2026-08-03-qwen3-8b-setup-playbook"
-        }
-      }
-    ]
+    "items": []
   },
   "history": [
+    {
+      "run_at": "2026-08-05T03:44:28.761751Z",
+      "queue_date": "2026-08-05",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-08-04T03:48:54.476858Z",
       "queue_date": "2026-08-04",
@@ -921,17 +917,6 @@
     {
       "run_at": "2026-05-17T04:39:25.109882Z",
       "queue_date": "2026-05-17",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
-    },
-    {
-      "run_at": "2026-05-16T04:09:25.727496Z",
-      "queue_date": "2026-05-16",
       "reviewed_count": 0,
       "auto_approved_count": 0,
       "pending_manual_review_count": 0,
