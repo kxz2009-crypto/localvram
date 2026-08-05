@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T15:54:17Z",
+  "updated_at": "2026-08-05T05:23:08Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -15,7 +15,8 @@
     "mistral-small",
     "gemma3",
     "llama4",
-    "qwq"
+    "qwq",
+    "gemma4"
   ],
   "retry_delays_s": [
     5.0,
@@ -59,46 +60,89 @@
       "stderr": ""
     },
     "OLLAMA_VERSION": {
-      "exit": 1,
-      "stdout": "",
-      "stderr": "Command '['ollama', '--version']' timed out after 12 seconds"
+      "exit": 0,
+      "stdout": "ollama version is 0.20.2",
+      "stderr": ""
     }
   },
   "checks": {
-    "port_listeners": [],
-    "ps_ollama": [],
+    "port_listeners": [
+      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=592711,fd=3))"
+    ],
+    "ps_ollama": [
+      "gao20     592711       1  0 Aug04 ?        00:00:01 /usr/local/bin/ollama serve"
+    ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
-      "ollama_serve_process_count": 0,
-      "failure_class": "ollama_instance_unmanaged",
-      "failure_detail": "no local 'ollama serve' process detected for loopback endpoint"
+      "ollama_serve_process_count": 1,
+      "failure_class": "none",
+      "failure_detail": ""
     },
     "SYSTEMD_OLLAMA_IS_ACTIVE": {
-      "exit": 3,
-      "stdout": "inactive",
+      "exit": 0,
+      "stdout": "active",
       "stderr": ""
     },
     "SYSTEMD_OLLAMA_STATUS": {
-      "exit": 3,
-      "stdout": "○ ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; disabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: inactive (dead)",
+      "exit": 0,
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Tue 2026-08-04 15:18:19 EDT; 10h ago\n   Main PID: 592711 (ollama)\n      Tasks: 15 (limit: 86826)\n     Memory: 18.5M (peak: 341.4M swap: 4.7M swap peak: 5.2M)\n        CPU: 1.583s\n     CGroup: /system.slice/ollama.service\n             └─592711 /usr/local/bin/ollama serve\n\nAug 05 00:46:59 Vernon ollama[592711]: [GIN] 2026/08/05 - 00:46:59 | 200 |   306.79799ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 05 00:47:00 Vernon ollama[592711]: time=2026-08-05T00:47:00.524-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 05 00:47:00 Vernon ollama[592711]: [GIN] 2026/08/05 - 00:47:00 | 200 |  381.149871ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 05 00:47:01 Vernon ollama[592711]: [GIN] 2026/08/05 - 00:47:01 | 200 |     311.671µs |       127.0.0.1 | GET      \"/api/version\"\nAug 05 00:47:01 Vernon ollama[592711]: [GIN] 2026/08/05 - 00:47:01 | 200 |      27.886µs |       127.0.0.1 | GET      \"/api/version\"\nAug 05 00:47:01 Vernon ollama[592711]: time=2026-08-05T00:47:01.535-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 05 00:47:01 Vernon ollama[592711]: [GIN] 2026/08/05 - 00:47:01 | 200 |  291.233933ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 05 01:23:07 Vernon ollama[592711]: time=2026-08-05T01:23:07.950-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 05 01:23:08 Vernon ollama[592711]: [GIN] 2026/08/05 - 01:23:08 | 200 |  585.946779ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 05 01:23:08 Vernon ollama[592711]: [GIN] 2026/08/05 - 01:23:08 | 200 |     200.563µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
-      "stdout": "UNIT                                                              LOAD   ACTIVE   SUB     DESCRIPTION\n● actions.runner.kxz2009-crypto-localvram.3090-WSL2-V2.service      loaded failed   failed  GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2-V2)\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service         loaded inactive dead    GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n  actions.runner.kxz2009-crypto-localvram.localvram-wsl-d01.service loaded active   running GitHub Actions Runner (kxz2009-crypto-localvram.localvram-wsl-d01)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n3 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
+      "stdout": "UNIT                                                              LOAD   ACTIVE SUB     DESCRIPTION\n  actions.runner.kxz2009-crypto-localvram.localvram-wsl-d01.service loaded active running GitHub Actions Runner (kxz2009-crypto-localvram.localvram-wsl-d01)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n1 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
       "stderr": ""
     }
   },
   "api": {
-    "version_error": "<urlopen error timed out>",
-    "tags_error": "<urlopen error timed out>"
+    "version": {
+      "version": "0.20.2"
+    },
+    "tags": {
+      "model_count": 49,
+      "sample": [
+        "bge-m3:latest",
+        "deepseek-ocr:3b-bf16",
+        "deepseek-r1:14b",
+        "deepseek-r1:32b",
+        "deepseek-r1:70b",
+        "deepseek-v4-flash:cloud",
+        "deepseek-v4-pro:cloud",
+        "gemma3:27b",
+        "gemma4:26b",
+        "gemma4:e2b",
+        "glm-4.7-flash:bf16",
+        "glm-4.7-flash:q8_0",
+        "glm-5.2:cloud",
+        "glm-5:cloud",
+        "granite4.1:30b",
+        "kimi-k2.7-code:cloud",
+        "llama3.2-vision:11b",
+        "llama4:latest",
+        "minimax-m2.5:cloud",
+        "ministral-3:14b"
+      ]
+    }
   },
   "summary": {
-    "model_count": 0,
-    "required_targets_count": 14,
-    "required_targets_runnable_count": 0,
-    "required_targets_runnable": [],
-    "failure_class": "ollama_instance_unmanaged",
-    "failure_detail": "no local 'ollama serve' process detected for loopback endpoint"
+    "model_count": 49,
+    "required_targets_count": 15,
+    "required_targets_runnable_count": 12,
+    "required_targets_runnable": [
+      "qwen3",
+      "deepseek-r1",
+      "qwen3-coder",
+      "qwen3.5",
+      "qwen3.6",
+      "qwen2.5-coder",
+      "ministral-3",
+      "mistral-small",
+      "gemma3",
+      "llama4",
+      "qwq",
+      "gemma4"
+    ],
+    "failure_class": "none",
+    "failure_detail": ""
   }
 }

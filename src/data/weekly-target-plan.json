@@ -1,13 +1,78 @@
 {
-  "generated_at": "2026-07-08T15:54:17Z",
+  "generated_at": "2026-08-05T05:23:08Z",
   "endpoint": "http://127.0.0.1:11435",
   "base_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "base_targets_raw_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
-  "resolved_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
-  "local_model_count": 0,
-  "local_models_sample": [],
-  "local_family_count": 0,
-  "local_families": [],
+  "resolved_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96,gemma4=128",
+  "local_model_count": 49,
+  "local_models_sample": [
+    "bge-m3:latest",
+    "deepseek-ocr:3b-bf16",
+    "deepseek-r1:14b",
+    "deepseek-r1:32b",
+    "deepseek-r1:70b",
+    "deepseek-v4-flash:cloud",
+    "deepseek-v4-pro:cloud",
+    "gemma3:27b",
+    "gemma4:26b",
+    "gemma4:e2b",
+    "glm-4.7-flash:bf16",
+    "glm-4.7-flash:q8_0",
+    "glm-5.2:cloud",
+    "glm-5:cloud",
+    "granite4.1:30b",
+    "kimi-k2.7-code:cloud",
+    "llama3.2-vision:11b",
+    "llama4:latest",
+    "minimax-m2.5:cloud",
+    "ministral-3:14b",
+    "mistral-small:22b",
+    "nemotron-3-nano:30b",
+    "nemotron3:33b",
+    "olmo-3.1:32b-instruct",
+    "olmo-3.1:32b-think",
+    "qwen2.5-coder:32b",
+    "qwen3-coder-next:latest",
+    "qwen3-coder:30b",
+    "qwen3-embedding:8b",
+    "qwen3-vl:30b"
+  ],
+  "local_family_count": 33,
+  "local_families": [
+    "bge-m3",
+    "deepseek-ocr",
+    "deepseek-r1",
+    "deepseek-v4-flash",
+    "deepseek-v4-pro",
+    "gemma3",
+    "gemma4",
+    "glm-4.7-flash",
+    "glm-5",
+    "glm-5.2",
+    "granite4.1",
+    "kimi-k2.7-code",
+    "llama3.2-vision",
+    "llama4",
+    "minimax-m2.5",
+    "ministral-3",
+    "mistral-small",
+    "nemotron-3-nano",
+    "nemotron3",
+    "olmo-3.1",
+    "qwen2.5-coder",
+    "qwen3",
+    "qwen3-coder",
+    "qwen3-coder-next",
+    "qwen3-embedding",
+    "qwen3-vl",
+    "qwen3.5",
+    "qwen3.6",
+    "qwen3.6-hermes",
+    "qwen36-moe",
+    "qwen36-moe-agent",
+    "qwq",
+    "translategemma"
+  ],
   "retired_policy_file": "/mnt/e/github-actions/localvram-01/_work/localvram/localvram/src/data/retired-models.json",
   "retired_families": [],
   "retired_tags": [
@@ -17,8 +82,48 @@
   "dropped_base_targets": [],
   "retired_local_models_sample": [],
   "retired_local_model_count": 0,
-  "candidate_families": [],
-  "added_targets": [],
+  "candidate_families": [
+    "gemma4",
+    "qwen3-embedding",
+    "translategemma",
+    "granite4.1",
+    "nemotron-3-nano",
+    "olmo-3.1",
+    "nemotron3",
+    "deepseek-v4-flash",
+    "deepseek-v4-pro",
+    "glm-4.7-flash",
+    "glm-5",
+    "glm-5.2",
+    "kimi-k2.7-code",
+    "minimax-m2.5",
+    "qwen3-coder-next",
+    "qwen3.6-hermes",
+    "qwen36-moe",
+    "qwen36-moe-agent"
+  ],
+  "added_targets": [
+    {
+      "model": "gemma4",
+      "num_predict": 128
+    },
+    {
+      "model": "qwen3-embedding",
+      "num_predict": 128
+    },
+    {
+      "model": "translategemma",
+      "num_predict": 96
+    },
+    {
+      "model": "granite4.1",
+      "num_predict": 96
+    },
+    {
+      "model": "nemotron-3-nano",
+      "num_predict": 96
+    }
+  ],
   "excluded_families": [
     "all-minilm",
     "bge-m3",
@@ -51,5 +156,5 @@
     "llama4",
     "qwq"
   ],
-  "warning": "endpoint_unavailable_fallback_to_base: <urlopen error timed out>"
+  "warning": ""
 }

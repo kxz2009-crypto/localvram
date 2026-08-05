@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T16:07:01Z",
+  "updated_at": "2026-08-05T05:32:04Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -15,7 +15,8 @@
     "mistral-small",
     "gemma3",
     "llama4",
-    "qwq"
+    "qwq",
+    "gemma4"
   ],
   "retry_delays_s": [
     5.0,
@@ -66,11 +67,11 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096        127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=24137,fd=3))"
+      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=592711,fd=3))"
     ],
     "ps_ollama": [
-      "gao20      24137       1  1 Jul08 ?        00:00:07 /usr/local/bin/ollama serve",
-      "gao20      41224   24137 65 00:05 ?        00:01:04 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 45025"
+      "gao20     592711       1  0 Aug04 ?        00:00:09 /usr/local/bin/ollama serve",
+      "gao20     614572  592711 22 01:30 ?        00:00:23 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 33725"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -79,18 +80,18 @@
       "failure_detail": ""
     },
     "SYSTEMD_OLLAMA_IS_ACTIVE": {
-      "exit": 3,
-      "stdout": "inactive",
+      "exit": 0,
+      "stdout": "active",
       "stderr": ""
     },
     "SYSTEMD_OLLAMA_STATUS": {
-      "exit": 3,
-      "stdout": "○ ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; disabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf\n     Active: inactive (dead)",
+      "exit": 0,
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Tue 2026-08-04 15:18:19 EDT; 10h ago\n   Main PID: 592711 (ollama)\n      Tasks: 41 (limit: 86826)\n     Memory: 19.2G (peak: 46.3G swap: 3.8M swap peak: 5.2M)\n        CPU: 10min 52.423s\n     CGroup: /system.slice/ollama.service\n             ├─592711 /usr/local/bin/ollama serve\n             └─614572 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 33725\n\nAug 05 01:31:56 Vernon ollama[592711]: time=2026-08-05T01:31:56.293-04:00 level=INFO source=server.go:1390 msg=\"llama runner started in 97.10 seconds\"\nAug 05 01:31:56 Vernon ollama[592711]: time=2026-08-05T01:31:56.294-04:00 level=INFO source=sched.go:561 msg=\"loaded runners\" count=1\nAug 05 01:31:56 Vernon ollama[592711]: time=2026-08-05T01:31:56.294-04:00 level=INFO source=server.go:1352 msg=\"waiting for llama runner to start responding\"\nAug 05 01:31:56 Vernon ollama[592711]: time=2026-08-05T01:31:56.294-04:00 level=INFO source=server.go:1390 msg=\"llama runner started in 97.10 seconds\"\nAug 05 01:31:57 Vernon ollama[592711]: [GIN] 2026/08/05 - 01:31:57 | 200 |         1m38s |       127.0.0.1 | POST     \"/api/generate\"\nAug 05 01:32:00 Vernon ollama[592711]: [GIN] 2026/08/05 - 01:32:00 | 200 |  3.107109055s |       127.0.0.1 | POST     \"/api/generate\"\nAug 05 01:32:03 Vernon ollama[592711]: [GIN] 2026/08/05 - 01:32:03 | 200 |  3.092308593s |       127.0.0.1 | POST     \"/api/generate\"\nAug 05 01:32:03 Vernon ollama[592711]: [GIN] 2026/08/05 - 01:32:03 | 404 |  193.250961ms |       127.0.0.1 | POST     \"/api/generate\"\nAug 05 01:32:03 Vernon ollama[592711]: [GIN] 2026/08/05 - 01:32:03 | 404 |  189.865006ms |       127.0.0.1 | POST     \"/api/generate\"\nAug 05 01:32:04 Vernon ollama[592711]: [GIN] 2026/08/05 - 01:32:04 | 200 |      55.294µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
-      "stdout": "UNIT                                                              LOAD   ACTIVE   SUB     DESCRIPTION\n● actions.runner.kxz2009-crypto-localvram.3090-WSL2-V2.service      loaded failed   failed  GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2-V2)\n  actions.runner.kxz2009-crypto-localvram.3090-WSL2.service         loaded inactive dead    GitHub Actions Runner (kxz2009-crypto-localvram.3090-WSL2)\n  actions.runner.kxz2009-crypto-localvram.localvram-wsl-d01.service loaded active   running GitHub Actions Runner (kxz2009-crypto-localvram.localvram-wsl-d01)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n3 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
+      "stdout": "UNIT                                                              LOAD   ACTIVE SUB     DESCRIPTION\n  actions.runner.kxz2009-crypto-localvram.localvram-wsl-d01.service loaded active running GitHub Actions Runner (kxz2009-crypto-localvram.localvram-wsl-d01)\n\nLegend: LOAD   → Reflects whether the unit definition was properly loaded.\n        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.\n        SUB    → The low-level unit activation state, values depend on unit type.\n\n1 loaded units listed.\nTo show all installed unit files use 'systemctl list-unit-files'.",
       "stderr": ""
     }
   },
@@ -99,7 +100,7 @@
       "version": "0.20.2"
     },
     "tags": {
-      "model_count": 47,
+      "model_count": 49,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -125,9 +126,9 @@
     }
   },
   "summary": {
-    "model_count": 47,
-    "required_targets_count": 14,
-    "required_targets_runnable_count": 11,
+    "model_count": 49,
+    "required_targets_count": 15,
+    "required_targets_runnable_count": 12,
     "required_targets_runnable": [
       "qwen3",
       "deepseek-r1",
@@ -139,7 +140,8 @@
       "mistral-small",
       "gemma3",
       "llama4",
-      "qwq"
+      "qwq",
+      "gemma4"
     ],
     "failure_class": "none",
     "failure_detail": ""
