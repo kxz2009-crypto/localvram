@@ -1,6 +1,36 @@
 {
   "items": [
     {
+      "date": "2026-08-06",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-08-06",
+          "slug": "model-qwen3-vl-30b-vram-requirements-rtx-3090",
+          "title": "qwen3-vl:30B VRAM Requirements RTX 3090: Hardware Decision Matrix for Local LLM (2026)",
+          "keyword": "qwen3-vl:30b vram requirements rtx 3090",
+          "score": 3400,
+          "source": "new_model_watchlist",
+          "landing": "/en/models/",
+          "model_tag": "qwen3-vl:30b",
+          "model_key": "qwen3-vl-30b",
+          "traffic_priority": "benchmark_then_publish",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "",
+          "content_angle": "hardware-upgrade",
+          "draft_path": "content-queue/2026-08-06/01-model-qwen3-vl-30b-vram-requirements-rtx-3090.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "model-qwen3-vl-30b-vram-requirements-rtx-3090",
+          "title": "qwen3-vl:30B VRAM Requirements RTX 3090: Hardware Decision Matrix for Local LLM (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-08-06T03:50:09.706860Z"
+    },
+    {
       "date": "2026-08-05",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [],
@@ -444,19 +474,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-06-20T04:52:49.405199Z"
-    },
-    {
-      "date": "2026-06-19",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-06-19",
-          "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-06-19T05:34:17.863168Z"
     }
   ]
 }
