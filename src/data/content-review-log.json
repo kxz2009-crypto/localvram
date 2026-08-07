@@ -1,33 +1,29 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-06T03:50:09.625728Z",
+  "updated_at": "2026-08-07T03:29:58.198601Z",
   "last_run": {
-    "run_at": "2026-08-06T03:50:09.625728Z",
-    "queue_date": "2026-08-06",
-    "reviewed_count": 1,
-    "auto_approved_count": 1,
+    "run_at": "2026-08-07T03:29:58.198601Z",
+    "queue_date": "2026-08-07",
+    "reviewed_count": 0,
+    "auto_approved_count": 0,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": [
-      {
-        "draft": "content-queue/2026-08-06/01-model-qwen3-vl-30b-vram-requirements-rtx-3090.md",
-        "slug": "model-qwen3-vl-30b-vram-requirements-rtx-3090",
-        "score": 3400.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 637,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.8462,
-          "topic_score": 0.1818,
-          "slug": "2026-06-17-gpt-oss-20b-hardware-upgrade"
-        }
-      }
-    ]
+    "items": []
   },
   "history": [
+    {
+      "run_at": "2026-08-07T03:29:58.198601Z",
+      "queue_date": "2026-08-07",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-08-06T03:50:09.625728Z",
       "queue_date": "2026-08-06",
@@ -936,17 +932,6 @@
     {
       "run_at": "2026-05-19T04:42:54.620318Z",
       "queue_date": "2026-05-19",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
-    },
-    {
-      "run_at": "2026-05-18T04:50:35.676228Z",
-      "queue_date": "2026-05-18",
       "reviewed_count": 0,
       "auto_approved_count": 0,
       "pending_manual_review_count": 0,
