@@ -1,34 +1,51 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-08T02:28:16.695171Z",
+  "updated_at": "2026-08-09T02:35:43.886613Z",
   "last_run": {
-    "run_at": "2026-08-08T02:28:16.695171Z",
-    "queue_date": "2026-08-08",
-    "candidate_count": 1,
+    "run_at": "2026-08-09T02:35:43.886613Z",
+    "queue_date": "2026-08-09",
+    "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 0,
+    "fallback_generated_count": 1,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "en-models",
-        "title": "ai83090: Setup, Validation, and Scaling Playbook (2026)",
-        "topic_key": "ai83090",
-        "score": 210.0,
-        "source_draft": "content-queue/2026-08-08/01-en-models.md",
-        "out_file": "src/content/blog/en-models.md",
-        "intent": "guide",
-        "model_tag": "",
-        "model_key": "",
-        "traffic_priority": "",
-        "ollama_updated_label": "",
-        "benchmark_measured_at": ""
+        "slug": "daily-local-llm-benchmark-snapshot-2026-08-09",
+        "title": "Today's Local LLM Pick: llama4:16x17b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-08-09-daily-local-llm-benchmark-snapshot-2026-08-09",
+        "score": 120.0,
+        "source_draft": "system:fallback-daily-generator",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-09.md",
+        "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-08-09T02:35:43.886613Z",
+      "queue_date": "2026-08-09",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-08-09",
+          "title": "Today's Local LLM Pick: llama4:16x17b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-08-09-daily-local-llm-benchmark-snapshot-2026-08-09",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-09.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-08-08T02:28:16.695171Z",
       "queue_date": "2026-08-08",
@@ -1395,33 +1412,6 @@
         }
       ],
       "skipped": []
-    },
-    {
-      "run_at": "2026-05-20T04:47:07.536572Z",
-      "queue_date": "2026-05-20",
-      "candidate_count": 1,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-05-20",
-          "title": "Today's Local LLM Pick: qwen3-coder:30b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-05-20-daily-local-llm-benchmark-snapshot-2026-05-20",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-05-20.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-05-20/01-en-blog-best-local-rag-models-2026.md",
-          "reason": "similar_slug:best-local-rag-models-2026"
-        }
-      ]
     }
   ]
 }

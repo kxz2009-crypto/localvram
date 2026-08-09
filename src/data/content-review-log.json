@@ -1,33 +1,29 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-08T02:28:16.632349Z",
+  "updated_at": "2026-08-09T02:35:43.830533Z",
   "last_run": {
-    "run_at": "2026-08-08T02:28:16.632349Z",
-    "queue_date": "2026-08-08",
-    "reviewed_count": 1,
-    "auto_approved_count": 1,
+    "run_at": "2026-08-09T02:35:43.830533Z",
+    "queue_date": "2026-08-09",
+    "reviewed_count": 0,
+    "auto_approved_count": 0,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": [
-      {
-        "draft": "content-queue/2026-08-08/01-en-models.md",
-        "slug": "en-models",
-        "score": 210.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 615,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.7879,
-          "topic_score": 0.0556,
-          "slug": "model-qwen3-vl-30b-vram-requirements-rtx-3090"
-        }
-      }
-    ]
+    "items": []
   },
   "history": [
+    {
+      "run_at": "2026-08-09T02:35:43.830533Z",
+      "queue_date": "2026-08-09",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-08-08T02:28:16.632349Z",
       "queue_date": "2026-08-08",
@@ -943,32 +939,6 @@
       "high_risk_count": 0,
       "risk_flag_counts": {},
       "items": []
-    },
-    {
-      "run_at": "2026-05-20T04:47:07.459824Z",
-      "queue_date": "2026-05-20",
-      "reviewed_count": 1,
-      "auto_approved_count": 1,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-05-20/01-en-blog-best-local-rag-models-2026.md",
-          "slug": "en-blog-best-local-rag-models-2026",
-          "score": 192.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 541,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.8421,
-            "topic_score": 0.1579,
-            "slug": "model-deepseek-r1-14b-rtx-3090-ollama-benchmark"
-          }
-        }
-      ]
     }
   ]
 }
