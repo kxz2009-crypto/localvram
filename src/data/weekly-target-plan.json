@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T05:23:08Z",
+  "generated_at": "2026-08-12T04:15:49Z",
   "endpoint": "http://127.0.0.1:11435",
   "base_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "base_targets_raw_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
@@ -84,7 +84,6 @@
   "retired_local_model_count": 0,
   "candidate_families": [
     "gemma4",
-    "qwen3-embedding",
     "translategemma",
     "granite4.1",
     "nemotron-3-nano",
@@ -108,10 +107,6 @@
       "num_predict": 128
     },
     {
-      "model": "qwen3-embedding",
-      "num_predict": 128
-    },
-    {
       "model": "translategemma",
       "num_predict": 96
     },
@@ -121,6 +116,10 @@
     },
     {
       "model": "nemotron-3-nano",
+      "num_predict": 96
+    },
+    {
+      "model": "olmo-3.1",
       "num_predict": 96
     }
   ],
