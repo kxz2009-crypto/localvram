@@ -1,77 +1,77 @@
 {
-  "generated_at": "2026-08-13T03:09:23.529853Z",
+  "generated_at": "2026-08-14T03:08:53.996742Z",
   "window_days": 30,
-  "window_start": "2026-07-14T03:09:23.529853Z",
-  "window_end": "2026-08-13T03:09:23.529853Z",
+  "window_start": "2026-07-15T03:08:53.996742Z",
+  "window_end": "2026-08-14T03:08:53.996742Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
-    "search_console_updated_at": "2026-08-10T04:09:38Z"
+    "search_console_updated_at": "2026-08-13T04:22:21Z"
   },
   "funnel": {
     "organic_search_clicks": 1,
     "decision_page_clicks": 1,
-    "affiliate_redirect_clicks": 310,
-    "cloud_redirect_clicks": 114,
-    "hardware_redirect_clicks": 196,
-    "search_to_affiliate_pct": 31000.0,
-    "search_to_cloud_pct": 11400.0,
-    "affiliate_to_cloud_pct": 36.77
+    "affiliate_redirect_clicks": 315,
+    "cloud_redirect_clicks": 117,
+    "hardware_redirect_clicks": 198,
+    "search_to_affiliate_pct": 31500.0,
+    "search_to_cloud_pct": 11700.0,
+    "affiliate_to_cloud_pct": 37.14
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 196,
-        "share_pct": 63.23
+        "clicks": 198,
+        "share_pct": 62.86
       },
       {
         "provider": "runpod",
-        "clicks": 58,
-        "share_pct": 18.71
+        "clicks": 60,
+        "share_pct": 19.05
       },
       {
         "provider": "vast",
-        "clicks": 56,
-        "share_pct": 18.06
+        "clicks": 57,
+        "share_pct": 18.1
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 96,
-        "share_pct": 30.97
+        "clicks": 98,
+        "share_pct": 31.11
       },
       {
         "route": "/go/runpod",
-        "clicks": 58,
-        "share_pct": 18.71
+        "clicks": 60,
+        "share_pct": 19.05
       },
       {
         "route": "/go/vast",
-        "clicks": 56,
-        "share_pct": 18.06
+        "clicks": 57,
+        "share_pct": 18.1
       },
       {
         "route": "/recommends/rtx-4090-24gb",
         "clicks": 40,
-        "share_pct": 12.9
+        "share_pct": 12.7
       },
       {
         "route": "/recommends/atx3-1000w-psu",
         "clicks": 30,
-        "share_pct": 9.68
+        "share_pct": 9.52
       },
       {
         "route": "/recommends/high-airflow-case",
         "clicks": 30,
-        "share_pct": 9.68
+        "share_pct": 9.52
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 285
+        "clicks": 290
       },
       {
         "page": "/en/affiliate/hardware-upgrade/",
@@ -126,12 +126,17 @@
         "share_pct": 0.0
       },
       {
+        "landing": "/ar/models/deepseek-coder-67b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/ar/models/qwen-18b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
-        "landing": "/ar/models/deepseek-coder-67b-q8/",
+        "landing": "/ar/models/glm-47-flash-7b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -151,11 +156,6 @@
         "share_pct": 0.0
       },
       {
-        "landing": "/ar/models/qwen25-72b-q8/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
         "landing": "/ar/models/qwen25-coder-05b-q8/",
         "clicks": 0,
         "share_pct": 0.0
@@ -166,7 +166,7 @@
         "share_pct": 0.0
       },
       {
-        "landing": "/ar/models/qwen3-vl-2b-q8/",
+        "landing": "/ar/models/qwen25-72b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -201,6 +201,11 @@
         "share_pct": 0.0
       },
       {
+        "landing": "/de/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/de/guides/ollama-local-cluster-network/",
         "clicks": 0,
         "share_pct": 0.0
@@ -209,18 +214,13 @@
         "landing": "/de/models/qwen3-coder-30b-q4/",
         "clicks": 0,
         "share_pct": 0.0
-      },
-      {
-        "landing": "/de/",
-        "clicks": 0,
-        "share_pct": 0.0
       }
     ]
   },
   "data_quality": {
-    "search_console_items": 266,
-    "affiliate_event_items_total": 447,
-    "affiliate_event_items_in_window": 310,
+    "search_console_items": 277,
+    "affiliate_event_items_total": 450,
+    "affiliate_event_items_in_window": 315,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }
