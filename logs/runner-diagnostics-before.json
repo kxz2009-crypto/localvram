@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-12T04:15:49Z",
+  "updated_at": "2026-08-19T03:08:40Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -67,10 +67,10 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=312,fd=3))"
+      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=295,fd=3))"
     ],
     "ps_ollama": [
-      "gao20        312       1  0 Aug09 ?        00:00:05 /usr/local/bin/ollama serve"
+      "gao20        295       1  0 Aug16 ?        00:00:06 /usr/local/bin/ollama serve"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -85,8 +85,8 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Sun 2026-08-09 23:46:58 EDT; 2 days ago\n   Main PID: 312 (ollama)\n      Tasks: 15 (limit: 86826)\n     Memory: 20.0M (peak: 447.6M swap: 3.9M swap peak: 4.9M)\n        CPU: 5.423s\n     CGroup: /system.slice/ollama.service\n             └─312 /usr/local/bin/ollama serve\n\nAug 11 23:49:52 Vernon ollama[312]: [GIN] 2026/08/11 - 23:49:52 | 200 |  276.067696ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 11 23:49:52 Vernon ollama[312]: time=2026-08-11T23:49:52.994-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 11 23:49:53 Vernon ollama[312]: [GIN] 2026/08/11 - 23:49:53 | 200 |  268.344123ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 11 23:49:53 Vernon ollama[312]: [GIN] 2026/08/11 - 23:49:53 | 200 |      24.393µs |       127.0.0.1 | GET      \"/api/version\"\nAug 11 23:49:53 Vernon ollama[312]: [GIN] 2026/08/11 - 23:49:53 | 200 |      23.989µs |       127.0.0.1 | GET      \"/api/version\"\nAug 11 23:49:53 Vernon ollama[312]: time=2026-08-11T23:49:53.763-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 11 23:49:53 Vernon ollama[312]: [GIN] 2026/08/11 - 23:49:53 | 200 |  271.924525ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 12 00:15:49 Vernon ollama[312]: time=2026-08-12T00:15:49.351-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 12 00:15:49 Vernon ollama[312]: [GIN] 2026/08/12 - 00:15:49 | 200 |  344.078982ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 12 00:15:49 Vernon ollama[312]: [GIN] 2026/08/12 - 00:15:49 | 200 |     182.272µs |       127.0.0.1 | GET      \"/api/version\"",
-      "stderr": ""
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Sun 2026-08-16 11:16:16 EDT; 2 days ago\n   Main PID: 295 (ollama)\n      Tasks: 15 (limit: 86826)\n     Memory: 19.2M (peak: 447.3M swap: 4.8M swap peak: 5.5M)\n        CPU: 6.435s\n     CGroup: /system.slice/ollama.service\n             └─295 /usr/local/bin/ollama serve\n\nAug 18 22:43:09 Vernon ollama[295]: [GIN] 2026/08/18 - 22:43:09 | 200 |  261.261611ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 18 22:43:10 Vernon ollama[295]: time=2026-08-18T22:43:10.419-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 18 22:43:10 Vernon ollama[295]: [GIN] 2026/08/18 - 22:43:10 | 200 |  276.203587ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 18 22:43:10 Vernon ollama[295]: [GIN] 2026/08/18 - 22:43:10 | 200 |      35.837µs |       127.0.0.1 | GET      \"/api/version\"\nAug 18 22:43:10 Vernon ollama[295]: [GIN] 2026/08/18 - 22:43:10 | 200 |     319.183µs |       127.0.0.1 | GET      \"/api/version\"\nAug 18 22:43:11 Vernon ollama[295]: time=2026-08-18T22:43:11.181-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 18 22:43:11 Vernon ollama[295]: [GIN] 2026/08/18 - 22:43:11 | 200 |  293.609894ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 18 23:08:40 Vernon ollama[295]: time=2026-08-18T23:08:40.444-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nAug 18 23:08:40 Vernon ollama[295]: [GIN] 2026/08/18 - 23:08:40 | 200 |  319.307978ms |       127.0.0.1 | GET      \"/api/tags\"\nAug 18 23:08:40 Vernon ollama[295]: [GIN] 2026/08/18 - 23:08:40 | 200 |     448.564µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stderr": "Warning: The unit file, source configuration file or drop-ins of ollama.service changed on disk. Run 'systemctl daemon-reload' to reload units."
     },
     "SYSTEMD_RUNNER_UNITS": {
       "exit": 0,
