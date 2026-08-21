@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-20T02:02:24.303288Z",
+  "generated_at": "2026-08-21T02:09:58.044338Z",
   "window_days": 30,
-  "window_start": "2026-07-21T02:02:24.303288Z",
-  "window_end": "2026-08-20T02:02:24.303288Z",
+  "window_start": "2026-07-22T02:09:58.044338Z",
+  "window_end": "2026-08-21T02:09:58.044338Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -27,13 +27,13 @@
       },
       {
         "provider": "runpod",
-        "clicks": 75,
-        "share_pct": 21.55
+        "clicks": 77,
+        "share_pct": 22.13
       },
       {
         "provider": "vast",
-        "clicks": 69,
-        "share_pct": 19.83
+        "clicks": 67,
+        "share_pct": 19.25
       }
     ],
     "routes": [
@@ -44,13 +44,13 @@
       },
       {
         "route": "/go/runpod",
-        "clicks": 75,
-        "share_pct": 21.55
+        "clicks": 77,
+        "share_pct": 22.13
       },
       {
         "route": "/go/vast",
-        "clicks": 69,
-        "share_pct": 19.83
+        "clicks": 67,
+        "share_pct": 19.25
       },
       {
         "route": "/recommends/rtx-4090-24gb",
@@ -71,7 +71,11 @@
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 321
+        "clicks": 318
+      },
+      {
+        "page": "/en/models/gpt-oss-20b-q4/",
+        "clicks": 6
       },
       {
         "page": "/",
@@ -86,15 +90,7 @@
         "clicks": 3
       },
       {
-        "page": "/en/models/gpt-oss-20b-q4/",
-        "clicks": 3
-      },
-      {
         "page": "/en/models/qwen3-coder-30b-q4/",
-        "clicks": 3
-      },
-      {
-        "page": "/go/vast",
         "clicks": 3
       },
       {
@@ -102,8 +98,16 @@
         "clicks": 2
       },
       {
+        "page": "/go/vast",
+        "clicks": 2
+      },
+      {
         "page": "/go/runpod",
         "clicks": 2
+      },
+      {
+        "page": "/en/models/ministral-3-14b-q4/",
+        "clicks": 1
       },
       {
         "page": "/pt/tools/vram-calculator/",
@@ -227,7 +231,7 @@
   },
   "data_quality": {
     "search_console_items": 285,
-    "affiliate_event_items_total": 478,
+    "affiliate_event_items_total": 482,
     "affiliate_event_items_in_window": 348,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
