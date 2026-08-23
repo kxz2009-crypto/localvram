@@ -1,33 +1,29 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-22T01:58:10.266513Z",
+  "updated_at": "2026-08-23T02:09:29.929021Z",
   "last_run": {
-    "run_at": "2026-08-22T01:58:10.266513Z",
-    "queue_date": "2026-08-22",
-    "reviewed_count": 1,
-    "auto_approved_count": 1,
+    "run_at": "2026-08-23T02:09:29.929021Z",
+    "queue_date": "2026-08-23",
+    "reviewed_count": 0,
+    "auto_approved_count": 0,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": [
-      {
-        "draft": "content-queue/2026-08-22/01-ru-blog-still-the-vram-king-rtx-3090-2026.md",
-        "slug": "ru-blog-still-the-vram-king-rtx-3090-2026",
-        "score": 210.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 624,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.8354,
-          "topic_score": 0.4375,
-          "slug": "2026-08-03-qwen3-coder-30b-hardware-upgrade"
-        }
-      }
-    ]
+    "items": []
   },
   "history": [
+    {
+      "run_at": "2026-08-23T02:09:29.929021Z",
+      "queue_date": "2026-08-23",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-08-22T01:58:10.266513Z",
       "queue_date": "2026-08-22",
@@ -943,17 +939,6 @@
           }
         }
       ]
-    },
-    {
-      "run_at": "2026-06-04T05:22:58.929837Z",
-      "queue_date": "2026-06-04",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
     }
   ]
 }

@@ -1,71 +1,71 @@
 {
-  "generated_at": "2026-08-22T01:59:55.246709Z",
+  "generated_at": "2026-08-23T02:11:19.060608Z",
   "window_days": 30,
-  "window_start": "2026-07-23T01:59:55.246709Z",
-  "window_end": "2026-08-22T01:59:55.246709Z",
+  "window_start": "2026-07-24T02:11:19.060608Z",
+  "window_end": "2026-08-23T02:11:19.060608Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
-    "search_console_updated_at": "2026-08-16T03:14:54Z"
+    "search_console_updated_at": "2026-08-22T03:10:31Z"
   },
   "funnel": {
-    "organic_search_clicks": 2,
+    "organic_search_clicks": 3,
     "decision_page_clicks": 1,
-    "affiliate_redirect_clicks": 351,
-    "cloud_redirect_clicks": 146,
-    "hardware_redirect_clicks": 205,
-    "search_to_affiliate_pct": 17550.0,
-    "search_to_cloud_pct": 7300.0,
-    "affiliate_to_cloud_pct": 41.6
+    "affiliate_redirect_clicks": 348,
+    "cloud_redirect_clicks": 144,
+    "hardware_redirect_clicks": 204,
+    "search_to_affiliate_pct": 11600.0,
+    "search_to_cloud_pct": 4800.0,
+    "affiliate_to_cloud_pct": 41.38
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 205,
-        "share_pct": 58.4
+        "clicks": 204,
+        "share_pct": 58.62
       },
       {
         "provider": "runpod",
-        "clicks": 78,
-        "share_pct": 22.22
+        "clicks": 77,
+        "share_pct": 22.13
       },
       {
         "provider": "vast",
-        "clicks": 68,
-        "share_pct": 19.37
+        "clicks": 67,
+        "share_pct": 19.25
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 104,
-        "share_pct": 29.63
+        "clicks": 103,
+        "share_pct": 29.6
       },
       {
         "route": "/go/runpod",
-        "clicks": 78,
-        "share_pct": 22.22
+        "clicks": 77,
+        "share_pct": 22.13
       },
       {
         "route": "/go/vast",
-        "clicks": 68,
-        "share_pct": 19.37
+        "clicks": 67,
+        "share_pct": 19.25
       },
       {
         "route": "/recommends/rtx-4090-24gb",
         "clicks": 41,
-        "share_pct": 11.68
+        "share_pct": 11.78
       },
       {
         "route": "/recommends/atx3-1000w-psu",
         "clicks": 30,
-        "share_pct": 8.55
+        "share_pct": 8.62
       },
       {
         "route": "/recommends/high-airflow-case",
         "clicks": 30,
-        "share_pct": 8.55
+        "share_pct": 8.62
       }
     ],
     "source_pages": [
@@ -98,14 +98,6 @@
         "clicks": 2
       },
       {
-        "page": "/go/vast",
-        "clicks": 2
-      },
-      {
-        "page": "/go/runpod",
-        "clicks": 2
-      },
-      {
         "page": "/en/models/ministral-3-14b-q4/",
         "clicks": 1
       },
@@ -122,7 +114,11 @@
         "clicks": 1
       },
       {
-        "page": "/recommends/rtx-3090-24gb",
+        "page": "/go/vast",
+        "clicks": 1
+      },
+      {
+        "page": "/go/runpod",
         "clicks": 1
       }
     ],
@@ -130,12 +126,17 @@
       {
         "landing": "/en/guides/best-coding-models/",
         "clicks": 1,
-        "share_pct": 50.0
+        "share_pct": 33.33
+      },
+      {
+        "landing": "/ko/models/qwen3-14b-q4/",
+        "clicks": 1,
+        "share_pct": 33.33
       },
       {
         "landing": "/ru/blog/still-the-vram-king-rtx-3090-2026/",
         "clicks": 1,
-        "share_pct": 50.0
+        "share_pct": 33.33
       },
       {
         "landing": "/ar/models/llama2-7b-fp16/",
@@ -143,7 +144,17 @@
         "share_pct": 0.0
       },
       {
+        "landing": "/ar/models/gemma3-12b-q5/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/ar/models/qwen-18b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/qwen3-vl-4b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -163,17 +174,17 @@
         "share_pct": 0.0
       },
       {
+        "landing": "/ar/models/llama32-1b-q5/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/ar/models/qwen25-coder-14b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
         "landing": "/ar/models/qwen35-35b-q8/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/ar/models/qwen25-coder-05b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -198,41 +209,26 @@
         "share_pct": 0.0
       },
       {
+        "landing": "/ar/models/qwen3-coder-30b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/de/tools/vram-calculator/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/status/conversion-funnel/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/models/qwen3-coder-30b-q4/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/guides/ollama-local-cluster-network/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/hardware/verified-3090/",
         "clicks": 0,
         "share_pct": 0.0
       }
     ]
   },
   "data_quality": {
-    "search_console_items": 285,
-    "affiliate_event_items_total": 484,
-    "affiliate_event_items_in_window": 351,
+    "search_console_items": 306,
+    "affiliate_event_items_total": 487,
+    "affiliate_event_items_in_window": 348,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }
