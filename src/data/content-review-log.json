@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-23T02:09:29.929021Z",
+  "updated_at": "2026-08-24T02:07:48.961776Z",
   "last_run": {
-    "run_at": "2026-08-23T02:09:29.929021Z",
-    "queue_date": "2026-08-23",
+    "run_at": "2026-08-24T02:07:48.961776Z",
+    "queue_date": "2026-08-24",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-08-24T02:07:48.961776Z",
+      "queue_date": "2026-08-24",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-08-23T02:09:29.929021Z",
       "queue_date": "2026-08-23",
@@ -913,32 +924,6 @@
       "high_risk_count": 0,
       "risk_flag_counts": {},
       "items": []
-    },
-    {
-      "run_at": "2026-06-05T04:57:22.993563Z",
-      "queue_date": "2026-06-05",
-      "reviewed_count": 1,
-      "auto_approved_count": 1,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-06-05/01-model-qwq-32b-local-benchmark.md",
-          "slug": "model-qwq-32b-local-benchmark",
-          "score": 225.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 557,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.7736,
-            "topic_score": 0.2667,
-            "slug": "model-deepseek-r1-14b-benchmark-refresh"
-          }
-        }
-      ]
     }
   ]
 }

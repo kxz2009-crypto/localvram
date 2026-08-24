@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-23T02:09:30.011023Z",
+  "updated_at": "2026-08-24T02:07:49.047034Z",
   "last_run": {
-    "run_at": "2026-08-23T02:09:30.011023Z",
-    "queue_date": "2026-08-23",
+    "run_at": "2026-08-24T02:07:49.047034Z",
+    "queue_date": "2026-08-24",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-08-23",
-        "title": "Today's Local LLM Pick: gemma3:27b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-08-23-daily-local-llm-benchmark-snapshot-2026-08-23",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-08-24",
+        "title": "Today's Local LLM Pick: qwen2.5-coder:32b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-08-24-daily-local-llm-benchmark-snapshot-2026-08-24",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-23.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-24.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-08-24T02:07:49.047034Z",
+      "queue_date": "2026-08-24",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-08-24",
+          "title": "Today's Local LLM Pick: qwen2.5-coder:32b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-08-24-daily-local-llm-benchmark-snapshot-2026-08-24",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-24.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-08-23T02:09:30.011023Z",
       "queue_date": "2026-08-23",
@@ -1382,33 +1404,6 @@
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-06.md",
           "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-06-05T04:57:23.066832Z",
-      "queue_date": "2026-06-05",
-      "candidate_count": 1,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 0,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "model-qwq-32b-local-benchmark",
-          "title": "qwq:32B: Local Inference Performance Report (2026)",
-          "topic_key": "qwq-32b-local-inference-benchmark",
-          "score": 225.0,
-          "source_draft": "content-queue/2026-06-05/01-model-qwq-32b-local-benchmark.md",
-          "out_file": "src/content/blog/model-qwq-32b-local-benchmark.md",
-          "intent": "benchmark",
-          "model_tag": "qwq:32b",
-          "model_key": "qwq-32b",
-          "traffic_priority": "",
-          "ollama_updated_label": "",
-          "benchmark_measured_at": ""
         }
       ],
       "skipped": []
