@@ -1,77 +1,77 @@
 {
-  "generated_at": "2026-08-28T11:42:23.850825Z",
+  "generated_at": "2026-08-29T07:18:42.340398Z",
   "window_days": 30,
-  "window_start": "2026-07-29T11:42:23.850825Z",
-  "window_end": "2026-08-28T11:42:23.850825Z",
+  "window_start": "2026-07-30T07:18:42.340398Z",
+  "window_end": "2026-08-29T07:18:42.340398Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
-    "search_console_updated_at": "2026-08-25T03:14:53Z"
+    "search_console_updated_at": "2026-08-28T14:24:58Z"
   },
   "funnel": {
-    "organic_search_clicks": 2,
+    "organic_search_clicks": 3,
     "decision_page_clicks": 0,
-    "affiliate_redirect_clicks": 338,
-    "cloud_redirect_clicks": 137,
-    "hardware_redirect_clicks": 201,
-    "search_to_affiliate_pct": 16900.0,
-    "search_to_cloud_pct": 6850.0,
-    "affiliate_to_cloud_pct": 40.53
+    "affiliate_redirect_clicks": 333,
+    "cloud_redirect_clicks": 134,
+    "hardware_redirect_clicks": 199,
+    "search_to_affiliate_pct": 11100.0,
+    "search_to_cloud_pct": 4466.67,
+    "affiliate_to_cloud_pct": 40.24
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 201,
-        "share_pct": 59.47
+        "clicks": 199,
+        "share_pct": 59.76
       },
       {
         "provider": "runpod",
-        "clicks": 74,
-        "share_pct": 21.89
+        "clicks": 73,
+        "share_pct": 21.92
       },
       {
         "provider": "vast",
-        "clicks": 63,
-        "share_pct": 18.64
+        "clicks": 61,
+        "share_pct": 18.32
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 101,
-        "share_pct": 29.88
+        "clicks": 99,
+        "share_pct": 29.73
       },
       {
         "route": "/go/runpod",
-        "clicks": 74,
-        "share_pct": 21.89
+        "clicks": 73,
+        "share_pct": 21.92
       },
       {
         "route": "/go/vast",
-        "clicks": 63,
-        "share_pct": 18.64
+        "clicks": 61,
+        "share_pct": 18.32
       },
       {
         "route": "/recommends/rtx-4090-24gb",
-        "clicks": 42,
-        "share_pct": 12.43
+        "clicks": 40,
+        "share_pct": 12.01
       },
       {
         "route": "/recommends/atx3-1000w-psu",
-        "clicks": 29,
-        "share_pct": 8.58
+        "clicks": 30,
+        "share_pct": 9.01
       },
       {
         "route": "/recommends/high-airflow-case",
-        "clicks": 29,
-        "share_pct": 8.58
+        "clicks": 30,
+        "share_pct": 9.01
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 309
+        "clicks": 308
       },
       {
         "page": "/en/models/gpt-oss-20b-q4/",
@@ -79,7 +79,7 @@
       },
       {
         "page": "/en/affiliate/hardware-upgrade/",
-        "clicks": 5
+        "clicks": 4
       },
       {
         "page": "/",
@@ -87,10 +87,6 @@
       },
       {
         "page": "/en/models/qwen3-vl-30b-q4/",
-        "clicks": 3
-      },
-      {
-        "page": "/en/models/qwen3-coder-30b-q4/",
         "clicks": 3
       },
       {
@@ -124,22 +120,27 @@
     ],
     "search_landings": [
       {
+        "landing": "/en/blog/16gb-vram-model-selection-guide/",
+        "clicks": 1,
+        "share_pct": 33.33
+      },
+      {
         "landing": "/ko/models/qwen3-14b-q4/",
         "clicks": 1,
-        "share_pct": 50.0
+        "share_pct": 33.33
       },
       {
         "landing": "/ru/blog/still-the-vram-king-rtx-3090-2026/",
         "clicks": 1,
-        "share_pct": 50.0
+        "share_pct": 33.33
       },
       {
-        "landing": "/ar/models/llama2-7b-fp16/",
+        "landing": "/ar/models/gemma3-12b-q5/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
-        "landing": "/ar/models/gemma3-12b-q5/",
+        "landing": "/ar/models/llama2-7b-fp16/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -155,11 +156,6 @@
       },
       {
         "landing": "/ar/models/glm-47-flash-7b-q8/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/ar/models/llama3-70b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -185,11 +181,6 @@
       },
       {
         "landing": "/ar/models/qwen3-235b-q8/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/ar/models/qwen3-4b-fp16/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -222,13 +213,18 @@
         "landing": "/de/",
         "clicks": 0,
         "share_pct": 0.0
+      },
+      {
+        "landing": "/de/models/qwen3-14b-q4/",
+        "clicks": 0,
+        "share_pct": 0.0
       }
     ]
   },
   "data_quality": {
-    "search_console_items": 299,
-    "affiliate_event_items_total": 483,
-    "affiliate_event_items_in_window": 338,
+    "search_console_items": 311,
+    "affiliate_event_items_total": 493,
+    "affiliate_event_items_in_window": 333,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }
