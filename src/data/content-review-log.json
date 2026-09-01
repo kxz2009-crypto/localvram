@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-31T05:57:19.615267Z",
+  "updated_at": "2026-09-01T05:30:15.022949Z",
   "last_run": {
-    "run_at": "2026-08-31T05:57:19.615267Z",
-    "queue_date": "2026-08-31",
+    "run_at": "2026-09-01T05:30:15.022949Z",
+    "queue_date": "2026-09-01",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-09-01T05:30:15.022949Z",
+      "queue_date": "2026-09-01",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-08-31T05:57:19.615267Z",
       "queue_date": "2026-08-31",
@@ -898,32 +909,6 @@
       "high_risk_count": 0,
       "risk_flag_counts": {},
       "items": []
-    },
-    {
-      "run_at": "2026-06-17T05:25:37.007166Z",
-      "queue_date": "2026-06-17",
-      "reviewed_count": 1,
-      "auto_approved_count": 1,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-06-17/01-2026-06-17-gpt-oss-20b-hardware-upgrade.md",
-          "slug": "2026-06-17-gpt-oss-20b-hardware-upgrade",
-          "score": 216.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 643,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.6229,
-            "topic_score": 0.1579,
-            "slug": "model-qwq-32b-local-benchmark"
-          }
-        }
-      ]
     }
   ]
 }

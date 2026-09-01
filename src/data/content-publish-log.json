@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-08-31T05:57:19.694102Z",
+  "updated_at": "2026-09-01T05:30:15.110644Z",
   "last_run": {
-    "run_at": "2026-08-31T05:57:19.694102Z",
-    "queue_date": "2026-08-31",
+    "run_at": "2026-09-01T05:30:15.110644Z",
+    "queue_date": "2026-09-01",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-08-31",
-        "title": "Today's Local LLM Pick: mistral-small:22b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-08-31-daily-local-llm-benchmark-snapshot-2026-08-31",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-09-01",
+        "title": "Today's Local LLM Pick: ministral-3:14b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-09-01-daily-local-llm-benchmark-snapshot-2026-09-01",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-08-31.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-01.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-09-01T05:30:15.110644Z",
+      "queue_date": "2026-09-01",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-09-01",
+          "title": "Today's Local LLM Pick: ministral-3:14b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-09-01-daily-local-llm-benchmark-snapshot-2026-09-01",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-01.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-08-31T05:57:19.694102Z",
       "queue_date": "2026-08-31",
@@ -1377,33 +1399,6 @@
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-18.md",
           "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-06-17T05:25:37.085116Z",
-      "queue_date": "2026-06-17",
-      "candidate_count": 1,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 0,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "2026-06-17-gpt-oss-20b-hardware-upgrade",
-          "title": "gpt-oss:20B RTX 3090 Local Benchmark Hardware Upgrade: Practical GPU Selection for Stable Local Inference (2026)",
-          "topic_key": "gpt-oss-20b-rtx-3090-local-benchmark-hardware-upgrade",
-          "score": 216.0,
-          "source_draft": "content-queue/2026-06-17/01-2026-06-17-gpt-oss-20b-hardware-upgrade.md",
-          "out_file": "src/content/blog/2026-06-17-gpt-oss-20b-hardware-upgrade.md",
-          "intent": "hardware",
-          "model_tag": "gpt-oss:20b",
-          "model_key": "gpt-oss-20b",
-          "traffic_priority": "fallback",
-          "ollama_updated_label": "",
-          "benchmark_measured_at": "2026-04-29T05:39:58Z"
         }
       ],
       "skipped": []
