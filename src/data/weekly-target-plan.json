@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-26T03:15:44Z",
+  "generated_at": "2026-09-02T07:04:38Z",
   "endpoint": "http://127.0.0.1:11435",
   "base_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "base_targets_raw_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "resolved_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96,gemma4=128",
-  "local_model_count": 49,
+  "local_model_count": 50,
   "local_models_sample": [
     "bge-m3:latest",
     "deepseek-ocr:3b-bf16",
@@ -37,7 +37,7 @@
     "qwen3-embedding:8b",
     "qwen3-vl:30b"
   ],
-  "local_family_count": 33,
+  "local_family_count": 34,
   "local_families": [
     "bge-m3",
     "deepseek-ocr",
@@ -68,6 +68,7 @@
     "qwen3.5",
     "qwen3.6",
     "qwen3.6-hermes",
+    "qwen3.8",
     "qwen36-moe",
     "qwen36-moe-agent",
     "qwq",
@@ -84,6 +85,7 @@
   "retired_local_model_count": 0,
   "candidate_families": [
     "gemma4",
+    "qwen3.8",
     "translategemma",
     "granite4.1",
     "nemotron-3-nano",
@@ -107,6 +109,10 @@
       "num_predict": 128
     },
     {
+      "model": "qwen3.8",
+      "num_predict": 96
+    },
+    {
       "model": "translategemma",
       "num_predict": 96
     },
@@ -116,10 +122,6 @@
     },
     {
       "model": "nemotron-3-nano",
-      "num_predict": 96
-    },
-    {
-      "model": "olmo-3.1",
       "num_predict": 96
     }
   ],
