@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-02T07:13:49Z",
+  "updated_at": "2026-09-02T07:13:51Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -17,15 +17,15 @@
     "publish_benchmark_artifact": {
       "workflow_key": "publish_benchmark_artifact",
       "workflow_name": "Publish Benchmark Artifact",
-      "run_id": "32926447342",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/32926447342",
+      "run_id": "33602524244",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/33602524244",
       "status": "completed",
       "conclusion": "success",
       "event": "workflow_run",
-      "head_sha": "e7b21f7de7d791e21ceadb84706693a54a80c754",
+      "head_sha": "966b6f28ac97daadc910e96e05926fdb84dfc336",
       "failure_class": "none",
       "failure_detail": "",
-      "updated_at": "2026-08-26T03:26:37Z"
+      "updated_at": "2026-09-02T07:13:51Z"
     },
     "daily_content": {
       "workflow_key": "daily_content",
@@ -42,6 +42,19 @@
     }
   },
   "history": [
+    {
+      "workflow_key": "publish_benchmark_artifact",
+      "workflow_name": "Publish Benchmark Artifact",
+      "run_id": "33602524244",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/33602524244",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "workflow_run",
+      "head_sha": "966b6f28ac97daadc910e96e05926fdb84dfc336",
+      "failure_class": "none",
+      "failure_detail": "",
+      "updated_at": "2026-09-02T07:13:51Z"
+    },
     {
       "workflow_key": "weekly_benchmark",
       "workflow_name": "Weekly Benchmark",
@@ -808,19 +821,6 @@
       "failure_class": "daily_content_failed",
       "failure_detail": "quality-gate.py failed",
       "updated_at": "2026-07-21T03:57:53Z"
-    },
-    {
-      "workflow_key": "daily_content",
-      "workflow_name": "Daily Content Agent",
-      "run_id": "29716729883",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/29716729883",
-      "status": "completed",
-      "conclusion": "failure",
-      "event": "schedule",
-      "head_sha": "1d0a96db7d895c584848e152c411805dfc20b0dc",
-      "failure_class": "daily_content_failed",
-      "failure_detail": "quality-gate.py failed",
-      "updated_at": "2026-07-20T04:24:18Z"
     }
   ]
 }
