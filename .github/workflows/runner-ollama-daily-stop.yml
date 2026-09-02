@@ -1,0 +1,41 @@
+name: Runner Ollama Daily Stop
+
+on:
+  schedule:
+    # 03:00 UTC = 11:00 Beijing time
+    - cron: "0 3 * * *"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stop-ollama:
+    runs-on: [self-hosted, Linux, X64, 3090, local-ai]
+
+    steps:
+      - name: Stop WSL Ollama at end of daily window
+        shell: bash
+        run: |
+          echo "=== Ollama state before stop ==="
+          systemctl is-active ollama || true
+          ss -lntp | grep ':11435 ' || true
+
+          echo
+          echo "=== stopping WSL Ollama ==="
+          sudo systemctl stop ollama
+
+          sleep 2
+
+          echo
+          echo "=== final state ==="
+          systemctl is-active ollama || true
+
+          if ss -lntp | grep -q ':11435 '; then
+            echo "::error::WSL Ollama port 11435 is still listening"
+            ss -lntp | grep ':11435 ' || true
+            exit 1
+          fi
+
+          echo "WSL Ollama stopped successfully."

@@ -30,8 +30,8 @@ permissions:
   contents: read
 
 env:
-  DEFAULT_OLLAMA_ENDPOINT: ${{ vars.LV_OLLAMA_ENDPOINT || 'http://127.0.0.1:11434' }}
-  DEFAULT_REQUIRED_TARGETS: ${{ vars.LV_WEEKLY_BASE_TARGETS || 'qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,gemma4=96,llama4=64,qwq=96' }}
+  DEFAULT_OLLAMA_ENDPOINT: ${{ vars.LV_OLLAMA_ENDPOINT || 'http://127.0.0.1:11435' }}
+  DEFAULT_REQUIRED_TARGETS: ${{ vars.LV_WEEKLY_BASE_TARGETS || 'qwen3=128,qwen3.8=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,gemma4=96,llama4=64,qwq=96' }}
   DEFAULT_RETRY_DELAYS_S: ${{ vars.LV_NETWORK_RETRY_DELAYS_S || '5,10,20' }}
   OLLAMA_MODELS: ${{ vars.OLLAMA_MODELS || '/mnt/d/Ollama' }}
 
@@ -57,6 +57,56 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
+
+      - name: Start WSL Ollama for daily benchmark window
+        if: steps.checkout.conclusion == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "=== WSL Ollama before start ==="
+          echo -n "enabled: "
+          systemctl is-enabled ollama || true
+
+          echo -n "active: "
+          systemctl is-active ollama || true
+
+          echo
+          echo "=== Starting WSL Ollama ==="
+
+          # Ollama stays disabled at boot.
+          # It is started only for the daily 09:40-11:00 Beijing-time window.
+          sudo systemctl start ollama
+
+          echo
+          echo "=== Waiting for Ollama API ==="
+
+          READY=false
+
+          for attempt in {1..12}; do
+            if curl -fsS \
+              --max-time 5 \
+              http://127.0.0.1:11435/api/version; then
+              echo
+              READY=true
+              break
+            fi
+
+            echo "waiting for Ollama (${attempt}/12)..."
+            sleep 5
+          done
+
+          if [ "${READY}" != "true" ]; then
+            echo "::error::WSL Ollama failed to start on 127.0.0.1:11435"
+            systemctl status ollama --no-pager -l || true
+            journalctl -u ollama -n 50 --no-pager || true
+            exit 1
+          fi
+
+          echo
+          echo "=== WSL Ollama ready ==="
+          systemctl is-active ollama
+          ss -lntp | grep ':11435 ' || true
 
       - name: Normalize smoke inputs
         id: smoke_inputs
