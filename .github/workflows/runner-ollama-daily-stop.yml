@@ -24,7 +24,7 @@ jobs:
 
           echo
           echo "=== stopping WSL Ollama ==="
-          sudo systemctl stop ollama
+          sudo -n systemctl stop ollama
 
           sleep 2
 

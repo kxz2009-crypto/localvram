@@ -76,7 +76,7 @@ jobs:
 
           # Ollama stays disabled at boot.
           # It is started only for the daily 09:40-11:00 Beijing-time window.
-          sudo systemctl start ollama
+          sudo -n systemctl start ollama
 
           echo
           echo "=== Waiting for Ollama API ==="
