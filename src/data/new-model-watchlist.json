@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-02T04:56:17.141533Z",
+  "updated_at": "2026-09-03T04:53:19.364450Z",
   "window_hours": 48,
   "max_library_age_days": 14,
   "strategy": "Prioritize new Ollama model families; use RTX 3090 benchmark recency as evidence, not as proof of model freshness.",
   "local_inventory": {
-    "model_count": 49,
+    "model_count": 50,
     "source": "runner /api/tags via runner-status.json and weekly-target-plan.json"
   },
   "items": [
@@ -17,35 +17,35 @@
       "source": "new_family_benchmark",
       "priority_score": 100,
       "status": "measured",
-      "measured_at": "2026-08-26T03:15:46Z",
-      "tokens_per_second": 6.41,
-      "latency_ms": 16340.0,
+      "measured_at": "2026-09-02T07:04:40Z",
+      "tokens_per_second": 28.265,
+      "latency_ms": 4033.0,
       "ollama_command": "ollama run qwen3.6:35b",
       "source_url": "https://ollama.com/library/qwen3.6",
-      "ollama_updated_label": "12 hours ago",
-      "ollama_updated_days": 0,
-      "ollama_downloads": "6.3M",
+      "ollama_updated_label": "",
+      "ollama_updated_days": null,
+      "ollama_downloads": "6.4M",
       "ollama_library_freshness": {
-        "status": "fresh",
-        "updated_label": "12 hours ago",
-        "updated_days": 0,
-        "downloads": "6.3M",
+        "status": "inferred",
+        "updated_label": "",
+        "updated_days": null,
+        "downloads": "6.4M",
         "source_url": "https://ollama.com/library/qwen3.6"
       },
       "local_inventory_status": {
         "status": "downloaded",
         "source": "benchmark_results",
-        "model_count": 49
+        "model_count": 50
       },
       "benchmark_status": {
         "status": "measured",
-        "measured_at": "2026-08-26T03:15:46Z",
-        "tokens_per_second": 6.41,
-        "latency_ms": 16340.0
+        "measured_at": "2026-09-02T07:04:40Z",
+        "tokens_per_second": 28.265,
+        "latency_ms": 4033.0
       },
       "traffic_priority": "publish_now",
       "landing": "/en/models/qwen3-6-35b/",
-      "content_angle": "New model family with RTX 3090 evidence; publish while launch-search demand is warm."
+      "content_angle": "Fresh RTX 3090 result; publish while Ollama search demand is warm."
     },
     {
       "tag": "qwen3-vl:30b",
@@ -74,7 +74,7 @@
       "local_inventory_status": {
         "status": "downloaded",
         "source": "runner_api_tags_exact",
-        "model_count": 49
+        "model_count": 50
       },
       "benchmark_status": {
         "status": "pending",

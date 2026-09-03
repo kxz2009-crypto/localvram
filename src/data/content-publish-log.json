@@ -1,29 +1,71 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-02T04:56:19.681145Z",
+  "updated_at": "2026-09-03T04:53:21.361120Z",
   "last_run": {
-    "run_at": "2026-09-02T04:56:19.681145Z",
-    "queue_date": "2026-09-02",
-    "candidate_count": 0,
+    "run_at": "2026-09-03T04:53:21.361120Z",
+    "queue_date": "2026-09-03",
+    "candidate_count": 2,
     "min_publish": 1,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 1,
-    "skipped_count": 0,
+    "fallback_generated_count": 0,
+    "skipped_count": 1,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-09-02",
-        "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-09-02-daily-local-llm-benchmark-snapshot-2026-09-02",
-        "score": 120.0,
-        "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-02.md",
-        "intent": "benchmark"
+        "slug": "2026-09-03-qwen3-coder-30b-setup-playbook",
+        "title": "qwen3-coder:30B RTX 3090 Local Benchmark Setup Playbook: GPU and VRAM Sizing Guide (2026)",
+        "topic_key": "qwen3-coder-30b-rtx-3090-local-benchmark-setup-playbook",
+        "score": 216.0,
+        "source_draft": "content-queue/2026-09-03/02-2026-09-03-qwen3-coder-30b-setup-playbook.md",
+        "out_file": "src/content/blog/2026-09-03-qwen3-coder-30b-setup-playbook.md",
+        "intent": "hardware",
+        "model_tag": "qwen3-coder:30b",
+        "model_key": "qwen3-coder-30b",
+        "traffic_priority": "fallback",
+        "ollama_updated_label": "",
+        "benchmark_measured_at": "2026-09-02T07:04:40Z"
       }
     ],
-    "skipped": []
+    "skipped": [
+      {
+        "draft": "content-queue/2026-09-03/01-q4-vs-q8-quality-loss-ollama-guide.md",
+        "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-09-03T04:53:21.361120Z",
+      "queue_date": "2026-09-03",
+      "candidate_count": 2,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "2026-09-03-qwen3-coder-30b-setup-playbook",
+          "title": "qwen3-coder:30B RTX 3090 Local Benchmark Setup Playbook: GPU and VRAM Sizing Guide (2026)",
+          "topic_key": "qwen3-coder-30b-rtx-3090-local-benchmark-setup-playbook",
+          "score": 216.0,
+          "source_draft": "content-queue/2026-09-03/02-2026-09-03-qwen3-coder-30b-setup-playbook.md",
+          "out_file": "src/content/blog/2026-09-03-qwen3-coder-30b-setup-playbook.md",
+          "intent": "hardware",
+          "model_tag": "qwen3-coder:30b",
+          "model_key": "qwen3-coder-30b",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-09-02T07:04:40Z"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-09-03/01-q4-vs-q8-quality-loss-ollama-guide.md",
+          "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
+        }
+      ]
+    },
     {
       "run_at": "2026-09-02T04:56:19.681145Z",
       "queue_date": "2026-09-02",
@@ -1376,28 +1418,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-20.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-06-19T05:34:17.863168Z",
-      "queue_date": "2026-06-19",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-06-19",
-          "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-06-19-daily-local-llm-benchmark-snapshot-2026-06-19",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-19.md",
           "intent": "benchmark"
         }
       ],
