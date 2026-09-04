@@ -1,6 +1,36 @@
 {
   "items": [
     {
+      "date": "2026-09-04",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-09-04",
+          "slug": "2026-09-04-gpt-oss-20b-vram-fit",
+          "title": "gpt-oss:20B RTX 3090 Local Benchmark VRAM Fit: VRAM Fit and Quantization Plan (2026)",
+          "keyword": "gpt-oss:20b rtx 3090 local benchmark vram fit",
+          "score": 216,
+          "source": "quality_floor_fallback",
+          "landing": "/en/models/",
+          "model_tag": "gpt-oss:20b",
+          "model_key": "",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-04-29T05:39:58Z",
+          "content_angle": "vram-fit",
+          "draft_path": "content-queue/2026-09-04/01-2026-09-04-gpt-oss-20b-vram-fit.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "2026-09-04-gpt-oss-20b-vram-fit",
+          "title": "gpt-oss:20B RTX 3090 Local Benchmark VRAM Fit: VRAM Fit and Quantization Plan (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-09-04T04:58:16.581383Z"
+    },
+    {
       "date": "2026-09-03",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -460,19 +490,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-08-06T03:50:09.706860Z"
-    },
-    {
-      "date": "2026-08-05",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-08-05",
-          "title": "Today's Local LLM Pick: gemma3:27b on RTX 3090 (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-08-05T03:44:28.848611Z"
     }
   ]
 }

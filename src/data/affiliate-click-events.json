@@ -1,7 +1,70 @@
 {
-  "updated_at": "2026-09-03T04:55:02.494094Z",
+  "updated_at": "2026-09-04T04:59:54.648348Z",
   "source": "cloudflare_kv_api_sync",
   "events": [
+    {
+      "ts": "2026-09-04T02:11:34.087000Z",
+      "provider": "runpod",
+      "route": "/go/runpod",
+      "destination": "https://runpod.io/?ref=kzc9gtvv&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-runpod",
+      "referer": ""
+    },
+    {
+      "ts": "2026-09-03T10:36:54.209000Z",
+      "provider": "vast",
+      "route": "/go/vast",
+      "destination": "https://cloud.vast.ai/?ref_id=415258&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-vast",
+      "referer": ""
+    },
+    {
+      "ts": "2026-09-03T10:36:54.123000Z",
+      "provider": "runpod",
+      "route": "/go/runpod",
+      "destination": "https://runpod.io/?ref=kzc9gtvv&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-runpod",
+      "referer": ""
+    },
+    {
+      "ts": "2026-09-03T10:36:54.016000Z",
+      "provider": "amazon",
+      "route": "/recommends/atx3-1000w-psu",
+      "destination": "https://amzn.to/4ryN84q?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-atx3-1000w-psu",
+      "referer": ""
+    },
+    {
+      "ts": "2026-09-03T10:36:53.939000Z",
+      "provider": "amazon",
+      "route": "/recommends/high-airflow-case",
+      "destination": "https://amzn.to/4ryVBEN?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-high-airflow-case",
+      "referer": ""
+    },
+    {
+      "ts": "2026-09-03T10:36:53.838000Z",
+      "provider": "amazon",
+      "route": "/recommends/rtx-4090-24gb",
+      "destination": "https://amzn.to/3N1JaCr?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-4090-24gb",
+      "referer": ""
+    },
+    {
+      "ts": "2026-09-03T10:36:53.735000Z",
+      "provider": "amazon",
+      "route": "/recommends/rtx-3090-24gb",
+      "destination": "https://amzn.to/4sdISrb?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-3090-24gb",
+      "referer": ""
+    },
+    {
+      "ts": "2026-09-03T10:36:53.618000Z",
+      "provider": "amazon",
+      "route": "/recommends/rtx-3090-24gb",
+      "destination": "https://amzn.to/4sdISrb?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-3090-24gb",
+      "referer": ""
+    },
+    {
+      "ts": "2026-09-03T09:37:47.779000Z",
+      "provider": "runpod",
+      "route": "/go/runpod",
+      "destination": "https://runpod.io/?ref=kzc9gtvv&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-runpod",
+      "referer": "https://localvram.com/ru/tools/vram-calculator/"
+    },
     {
       "ts": "2026-09-02T10:32:35.767000Z",
       "provider": "vast",
@@ -3280,90 +3343,6 @@
     },
     {
       "ts": "2026-07-21T07:00:16.442000Z",
-      "provider": "amazon",
-      "route": "/recommends/rtx-3090-24gb",
-      "destination": "https://amzn.to/4sdISrb?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-3090-24gb",
-      "referer": ""
-    },
-    {
-      "ts": "2026-07-20T17:31:28.720000Z",
-      "provider": "amazon",
-      "route": "/recommends/rtx-3090-24gb",
-      "destination": "https://amzn.to/4sdISrb?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-3090-24gb",
-      "referer": "https://localvram.com/en/affiliate/hardware-upgrade/"
-    },
-    {
-      "ts": "2026-07-20T17:28:18.311000Z",
-      "provider": "runpod",
-      "route": "/go/runpod",
-      "destination": "https://runpod.io/?ref=kzc9gtvv&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-runpod",
-      "referer": "https://localvram.com/en/affiliate/hardware-upgrade/"
-    },
-    {
-      "ts": "2026-07-20T17:28:02.594000Z",
-      "provider": "amazon",
-      "route": "/recommends/rtx-4090-24gb",
-      "destination": "https://amzn.to/3N1JaCr?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-4090-24gb",
-      "referer": "https://localvram.com/en/affiliate/hardware-upgrade/"
-    },
-    {
-      "ts": "2026-07-20T17:26:25.415000Z",
-      "provider": "amazon",
-      "route": "/recommends/rtx-3090-24gb",
-      "destination": "https://amzn.to/4sdISrb?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-3090-24gb",
-      "referer": "https://localvram.com/en/affiliate/hardware-upgrade/"
-    },
-    {
-      "ts": "2026-07-20T14:25:41.319000Z",
-      "provider": "runpod",
-      "route": "/go/runpod",
-      "destination": "https://runpod.io/?ref=kzc9gtvv&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-runpod",
-      "referer": "https://localvram.com/en/guides/ollama-local-cluster-network/"
-    },
-    {
-      "ts": "2026-07-20T08:51:21.817000Z",
-      "provider": "vast",
-      "route": "/go/vast",
-      "destination": "https://cloud.vast.ai/?ref_id=415258&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-vast",
-      "referer": ""
-    },
-    {
-      "ts": "2026-07-20T08:51:21.725000Z",
-      "provider": "runpod",
-      "route": "/go/runpod",
-      "destination": "https://runpod.io/?ref=kzc9gtvv&utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=go-runpod",
-      "referer": ""
-    },
-    {
-      "ts": "2026-07-20T08:51:21.634000Z",
-      "provider": "amazon",
-      "route": "/recommends/atx3-1000w-psu",
-      "destination": "https://amzn.to/4ryN84q?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-atx3-1000w-psu",
-      "referer": ""
-    },
-    {
-      "ts": "2026-07-20T08:51:21.575000Z",
-      "provider": "amazon",
-      "route": "/recommends/high-airflow-case",
-      "destination": "https://amzn.to/4ryVBEN?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-high-airflow-case",
-      "referer": ""
-    },
-    {
-      "ts": "2026-07-20T08:51:21.483000Z",
-      "provider": "amazon",
-      "route": "/recommends/rtx-4090-24gb",
-      "destination": "https://amzn.to/3N1JaCr?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-4090-24gb",
-      "referer": ""
-    },
-    {
-      "ts": "2026-07-20T08:51:21.388000Z",
-      "provider": "amazon",
-      "route": "/recommends/rtx-3090-24gb",
-      "destination": "https://amzn.to/4sdISrb?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-3090-24gb",
-      "referer": ""
-    },
-    {
-      "ts": "2026-07-20T08:51:21.273000Z",
       "provider": "amazon",
       "route": "/recommends/rtx-3090-24gb",
       "destination": "https://amzn.to/4sdISrb?utm_source=localvram&utm_medium=affiliate_redirect&utm_campaign=recommends-rtx-3090-24gb",
