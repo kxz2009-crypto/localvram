@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-03T04:55:04Z",
+  "updated_at": "2026-09-04T04:59:57Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -30,18 +30,31 @@
     "daily_content": {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
-      "run_id": "33716678499",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/33716678499",
+      "run_id": "33838731626",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/33838731626",
       "status": "completed",
       "conclusion": "success",
       "event": "schedule",
-      "head_sha": "1c25b9c32a8fe215b0de19eeb588773f180be194",
+      "head_sha": "6ac1d3df49cdd8ddfae0c49c269fa2dcd5c048bd",
       "failure_class": "none",
       "failure_detail": "",
-      "updated_at": "2026-09-03T04:55:04Z"
+      "updated_at": "2026-09-04T04:59:57Z"
     }
   },
   "history": [
+    {
+      "workflow_key": "daily_content",
+      "workflow_name": "Daily Content Agent",
+      "run_id": "33838731626",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/33838731626",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "schedule",
+      "head_sha": "6ac1d3df49cdd8ddfae0c49c269fa2dcd5c048bd",
+      "failure_class": "none",
+      "failure_detail": "",
+      "updated_at": "2026-09-04T04:59:57Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
@@ -808,19 +821,6 @@
       "failure_class": "none",
       "failure_detail": "",
       "updated_at": "2026-07-22T05:38:51Z"
-    },
-    {
-      "workflow_key": "daily_content",
-      "workflow_name": "Daily Content Agent",
-      "run_id": "29889771312",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/29889771312",
-      "status": "completed",
-      "conclusion": "failure",
-      "event": "schedule",
-      "head_sha": "e8563b3af43326938a373e2e7a726e53fcd52644",
-      "failure_class": "daily_content_failed",
-      "failure_detail": "check-cn-blog-sync.py failed",
-      "updated_at": "2026-07-22T03:57:44Z"
     }
   ]
 }
