@@ -1,77 +1,77 @@
 {
-  "generated_at": "2026-09-04T04:59:54.715048Z",
+  "generated_at": "2026-09-05T04:52:31.783024Z",
   "window_days": 30,
-  "window_start": "2026-08-05T04:59:54.715048Z",
-  "window_end": "2026-09-04T04:59:54.715048Z",
+  "window_start": "2026-08-06T04:52:31.783024Z",
+  "window_end": "2026-09-05T04:52:31.783024Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
-    "search_console_updated_at": "2026-09-01T07:52:27Z"
+    "search_console_updated_at": "2026-09-04T07:17:23Z"
   },
   "funnel": {
     "organic_search_clicks": 3,
     "decision_page_clicks": 0,
-    "affiliate_redirect_clicks": 302,
+    "affiliate_redirect_clicks": 301,
     "cloud_redirect_clicks": 123,
-    "hardware_redirect_clicks": 179,
-    "search_to_affiliate_pct": 10066.67,
+    "hardware_redirect_clicks": 178,
+    "search_to_affiliate_pct": 10033.33,
     "search_to_cloud_pct": 4100.0,
-    "affiliate_to_cloud_pct": 40.73
+    "affiliate_to_cloud_pct": 40.86
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 179,
-        "share_pct": 59.27
+        "clicks": 178,
+        "share_pct": 59.14
       },
       {
         "provider": "runpod",
-        "clicks": 68,
-        "share_pct": 22.52
+        "clicks": 67,
+        "share_pct": 22.26
       },
       {
         "provider": "vast",
-        "clicks": 55,
-        "share_pct": 18.21
+        "clicks": 56,
+        "share_pct": 18.6
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 83,
-        "share_pct": 27.48
+        "clicks": 82,
+        "share_pct": 27.24
       },
       {
         "route": "/go/runpod",
-        "clicks": 68,
-        "share_pct": 22.52
+        "clicks": 67,
+        "share_pct": 22.26
       },
       {
         "route": "/go/vast",
-        "clicks": 55,
-        "share_pct": 18.21
+        "clicks": 56,
+        "share_pct": 18.6
       },
       {
         "route": "/recommends/rtx-4090-24gb",
         "clicks": 36,
-        "share_pct": 11.92
+        "share_pct": 11.96
       },
       {
         "route": "/recommends/atx3-1000w-psu",
         "clicks": 30,
-        "share_pct": 9.93
+        "share_pct": 9.97
       },
       {
         "route": "/recommends/high-airflow-case",
         "clicks": 30,
-        "share_pct": 9.93
+        "share_pct": 9.97
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 278
+        "clicks": 277
       },
       {
         "page": "/en/models/gpt-oss-20b-q4/",
@@ -82,16 +82,12 @@
         "clicks": 4
       },
       {
-        "page": "/en/models/qwen3-vl-30b-q4/",
+        "page": "/de/tools/vram-calculator/",
         "clicks": 3
       },
       {
-        "page": "/de/tools/vram-calculator/",
-        "clicks": 2
-      },
-      {
-        "page": "/",
-        "clicks": 2
+        "page": "/en/models/qwen3-vl-30b-q4/",
+        "clicks": 3
       },
       {
         "page": "/ru/tools/vram-calculator/",
@@ -120,6 +116,10 @@
       {
         "page": "/en/models/llama4-16x17b-q4/",
         "clicks": 1
+      },
+      {
+        "page": "/",
+        "clicks": 1
       }
     ],
     "search_landings": [
@@ -139,17 +139,22 @@
         "share_pct": 33.33
       },
       {
+        "landing": "/ar/models/deepseek-coder-67b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/ar/models/gemma3-12b-q5/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
-        "landing": "/ar/models/qwen3-vl-4b-q8/",
+        "landing": "/ar/models/qwen25-coder-14b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
-        "landing": "/ar/models/deepseek-coder-67b-q8/",
+        "landing": "/ar/models/qwen3-vl-4b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -165,11 +170,6 @@
       },
       {
         "landing": "/ar/models/llama32-1b-q5/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/ar/models/qwen25-coder-14b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -226,9 +226,9 @@
     ]
   },
   "data_quality": {
-    "search_console_items": 288,
-    "affiliate_event_items_total": 478,
-    "affiliate_event_items_in_window": 302,
+    "search_console_items": 279,
+    "affiliate_event_items_total": 477,
+    "affiliate_event_items_in_window": 301,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }
