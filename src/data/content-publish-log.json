@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-06T04:58:34.094105Z",
+  "updated_at": "2026-09-07T05:05:15.733914Z",
   "last_run": {
-    "run_at": "2026-09-06T04:58:34.094105Z",
-    "queue_date": "2026-09-06",
+    "run_at": "2026-09-07T05:05:15.733914Z",
+    "queue_date": "2026-09-07",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-09-06",
-        "title": "Today's Local LLM Pick: qwq:32b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-09-06-daily-local-llm-benchmark-snapshot-2026-09-06",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-09-07",
+        "title": "Today's Local LLM Pick: qwen3.6:35b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-09-07-daily-local-llm-benchmark-snapshot-2026-09-07",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-06.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-07.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-09-07T05:05:15.733914Z",
+      "queue_date": "2026-09-07",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-09-07",
+          "title": "Today's Local LLM Pick: qwen3.6:35b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-09-07-daily-local-llm-benchmark-snapshot-2026-09-07",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-07.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-09-06T04:58:34.094105Z",
       "queue_date": "2026-09-06",
@@ -1391,28 +1413,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-24.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-06-23T04:41:40.482876Z",
-      "queue_date": "2026-06-23",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-06-23",
-          "title": "Today's Local LLM Pick: translategemma:27b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-06-23-daily-local-llm-benchmark-snapshot-2026-06-23",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-23.md",
           "intent": "benchmark"
         }
       ],
