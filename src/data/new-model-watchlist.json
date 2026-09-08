@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-07T05:05:14.738667Z",
+  "updated_at": "2026-09-08T05:02:25.015702Z",
   "window_hours": 48,
   "max_library_age_days": 14,
   "strategy": "Prioritize new Ollama model families; use RTX 3090 benchmark recency as evidence, not as proof of model freshness.",
@@ -22,13 +22,13 @@
       "latency_ms": 4033.0,
       "ollama_command": "ollama run qwen3.6:35b",
       "source_url": "https://ollama.com/library/qwen3.6",
-      "ollama_updated_label": "5 days ago",
-      "ollama_updated_days": 5,
+      "ollama_updated_label": "6 days ago",
+      "ollama_updated_days": 6,
       "ollama_downloads": "6.4M",
       "ollama_library_freshness": {
         "status": "fresh",
-        "updated_label": "5 days ago",
-        "updated_days": 5,
+        "updated_label": "6 days ago",
+        "updated_days": 6,
         "downloads": "6.4M",
         "source_url": "https://ollama.com/library/qwen3.6"
       },
