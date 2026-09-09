@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T07:13:49Z",
+  "generated_at": "2026-09-09T08:42:48Z",
   "candidates_file": "/home/runner/work/localvram/localvram/src/data/retirement-candidates.json",
   "policy_file": "/home/runner/work/localvram/localvram/src/data/retired-models.json",
   "rules": {
@@ -10,57 +10,31 @@
   "source_candidate_count": 2,
   "already_retired_count": 0,
   "already_retired_sample": [],
-  "auto_approved_count": 0,
-  "auto_approved": [],
-  "manual_review_count": 2,
-  "manual_review": [
+  "auto_approved_count": 2,
+  "auto_approved": [
     {
       "model": "nemotron-3-nano:30b",
       "family": "nemotron-3-nano",
-      "last_seen_run_index": 17,
-      "seen_ok_count": 3,
-      "blockers": [
-        "seen_ok_count>2"
-      ],
-      "source": {
-        "model": "nemotron-3-nano:30b",
-        "family": "nemotron-3-nano",
-        "last_seen_at": "2026-03-11T04:17:51Z",
-        "last_seen_run_index": 17,
-        "last_success_at": "2026-03-11T04:17:51Z",
-        "seen_ok_count": 3,
-        "seen_targets_count": 0,
-        "seen_results_count": 3,
-        "reasons": [
-          "absent_in_recent_runs>=3",
-          "not_in_current_weekly_plan",
-          "not_in_latest_targets_or_results"
-        ]
-      }
+      "last_seen_run_index": 18,
+      "seen_ok_count": 2,
+      "reasons": [
+        "absent_in_recent_runs>=3",
+        "not_in_current_weekly_plan",
+        "not_in_latest_targets_or_results"
+      ]
     },
     {
       "model": "translategemma:27b",
       "family": "translategemma",
-      "last_seen_run_index": 17,
-      "seen_ok_count": 3,
-      "blockers": [
-        "seen_ok_count>2"
-      ],
-      "source": {
-        "model": "translategemma:27b",
-        "family": "translategemma",
-        "last_seen_at": "2026-03-11T04:17:51Z",
-        "last_seen_run_index": 17,
-        "last_success_at": "2026-03-11T04:17:51Z",
-        "seen_ok_count": 3,
-        "seen_targets_count": 0,
-        "seen_results_count": 3,
-        "reasons": [
-          "absent_in_recent_runs>=3",
-          "not_in_current_weekly_plan",
-          "not_in_latest_targets_or_results"
-        ]
-      }
+      "last_seen_run_index": 18,
+      "seen_ok_count": 2,
+      "reasons": [
+        "absent_in_recent_runs>=3",
+        "not_in_current_weekly_plan",
+        "not_in_latest_targets_or_results"
+      ]
     }
-  ]
+  ],
+  "manual_review_count": 0,
+  "manual_review": []
 }

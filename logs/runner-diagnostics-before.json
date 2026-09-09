@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-02T07:04:39Z",
+  "updated_at": "2026-09-09T07:21:04Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -61,16 +61,16 @@
     },
     "OLLAMA_VERSION": {
       "exit": 0,
-      "stdout": "ollama version is 0.20.2",
+      "stdout": "ollama version is 0.33.2",
       "stderr": ""
     }
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=293,fd=3))"
+      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=1256185,fd=4))"
     ],
     "ps_ollama": [
-      "gao20        293       1  0 Sep01 ?        00:00:02 /usr/local/bin/ollama serve"
+      "gao20    1256185       1  0 02:40 ?        00:00:00 /usr/local/bin/ollama serve"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -85,7 +85,7 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Tue 2026-09-01 05:28:09 EDT; 21h ago\n   Main PID: 293 (ollama)\n      Tasks: 15 (limit: 86826)\n     Memory: 20.1M (peak: 447.8M swap: 4.7M swap peak: 5.3M)\n        CPU: 2.495s\n     CGroup: /system.slice/ollama.service\n             └─293 /usr/local/bin/ollama serve\n\nSep 02 02:24:58 Vernon ollama[293]: [GIN] 2026/09/02 - 02:24:58 | 200 |  256.710222ms |       127.0.0.1 | GET      \"/api/tags\"\nSep 02 02:24:59 Vernon ollama[293]: time=2026-09-02T02:24:59.232-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nSep 02 02:24:59 Vernon ollama[293]: [GIN] 2026/09/02 - 02:24:59 | 200 |  245.328068ms |       127.0.0.1 | GET      \"/api/tags\"\nSep 02 02:24:59 Vernon ollama[293]: [GIN] 2026/09/02 - 02:24:59 | 200 |      23.065µs |       127.0.0.1 | GET      \"/api/version\"\nSep 02 02:24:59 Vernon ollama[293]: [GIN] 2026/09/02 - 02:24:59 | 200 |      30.858µs |       127.0.0.1 | GET      \"/api/version\"\nSep 02 02:24:59 Vernon ollama[293]: time=2026-09-02T02:24:59.951-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nSep 02 02:24:59 Vernon ollama[293]: [GIN] 2026/09/02 - 02:24:59 | 200 |  279.422936ms |       127.0.0.1 | GET      \"/api/tags\"\nSep 02 03:04:38 Vernon ollama[293]: time=2026-09-02T03:04:38.687-04:00 level=WARN source=routes.go:1408 msg=\"bad manifest filepath\" name=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nSep 02 03:04:38 Vernon ollama[293]: [GIN] 2026/09/02 - 03:04:38 | 200 |  295.235448ms |       127.0.0.1 | GET      \"/api/tags\"\nSep 02 03:04:39 Vernon ollama[293]: [GIN] 2026/09/02 - 03:04:39 | 200 |     730.151µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; disabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Wed 2026-09-09 02:40:31 EDT; 40min ago\n   Main PID: 1256185 (ollama)\n      Tasks: 17 (limit: 86826)\n     Memory: 20.6M (peak: 896.4M swap: 5.0M swap peak: 5.3M)\n        CPU: 2.013s\n     CGroup: /system.slice/ollama.service\n             └─1256185 /usr/local/bin/ollama serve\n\nSep 09 02:40:38 Vernon ollama[1256185]: [GIN] 2026/09/09 - 02:40:38 | 200 |  225.997683ms |       127.0.0.1 | GET      \"/api/tags\"\nSep 09 02:40:39 Vernon ollama[1256185]: time=2026-09-09T02:40:39.498-04:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nSep 09 02:40:39 Vernon ollama[1256185]: [GIN] 2026/09/09 - 02:40:39 | 200 |  240.103315ms |       127.0.0.1 | GET      \"/api/tags\"\nSep 09 02:40:39 Vernon ollama[1256185]: [GIN] 2026/09/09 - 02:40:39 | 200 |       22.91µs |       127.0.0.1 | GET      \"/api/version\"\nSep 09 02:40:39 Vernon ollama[1256185]: [GIN] 2026/09/09 - 02:40:39 | 200 |      25.421µs |       127.0.0.1 | GET      \"/api/version\"\nSep 09 02:40:40 Vernon ollama[1256185]: time=2026-09-09T02:40:40.232-04:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nSep 09 02:40:40 Vernon ollama[1256185]: [GIN] 2026/09/09 - 02:40:40 | 200 |   256.04645ms |       127.0.0.1 | GET      \"/api/tags\"\nSep 09 03:21:03 Vernon ollama[1256185]: time=2026-09-09T03:21:03.486-04:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nSep 09 03:21:03 Vernon ollama[1256185]: [GIN] 2026/09/09 - 03:21:03 | 200 |  408.274273ms |       127.0.0.1 | GET      \"/api/tags\"\nSep 09 03:21:04 Vernon ollama[1256185]: [GIN] 2026/09/09 - 03:21:04 | 200 |     613.763µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
@@ -96,7 +96,7 @@
   },
   "api": {
     "version": {
-      "version": "0.20.2"
+      "version": "0.33.2"
     },
     "tags": {
       "model_count": 50,

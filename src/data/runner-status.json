@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-02T07:13:03Z",
+  "updated_at": "2026-09-09T08:42:14Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -61,17 +61,17 @@
     },
     "OLLAMA_VERSION": {
       "exit": 0,
-      "stdout": "ollama version is 0.20.2",
+      "stdout": "ollama version is 0.33.2",
       "stderr": ""
     }
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=293,fd=3))"
+      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=1256185,fd=4))"
     ],
     "ps_ollama": [
-      "gao20        293       1  0 Sep01 ?        00:00:09 /usr/local/bin/ollama serve",
-      "gao20     158328     293 21 03:11 ?        00:00:20 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 38521"
+      "gao20    1256185       1  0 02:42 ?        00:00:17 /usr/local/bin/ollama serve",
+      "gao20    1271966 1256185 67 04:40 ?        00:01:29 /usr/local/lib/ollama/llama-server --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 35389 --host 127.0.0.1 --no-webui --offline -c 4096 -np 1 --log-verbosity 4 --no-log-prefix --no-log-timestamps --cache-type-k q4_0 --cache-type-v q4_0 --flash-attn on -b 512 -ub 512 --context-shift --keep 4"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -86,7 +86,7 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Tue 2026-09-01 05:28:09 EDT; 21h ago\n   Main PID: 293 (ollama)\n      Tasks: 41 (limit: 86826)\n     Memory: 19.2G (peak: 45.2G swap: 4.1M swap peak: 5.3M)\n        CPU: 8min 15.083s\n     CGroup: /system.slice/ollama.service\n             ├─   293 /usr/local/bin/ollama serve\n             └─158328 /usr/local/bin/ollama runner --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 38521\n\nSep 02 03:12:55 Vernon ollama[293]: time=2026-09-02T03:12:55.868-04:00 level=INFO source=server.go:1390 msg=\"llama runner started in 90.54 seconds\"\nSep 02 03:12:55 Vernon ollama[293]: time=2026-09-02T03:12:55.869-04:00 level=INFO source=sched.go:561 msg=\"loaded runners\" count=1\nSep 02 03:12:55 Vernon ollama[293]: time=2026-09-02T03:12:55.869-04:00 level=INFO source=server.go:1352 msg=\"waiting for llama runner to start responding\"\nSep 02 03:12:55 Vernon ollama[293]: time=2026-09-02T03:12:55.870-04:00 level=INFO source=server.go:1390 msg=\"llama runner started in 90.54 seconds\"\nSep 02 03:12:56 Vernon ollama[293]: [GIN] 2026/09/02 - 03:12:56 | 200 |         1m32s |       127.0.0.1 | POST     \"/api/generate\"\nSep 02 03:12:59 Vernon ollama[293]: [GIN] 2026/09/02 - 03:12:59 | 200 |  3.034863721s |       127.0.0.1 | POST     \"/api/generate\"\nSep 02 03:13:02 Vernon ollama[293]: [GIN] 2026/09/02 - 03:13:02 | 200 |  3.039612816s |       127.0.0.1 | POST     \"/api/generate\"\nSep 02 03:13:02 Vernon ollama[293]: [GIN] 2026/09/02 - 03:13:02 | 404 |  185.260913ms |       127.0.0.1 | POST     \"/api/generate\"\nSep 02 03:13:03 Vernon ollama[293]: [GIN] 2026/09/02 - 03:13:03 | 404 |  195.688116ms |       127.0.0.1 | POST     \"/api/generate\"\nSep 02 03:13:04 Vernon ollama[293]: [GIN] 2026/09/02 - 03:13:04 | 200 |      58.937µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; disabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Wed 2026-09-09 02:40:31 EDT; 2h 1min ago\n   Main PID: 1256185 (ollama)\n      Tasks: 72 (limit: 86826)\n     Memory: 18.7G (peak: 54.4G swap: 5.3M swap peak: 67.9M)\n        CPU: 37min 55.495s\n     CGroup: /system.slice/ollama.service\n             ├─1256185 /usr/local/bin/ollama serve\n             └─1271966 /usr/local/lib/ollama/llama-server --model /mnt/d/Ollama/blobs/sha256-7ccc6415b2c7cb61ff8e01fec069d6f2fd6e213c509824d642c8a15c3d002e73 --port 35389 --host 127.0.0.1 --no-webui --offline -c 4096 -np 1 --log-verbosity 4 --no-log-prefix --no-log-timestamps --cache-type-k q4_0 --cache-type-v q4_0 --flash-attn on -b 512 -ub 512 --context-shift --keep 4\n\nSep 09 04:42:12 Vernon ollama[1256185]: slot print_timing: id  0 | task 122 | prompt eval time =      49.52 ms /     1 tokens (   49.52 ms per token,    20.19 tokens per second)\nSep 09 04:42:12 Vernon ollama[1256185]: slot print_timing: id  0 | task 122 |        eval time =    3654.88 ms /    96 tokens (   38.47 ms per token,    25.99 tokens per second)\nSep 09 04:42:12 Vernon ollama[1256185]: slot print_timing: id  0 | task 122 |       total time =    3704.41 ms /    97 tokens\nSep 09 04:42:12 Vernon ollama[1256185]: slot print_timing: id  0 | task 122 |    graphs reused =        215\nSep 09 04:42:12 Vernon ollama[1256185]: slot      release: id  0 | task 122 | stop processing: n_tokens = 126, truncated = 0\nSep 09 04:42:12 Vernon ollama[1256185]: srv  update_slots: all slots are idle\nSep 09 04:42:12 Vernon ollama[1256185]: [GIN] 2026/09/09 - 04:42:12 | 200 |  4.088536434s |       127.0.0.1 | POST     \"/api/generate\"\nSep 09 04:42:12 Vernon ollama[1256185]: [GIN] 2026/09/09 - 04:42:12 | 404 |  391.087201ms |       127.0.0.1 | POST     \"/api/generate\"\nSep 09 04:42:13 Vernon ollama[1256185]: [GIN] 2026/09/09 - 04:42:13 | 404 |  319.495948ms |       127.0.0.1 | POST     \"/api/generate\"\nSep 09 04:42:14 Vernon ollama[1256185]: [GIN] 2026/09/09 - 04:42:14 | 200 |      52.719µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
@@ -97,7 +97,7 @@
   },
   "api": {
     "version": {
-      "version": "0.20.2"
+      "version": "0.33.2"
     },
     "tags": {
       "model_count": 50,
