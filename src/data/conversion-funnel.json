@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-08T05:04:13.635507Z",
+  "generated_at": "2026-09-09T05:04:29.003664Z",
   "window_days": 30,
-  "window_start": "2026-08-09T05:04:13.635507Z",
-  "window_end": "2026-09-08T05:04:13.635507Z",
+  "window_start": "2026-08-10T05:04:29.003664Z",
+  "window_end": "2026-09-09T05:04:29.003664Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -11,67 +11,67 @@
   "funnel": {
     "organic_search_clicks": 3,
     "decision_page_clicks": 0,
-    "affiliate_redirect_clicks": 314,
+    "affiliate_redirect_clicks": 315,
     "cloud_redirect_clicks": 134,
-    "hardware_redirect_clicks": 180,
-    "search_to_affiliate_pct": 10466.67,
+    "hardware_redirect_clicks": 181,
+    "search_to_affiliate_pct": 10500.0,
     "search_to_cloud_pct": 4466.67,
-    "affiliate_to_cloud_pct": 42.68
+    "affiliate_to_cloud_pct": 42.54
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 180,
-        "share_pct": 57.32
+        "clicks": 181,
+        "share_pct": 57.46
       },
       {
         "provider": "runpod",
-        "clicks": 72,
-        "share_pct": 22.93
+        "clicks": 71,
+        "share_pct": 22.54
       },
       {
         "provider": "vast",
-        "clicks": 62,
-        "share_pct": 19.75
+        "clicks": 63,
+        "share_pct": 20.0
       }
     ],
     "routes": [
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 84,
-        "share_pct": 26.75
+        "clicks": 85,
+        "share_pct": 26.98
       },
       {
         "route": "/go/runpod",
-        "clicks": 72,
-        "share_pct": 22.93
+        "clicks": 71,
+        "share_pct": 22.54
       },
       {
         "route": "/go/vast",
-        "clicks": 62,
-        "share_pct": 19.75
+        "clicks": 63,
+        "share_pct": 20.0
       },
       {
         "route": "/recommends/rtx-4090-24gb",
         "clicks": 36,
-        "share_pct": 11.46
+        "share_pct": 11.43
       },
       {
         "route": "/recommends/atx3-1000w-psu",
         "clicks": 30,
-        "share_pct": 9.55
+        "share_pct": 9.52
       },
       {
         "route": "/recommends/high-airflow-case",
         "clicks": 30,
-        "share_pct": 9.55
+        "share_pct": 9.52
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 288
+        "clicks": 289
       },
       {
         "page": "/en/models/gpt-oss-20b-q4/",
@@ -82,16 +82,20 @@
         "clicks": 4
       },
       {
-        "page": "/de/tools/vram-calculator/",
-        "clicks": 3
-      },
-      {
         "page": "/en/models/qwen3-vl-30b-q4/",
         "clicks": 3
       },
       {
         "page": "/go/vast",
         "clicks": 2
+      },
+      {
+        "page": "/de/tools/vram-calculator/",
+        "clicks": 2
+      },
+      {
+        "page": "/en/models/codellama-7b-q5/",
+        "clicks": 1
       },
       {
         "page": "/en/affiliate/cloud-gpu/",
@@ -231,8 +235,8 @@
   },
   "data_quality": {
     "search_console_items": 275,
-    "affiliate_event_items_total": 484,
-    "affiliate_event_items_in_window": 314,
+    "affiliate_event_items_total": 486,
+    "affiliate_event_items_in_window": 315,
     "has_affiliate_event_feed": true,
     "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
   }
