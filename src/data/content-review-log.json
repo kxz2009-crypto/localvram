@@ -1,18 +1,67 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-09T05:02:06.654240Z",
+  "updated_at": "2026-09-10T05:05:07.492521Z",
   "last_run": {
-    "run_at": "2026-09-09T05:02:06.654240Z",
-    "queue_date": "2026-09-09",
-    "reviewed_count": 0,
+    "run_at": "2026-09-10T05:05:07.492521Z",
+    "queue_date": "2026-09-10",
+    "reviewed_count": 1,
     "auto_approved_count": 0,
-    "pending_manual_review_count": 0,
+    "pending_manual_review_count": 1,
     "rejected_manual_count": 0,
-    "high_risk_count": 0,
-    "risk_flag_counts": {},
-    "items": []
+    "high_risk_count": 1,
+    "risk_flag_counts": {
+      "near_duplicate_published": 1
+    },
+    "items": [
+      {
+        "draft": "content-queue/2026-09-10/01-2026-09-10-qwen2-5-14b-setup-playbook.md",
+        "slug": "2026-09-10-qwen2-5-14b-setup-playbook",
+        "score": 216.0,
+        "status_before": "draft",
+        "status_after": "pending_manual_review",
+        "word_count": 640,
+        "risk_flags": [
+          "near_duplicate_published"
+        ],
+        "similarity": {
+          "score": 0.9103,
+          "topic_score": 0.6667,
+          "slug": "2026-08-04-gpt-oss-20b-setup-playbook"
+        }
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-09-10T05:05:07.492521Z",
+      "queue_date": "2026-09-10",
+      "reviewed_count": 1,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 1,
+      "rejected_manual_count": 0,
+      "high_risk_count": 1,
+      "risk_flag_counts": {
+        "near_duplicate_published": 1
+      },
+      "items": [
+        {
+          "draft": "content-queue/2026-09-10/01-2026-09-10-qwen2-5-14b-setup-playbook.md",
+          "slug": "2026-09-10-qwen2-5-14b-setup-playbook",
+          "score": 216.0,
+          "status_before": "draft",
+          "status_after": "pending_manual_review",
+          "word_count": 640,
+          "risk_flags": [
+            "near_duplicate_published"
+          ],
+          "similarity": {
+            "score": 0.9103,
+            "topic_score": 0.6667,
+            "slug": "2026-08-04-gpt-oss-20b-setup-playbook"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-09-09T05:02:06.654240Z",
       "queue_date": "2026-09-09",
@@ -942,17 +991,6 @@
           }
         }
       ]
-    },
-    {
-      "run_at": "2026-06-26T04:50:30.399814Z",
-      "queue_date": "2026-06-26",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
     }
   ]
 }
