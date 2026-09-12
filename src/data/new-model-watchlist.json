@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-11T05:01:56.406098Z",
+  "updated_at": "2026-09-12T04:53:35.681488Z",
   "window_hours": 48,
   "max_library_age_days": 14,
   "strategy": "Prioritize new Ollama model families; use RTX 3090 benchmark recency as evidence, not as proof of model freshness.",
@@ -45,7 +45,7 @@
       },
       "traffic_priority": "publish_now",
       "landing": "/en/models/qwen3-6-35b/",
-      "content_angle": "Fresh RTX 3090 result; publish while Ollama search demand is warm."
+      "content_angle": "New model family with RTX 3090 evidence; publish while launch-search demand is warm."
     },
     {
       "tag": "qwen3-vl:30b",
