@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-12T04:53:37.136792Z",
+  "updated_at": "2026-09-13T05:14:22.267992Z",
   "last_run": {
-    "run_at": "2026-09-12T04:53:37.136792Z",
-    "queue_date": "2026-09-12",
+    "run_at": "2026-09-13T05:14:22.267992Z",
+    "queue_date": "2026-09-13",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-09-13T05:14:22.267992Z",
+      "queue_date": "2026-09-13",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-09-12T04:53:37.136792Z",
       "queue_date": "2026-09-12",
@@ -946,17 +957,6 @@
           }
         }
       ]
-    },
-    {
-      "run_at": "2026-06-29T05:12:31.320733Z",
-      "queue_date": "2026-06-29",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
     }
   ]
 }
