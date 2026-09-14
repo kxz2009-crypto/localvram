@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-13T05:14:22.358404Z",
+  "updated_at": "2026-09-14T05:19:07.212183Z",
   "last_run": {
-    "run_at": "2026-09-13T05:14:22.358404Z",
-    "queue_date": "2026-09-13",
+    "run_at": "2026-09-14T05:19:07.212183Z",
+    "queue_date": "2026-09-14",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-09-13",
-        "title": "Today's Local LLM Pick: qwen3.6:35b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-09-13-daily-local-llm-benchmark-snapshot-2026-09-13",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-09-14",
+        "title": "Today's Local LLM Pick: gemma3:27b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-09-14-daily-local-llm-benchmark-snapshot-2026-09-14",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-13.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-14.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-09-14T05:19:07.212183Z",
+      "queue_date": "2026-09-14",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-09-14",
+          "title": "Today's Local LLM Pick: gemma3:27b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-09-14-daily-local-llm-benchmark-snapshot-2026-09-14",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-14.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-09-13T05:14:22.358404Z",
       "queue_date": "2026-09-13",
@@ -1385,33 +1407,6 @@
         }
       ],
       "skipped": []
-    },
-    {
-      "run_at": "2026-06-30T04:46:14.605865Z",
-      "queue_date": "2026-06-30",
-      "candidate_count": 1,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 1,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-06-30",
-          "title": "Today's Local LLM Pick: qwen2.5:14b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-06-30-daily-local-llm-benchmark-snapshot-2026-06-30",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-06-30.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": [
-        {
-          "draft": "content-queue/2026-06-30/01-q4-vs-q8-quality-loss-ollama-guide.md",
-          "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
-        }
-      ]
     }
   ]
 }

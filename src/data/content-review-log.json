@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-13T05:14:22.267992Z",
+  "updated_at": "2026-09-14T05:19:07.127496Z",
   "last_run": {
-    "run_at": "2026-09-13T05:14:22.267992Z",
-    "queue_date": "2026-09-13",
+    "run_at": "2026-09-14T05:19:07.127496Z",
+    "queue_date": "2026-09-14",
     "reviewed_count": 0,
     "auto_approved_count": 0,
     "pending_manual_review_count": 0,
@@ -13,6 +13,17 @@
     "items": []
   },
   "history": [
+    {
+      "run_at": "2026-09-14T05:19:07.127496Z",
+      "queue_date": "2026-09-14",
+      "reviewed_count": 0,
+      "auto_approved_count": 0,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": []
+    },
     {
       "run_at": "2026-09-13T05:14:22.267992Z",
       "queue_date": "2026-09-13",
@@ -931,32 +942,6 @@
       "high_risk_count": 0,
       "risk_flag_counts": {},
       "items": []
-    },
-    {
-      "run_at": "2026-06-30T04:46:14.520936Z",
-      "queue_date": "2026-06-30",
-      "reviewed_count": 1,
-      "auto_approved_count": 1,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": [
-        {
-          "draft": "content-queue/2026-06-30/01-q4-vs-q8-quality-loss-ollama-guide.md",
-          "slug": "q4-vs-q8-quality-loss-ollama-guide",
-          "score": 576.0,
-          "status_before": "draft",
-          "status_after": "approved_auto",
-          "word_count": 625,
-          "risk_flags": [],
-          "similarity": {
-            "score": 0.8896,
-            "topic_score": 0.0769,
-            "slug": "ko-benchmarks"
-          }
-        }
-      ]
     }
   ]
 }
