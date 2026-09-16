@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T08:42:48Z",
+  "generated_at": "2026-09-16T07:56:02Z",
   "candidates_file": "/home/runner/work/localvram/localvram/src/data/retirement-candidates.json",
   "policy_file": "/home/runner/work/localvram/localvram/src/data/retired-models.json",
   "rules": {
@@ -15,8 +15,8 @@
     {
       "model": "nemotron-3-nano:30b",
       "family": "nemotron-3-nano",
-      "last_seen_run_index": 18,
-      "seen_ok_count": 2,
+      "last_seen_run_index": 19,
+      "seen_ok_count": 1,
       "reasons": [
         "absent_in_recent_runs>=3",
         "not_in_current_weekly_plan",
@@ -26,8 +26,8 @@
     {
       "model": "translategemma:27b",
       "family": "translategemma",
-      "last_seen_run_index": 18,
-      "seen_ok_count": 2,
+      "last_seen_run_index": 19,
+      "seen_ok_count": 1,
       "reasons": [
         "absent_in_recent_runs>=3",
         "not_in_current_weekly_plan",

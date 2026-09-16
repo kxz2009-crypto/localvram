@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-09-09T07:21:06Z",
+  "updated_at": "2026-09-16T07:39:43Z",
   "items": [
+    {
+      "date": "2026-09-16",
+      "title": "Weekly benchmark run (10 successful model(s))",
+      "environment": "NVIDIA GeForce RTX 3090 | driver 591.86 | Ollama 0.33.2",
+      "changes": [
+        "qwen3:8b avg 117.982 tok/s, avg latency 1.332s (2 run(s))",
+        "deepseek-r1:14b avg 72.868 tok/s, avg latency 1.988s (2 run(s))",
+        "qwen3-coder:30b avg 158.459 tok/s, avg latency 0.776s (2 run(s))",
+        "qwen3.6:27b avg 40.072 tok/s, avg latency 2.871s (2 run(s))",
+        "qwen2.5-coder:32b avg 134.24 tok/s, avg latency 1.015s (2 run(s))",
+        "ministral-3:14b avg 76.977 tok/s, avg latency 1.927s (2 run(s))",
+        "mistral-small:22b avg 55.986 tok/s, avg latency 1.803s (2 run(s))",
+        "gemma3:27b avg 40.204 tok/s, avg latency 2.743s (2 run(s))",
+        "llama4:latest avg 16.791 tok/s, avg latency 4.319s (2 run(s))",
+        "qwq:32b avg 36.042 tok/s, avg latency 2.891s (2 run(s))",
+        "Skipped/failed targets: qwen2.5, qwen3.5:27b, llama3.3, gpt-oss, gemma4:e2b"
+      ]
+    },
     {
       "date": "2026-09-09",
       "title": "Weekly benchmark run (9 successful model(s))",
@@ -658,15 +676,6 @@
       "changes": [
         "ROI table recalculated with latest cloud hourly pricing",
         "Cloud fallback CTA switched for >32GB optimal VRAM profiles"
-      ]
-    },
-    {
-      "date": "2026-02-22",
-      "title": "DeepSeek-R1 quantization benchmark batch",
-      "environment": "RTX 3090 | WSL2 | Ollama",
-      "changes": [
-        "Added Q4/Q5/Q8 comparison",
-        "Updated quality notes for long-context prompts"
       ]
     }
   ]
