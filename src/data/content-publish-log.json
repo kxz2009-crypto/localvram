@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-16T05:06:00.529878Z",
+  "updated_at": "2026-09-17T05:09:04.629104Z",
   "last_run": {
-    "run_at": "2026-09-16T05:06:00.529878Z",
-    "queue_date": "2026-09-16",
+    "run_at": "2026-09-17T05:09:04.629104Z",
+    "queue_date": "2026-09-17",
     "candidate_count": 0,
     "min_publish": 1,
     "max_publish": 2,
@@ -12,18 +12,40 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-09-16",
-        "title": "Today's Local LLM Pick: qwen2.5-coder:32b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-09-16-daily-local-llm-benchmark-snapshot-2026-09-16",
+        "slug": "daily-local-llm-benchmark-snapshot-2026-09-17",
+        "title": "Today's Local LLM Pick: llama4:16x17b on RTX 3090 (2026)",
+        "topic_key": "daily-benchmark-fallback-2026-09-17-daily-local-llm-benchmark-snapshot-2026-09-17",
         "score": 120.0,
         "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-16.md",
+        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-17.md",
         "intent": "benchmark"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-09-17T05:09:04.629104Z",
+      "queue_date": "2026-09-17",
+      "candidate_count": 0,
+      "min_publish": 1,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 1,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "daily-local-llm-benchmark-snapshot-2026-09-17",
+          "title": "Today's Local LLM Pick: llama4:16x17b on RTX 3090 (2026)",
+          "topic_key": "daily-benchmark-fallback-2026-09-17-daily-local-llm-benchmark-snapshot-2026-09-17",
+          "score": 120.0,
+          "source_draft": "system:fallback-daily-generator",
+          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-17.md",
+          "intent": "benchmark"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-09-16T05:06:00.529878Z",
       "queue_date": "2026-09-16",
@@ -1381,28 +1403,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-04.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-07-03T04:25:53.332433Z",
-      "queue_date": "2026-07-03",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-07-03",
-          "title": "Today's Local LLM Pick: mistral-small:22b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-07-03-daily-local-llm-benchmark-snapshot-2026-07-03",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-03.md",
           "intent": "benchmark"
         }
       ],
