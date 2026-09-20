@@ -35,7 +35,7 @@ jobs:
           echo "=== listeners on ${PORT} / 11434 ==="
           ss -ltnp | grep -E ":(${PORT}|11434) " || echo "no listeners"
           echo "=== ollama-ish processes ==="
-          ps -eo pid,ppid,user,etime,args | grep -iE "ollama|${PORT}" | grep -v grep || true
+          pgrep -afi "ollama|${PORT}" || true
           echo "=== listener process details ==="
           for pid in $(ss -ltnp | grep ":${PORT} " | grep -oP 'pid=\K[0-9]+' | sort -u); do
             echo "--- pid ${pid} ---"
@@ -71,7 +71,7 @@ jobs:
           mapfile -t squatters < <(ss -ltnp | grep ":${PORT} " | grep -v '"ollama"' | grep -oP 'pid=\K[0-9]+' | sort -u)
           for pid in "${squatters[@]}"; do
             [ -n "${pid}" ] || continue
-            echo "killing non-ollama listener pid=${pid} cmd=$(tr '\0' ' ' < /proc/${pid}/cmdline)"
+            echo "killing non-ollama listener pid=${pid} cmd=$(tr '\0' ' ' < "/proc/${pid}/cmdline")"
             kill "${pid}" || true
           done
           sleep 3
@@ -182,4 +182,4 @@ jobs:
 
           echo "=== post-remediate state ==="
           ss -ltnp | grep ":${PORT} " || true
-          ps -eo pid,ppid,user,etime,args | grep -i 'ollama serve' | grep -v grep || true
+          pgrep -afi 'ollama serve' || true
