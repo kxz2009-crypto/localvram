@@ -228,7 +228,7 @@ jobs:
               chown -R \"${ORIGIN_OWNER}\" \"${ORIGIN_SITE_ROOT}\"; \
               rm -f \"${remote_tmp}\"; \
               nginx -t; \
-              systemctl reload nginx;" | tee logs/deploy-cn-origin.log
+              if systemctl is-active --quiet nginx; then systemctl reload nginx; else nginx -s reload; fi;" | tee logs/deploy-cn-origin.log
 
           rm -f cn_origin_deploy.key dist-cn.tar.gz
 

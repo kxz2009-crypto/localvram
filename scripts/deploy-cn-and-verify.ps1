@@ -59,7 +59,12 @@ tar -xzf /root/dist-cn.tar.gz -C "$REL" --strip-components=1
 
 ln -sfn "$REL" /var/www/localvram-cn/current
 chown -R nginx:nginx /var/www/localvram-cn
-nginx -t && systemctl reload nginx
+nginx -t
+if systemctl is-active --quiet nginx; then
+  systemctl reload nginx
+else
+  nginx -s reload
+fi
 
 echo "==== verify home ===="
 curl -sL --compressed https://localvram.cn/ | grep -E "60 秒选对适合你显卡的本地模型|开始显存计算|数据状态"
