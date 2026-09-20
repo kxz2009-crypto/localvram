@@ -1,4 +1,6 @@
 ---
+import evidenceResults from "../../../data/benchmark-results.json";
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import modelCatalog from "../../../data/model-catalog.json";
@@ -64,7 +66,7 @@ const groupsLabel = groupsLabelByLocale[locale] || text.kpi_groups || "Groups";
 const itemColumnLabel = itemColumnLabelByLocale[locale] || text.table_col_item || "Item";
 const detailColumnLabel = detailColumnLabelByLocale[locale] || "Details";
 const openModelLabel = openModelLabelByLocale[locale] || "Open profile";
-const measuredCount = items.filter((item) => item?.data_status === "measured").length;
+const measuredCount = items.filter((item) => getProfileBenchmark(item, evidenceResults.models)).length;
 const groupCount = (groupId: string) =>
   items.filter(
     (item) =>

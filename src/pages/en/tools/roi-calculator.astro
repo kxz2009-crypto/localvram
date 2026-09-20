@@ -1,4 +1,5 @@
 ---
+import RoiCalculator from "../../../components/RoiCalculator.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 
 const pagePath = "/en/tools/roi-calculator/";
@@ -47,8 +48,8 @@ const faqSchema = {
   <main class="container">
     <h1>ROI Calculator</h1>
     <p>
-      Compare local electricity cost against cloud GPU hourly pricing. Affiliate
-      links can be injected from <code>src/data/affiliate-links.json</code>.
+      Compare purchase, electricity, maintenance and cloud costs for the same workload.
     </p>
+    <RoiCalculator locale="en" />
   </main>
 </BaseLayout>

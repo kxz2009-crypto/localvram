@@ -1,4 +1,6 @@
 ---
+import evidenceResults from "../../../data/benchmark-results.json";
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { ROOT_ALTERNATES } from "../../../data/root-alternates";
 import modelCatalog from "../../../data/model-catalog.json";
@@ -349,7 +351,7 @@ const structuredData = relatedProfiles.length
           </div>
           <div>
             <dt>{labels.dataStatus}</dt>
-            <dd>{String(item?.data_status || "-")}</dd>
+            <dd>{getProfileBenchmark(item, evidenceResults.models) ? "Measured run (exact model file)" : "Estimated profile; exact measurement unavailable"}</dd>
           </div>
           <div>
             <dt>{labels.updated}</dt>

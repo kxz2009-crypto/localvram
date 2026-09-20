@@ -43,7 +43,7 @@ date,slot,priority_bucket,page_url,page_type,model_tag,is_newest,is_older_than_3
 '@
 
 $localeKpiCsv = @'
-date,domain,locale,owner,indexed_urls,discovered_urls,index_rate_pct,impressions,clicks,ctr_pct,avg_position,notes,next_action
+date,domain,locale,owner,visible_landing_urls,discovered_urls,search_visibility_pct,impressions,clicks,ctr_pct,avg_position,notes,next_action
 2026-02-27,localvram.com,en,seo-en,0,0,0,0,0,0,0,baseline row,fill from Search Console
 2026-02-27,localvram.com,es,seo-es,0,0,0,0,0,0,0,baseline row,build locale keyword seed list
 2026-02-27,localvram.com,pt,seo-pt,0,0,0,0,0,0,0,baseline row,build locale keyword seed list

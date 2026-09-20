@@ -117,7 +117,19 @@ async function persistClickEvent(context, event) {
   console.log("affiliate_click", JSON.stringify(event));
 }
 
+function shouldTrackRequest(request) {
+  if (request.method !== "GET") return false;
+  const ua = request.headers.get("user-agent") || "";
+  const purpose = `${request.headers.get("purpose") || ""} ${request.headers.get("sec-purpose") || ""}`;
+  if (/prefetch|prerender/i.test(purpose)) return false;
+  if (/bot|crawler|spider|curl|wget|python-requests|healthcheck|uptime/i.test(ua)) return false;
+  if (request.cf?.botManagement?.verifiedBot) return false;
+  // Filtering obvious automation does not establish that a request is human.
+  return true;
+}
+
 function trackClick(context, details) {
+  if (!shouldTrackRequest(context.request)) return;
   const cf = context.request.cf || {};
   const event = {
     ts: new Date().toISOString(),
@@ -140,5 +152,6 @@ export {
   buildProviderTarget,
   redirectResponse,
   trackClick,
+  shouldTrackRequest,
   withSharedTrackingParams
 };

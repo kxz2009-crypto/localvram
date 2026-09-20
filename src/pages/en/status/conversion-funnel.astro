@@ -12,7 +12,7 @@ const sourceRows = Array.isArray(breakdown.source_pages) ? breakdown.source_page
 const landingRows = Array.isArray(breakdown.search_landings) ? breakdown.search_landings : [];
 const pagePath = "/en/status/conversion-funnel/";
 const pageTitle = "Conversion Funnel | LocalVRAM";
-const pageDescription = "Search intent to affiliate redirect funnel snapshot.";
+const pageDescription = "Separate search-export and outbound-request statistics; conversion is not yet attributed.";
 const structuredData = buildStatusDatasetSchema({
   name: "Conversion Funnel",
   description: pageDescription,
@@ -35,7 +35,7 @@ const structuredData = buildStatusDatasetSchema({
 
     <div class="card-grid">
       <article class="card">
-        <h2>Organic Search Clicks</h2>
+        <h2>Search Export Clicks</h2>
         <p>{funnel.organic_search_clicks ?? 0}</p>
       </article>
       <article class="card">
@@ -43,20 +43,20 @@ const structuredData = buildStatusDatasetSchema({
         <p>{funnel.decision_page_clicks ?? 0}</p>
       </article>
       <article class="card">
-        <h2>Affiliate Redirect Clicks</h2>
+        <h2>Affiliate Redirect Requests</h2>
         <p>{funnel.affiliate_redirect_clicks ?? 0}</p>
       </article>
       <article class="card">
-        <h2>Cloud Redirect Clicks</h2>
+        <h2>Cloud Redirect Requests</h2>
         <p>{funnel.cloud_redirect_clicks ?? 0}</p>
       </article>
       <article class="card">
-        <h2>Hardware Redirect Clicks</h2>
+        <h2>Hardware Redirect Requests</h2>
         <p>{funnel.hardware_redirect_clicks ?? 0}</p>
       </article>
       <article class="card">
         <h2>Search → Affiliate CTR</h2>
-        <p>{funnel.search_to_affiliate_pct ?? 0}%</p>
+        <p>N/A — no session attribution</p>
       </article>
     </div>
 
@@ -66,6 +66,7 @@ const structuredData = buildStatusDatasetSchema({
       <p>Generated: {report.generated_at || "unknown"}</p>
       <p>Search Console Updated: {report.sources?.search_console_updated_at || "unknown"}</p>
       <p>{quality.note || "-"}</p>
+          <p>Search export window: {report.sources?.search_console_window?.start_date || "unknown"} → {report.sources?.search_console_window?.end_date || "unknown"}</p>
     </section>
 
     <section class="card" style="margin-top: 16px;">

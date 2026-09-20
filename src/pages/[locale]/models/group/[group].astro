@@ -1,4 +1,6 @@
 ---
+import evidenceResults from "../../../../data/benchmark-results.json";
+import { getProfileBenchmark } from "../../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import { ROOT_ALTERNATES } from "../../../../data/root-alternates";
 import modelCatalog from "../../../../data/model-catalog.json";
@@ -31,7 +33,7 @@ const items = (Array.isArray(modelCatalog?.items) ? modelCatalog.items : [])
   .filter((item) => item?.license_scope === groupId || item?.size_class === groupId || item?.scenario === groupId)
   .sort((a, b) => Number(b?.params_b || 0) - Number(a?.params_b || 0) || String(a?.name || "").localeCompare(String(b?.name || "")));
 const featuredItems = items.slice(0, 24);
-const measuredCount = items.filter((item) => item?.data_status === "measured").length;
+const measuredCount = items.filter((item) => getProfileBenchmark(item, evidenceResults.models)).length;
 const curatedCount = items.filter((item) => Boolean(item?.is_top20_curated)).length;
 const systemRamTarget = (optimalVram: number) =>
   optimalVram <= 12 ? 16 : optimalVram <= 24 ? 32 : optimalVram <= 48 ? 64 : 128;
@@ -174,7 +176,7 @@ const structuredData = {
             return (
               <article class="model-card">
                 <div>
-                  <p class="eyebrow">{item?.data_status === "measured" ? labels.measured : labels.curated}</p>
+                  <p class="eyebrow">{getProfileBenchmark(item, evidenceResults.models) ? labels.measured : labels.curated}</p>
                   <h2>{String(item?.name || id)}</h2>
                 </div>
                 <dl>

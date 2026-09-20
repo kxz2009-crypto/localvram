@@ -1,4 +1,6 @@
 ---
+import evidenceResults from "../../../data/benchmark-results.json";
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 import catalog from "../../../data/model-catalog.json";
@@ -55,7 +57,7 @@ const modelScore = (item: (typeof catalog.items)[number]) => {
   if (familySlug && normalizedBodyHaystack.includes(familySlug)) score += 8;
   if (!score) return 0;
   score += quantScore(item.quantization);
-  if (item.data_status === "measured") score += 8;
+  if (getProfileBenchmark(item, evidenceResults.models)) score += 8;
   if (item.is_top20_curated) score += 6;
   return score;
 };
@@ -79,7 +81,7 @@ const relatedModels = Array.from(relatedModelCandidates.values())
     id: item.id,
     name: item.name,
     tag: item.ollama_tag,
-    status: item.data_status === "measured" ? "measured" : "estimated",
+    status: getProfileBenchmark(item, evidenceResults.models) ? "measured" : "estimated",
     quantization: item.quantization,
     vramMin: item.vram_min_gb,
     vramOptimal: item.vram_optimal_gb

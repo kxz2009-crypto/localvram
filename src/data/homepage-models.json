@@ -1,0 +1,39 @@
+{
+  "reviewed_at": "2026-09-20T17:30:00Z",
+  "review_interval_days": 30,
+  "items": [
+    {
+      "tag": "qwen3.8:27b",
+      "name": "Qwen3.8 27B",
+      "priority": 1,
+      "source_url": "https://ollama.com/library/qwen3.8:27b",
+      "source_checked_at": "2026-09-20T17:30:00Z",
+      "download_size_label": "18 GB",
+      "quantization": "Q4_K_M",
+      "summary_en": "Coding, agent workflows and multimodal tasks.",
+      "summary_zh": "关注编程、智能体工作流与多模态任务。"
+    },
+    {
+      "tag": "gemma4:26b",
+      "name": "Gemma 4 26B",
+      "priority": 2,
+      "source_url": "https://ollama.com/library/gemma4:26b",
+      "source_checked_at": "2026-09-20T17:30:00Z",
+      "download_size_label": "19 GB",
+      "quantization": "Q4_K_M",
+      "summary_en": "A mixture-of-experts option for text and image workflows.",
+      "summary_zh": "适合关注文本与图像工作流的 MoE 模型。"
+    },
+    {
+      "tag": "qwen3.6:27b",
+      "name": "Qwen3.6 27B",
+      "priority": 3,
+      "source_url": "https://ollama.com/library/qwen3.6:27b",
+      "source_checked_at": "2026-09-20T17:30:00Z",
+      "download_size_label": "18 GB",
+      "quantization": "Q4_K_M",
+      "summary_en": "A comparison point for coding and reasoning workflows.",
+      "summary_zh": "作为编程与推理工作流的对照选项。"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 ---
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import links from "../../../data/affiliate-links.json";
@@ -9,6 +10,7 @@ import { getFeaturedTestModels } from "../../../lib/featured-test-models";
 
 const allModels = Array.isArray(catalog.items) ? catalog.items : [];
 const benchmarkMap = benchmarkResults.models || {};
+const profileBenchmarks = Object.fromEntries(allModels.map((item) => [item.id, getProfileBenchmark(item, benchmarkMap)]));
 const featuredModels = getFeaturedTestModels(allModels, benchmarkMap, newModelWatchlist.items);
 const featuredIdSet = new Set(featuredModels.map((item) => item.id));
 const sampleModels = [...allModels].sort((a, b) => {
@@ -22,8 +24,8 @@ const sampleModels = [...allModels].sort((a, b) => {
 
   const aTag = String(a?.ollama_tag || "");
   const bTag = String(b?.ollama_tag || "");
-  const aMeasured = aTag && benchmarkMap[aTag]?.status === "ok" ? 0 : 1;
-  const bMeasured = bTag && benchmarkMap[bTag]?.status === "ok" ? 0 : 1;
+  const aMeasured = getProfileBenchmark(a, benchmarkMap) ? 0 : 1;
+  const bMeasured = getProfileBenchmark(b, benchmarkMap) ? 0 : 1;
   if (aMeasured !== bMeasured) {
     return aMeasured - bMeasured;
   }
@@ -40,7 +42,7 @@ const firstMeasuredModel = sampleModels.find((item) => {
   if (!item.ollama_tag) {
     return false;
   }
-  const data = benchmarkMap[item.ollama_tag];
+  const data = getProfileBenchmark(item, benchmarkMap);
   return data && data.status === "ok" && typeof data.tokens_per_second === "number";
 });
 const pinnedModelId = featuredModels.find((item) => featuredIdSet.has(item.id))?.id || "";
@@ -144,7 +146,7 @@ const faqSchema = {
   </main>
 
   <script is:inline src="/js/performance-chart.js?v=20260625"></script>
-  <script define:vars={{ items: sampleModels, benchmarkMap, defaultModelId }}>
+  <script define:vars={{ items: sampleModels, profileBenchmarks, defaultModelId }}>
     const select = document.getElementById("model-select");
     const result = document.getElementById("calc-result");
     const chartCanvas = document.getElementById("calc-chart");
@@ -190,7 +192,7 @@ const faqSchema = {
 
     const render = () => {
       const model = items.find((item) => item.id === select.value) || items[0];
-      const realData = model.ollama_tag ? benchmarkMap[model.ollama_tag] : null;
+      const realData = profileBenchmarks[model.id] || null;
       const isMeasured = realData && realData.status === "ok" && typeof realData.tokens_per_second === "number";
       const realPerf = isMeasured ? `${realData.tokens_per_second.toFixed(1)} tok/s` : "N/A";
       const realTestTime = isMeasured ? realData.test_time : "N/A";

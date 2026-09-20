@@ -1,9 +1,12 @@
 ---
+import HomepageModels from "../../components/HomepageModels.astro";
+import homepageRegistry from "../../data/homepage-models.json";
+import { getHomepageModels } from "../../lib/homepage-models.js";
+import benchmarkResults from "../../data/benchmark-results.json";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import runnerStatus from "../../data/runner-status.json";
 import statusReport from "../../data/status.json";
 import dailyUpdates from "../../data/daily-updates.json";
-import newModelWatchlist from "../../data/new-model-watchlist.json";
 import { buildCnAlternates } from "../../data/root-alternates";
 
 const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
@@ -11,12 +14,12 @@ const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_
 const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || "未知");
-const latestNewModel = newModelWatchlist.items?.[0];
-const latestNewModelTag = String(latestNewModel?.tag || "未知");
-const latestNewModelLanding = String(latestNewModel?.landing || "/en/models/").replace(/^\/en/, "") || "/models/";
-const latestLocalStatus = String(latestNewModel?.local_inventory_status?.status || "unknown");
-const latestBenchmarkStatus = String(latestNewModel?.benchmark_status?.status || latestNewModel?.status || "unknown");
-const latestOllamaUpdated = String(latestNewModel?.ollama_updated_label || "");
+const featuredModel = getHomepageModels(homepageRegistry, runnerStatus, benchmarkResults.models)[0];
+const latestNewModelTag = featuredModel?.tag || "—";
+const latestNewModelLanding = featuredModel?.source_url || "https://ollama.com/library";
+const latestLocalStatus = featuredModel?.inventory_status || "unknown";
+const latestBenchmarkStatus = featuredModel?.benchmark_status || "pending_verification";
+const latestOllamaUpdated = "";
 
 function formatGpuTemperature(value: number): string {
   if (!Number.isFinite(value) || value <= 0) {
@@ -39,16 +42,9 @@ function formatUtcDisplay(value: string): string {
 
 const lastSyncUtc = formatUtcDisplay(rawLastSync);
 const gpuTemperature = formatGpuTemperature(rawGpuTemperature);
-const localModelLabel =
-  latestLocalStatus === "downloaded"
-    ? "已下载"
-    : latestLocalStatus === "family_available"
-      ? "同家族可用"
-      : latestLocalStatus === "measured_recently"
-        ? "本地已测"
-        : "本地未见";
-const benchmarkModelLabel = latestBenchmarkStatus === "measured" ? "已实测" : "待测试";
-const newModelFreshnessLabel = latestOllamaUpdated ? `（${latestOllamaUpdated}）` : "";
+const localModelLabel = latestLocalStatus === "observed_in_snapshot" ? "历史清单可见" : "当前未确认";
+const benchmarkModelLabel = latestBenchmarkStatus === "measured" ? "精确配置已测" : "待精确配置验证";
+const newModelFreshnessLabel = "";
 const homeStructuredData = [
   {
     "@context": "https://schema.org",
@@ -82,7 +78,7 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM 中文站" />
     </a>
     <div class="ticker">
-      每日更新: {latestDailyUpdateDate} | Ollama 新模型: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | 本地:
+      每日更新: {latestDailyUpdateDate} | 近期关注模型: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | 本地:
       {localModelLabel} | RTX 3090: {benchmarkModelLabel} @{gpuTemperature} | Ollama: {ollamaVersion} | 硬件同步:
       <span id="last-sync-local">本地时间加载中...</span> (UTC {lastSyncUtc})
     </div>
@@ -91,15 +87,17 @@ const homeStructuredData = [
 
   <main class="container">
     <section class="hero">
-      <img
-        class="verified-pill"
-        src="/branding/ollama-verified-pill.svg"
-        alt="Ollama 已验证"
-      />
+      <p class="eyebrow">Ollama 模型 · 状态透明</p>
       <h1>60 秒选对适合你显卡的本地模型</h1>
       <p>
-        真实可跑兼容性、持续负载基准和本地/云端决策，一页完成。
+        查看模型兼容性、带日期的测试证据，比较本地与云端成本。
       </p>
+      <div class="cta-row"><a class="btn btn-primary" href="/tools/roi-calculator/">比较本地与云端成本</a></div>
+    </section>
+
+    <HomepageModels locale="zh" />
+
+    <section class="hero">
       <h2>核心导航</h2>
       <h3>工具、模型目录、硬件分层与运行状态监控</h3>
       <div class="cta-row">
@@ -127,7 +125,7 @@ const homeStructuredData = [
     <section class="card-grid">
       <article class="card">
         <h2>RTX 3090 实测验证</h2>
-        <p>覆盖温度衰减与 1 小时持续负载验证。</p>
+        <p>查看 RTX 3090 历史运行记录、测试日期与证据范围。</p>
         <a class="btn" href="/hardware/verified-3090/">查看验证页</a>
       </article>
       <article class="card">

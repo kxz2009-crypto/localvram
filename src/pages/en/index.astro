@@ -1,45 +1,25 @@
 ---
+import HomepageModels from "../../components/HomepageModels.astro";
+import homepageRegistry from "../../data/homepage-models.json";
+import { getHomepageModels } from "../../lib/homepage-models.js";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import runnerStatus from "../../data/runner-status.json";
 import statusReport from "../../data/status.json";
 import dailyUpdates from "../../data/daily-updates.json";
-import newModelWatchlist from "../../data/new-model-watchlist.json";
-import catalog from "../../data/model-catalog.json";
 import benchmarkResults from "../../data/benchmark-results.json";
 import { ROOT_ALTERNATES } from "../../data/root-alternates";
-import { getFeaturedTestModel } from "../../lib/featured-test-models";
 
 const ollamaVersion = String(runnerStatus?.api?.version?.version || "unknown");
 const rawLastSync = String(statusReport.last_hardware_sync || statusReport.last_verified || "unknown");
 const rawGpuTemperature = Number(statusReport.latest_gpu_temperature_c);
 const latestDailyUpdate = dailyUpdates.items?.[0];
 const latestDailyUpdateDate = String(latestDailyUpdate?.date || "unknown");
-const latestNewModel = newModelWatchlist.items?.[0];
-const newModelItems = Array.isArray(newModelWatchlist.items) ? newModelWatchlist.items : [];
-const benchmarkMap = benchmarkResults.models || {};
-const featuredTestModel = getFeaturedTestModel(catalog.items, benchmarkMap, newModelItems);
-const featuredWatchlistItem =
-  newModelItems.find((item) => item?.tag && item.tag === featuredTestModel?.featured_tag) || latestNewModel;
-const latestNewModelTag = String(featuredTestModel?.featured_tag || featuredWatchlistItem?.tag || "unknown");
-const latestNewModelLanding = String(featuredTestModel?.featured_path || featuredWatchlistItem?.landing || "/en/models/");
-const featuredDataStatus = String(featuredTestModel?.data_status || "");
-const latestLocalStatus = String(
-  featuredWatchlistItem?.local_inventory_status?.status ||
-    (featuredDataStatus === "local_inventory"
-      ? "downloaded"
-      : featuredDataStatus === "measured" || featuredTestModel?.measured_tokens_per_second
-        ? "measured_recently"
-        : "unknown")
-);
-const latestBenchmarkStatus = String(
-  featuredWatchlistItem?.benchmark_status?.status ||
-    featuredWatchlistItem?.status ||
-    (featuredTestModel?.measured_tokens_per_second ? "measured" : "unknown")
-);
-const latestOllamaUpdated = String(featuredWatchlistItem?.ollama_updated_label || "");
-const featuredPerfLabel = featuredTestModel?.measured_tokens_per_second
-  ? `${featuredTestModel.measured_tokens_per_second.toFixed(1)} tok/s`
-  : "pending";
+const featuredModel = getHomepageModels(homepageRegistry, runnerStatus, benchmarkResults.models)[0];
+const latestNewModelTag = featuredModel?.tag || "—";
+const latestNewModelLanding = featuredModel?.source_url || "https://ollama.com/library";
+const latestLocalStatus = featuredModel?.inventory_status || "unknown";
+const latestBenchmarkStatus = featuredModel?.benchmark_status || "pending_verification";
+const latestOllamaUpdated = "";
 
 function formatGpuTemperature(value: number): string {
   if (!Number.isFinite(value) || value <= 0) {
@@ -62,16 +42,10 @@ function formatUtcDisplay(value: string): string {
 
 const lastSyncUtc = formatUtcDisplay(rawLastSync);
 const gpuTemperature = formatGpuTemperature(rawGpuTemperature);
-const localModelLabel =
-  latestLocalStatus === "downloaded"
-    ? "downloaded"
-    : latestLocalStatus === "family_available"
-      ? "family available"
-      : latestLocalStatus === "measured_recently"
-        ? "measured locally"
-        : "not local yet";
-const benchmarkModelLabel = latestBenchmarkStatus === "measured" ? "measured" : "pending";
-const newModelFreshnessLabel = latestOllamaUpdated ? ` (${latestOllamaUpdated})` : "";
+const localModelLabel = latestLocalStatus === "observed_in_snapshot" ? "seen in saved inventory" : "not currently confirmed";
+const benchmarkModelLabel = latestBenchmarkStatus === "measured" ? "measured" : "exact configuration pending";
+const newModelFreshnessLabel = "";
+const featuredPerfLabel = featuredModel?.measured_tokens_per_second != null ? `${featuredModel.measured_tokens_per_second.toFixed(1)} tok/s` : "pending verification";
 const homeStructuredData = [
   {
     "@context": "https://schema.org",
@@ -104,9 +78,9 @@ const homeStructuredData = [
       <img src="/branding/logo.svg" alt="LocalVRAM" />
     </a>
     <div class="ticker">
-      Daily Update: {latestDailyUpdateDate} | Featured test: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | RTX 3090:
+      Daily Update: {latestDailyUpdateDate} | Featured model: <a href={latestNewModelLanding}>{latestNewModelTag}</a>{newModelFreshnessLabel} | RTX 3090:
       {featuredPerfLabel} | Local:
-      {localModelLabel} | Runner status: {benchmarkModelLabel} @ {gpuTemperature} | Ollama: {ollamaVersion} | Hardware Sync:
+      {localModelLabel} | Measurement: {benchmarkModelLabel} @ {gpuTemperature} | Ollama: {ollamaVersion} | Hardware Sync:
       <span id="last-sync-local">local time loading...</span> <span id="ticker-freshness-badge"></span> (UTC {lastSyncUtc})
     </div>
     <a class="mode-btn" href="/en/status/">Data Status</a>
@@ -114,16 +88,17 @@ const homeStructuredData = [
 
   <main class="container">
     <section class="hero">
-      <img
-        class="verified-pill"
-        src="/branding/ollama-verified-pill.svg"
-        alt="Ollama Verified"
-      />
+      <p class="eyebrow">Ollama models · evidence explained</p>
       <h1>Pick the right model for your GPU in 60 seconds</h1>
       <p>
-        Real-world compatibility, sustained-load benchmarks, and direct run vs
-        rent decisions.
+        Model compatibility, dated benchmark evidence, and local vs cloud cost decisions.
       </p>
+      <div class="cta-row"><a class="btn btn-primary" href="/en/tools/roi-calculator/">Compare local vs cloud costs</a></div>
+    </section>
+
+    <HomepageModels locale="en" />
+
+    <section class="hero">
       <h2>Navigation Hubs</h2>
       <h3>Tools, model pages, hardware tiers, and status monitors</h3>
       <div class="cta-row">
@@ -152,7 +127,7 @@ const homeStructuredData = [
     <section class="card-grid">
       <article class="card">
         <h2>Verified on 3090</h2>
-        <p>Thermal drop-off tracking and 1-hour sustained load runs.</p>
+        <p>Recorded RTX 3090 runs with test dates and evidence limitations.</p>
         <a class="btn" href="/en/hardware/verified-3090/">Open verification page</a>
       </article>
       <article class="card">

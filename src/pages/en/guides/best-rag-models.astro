@@ -1,4 +1,5 @@
 ---
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
@@ -15,8 +16,8 @@ const embeddingRows = allItems
 const generatorRows = allItems
   .filter((item) => (item.scenario === "chat" || item.scenario === "reasoning") && item.vram_optimal_gb <= 24)
   .sort((a, b) => {
-    const aMeasured = a.ollama_tag && benchmarkMap[a.ollama_tag]?.status === "ok" ? 0 : 1;
-    const bMeasured = b.ollama_tag && benchmarkMap[b.ollama_tag]?.status === "ok" ? 0 : 1;
+    const aMeasured = getProfileBenchmark(a, benchmarkMap) ? 0 : 1;
+    const bMeasured = getProfileBenchmark(b, benchmarkMap) ? 0 : 1;
     if (aMeasured !== bMeasured) {
       return aMeasured - bMeasured;
     }
@@ -90,7 +91,7 @@ const articleSchema = {
         </thead>
         <tbody>
           {generatorRows.map((item) => {
-            const measured = item.ollama_tag && benchmarkMap[item.ollama_tag]?.status === "ok";
+            const measured = getProfileBenchmark(item, benchmarkMap);
             return (
               <tr>
                 <td>{item.name}</td>

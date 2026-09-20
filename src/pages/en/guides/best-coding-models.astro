@@ -1,4 +1,5 @@
 ---
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
@@ -9,8 +10,8 @@ const benchmarkMap = benchmarkResults.models || {};
 const codingItems = allItems.filter((item) => item.scenario === "coding");
 
 const rankedCoding = [...codingItems].sort((a, b) => {
-  const aMeasured = a.ollama_tag && benchmarkMap[a.ollama_tag]?.status === "ok" ? 0 : 1;
-  const bMeasured = b.ollama_tag && benchmarkMap[b.ollama_tag]?.status === "ok" ? 0 : 1;
+  const aMeasured = getProfileBenchmark(a, benchmarkMap) ? 0 : 1;
+  const bMeasured = getProfileBenchmark(b, benchmarkMap) ? 0 : 1;
   if (aMeasured !== bMeasured) {
     return aMeasured - bMeasured;
   }
@@ -22,7 +23,7 @@ const rankedCoding = [...codingItems].sort((a, b) => {
 
 const localFirstRows = rankedCoding.filter((item) => item.vram_optimal_gb <= 24).slice(0, 12);
 const heavyRows = rankedCoding.filter((item) => item.vram_optimal_gb > 24).slice(0, 8);
-const measuredCount = rankedCoding.filter((item) => item.ollama_tag && benchmarkMap[item.ollama_tag]?.status === "ok").length;
+const measuredCount = rankedCoding.filter((item) => getProfileBenchmark(item, benchmarkMap)).length;
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -85,7 +86,7 @@ const articleSchema = {
         </thead>
         <tbody>
           {localFirstRows.map((item) => {
-            const measured = item.ollama_tag && benchmarkMap[item.ollama_tag]?.status === "ok";
+            const measured = getProfileBenchmark(item, benchmarkMap);
             return (
               <tr>
                 <td>{item.name}</td>

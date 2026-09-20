@@ -1,4 +1,5 @@
 ---
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
@@ -30,8 +31,8 @@ const { left, right } = Astro.props;
 const comparePath = `/en/compare/${left.id}-vs-${right.id}/`;
 const compareUrl = `https://localvram.com${comparePath}`;
 const benchmarkMap = benchmarkResults.models || {};
-const leftMeasured = left.ollama_tag ? benchmarkMap[left.ollama_tag] : null;
-const rightMeasured = right.ollama_tag ? benchmarkMap[right.ollama_tag] : null;
+const leftMeasured = getProfileBenchmark(left, benchmarkMap);
+const rightMeasured = getProfileBenchmark(right, benchmarkMap);
 
 const localRecommendation =
   left.vram_optimal_gb <= 24 && right.vram_optimal_gb > 24

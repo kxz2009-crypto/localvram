@@ -1,0 +1,96 @@
+---
+const { locale = 'en' } = Astro.props;
+const zh = locale === 'zh';
+const fields = [
+  ['months', zh ? '比较期限（月）' : 'Horizon (months)', 24, 1, 120, 1],
+  ['hours', zh ? '每月本地等效工作时长' : 'Local workload hours / month', 120, 0, 730, 1],
+  ['activeWatts', zh ? '工作时整机功耗（W）' : 'Whole-system active power (W)', 350, 0, 100000, 1],
+  ['idleWatts', zh ? '闲置整机功耗（W，关机填 0）' : 'Idle power (W; 0 if off)', 40, 0, 100000, 1],
+  ['electricity', zh ? '电价 / kWh' : 'Electricity / kWh', 0.15, 0, 1000, 'any'],
+  ['localMaintenance', zh ? '每月本地维护成本（含工时）' : 'Local maintenance / month (include labor)', 5, 0, 1000000, 'any'],
+  ['purchase', zh ? '购置总价（新购模式）' : 'Purchase cost (new hardware)', 1500, 0, 10000000, 'any'],
+  ['resale', zh ? '期限末预计残值（新购模式）' : 'Expected resale at horizon (new hardware)', 300, 0, 10000000, 'any'],
+  ['cloudRate', zh ? '云端小时单价' : 'Cloud price / hour', 1, 0, 1000000, 'any'],
+  ['cloudTimeRatio', zh ? '同一任务云端耗时 / 本地耗时' : 'Cloud time / local time for the same task', 1, 0.001, 1000, 'any'],
+  ['cloudExtras', zh ? '每月云端附加费用（存储、流量、运维）' : 'Cloud extras / month (storage, transfer, ops)', 8, 0, 1000000, 'any'],
+];
+const copy = zh ? {
+  error:'请输入有效的非负数；期限为 1–120 个整月，每月工作时长不超过 730 小时，云端耗时比大于 0，残值不超过购置价。',
+  owned:'已有硬件：不计算购置回本', never:'运行成本没有节省，无法靠月度节省回本', outside:'超出比较期限', months:'个月',
+  neutral:'所填条件下，两者总成本相同。', local:'所填条件下，本地总成本较低，差额', cloud:'所填条件下，云端总成本较低，差额',
+  upfront:'购置投入', operating:'每月运行成本', residual:'期限末残值抵扣', total:'比较期总成本', localName:'本地',cloudName:'云端',
+  notice:'结果仅对应所填条件；请先确认模型可运行且两种方案完成同样质量与数量的任务。',
+} : {
+  error:'Use valid non-negative numbers: 1–120 whole months, at most 730 workload hours/month, a positive cloud-time ratio, and resale no greater than purchase cost.',
+  owned:'Owned hardware: purchase payback does not apply', never:'No monthly operating savings to repay the purchase', outside:'beyond the selected horizon', months:'months',
+  neutral:'The entered assumptions produce equal total costs.', local:'Local has the lower total cost under these assumptions. Difference:', cloud:'Cloud has the lower total cost under these assumptions. Difference:',
+  upfront:'Upfront purchase',operating:'Monthly operating cost',residual:'Resale credit at horizon',total:'Total over horizon',localName:'Local',cloudName:'Cloud',
+  notice:'These results reflect your inputs. First confirm model fit and equivalent workload quality and volume.',
+};
+---
+<section class="card roi-calculator" id="cost-calculator" data-roi-calculator data-copy={JSON.stringify(copy)} lang={zh ? 'zh-CN' : 'en'}>
+  <h2>{zh ? '本地与云端：按同一任务比较总成本' : 'Local vs cloud: compare total cost for the same workload'}</h2>
+  <p>{zh ? '以下为可修改的演算示例，不是实时价格。所有金额请使用同一种货币。按每月 730 小时计算闲置时间；预计残值仅在期限末抵扣。' : 'Editable example assumptions, not live prices. Use one currency for all amounts. Idle time uses a 730-hour month; resale is credited only at the end of the horizon.'}</p>
+  <form data-roi-form>
+    <div class="roi-fields">
+      <label>{zh ? '硬件情况' : 'Hardware ownership'}<select name="mode" class="input"><option value="purchase">{zh ? '准备新购硬件' : 'Buying new hardware'}</option><option value="owned">{zh ? '已有硬件，只比较增量成本' : 'Already owned: incremental costs'}</option></select></label>
+      {fields.map(([name,label,value,min,max,step]) => <label>{label}<input class="input" name={String(name)} type="number" value={value} min={min} max={max} step={step} required /></label>)}
+    </div>
+    <button class="btn btn-primary" type="submit">{zh ? '计算并比较' : 'Calculate and compare'}</button>
+  </form>
+  <p data-roi-error role="alert" hidden></p>
+  <div data-roi-result aria-live="polite" hidden>
+    <p data-roi-summary class="roi-summary"></p>
+    <div class="roi-table-wrap"><table class="table"><thead><tr><th>{zh ? '成本项目' : 'Cost item'}</th><th>{copy.localName}</th><th>{copy.cloudName}</th></tr></thead><tbody data-roi-rows></tbody></table></div>
+    <p><strong>{zh ? '购置现金回本时间：' : 'Purchase cash payback: '}</strong><span data-roi-payback></span></p>
+    <p>{zh ? '现金回本按购置总价 ÷ 每月运行节省计算，不提前计入预计转售所得；已有硬件的历史购置价不重复计算。' : 'Cash payback divides purchase cost by monthly operating savings, without counting future resale early. Historical purchase cost is excluded for already-owned hardware.'}</p>
+    <p>{copy.notice}</p>
+  </div>
+  <noscript>{zh ? '请启用 JavaScript 以使用交互计算器。' : 'Enable JavaScript to use the interactive calculator.'}</noscript>
+</section>
+<script>
+  import { calculateCosts } from '../lib/roi-calculator.js';
+  for (const element of document.querySelectorAll<HTMLElement>('[data-roi-calculator]')) {
+    const form = element.querySelector<HTMLFormElement>('[data-roi-form]')!;
+    const copy = JSON.parse(element.dataset.copy || '{}');
+    const result = element.querySelector<HTMLElement>('[data-roi-result]')!;
+    const error = element.querySelector<HTMLElement>('[data-roi-error]')!;
+    const format = (value:number) => new Intl.NumberFormat(element.lang === 'zh-CN' ? 'zh-CN' : 'en-US',{minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
+    const syncMode = () => {
+      const owned = new FormData(form).get('mode') === 'owned';
+      for (const name of ['purchase','resale']) (form.elements.namedItem(name) as HTMLInputElement).disabled = owned;
+    };
+    const render = () => {
+      syncMode();
+      result.hidden = true;
+      error.hidden = true;
+      if (!form.checkValidity()) { error.textContent=copy.error;error.hidden=false;return; }
+      const raw = Object.fromEntries(new FormData(form));
+      const input:any={mode:raw.mode};
+      for (const key of ['months','hours','activeWatts','idleWatts','electricity','localMaintenance','purchase','resale','cloudRate','cloudTimeRatio','cloudExtras']) input[key]=Number(raw[key] ?? 0);
+      try {
+        const values=calculateCosts(input);
+        const rows = [[copy.upfront,values.upfront,0],[copy.operating,values.localMonthly,values.cloudMonthly],[copy.residual,-values.residual,0],[copy.total,values.localTotal,values.cloudTotal]];
+        const tbody=element.querySelector('[data-roi-rows]')!;
+        tbody.replaceChildren(...rows.map(row => { const tr=document.createElement('tr'); for (const [index,value] of row.entries()) { const td=document.createElement('td');td.textContent=index===0 ? String(value) : format(Number(value));tr.append(td); } return tr; }));
+        element.querySelector('[data-roi-summary]')!.textContent=Math.abs(values.savings)<0.005 ? copy.neutral : `${values.savings>0 ? copy.local : copy.cloud} ${format(Math.abs(values.savings))}`;
+        element.querySelector('[data-roi-payback]')!.textContent=input.mode==='owned' ? copy.owned : values.paybackMonths===null ? copy.never : `${format(values.paybackMonths)} ${copy.months}${values.paybackWithinHorizon ? '' : ` · ${copy.outside}`}`;
+        result.hidden=false;
+      } catch { error.textContent=copy.error;error.hidden=false; }
+    };
+    form.addEventListener('submit',event=>{event.preventDefault();render();});
+    form.addEventListener('input',render);
+    render();
+  }
+</script>
+<style>
+  .roi-calculator { margin: 24px 0; }
+  .roi-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap:16px; margin:24px 0; }
+  label { display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--muted); }
+  select,input { min-width:0; width:100%; }
+  .roi-summary { font-size:20px; color:var(--primary); }
+  [data-roi-error] { color:#fca5a5; }
+  [hidden] { display:none !important; }
+  .roi-table-wrap { overflow-x:auto; }
+  @media(max-width:640px) { .roi-fields { grid-template-columns:1fr; } }
+</style>

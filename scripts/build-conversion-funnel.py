@@ -2,6 +2,7 @@
 import argparse
 import datetime as dt
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -15,15 +16,8 @@ DEFAULT_SEARCH_CONSOLE_FILE = ROOT / "src" / "data" / "search-console-keywords.j
 DEFAULT_AFFILIATE_EVENTS_FILE = ROOT / "src" / "data" / "affiliate-click-events.json"
 DEFAULT_OUT_FILE = ROOT / "src" / "data" / "conversion-funnel.json"
 
-LOCAL_HOSTS = {"localvram.com", "www.localvram.com"}
-DECISION_PREFIXES = (
-    "/en/models/",
-    "/en/tools/",
-    "/en/errors/",
-    "/en/hardware/",
-    "/en/guides/",
-    "/en/affiliate/",
-)
+LOCAL_HOSTS = {"localvram.com", "www.localvram.com", "localvram.cn", "www.localvram.cn"}
+DECISION_PATH = re.compile(r"^/(?:[a-z]{2}/)?(?:models|tools|errors|hardware|guides|affiliate)/")
 LOGGER = configure_logging("build-conversion-funnel")
 
 
@@ -67,7 +61,7 @@ def safe_path_from_url(raw_url: str) -> str:
         parsed = urlparse(value)
     except ValueError:
         return ""
-    return parsed.path or ""
+    return (parsed.path or "") if not parsed.netloc or parsed.hostname in LOCAL_HOSTS else ""
 
 
 def percent(numerator: int, denominator: int) -> float:
@@ -104,7 +98,7 @@ def main() -> None:
         organic_clicks += clicks
         landing = str(item.get("landing", "")).strip() or "/unknown"
         landing_counter[landing] += clicks
-        if any(landing.startswith(prefix) for prefix in DECISION_PREFIXES):
+        if DECISION_PATH.match(safe_path_from_url(landing)):
             decision_clicks += clicks
 
     raw_event_payload = load_json(events_path, {"events": []})
@@ -112,7 +106,7 @@ def main() -> None:
     in_window_events: list[dict[str, Any]] = []
     for event in all_events:
         event_time = parse_iso_utc(str(event.get("ts", "")))
-        if event_time is not None and event_time < window_start:
+        if event_time is None or not window_start <= event_time <= now_utc:
             continue
         in_window_events.append(event)
 
@@ -181,8 +175,9 @@ def main() -> None:
         "window_start": window_start.isoformat().replace("+00:00", "Z"),
         "window_end": now_utc.isoformat().replace("+00:00", "Z"),
         "sources": {
-            "search_console_file": str(sc_path.relative_to(ROOT)).replace("\\", "/") if sc_path.exists() else str(sc_path),
-            "affiliate_events_file": str(events_path.relative_to(ROOT)).replace("\\", "/") if events_path.exists() else str(events_path),
+            "search_console_file": str(sc_path.relative_to(ROOT)) if sc_path.is_relative_to(ROOT) else str(sc_path),
+            "affiliate_events_file": str(events_path.relative_to(ROOT)) if events_path.is_relative_to(ROOT) else str(events_path),
+            "search_console_window": sc_payload.get("window", {}) if isinstance(sc_payload, dict) else {},
             "search_console_updated_at": str(sc_payload.get("updated_at", "")) if isinstance(sc_payload, dict) else "",
         },
         "funnel": {
@@ -191,9 +186,10 @@ def main() -> None:
             "affiliate_redirect_clicks": int(affiliate_clicks),
             "cloud_redirect_clicks": int(cloud_clicks),
             "hardware_redirect_clicks": int(hardware_clicks),
-            "search_to_affiliate_pct": percent(affiliate_clicks, organic_clicks),
-            "search_to_cloud_pct": percent(cloud_clicks, organic_clicks),
-            "affiliate_to_cloud_pct": percent(cloud_clicks, affiliate_clicks),
+            "search_to_affiliate_pct": None,
+            "search_to_cloud_pct": None,
+            "affiliate_to_cloud_pct": None,
+            "cloud_share_of_redirects_pct": percent(cloud_clicks, affiliate_clicks) if affiliate_clicks else None,
         },
         "breakdown": {
             "providers": by_provider,
@@ -206,7 +202,10 @@ def main() -> None:
             "affiliate_event_items_total": len(all_events),
             "affiliate_event_items_in_window": len(in_window_events),
             "has_affiliate_event_feed": bool(events_path.exists() and len(all_events) > 0),
-            "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks.",
+            "unattributed_redirects": int(source_page_counter.get("unknown", 0)),
+            "excluded_invalid_or_out_of_window_events": len(all_events) - len(in_window_events),
+            "conversion_rate_status": "unavailable_no_session_attribution",
+            "note": "Search Console query/page totals and redirect request counts are separate datasets with different windows. Requests are not unique people or orders; legacy events may include bots and checks. Conversion rates are unavailable without session attribution and provider order reconciliation.",
         },
     }
 

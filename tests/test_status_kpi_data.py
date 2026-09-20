@@ -55,7 +55,7 @@ class StatusKpiDataTests(unittest.TestCase):
     def write_locale_kpi(self, rows):
         path = self.tmp_dir / "locale-kpi-tracker.csv"
         path.write_text(
-            "date,domain,locale,owner,indexed_urls,discovered_urls,index_rate_pct,impressions,clicks,ctr_pct,avg_position,notes,next_action\n"
+            "date,domain,locale,owner,visible_landing_urls,discovered_urls,search_visibility_pct,impressions,clicks,ctr_pct,avg_position,notes,next_action\n"
             + "\n".join(rows)
             + "\n",
             encoding="utf-8",
@@ -106,7 +106,7 @@ class StatusKpiDataTests(unittest.TestCase):
         self.assertIn("locale KPI needs at least one row for /en/status/", result["errors"])
         self.assertIn("locale KPI missing expected locales: de", result["errors"])
 
-    def test_kpi_rejects_indexed_count_above_discovered_count(self):
+    def test_visible_landings_may_include_urls_outside_sitemap(self):
         search_path = self.write_search_console(
             [
                 {
@@ -129,7 +129,7 @@ class StatusKpiDataTests(unittest.TestCase):
             expected_locales={"de"},
         )
 
-        self.assertIn("locale KPI de indexed_urls cannot exceed discovered_urls", result["errors"])
+        self.assertEqual(result["errors"], [])
 
 
 if __name__ == "__main__":

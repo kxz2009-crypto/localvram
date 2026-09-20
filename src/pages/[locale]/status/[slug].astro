@@ -340,7 +340,7 @@ const structuredData = [
           </article>
           <article class="card">
             <h2>{statusText.searchAffiliateCtr}</h2>
-            <p>{funnel.search_to_affiliate_pct ?? 0}%</p>
+            <p>N/A — no session attribution</p>
           </article>
         </section>
 
@@ -350,6 +350,7 @@ const structuredData = [
           <p>{statusText.generated}: {conversionReport.generated_at || "unknown"}</p>
           <p>{statusText.searchConsoleUpdated}: {conversionReport.sources?.search_console_updated_at || "unknown"}</p>
           <p>{conversionReport.data_quality?.note || "-"}</p>
+          <p>Search export window: {conversionReport.sources?.search_console_window?.start_date || "unknown"} → {conversionReport.sources?.search_console_window?.end_date || "unknown"}</p>
         </section>
 
         <section class="card" style="margin-top: 16px;">

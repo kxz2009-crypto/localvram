@@ -17,9 +17,9 @@ REQUIRED_KPI_COLUMNS = {
     "date",
     "domain",
     "locale",
-    "indexed_urls",
+    "visible_landing_urls",
     "discovered_urls",
-    "index_rate_pct",
+    "search_visibility_pct",
     "impressions",
     "clicks",
     "ctr_pct",
@@ -102,15 +102,14 @@ def validate_status_kpi_data(
             errors.append(f"locale KPI {locale} missing date")
         if not str(row.get("next_action", "")).strip():
             errors.append(f"locale KPI {locale} missing next_action")
-        indexed = _number(row.get("indexed_urls", 0), f"locale KPI {locale} indexed_urls", errors)
+        indexed = _number(row.get("visible_landing_urls", 0), f"locale KPI {locale} visible_landing_urls", errors)
         discovered = _number(row.get("discovered_urls", 0), f"locale KPI {locale} discovered_urls", errors)
-        _number(row.get("index_rate_pct", 0), f"locale KPI {locale} index_rate_pct", errors)
+        _number(row.get("search_visibility_pct", 0), f"locale KPI {locale} search_visibility_pct", errors)
         _number(row.get("impressions", 0), f"locale KPI {locale} impressions", errors)
         _number(row.get("clicks", 0), f"locale KPI {locale} clicks", errors)
         _number(row.get("ctr_pct", 0), f"locale KPI {locale} ctr_pct", errors)
         _number(row.get("avg_position", 0), f"locale KPI {locale} avg_position", errors)
-        if discovered and indexed > discovered:
-            errors.append(f"locale KPI {locale} indexed_urls cannot exceed discovered_urls")
+        # Search may show URLs absent from the sitemap, so this ratio can exceed 100%.
 
     return {
         "errors": errors,

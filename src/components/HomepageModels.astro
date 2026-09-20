@@ -1,0 +1,49 @@
+---
+import registry from '../data/homepage-models.json';
+import runner from '../data/runner-status.json';
+import benchmarks from '../data/benchmark-results.json';
+import { getHomepageModels } from '../lib/homepage-models.js';
+const { locale = 'en' } = Astro.props;
+const zh = locale === 'zh';
+const items = getHomepageModels(registry, runner, benchmarks.models);
+---
+<section class="model-spotlights" aria-labelledby="model-spotlights-title" lang={zh ? 'zh-CN' : 'en'}>
+  <div class="spotlight-heading">
+    <p class="eyebrow">{zh ? '近期模型 · 独立核对' : 'MODEL SPOTLIGHT · SOURCE CHECKED'}</p>
+    <h2 id="model-spotlights-title">{zh ? '从精确模型标签开始' : 'Start with the exact model tag'}</h2>
+    <p>{zh ? '官方资料、本地清单与硬件实测分开展示。下载体积不是运行显存需求。' : 'Official metadata, local inventory and hardware measurements are separate. Download size is not runtime VRAM.'}</p>
+  </div>
+  <div class="spotlight-grid">
+    {items.map((model,index) => (
+      <article class:list={['card', 'spotlight-card', { 'spotlight-primary': index === 0 }]} data-model-tag={model.tag}>
+        <p class="eyebrow">{index === 0 ? (zh ? '本期重点' : 'FEATURED') : model.quantization}</p>
+        <h3>{model.name}</h3>
+        <p>{zh ? model.summary_zh : model.summary_en}</p>
+        <dl>
+          <dt>{zh ? '官方条目核对' : 'Official tag checked'}</dt><dd>{model.source_date || '—'}{model.review_due ? (zh ? ' · 待复核' : ' · review due') : ''}</dd>
+          <dt>{zh ? '下载体积（约）' : 'Download (approx.)'}</dt><dd>{model.download_size_label} · {model.quantization}</dd>
+          <dt>{zh ? '本地状态' : 'Local inventory'}</dt><dd>{model.inventory_status === 'observed_in_snapshot' ? (zh ? '历史清单中可见' : 'Seen in saved inventory') : (zh ? '当前未确认' : 'Not currently confirmed')}</dd>
+          {model.inventory_status === 'observed_in_snapshot' && <><dt>{zh ? '清单时间' : 'Inventory time'}</dt><dd><time>{model.inventory_date}</time></dd></>}
+          <dt>{zh ? 'RTX 3090 实测' : 'RTX 3090 measurement'}</dt><dd>{model.measured_tokens_per_second === null ? (zh ? '待精确配置验证' : 'Exact configuration pending') : `${model.measured_tokens_per_second.toFixed(1)} tok/s`}</dd>
+        </dl>
+        <code class="run-command">{model.command}</code>
+        <a class="btn" href={model.source_url} target="_blank" rel="noopener noreferrer">{zh ? '查看官方模型条目 ↗' : 'Open official model tag ↗'}</a>
+      </article>
+    ))}
+  </div>
+</section>
+<style>
+  .model-spotlights { margin: 32px 0; }
+  .spotlight-heading { margin-bottom: 20px; }
+  .spotlight-heading h2 { margin: 8px 0; font-size: clamp(24px,3vw,34px); }
+  .spotlight-heading p, .spotlight-card p { color: var(--muted); }
+  .spotlight-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+  .spotlight-card { display: flex; flex-direction: column; min-width: 0; }
+  .spotlight-primary { border-color: var(--primary); background: linear-gradient(145deg,rgba(14,165,233,.12),var(--card)); }
+  .spotlight-card h3 { font-size: 24px; margin: 8px 0; }
+  dl { margin: 16px 0; font-size: 14px; }
+  dt { color: var(--muted); margin-top: 10px; }
+  dd { margin: 4px 0; overflow-wrap: anywhere; }
+  .run-command { display: block; white-space: normal; overflow-wrap: anywhere; padding: 12px; background: var(--bg); border-radius: 8px; margin: auto 0 14px; }
+  @media(max-width:800px) { .spotlight-grid { grid-template-columns: 1fr; } }
+</style>

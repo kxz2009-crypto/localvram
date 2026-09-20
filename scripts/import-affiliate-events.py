@@ -127,8 +127,8 @@ def load_source_events(path: Path, source_format: str) -> list[dict[str, Any]]:
 def sanitize_event(raw: dict[str, Any], now: dt.datetime) -> dict[str, Any] | None:
     ts_raw = str(raw.get("ts") or raw.get("timestamp") or raw.get("time") or "").strip()
     parsed = parse_iso_utc(ts_raw)
-    if parsed is None:
-        parsed = now
+    if parsed is None or parsed > now:
+        return None
 
     provider = str(raw.get("provider", "")).strip().lower() or "unknown"
     if provider not in KNOWN_PROVIDERS:

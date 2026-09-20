@@ -259,6 +259,34 @@ def list_local_models(endpoint: str, retry_delays: list[float] | None = None) ->
     return models
 
 
+def fetch_model_identity(endpoint: str, model: str) -> dict[str, str]:
+    """Capture immutable identity and exact quantization; never infer from a family name."""
+    def full_tag(value: str) -> str:
+        tag = str(value).strip().lower()
+        return tag if ":" in tag else f"{tag}:latest"
+
+    try:
+        payload = api_request(endpoint, "/api/tags", None, timeout=20)
+        for item in payload.get("models", []):
+            if not isinstance(item, dict):
+                continue
+            names = [item.get("name", ""), item.get("model", "")]
+            if full_tag(model) not in [full_tag(name) for name in names if name]:
+                continue
+            digest = str(item.get("digest", "")).strip().lower().removeprefix("sha256:")
+            details = item.get("details") or {}
+            quantization = str(details.get("quantization_level", "")).strip().upper()
+            if re.fullmatch(r"[a-f0-9]{64}", digest) and quantization:
+                return {"model_digest": f"sha256:{digest}", "quantization": quantization}
+    except Exception as exc:  # identity failure must not promote an unverified profile
+        LOGGER.warning("benchmark identity unavailable for %s: %s", model, type(exc).__name__)
+    return {}
+
+
+def stable_model_identity(before: dict[str, str], after: dict[str, str]) -> dict[str, str]:
+    return before if before and before == after else {}
+
+
 def load_known_model_tags() -> set[str]:
     catalog = read_json(MODEL_CATALOG_FILE, {"items": []})
     tags = set()
@@ -642,6 +670,10 @@ def has_significant_change(old_row: dict[str, Any] | None, new_row: dict[str, An
         return True
     if old_row.get("status") != new_row.get("status"):
         return True
+    # Evidence changes must publish even when throughput stays within the delta gate.
+    for field in ("model_digest", "quantization", "ollama_version", "num_ctx", "gpu_model"):
+        if old_row.get(field) != new_row.get(field):
+            return True
     old_tps = old_row.get("tokens_per_second")
     new_tps = new_row.get("tokens_per_second")
     if old_tps is None and new_tps is not None:
@@ -1263,6 +1295,7 @@ def main() -> None:
             append_log(log_file, {"level": "error", "event": "model_missing", **report})
             continue
         runnable_target_count += 1
+        identity_before = fetch_model_identity(endpoint, runner_model_tag)
         report = benchmark_model(
             endpoint=endpoint,
             model=runner_model_tag,
@@ -1275,6 +1308,7 @@ def main() -> None:
             log_file=log_file,
             retry_delays=network_retry_delays,
         )
+        report["model_identity"] = stable_model_identity(identity_before, fetch_model_identity(endpoint, runner_model_tag))
         report["requested_model"] = model_tag
         report["canonical_model"] = canonical_model_tag
         reports.append(report)
@@ -1304,6 +1338,8 @@ def main() -> None:
         source_model_tag = str(report.get("model", "")).strip().lower()
         model_tag = str(report.get("canonical_model", source_model_tag)).strip().lower()
         next_model_rows[model_tag] = {
+            **report.get("model_identity", {}),
+            "ollama_version": ollama_version,
             "tokens_per_second": round(float(report.get("tokens_per_s_avg", 0.0)), 3),
             "latency_ms": round(float(report.get("latency_s_avg", 0.0)) * 1000.0, 2),
             "prompt_tokens": prompt_tokens,

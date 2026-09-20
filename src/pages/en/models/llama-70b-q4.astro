@@ -1,4 +1,5 @@
 ---
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
@@ -17,8 +18,8 @@ if (!llama33 || !llama3) {
 }
 
 const benchmarkMap = benchmarkResults?.models || {};
-const llama33Measured = benchmarkMap[llama33.ollama_tag] || null;
-const llama3Measured = benchmarkMap[llama3.ollama_tag] || null;
+const llama33Measured = getProfileBenchmark(llama33, benchmarkMap);
+const llama3Measured = getProfileBenchmark(llama3, benchmarkMap);
 const hasLlama33Measured = llama33Measured?.status === "ok" && typeof llama33Measured?.tokens_per_second === "number";
 const hasLlama3Measured = llama3Measured?.status === "ok" && typeof llama3Measured?.tokens_per_second === "number";
 

@@ -1,4 +1,6 @@
 ---
+import evidenceResults from "../../../../data/benchmark-results.json";
+import { getProfileBenchmark } from "../../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import catalog from "../../../../data/model-catalog.json";
 import links from "../../../../data/affiliate-links.json";
@@ -77,7 +79,7 @@ const structuredData = {
           {items.map((item) => (
             <tr>
               <td>{item.name}</td>
-              <td>{item.data_status === "measured" ? "Measured" : "Estimated"}</td>
+              <td>{getProfileBenchmark(item, evidenceResults.models) ? "Measured" : "Estimated"}</td>
               <td>{item.vram_min_gb}GB</td>
               <td>{item.vram_optimal_gb}GB</td>
               <td>{systemRamTarget(item.vram_optimal_gb)}GB+</td>

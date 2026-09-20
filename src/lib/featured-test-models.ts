@@ -1,3 +1,4 @@
+import { getProfileBenchmark } from "./benchmark-evidence.js";
 type CatalogModel = {
   id?: string;
   name?: string;
@@ -80,20 +81,13 @@ function quantizationPriority(value: string): number {
   return QUANTIZATION_PRIORITY[value.toUpperCase()] ?? 10;
 }
 
-function benchmarkFor(tag: string, benchmarkMap: Record<string, BenchmarkRow>): BenchmarkRow | null {
-  const row = benchmarkMap[tag];
-  if (!row || row.status !== "ok" || typeof row.tokens_per_second !== "number") {
-    return null;
-  }
-  return row;
-}
 
 function toFeaturedModel(
   item: CatalogModel,
   benchmarkMap: Record<string, BenchmarkRow>,
 ): FeaturedTestModel {
   const tag = String(item.ollama_tag || "");
-  const benchmark = benchmarkFor(tag, benchmarkMap);
+  const benchmark = getProfileBenchmark(item, benchmarkMap);
   return {
     ...item,
     featured_tag: tag,
@@ -111,8 +105,8 @@ function compareCatalogModelQuality(
 ): number {
   const aTag = String(a?.ollama_tag || "");
   const bTag = String(b?.ollama_tag || "");
-  const aMeasured = benchmarkFor(aTag, benchmarkMap) ? 0 : 1;
-  const bMeasured = benchmarkFor(bTag, benchmarkMap) ? 0 : 1;
+  const aMeasured = getProfileBenchmark(a, benchmarkMap) ? 0 : 1;
+  const bMeasured = getProfileBenchmark(b, benchmarkMap) ? 0 : 1;
   if (aMeasured !== bMeasured) {
     return aMeasured - bMeasured;
   }
@@ -153,7 +147,7 @@ function popularityScore(item: CatalogModel): number {
 function localAvailabilityScore(item: CatalogModel, benchmarkMap: Record<string, BenchmarkRow>): number {
   const tag = String(item?.ollama_tag || "");
   const status = String(item?.data_status || "").toLowerCase();
-  if (status === "local_inventory" || status === "measured" || benchmarkFor(tag, benchmarkMap)) {
+  if (status === "local_inventory" || status === "measured" || getProfileBenchmark(item, benchmarkMap)) {
     return 0;
   }
   return 1;
@@ -184,8 +178,8 @@ function compareDynamicCatalogCandidate(
 
   const aTag = String(a?.ollama_tag || "");
   const bTag = String(b?.ollama_tag || "");
-  const aMeasured = benchmarkFor(aTag, benchmarkMap) ? 0 : 1;
-  const bMeasured = benchmarkFor(bTag, benchmarkMap) ? 0 : 1;
+  const aMeasured = getProfileBenchmark(a, benchmarkMap) ? 0 : 1;
+  const bMeasured = getProfileBenchmark(b, benchmarkMap) ? 0 : 1;
   if (aMeasured !== bMeasured) {
     return aMeasured - bMeasured;
   }

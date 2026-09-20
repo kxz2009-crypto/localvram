@@ -6,7 +6,12 @@
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
-    "search_console_updated_at": "2026-09-19T07:24:01Z"
+    "search_console_updated_at": "2026-09-19T07:24:01Z",
+    "search_console_window": {
+      "start_date": "2026-08-23",
+      "end_date": "2026-09-19",
+      "days": 28
+    }
   },
   "funnel": {
     "organic_search_clicks": 1,
@@ -14,9 +19,10 @@
     "affiliate_redirect_clicks": 290,
     "cloud_redirect_clicks": 116,
     "hardware_redirect_clicks": 174,
-    "search_to_affiliate_pct": 29000.0,
-    "search_to_cloud_pct": 11600.0,
-    "affiliate_to_cloud_pct": 40.0
+    "search_to_affiliate_pct": null,
+    "search_to_cloud_pct": null,
+    "affiliate_to_cloud_pct": null,
+    "cloud_share_of_redirects_pct": 40.0
   },
   "breakdown": {
     "providers": [
@@ -222,6 +228,7 @@
     "affiliate_event_items_total": 463,
     "affiliate_event_items_in_window": 290,
     "has_affiliate_event_feed": true,
-    "note": "Affiliate orders/conversions from third-party networks are not included. This report tracks search intent and outbound redirect clicks."
+    "note": "Search export totals and redirect requests are separate datasets with different windows. Requests are not unique people or orders; legacy events may include bots and checks. Conversion rates require session attribution and provider order reconciliation.",
+    "conversion_rate_status": "unavailable_no_session_attribution"
   }
 }

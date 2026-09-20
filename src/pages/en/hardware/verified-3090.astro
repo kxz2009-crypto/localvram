@@ -1,4 +1,5 @@
 ---
+import { getProfileBenchmark } from "../../../lib/benchmark-evidence.js";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import catalog from "../../../data/model-catalog.json";
 import benchmarkResults from "../../../data/benchmark-results.json";
@@ -6,15 +7,15 @@ import benchmarkResults from "../../../data/benchmark-results.json";
 const pagePath = "/en/hardware/verified-3090/";
 const allItems = Array.isArray(catalog.items) ? catalog.items : [];
 const benchmarkMap = benchmarkResults.models || {};
-const modelByTag = new Map(allItems.map((item) => [String(item.ollama_tag || ""), item]));
+// A tag can map to several quantizations; link only an exact file match.
 
 const measuredRows = Object.entries(benchmarkMap)
   .filter(([, row]) => row?.status === "ok" && typeof row.tokens_per_second === "number")
   .map(([tag, row]) => {
-    const model = modelByTag.get(String(tag)) || null;
+    const model = allItems.find((item) => item.ollama_tag === tag && getProfileBenchmark(item, benchmarkMap)) || null;
     return {
       tag,
-      name: model?.name || String(tag),
+      name: model?.name || `${tag} (tag-level reference; exact profile unverified)`,
       id: model?.id || "",
       tokensPerSecond: Number(row.tokens_per_second),
       latencyMs: Number(row.latency_ms || 0),

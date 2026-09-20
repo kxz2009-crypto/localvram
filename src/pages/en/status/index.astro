@@ -26,9 +26,9 @@ type WorkflowRow = {
 type LocaleKpiRow = {
   date: string;
   locale: string;
-  indexed_urls: number;
+  visible_landing_urls: number;
   discovered_urls: number;
-  index_rate_pct: number;
+  search_visibility_pct: number;
   impressions: number;
   clicks: number;
   ctr_pct: number;
@@ -101,9 +101,9 @@ function parseLocaleKpi(): LocaleKpiRow[] {
     return {
       date: row.date || "",
       locale: row.locale || "",
-      indexed_urls: Number(row.indexed_urls || 0),
+      visible_landing_urls: Number(row.visible_landing_urls ?? row.indexed_urls ?? 0),
       discovered_urls: Number(row.discovered_urls || 0),
-      index_rate_pct: Number(row.index_rate_pct || 0),
+      search_visibility_pct: Number(row.search_visibility_pct ?? row.index_rate_pct ?? 0),
       impressions: Number(row.impressions || 0),
       clicks: Number(row.clicks || 0),
       ctr_pct: Number(row.ctr_pct || 0),
@@ -148,7 +148,7 @@ const catalogVerifiedAt = String(modelCatalog.ollama_verified_at || modelCatalog
 const localeKpiRows = parseLocaleKpi();
 const latestLocaleKpiDate = localeKpiRows[0]?.date || "unknown";
 const topLocaleRows = [...localeKpiRows].sort((a, b) => b.impressions - a.impressions).slice(0, 5);
-const lowestIndexRows = [...localeKpiRows].sort((a, b) => a.index_rate_pct - b.index_rate_pct).slice(0, 5);
+const lowestVisibilityRows = [...localeKpiRows].sort((a, b) => a.search_visibility_pct - b.search_visibility_pct).slice(0, 5);
 const searchItems = Array.isArray(searchConsole.items) ? searchConsole.items : [];
 const topSearchRows = [...searchItems]
   .sort((a: any, b: any) => Number(b.impressions || 0) - Number(a.impressions || 0))
@@ -389,13 +389,14 @@ const workflowRows = [
 
     <section class="card" style="margin-top: 16px;">
       <h2>Locale KPI</h2>
+      <p>Visible landings are unique URLs with impressions in the search export. This is not Google index coverage. The percentage compares them with sitemap URL count.</p>
       <p>Latest checkpoint: {latestLocaleKpiDate}. Top locales by impressions are listed first; low index-rate locales show where inspection work is most urgent.</p>
       <table class="table">
         <thead>
           <tr>
             <th>Locale</th>
-            <th>Indexed / Discovered</th>
-            <th>Index Rate</th>
+            <th>Visible Landings / Sitemap URLs</th>
+            <th>Search Visibility</th>
             <th>Impressions</th>
             <th>Clicks</th>
             <th>Next Action</th>
@@ -405,8 +406,8 @@ const workflowRows = [
           {topLocaleRows.map((row) => (
             <tr>
               <td>{row.locale}</td>
-              <td>{row.indexed_urls} / {row.discovered_urls}</td>
-              <td>{row.index_rate_pct}%</td>
+              <td>{row.visible_landing_urls} / {row.discovered_urls}</td>
+              <td>{row.search_visibility_pct}%</td>
               <td>{row.impressions}</td>
               <td>{row.clicks}</td>
               <td>{row.next_action}</td>
@@ -414,23 +415,23 @@ const workflowRows = [
           ))}
         </tbody>
       </table>
-      <h3>Lowest Index Rate</h3>
+      <h3>Lowest Search Visibility</h3>
       <table class="table">
         <thead>
           <tr>
             <th>Locale</th>
-            <th>Index Rate</th>
-            <th>Indexed</th>
-            <th>Discovered</th>
+            <th>Search Visibility</th>
+            <th>Visible Landings</th>
+            <th>Sitemap URLs</th>
             <th>Avg. Position</th>
           </tr>
         </thead>
         <tbody>
-          {lowestIndexRows.map((row) => (
+          {lowestVisibilityRows.map((row) => (
             <tr>
               <td>{row.locale}</td>
-              <td>{row.index_rate_pct}%</td>
-              <td>{row.indexed_urls}</td>
+              <td>{row.search_visibility_pct}%</td>
+              <td>{row.visible_landing_urls}</td>
               <td>{row.discovered_urls}</td>
               <td>{row.avg_position}</td>
             </tr>
