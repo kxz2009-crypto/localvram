@@ -26,6 +26,7 @@ const items = getHomepageModels(registry, runner, benchmarks.models);
           {model.inventory_status === 'observed_in_snapshot' && <><dt>{zh ? '清单时间' : 'Inventory time'}</dt><dd><time>{model.inventory_date}</time></dd></>}
           <dt>{zh ? 'RTX 3090 实测' : 'RTX 3090 measurement'}</dt><dd>{model.measured_tokens_per_second === null ? (zh ? '待精确配置验证' : 'Exact configuration pending') : `${model.measured_tokens_per_second.toFixed(1)} tok/s`}</dd>
         </dl>
+        <a class="btn" href={`${zh ? '' : `/${locale}`}/tools/roi-calculator/?model=${encodeURIComponent(model.tag)}`}>{zh ? '计算此模型成本' : 'Calculate costs for this model'}</a>
         <code class="run-command">{model.command}</code>
         <a class="btn" href={model.source_url} target="_blank" rel="noopener noreferrer">{zh ? '查看官方模型条目 ↗' : 'Open official model tag ↗'}</a>
       </article>

@@ -26,3 +26,12 @@ export function calculateCosts(input) {
   if (Object.values(result).some(value => typeof value === 'number' && !Number.isFinite(value))) throw new Error('invalid_range');
   return result;
 }
+
+/** Generation-only workload estimate using user-measured speeds, never guessed model benchmarks. */
+export function workloadFromTokens(millionTokens, localTokensPerSecond, cloudTokensPerSecond) {
+  if (![millionTokens,localTokensPerSecond,cloudTokensPerSecond].every(value => typeof value === 'number' && Number.isFinite(value)) || millionTokens < 0 || localTokensPerSecond <= 0 || cloudTokensPerSecond <= 0) throw new Error('invalid_throughput');
+  const hours = millionTokens * 1e6 / localTokensPerSecond / 3600;
+  const cloudTimeRatio = localTokensPerSecond / cloudTokensPerSecond;
+  if (!Number.isFinite(hours) || hours > 730 || !Number.isFinite(cloudTimeRatio) || cloudTimeRatio <= 0) throw new Error('invalid_workload');
+  return { hours, cloudTimeRatio };
+}

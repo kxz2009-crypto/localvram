@@ -13,6 +13,7 @@ for (const locale of locales) {
  assert.ok(!html.includes('1-stündige Dauerlastläufe'),'Unsupported sustained-load claim remains');
  const roi=readFileSync(`${root}/${locale}tools/roi-calculator/index.html`,'utf8');
  assert.ok(roi.includes('data-roi-calculator') && roi.includes('name="cloudTimeRatio"'));
+ assert.ok(roi.includes('name="model"') && roi.includes('value="qwen3.8:27b"') && roi.includes('name="localSpeed"'));
  assert.ok(roi.includes('name="mode"') && roi.includes('data-roi-payback'));
  const bundles=[...roi.matchAll(/src="(\/_astro\/[^\"]+\.js)"/g)].map(match=>match[1]);
  assert.ok(bundles.some(bundle=>existsSync(`${root}${bundle}`)) || [...roi.matchAll(/<script type="module">([\s\S]*?)<\/script>/g)].some(match=>match[1].includes('data-roi-calculator')),'Calculator module must be emitted inline or as a bundle');

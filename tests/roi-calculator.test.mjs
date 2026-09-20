@@ -24,3 +24,17 @@ test('cloud cheaper gives no operating-savings payback',()=>{
 test('invalid, nonfinite and impossible inputs are rejected',()=>{
  for(const input of [{hours:731},{months:1.5},{months:0},{cloudTimeRatio:0},{resale:1501},{electricity:-1},{cloudRate:NaN},{activeWatts:Infinity},{mode:'other'}]) assert.throws(()=>calculateCosts({...base,...input}));
 });
+
+test('model workload converts measured token speeds into equivalent runtime', async()=>{
+ const {workloadFromTokens}=await import('../src/lib/roi-calculator.js');
+ const w=workloadFromTokens(3.6,10,20);
+ close(w.hours,100);close(w.cloudTimeRatio,0.5);
+ const result=calculateCosts({...base,...w});close(result.cloudHours,50);
+ const slower=calculateCosts({...base,...workloadFromTokens(3.6,5,20)});
+ close(slower.cloudHours,50);assert.ok(slower.localElectricity>result.localElectricity);
+});
+test('missing speeds and workloads beyond monthly local capacity fail closed', async()=>{
+ const {workloadFromTokens}=await import('../src/lib/roi-calculator.js');
+ for(const args of [[10,0,20],[10,10,NaN],[-1,10,20],[100,1,20],[Infinity,10,20]]) assert.throws(()=>workloadFromTokens(...args));
+ assert.equal(workloadFromTokens(0,10,20).hours,0);
+});

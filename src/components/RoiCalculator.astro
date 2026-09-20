@@ -1,4 +1,5 @@
 ---
+import registry from '../data/homepage-models.json';
 const { locale = 'en' } = Astro.props;
 const zh = locale === 'zh';
 const fields = [
@@ -15,13 +16,13 @@ const fields = [
   ['cloudExtras', zh ? '每月云端附加费用（存储、流量、运维）' : 'Cloud extras / month (storage, transfer, ops)', 8, 0, 1000000, 'any'],
 ];
 const copy = zh ? {
-  error:'请输入有效的非负数；期限为 1–120 个整月，每月工作时长不超过 730 小时，云端耗时比大于 0，残值不超过购置价。',
+  error:'请输入有效的非负数；期限为 1–120 个整月，每月工作时长不超过 730 小时，云端耗时比大于 0，残值不超过购置价。按生成量计算时，请填写两端的正数实测速度；所需本地时长不能超过每月 730 小时。',
   owned:'已有硬件：不计算购置回本', never:'运行成本没有节省，无法靠月度节省回本', outside:'超出比较期限', months:'个月',
   neutral:'所填条件下，两者总成本相同。', local:'所填条件下，本地总成本较低，差额', cloud:'所填条件下，云端总成本较低，差额',
   upfront:'购置投入', operating:'每月运行成本', residual:'期限末残值抵扣', total:'比较期总成本', localName:'本地',cloudName:'云端',
   notice:'结果仅对应所填条件；请先确认模型可运行且两种方案完成同样质量与数量的任务。',
 } : {
-  error:'Use valid non-negative numbers: 1–120 whole months, at most 730 workload hours/month, a positive cloud-time ratio, and resale no greater than purchase cost.',
+  error:'Use valid non-negative numbers: 1–120 whole months, at most 730 workload hours/month, a positive cloud-time ratio, and resale no greater than purchase cost. Token mode requires positive measured speeds and a workload fitting within 730 local hours/month.',
   owned:'Owned hardware: purchase payback does not apply', never:'No monthly operating savings to repay the purchase', outside:'beyond the selected horizon', months:'months',
   neutral:'The entered assumptions produce equal total costs.', local:'Local has the lower total cost under these assumptions. Difference:', cloud:'Cloud has the lower total cost under these assumptions. Difference:',
   upfront:'Upfront purchase',operating:'Monthly operating cost',residual:'Resale credit at horizon',total:'Total over horizon',localName:'Local',cloudName:'Cloud',
@@ -33,13 +34,30 @@ const copy = zh ? {
   <p>{zh ? '以下为可修改的演算示例，不是实时价格。所有金额请使用同一种货币。按每月 730 小时计算闲置时间；预计残值仅在期限末抵扣。' : 'Editable example assumptions, not live prices. Use one currency for all amounts. Idle time uses a 730-hour month; resale is credited only at the end of the horizon.'}</p>
   <form data-roi-form>
     <div class="roi-fields">
+      <label>{zh ? '目标模型' : 'Target model'}<select name="model" class="input" aria-describedby="roi-model-help">
+        {registry.items.map(model => <option value={model.tag}>{model.name} · {model.tag} · {model.quantization}</option>)}
+        <option value="custom">{zh ? '其他模型（填写精确标签）' : 'Other model (enter exact tag)'}</option>
+      </select></label>
+      <label data-custom-model hidden>{zh ? '自定义模型标签' : 'Custom model tag'}<input name="customModel" class="input" type="text" maxlength="120" required disabled /></label>
+      <label>{zh ? '工作量输入方式' : 'Workload input'}<select name="workloadMode" class="input"><option value="hours">{zh ? '按每月运行时长' : 'Monthly runtime hours'}</option><option value="tokens">{zh ? '按生成量与实测速度' : 'Generated tokens and measured speeds'}</option></select></label>
+    </div>
+    <p id="roi-model-help">{zh ? '模型选择不会自动套用速度、功耗或价格。请按所选模型的实际运行情况填写；这些近期模型的精确配置测速尚未验证。' : 'Selecting a model does not assume speed, power or price. Enter measurements for that model; exact-configuration benchmarks for these recent models are not yet verified.'}</p>
+    <div class="roi-fields" data-token-fields hidden>
+      <label>{zh ? '每月生成量（百万 token）' : 'Generated tokens / month (millions)'}<input name="millionTokens" class="input" type="number" min="0" step="any" value="10" required disabled /></label>
+      <label>{zh ? '本地实测生成速度（token/s）' : 'Measured local generation speed (tokens/s)'}<input name="localSpeed" class="input" type="number" min="0.001" step="any" required disabled /></label>
+      <label>{zh ? '云端实测生成速度（token/s）' : 'Measured cloud generation speed (tokens/s)'}<input name="cloudSpeed" class="input" type="number" min="0.001" step="any" required disabled /></label>
+      <p>{zh ? '同一模型、量化与任务下填写两端实测速度。此方式只估算生成阶段，不含提示词处理、排队和启动；完整任务请使用运行时长方式。切换模型会清空速度。' : 'Use speeds measured for the same model, quantization and task. This estimates generation only, excluding prompt processing, queues and startup; use runtime mode for complete jobs. Switching models clears speeds.'}</p>
+    </div>
+    <div class="roi-fields">
       <label>{zh ? '硬件情况' : 'Hardware ownership'}<select name="mode" class="input"><option value="purchase">{zh ? '准备新购硬件' : 'Buying new hardware'}</option><option value="owned">{zh ? '已有硬件，只比较增量成本' : 'Already owned: incremental costs'}</option></select></label>
-      {fields.map(([name,label,value,min,max,step]) => <label>{label}<input class="input" name={String(name)} type="number" value={value} min={min} max={max} step={step} required /></label>)}
+      {fields.map(([name,label,value,min,max,step]) => <label data-runtime-field={name === 'hours' || name === 'cloudTimeRatio' ? 'true' : undefined}>{label}<input class="input" name={String(name)} type="number" value={value} min={min} max={max} step={step} required /></label>)}
     </div>
     <button class="btn btn-primary" type="submit">{zh ? '计算并比较' : 'Calculate and compare'}</button>
   </form>
   <p data-roi-error role="alert" hidden></p>
   <div data-roi-result aria-live="polite" hidden>
+    <p data-roi-model></p>
+    <p data-roi-hours></p>
     <p data-roi-summary class="roi-summary"></p>
     <div class="roi-table-wrap"><table class="table"><thead><tr><th>{zh ? '成本项目' : 'Cost item'}</th><th>{copy.localName}</th><th>{copy.cloudName}</th></tr></thead><tbody data-roi-rows></tbody></table></div>
     <p><strong>{zh ? '购置现金回本时间：' : 'Purchase cash payback: '}</strong><span data-roi-payback></span></p>
@@ -49,14 +67,27 @@ const copy = zh ? {
   <noscript>{zh ? '请启用 JavaScript 以使用交互计算器。' : 'Enable JavaScript to use the interactive calculator.'}</noscript>
 </section>
 <script>
-  import { calculateCosts } from '../lib/roi-calculator.js';
+  import { calculateCosts, workloadFromTokens } from '../lib/roi-calculator.js';
   for (const element of document.querySelectorAll<HTMLElement>('[data-roi-calculator]')) {
     const form = element.querySelector<HTMLFormElement>('[data-roi-form]')!;
     const copy = JSON.parse(element.dataset.copy || '{}');
     const result = element.querySelector<HTMLElement>('[data-roi-result]')!;
     const error = element.querySelector<HTMLElement>('[data-roi-error]')!;
     const format = (value:number) => new Intl.NumberFormat(element.lang === 'zh-CN' ? 'zh-CN' : 'en-US',{minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
+    const modelSelect = form.elements.namedItem('model') as HTMLSelectElement;
+    const initialModel = new URLSearchParams(window.location.search).get('model');
+    if (initialModel && [...modelSelect.options].some(option => option.value === initialModel && option.value !== 'custom')) modelSelect.value=initialModel;
     const syncMode = () => {
+      const tokens = (form.elements.namedItem('workloadMode') as HTMLSelectElement).value === 'tokens';
+      const custom = modelSelect.value === 'custom';
+      (element.querySelector('[data-custom-model]') as HTMLElement).hidden = !custom;
+      (form.elements.namedItem('customModel') as HTMLInputElement).disabled = !custom;
+      (element.querySelector('[data-token-fields]') as HTMLElement).hidden = !tokens;
+      for (const name of ['millionTokens','localSpeed','cloudSpeed']) (form.elements.namedItem(name) as HTMLInputElement).disabled = !tokens;
+      for (const label of element.querySelectorAll<HTMLElement>('[data-runtime-field]')) {
+        label.hidden=tokens;
+        label.querySelector('input')!.disabled=tokens;
+      }
       const owned = new FormData(form).get('mode') === 'owned';
       for (const name of ['purchase','resale']) (form.elements.namedItem(name) as HTMLInputElement).disabled = owned;
     };
@@ -69,7 +100,12 @@ const copy = zh ? {
       const input:any={mode:raw.mode};
       for (const key of ['months','hours','activeWatts','idleWatts','electricity','localMaintenance','purchase','resale','cloudRate','cloudTimeRatio','cloudExtras']) input[key]=Number(raw[key] ?? 0);
       try {
+        if (raw.workloadMode === 'tokens') Object.assign(input,workloadFromTokens(Number(raw.millionTokens),Number(raw.localSpeed),Number(raw.cloudSpeed)));
         const values=calculateCosts(input);
+        const zh = element.lang === 'zh-CN';
+        const model = raw.model === 'custom' ? String(raw.customModel).trim() : String(raw.model);
+        element.querySelector('[data-roi-model]')!.textContent = `${zh ? '目标模型' : 'Target model'}: ${model}`;
+        element.querySelector('[data-roi-hours]')!.textContent = `${zh ? '每月运行时长（本地 / 云端）' : 'Monthly runtime (local / cloud)'}: ${format(input.hours)} / ${format(values.cloudHours)} ${zh ? '小时' : 'hours'}`;
         const rows = [[copy.upfront,values.upfront,0],[copy.operating,values.localMonthly,values.cloudMonthly],[copy.residual,-values.residual,0],[copy.total,values.localTotal,values.cloudTotal]];
         const tbody=element.querySelector('[data-roi-rows]')!;
         tbody.replaceChildren(...rows.map(row => { const tr=document.createElement('tr'); for (const [index,value] of row.entries()) { const td=document.createElement('td');td.textContent=index===0 ? String(value) : format(Number(value));tr.append(td); } return tr; }));
@@ -78,6 +114,11 @@ const copy = zh ? {
         result.hidden=false;
       } catch { error.textContent=copy.error;error.hidden=false; }
     };
+    const clearSpeeds = () => {
+      for (const name of ['localSpeed','cloudSpeed']) (form.elements.namedItem(name) as HTMLInputElement).value='';
+    };
+    modelSelect.addEventListener('input',clearSpeeds);
+    form.elements.namedItem('customModel')!.addEventListener('input',clearSpeeds);
     form.addEventListener('submit',event=>{event.preventDefault();render();});
     form.addEventListener('input',render);
     render();
@@ -88,6 +129,7 @@ const copy = zh ? {
   .roi-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap:16px; margin:24px 0; }
   label { display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--muted); }
   select,input { min-width:0; width:100%; }
+  button { color:var(--text); cursor:pointer; }
   .roi-summary { font-size:20px; color:var(--primary); }
   [data-roi-error] { color:#fca5a5; }
   [hidden] { display:none !important; }
