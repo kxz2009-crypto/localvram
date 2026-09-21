@@ -741,7 +741,7 @@ def main() -> None:
     parser.add_argument(
         "--min-publish",
         type=int,
-        default=int(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_DAILY", "1")),
+        default=int(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_DAILY", "0")),
         help="Minimum posts to publish per day. If normal candidates are insufficient, fallback post(s) are generated.",
     )
     parser.add_argument("--min-score", type=float, default=float(os.getenv("LV_CONTENT_AUTO_PUBLISH_MIN_SCORE", "120")))
@@ -905,8 +905,10 @@ def main() -> None:
         date_row = {"date": queue_date, "summary": "", "candidates": []}
         items.insert(0, date_row)
     if published:
-        date_row["published_posts"] = [{"slug": p["slug"], "title": p["title"]} for p in published]
-        date_row["published_count"] = len(published)
+        existing_posts = {p["slug"]: p for p in date_row.get("published_posts", []) if isinstance(p, dict) and p.get("slug")}
+        existing_posts.update({p["slug"]: {"slug": p["slug"], "title": p["title"]} for p in published})
+        date_row["published_posts"] = list(existing_posts.values())
+        date_row["published_count"] = len(date_row["published_posts"])
         date_row["publish_run_at"] = run_at
     else:
         if int(date_row.get("published_count", 0) or 0) <= 0:

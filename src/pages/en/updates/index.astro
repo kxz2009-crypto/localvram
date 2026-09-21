@@ -1,4 +1,5 @@
 ---
+import DailyArticles from "../../../components/DailyArticles.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import updates from "../../../data/daily-updates.json";
 
@@ -46,6 +47,8 @@ const structuredData = {
     <h1>Daily Updates</h1>
     <p>Operational feed for what is updated every day (content + verification + SEO).</p>
 
+    <DailyArticles locale="en" />
+    <details><summary>Automation run history</summary>
     <section class="post-list">
       {updates.items.map((item) => (
         <article class="post-card">
@@ -59,5 +62,6 @@ const structuredData = {
         </article>
       ))}
     </section>
+    </details>
   </main>
 </BaseLayout>

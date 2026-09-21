@@ -1,4 +1,5 @@
 ---
+import DailyArticles from "../../components/DailyArticles.astro";
 import HomepageModels from "../../components/HomepageModels.astro";
 import homepageRegistry from "../../data/homepage-models.json";
 import { getHomepageModels } from "../../lib/homepage-models.js";
@@ -117,6 +118,7 @@ const homeStructuredData = [
     </section>
 
     <HomepageModels locale={locale} />
+    <DailyArticles locale={locale} limit={3} />
 
     <section class="hero">
       <h2>{text.nav_hubs_title}</h2>

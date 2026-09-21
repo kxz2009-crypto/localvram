@@ -1,4 +1,5 @@
 ---
+import DailyArticles from "../../../components/DailyArticles.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import updatesData from "../../../data/daily-updates.json";
 import { buildCnAlternates } from "../../../data/root-alternates";
@@ -44,6 +45,8 @@ const structuredData = {
       </div>
     </section>
 
+    <DailyArticles locale="zh" />
+    <details><summary>自动任务运行记录</summary>
     <section class="post-list">
       {rows.length === 0 && <p>暂无可展示的更新记录。</p>}
       {rows.map((row) => (
@@ -67,5 +70,6 @@ const structuredData = {
         </article>
       ))}
     </section>
+    </details>
   </main>
 </BaseLayout>

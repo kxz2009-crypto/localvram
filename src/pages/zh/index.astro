@@ -1,4 +1,5 @@
 ---
+import DailyArticles from "../../components/DailyArticles.astro";
 import HomepageModels from "../../components/HomepageModels.astro";
 import homepageRegistry from "../../data/homepage-models.json";
 import { getHomepageModels } from "../../lib/homepage-models.js";
@@ -96,6 +97,7 @@ const homeStructuredData = [
     </section>
 
     <HomepageModels locale="zh" />
+    <DailyArticles locale="zh" limit={3} />
 
     <section class="hero">
       <h2>核心导航</h2>
@@ -159,9 +161,9 @@ const homeStructuredData = [
         <a class="btn" href="/hardware/apple-silicon-llm-guide/">查看指南</a>
       </article>
       <article class="card">
-        <h2>每日更新</h2>
+        <h2>每日专题博客</h2>
         <p>今天更新了什么，一眼看清数据与内容变化。</p>
-        <a class="btn" href="/updates/">查看更新流</a>
+        <a class="btn" href="/blog/">阅读专题文章</a>
       </article>
       <article class="card">
         <h2>模型规模导航</h2>

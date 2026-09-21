@@ -74,7 +74,7 @@ jobs:
       - name: Auto-publish queue drafts to blog
         if: steps.checkout.conclusion == 'success'
         run: |
-          if ! python scripts/publish-content-queue.py; then
+          if ! python scripts/publish-content-queue.py --min-publish 0; then
             python -c "import json, pathlib; pathlib.Path('logs/failure-context.json').write_text(json.dumps({'failure_class':'daily_content_failed','failure_detail':'publish-content-queue.py failed'}, ensure_ascii=False), encoding='utf-8')"
             echo "::error title=FailureClass::daily_content_failed - publish-content-queue.py failed"
             exit 1

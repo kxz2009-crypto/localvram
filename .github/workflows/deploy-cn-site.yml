@@ -1,6 +1,9 @@
 name: Deploy CN Site
 
 on:
+  workflow_run:
+    workflows: ["Daily Content Agent"]
+    types: [completed]
   workflow_dispatch:
     inputs:
       dry_run_only:
@@ -86,6 +89,8 @@ permissions:
 
 jobs:
   deploy-cn-site:
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-latest
     env:
       ASTRO_TELEMETRY_DISABLED: "1"
@@ -103,7 +108,7 @@ jobs:
       EXPECTED_SITEMAP_URL: ${{ github.event.inputs.expected_sitemap_url || 'https://localvram.cn/sitemap-cn.xml' }}
       SKIP_LEGACY_ZH_REDIRECT_CHECKS: ${{ github.event.inputs.skip_legacy_zh_redirect_checks || 'false' }}
       SKIP_CONTENT_CHECKS: ${{ github.event.inputs.skip_content_checks || 'false' }}
-      PUSH_BAIDU_URLS: ${{ github.event.inputs.push_baidu_urls || 'true' }}
+      PUSH_BAIDU_URLS: ${{ github.event.inputs.push_baidu_urls || (github.event_name == 'workflow_dispatch' && 'true' || 'false') }}
       BAIDU_PUSH_REQUIRED: ${{ github.event.inputs.baidu_push_required || 'false' }}
       BAIDU_SITE: ${{ github.event.inputs.baidu_site || 'https://localvram.cn' }}
       BAIDU_SITEMAP_URL: ${{ github.event.inputs.baidu_sitemap_url || 'https://localvram.cn/sitemap-cn.xml' }}

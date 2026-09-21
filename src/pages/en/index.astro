@@ -1,4 +1,5 @@
 ---
+import DailyArticles from "../../components/DailyArticles.astro";
 import HomepageModels from "../../components/HomepageModels.astro";
 import homepageRegistry from "../../data/homepage-models.json";
 import { getHomepageModels } from "../../lib/homepage-models.js";
@@ -97,6 +98,7 @@ const homeStructuredData = [
     </section>
 
     <HomepageModels locale="en" />
+    <DailyArticles locale="en" limit={3} />
 
     <section class="hero">
       <h2>Navigation Hubs</h2>
@@ -161,9 +163,9 @@ const homeStructuredData = [
         <a class="btn" href="/en/hardware/apple-silicon-llm-guide/">Open guide</a>
       </article>
       <article class="card">
-        <h2>Daily Updates</h2>
+        <h2>Daily Blog</h2>
         <p>What was updated today for SEO ranking and user decisions.</p>
-        <a class="btn" href="/en/updates/">Open update feed</a>
+        <a class="btn" href="/en/blog/">Read daily articles</a>
       </article>
       <article class="card">
         <h2>Model Scale Hub</h2>

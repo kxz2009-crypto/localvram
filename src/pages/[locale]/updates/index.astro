@@ -1,4 +1,5 @@
 ---
+import DailyArticles from "../../../components/DailyArticles.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { STANDARD_I18N_LOCALES, type ComLocale } from "../../../config/i18n";
 import updates from "../../../data/daily-updates.json";
@@ -291,6 +292,8 @@ const structuredData = {
       )}
     </section>
 
+    <DailyArticles locale={locale} />
+    <details><summary>Automation run history</summary>
     <section class="post-list" aria-label={text.heading}>
       {allUpdates.map((item) => (
         <article class="post-card" id={`update-${item.date}`}>
@@ -333,5 +336,6 @@ const structuredData = {
         </article>
       ))}
     </section>
+    </details>
   </main>
 </BaseLayout>

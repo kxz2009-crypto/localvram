@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import { resolveBlogBody } from '../lib/i18n-blog-body';
+import { resolveZhBlogTitle, extractFirstParagraph } from '../lib/zh-blog-meta';
+const { locale='en', limit=14 } = Astro.props;
+const zh = locale === 'zh';
+const prefix = zh ? '' : `/${locale}`;
+const posts = (await getCollection('blog',({data})=>data.lang==='en')).sort((a,b)=> b.data.pubDate.getTime()-a.data.pubDate.getTime() || b.id.localeCompare(a.id)).slice(0,limit);
+const articles = posts.map(post=>{
+ const body=resolveBlogBody(post.slug,locale,post.body || '');
+ return {post,title:zh && body.isLocalized ? resolveZhBlogTitle(body.markdown,post.data.title) : post.data.title,
+ excerpt: (extractFirstParagraph(body.markdown) || post.data.description).replace(/[`*_]/g,'').slice(0,300),localized:body.isLocalized};
+});
+---
+<section class="post-list daily-articles" data-daily-articles lang={zh ? 'zh-CN' : 'en'}>
+  <h2>{zh ? '每日专题 · Daily Blog' : 'Daily Blog · Practical articles'}</h2>
+  <p>{zh ? '阅读完整文章：模型选择、部署排障与成本决策。日期为文章发布日期，测速时间请以正文记录为准。' : 'Full articles on model selection, troubleshooting and cost decisions. Publication dates differ from benchmark dates recorded in each article.'}</p>
+  {articles.map(({post,title,excerpt,localized})=><article class="post-card" data-daily-article>
+    <h3><a href={`${prefix}/blog/${post.slug}/`}>{title}</a></h3>
+    <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toISOString().slice(0,10)}</time>
+    <p>{excerpt}{!localized && zh ? '（英文原文，中文翻译待补齐）' : ''}</p>
+    <a class="btn" href={`${prefix}/blog/${post.slug}/`}>{zh ? '阅读全文' : 'Read full article'}</a>
+  </article>)}
+  <a class="btn" href={`${prefix}/blog/`}>{zh ? '查看全部专题文章' : 'Browse all articles'}</a>
+</section>
+<style>.daily-articles { margin:32px 0; } time { color:var(--muted); font-size:14px; } h3 { font-size:21px; } .post-card { margin:16px 0; }</style>

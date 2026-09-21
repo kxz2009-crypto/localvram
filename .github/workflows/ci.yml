@@ -68,6 +68,7 @@ jobs:
         run: |
           node scripts/check-evidence-render.mjs
           node scripts/check-homepage-render.mjs
+          node scripts/check-blog-render.mjs
 
       - name: Smoke tests
         run: npm run test:smoke
