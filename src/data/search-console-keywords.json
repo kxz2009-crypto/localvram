@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-22T07:46:48Z",
+  "updated_at": "2026-09-25T07:57:23Z",
   "source": "google-search-console-api",
   "site_url": "sc-domain:localvram.com",
   "window": {
-    "start_date": "2026-08-26",
-    "end_date": "2026-09-22",
+    "start_date": "2026-08-29",
+    "end_date": "2026-09-25",
     "days": 28
   },
   "locales": [
@@ -62,16 +62,6 @@
       "locale": "ar"
     },
     {
-      "keyword": "how much vram llama 2 7b fp16",
-      "query": "how much vram llama 2 7b fp16",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 11.0,
-      "landing": "/ar/models/llama2-7b-fp16/",
-      "locale": "ar"
-    },
-    {
       "keyword": "how much vram to load llama 2 70b fp16",
       "query": "how much vram to load llama 2 70b fp16",
       "clicks": 0,
@@ -95,9 +85,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 114,
+      "impressions": 125,
       "ctr": 0.0,
-      "position": 7.2,
+      "position": 7.15,
       "landing": "/de/updates/",
       "locale": "de"
     },
@@ -107,7 +97,7 @@
       "clicks": 0,
       "impressions": 13,
       "ctr": 0.0,
-      "position": 72.31,
+      "position": 72.69,
       "landing": "/de/tools/vram-calculator/",
       "locale": "de"
     },
@@ -115,9 +105,9 @@
       "keyword": "vram",
       "query": "vram",
       "clicks": 0,
-      "impressions": 9,
+      "impressions": 8,
       "ctr": 0.0,
-      "position": 71.22,
+      "position": 70.25,
       "landing": "/de/",
       "locale": "de"
     },
@@ -132,16 +122,6 @@
       "locale": "de"
     },
     {
-      "keyword": "vram test",
-      "query": "vram test",
-      "clicks": 0,
-      "impressions": 4,
-      "ctr": 0.0,
-      "position": 30.25,
-      "landing": "/de/",
-      "locale": "de"
-    },
-    {
       "keyword": "vram testen",
       "query": "vram testen",
       "clicks": 0,
@@ -152,33 +132,13 @@
       "locale": "de"
     },
     {
-      "keyword": "qwen3 14b q4",
-      "query": "qwen3 14b q4",
+      "keyword": "vram test",
+      "query": "vram test",
       "clicks": 0,
       "impressions": 3,
       "ctr": 0.0,
-      "position": 9.0,
-      "landing": "/de/models/qwen3-14b-q4/",
-      "locale": "de"
-    },
-    {
-      "keyword": "qwen4exp",
-      "query": "qwen4exp",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 6.0,
-      "landing": "/de/models/qwen-4b-q4/",
-      "locale": "de"
-    },
-    {
-      "keyword": "ram rechner",
-      "query": "ram rechner",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 52.33,
-      "landing": "/de/tools/vram-calculator/",
+      "position": 29.67,
+      "landing": "/de/",
       "locale": "de"
     },
     {
@@ -232,6 +192,16 @@
       "locale": "de"
     },
     {
+      "keyword": "3090 vram",
+      "query": "3090 vram",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 23.5,
+      "landing": "/de/hardware/verified-3090/",
+      "locale": "de"
+    },
+    {
       "keyword": "cluster lokale gruppe",
       "query": "cluster lokale gruppe",
       "clicks": 0,
@@ -239,6 +209,36 @@
       "ctr": 0.0,
       "position": 63.5,
       "landing": "/de/guides/ollama-local-cluster-network/",
+      "locale": "de"
+    },
+    {
+      "keyword": "qwen3 14b q4",
+      "query": "qwen3 14b q4",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 9.0,
+      "landing": "/de/models/qwen3-14b-q4/",
+      "locale": "de"
+    },
+    {
+      "keyword": "ram rechner",
+      "query": "ram rechner",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 51.5,
+      "landing": "/de/tools/vram-calculator/",
+      "locale": "de"
+    },
+    {
+      "keyword": "rtx 3090 vram",
+      "query": "rtx 3090 vram",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 10.0,
+      "landing": "/de/hardware/verified-3090/",
       "locale": "de"
     },
     {
@@ -272,16 +272,6 @@
       "locale": "de"
     },
     {
-      "keyword": "3090 vram",
-      "query": "3090 vram",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 26.0,
-      "landing": "/de/hardware/verified-3090/",
-      "locale": "de"
-    },
-    {
       "keyword": "cuda out of memory",
       "query": "cuda out of memory",
       "clicks": 0,
@@ -302,6 +292,26 @@
       "locale": "de"
     },
     {
+      "keyword": "qwen3-coder 30b q4",
+      "query": "qwen3-coder 30b q4",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 4.0,
+      "landing": "/de/models/qwen3-coder-30b-q4/",
+      "locale": "de"
+    },
+    {
+      "keyword": "qwen4b",
+      "query": "qwen4b",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0,
+      "landing": "/de/models/qwen-4b-q8/",
+      "locale": "de"
+    },
+    {
       "keyword": "rtx 3090 benchmark",
       "query": "rtx 3090 benchmark",
       "clicks": 0,
@@ -312,12 +322,12 @@
       "locale": "de"
     },
     {
-      "keyword": "rtx 3090 vram",
-      "query": "rtx 3090 vram",
+      "keyword": "rtx 3090 tokens per second",
+      "query": "rtx 3090 tokens per second",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 9.0,
+      "position": 4.0,
       "landing": "/de/hardware/verified-3090/",
       "locale": "de"
     },
@@ -362,16 +372,6 @@
       "locale": "de"
     },
     {
-      "keyword": "v-ram",
-      "query": "v-ram",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 61.0,
-      "landing": "/de/tools/vram-calculator/",
-      "locale": "de"
-    },
-    {
       "keyword": "vram 3090",
       "query": "vram 3090",
       "clicks": 0,
@@ -395,9 +395,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 3340,
+      "impressions": 5214,
       "ctr": 0.0,
-      "position": 4.91,
+      "position": 4.79,
       "landing": "/en/blog/",
       "locale": "en"
     },
@@ -405,9 +405,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 2566,
+      "impressions": 3551,
       "ctr": 0.0,
-      "position": 5.26,
+      "position": 5.62,
       "landing": "/en/models/",
       "locale": "en"
     },
@@ -415,9 +415,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 1614,
+      "impressions": 2225,
       "ctr": 0.0,
-      "position": 6.2,
+      "position": 6.46,
       "landing": "/en/status/",
       "locale": "en"
     },
@@ -425,9 +425,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 830,
+      "impressions": 992,
       "ctr": 0.0,
-      "position": 7.42,
+      "position": 7.46,
       "landing": "/en/updates/",
       "locale": "en"
     },
@@ -435,9 +435,9 @@
       "keyword": "best local llm 16gb vram",
       "query": "best local llm 16gb vram",
       "clicks": 0,
-      "impressions": 22,
+      "impressions": 23,
       "ctr": 0.0,
-      "position": 39.59,
+      "position": 40.04,
       "landing": "/en/blog/16gb-vram-model-selection-guide/",
       "locale": "en"
     },
@@ -445,30 +445,10 @@
       "keyword": "llama4:16x17b",
       "query": "llama4:16x17b",
       "clicks": 0,
-      "impressions": 6,
+      "impressions": 8,
       "ctr": 0.0,
-      "position": 7.5,
+      "position": 7.75,
       "landing": "/en/models/llama4-16x17b-q8/",
-      "locale": "en"
-    },
-    {
-      "keyword": "mistral nemo 12b vram requirements",
-      "query": "mistral nemo 12b vram requirements",
-      "clicks": 0,
-      "impressions": 5,
-      "ctr": 0.0,
-      "position": 7.8,
-      "landing": "/en/models/mistral-nemo-12b-q4/",
-      "locale": "en"
-    },
-    {
-      "keyword": "rtx 4090 llm",
-      "query": "rtx 4090 llm",
-      "clicks": 0,
-      "impressions": 5,
-      "ctr": 0.0,
-      "position": 34.0,
-      "landing": "/en/blog/rtx4090-vs-rtx3090-for-local-llm/",
       "locale": "en"
     },
     {
@@ -479,6 +459,26 @@
       "ctr": 0.0,
       "position": 27.25,
       "landing": "/en/blog/16gb-vram-model-selection-guide/",
+      "locale": "en"
+    },
+    {
+      "keyword": "mistral nemo 12b vram requirements",
+      "query": "mistral nemo 12b vram requirements",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 8.5,
+      "landing": "/en/models/mistral-nemo-12b-q4/",
+      "locale": "en"
+    },
+    {
+      "keyword": "rtx 4090 llm",
+      "query": "rtx 4090 llm",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 33.25,
+      "landing": "/en/blog/rtx4090-vs-rtx3090-for-local-llm/",
       "locale": "en"
     },
     {
@@ -502,16 +502,6 @@
       "locale": "en"
     },
     {
-      "keyword": "gemma 27b vram requirements",
-      "query": "gemma 27b vram requirements",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0.0,
-      "position": 10.0,
-      "landing": "/en/models/gemma3-27b-q5/",
-      "locale": "en"
-    },
-    {
       "keyword": "my vram",
       "query": "my vram",
       "clicks": 0,
@@ -529,16 +519,6 @@
       "ctr": 0.0,
       "position": 60.0,
       "landing": "/en/guides/ollama-local-cluster-network/",
-      "locale": "en"
-    },
-    {
-      "keyword": "q4 vs q8",
-      "query": "q4 vs q8",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0.0,
-      "position": 22.5,
-      "landing": "/en/tools/quantization-blind-test/",
       "locale": "en"
     },
     {
@@ -569,26 +549,6 @@
       "ctr": 0.0,
       "position": 4.0,
       "landing": "/en/",
-      "locale": "en"
-    },
-    {
-      "keyword": "best llm for 16 gb vram",
-      "query": "best llm for 16 gb vram",
-      "clicks": 1,
-      "impressions": 1,
-      "ctr": 1.0,
-      "position": 14.0,
-      "landing": "/en/blog/16gb-vram-model-selection-guide/",
-      "locale": "en"
-    },
-    {
-      "keyword": "16gb vram local llm",
-      "query": "16gb vram local llm",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 16.0,
-      "landing": "/en/blog/16gb-vram-model-selection-guide/",
       "locale": "en"
     },
     {
@@ -638,16 +598,6 @@
       "impressions": 1,
       "ctr": 0.0,
       "position": 53.0,
-      "landing": "/en/guides/best-coding-models/",
-      "locale": "en"
-    },
-    {
-      "keyword": "best coding model for 12gb vram",
-      "query": "best coding model for 12gb vram",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 30.0,
       "landing": "/en/guides/best-coding-models/",
       "locale": "en"
     },
@@ -702,6 +652,16 @@
       "locale": "en"
     },
     {
+      "keyword": "best models for 24gb vram",
+      "query": "best models for 24gb vram",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0,
+      "landing": "/en/blog/best-24gb-vram-models-2026/",
+      "locale": "en"
+    },
+    {
       "keyword": "best qwen for coding",
       "query": "best qwen for coding",
       "clicks": 0,
@@ -752,16 +712,6 @@
       "locale": "en"
     },
     {
-      "keyword": "lowram",
-      "query": "lowram",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 83.0,
-      "landing": "/en/",
-      "locale": "en"
-    },
-    {
       "keyword": "minimum vram",
       "query": "minimum vram",
       "clicks": 0,
@@ -769,16 +719,6 @@
       "ctr": 0.0,
       "position": 52.0,
       "landing": "/en/tools/vram-calculator/",
-      "locale": "en"
-    },
-    {
-      "keyword": "ollama model memory requirements 7b 14b 32b quantized",
-      "query": "ollama model memory requirements 7b 14b 32b quantized",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 11.0,
-      "landing": "/en/models/",
       "locale": "en"
     },
     {
@@ -792,6 +732,16 @@
       "locale": "en"
     },
     {
+      "keyword": "ollama qwen2.5-coder 14b model size",
+      "query": "ollama qwen2.5-coder 14b model size",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 7.0,
+      "landing": "/en/models/qwen25-coder-14b-q5/",
+      "locale": "en"
+    },
+    {
       "keyword": "ollama run deepseek-coder:6.7b",
       "query": "ollama run deepseek-coder:6.7b",
       "clicks": 0,
@@ -799,6 +749,26 @@
       "ctr": 0.0,
       "position": 11.0,
       "landing": "/en/models/deepseek-coder-67b-fp16/",
+      "locale": "en"
+    },
+    {
+      "keyword": "ollama vs vllm",
+      "query": "ollama vs vllm",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 48.0,
+      "landing": "/en/guides/ollama-vs-vllm-vram/",
+      "locale": "en"
+    },
+    {
+      "keyword": "q4 vs q8",
+      "query": "q4 vs q8",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 24.0,
+      "landing": "/en/tools/quantization-blind-test/",
       "locale": "en"
     },
     {
@@ -812,23 +782,23 @@
       "locale": "en"
     },
     {
-      "keyword": "qwen 3.5 31b",
-      "query": "qwen 3.5 31b",
+      "keyword": "q8 vs q4",
+      "query": "q8 vs q4",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 55.0,
-      "landing": "/en/compare/qwen35-35b-q4-vs-llama31-70b-q4/",
+      "position": 9.0,
+      "landing": "/en/tools/quantization-blind-test/",
       "locale": "en"
     },
     {
-      "keyword": "qwen 3.8 flash vram",
-      "query": "qwen 3.8 flash vram",
+      "keyword": "qwen2.5-coder 14b vram requirements",
+      "query": "qwen2.5-coder 14b vram requirements",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 44.0,
-      "landing": "/en/blog/",
+      "position": 8.0,
+      "landing": "/en/models/qwen25-coder-14b-q5/",
       "locale": "en"
     },
     {
@@ -838,6 +808,16 @@
       "impressions": 1,
       "ctr": 0.0,
       "position": 11.0,
+      "landing": "/en/models/qwen25vl-7b-q5/",
+      "locale": "en"
+    },
+    {
+      "keyword": "qwen2.5-vl-7b vram requirements",
+      "query": "qwen2.5-vl-7b vram requirements",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 8.0,
       "landing": "/en/models/qwen25vl-7b-q5/",
       "locale": "en"
     },
@@ -859,36 +839,6 @@
       "ctr": 0.0,
       "position": 16.0,
       "landing": "/en/models/qwen3-vl-8b-q5/",
-      "locale": "en"
-    },
-    {
-      "keyword": "ram to vram ratio",
-      "query": "ram to vram ratio",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 57.0,
-      "landing": "/en/tools/vram-calculator/",
-      "locale": "en"
-    },
-    {
-      "keyword": "sglang 3090",
-      "query": "sglang 3090",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 61.0,
-      "landing": "/en/blog/",
-      "locale": "en"
-    },
-    {
-      "keyword": "tinyllama 1.1b model",
-      "query": "tinyllama 1.1b model",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 91.0,
-      "landing": "/en/models/tinyllama-11b-q4/",
       "locale": "en"
     },
     {
@@ -935,9 +885,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 935,
+      "impressions": 1117,
       "ctr": 0.0,
-      "position": 5.42,
+      "position": 5.7,
       "landing": "/es/status/",
       "locale": "es"
     },
@@ -952,32 +902,22 @@
       "locale": "es"
     },
     {
+      "keyword": "rtx 3090 en 2026",
+      "query": "rtx 3090 en 2026",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 6.75,
+      "landing": "/es/blog/still-the-vram-king-rtx-3090-2026/",
+      "locale": "es"
+    },
+    {
       "keyword": "rtx 3090 2026",
       "query": "rtx 3090 2026",
       "clicks": 0,
       "impressions": 3,
       "ctr": 0.0,
       "position": 9.33,
-      "landing": "/es/blog/still-the-vram-king-rtx-3090-2026/",
-      "locale": "es"
-    },
-    {
-      "keyword": "rtx 3090 en 2026",
-      "query": "rtx 3090 en 2026",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 7.0,
-      "landing": "/es/blog/still-the-vram-king-rtx-3090-2026/",
-      "locale": "es"
-    },
-    {
-      "keyword": "rtx 3090 vram",
-      "query": "rtx 3090 vram",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 27.67,
       "landing": "/es/blog/still-the-vram-king-rtx-3090-2026/",
       "locale": "es"
     },
@@ -1019,6 +959,16 @@
       "ctr": 0.0,
       "position": 10.0,
       "landing": "/es/models/llama2-7b-fp16/",
+      "locale": "es"
+    },
+    {
+      "keyword": "rtx 3090 vram",
+      "query": "rtx 3090 vram",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 26.5,
+      "landing": "/es/blog/still-the-vram-king-rtx-3090-2026/",
       "locale": "es"
     },
     {
@@ -1069,16 +1019,6 @@
       "ctr": 0.0,
       "position": 61.0,
       "landing": "/es/tools/quantization-blind-test/",
-      "locale": "es"
-    },
-    {
-      "keyword": "data freshness",
-      "query": "data freshness",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 66.0,
-      "landing": "/es/status/data-freshness/",
       "locale": "es"
     },
     {
@@ -1172,6 +1112,16 @@
       "locale": "es"
     },
     {
+      "keyword": "ollama deepseek-r1 8b model tag official",
+      "query": "ollama deepseek-r1 8b model tag official",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 28.0,
+      "landing": "/es/models/deepseek-r1-8b-q8/",
+      "locale": "es"
+    },
+    {
       "keyword": "ollama qwen2.5-coder 14b model size",
       "query": "ollama qwen2.5-coder 14b model size",
       "clicks": 0,
@@ -1262,16 +1212,6 @@
       "locale": "es"
     },
     {
-      "keyword": "vram benchmark test",
-      "query": "vram benchmark test",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 55.0,
-      "landing": "/es/tools/vram-calculator/",
-      "locale": "es"
-    },
-    {
       "keyword": "vram test",
       "query": "vram test",
       "clicks": 0,
@@ -1295,9 +1235,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 217,
+      "impressions": 325,
       "ctr": 0.0,
-      "position": 5.56,
+      "position": 5.58,
       "landing": "/fr/updates/",
       "locale": "fr"
     },
@@ -1307,7 +1247,7 @@
       "clicks": 0,
       "impressions": 8,
       "ctr": 0.0,
-      "position": 33.75,
+      "position": 33.12,
       "landing": "/fr/errors/cuda-out-of-memory/",
       "locale": "fr"
     },
@@ -1315,9 +1255,9 @@
       "keyword": "ollama vs vllm",
       "query": "ollama vs vllm",
       "clicks": 0,
-      "impressions": 8,
+      "impressions": 7,
       "ctr": 0.0,
-      "position": 49.12,
+      "position": 48.71,
       "landing": "/fr/guides/ollama-vs-vllm-vram/",
       "locale": "fr"
     },
@@ -1327,7 +1267,7 @@
       "clicks": 0,
       "impressions": 6,
       "ctr": 0.0,
-      "position": 41.83,
+      "position": 40.33,
       "landing": "/fr/hardware/apple-silicon-llm-guide/",
       "locale": "fr"
     },
@@ -1337,7 +1277,7 @@
       "clicks": 0,
       "impressions": 3,
       "ctr": 0.0,
-      "position": 73.67,
+      "position": 73.33,
       "landing": "/fr/affiliate/cloud-gpu/",
       "locale": "fr"
     },
@@ -1369,6 +1309,16 @@
       "ctr": 0.0,
       "position": 35.0,
       "landing": "/fr/errors/cuda-out-of-memory/",
+      "locale": "fr"
+    },
+    {
+      "keyword": "location carte graphique",
+      "query": "location carte graphique",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 68.0,
+      "landing": "/fr/affiliate/cloud-gpu/",
       "locale": "fr"
     },
     {
@@ -1442,16 +1392,6 @@
       "locale": "fr"
     },
     {
-      "keyword": "vram extension",
-      "query": "vram extension",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 53.0,
-      "landing": "/fr/tools/vram-calculator/",
-      "locale": "fr"
-    },
-    {
       "keyword": "vram gpu",
       "query": "vram gpu",
       "clicks": 0,
@@ -1460,26 +1400,6 @@
       "position": 59.0,
       "landing": "/fr/",
       "locale": "fr"
-    },
-    {
-      "keyword": "mixtral 8x7b vram requirement",
-      "query": "mixtral 8x7b vram requirement",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 12.0,
-      "landing": "/hi/models/mixtral-8x7b-q4/",
-      "locale": "hi"
-    },
-    {
-      "keyword": "ollama qwen2.5-coder-1.5b",
-      "query": "ollama qwen2.5-coder-1.5b",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 55.0,
-      "landing": "/hi/models/qwen25-coder-15b-q8/",
-      "locale": "hi"
     },
     {
       "keyword": "rtx 3090 24gb ram",
@@ -1495,7 +1415,7 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 524,
+      "impressions": 535,
       "ctr": 0.0,
       "position": 6.83,
       "landing": "/id/updates/",
@@ -1595,9 +1515,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 54,
+      "impressions": 105,
       "ctr": 0.0,
-      "position": 9.17,
+      "position": 9.28,
       "landing": "/ja/blog/",
       "locale": "ja"
     },
@@ -1605,9 +1525,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 32,
+      "impressions": 67,
       "ctr": 0.0,
-      "position": 9.06,
+      "position": 9.24,
       "landing": "/ja/status/",
       "locale": "ja"
     },
@@ -1635,9 +1555,9 @@
       "keyword": "cuda out of memory",
       "query": "cuda out of memory",
       "clicks": 0,
-      "impressions": 7,
+      "impressions": 6,
       "ctr": 0.0,
-      "position": 36.86,
+      "position": 36.33,
       "landing": "/ja/errors/cuda-out-of-memory/",
       "locale": "ja"
     },
@@ -1645,9 +1565,9 @@
       "keyword": "コンバージョンファネルとは",
       "query": "コンバージョンファネルとは",
       "clicks": 0,
-      "impressions": 4,
+      "impressions": 3,
       "ctr": 0.0,
-      "position": 68.75,
+      "position": 69.33,
       "landing": "/ja/status/conversion-funnel/",
       "locale": "ja"
     },
@@ -1692,22 +1612,12 @@
       "locale": "ja"
     },
     {
-      "keyword": "ブラインド テスト と は",
-      "query": "ブラインド テスト と は",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 51.0,
-      "landing": "/ja/tools/quantization-blind-test/",
-      "locale": "ja"
-    },
-    {
       "keyword": "데이터 신선도",
       "query": "데이터 신선도",
       "clicks": 0,
-      "impressions": 50,
+      "impressions": 52,
       "ctr": 0.0,
-      "position": 15.22,
+      "position": 15.38,
       "landing": "/ko/status/data-freshness/",
       "locale": "ko"
     },
@@ -1715,9 +1625,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 28,
+      "impressions": 41,
       "ctr": 0.0,
-      "position": 3.54,
+      "position": 3.37,
       "landing": "/ko/blog/",
       "locale": "ko"
     },
@@ -1725,10 +1635,20 @@
       "keyword": "vram calculator",
       "query": "vram calculator",
       "clicks": 0,
-      "impressions": 5,
+      "impressions": 6,
       "ctr": 0.0,
-      "position": 9.8,
+      "position": 9.83,
       "landing": "/ko/tools/vram-calculator/",
+      "locale": "ko"
+    },
+    {
+      "keyword": "3090 vram",
+      "query": "3090 vram",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 33.33,
+      "landing": "/ko/hardware/verified-3090/",
       "locale": "ko"
     },
     {
@@ -1782,23 +1702,13 @@
       "locale": "ko"
     },
     {
-      "keyword": "3090 vram",
-      "query": "3090 vram",
+      "keyword": "qwen2.5-coder:1.5b",
+      "query": "qwen2.5-coder:1.5b",
       "clicks": 0,
       "impressions": 2,
       "ctr": 0.0,
-      "position": 29.0,
-      "landing": "/ko/hardware/verified-3090/",
-      "locale": "ko"
-    },
-    {
-      "keyword": "rtx 3090 vram",
-      "query": "rtx 3090 vram",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0.0,
-      "position": 8.5,
-      "landing": "/ko/hardware/verified-3090/",
+      "position": 19.5,
+      "landing": "/ko/models/qwen25-coder-15b-q5/",
       "locale": "ko"
     },
     {
@@ -1819,6 +1729,16 @@
       "ctr": 0.0,
       "position": 31.0,
       "landing": "/ko/models/qwen25-coder-32b-q4/",
+      "locale": "ko"
+    },
+    {
+      "keyword": "7b q4",
+      "query": "7b q4",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 8.0,
+      "landing": "/ko/models/mistral-7b-q4/",
       "locale": "ko"
     },
     {
@@ -1902,6 +1822,16 @@
       "locale": "ko"
     },
     {
+      "keyword": "llama4:16x17b",
+      "query": "llama4:16x17b",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0,
+      "landing": "/ko/models/llama4-16x17b-fp16/",
+      "locale": "ko"
+    },
+    {
       "keyword": "mistral 7b q4",
       "query": "mistral 7b q4",
       "clicks": 0,
@@ -1912,13 +1842,13 @@
       "locale": "ko"
     },
     {
-      "keyword": "phi3:3.8b",
-      "query": "phi3:3.8b",
+      "keyword": "ollama 16gb vram",
+      "query": "ollama 16gb vram",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0.0,
-      "position": 92.0,
-      "landing": "/ko/models/phi3-38b-q4/",
+      "position": 16.0,
+      "landing": "/ko/hardware/16gb-vram-models/",
       "locale": "ko"
     },
     {
@@ -1972,16 +1902,6 @@
       "locale": "ko"
     },
     {
-      "keyword": "qwen2.5-coder:1.5b",
-      "query": "qwen2.5-coder:1.5b",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 11.0,
-      "landing": "/ko/models/qwen25-coder-15b-q5/",
-      "locale": "ko"
-    },
-    {
       "keyword": "qwen3 4b",
       "query": "qwen3 4b",
       "clicks": 0,
@@ -2022,6 +1942,36 @@
       "locale": "ko"
     },
     {
+      "keyword": "qwen3-vl-2b",
+      "query": "qwen3-vl-2b",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 32.0,
+      "landing": "/ko/models/qwen3-vl-2b-cloud/",
+      "locale": "ko"
+    },
+    {
+      "keyword": "rtx 3090 vram",
+      "query": "rtx 3090 vram",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 11.0,
+      "landing": "/ko/hardware/verified-3090/",
+      "locale": "ko"
+    },
+    {
+      "keyword": "rtx3090 vram",
+      "query": "rtx3090 vram",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0,
+      "landing": "/ko/hardware/verified-3090/",
+      "locale": "ko"
+    },
+    {
       "keyword": "vram 3090",
       "query": "vram 3090",
       "clicks": 0,
@@ -2055,10 +2005,20 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 166,
+      "impressions": 285,
       "ctr": 0.0,
-      "position": 4.29,
+      "position": 4.35,
       "landing": "/pt/blog/",
+      "locale": "pt"
+    },
+    {
+      "keyword": "ai83090",
+      "query": "ai83090",
+      "clicks": 0,
+      "impressions": 59,
+      "ctr": 0.0,
+      "position": 8.24,
+      "landing": "/pt/status/",
       "locale": "pt"
     },
     {
@@ -2092,16 +2052,6 @@
       "locale": "pt"
     },
     {
-      "keyword": "rag in portuguese",
-      "query": "rag in portuguese",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 82.0,
-      "landing": "/pt/guides/best-rag-models/",
-      "locale": "pt"
-    },
-    {
       "keyword": "v ram",
       "query": "v ram",
       "clicks": 0,
@@ -2125,9 +2075,9 @@
       "keyword": "ai83090",
       "query": "ai83090",
       "clicks": 0,
-      "impressions": 475,
+      "impressions": 691,
       "ctr": 0.0,
-      "position": 3.52,
+      "position": 3.51,
       "landing": "/ru/updates/",
       "locale": "ru"
     },
@@ -2135,9 +2085,9 @@
       "keyword": "cuda error out of memory при майнинге",
       "query": "cuda error out of memory при майнинге",
       "clicks": 0,
-      "impressions": 33,
+      "impressions": 34,
       "ctr": 0.0,
-      "position": 16.67,
+      "position": 16.56,
       "landing": "/ru/errors/cuda-out-of-memory/",
       "locale": "ru"
     },
@@ -2145,9 +2095,9 @@
       "keyword": "cuda ошибка out of memory",
       "query": "cuda ошибка out of memory",
       "clicks": 0,
-      "impressions": 21,
+      "impressions": 22,
       "ctr": 0.0,
-      "position": 28.05,
+      "position": 28.14,
       "landing": "/ru/blog/cuda-out-of-memory-ollama-fixes-2026/",
       "locale": "ru"
     },
@@ -2155,9 +2105,9 @@
       "keyword": "cuda ошибка out of memory",
       "query": "cuda ошибка out of memory",
       "clicks": 0,
-      "impressions": 21,
+      "impressions": 22,
       "ctr": 0.0,
-      "position": 12.81,
+      "position": 12.73,
       "landing": "/ru/errors/cuda-out-of-memory/",
       "locale": "ru"
     },
@@ -2182,13 +2132,13 @@
       "locale": "ru"
     },
     {
-      "keyword": "qwen3 1.7b q4",
-      "query": "qwen3 1.7b q4",
+      "keyword": "qwen3 4b vram requirements",
+      "query": "qwen3 4b vram requirements",
       "clicks": 0,
       "impressions": 2,
       "ctr": 0.0,
-      "position": 6.5,
-      "landing": "/ru/models/qwen3-17b-q4/",
+      "position": 10.0,
+      "landing": "/ru/models/qwen3-4b-q5/",
       "locale": "ru"
     },
     {
@@ -2242,6 +2192,16 @@
       "locale": "ru"
     },
     {
+      "keyword": "qwen3 1.7b q4",
+      "query": "qwen3 1.7b q4",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 6.0,
+      "landing": "/ru/models/qwen3-17b-q4/",
+      "locale": "ru"
+    },
+    {
       "keyword": "qwen3 235b memory requirements",
       "query": "qwen3 235b memory requirements",
       "clicks": 0,
@@ -2259,6 +2219,16 @@
       "ctr": 0.0,
       "position": 9.0,
       "landing": "/ru/models/qwen3-235b-q8/",
+      "locale": "ru"
+    },
+    {
+      "keyword": "qwen3 32b vram requirements",
+      "query": "qwen3 32b vram requirements",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 11.0,
+      "landing": "/ru/models/qwen3-32b-q8/",
       "locale": "ru"
     },
     {
@@ -2289,6 +2259,16 @@
       "ctr": 0.0,
       "position": 63.0,
       "landing": "/ru/models/qwen3-coder-480b-q4/",
+      "locale": "ru"
+    },
+    {
+      "keyword": "qwen3:8b requirements",
+      "query": "qwen3:8b requirements",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0,
+      "landing": "/ru/models/qwen3-8b-q5/",
       "locale": "ru"
     }
   ]
