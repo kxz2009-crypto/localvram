@@ -1,29 +1,61 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-20T05:15:21.248765Z",
+  "updated_at": "2026-10-03T05:36:28.125878Z",
   "last_run": {
-    "run_at": "2026-09-20T05:15:21.248765Z",
-    "queue_date": "2026-09-20",
-    "candidate_count": 0,
-    "min_publish": 1,
+    "run_at": "2026-10-03T05:36:28.125878Z",
+    "queue_date": "2026-10-03",
+    "candidate_count": 1,
+    "min_publish": 0,
     "max_publish": 2,
     "published_count": 1,
-    "fallback_generated_count": 1,
+    "fallback_generated_count": 0,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "daily-local-llm-benchmark-snapshot-2026-09-20",
-        "title": "Today's Local LLM Pick: ministral-3:14b on RTX 3090 (2026)",
-        "topic_key": "daily-benchmark-fallback-2026-09-20-daily-local-llm-benchmark-snapshot-2026-09-20",
-        "score": 120.0,
-        "source_draft": "system:fallback-daily-generator",
-        "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-09-20.md",
-        "intent": "benchmark"
+        "slug": "ko-tools-vram-calculator",
+        "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+        "topic_key": "local-llm-vram-calculator",
+        "score": 210.0,
+        "source_draft": "content-queue/2026-10-03/01-ko-tools-vram-calculator.md",
+        "out_file": "src/content/blog/ko-tools-vram-calculator.md",
+        "intent": "hardware",
+        "model_tag": "",
+        "model_key": "",
+        "traffic_priority": "",
+        "ollama_updated_label": "",
+        "benchmark_measured_at": ""
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-10-03T05:36:28.125878Z",
+      "queue_date": "2026-10-03",
+      "candidate_count": 1,
+      "min_publish": 0,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "ko-tools-vram-calculator",
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "topic_key": "local-llm-vram-calculator",
+          "score": 210.0,
+          "source_draft": "content-queue/2026-10-03/01-ko-tools-vram-calculator.md",
+          "out_file": "src/content/blog/ko-tools-vram-calculator.md",
+          "intent": "hardware",
+          "model_tag": "",
+          "model_key": "",
+          "traffic_priority": "",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": ""
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-09-20T05:15:21.248765Z",
       "queue_date": "2026-09-20",
@@ -1381,28 +1413,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-09.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-07-08T03:54:30.395970Z",
-      "queue_date": "2026-07-08",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-07-08",
-          "title": "Today's Local LLM Pick: llama4:16x17b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-07-08-daily-local-llm-benchmark-snapshot-2026-07-08",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-08.md",
           "intent": "benchmark"
         }
       ],

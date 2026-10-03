@@ -1,6 +1,36 @@
 {
   "items": [
     {
+      "date": "2026-10-03",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-10-03",
+          "slug": "ko-tools-vram-calculator",
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "keyword": "local llm vram calculator",
+          "score": 210,
+          "source": "opportunity",
+          "landing": "",
+          "model_tag": "",
+          "model_key": "",
+          "traffic_priority": "",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "",
+          "content_angle": "setup-playbook",
+          "draft_path": "content-queue/2026-10-03/01-ko-tools-vram-calculator.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "ko-tools-vram-calculator",
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)"
+        }
+      ],
+      "published_count": 1,
+      "publish_run_at": "2026-10-03T05:36:28.125878Z"
+    },
+    {
       "date": "2026-09-20",
       "summary": "Published a practical Qwen3.8 cost comparison guide; restored article previews and distinct Chinese blog titles.",
       "candidates": [],
@@ -447,36 +477,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-08-23T02:09:30.011023Z"
-    },
-    {
-      "date": "2026-08-22",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [
-        {
-          "date": "2026-08-22",
-          "slug": "ru-blog-still-the-vram-king-rtx-3090-2026",
-          "title": "RTX 3090 2026: VRAM Fit and Quantization Plan (2026)",
-          "keyword": "rtx 3090 2026",
-          "score": 210,
-          "source": "opportunity",
-          "landing": "",
-          "model_tag": "",
-          "model_key": "",
-          "traffic_priority": "",
-          "ollama_updated_label": "",
-          "benchmark_measured_at": "",
-          "content_angle": "hardware-upgrade",
-          "draft_path": "content-queue/2026-08-22/01-ru-blog-still-the-vram-king-rtx-3090-2026.md"
-        }
-      ],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-08-22",
-          "title": "Today's Local LLM Pick: mistral-small:22b on RTX 3090 (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-08-22T01:58:10.357937Z"
     }
   ]
 }

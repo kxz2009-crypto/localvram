@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-21T02:50:55Z",
+  "updated_at": "2026-10-03T05:36:28Z",
   "wave": "blog-copy-wave1-top5",
   "slugs": {
     "best-24gb-vram-models-2026": {
@@ -12742,6 +12742,65 @@
         "id": {
           "title": "Qwen3.8 27B: Measure the Workload Before Comparing Local and Cloud Costs",
           "description": "A reproducible way to compare Qwen3.8 27B costs: fix the task and configuration, measure runtime, include idle power, and avoid treating download size as VRAM.",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "ko-tools-vram-calculator": {
+      "en": {
+        "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+        "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"local llm vram calculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Local LLM VRAM",
           "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
         }
       }

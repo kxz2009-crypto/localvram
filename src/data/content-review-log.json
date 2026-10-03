@@ -1,18 +1,59 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-09-20T05:15:21.195678Z",
+  "updated_at": "2026-10-03T05:36:28.043736Z",
   "last_run": {
-    "run_at": "2026-09-20T05:15:21.195678Z",
-    "queue_date": "2026-09-20",
-    "reviewed_count": 0,
-    "auto_approved_count": 0,
+    "run_at": "2026-10-03T05:36:28.043736Z",
+    "queue_date": "2026-10-03",
+    "reviewed_count": 1,
+    "auto_approved_count": 1,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
-    "items": []
+    "items": [
+      {
+        "draft": "content-queue/2026-10-03/01-ko-tools-vram-calculator.md",
+        "slug": "ko-tools-vram-calculator",
+        "score": 210.0,
+        "status_before": "draft",
+        "status_after": "approved_auto",
+        "word_count": 626,
+        "risk_flags": [],
+        "similarity": {
+          "score": 0.805,
+          "topic_score": 0.0526,
+          "slug": "2026-08-03-qwen3-8b-setup-playbook"
+        }
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-10-03T05:36:28.043736Z",
+      "queue_date": "2026-10-03",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-10-03/01-ko-tools-vram-calculator.md",
+          "slug": "ko-tools-vram-calculator",
+          "score": 210.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 626,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.805,
+            "topic_score": 0.0526,
+            "slug": "2026-08-03-qwen3-8b-setup-playbook"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-09-20T05:15:21.195678Z",
       "queue_date": "2026-09-20",
@@ -924,17 +965,6 @@
     {
       "run_at": "2026-07-09T04:31:38.861442Z",
       "queue_date": "2026-07-09",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
-    },
-    {
-      "run_at": "2026-07-08T03:54:30.306603Z",
-      "queue_date": "2026-07-08",
       "reviewed_count": 0,
       "auto_approved_count": 0,
       "pending_manual_review_count": 0,
