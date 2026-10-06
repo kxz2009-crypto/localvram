@@ -1,6 +1,38 @@
 {
-  "updated_at": "2026-10-03T00:00:00Z",
+  "updated_at": "2026-10-06T00:00:00Z",
   "items": [
+    {
+      "date": "2026-10-06",
+      "slug": "q4-vs-q8-quality-loss-ollama-guide",
+      "title": "Q4 Vs Q8 Quality Loss Ollama: Setup, Validation, and Scaling Playbook (2026)",
+      "keyword": "q4 vs q8 quality loss ollama",
+      "score": 576,
+      "source": "opportunity",
+      "landing": "",
+      "model_tag": "",
+      "model_key": "",
+      "traffic_priority": "",
+      "ollama_updated_label": "",
+      "benchmark_measured_at": "",
+      "content_angle": "operator-checklist",
+      "draft_path": "content-queue/2026-10-06/01-q4-vs-q8-quality-loss-ollama-guide.md"
+    },
+    {
+      "date": "2026-10-06",
+      "slug": "2026-10-06-qwen3-coder-30b-vram-fit",
+      "title": "qwen3-coder:30B RTX 3090 Local Benchmark VRAM Fit: Hardware Decision Matrix for Local LLM (2026)",
+      "keyword": "qwen3-coder:30b rtx 3090 local benchmark vram fit",
+      "score": 216,
+      "source": "quality_floor_fallback",
+      "landing": "/en/models/",
+      "model_tag": "qwen3-coder:30b",
+      "model_key": "",
+      "traffic_priority": "fallback",
+      "ollama_updated_label": "",
+      "benchmark_measured_at": "2026-09-16T07:39:43Z",
+      "content_angle": "vram-fit",
+      "draft_path": "content-queue/2026-10-06/02-2026-10-06-qwen3-coder-30b-vram-fit.md"
+    },
     {
       "date": "2026-10-03",
       "slug": "ko-tools-vram-calculator",

@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-03T05:37:52.152753Z",
+  "generated_at": "2026-10-06T06:47:41.015452Z",
   "window_days": 30,
-  "window_start": "2026-09-03T05:37:52.152753Z",
-  "window_end": "2026-10-03T05:37:52.152753Z",
+  "window_start": "2026-09-06T06:47:41.015452Z",
+  "window_end": "2026-10-06T06:47:41.015452Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -16,84 +16,80 @@
   "funnel": {
     "organic_search_clicks": 1,
     "decision_page_clicks": 1,
-    "affiliate_redirect_clicks": 319,
-    "cloud_redirect_clicks": 145,
+    "affiliate_redirect_clicks": 326,
+    "cloud_redirect_clicks": 152,
     "hardware_redirect_clicks": 174,
     "search_to_affiliate_pct": null,
     "search_to_cloud_pct": null,
     "affiliate_to_cloud_pct": null,
-    "cloud_share_of_redirects_pct": 45.45
+    "cloud_share_of_redirects_pct": 46.63
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
         "clicks": 174,
-        "share_pct": 54.55
+        "share_pct": 53.37
       },
       {
         "provider": "runpod",
-        "clicks": 78,
-        "share_pct": 24.45
+        "clicks": 81,
+        "share_pct": 24.85
       },
       {
         "provider": "vast",
-        "clicks": 67,
-        "share_pct": 21.0
+        "clicks": 71,
+        "share_pct": 21.78
       }
     ],
     "routes": [
       {
-        "route": "/recommends/rtx-3090-24gb",
-        "clicks": 79,
-        "share_pct": 24.76
+        "route": "/go/runpod",
+        "clicks": 81,
+        "share_pct": 24.85
       },
       {
-        "route": "/go/runpod",
-        "clicks": 78,
-        "share_pct": 24.45
+        "route": "/recommends/rtx-3090-24gb",
+        "clicks": 79,
+        "share_pct": 24.23
       },
       {
         "route": "/go/vast",
-        "clicks": 67,
-        "share_pct": 21.0
+        "clicks": 71,
+        "share_pct": 21.78
       },
       {
         "route": "/recommends/rtx-4090-24gb",
         "clicks": 35,
-        "share_pct": 10.97
+        "share_pct": 10.74
       },
       {
         "route": "/recommends/atx3-1000w-psu",
         "clicks": 30,
-        "share_pct": 9.4
+        "share_pct": 9.2
       },
       {
         "route": "/recommends/high-airflow-case",
         "clicks": 30,
-        "share_pct": 9.4
+        "share_pct": 9.2
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 298
+        "clicks": 301
       },
       {
         "page": "/",
-        "clicks": 5
+        "clicks": 8
+      },
+      {
+        "page": "/ru/tools/vram-calculator/",
+        "clicks": 4
       },
       {
         "page": "/en/affiliate/cloud-gpu/",
         "clicks": 3
-      },
-      {
-        "page": "/ru/tools/vram-calculator/",
-        "clicks": 3
-      },
-      {
-        "page": "/de/tools/vram-calculator/",
-        "clicks": 2
       },
       {
         "page": "/go/vast",
@@ -104,11 +100,19 @@
         "clicks": 2
       },
       {
+        "page": "/de/hardware/12gb-vram-models/",
+        "clicks": 1
+      },
+      {
         "page": "/es/tools/vram-calculator/",
         "clicks": 1
       },
       {
         "page": "/en/models/dolphin3-8b-q5/",
+        "clicks": 1
+      },
+      {
+        "page": "/de/tools/vram-calculator/",
         "clicks": 1
       },
       {
@@ -225,11 +229,11 @@
   },
   "data_quality": {
     "search_console_items": 238,
-    "affiliate_event_items_total": 472,
-    "affiliate_event_items_in_window": 319,
+    "affiliate_event_items_total": 448,
+    "affiliate_event_items_in_window": 326,
     "has_affiliate_event_feed": true,
-    "unattributed_redirects": 298,
-    "excluded_invalid_or_out_of_window_events": 153,
+    "unattributed_redirects": 301,
+    "excluded_invalid_or_out_of_window_events": 122,
     "conversion_rate_status": "unavailable_no_session_attribution",
     "note": "Search Console query/page totals and redirect request counts are separate datasets with different windows. Requests are not unique people or orders; legacy events may include bots and checks. Conversion rates are unavailable without session attribution and provider order reconciliation."
   }

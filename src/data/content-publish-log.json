@@ -1,34 +1,71 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-10-03T05:36:28.125878Z",
+  "updated_at": "2026-10-06T06:44:08.233478Z",
   "last_run": {
-    "run_at": "2026-10-03T05:36:28.125878Z",
-    "queue_date": "2026-10-03",
-    "candidate_count": 1,
+    "run_at": "2026-10-06T06:44:08.233478Z",
+    "queue_date": "2026-10-06",
+    "candidate_count": 2,
     "min_publish": 0,
     "max_publish": 2,
     "published_count": 1,
     "fallback_generated_count": 0,
-    "skipped_count": 0,
+    "skipped_count": 1,
     "published": [
       {
-        "slug": "ko-tools-vram-calculator",
-        "title": "Local LLM VRAM Calculator: VRAM Fit and Quantization Plan (2026)",
-        "topic_key": "local-llm-vram-calculator",
-        "score": 210.0,
-        "source_draft": "content-queue/2026-10-03/01-ko-tools-vram-calculator.md",
-        "out_file": "src/content/blog/ko-tools-vram-calculator.md",
+        "slug": "2026-10-06-qwen3-coder-30b-vram-fit",
+        "title": "qwen3-coder:30B RTX 3090 Local Benchmark VRAM Fit: Hardware Decision Matrix for Local LLM (2026)",
+        "topic_key": "qwen3-coder-30b-rtx-3090-local-benchmark-vram-fit",
+        "score": 216.0,
+        "source_draft": "content-queue/2026-10-06/02-2026-10-06-qwen3-coder-30b-vram-fit.md",
+        "out_file": "src/content/blog/2026-10-06-qwen3-coder-30b-vram-fit.md",
         "intent": "hardware",
-        "model_tag": "",
-        "model_key": "",
-        "traffic_priority": "",
+        "model_tag": "qwen3-coder:30b",
+        "model_key": "qwen3-coder-30b",
+        "traffic_priority": "fallback",
         "ollama_updated_label": "",
-        "benchmark_measured_at": ""
+        "benchmark_measured_at": "2026-09-16T07:39:43Z"
       }
     ],
-    "skipped": []
+    "skipped": [
+      {
+        "draft": "content-queue/2026-10-06/01-q4-vs-q8-quality-loss-ollama-guide.md",
+        "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
+      }
+    ]
   },
   "history": [
+    {
+      "run_at": "2026-10-06T06:44:08.233478Z",
+      "queue_date": "2026-10-06",
+      "candidate_count": 2,
+      "min_publish": 0,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 1,
+      "published": [
+        {
+          "slug": "2026-10-06-qwen3-coder-30b-vram-fit",
+          "title": "qwen3-coder:30B RTX 3090 Local Benchmark VRAM Fit: Hardware Decision Matrix for Local LLM (2026)",
+          "topic_key": "qwen3-coder-30b-rtx-3090-local-benchmark-vram-fit",
+          "score": 216.0,
+          "source_draft": "content-queue/2026-10-06/02-2026-10-06-qwen3-coder-30b-vram-fit.md",
+          "out_file": "src/content/blog/2026-10-06-qwen3-coder-30b-vram-fit.md",
+          "intent": "hardware",
+          "model_tag": "qwen3-coder:30b",
+          "model_key": "qwen3-coder-30b",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-09-16T07:39:43Z"
+        }
+      ],
+      "skipped": [
+        {
+          "draft": "content-queue/2026-10-06/01-q4-vs-q8-quality-loss-ollama-guide.md",
+          "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
+        }
+      ]
+    },
     {
       "run_at": "2026-10-03T05:36:28.125878Z",
       "queue_date": "2026-10-03",
@@ -1391,28 +1428,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-10.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-07-09T04:31:38.942168Z",
-      "queue_date": "2026-07-09",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-07-09",
-          "title": "Today's Local LLM Pick: qwen3.5:35b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-07-09-daily-local-llm-benchmark-snapshot-2026-07-09",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-09.md",
           "intent": "benchmark"
         }
       ],
