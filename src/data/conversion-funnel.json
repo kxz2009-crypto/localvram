@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-06T06:47:41.015452Z",
+  "generated_at": "2026-10-07T09:33:10.345327Z",
   "window_days": 30,
-  "window_start": "2026-09-06T06:47:41.015452Z",
-  "window_end": "2026-10-06T06:47:41.015452Z",
+  "window_start": "2026-09-07T09:33:10.345327Z",
+  "window_end": "2026-10-07T09:33:10.345327Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -16,68 +16,68 @@
   "funnel": {
     "organic_search_clicks": 1,
     "decision_page_clicks": 1,
-    "affiliate_redirect_clicks": 326,
-    "cloud_redirect_clicks": 152,
-    "hardware_redirect_clicks": 174,
+    "affiliate_redirect_clicks": 313,
+    "cloud_redirect_clicks": 146,
+    "hardware_redirect_clicks": 167,
     "search_to_affiliate_pct": null,
     "search_to_cloud_pct": null,
     "affiliate_to_cloud_pct": null,
-    "cloud_share_of_redirects_pct": 46.63
+    "cloud_share_of_redirects_pct": 46.65
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 174,
-        "share_pct": 53.37
+        "clicks": 167,
+        "share_pct": 53.35
       },
       {
         "provider": "runpod",
-        "clicks": 81,
-        "share_pct": 24.85
+        "clicks": 78,
+        "share_pct": 24.92
       },
       {
         "provider": "vast",
-        "clicks": 71,
-        "share_pct": 21.78
+        "clicks": 68,
+        "share_pct": 21.73
       }
     ],
     "routes": [
       {
         "route": "/go/runpod",
-        "clicks": 81,
-        "share_pct": 24.85
+        "clicks": 78,
+        "share_pct": 24.92
       },
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 79,
-        "share_pct": 24.23
+        "clicks": 76,
+        "share_pct": 24.28
       },
       {
         "route": "/go/vast",
-        "clicks": 71,
-        "share_pct": 21.78
+        "clicks": 68,
+        "share_pct": 21.73
       },
       {
         "route": "/recommends/rtx-4090-24gb",
-        "clicks": 35,
-        "share_pct": 10.74
+        "clicks": 33,
+        "share_pct": 10.54
       },
       {
         "route": "/recommends/atx3-1000w-psu",
-        "clicks": 30,
-        "share_pct": 9.2
+        "clicks": 29,
+        "share_pct": 9.27
       },
       {
         "route": "/recommends/high-airflow-case",
-        "clicks": 30,
-        "share_pct": 9.2
+        "clicks": 29,
+        "share_pct": 9.27
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 301
+        "clicks": 289
       },
       {
         "page": "/",
@@ -89,7 +89,7 @@
       },
       {
         "page": "/en/affiliate/cloud-gpu/",
-        "clicks": 3
+        "clicks": 2
       },
       {
         "page": "/go/vast",
@@ -230,10 +230,10 @@
   "data_quality": {
     "search_console_items": 238,
     "affiliate_event_items_total": 448,
-    "affiliate_event_items_in_window": 326,
+    "affiliate_event_items_in_window": 313,
     "has_affiliate_event_feed": true,
-    "unattributed_redirects": 301,
-    "excluded_invalid_or_out_of_window_events": 122,
+    "unattributed_redirects": 289,
+    "excluded_invalid_or_out_of_window_events": 135,
     "conversion_rate_status": "unavailable_no_session_attribution",
     "note": "Search Console query/page totals and redirect request counts are separate datasets with different windows. Requests are not unique people or orders; legacy events may include bots and checks. Conversion rates are unavailable without session attribution and provider order reconciliation."
   }

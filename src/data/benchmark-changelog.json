@@ -1,6 +1,23 @@
 {
-  "updated_at": "2026-09-16T07:39:43Z",
+  "updated_at": "2026-10-07T08:35:40Z",
   "items": [
+    {
+      "date": "2026-10-07",
+      "title": "Weekly benchmark run (9 successful model(s))",
+      "environment": "NVIDIA GeForce RTX 3090 | driver 591.86 | Ollama 0.33.2",
+      "changes": [
+        "qwen3:8b avg 109.57 tok/s, avg latency 1.442s (2 run(s))",
+        "deepseek-r1:14b avg 66.495 tok/s, avg latency 2.189s (2 run(s))",
+        "qwen3-coder:30b avg 61.8 tok/s, avg latency 1.575s (2 run(s))",
+        "qwen3.6:27b avg 36.587 tok/s, avg latency 3.162s (2 run(s))",
+        "qwen2.5-coder:32b avg 17.309 tok/s, avg latency 6.086s (2 run(s))",
+        "ministral-3:14b avg 69.981 tok/s, avg latency 2.113s (2 run(s))",
+        "mistral-small:22b avg 48.909 tok/s, avg latency 2.087s (2 run(s))",
+        "gemma3:27b avg 36.569 tok/s, avg latency 3.006s (2 run(s))",
+        "qwq:32b avg 31.095 tok/s, avg latency 3.409s (2 run(s))",
+        "Skipped/failed targets: qwen2.5, qwen3.5:27b, llama3.3, gpt-oss, llama4:latest"
+      ]
+    },
     {
       "date": "2026-09-16",
       "title": "Weekly benchmark run (10 successful model(s))",
@@ -667,15 +684,6 @@
         "1-hour sustained run completed with updated thermal profile",
         "Token throughput increased by 12% versus previous baseline",
         "OOM threshold at 16K context reconfirmed"
-      ]
-    },
-    {
-      "date": "2026-02-23",
-      "title": "Qwen 32B Q5 local-vs-cloud cost refresh",
-      "environment": "RTX 3090 + RunPod A6000",
-      "changes": [
-        "ROI table recalculated with latest cloud hourly pricing",
-        "Cloud fallback CTA switched for >32GB optimal VRAM profiles"
       ]
     }
   ]
