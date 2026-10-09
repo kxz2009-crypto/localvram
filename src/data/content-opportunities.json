@@ -1,22 +1,32 @@
 {
-  "updated_at": "2026-10-02T07:31:33.414452Z",
+  "updated_at": "2026-10-09T08:00:06.517083Z",
   "rotation_policy": {
     "target_pool_size": 30,
     "refresh_cadence": "weekly",
     "weekly_replace_count": 8,
     "cooldown_days": 30,
-    "next_refresh_at": "2026-10-09T00:00:00Z",
+    "next_refresh_at": "2026-10-16T00:00:00Z",
     "sources": [
       "search_console",
       "benchmark_changes",
       "affiliate_click_paths",
       "manual_editor_boost"
     ],
-    "last_refresh_at": "2026-10-02T07:31:33.414452Z",
+    "last_refresh_at": "2026-10-09T08:00:06.517083Z",
     "last_refresh_summary": {
       "incoming_count": 8,
       "removed_count": 8,
       "incoming_topic_keys": [
+        "gemma3-27b-local-inference-benchmark-update",
+        "glm-4-7-flash-bf16-local-inference-benchmark-update",
+        "llama-3-1-405b-vram-requirements",
+        "llama3-3-70b-local-inference-benchmark-update",
+        "ollama-qwen2-5-1-5b-size",
+        "qwen3-coder-30b-q4",
+        "rtx-3090-tokens-per-second",
+        "vram-site"
+      ],
+      "removed_topic_keys": [
         "llama4-16x17b-local-inference-benchmark-update",
         "local-llm-vram-calculator",
         "ollama-qwen3-8b-size",
@@ -26,17 +36,7 @@
         "qwq-32b-local-inference-benchmark-update",
         "site-ollama-com-library-qwen3-coder-30b"
       ],
-      "removed_topic_keys": [
-        "deepseek-v3-vram-requirements",
-        "dolphin3-8b",
-        "gemma3-27b-local-inference-benchmark-update",
-        "glm-4-7-flash-bf16-local-inference-benchmark-update",
-        "llama-3-1-405b-vram-requirements",
-        "llama3-3-70b-local-inference-benchmark-update",
-        "mistral-7b-q4",
-        "ollama-qwen2-5-1-5b-size"
-      ],
-      "blocked_recent_topic_count": 36
+      "blocked_recent_topic_count": 26
     }
   },
   "items": [
@@ -188,6 +188,13 @@
       "freshness_gap_score": 10
     },
     {
+      "slug": "model-gemma3-27b-benchmark-refresh",
+      "keyword": "gemma3:27b local inference benchmark update",
+      "search_intent_score": 6,
+      "commercial_intent_score": 6,
+      "freshness_gap_score": 10
+    },
+    {
       "slug": "model-translategemma-27b-benchmark-refresh",
       "keyword": "translategemma:27b local inference benchmark update",
       "search_intent_score": 6,
@@ -195,58 +202,51 @@
       "freshness_gap_score": 10
     },
     {
-      "slug": "model-qwen3-6-35b-benchmark-refresh",
-      "keyword": "qwen3.6:35b local inference benchmark update",
-      "search_intent_score": 6,
-      "commercial_intent_score": 6,
-      "freshness_gap_score": 6
-    },
-    {
-      "slug": "model-qwq-32b-benchmark-refresh",
-      "keyword": "qwq:32b local inference benchmark update",
-      "search_intent_score": 6,
-      "commercial_intent_score": 6,
-      "freshness_gap_score": 6
-    },
-    {
-      "slug": "ko-tools-vram-calculator",
-      "keyword": "local llm vram calculator",
-      "search_intent_score": 7,
-      "commercial_intent_score": 3,
-      "freshness_gap_score": 10
-    },
-    {
-      "slug": "model-llama4-16x17b-benchmark-refresh",
-      "keyword": "llama4:16x17b local inference benchmark update",
-      "search_intent_score": 4,
-      "commercial_intent_score": 5,
-      "freshness_gap_score": 6
-    },
-    {
-      "slug": "model-qwen3-5-122b-benchmark-refresh",
-      "keyword": "qwen3.5:122b local inference benchmark update",
+      "slug": "model-glm-4-7-flash-bf16-benchmark-refresh",
+      "keyword": "glm-4.7-flash:bf16 local inference benchmark update",
       "search_intent_score": 4,
       "commercial_intent_score": 5,
       "freshness_gap_score": 5
     },
     {
-      "slug": "model-qwen3-5-35b-benchmark-refresh",
-      "keyword": "qwen3.5:35b local inference benchmark update",
+      "slug": "model-llama3-3-70b-benchmark-refresh",
+      "keyword": "llama3.3:70b local inference benchmark update",
       "search_intent_score": 4,
       "commercial_intent_score": 5,
       "freshness_gap_score": 5
     },
     {
-      "slug": "en-models-qwen3-coder-30b-q5",
-      "keyword": "%site.ollama.com/library qwen3-coder 30b",
+      "slug": "id-models-qwen25-15b-q8",
+      "keyword": "ollama qwen2.5:1.5b size",
       "search_intent_score": 10,
       "commercial_intent_score": 3,
       "freshness_gap_score": 3
     },
     {
-      "slug": "ru-models-qwen3-8b-q5",
-      "keyword": "ollama qwen3:8b size",
-      "search_intent_score": 10,
+      "slug": "de-hardware-verified-3090",
+      "keyword": "rtx 3090 tokens per second",
+      "search_intent_score": 8,
+      "commercial_intent_score": 3,
+      "freshness_gap_score": 3
+    },
+    {
+      "slug": "de-models-qwen3-coder-30b-q4",
+      "keyword": "qwen3-coder 30b q4",
+      "search_intent_score": 8,
+      "commercial_intent_score": 3,
+      "freshness_gap_score": 3
+    },
+    {
+      "slug": "en",
+      "keyword": "vram site",
+      "search_intent_score": 8,
+      "commercial_intent_score": 3,
+      "freshness_gap_score": 3
+    },
+    {
+      "slug": "ja-models-llama31-405b-q5",
+      "keyword": "llama 3.1 405b vram requirements",
+      "search_intent_score": 8,
       "commercial_intent_score": 3,
       "freshness_gap_score": 3
     }
