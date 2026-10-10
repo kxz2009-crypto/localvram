@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-07T09:33:10.345327Z",
+  "generated_at": "2026-10-10T06:17:10.198444Z",
   "window_days": 30,
-  "window_start": "2026-09-07T09:33:10.345327Z",
-  "window_end": "2026-10-07T09:33:10.345327Z",
+  "window_start": "2026-09-10T06:17:10.198444Z",
+  "window_end": "2026-10-10T06:17:10.198444Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
@@ -16,88 +16,88 @@
   "funnel": {
     "organic_search_clicks": 1,
     "decision_page_clicks": 1,
-    "affiliate_redirect_clicks": 313,
-    "cloud_redirect_clicks": 146,
-    "hardware_redirect_clicks": 167,
+    "affiliate_redirect_clicks": 326,
+    "cloud_redirect_clicks": 151,
+    "hardware_redirect_clicks": 175,
     "search_to_affiliate_pct": null,
     "search_to_cloud_pct": null,
     "affiliate_to_cloud_pct": null,
-    "cloud_share_of_redirects_pct": 46.65
+    "cloud_share_of_redirects_pct": 46.32
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 167,
-        "share_pct": 53.35
+        "clicks": 175,
+        "share_pct": 53.68
       },
       {
         "provider": "runpod",
-        "clicks": 78,
-        "share_pct": 24.92
+        "clicks": 84,
+        "share_pct": 25.77
       },
       {
         "provider": "vast",
-        "clicks": 68,
-        "share_pct": 21.73
+        "clicks": 67,
+        "share_pct": 20.55
       }
     ],
     "routes": [
       {
         "route": "/go/runpod",
-        "clicks": 78,
-        "share_pct": 24.92
+        "clicks": 84,
+        "share_pct": 25.77
       },
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 76,
-        "share_pct": 24.28
+        "clicks": 80,
+        "share_pct": 24.54
       },
       {
         "route": "/go/vast",
-        "clicks": 68,
-        "share_pct": 21.73
+        "clicks": 67,
+        "share_pct": 20.55
       },
       {
         "route": "/recommends/rtx-4090-24gb",
-        "clicks": 33,
-        "share_pct": 10.54
+        "clicks": 35,
+        "share_pct": 10.74
       },
       {
         "route": "/recommends/atx3-1000w-psu",
-        "clicks": 29,
-        "share_pct": 9.27
+        "clicks": 30,
+        "share_pct": 9.2
       },
       {
         "route": "/recommends/high-airflow-case",
-        "clicks": 29,
-        "share_pct": 9.27
+        "clicks": 30,
+        "share_pct": 9.2
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 289
+        "clicks": 300
       },
       {
         "page": "/",
-        "clicks": 8
+        "clicks": 12
       },
       {
         "page": "/ru/tools/vram-calculator/",
         "clicks": 4
       },
       {
+        "page": "/recommends/rtx-3090-24gb",
+        "clicks": 2
+      },
+      {
         "page": "/en/affiliate/cloud-gpu/",
         "clicks": 2
       },
       {
-        "page": "/go/vast",
-        "clicks": 2
-      },
-      {
-        "page": "/en/tools/vram-calculator/",
-        "clicks": 2
+        "page": "/fr/tools/vram-calculator/",
+        "clicks": 1
       },
       {
         "page": "/de/hardware/12gb-vram-models/",
@@ -116,11 +116,7 @@
         "clicks": 1
       },
       {
-        "page": "/recommends/rtx-3090-24gb",
-        "clicks": 1
-      },
-      {
-        "page": "/en/models/codellama-7b-q5/",
+        "page": "/go/vast",
         "clicks": 1
       }
     ],
@@ -229,11 +225,11 @@
   },
   "data_quality": {
     "search_console_items": 238,
-    "affiliate_event_items_total": 448,
-    "affiliate_event_items_in_window": 313,
+    "affiliate_event_items_total": 469,
+    "affiliate_event_items_in_window": 326,
     "has_affiliate_event_feed": true,
-    "unattributed_redirects": 289,
-    "excluded_invalid_or_out_of_window_events": 135,
+    "unattributed_redirects": 300,
+    "excluded_invalid_or_out_of_window_events": 143,
     "conversion_rate_status": "unavailable_no_session_attribution",
     "note": "Search Console query/page totals and redirect request counts are separate datasets with different windows. Requests are not unique people or orders; legacy events may include bots and checks. Conversion rates are unavailable without session attribution and provider order reconciliation."
   }

@@ -1,47 +1,59 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-10-06T06:44:08.168339Z",
+  "updated_at": "2026-10-10T06:14:56.467319Z",
   "last_run": {
-    "run_at": "2026-10-06T06:44:08.168339Z",
-    "queue_date": "2026-10-06",
-    "reviewed_count": 2,
-    "auto_approved_count": 2,
+    "run_at": "2026-10-10T06:14:56.467319Z",
+    "queue_date": "2026-10-10",
+    "reviewed_count": 1,
+    "auto_approved_count": 1,
     "pending_manual_review_count": 0,
     "rejected_manual_count": 0,
     "high_risk_count": 0,
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-10-06/01-q4-vs-q8-quality-loss-ollama-guide.md",
-        "slug": "q4-vs-q8-quality-loss-ollama-guide",
-        "score": 576.0,
+        "draft": "content-queue/2026-10-10/01-model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
+        "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
+        "score": 6000.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 627,
+        "word_count": 651,
         "risk_flags": [],
         "similarity": {
-          "score": 0.8742,
-          "topic_score": 0.4545,
-          "slug": "en-models"
-        }
-      },
-      {
-        "draft": "content-queue/2026-10-06/02-2026-10-06-qwen3-coder-30b-vram-fit.md",
-        "slug": "2026-10-06-qwen3-coder-30b-vram-fit",
-        "score": 216.0,
-        "status_before": "draft",
-        "status_after": "approved_auto",
-        "word_count": 645,
-        "risk_flags": [],
-        "similarity": {
-          "score": 0.869,
-          "topic_score": 0.3333,
-          "slug": "2026-09-04-gpt-oss-20b-vram-fit"
+          "score": 0.8333,
+          "topic_score": 0.4444,
+          "slug": "2026-08-03-qwen3-coder-30b-hardware-upgrade"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-10-10T06:14:56.467319Z",
+      "queue_date": "2026-10-10",
+      "reviewed_count": 1,
+      "auto_approved_count": 1,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-10-10/01-model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
+          "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
+          "score": 6000.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 651,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8333,
+            "topic_score": 0.4444,
+            "slug": "2026-08-03-qwen3-coder-30b-hardware-upgrade"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-10-06T06:44:08.168339Z",
       "queue_date": "2026-10-06",
@@ -997,17 +1009,6 @@
     {
       "run_at": "2026-07-11T03:52:23.346399Z",
       "queue_date": "2026-07-11",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
-    },
-    {
-      "run_at": "2026-07-10T04:34:22.206542Z",
-      "queue_date": "2026-07-10",
       "reviewed_count": 0,
       "auto_approved_count": 0,
       "pending_manual_review_count": 0,

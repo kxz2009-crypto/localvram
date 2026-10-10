@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-06T06:44:06.250176Z",
+  "updated_at": "2026-10-10T06:14:54.404994Z",
   "window_hours": 48,
   "max_library_age_days": 14,
   "strategy": "Prioritize new Ollama model families; use RTX 3090 benchmark recency as evidence, not as proof of model freshness.",
@@ -8,6 +8,45 @@
     "source": "runner /api/tags via runner-status.json and weekly-target-plan.json"
   },
   "items": [
+    {
+      "tag": "gpt-oss:20b",
+      "family": "gpt-oss",
+      "keyword": "gpt-oss:20b rtx 3090 ollama benchmark",
+      "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
+      "title": "gpt-oss:20b on RTX 3090: Ollama Benchmark, VRAM, and Setup",
+      "source": "new_family_benchmark",
+      "priority_score": 100,
+      "status": "measured",
+      "measured_at": "2026-04-29T05:39:58Z",
+      "tokens_per_second": 156.076,
+      "latency_ms": 1524.0,
+      "ollama_command": "ollama run gpt-oss:20b",
+      "source_url": "https://ollama.com/library/gpt-oss",
+      "ollama_updated_label": "15 hours ago",
+      "ollama_updated_days": 0,
+      "ollama_downloads": "13.6M",
+      "ollama_library_freshness": {
+        "status": "fresh",
+        "updated_label": "15 hours ago",
+        "updated_days": 0,
+        "downloads": "13.6M",
+        "source_url": "https://ollama.com/library/gpt-oss"
+      },
+      "local_inventory_status": {
+        "status": "downloaded",
+        "source": "benchmark_results",
+        "model_count": 50
+      },
+      "benchmark_status": {
+        "status": "measured",
+        "measured_at": "2026-04-29T05:39:58Z",
+        "tokens_per_second": 156.076,
+        "latency_ms": 1524.0
+      },
+      "traffic_priority": "publish_now",
+      "landing": "/en/models/gpt-oss-20b/",
+      "content_angle": "New model family with RTX 3090 evidence; publish while launch-search demand is warm."
+    },
     {
       "tag": "qwen3-vl:30b",
       "family": "qwen3-vl",

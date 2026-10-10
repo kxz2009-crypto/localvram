@@ -1,39 +1,61 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-10-06T06:44:08.233478Z",
+  "updated_at": "2026-10-10T06:14:56.554623Z",
   "last_run": {
-    "run_at": "2026-10-06T06:44:08.233478Z",
-    "queue_date": "2026-10-06",
-    "candidate_count": 2,
+    "run_at": "2026-10-10T06:14:56.554623Z",
+    "queue_date": "2026-10-10",
+    "candidate_count": 1,
     "min_publish": 0,
     "max_publish": 2,
     "published_count": 1,
     "fallback_generated_count": 0,
-    "skipped_count": 1,
+    "skipped_count": 0,
     "published": [
       {
-        "slug": "2026-10-06-qwen3-coder-30b-vram-fit",
-        "title": "qwen3-coder:30B RTX 3090 Local Benchmark VRAM Fit: Hardware Decision Matrix for Local LLM (2026)",
-        "topic_key": "qwen3-coder-30b-rtx-3090-local-benchmark-vram-fit",
-        "score": 216.0,
-        "source_draft": "content-queue/2026-10-06/02-2026-10-06-qwen3-coder-30b-vram-fit.md",
-        "out_file": "src/content/blog/2026-10-06-qwen3-coder-30b-vram-fit.md",
+        "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
+        "title": "gpt-oss:20B RTX 3090 Ollama Benchmark: VRAM Fit and Quantization Plan (2026)",
+        "topic_key": "gpt-oss-20b-rtx-3090-ollama-benchmark",
+        "score": 6000.0,
+        "source_draft": "content-queue/2026-10-10/01-model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
+        "out_file": "src/content/blog/model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
         "intent": "hardware",
-        "model_tag": "qwen3-coder:30b",
-        "model_key": "qwen3-coder-30b",
-        "traffic_priority": "fallback",
-        "ollama_updated_label": "",
-        "benchmark_measured_at": "2026-09-16T07:39:43Z"
+        "model_tag": "gpt-oss:20b",
+        "model_key": "gpt-oss-20b",
+        "traffic_priority": "publish_now",
+        "ollama_updated_label": "15 hours ago",
+        "benchmark_measured_at": "2026-04-29T05:39:58Z"
       }
     ],
-    "skipped": [
-      {
-        "draft": "content-queue/2026-10-06/01-q4-vs-q8-quality-loss-ollama-guide.md",
-        "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
-      }
-    ]
+    "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-10-10T06:14:56.554623Z",
+      "queue_date": "2026-10-10",
+      "candidate_count": 1,
+      "min_publish": 0,
+      "max_publish": 2,
+      "published_count": 1,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
+          "title": "gpt-oss:20B RTX 3090 Ollama Benchmark: VRAM Fit and Quantization Plan (2026)",
+          "topic_key": "gpt-oss-20b-rtx-3090-ollama-benchmark",
+          "score": 6000.0,
+          "source_draft": "content-queue/2026-10-10/01-model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
+          "out_file": "src/content/blog/model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
+          "intent": "hardware",
+          "model_tag": "gpt-oss:20b",
+          "model_key": "gpt-oss-20b",
+          "traffic_priority": "publish_now",
+          "ollama_updated_label": "15 hours ago",
+          "benchmark_measured_at": "2026-04-29T05:39:58Z"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-10-06T06:44:08.233478Z",
       "queue_date": "2026-10-06",
@@ -1406,28 +1428,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-11.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-07-10T04:34:22.279567Z",
-      "queue_date": "2026-07-10",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-07-10",
-          "title": "Today's Local LLM Pick: ministral-3:14b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-07-10-daily-local-llm-benchmark-snapshot-2026-07-10",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-10.md",
           "intent": "benchmark"
         }
       ],
