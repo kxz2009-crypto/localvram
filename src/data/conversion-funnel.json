@@ -1,83 +1,83 @@
 {
-  "generated_at": "2026-10-10T06:17:10.198444Z",
+  "generated_at": "2026-10-11T06:16:12.558014Z",
   "window_days": 30,
-  "window_start": "2026-09-10T06:17:10.198444Z",
-  "window_end": "2026-10-10T06:17:10.198444Z",
+  "window_start": "2026-09-11T06:16:12.558014Z",
+  "window_end": "2026-10-11T06:16:12.558014Z",
   "sources": {
     "search_console_file": "src/data/search-console-keywords.json",
     "affiliate_events_file": "src/data/affiliate-click-events.json",
     "search_console_window": {
-      "start_date": "2026-09-04",
-      "end_date": "2026-10-01",
+      "start_date": "2026-09-13",
+      "end_date": "2026-10-10",
       "days": 28
     },
-    "search_console_updated_at": "2026-10-01T09:03:57Z"
+    "search_console_updated_at": "2026-10-10T08:38:13Z"
   },
   "funnel": {
     "organic_search_clicks": 1,
     "decision_page_clicks": 1,
-    "affiliate_redirect_clicks": 326,
-    "cloud_redirect_clicks": 151,
-    "hardware_redirect_clicks": 175,
+    "affiliate_redirect_clicks": 329,
+    "cloud_redirect_clicks": 153,
+    "hardware_redirect_clicks": 176,
     "search_to_affiliate_pct": null,
     "search_to_cloud_pct": null,
     "affiliate_to_cloud_pct": null,
-    "cloud_share_of_redirects_pct": 46.32
+    "cloud_share_of_redirects_pct": 46.5
   },
   "breakdown": {
     "providers": [
       {
         "provider": "amazon",
-        "clicks": 175,
-        "share_pct": 53.68
+        "clicks": 176,
+        "share_pct": 53.5
       },
       {
         "provider": "runpod",
-        "clicks": 84,
-        "share_pct": 25.77
+        "clicks": 85,
+        "share_pct": 25.84
       },
       {
         "provider": "vast",
-        "clicks": 67,
-        "share_pct": 20.55
+        "clicks": 68,
+        "share_pct": 20.67
       }
     ],
     "routes": [
       {
         "route": "/go/runpod",
-        "clicks": 84,
-        "share_pct": 25.77
+        "clicks": 85,
+        "share_pct": 25.84
       },
       {
         "route": "/recommends/rtx-3090-24gb",
-        "clicks": 80,
-        "share_pct": 24.54
+        "clicks": 81,
+        "share_pct": 24.62
       },
       {
         "route": "/go/vast",
-        "clicks": 67,
-        "share_pct": 20.55
+        "clicks": 68,
+        "share_pct": 20.67
       },
       {
         "route": "/recommends/rtx-4090-24gb",
         "clicks": 35,
-        "share_pct": 10.74
+        "share_pct": 10.64
       },
       {
         "route": "/recommends/atx3-1000w-psu",
         "clicks": 30,
-        "share_pct": 9.2
+        "share_pct": 9.12
       },
       {
         "route": "/recommends/high-airflow-case",
         "clicks": 30,
-        "share_pct": 9.2
+        "share_pct": 9.12
       }
     ],
     "source_pages": [
       {
         "page": "unknown",
-        "clicks": 300
+        "clicks": 302
       },
       {
         "page": "/",
@@ -94,6 +94,10 @@
       {
         "page": "/en/affiliate/cloud-gpu/",
         "clicks": 2
+      },
+      {
+        "page": "/recommends/rtx-4090-24gb",
+        "clicks": 1
       },
       {
         "page": "/fr/tools/vram-calculator/",
@@ -127,6 +131,11 @@
         "share_pct": 100.0
       },
       {
+        "landing": "/ar/status/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/ar/models/deepseek-r1-70b-q8/",
         "clicks": 0,
         "share_pct": 0.0
@@ -137,12 +146,22 @@
         "share_pct": 0.0
       },
       {
-        "landing": "/ar/models/deepseek-v3-671b-q8/",
+        "landing": "/ar/models/qwen3-32b-q4/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
-        "landing": "/ar/models/llama2-70b-fp16/",
+        "landing": "/ar/models/gemma4-26b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/mistral-nemo-12b-q8/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/ar/models/gpt-oss-20b-q8/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -157,12 +176,27 @@
         "share_pct": 0.0
       },
       {
+        "landing": "/ar/models/qwen3-embedding-8b-q4/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/de/updates/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
+        "landing": "/de/hardware/verified-3090/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
         "landing": "/de/tools/vram-calculator/",
+        "clicks": 0,
+        "share_pct": 0.0
+      },
+      {
+        "landing": "/de/",
         "clicks": 0,
         "share_pct": 0.0
       },
@@ -177,58 +211,28 @@
         "share_pct": 0.0
       },
       {
-        "landing": "/de/hardware/verified-3090/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/de/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
         "landing": "/de/errors/cuda-out-of-memory/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
-        "landing": "/de/models/qwen3-coder-30b-q4/",
+        "landing": "/de/models/nemotron3-33b-fp16/",
         "clicks": 0,
         "share_pct": 0.0
       },
       {
-        "landing": "/de/models/qwen-4b-q8/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/blog/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/models/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/status/",
-        "clicks": 0,
-        "share_pct": 0.0
-      },
-      {
-        "landing": "/en/updates/",
+        "landing": "/de/blog/fix-ollama-cuda-out-of-memory/",
         "clicks": 0,
         "share_pct": 0.0
       }
     ]
   },
   "data_quality": {
-    "search_console_items": 238,
-    "affiliate_event_items_total": 469,
-    "affiliate_event_items_in_window": 326,
+    "search_console_items": 263,
+    "affiliate_event_items_total": 472,
+    "affiliate_event_items_in_window": 329,
     "has_affiliate_event_feed": true,
-    "unattributed_redirects": 300,
+    "unattributed_redirects": 302,
     "excluded_invalid_or_out_of_window_events": 143,
     "conversion_rate_status": "unavailable_no_session_attribution",
     "note": "Search Console query/page totals and redirect request counts are separate datasets with different windows. Requests are not unique people or orders; legacy events may include bots and checks. Conversion rates are unavailable without session attribution and provider order reconciliation."

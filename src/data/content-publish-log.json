@@ -1,34 +1,89 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-10-10T06:14:56.554623Z",
+  "updated_at": "2026-10-11T06:14:14.172510Z",
   "last_run": {
-    "run_at": "2026-10-10T06:14:56.554623Z",
-    "queue_date": "2026-10-10",
-    "candidate_count": 1,
+    "run_at": "2026-10-11T06:14:14.172510Z",
+    "queue_date": "2026-10-11",
+    "candidate_count": 2,
     "min_publish": 0,
     "max_publish": 2,
-    "published_count": 1,
+    "published_count": 2,
     "fallback_generated_count": 0,
     "skipped_count": 0,
     "published": [
       {
-        "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark",
-        "title": "gpt-oss:20B RTX 3090 Ollama Benchmark: VRAM Fit and Quantization Plan (2026)",
-        "topic_key": "gpt-oss-20b-rtx-3090-ollama-benchmark",
-        "score": 6000.0,
-        "source_draft": "content-queue/2026-10-10/01-model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
-        "out_file": "src/content/blog/model-gpt-oss-20b-rtx-3090-ollama-benchmark.md",
+        "slug": "2026-10-11-qwen2-5-14b-hardware-upgrade",
+        "title": "qwen2.5:14B RTX 3090 Local Benchmark Hardware Upgrade: Hardware Decision Matrix for Local LLM (2026)",
+        "topic_key": "qwen2-5-14b-rtx-3090-local-benchmark-hardware-upgrade",
+        "score": 216.0,
+        "source_draft": "content-queue/2026-10-11/02-2026-10-11-qwen2-5-14b-hardware-upgrade.md",
+        "out_file": "src/content/blog/2026-10-11-qwen2-5-14b-hardware-upgrade.md",
         "intent": "hardware",
-        "model_tag": "gpt-oss:20b",
-        "model_key": "gpt-oss-20b",
-        "traffic_priority": "publish_now",
-        "ollama_updated_label": "15 hours ago",
+        "model_tag": "qwen2.5:14b",
+        "model_key": "qwen2-5-14b",
+        "traffic_priority": "fallback",
+        "ollama_updated_label": "",
         "benchmark_measured_at": "2026-04-29T05:39:58Z"
+      },
+      {
+        "slug": "2026-10-11-qwen3-8b-vram-fit",
+        "title": "qwen3:8B RTX 3090 Local Benchmark VRAM Fit: GPU and VRAM Sizing Guide (2026)",
+        "topic_key": "qwen3-8b-rtx-3090-local-benchmark-vram-fit",
+        "score": 216.0,
+        "source_draft": "content-queue/2026-10-11/01-2026-10-11-qwen3-8b-vram-fit.md",
+        "out_file": "src/content/blog/2026-10-11-qwen3-8b-vram-fit.md",
+        "intent": "hardware",
+        "model_tag": "qwen3:8b",
+        "model_key": "qwen3-8b",
+        "traffic_priority": "fallback",
+        "ollama_updated_label": "",
+        "benchmark_measured_at": "2026-10-07T08:35:40Z"
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-10-11T06:14:14.172510Z",
+      "queue_date": "2026-10-11",
+      "candidate_count": 2,
+      "min_publish": 0,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "2026-10-11-qwen2-5-14b-hardware-upgrade",
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Hardware Upgrade: Hardware Decision Matrix for Local LLM (2026)",
+          "topic_key": "qwen2-5-14b-rtx-3090-local-benchmark-hardware-upgrade",
+          "score": 216.0,
+          "source_draft": "content-queue/2026-10-11/02-2026-10-11-qwen2-5-14b-hardware-upgrade.md",
+          "out_file": "src/content/blog/2026-10-11-qwen2-5-14b-hardware-upgrade.md",
+          "intent": "hardware",
+          "model_tag": "qwen2.5:14b",
+          "model_key": "qwen2-5-14b",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-04-29T05:39:58Z"
+        },
+        {
+          "slug": "2026-10-11-qwen3-8b-vram-fit",
+          "title": "qwen3:8B RTX 3090 Local Benchmark VRAM Fit: GPU and VRAM Sizing Guide (2026)",
+          "topic_key": "qwen3-8b-rtx-3090-local-benchmark-vram-fit",
+          "score": 216.0,
+          "source_draft": "content-queue/2026-10-11/01-2026-10-11-qwen3-8b-vram-fit.md",
+          "out_file": "src/content/blog/2026-10-11-qwen3-8b-vram-fit.md",
+          "intent": "hardware",
+          "model_tag": "qwen3:8b",
+          "model_key": "qwen3-8b",
+          "traffic_priority": "fallback",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "2026-10-07T08:35:40Z"
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-10-10T06:14:56.554623Z",
       "queue_date": "2026-10-10",
@@ -1406,28 +1461,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-12.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-07-11T03:52:23.415751Z",
-      "queue_date": "2026-07-11",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-07-11",
-          "title": "Today's Local LLM Pick: deepseek-r1:14b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-07-11-daily-local-llm-benchmark-snapshot-2026-07-11",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-11.md",
           "intent": "benchmark"
         }
       ],
