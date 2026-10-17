@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-11T06:14:14Z",
+  "updated_at": "2026-10-17T04:51:53Z",
   "wave": "blog-copy-wave1-top5",
   "slugs": {
     "best-24gb-vram-models-2026": {
@@ -13037,6 +13037,124 @@
         "id": {
           "title": "qwen3:8B RTX 3090 Local Benchmark VRAM Fit: GPU and VRAM Sizing Guide (2026)",
           "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark vram fit\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is wheth",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "ja-tools-vram-calculator": {
+      "en": {
+        "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+        "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"vramcalculator\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether Vramcalculator is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "ko-models-qwen3-14b-q5": {
+      "en": {
+        "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+        "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
           "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
         }
       }

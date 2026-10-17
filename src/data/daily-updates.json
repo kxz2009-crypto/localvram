@@ -1,6 +1,56 @@
 {
   "items": [
     {
+      "date": "2026-10-17",
+      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
+      "candidates": [
+        {
+          "date": "2026-10-17",
+          "slug": "ja-tools-vram-calculator",
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "keyword": "vramcalculator",
+          "score": 210,
+          "source": "opportunity",
+          "landing": "",
+          "model_tag": "",
+          "model_key": "",
+          "traffic_priority": "",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "",
+          "content_angle": "setup-playbook",
+          "draft_path": "content-queue/2026-10-17/01-ja-tools-vram-calculator.md"
+        },
+        {
+          "date": "2026-10-17",
+          "slug": "ko-models-qwen3-14b-q5",
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "keyword": "qwen3 14b vram",
+          "score": 180,
+          "source": "opportunity",
+          "landing": "",
+          "model_tag": "",
+          "model_key": "",
+          "traffic_priority": "",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": "",
+          "content_angle": "hardware-upgrade",
+          "draft_path": "content-queue/2026-10-17/02-ko-models-qwen3-14b-q5.md"
+        }
+      ],
+      "published_posts": [
+        {
+          "slug": "ja-tools-vram-calculator",
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)"
+        },
+        {
+          "slug": "ko-models-qwen3-14b-q5",
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)"
+        }
+      ],
+      "published_count": 2,
+      "publish_run_at": "2026-10-17T04:51:53.534908Z"
+    },
+    {
       "date": "2026-10-11",
       "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
       "candidates": [
@@ -551,19 +601,6 @@
       ],
       "published_count": 1,
       "publish_run_at": "2026-08-27T10:09:38.391947Z"
-    },
-    {
-      "date": "2026-08-26",
-      "summary": "Agent ranked SEO opportunities, filtered repeated topics, and generated review-ready content drafts.",
-      "candidates": [],
-      "published_posts": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-08-26",
-          "title": "Today's Local LLM Pick: qwen3.6:35b on RTX 3090 (2026)"
-        }
-      ],
-      "published_count": 1,
-      "publish_run_at": "2026-08-26T02:09:07.077105Z"
     }
   ]
 }

@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-10-11T06:14:14.099413Z",
+  "updated_at": "2026-10-17T04:51:53.445185Z",
   "last_run": {
-    "run_at": "2026-10-11T06:14:14.099413Z",
-    "queue_date": "2026-10-11",
+    "run_at": "2026-10-17T04:51:53.445185Z",
+    "queue_date": "2026-10-17",
     "reviewed_count": 2,
     "auto_approved_count": 2,
     "pending_manual_review_count": 0,
@@ -12,36 +12,76 @@
     "risk_flag_counts": {},
     "items": [
       {
-        "draft": "content-queue/2026-10-11/01-2026-10-11-qwen3-8b-vram-fit.md",
-        "slug": "2026-10-11-qwen3-8b-vram-fit",
-        "score": 216.0,
+        "draft": "content-queue/2026-10-17/01-ja-tools-vram-calculator.md",
+        "slug": "ja-tools-vram-calculator",
+        "score": 210.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 634,
+        "word_count": 618,
         "risk_flags": [],
         "similarity": {
-          "score": 0.8759,
-          "topic_score": 0.4,
-          "slug": "2026-09-04-gpt-oss-20b-vram-fit"
+          "score": 0.8562,
+          "topic_score": 0.3846,
+          "slug": "2026-10-11-qwen3-8b-vram-fit"
         }
       },
       {
-        "draft": "content-queue/2026-10-11/02-2026-10-11-qwen2-5-14b-hardware-upgrade.md",
-        "slug": "2026-10-11-qwen2-5-14b-hardware-upgrade",
-        "score": 216.0,
+        "draft": "content-queue/2026-10-17/02-ko-models-qwen3-14b-q5.md",
+        "slug": "ko-models-qwen3-14b-q5",
+        "score": 180.0,
         "status_before": "draft",
         "status_after": "approved_auto",
-        "word_count": 641,
+        "word_count": 624,
         "risk_flags": [],
         "similarity": {
-          "score": 0.9007,
-          "topic_score": 0.2,
-          "slug": "model-gpt-oss-20b-rtx-3090-ollama-benchmark"
+          "score": 0.8896,
+          "topic_score": 0.1176,
+          "slug": "2026-10-11-qwen2-5-14b-hardware-upgrade"
         }
       }
     ]
   },
   "history": [
+    {
+      "run_at": "2026-10-17T04:51:53.445185Z",
+      "queue_date": "2026-10-17",
+      "reviewed_count": 2,
+      "auto_approved_count": 2,
+      "pending_manual_review_count": 0,
+      "rejected_manual_count": 0,
+      "high_risk_count": 0,
+      "risk_flag_counts": {},
+      "items": [
+        {
+          "draft": "content-queue/2026-10-17/01-ja-tools-vram-calculator.md",
+          "slug": "ja-tools-vram-calculator",
+          "score": 210.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 618,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8562,
+            "topic_score": 0.3846,
+            "slug": "2026-10-11-qwen3-8b-vram-fit"
+          }
+        },
+        {
+          "draft": "content-queue/2026-10-17/02-ko-models-qwen3-14b-q5.md",
+          "slug": "ko-models-qwen3-14b-q5",
+          "score": 180.0,
+          "status_before": "draft",
+          "status_after": "approved_auto",
+          "word_count": 624,
+          "risk_flags": [],
+          "similarity": {
+            "score": 0.8896,
+            "topic_score": 0.1176,
+            "slug": "2026-10-11-qwen2-5-14b-hardware-upgrade"
+          }
+        }
+      ]
+    },
     {
       "run_at": "2026-10-11T06:14:14.099413Z",
       "queue_date": "2026-10-11",
@@ -1041,17 +1081,6 @@
     {
       "run_at": "2026-07-13T04:09:03.243997Z",
       "queue_date": "2026-07-13",
-      "reviewed_count": 0,
-      "auto_approved_count": 0,
-      "pending_manual_review_count": 0,
-      "rejected_manual_count": 0,
-      "high_risk_count": 0,
-      "risk_flag_counts": {},
-      "items": []
-    },
-    {
-      "run_at": "2026-07-12T04:06:52.020738Z",
-      "queue_date": "2026-07-12",
       "reviewed_count": 0,
       "auto_approved_count": 0,
       "pending_manual_review_count": 0,

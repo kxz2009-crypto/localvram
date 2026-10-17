@@ -1,9 +1,9 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-10-11T06:14:14.172510Z",
+  "updated_at": "2026-10-17T04:51:53.534908Z",
   "last_run": {
-    "run_at": "2026-10-11T06:14:14.172510Z",
-    "queue_date": "2026-10-11",
+    "run_at": "2026-10-17T04:51:53.534908Z",
+    "queue_date": "2026-10-17",
     "candidate_count": 2,
     "min_publish": 0,
     "max_publish": 2,
@@ -12,37 +12,78 @@
     "skipped_count": 0,
     "published": [
       {
-        "slug": "2026-10-11-qwen2-5-14b-hardware-upgrade",
-        "title": "qwen2.5:14B RTX 3090 Local Benchmark Hardware Upgrade: Hardware Decision Matrix for Local LLM (2026)",
-        "topic_key": "qwen2-5-14b-rtx-3090-local-benchmark-hardware-upgrade",
-        "score": 216.0,
-        "source_draft": "content-queue/2026-10-11/02-2026-10-11-qwen2-5-14b-hardware-upgrade.md",
-        "out_file": "src/content/blog/2026-10-11-qwen2-5-14b-hardware-upgrade.md",
+        "slug": "ja-tools-vram-calculator",
+        "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+        "topic_key": "vramcalculator",
+        "score": 210.0,
+        "source_draft": "content-queue/2026-10-17/01-ja-tools-vram-calculator.md",
+        "out_file": "src/content/blog/ja-tools-vram-calculator.md",
         "intent": "hardware",
-        "model_tag": "qwen2.5:14b",
-        "model_key": "qwen2-5-14b",
-        "traffic_priority": "fallback",
+        "model_tag": "",
+        "model_key": "",
+        "traffic_priority": "",
         "ollama_updated_label": "",
-        "benchmark_measured_at": "2026-04-29T05:39:58Z"
+        "benchmark_measured_at": ""
       },
       {
-        "slug": "2026-10-11-qwen3-8b-vram-fit",
-        "title": "qwen3:8B RTX 3090 Local Benchmark VRAM Fit: GPU and VRAM Sizing Guide (2026)",
-        "topic_key": "qwen3-8b-rtx-3090-local-benchmark-vram-fit",
-        "score": 216.0,
-        "source_draft": "content-queue/2026-10-11/01-2026-10-11-qwen3-8b-vram-fit.md",
-        "out_file": "src/content/blog/2026-10-11-qwen3-8b-vram-fit.md",
+        "slug": "ko-models-qwen3-14b-q5",
+        "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+        "topic_key": "qwen3-14b-vram",
+        "score": 180.0,
+        "source_draft": "content-queue/2026-10-17/02-ko-models-qwen3-14b-q5.md",
+        "out_file": "src/content/blog/ko-models-qwen3-14b-q5.md",
         "intent": "hardware",
-        "model_tag": "qwen3:8b",
-        "model_key": "qwen3-8b",
-        "traffic_priority": "fallback",
+        "model_tag": "",
+        "model_key": "",
+        "traffic_priority": "",
         "ollama_updated_label": "",
-        "benchmark_measured_at": "2026-10-07T08:35:40Z"
+        "benchmark_measured_at": ""
       }
     ],
     "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-10-17T04:51:53.534908Z",
+      "queue_date": "2026-10-17",
+      "candidate_count": 2,
+      "min_publish": 0,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "ja-tools-vram-calculator",
+          "title": "Vramcalculator: GPU and VRAM Sizing Guide (2026)",
+          "topic_key": "vramcalculator",
+          "score": 210.0,
+          "source_draft": "content-queue/2026-10-17/01-ja-tools-vram-calculator.md",
+          "out_file": "src/content/blog/ja-tools-vram-calculator.md",
+          "intent": "hardware",
+          "model_tag": "",
+          "model_key": "",
+          "traffic_priority": "",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": ""
+        },
+        {
+          "slug": "ko-models-qwen3-14b-q5",
+          "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
+          "topic_key": "qwen3-14b-vram",
+          "score": 180.0,
+          "source_draft": "content-queue/2026-10-17/02-ko-models-qwen3-14b-q5.md",
+          "out_file": "src/content/blog/ko-models-qwen3-14b-q5.md",
+          "intent": "hardware",
+          "model_tag": "",
+          "model_key": "",
+          "traffic_priority": "",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": ""
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-10-11T06:14:14.172510Z",
       "queue_date": "2026-10-11",
@@ -1439,28 +1480,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-13.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-07-12T04:06:52.102216Z",
-      "queue_date": "2026-07-12",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-07-12",
-          "title": "Today's Local LLM Pick: mistral-small:22b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-07-12-daily-local-llm-benchmark-snapshot-2026-07-12",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-12.md",
           "intent": "benchmark"
         }
       ],
