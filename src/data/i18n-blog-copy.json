@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-17T04:51:53Z",
+  "updated_at": "2026-11-11T06:57:37Z",
   "wave": "blog-copy-wave1-top5",
   "slugs": {
     "best-24gb-vram-models-2026": {
@@ -13155,6 +13155,124 @@
         "id": {
           "title": "qwen3 14B VRAM: VRAM Fit and Quantization Plan (2026)",
           "description": "This page targets \\\"qwen3 14b vram\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether qwen3 14B VRAM is worth t",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "2026-11-11-qwen2-5-14b-setup-playbook": {
+      "en": {
+        "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+        "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen2.5:14b rtx 3090 local benchmark setup playbook\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "2026-11-11-qwen3-8b-hardware-upgrade": {
+      "en": {
+        "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+        "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
+          "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
           "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
         }
       }
