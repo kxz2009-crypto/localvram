@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-07T08:35:38Z",
+  "generated_at": "2026-11-11T09:17:55Z",
   "endpoint": "http://127.0.0.1:11435",
   "base_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "base_targets_raw_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96",
   "resolved_targets_csv": "qwen3=128,deepseek-r1=128,qwen2.5=128,qwen3-coder=96,qwen3.5=96,qwen3.6=96,llama3.3=64,qwen2.5-coder=96,ministral-3=128,gpt-oss=96,mistral-small=96,gemma3=96,llama4=64,qwq=96,gemma4=128",
-  "local_model_count": 50,
+  "local_model_count": 46,
   "local_models_sample": [
     "bge-m3:latest",
     "deepseek-ocr:3b-bf16",
@@ -31,13 +31,13 @@
     "nemotron3:33b",
     "olmo-3.1:32b-instruct",
     "olmo-3.1:32b-think",
-    "qwen2.5-coder:32b",
-    "qwen3-coder-next:latest",
     "qwen3-coder:30b",
     "qwen3-embedding:8b",
-    "qwen3-vl:30b"
+    "qwen3-vl:30b",
+    "qwen3-vl:32b",
+    "qwen3-vl:32b-instruct-q8_0"
   ],
-  "local_family_count": 34,
+  "local_family_count": 30,
   "local_families": [
     "bge-m3",
     "deepseek-ocr",
@@ -59,19 +59,15 @@
     "nemotron-3-nano",
     "nemotron3",
     "olmo-3.1",
-    "qwen2.5-coder",
     "qwen3",
     "qwen3-coder",
-    "qwen3-coder-next",
     "qwen3-embedding",
     "qwen3-vl",
     "qwen3.5",
     "qwen3.6",
     "qwen3.6-hermes",
     "qwen3.8",
-    "qwen36-moe",
     "qwen36-moe-agent",
-    "qwq",
     "translategemma"
   ],
   "retired_policy_file": "/mnt/e/github-actions/localvram-01/_work/localvram/localvram/src/data/retired-models.json",
@@ -98,9 +94,7 @@
     "glm-5.2",
     "kimi-k2.7-code",
     "minimax-m2.5",
-    "qwen3-coder-next",
     "qwen3.6-hermes",
-    "qwen36-moe",
     "qwen36-moe-agent"
   ],
   "added_targets": [

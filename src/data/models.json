@@ -1,6 +1,6 @@
 {
   "version": "2026.02.24.ollama-popular",
-  "count": 601,
+  "count": 605,
   "models": [
     {
       "id": "llama31-8b-q4",
@@ -4773,6 +4773,38 @@
     {
       "id": "qwen3-embedding-8b-fp16",
       "name": "Qwen3 Embedding 8B FP16",
+      "quantizations": [
+        "FP16"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-q4",
+      "name": "Qwen3 Vl 32B Q4",
+      "quantizations": [
+        "Q4"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-q5",
+      "name": "Qwen3 Vl 32B Q5",
+      "quantizations": [
+        "Q5"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-q8",
+      "name": "Qwen3 Vl 32B Q8",
+      "quantizations": [
+        "Q8"
+      ],
+      "verified": false
+    },
+    {
+      "id": "qwen3-vl-32b-fp16",
+      "name": "Qwen3 Vl 32B FP16",
       "quantizations": [
         "FP16"
       ],

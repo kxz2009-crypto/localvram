@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-07T08:35:38Z",
+  "updated_at": "2026-11-11T09:17:55Z",
   "endpoint": "http://127.0.0.1:11435",
   "required_targets": [
     "qwen3",
@@ -67,10 +67,10 @@
   },
   "checks": {
     "port_listeners": [
-      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=1251757,fd=4))"
+      "LISTEN 0      4096       127.0.0.1:11435      0.0.0.0:*    users:((\"ollama\",pid=86596,fd=4))"
     ],
     "ps_ollama": [
-      "gao20    1251757       1  0 03:47 ?        00:00:00 /usr/local/bin/ollama serve"
+      "gao20      86596       1  0 03:29 ?        00:00:00 /usr/local/bin/ollama serve"
     ],
     "single_instance_guard": {
       "endpoint_is_loopback": true,
@@ -85,7 +85,7 @@
     },
     "SYSTEMD_OLLAMA_STATUS": {
       "exit": 0,
-      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; disabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf\n     Active: active (running) since Wed 2026-10-07 03:42:41 EDT; 52min ago\n   Main PID: 1251757 (ollama)\n      Tasks: 17 (limit: 86826)\n     Memory: 19.7M (peak: 894.9M swap: 5.3M swap peak: 5.3M)\n        CPU: 2.047s\n     CGroup: /system.slice/ollama.service\n             └─1251757 /usr/local/bin/ollama serve\n\nOct 07 03:42:50 Vernon ollama[1251757]: [GIN] 2026/10/07 - 03:42:50 | 200 |  315.984998ms |       127.0.0.1 | GET      \"/api/tags\"\nOct 07 03:42:51 Vernon ollama[1251757]: time=2026-10-07T03:42:51.270-04:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nOct 07 03:42:51 Vernon ollama[1251757]: [GIN] 2026/10/07 - 03:42:51 | 200 |  309.957536ms |       127.0.0.1 | GET      \"/api/tags\"\nOct 07 03:42:51 Vernon ollama[1251757]: [GIN] 2026/10/07 - 03:42:51 | 200 |      23.983µs |       127.0.0.1 | GET      \"/api/version\"\nOct 07 03:42:51 Vernon ollama[1251757]: [GIN] 2026/10/07 - 03:42:51 | 200 |      25.491µs |       127.0.0.1 | GET      \"/api/version\"\nOct 07 03:42:52 Vernon ollama[1251757]: time=2026-10-07T03:42:52.184-04:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nOct 07 03:42:52 Vernon ollama[1251757]: [GIN] 2026/10/07 - 03:42:52 | 200 |  312.550317ms |       127.0.0.1 | GET      \"/api/tags\"\nOct 07 04:35:38 Vernon ollama[1251757]: time=2026-10-07T04:35:38.201-04:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nOct 07 04:35:38 Vernon ollama[1251757]: [GIN] 2026/10/07 - 04:35:38 | 200 |  330.893351ms |       127.0.0.1 | GET      \"/api/tags\"\nOct 07 04:35:38 Vernon ollama[1251757]: [GIN] 2026/10/07 - 04:35:38 | 200 |     525.168µs |       127.0.0.1 | GET      \"/api/version\"",
+      "stdout": "● ollama.service - Ollama Service\n     Loaded: loaded (/etc/systemd/system/ollama.service; disabled; preset: enabled)\n    Drop-In: /etc/systemd/system/ollama.service.d\n             └─override.conf, zz-run-as-gao20.conf, zzzz-pinned-startup.conf\n     Active: active (running) since Wed 2026-11-11 03:25:37 EST; 52min ago\n   Main PID: 86596 (ollama)\n      Tasks: 17 (limit: 86826)\n     Memory: 20.3M (peak: 908.7M swap: 5.1M swap peak: 5.1M)\n        CPU: 1.948s\n     CGroup: /system.slice/ollama.service\n             └─86596 /usr/local/bin/ollama serve\n\nNov 11 03:25:45 Vernon ollama[86596]: [GIN] 2026/11/11 - 03:25:45 | 200 |  298.243665ms |       127.0.0.1 | GET      \"/api/tags\"\nNov 11 03:25:46 Vernon ollama[86596]: time=2026-11-11T03:25:46.397-05:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nNov 11 03:25:46 Vernon ollama[86596]: [GIN] 2026/11/11 - 03:25:46 | 200 |  297.290386ms |       127.0.0.1 | GET      \"/api/tags\"\nNov 11 03:25:46 Vernon ollama[86596]: [GIN] 2026/11/11 - 03:25:46 | 200 |      27.875µs |       127.0.0.1 | GET      \"/api/version\"\nNov 11 03:25:47 Vernon ollama[86596]: [GIN] 2026/11/11 - 03:25:47 | 200 |      30.706µs |       127.0.0.1 | GET      \"/api/version\"\nNov 11 03:25:47 Vernon ollama[86596]: time=2026-11-11T03:25:47.311-05:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nNov 11 03:25:47 Vernon ollama[86596]: [GIN] 2026/11/11 - 03:25:47 | 200 |  303.171724ms |       127.0.0.1 | GET      \"/api/tags\"\nNov 11 04:17:55 Vernon ollama[86596]: time=2026-11-11T04:17:55.355-05:00 level=WARN source=model_list_cache.go:202 msg=\"failed to refresh model list cache\" model=registry.ollama.ai/library/llama3.3:latest error=\"open /mnt/d/Ollama/blobs/sha256-c7091aa45e9be6c15e1e5c8d5489d47f18183bf5077b3d3697924e1d18ad1b2a: no such file or directory\"\nNov 11 04:17:55 Vernon ollama[86596]: [GIN] 2026/11/11 - 04:17:55 | 200 |  330.757919ms |       127.0.0.1 | GET      \"/api/tags\"\nNov 11 04:17:55 Vernon ollama[86596]: [GIN] 2026/11/11 - 04:17:55 | 200 |     512.299µs |       127.0.0.1 | GET      \"/api/version\"",
       "stderr": ""
     },
     "SYSTEMD_RUNNER_UNITS": {
@@ -99,7 +99,7 @@
       "version": "0.33.2"
     },
     "tags": {
-      "model_count": 50,
+      "model_count": 46,
       "sample": [
         "bge-m3:latest",
         "deepseek-ocr:3b-bf16",
@@ -125,21 +125,19 @@
     }
   },
   "summary": {
-    "model_count": 50,
+    "model_count": 46,
     "required_targets_count": 15,
-    "required_targets_runnable_count": 12,
+    "required_targets_runnable_count": 10,
     "required_targets_runnable": [
       "qwen3",
       "deepseek-r1",
       "qwen3-coder",
       "qwen3.5",
       "qwen3.6",
-      "qwen2.5-coder",
       "ministral-3",
       "mistral-small",
       "gemma3",
       "llama4",
-      "qwq",
       "gemma4"
     ],
     "failure_class": "none",
