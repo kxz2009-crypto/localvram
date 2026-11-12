@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-11T06:57:37Z",
+  "updated_at": "2026-11-12T07:33:51Z",
   "wave": "blog-copy-wave1-top5",
   "slugs": {
     "best-24gb-vram-models-2026": {
@@ -13273,6 +13273,124 @@
         "id": {
           "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
           "description": "This page targets \\\"qwen3:8b rtx 3090 local benchmark hardware upgrade\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090": {
+      "en": {
+        "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+        "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answ",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        }
+      }
+    },
+    "model-qwen3-vl-32b-vram-requirements-rtx-3090": {
+      "en": {
+        "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+        "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+        "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+      },
+      "locales": {
+        "es": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "pt": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "fr": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "de": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ru": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ja": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ko": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "ar": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "hi": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
+          "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
+        },
+        "id": {
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "description": "This page targets \\\"qwen3-vl:32b vram requirements rtx 3090\\\" for readers who need a concrete local-vs-cloud decision, not a generic model announcement. The useful answer is whether",
           "cta_line": "Start with a stable local baseline, then burst to cloud only for peak traffic."
         }
       }

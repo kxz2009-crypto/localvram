@@ -1,53 +1,89 @@
 {
   "version": "2026.02.26",
-  "updated_at": "2026-11-11T06:57:37.552730Z",
+  "updated_at": "2026-11-12T07:33:51.306501Z",
   "last_run": {
-    "run_at": "2026-11-11T06:57:37.552730Z",
-    "queue_date": "2026-11-11",
-    "candidate_count": 3,
+    "run_at": "2026-11-12T07:33:51.306501Z",
+    "queue_date": "2026-11-12",
+    "candidate_count": 2,
     "min_publish": 0,
     "max_publish": 2,
     "published_count": 2,
     "fallback_generated_count": 0,
-    "skipped_count": 1,
+    "skipped_count": 0,
     "published": [
       {
-        "slug": "2026-11-11-qwen2-5-14b-setup-playbook",
-        "title": "qwen2.5:14B RTX 3090 Local Benchmark Setup Playbook: Practical GPU Selection for Stable Local Inference (2026)",
-        "topic_key": "qwen2-5-14b-rtx-3090-local-benchmark-setup-playbook",
-        "score": 216.0,
-        "source_draft": "content-queue/2026-11-11/03-2026-11-11-qwen2-5-14b-setup-playbook.md",
-        "out_file": "src/content/blog/2026-11-11-qwen2-5-14b-setup-playbook.md",
+        "slug": "model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090",
+        "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+        "topic_key": "qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090",
+        "score": 3400.0,
+        "source_draft": "content-queue/2026-11-12/02-model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090.md",
+        "out_file": "src/content/blog/model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090.md",
         "intent": "hardware",
-        "model_tag": "qwen2.5:14b",
-        "model_key": "qwen2-5-14b",
-        "traffic_priority": "fallback",
+        "model_tag": "qwen3-vl:32b-instruct-q8_0",
+        "model_key": "qwen3-vl-32b-instruct-q8-0",
+        "traffic_priority": "benchmark_then_publish",
         "ollama_updated_label": "",
-        "benchmark_measured_at": "2026-04-29T05:39:58Z"
+        "benchmark_measured_at": ""
       },
       {
-        "slug": "2026-11-11-qwen3-8b-hardware-upgrade",
-        "title": "qwen3:8B RTX 3090 Local Benchmark Hardware Upgrade: VRAM Fit and Quantization Plan (2026)",
-        "topic_key": "qwen3-8b-rtx-3090-local-benchmark-hardware-upgrade",
-        "score": 216.0,
-        "source_draft": "content-queue/2026-11-11/02-2026-11-11-qwen3-8b-hardware-upgrade.md",
-        "out_file": "src/content/blog/2026-11-11-qwen3-8b-hardware-upgrade.md",
+        "slug": "model-qwen3-vl-32b-vram-requirements-rtx-3090",
+        "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+        "topic_key": "qwen3-vl-32b-vram-requirements-rtx-3090",
+        "score": 3400.0,
+        "source_draft": "content-queue/2026-11-12/01-model-qwen3-vl-32b-vram-requirements-rtx-3090.md",
+        "out_file": "src/content/blog/model-qwen3-vl-32b-vram-requirements-rtx-3090.md",
         "intent": "hardware",
-        "model_tag": "qwen3:8b",
-        "model_key": "qwen3-8b",
-        "traffic_priority": "fallback",
+        "model_tag": "qwen3-vl:32b",
+        "model_key": "qwen3-vl-32b",
+        "traffic_priority": "benchmark_then_publish",
         "ollama_updated_label": "",
-        "benchmark_measured_at": "2026-10-07T08:35:40Z"
+        "benchmark_measured_at": ""
       }
     ],
-    "skipped": [
-      {
-        "draft": "content-queue/2026-11-11/01-q4-vs-q8-quality-loss-ollama-guide.md",
-        "reason": "similar_slug:q4-vs-q8-quality-loss-ollama"
-      }
-    ]
+    "skipped": []
   },
   "history": [
+    {
+      "run_at": "2026-11-12T07:33:51.306501Z",
+      "queue_date": "2026-11-12",
+      "candidate_count": 2,
+      "min_publish": 0,
+      "max_publish": 2,
+      "published_count": 2,
+      "fallback_generated_count": 0,
+      "skipped_count": 0,
+      "published": [
+        {
+          "slug": "model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090",
+          "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+          "topic_key": "qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090",
+          "score": 3400.0,
+          "source_draft": "content-queue/2026-11-12/02-model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090.md",
+          "out_file": "src/content/blog/model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090.md",
+          "intent": "hardware",
+          "model_tag": "qwen3-vl:32b-instruct-q8_0",
+          "model_key": "qwen3-vl-32b-instruct-q8-0",
+          "traffic_priority": "benchmark_then_publish",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": ""
+        },
+        {
+          "slug": "model-qwen3-vl-32b-vram-requirements-rtx-3090",
+          "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+          "topic_key": "qwen3-vl-32b-vram-requirements-rtx-3090",
+          "score": 3400.0,
+          "source_draft": "content-queue/2026-11-12/01-model-qwen3-vl-32b-vram-requirements-rtx-3090.md",
+          "out_file": "src/content/blog/model-qwen3-vl-32b-vram-requirements-rtx-3090.md",
+          "intent": "hardware",
+          "model_tag": "qwen3-vl:32b",
+          "model_key": "qwen3-vl-32b",
+          "traffic_priority": "benchmark_then_publish",
+          "ollama_updated_label": "",
+          "benchmark_measured_at": ""
+        }
+      ],
+      "skipped": []
+    },
     {
       "run_at": "2026-11-11T06:57:37.552730Z",
       "queue_date": "2026-11-11",
@@ -1487,28 +1523,6 @@
           "score": 120.0,
           "source_draft": "system:fallback-daily-generator",
           "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-15.md",
-          "intent": "benchmark"
-        }
-      ],
-      "skipped": []
-    },
-    {
-      "run_at": "2026-07-14T03:44:25.635688Z",
-      "queue_date": "2026-07-14",
-      "candidate_count": 0,
-      "min_publish": 1,
-      "max_publish": 2,
-      "published_count": 1,
-      "fallback_generated_count": 1,
-      "skipped_count": 0,
-      "published": [
-        {
-          "slug": "daily-local-llm-benchmark-snapshot-2026-07-14",
-          "title": "Today's Local LLM Pick: qwen3.6:35b on RTX 3090 (2026)",
-          "topic_key": "daily-benchmark-fallback-2026-07-14-daily-local-llm-benchmark-snapshot-2026-07-14",
-          "score": 120.0,
-          "source_draft": "system:fallback-daily-generator",
-          "out_file": "src/content/blog/daily-local-llm-benchmark-snapshot-2026-07-14.md",
           "intent": "benchmark"
         }
       ],

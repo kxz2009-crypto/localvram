@@ -1,6 +1,38 @@
 {
-  "updated_at": "2026-11-11T00:00:00Z",
+  "updated_at": "2026-11-12T00:00:00Z",
   "items": [
+    {
+      "date": "2026-11-12",
+      "slug": "model-qwen3-vl-32b-vram-requirements-rtx-3090",
+      "title": "qwen3-vl:32B VRAM Requirements RTX 3090: Practical GPU Selection for Stable Local Inference (2026)",
+      "keyword": "qwen3-vl:32b vram requirements rtx 3090",
+      "score": 3400,
+      "source": "new_model_watchlist",
+      "landing": "/en/models/",
+      "model_tag": "qwen3-vl:32b",
+      "model_key": "qwen3-vl-32b",
+      "traffic_priority": "benchmark_then_publish",
+      "ollama_updated_label": "",
+      "benchmark_measured_at": "",
+      "content_angle": "setup-playbook",
+      "draft_path": "content-queue/2026-11-12/01-model-qwen3-vl-32b-vram-requirements-rtx-3090.md"
+    },
+    {
+      "date": "2026-11-12",
+      "slug": "model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090",
+      "title": "qwen3-vl:32B-instruct-q8 0 VRAM Requirements RTX 3090: GPU and VRAM Sizing Guide (2026)",
+      "keyword": "qwen3-vl:32b-instruct-q8_0 vram requirements rtx 3090",
+      "score": 3400,
+      "source": "new_model_watchlist",
+      "landing": "/en/models/",
+      "model_tag": "qwen3-vl:32b-instruct-q8_0",
+      "model_key": "qwen3-vl-32b-instruct-q8-0",
+      "traffic_priority": "benchmark_then_publish",
+      "ollama_updated_label": "",
+      "benchmark_measured_at": "",
+      "content_angle": "setup-playbook",
+      "draft_path": "content-queue/2026-11-12/02-model-qwen3-vl-32b-instruct-q8-0-vram-requirements-rtx-3090.md"
+    },
     {
       "date": "2026-11-11",
       "slug": "q4-vs-q8-quality-loss-ollama-guide",
