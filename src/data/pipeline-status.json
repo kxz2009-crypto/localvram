@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-23T08:02:14Z",
+  "updated_at": "2026-11-24T10:18:17Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
@@ -30,18 +30,31 @@
     "daily_content": {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
-      "run_id": "45135268484",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/45135268484",
+      "run_id": "45373281851",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/45373281851",
       "status": "completed",
       "conclusion": "failure",
       "event": "schedule",
-      "head_sha": "24370889f85272d64995dfb83eb5071c288deebf",
+      "head_sha": "39df4713e8988e280a01737e6d77132c38bebe08",
       "failure_class": "daily_content_failed",
       "failure_detail": "quality-gate.py failed",
-      "updated_at": "2026-11-23T08:02:14Z"
+      "updated_at": "2026-11-24T10:18:17Z"
     }
   },
   "history": [
+    {
+      "workflow_key": "daily_content",
+      "workflow_name": "Daily Content Agent",
+      "run_id": "45373281851",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/45373281851",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "schedule",
+      "head_sha": "39df4713e8988e280a01737e6d77132c38bebe08",
+      "failure_class": "daily_content_failed",
+      "failure_detail": "quality-gate.py failed",
+      "updated_at": "2026-11-24T10:18:17Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
@@ -808,19 +821,6 @@
       "failure_class": "daily_content_failed",
       "failure_detail": "quality-gate.py failed",
       "updated_at": "2026-10-08T06:32:22Z"
-    },
-    {
-      "workflow_key": "publish_benchmark_artifact",
-      "workflow_name": "Publish Benchmark Artifact",
-      "run_id": "37601376993",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/37601376993",
-      "status": "completed",
-      "conclusion": "success",
-      "event": "workflow_run",
-      "head_sha": "df3235eb692f2538c38aea32c6ae295acfd30dbc",
-      "failure_class": "none",
-      "failure_detail": "",
-      "updated_at": "2026-10-07T09:33:12Z"
     }
   ]
 }
