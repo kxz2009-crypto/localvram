@@ -1,31 +1,31 @@
 {
-  "updated_at": "2026-11-25T09:01:04Z",
+  "updated_at": "2026-11-25T12:07:28Z",
   "workflows": {
     "weekly_benchmark": {
       "workflow_key": "weekly_benchmark",
       "workflow_name": "Weekly Benchmark",
-      "run_id": "44281651233",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/44281651233",
+      "run_id": "45602058571",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/45602058571",
       "status": "completed",
       "conclusion": "success",
       "event": "schedule",
-      "head_sha": "f9a93c19a00fd19c67115d283239e8792289dd11",
+      "head_sha": "8da5cf07a66d60a9b3f8d41f772a24e1a8cce1c1",
       "failure_class": "none",
       "failure_detail": "",
-      "updated_at": "2026-11-18T10:17:29Z"
+      "updated_at": "2026-11-25T12:07:13Z"
     },
     "publish_benchmark_artifact": {
       "workflow_key": "publish_benchmark_artifact",
       "workflow_name": "Publish Benchmark Artifact",
-      "run_id": "44283994985",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/44283994985",
+      "run_id": "45610738380",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/45610738380",
       "status": "completed",
       "conclusion": "failure",
       "event": "workflow_run",
-      "head_sha": "f9a93c19a00fd19c67115d283239e8792289dd11",
+      "head_sha": "8da5cf07a66d60a9b3f8d41f772a24e1a8cce1c1",
       "failure_class": "publish_workflow_failed",
       "failure_detail": "",
-      "updated_at": "2026-11-18T10:17:44Z"
+      "updated_at": "2026-11-25T12:07:28Z"
     },
     "daily_content": {
       "workflow_key": "daily_content",
@@ -42,6 +42,32 @@
     }
   },
   "history": [
+    {
+      "workflow_key": "publish_benchmark_artifact",
+      "workflow_name": "Publish Benchmark Artifact",
+      "run_id": "45610738380",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/45610738380",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "workflow_run",
+      "head_sha": "8da5cf07a66d60a9b3f8d41f772a24e1a8cce1c1",
+      "failure_class": "publish_workflow_failed",
+      "failure_detail": "",
+      "updated_at": "2026-11-25T12:07:28Z"
+    },
+    {
+      "workflow_key": "weekly_benchmark",
+      "workflow_name": "Weekly Benchmark",
+      "run_id": "45602058571",
+      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/45602058571",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "schedule",
+      "head_sha": "8da5cf07a66d60a9b3f8d41f772a24e1a8cce1c1",
+      "failure_class": "none",
+      "failure_detail": "",
+      "updated_at": "2026-11-25T12:07:13Z"
+    },
     {
       "workflow_key": "daily_content",
       "workflow_name": "Daily Content Agent",
@@ -795,32 +821,6 @@
       "failure_class": "none",
       "failure_detail": "",
       "updated_at": "2026-10-11T06:16:14Z"
-    },
-    {
-      "workflow_key": "daily_content",
-      "workflow_name": "Daily Content Agent",
-      "run_id": "38030258996",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/38030258996",
-      "status": "completed",
-      "conclusion": "success",
-      "event": "schedule",
-      "head_sha": "bb67c7033df98bb71329afed6b65107930781f08",
-      "failure_class": "none",
-      "failure_detail": "",
-      "updated_at": "2026-10-10T06:17:12Z"
-    },
-    {
-      "workflow_key": "daily_content",
-      "workflow_name": "Daily Content Agent",
-      "run_id": "37894029758",
-      "run_url": "https://github.com/kxz2009-crypto/localvram/actions/runs/37894029758",
-      "status": "completed",
-      "conclusion": "failure",
-      "event": "schedule",
-      "head_sha": "6b47ff1a50b4addf4c32f4d6b8fd7c64d7a99564",
-      "failure_class": "daily_content_failed",
-      "failure_detail": "quality-gate.py failed",
-      "updated_at": "2026-10-09T06:33:21Z"
     }
   ]
 }
